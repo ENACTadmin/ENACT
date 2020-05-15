@@ -4,7 +4,7 @@ The Educational Network for Active Civic Transformation is a national program en
 
 ## Installation
 
-Use the package manager [npm](https://https://www.npmjs.com/) to install ENACT digital platform.
+Use the package manager [npm](https://www.npmjs.com/) to install ENACT digital platform.
 
 ```bash
 npm install
