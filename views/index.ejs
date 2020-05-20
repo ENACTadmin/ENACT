@@ -1,3 +1,145 @@
 <%- include('header'); -%>
-<a class="btn btn-outline-dark" href="/auth/google">Login with Google</a>
+<%- include('navbar'); -%>
+
+<script src="/js/menu.js"></script>
+
+<!-- Section intro -->
+<section class="section section--intro section--grey" id="home">
+    <div class="section__content section__content--full-width">
+        <div class="intro">
+            <div class="intro__content">
+                <% if (loggedIn) { %>
+                    <div class="intro__subtitle" style="color: black;">Hi, <b><%= req.user.googlename %>!</b></div>
+                <% } %>
+                <div class="intro__subtitle" style="color: black;">Welcome to ENACT Digital platform!</div>
+                <% if (loggedIn) { %>
+                    <div class="form-demo">
+                        <a href="/createCourse"><input type="submit" name="submit" class="form-demo__submit2"
+                                                        value="CREATE A CLASS"></a>
+                    </div>
+                    <br>
+                    <div class="form-demo">
+                        <a href="/forumFunction"><input type="submit" name="submit" class="form-demo__submit2"
+                                                        value="JOIN A CLASS"></a>
+                    </div>
+                    <br>
+                    <div class="form-demo">
+                        <a href="/forumFunction"><input type="submit" name="submit" class="form-demo__submit2"
+                                                        value="FIND SOME RESOURCES"></a>
+                    </div>
+                <% } else { %>
+                    <h3><b>PLEASE LOG IN TO ENABLE ALL FEATURES.</b></h3>
+                    <a href="/auth/google"><input type="submit" name="submit" class="form-demo__submit1"
+                                                  value="LOGIN IN"></a>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section features -->
+<section class="section section--features">
+    <br><br><br>
+    <div class="section__content section__content--fluid-width">
+        <div class="grid grid--3col">
+            <div class="grid__item">
+                <h3 class="grid__title"><span>TO BE REPLACED</span></h3>
+                <p class="grid__text">The Educational Network for Active Civic Transformation is a national program
+                    engaging undergraduates at colleges and universities in state-level legislative change by learning
+                    to work with legislators, staffers, and community organizations to advance policy. It is becoming a
+                    major voice in addressing challenges to American democracy by engaging young people around the
+                    country in civic activism built on knowledge, cooperation, justice and integrity. </p>
+                <br>
+                <br>
+            </div>
+
+
+            <div class="grid__item">
+                <h3 class="grid__title"><span>TO BE REPLACED</span></h3>
+                <p class="grid__text">The Educational Network for Active Civic Transformation is a national program
+                    engaging undergraduates at colleges and universities in state-level legislative change by learning
+                    to work with legislators, staffers, and community organizations to advance policy. It is becoming a
+                    major voice in addressing challenges to American democracy by engaging young people around the
+                    country in civic activism built on knowledge, cooperation, justice and integrity. </p>
+                <br>
+                <br>
+            </div>
+
+            <div class="grid__item">
+                <h3 class="grid__title"><span>TO BE REPLACED</span></h3>
+                <p class="grid__text">The Educational Network for Active Civic Transformation is a national program
+                    engaging undergraduates at colleges and universities in state-level legislative change by learning
+                    to work with legislators, staffers, and community organizations to advance policy. It is becoming a
+                    major voice in addressing challenges to American democracy by engaging young people around the
+                    country in civic activism built on knowledge, cooperation, justice and integrity. </p>
+                <br>
+                <br>
+            </div>
+        </div>
+    </div>
+</section>
+
+<br>
+<!-- Section -->
+<section class="section section--grey" id="forum">
+    <div class="section__content section__content--fluid-width section__content--padding">
+        <br>
+        <h2 class="section__title section__title--centered">Some static content</h2>
+        <div class="partners">
+            <div class="partners__content swiper-wrapper">
+                <div class="partners__slide swiper-slide">
+                    Test sample
+                </div>
+            </div>
+            <div class="partners__content swiper-wrapper">
+                <div class="partners__slide swiper-slide">
+                    Test sample
+                </div>
+            </div>
+            <div class="partners__content swiper-wrapper">
+                <div class="partners__slide swiper-slide">
+                    Test sample
+                </div>
+            </div>
+            <div class="partners__pagination swiper-pagination"></div>
+        </div>
+
+        <div class="clear"></div>
+
+    </div>
+</section>
+
+<!-- Section -->
+<section class="section" id="tutor">
+    <div class="section__content section__content--fluid-width section__content--padding">
+        <h2 class="section__title section__title--centered">Some static content</h2>
+
+        <br><br><br>
+        <div class="grid grid--3col">
+
+            <div class="partners__slide__grey grid__item">
+                <h2 class="grid__title">
+                    <span>TO BE REPLACED</span>
+                </h2>
+                <h3>TO BE REPLACED</h3>
+            </div>
+
+            <div class="partners__slide__grey grid__item">
+                <h3 class="grid__title"><span>TO BE REPLACED</span></h3>
+                <p class="grid__text">
+                    TO BE REPLACED TEXT
+                </p>
+            </div>
+
+            <div class="partners__slide__grey grid__item">
+                <h3 class="grid__title"><span>TO BE REPLACED</span></h3>
+                <p class="grid__text">
+                    TO BE REPLACED TEXT
+                </p>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</section>
+
 <%- include('footer'); -%>

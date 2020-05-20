@@ -1,0 +1,21 @@
+<header class="header">
+    <div class="header__content header__content--fluid-width">
+        <a class="header__logo-title" href="#home">ENACT</a>
+        <nav class="header__menu">
+            <ul>
+                <li>
+                    <a class="header-link" id="header-link" href="/">HOME</a>
+                </li>
+
+                <li class="header__btn header__btn--login">
+                    <% if (!loggedIn) { %>
+                        <a class="btn btn-outline-dark" href="/auth/google">Login with Google</a>
+                    <% } else { %>
+                        <a class="btn btn-outline-dark" href="/logout">Logout</a>
+                    <% } %>
+                </li>
+
+            </ul>
+        </nav>
+    </div>
+</header>

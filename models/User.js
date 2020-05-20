@@ -1,6 +1,7 @@
 'use strict';
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const ObjectID = mongoose.Schema.Types.ObjectID;
 
 const userSchema = Schema({
     googleid: String,
@@ -13,7 +14,8 @@ const userSchema = Schema({
     zipcode: String,
     city: String,
     state: String,
-    classCodes: [String],
+    enrolledCourses: [ObjectID],
+    ownedCourses: [ObjectID]
 });
 
 module.exports = mongoose.model('User', userSchema);
