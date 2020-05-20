@@ -3,7 +3,15 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  if (req.user && !req.user.userName) {
+    console.log("first time user!");
+    res.redirect('/')
+  } else {
+    res.render('index', {
+      req: req,
+      title: 'ENACT'
+    })
+  }
 });
 
 module.exports = router;
