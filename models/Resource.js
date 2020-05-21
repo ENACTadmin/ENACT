@@ -12,7 +12,8 @@ const resourceSchema = Schema({
     description: String,
     tags: [String], // tag the resource
     uri: String, // universal resource identifier specific to the resource
-    state: String
+    state: String,
+    resourceType: String
     // index
 });
 
