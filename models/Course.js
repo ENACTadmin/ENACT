@@ -9,10 +9,12 @@ const courseSchema = Schema({
     coursePin: String, // pin number to join the class
     tas: [objectID],
     zipcode: String,
-    city: String,
+    // city: String,
     state: String,
     semester: String,
-    createdAt: Date
+    createdAt: Date,
+    institution: String,
+    officeHour: String
 });
 
 module.exports = mongoose.model('Course', courseSchema);
