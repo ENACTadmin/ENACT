@@ -15,7 +15,8 @@ const userSchema = Schema({
     city: String,
     state: String,
     enrolledCourses: [ObjectID],
-    ownedCourses: [ObjectID]
+    ownedCourses: [ObjectID],
+
 });
 
 module.exports = mongoose.model('User', userSchema);

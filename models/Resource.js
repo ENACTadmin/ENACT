@@ -13,8 +13,9 @@ const resourceSchema = Schema({
     tags: [String], // tag the resource
     uri: String, // universal resource identifier specific to the resource
     state: String,
-    resourceType: String
-    // index
+    resourceType: String, // video/text document ...
+    institution: String,
+    yearOfCreation: Number // content's actual creation time
 });
 
 module.exports = mongoose.model('Resource', resourceSchema);

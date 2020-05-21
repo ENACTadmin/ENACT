@@ -13,10 +13,12 @@
                 <% } %>
                 <div class="intro__subtitle" style="color: black;">Welcome to ENACT Digital platform!</div>
                 <% if (loggedIn) { %>
-                    <div class="form-demo">
-                        <a href="/createCourse"><input type="submit" name="submit" class="form-demo__submit2"
-                                                        value="CREATE A CLASS"></a>
-                    </div>
+                    <% if (status === 'admin' || status === 'faculty') { %>
+                        <div class="form-demo">
+                            <a href="/createCourse"><input type="submit" name="submit" class="form-demo__submit2"
+                                                           value="CREATE A CLASS"></a>
+                        </div>
+                    <% } %>
                     <br>
                     <div class="form-demo">
                         <a href="/forumFunction"><input type="submit" name="submit" class="form-demo__submit2"

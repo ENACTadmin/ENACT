@@ -9,9 +9,14 @@ bodyParser = require("body-parser");
 
 
 // Models!
-const Course = require('./models/Course' );
-const Resource = require('./models/Resource' );
-const User = require('./models/User' );
+const Course = require('./models/Course');
+const Resource = require('./models/Resource');
+const User = require('./models/User');
+
+//*******************************************
+//***********Controller**********************
+
+const courseController = require('./controllers/courseController');
 
 // Authentication
 // const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -60,7 +65,7 @@ app.use(passport.initialize(1));
 app.use(passport.session(1));
 app.use(bodyParser.urlencoded({extended: false}));
 
-var facultyList = ["supremeethan@brandeis.edu"]
+var facultyList = []
 var adminList = ["bbdhy96@gmail.com"]
 // here is where we check on their logged in status
 app.use((req, res, next) => {
@@ -117,70 +122,54 @@ app.get('/', function (req, res) {
     })
 });
 
+// route middleware to make sure a user is logged in
+function isLoggedIn(req, res, next) {
+    console.log("checking to see if they are authenticated!");
+    // if user is authenticated in the session, carry on
+    res.locals.loggedIn = false;
+    if (req.isAuthenticated()) {
+        console.log("user has been Authenticated");
+        res.locals.loggedIn = true;
+        return next();
+    } else {
+        console.log("user has not been authenticated...");
+        // res.send("you must login first!");
+        return next();
+    }
+}
+
+
 // =====================================
 // Course ===============================
 // =====================================
 app.get('/createCourse',
-    (req,res) => res.render('createCourse'))
+    isLoggedIn,
+    (req, res) => res.render('createCourse'))
 
 // rename this to /createCourse and update the ejs form
 app.post('/createNewCourse',
-    async ( req, res, next ) => {
-        //console.dir(req.body)
-        if (false  && !req.user.googleemail.endsWith("@brandeis.edu")){
-            res.send("You must log in with an @brandeis.edu account to create a class. <a href='/logout'>Logout</a>")
-            return
-        } else if (!(req.body.norobot=='on' && req.body.robot==undefined)) {
-            res.send("no robots allowed!")
-            return
-        }
-        try {
-            let coursePin =  await getCoursePin()
-            //console.dir(req.user)
-            let newCourse = new Course(
-                {
-                    courseName: req.body.courseName,
-                    ownerId: req.user._id,
-                    coursePin:coursePin,
-                    semester: req.body.semester,
-                    city: req.body.city,
-                    state: req.body.state,
-                    createdAt: new Date()
-                }
-            )
-
-            newCourse.save()
-                .then( () => {
-                    res.redirect('/showCourses');
-                } )
-                .catch( error => {
-                    res.send( error );
-                } );
-        }
-        catch(e){
-            next(e)
-        }
-    }
+    isLoggedIn,
+    courseController.createNewClass
 )
 
-async function getCoursePin(){
+async function getCoursePin() {
     // this only works if there are many fewer than 10000000 courses
     // but that won't be an issue with this alpha version!
-    let coursePin =  Math.floor(Math.random()*10000000)
-    let lookupPin = await Course.find({coursePin:coursePin},'coursePin')
+    let coursePin = Math.floor(Math.random() * 10000000)
+    let lookupPin = await Course.find({coursePin: coursePin}, 'coursePin')
 
-    while (lookupPin.length>0) {
-        coursePin =  Math.floor(Math.random()*10000000)
-        lookupPin = await Course.find({coursePin:coursePin},'coursePin')
+    while (lookupPin.length > 0) {
+        coursePin = Math.floor(Math.random() * 10000000)
+        lookupPin = await Course.find({coursePin: coursePin}, 'coursePin')
     }
     return coursePin
 }
 
 app.get('/showCourses',
-    async ( req, res, next ) => {
+    async (req, res, next) => {
         if (!req.user) next()
         let coursesOwned =
-            await Course.find({ownerId:req.user._id},'courseName coursePin')
+            await Course.find({ownerId: req.user._id}, 'courseName coursePin')
         res.locals.coursesOwned = coursesOwned
         // res.locals.coursesTAing = []
         //
@@ -196,8 +185,6 @@ app.get('/showCourses',
         res.render('showCourses');
     }
 )
-
-
 
 
 // catch 404 and forward to error handler

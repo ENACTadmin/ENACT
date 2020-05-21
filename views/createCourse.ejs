@@ -16,33 +16,43 @@
         <div class="row">
             <div class="col-md-4 col-sm-12"></div>
             <div class="col-md-4 col-sm-12">
-                <form method="post" action="createNewCourse">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" style="width: 40%">Course name</span>
-                        <input type="text" class="form-control" name="courseName" placeholder="e.g. Brandeis ENACT">
+                <% if (loggedIn) { %>
+                    <form method="post" action="createNewCourse">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="width: 40%">Course Name</span>
+                            <input type="text" class="form-control" name="courseName" placeholder="e.g. Brandeis ENACT">
+                        </div>
+                        <br>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="width: 40%">Semester</span>
+                            <input type="text" class="form-control" name="semester" placeholder="e.g. SPR2020">
+                        </div>
+                        <br>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="width: 40%">Institution</span>
+                            <input type="text" class="form-control" name="institution"
+                                   placeholder="e.g. Brandeis University">
+                        </div>
+                        <br>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="width: 40%">State</span>
+                            <input type="text" class="form-control" name="state" placeholder="e.g. MA">
+                        </div>
+                        <br>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="width: 40%">Office Hour</span>
+                            <input type="text" class="form-control" name="officeHour" placeholder="e.g. Mon 3pm - 5pm">
+                        </div>
+                        <br>
+                        <input type="checkbox" name="norobot"> I am not a robot <br>
+                        <input type="checkbox" name="robot"> I am a robot<br><br>
+                        <input type="submit" name="submit" class="btn btn-outline-dark" value="Submit">
+                    </form>
+                <% } else { %>
+                    <div class="text-center partners__text">
+                        <h3>Please login to view this page</h3>
                     </div>
-                    <br>
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" style="width: 40%">Semester</span>
-                        <input type="text" class="form-control" name="semester" placeholder="e.g. SPR2020">
-                    </div>
-                    <br>
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" style="width: 40%">City</span>
-                        <input type="text" class="form-control" name="city" placeholder="e.g. Waltham">
-                    </div>
-                    <br>
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" style="width: 40%">State</span>
-                        <input type="text" class="form-control" name="state" placeholder="e.g. MA">
-                    </div>
-                    <!--                    Course Name: <input type="text" name="courseName" placeholder="Brandeis CS10a-02 Fall19">-->
-                    <br>
-                    <br>
-                    <input type="checkbox" name="norobot"> I am not a robot <br>
-                    <input type="checkbox" name="robot"> I am a robot<br><br>
-                    <input type="submit" name="submit" class="form-demo__submit2" value="Submit">
-                </form>
+                <% } %>
             </div>
         </div>
     </div>
