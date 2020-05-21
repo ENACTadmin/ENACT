@@ -6,12 +6,13 @@ const objectID = mongoose.Schema.Types.ObjectID;
 const courseSchema = Schema({
     ownerId: objectID,
     courseName: String,
-    pinCode: String, // pin number to join the class
+    coursePin: String, // pin number to join the class
     tas: [objectID],
     zipcode: String,
     city: String,
     state: String,
-    semester: String
+    semester: String,
+    createdAt: Date
 });
 
 module.exports = mongoose.model('Course', courseSchema);
