@@ -1,0 +1,38 @@
+<%- include('header'); -%>
+<%- include('navbar'); -%>
+
+<section class="section section--grey">
+    <div class="section__content section__content--full-width">
+        <div class="jumbotron masthead text-center">
+            <div class="section__title section__title--centered">
+                Join A Course
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section--grey">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-12"></div>
+            <div class="col-md-4 col-sm-12">
+                <% if (loggedIn) { %>
+                    <form method="post" action="joinCourse">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="width: 40%">Course Pin</span>
+                            <input type="text" class="form-control" name="coursePin" placeholder="e.g. 7-digit number">
+                        </div>
+                        <br>
+                        <input type="submit" name="submit" class="btn btn-outline-dark" value="Join">
+                    </form>
+                <% } else { %>
+                    <div class="text-center partners__text">
+                        <h3>Please login to view this page</h3>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('footer'); -%>

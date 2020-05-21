@@ -157,6 +157,23 @@ app.get('/showCourses',
     courseController.showOwnedCourses
 )
 
+app.get('/showOneCourse/:courseId',
+    isLoggedIn,
+    courseController.showOneCourse
+)
+
+app.get('/joinACourse',
+    isLoggedIn,
+    (req, res) => {
+        res.render('joinACourse')
+    }
+)
+
+app.post('/joinCourse',
+    isLoggedIn,
+    courseController.joinCourse
+)
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
