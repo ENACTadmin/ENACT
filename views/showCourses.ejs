@@ -1,0 +1,26 @@
+<%- include('header'); -%>
+<%- include('navbar'); -%>
+
+<section class="section section--grey">
+    <div class="section__content section__content--full-width">
+        <div class="jumbotron masthead text-center">
+            <div class="section__title section__title--centered">
+                Courses
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section section--grey">
+    <h2>Courses I'm Teaching</h2>
+    <ul>
+        <% for(i = 0; i<= coursesOwned.length-1; i++){  %>
+        <li>
+            <%= coursesOwned[i].courseName %>
+            <%= coursesOwned[i].coursePin%>
+        </li>
+        <% } %>
+    </ul>
+</div>
+
+<%- include('footer'); -%>
