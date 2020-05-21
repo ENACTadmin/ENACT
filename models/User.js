@@ -16,7 +16,6 @@ const userSchema = Schema({
     state: String,
     enrolledCourses: [ObjectID],
     ownedCourses: [ObjectID],
-
 });
 
 module.exports = mongoose.model('User', userSchema);

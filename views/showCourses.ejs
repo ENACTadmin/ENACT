@@ -16,8 +16,9 @@
     <ul>
         <% for(i = 0; i <= coursesOwned.length - 1; i++){ %>
             <li>
-                <%= coursesOwned[i].courseName %>
+                <a href="/showOneCourse/<%= coursesOwned[i]._id %>"><%= coursesOwned[i].courseName %></a>
                 <%= coursesOwned[i].coursePin %>
+                <!--                <%= coursesOwned[i]._id %>-->
             </li>
         <% } %>
     </ul>

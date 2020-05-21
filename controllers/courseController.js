@@ -1,5 +1,8 @@
 'use strict';
 const Course = require('../models/Course');
+const User = require('../models/User');
+const CourseMember = require('../models/CourseMember');
+
 
 /**
  * create a new course
@@ -82,4 +85,62 @@ exports.showOwnedCourses = async (req, res, next) => {
     //
     // res.locals.title = "PRA"
     res.render('showCourses');
+}
+
+exports.showOneCourse = async (req, res, next) => {
+    let courseId = req.params.courseId;
+    try {
+        //courseInfo contains these fields
+        res.locals.courseInfo = await Course.findOne({_id: courseId}, 'courseName coursePin ownerId')
+        let courseInfo = res.locals.courseInfo
+        let ownerInfo = await User.findOne({_id: courseInfo.ownerId}, 'googlename')
+        res.locals.ownerInfo = ownerInfo
+        res.render('showOneCourse')
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.joinCourse = async (req, res, next) => {
+    try {
+        let coursePin = req.body.coursePin
+
+        let courseInfo = await Course.findOne({coursePin: coursePin})
+
+        let newCourseMember = new CourseMember({
+            studentId: req.user._id,
+            courseId: courseInfo._id,
+            createdAt: new Date()
+        })
+
+        await newCourseMember.save()
+        console.log("courseMember saved")
+
+        let enrolledCourses = req.user.enrolledCourses || []
+
+        if (containsString(enrolledCourses, courseInfo._id)) {
+            console.log("enrolled already!")
+            return
+        }
+        // update user's enrolledCourses field
+        await req.user.enrolledCourses.push(courseInfo._id)
+        await req.user.save()
+        console.log("update finish")
+        res.redirect("/showOneCourse/" + courseInfo._id)
+
+    } catch (e) {
+        next(e)
+    }
+}
+
+function containsString(list, elt) {
+    let found = false;
+    list.forEach(e => {
+        if (JSON.stringify(e) === JSON.stringify(elt)) {
+            found = true
+        } else {
+            console.log(JSON.stringify(e) + "!=" + JSON.stringify(elt));
+        }
+    });
+    return found
 }
