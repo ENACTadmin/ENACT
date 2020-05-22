@@ -91,7 +91,7 @@ exports.showOneCourse = async (req, res, next) => {
     let courseId = req.params.courseId;
     try {
         //courseInfo contains these fields
-        res.locals.courseInfo = await Course.findOne({_id: courseId}, 'courseName coursePin ownerId')
+        res.locals.courseInfo = await Course.findOne({_id: courseId}, 'ownerId courseName coursePin institution officeHour officeHour Location')
         let courseInfo = res.locals.courseInfo
         let ownerInfo = await User.findOne({_id: courseInfo.ownerId}, 'googlename')
         res.locals.ownerInfo = ownerInfo

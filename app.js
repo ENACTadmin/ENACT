@@ -139,9 +139,9 @@ function isLoggedIn(req, res, next) {
 }
 
 
-// =====================================
-// Course ===============================
-// =====================================
+// ==============================================
+// Course related ===============================
+// ==============================================
 app.get('/createCourse',
     isLoggedIn,
     (req, res) => res.render('createCourse'))
@@ -173,6 +173,8 @@ app.post('/joinCourse',
     isLoggedIn,
     courseController.joinCourse
 )
+
+
 
 
 // catch 404 and forward to error handler

@@ -6,10 +6,85 @@
             <div class="section__title section__title--centered">
                 <%= courseInfo.courseName %>
                 <br>
-                Professor: <%= ownerInfo.googlename %>
             </div>
         </div>
     </div>
+</section>
+
+<section class="section section--grey">
+    <section class="section__content section__content--fluid-width">
+        <div class="container">
+            <div class="row">
+                <!--left information bar-->
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <b>General Information</b>
+                        </div>
+                        <!--content-->
+                        <div class="card-body">
+                            <div class="card-text">
+                                <ul class="list-group">
+                                    <li class="list-group-item borderless" style="padding: 0 0 3px 0">
+                                        <b>Instructor:</b> <%= ownerInfo.googlename %></li>
+                                    <li class="list-group-item borderless" style="padding: 0 0 3px 0">
+                                        <b>Office
+                                            Hour:</b> <%= courseInfo.officeHour %></li>
+                                    <li class="list-group-item borderless" style="padding: 0 0 3px 0">
+                                        <b>Office
+                                            Location:</b> <%= courseInfo.officeHourLocation %></li>
+                                    <li class="list-group-item borderless" style="padding: 0 0 3px 0">
+                                        <b>Institution: </b> <%= courseInfo.institution %></li>
+                                    <li class="list-group-item borderless" style="padding: 0 0 3px 0">
+                                        <b>Syllabus:</b>
+                                        <a href="#">Click me</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="card">
+                        <div class="card-header">
+                            <b>Tools</b>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-text">
+                                <ul class="list-group">
+                                    <% if (status === 'faculty' || status === 'admin') { %>
+                                        <li class="list-group-item borderless"
+                                            style="padding: 0 0 3px 0">
+                                            <a href="#">Update Syllabus</a></li>
+                                        <li class="list-group-item borderless"
+                                            style="padding: 0 0 3px 0">
+                                            <a href="#">Assign TAs</a></li>
+                                        <li class="list-group-item borderless"
+                                            style="padding: 0 0 3px 0">
+                                            Pin code: <%= courseInfo.coursePin %></li>
+                                    <% } %>
+                                    <li class="list-group-item borderless"
+                                        style="padding: 0 0 3px 0">
+                                        <a href="#">Upload Resources</a></li>
+                                    <li class="list-group-item borderless"
+                                        style="padding: 0 0 3px 0">
+                                        <a href="#">Search Resources</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="card blogBox moreBox">
+                        <div class="card-body">
+                            <a class="lead"
+                               href="#">Hello</a>
+                            <br><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </section>
 
 <%- include('footer'); -%>
