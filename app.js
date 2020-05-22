@@ -7,23 +7,28 @@ var flash = require('connect-flash');
 session = require("express-session");
 bodyParser = require("body-parser");
 
-
 // Models!
 const Course = require('./models/Course');
 const Resource = require('./models/Resource');
 const User = require('./models/User');
 
 //*******************************************
-//***********Controller**********************
+//***********Controllers*********************
 
 const courseController = require('./controllers/courseController');
+const resourceController = require('./controllers/resourceController');
 
-// Authentication
-// const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+
+//*******************************************
+//***********Authentication******************
+
 // here we set up authentication with passport
 const passport = require('passport');
 const configPassport = require('./config/passport');
 configPassport(passport);
+
+//*******************************************
+//***********Database connection*************
 
 const MONGODB_URI = 'mongodb://localhost/ENACT';
 const mongoose = require('mongoose');
@@ -37,7 +42,10 @@ db.once('open', function () {
     console.log("mongo connected")
 });
 
-var app = express();
+const app = express();
+
+//*******************************************
+//***********Middleware setup****************
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -55,7 +63,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
     secret: 'keyboard cat',
-    resave: true,
+    resave: false,
     saveUninitialized: false,
 }));
 
@@ -64,6 +72,9 @@ app.use(flash());
 app.use(passport.initialize(1));
 app.use(passport.session(1));
 app.use(bodyParser.urlencoded({extended: false}));
+
+//*******************************************
+//***********Login authorization*************
 
 var facultyList = []
 var adminList = ["bbdhy96@gmail.com"]
@@ -77,6 +88,7 @@ app.use((req, res, next) => {
         if (googleEmail.endsWith("edu") || googleEmail.endsWith("@gmail.com")) {
             res.locals.user = req.user;
             res.locals.loggedIn = true;
+            // set appropriate status
             if (facultyList.includes(googleEmail))
                 req.locals.status = "faculty"
             if (adminList.includes(googleEmail))
@@ -114,6 +126,9 @@ app.get('/login/authorized',
     })
 );
 
+//*******************************************
+//***********Index page router***************
+
 //we can use this or the index router to handle req
 app.get('/', function (req, res) {
     res.render('index', {
@@ -121,6 +136,9 @@ app.get('/', function (req, res) {
         user: req.user
     })
 });
+
+//*******************************************
+//***********Other helpers*******************
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
@@ -139,9 +157,8 @@ function isLoggedIn(req, res, next) {
 }
 
 
-// ==============================================
-// Course related ===============================
-// ==============================================
+//*******************************************
+//***********Course related******************
 app.get('/createCourse',
     isLoggedIn,
     (req, res) => res.render('createCourse'))
@@ -159,7 +176,8 @@ app.get('/showCourses',
 
 app.get('/showOneCourse/:courseId',
     isLoggedIn,
-    courseController.showOneCourse
+    courseController.showOneCourse,
+    resourceController.loadResources
 )
 
 app.get('/joinACourse',
@@ -174,8 +192,19 @@ app.post('/joinCourse',
     courseController.joinCourse
 )
 
+//*******************************************
+//***********Resource related****************
+app.get('/uploadToCourse/:courseId',
+    isLoggedIn,
+    (req, res) => {
+        res.render('uploadToCourse', {
+            req: req
+        })
+    })
 
-
+app.post('/uploadResource/:courseId',
+    isLoggedIn,
+    resourceController.uploadResource)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

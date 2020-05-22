@@ -27,10 +27,6 @@ div label input {
     margin-right: 100px;
 }
 
-body {
-    font-family: sans-serif;
-}
-
 #ck-button {
     margin: 4px;
     background-color: white;
@@ -161,8 +157,13 @@ li.borderless {
     border-right: 0 none;
     border-bottom: 0 none;
     border-left: 0 none;
+}
 
-
+borderless {
+    border-top: 0 none;
+    border-right: 0 none;
+    border-bottom: 0 none;
+    border-left: 0 none;
 }
 
 
@@ -296,7 +297,6 @@ Template:	LATERAL | Landing page templates for SAAS companies
 /*===============================================*/
 /* 1. RESET		 						 */
 /*===============================================*/
-@import "css/reset.css";
 /*===============================================*/
 /* 2. GENERAL		 						 */
 /*===============================================*/
