@@ -17,35 +17,35 @@
             <div class="col-md-4 col-sm-12"></div>
             <div class="col-md-4 col-sm-12">
                 <% if (loggedIn) { %>
-                    <form method="post" action="createNewCourse">
+                    <form method="post" action="uploadResource/<%= req.params.courseId%>">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" style="width: 40%">Course Name</span>
+                            <span class="input-group-text" style="width: 180px">Course Name</span>
                             <input type="text" class="form-control" name="courseName" placeholder="e.g. Brandeis ENACT">
                         </div>
                         <br>
                         <div class="input-group-prepend">
-                            <span class="input-group-text" style="width: 40%">Semester</span>
+                            <span class="input-group-text" style="width: 180px">Semester</span>
                             <input type="text" class="form-control" name="semester" placeholder="e.g. SPR2020">
                         </div>
                         <br>
                         <div class="input-group-prepend">
-                            <span class="input-group-text" style="width: 40%">Institution</span>
+                            <span class="input-group-text" style="width: 180px">Institution</span>
                             <input type="text" class="form-control" name="institution"
                                    placeholder="e.g. Brandeis University">
                         </div>
                         <br>
                         <div class="input-group-prepend">
-                            <span class="input-group-text" style="width: 40%">State</span>
+                            <span class="input-group-text" style="width: 180px">State</span>
                             <input type="text" class="form-control" name="state" placeholder="e.g. MA">
                         </div>
                         <br>
                         <div class="input-group-prepend">
-                            <span class="input-group-text" style="width: 40%">Office Hour</span>
+                            <span class="input-group-text" style="width: 180px">Office Hour</span>
                             <input type="text" class="form-control" name="officeHour" placeholder="e.g. Mon 3pm - 5pm">
                         </div>
                         <br>
                         <div class="input-group-prepend">
-                            <span class="input-group-text" style="width: 40%">Office Location</span>
+                            <span class="input-group-text" style="width: 180px">Office Location</span>
                             <input type="text" class="form-control" name="officeHourLocation"
                                    placeholder="e.g. Volen 110">
                         </div>

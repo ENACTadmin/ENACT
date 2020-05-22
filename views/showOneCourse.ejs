@@ -64,7 +64,7 @@
                                     <% } %>
                                     <li class="list-group-item borderless"
                                         style="padding: 0 0 3px 0">
-                                        <a href="#">Upload Resources</a></li>
+                                        <a href="/uploadToCourse/<%= courseInfo._id %>">Upload Resources</a></li>
                                     <li class="list-group-item borderless"
                                         style="padding: 0 0 3px 0">
                                         <a href="#">Search Resources</a></li>
@@ -74,11 +74,45 @@
                     </div>
                 </div>
                 <div class="col-md-9">
-                    <div class="card blogBox moreBox">
+                    <div class="card">
+                        <div class="card-header">
+                            <b>Latest Resources</b>
+                        </div>
                         <div class="card-body">
-                            <a class="lead"
-                               href="#">Hello</a>
-                            <br><br>
+                            <% if (resourceInfo.length !== 0) { %>
+                                <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
+                                    <div class="card blogBox moreBox">
+                                        <div class="card-body">
+                                            <h4><%= resourceInfo[i].name %></h4>
+                                            <div class="card-text">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item borderless"
+                                                        style="padding: 0 0 3px 10px">
+                                                        <b>Description: </b> <%= resourceInfo[i].description %></li>
+                                                    <li class="list-group-item borderless"
+                                                        style="padding: 0 0 3px 10px">
+                                                        <b>State:</b> <%= resourceInfo[i].state %></li>
+                                                    <li class="list-group-item borderless"
+                                                        style="padding: 0 0 3px 10px">
+                                                        <b>Link: </b> <a
+                                                                href="<%= resourceInfo[i].uri %>"><%= resourceInfo[i].uri %></a>
+                                                    </li>
+                                                    <li class="list-group-item borderless"
+                                                        style="padding: 0 0 3px 10px">
+                                                        <b>Institution: </b> <%= resourceInfo[i].institution %></li>
+                                                    <li class="list-group-item borderless"
+                                                        style="padding: 0 0 3px 10px">
+                                                        <b>Tags:</b> <%= resourceInfo[i].tags %>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                <% } %>
+                            <% } else { %>
+                                No resource available yet
+                            <% } %>
                         </div>
                     </div>
                 </div>

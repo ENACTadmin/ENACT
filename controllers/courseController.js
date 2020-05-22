@@ -95,7 +95,7 @@ exports.showOneCourse = async (req, res, next) => {
         let courseInfo = res.locals.courseInfo
         let ownerInfo = await User.findOne({_id: courseInfo.ownerId}, 'googlename')
         res.locals.ownerInfo = ownerInfo
-        res.render('showOneCourse')
+        next()
     } catch (e) {
         next(e)
     }
