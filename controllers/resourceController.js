@@ -1,6 +1,6 @@
 'use strict';
-const Course = require('../models/Course');
-const User = require('../models/User');
+// const Course = require('../models/Course');
+// const User = require('../models/User');
 const Resource = require('../models/Resource')
 
 exports.uploadResource = async (req, res, next) => {
