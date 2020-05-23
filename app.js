@@ -1,9 +1,9 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var flash = require('connect-flash');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const flash = require('connect-flash');
 session = require("express-session");
 bodyParser = require("body-parser");
 
@@ -17,6 +17,7 @@ const User = require('./models/User');
 
 const courseController = require('./controllers/courseController');
 const resourceController = require('./controllers/resourceController');
+const profileController = require('./controllers/profileController');
 
 
 //*******************************************
@@ -76,9 +77,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 //*******************************************
 //***********Login authorization*************
 
-var facultyList = []
-var adminList = ["bbdhy96@gmail.com"]
-// here is where we check on their logged in status
+let facultyList = []
+let adminList = ["bbdhy96@gmail.com"]
+// here is where we check and assign user's status
 app.use((req, res, next) => {
     res.locals.title = "ENACT";
     res.locals.loggedIn = false;
@@ -141,6 +142,7 @@ app.get('/', function (req, res) {
 //***********Other helpers*******************
 
 // route middleware to make sure a user is logged in
+// if not, res.locals.loggedIn will be assigned as FALSE
 function isLoggedIn(req, res, next) {
     console.log("checking to see if they are authenticated!");
     // if user is authenticated in the session, carry on
@@ -160,7 +162,7 @@ function isLoggedIn(req, res, next) {
 //*******************************************
 //***********Course related******************
 app.get('/createCourse',
-    isLoggedIn,
+    // isLoggedIn,
     (req, res) => res.render('createCourse'))
 
 // rename this to /createCourse and update the ejs form
@@ -194,6 +196,7 @@ app.post('/joinCourse',
 
 //*******************************************
 //***********Resource related****************
+
 app.get('/uploadToCourse/:courseId',
     isLoggedIn,
     (req, res) => {
@@ -205,6 +208,11 @@ app.get('/uploadToCourse/:courseId',
 app.post('/uploadResource/:courseId',
     isLoggedIn,
     resourceController.uploadResource)
+
+//*******************************************
+//***********Profile related*****************
+
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
