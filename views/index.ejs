@@ -2,7 +2,7 @@
 <%- include('navbar'); -%>
 
 <!-- Section intro -->
-<section class="section section--intro section--grey" id="home">
+<section class="section section--intro section__grey" id="home">
     <div class="section__content section__content--full-width">
         <div class="intro">
             <div class="intro__content">
@@ -13,18 +13,18 @@
                 <% if (loggedIn) { %>
                     <% if (status === 'admin' || status === 'faculty') { %>
                         <div class="form-demo">
-                            <a href="/createCourse"><input type="submit" name="submit" class="form-demo__submit2"
+                            <a href="/createCourse"><input type="submit" name="submit" class="form-demo__submit"
                                                            value="CREATE A COURSE"></a>
                         </div>
                     <% } %>
                     <br>
                     <div class="form-demo">
-                        <a href="/JoinACourse"><input type="submit" name="submit" class="form-demo__submit2"
+                        <a href="/JoinACourse"><input type="submit" name="submit" class="form-demo__submit"
                                                         value="JOIN A COURSE"></a>
                     </div>
                     <br>
                     <div class="form-demo">
-                        <a href="/forumFunction"><input type="submit" name="submit" class="form-demo__submit2"
+                        <a href="/forumFunction"><input type="submit" name="submit" class="form-demo__submit"
                                                         value="FIND SOME RESOURCES"></a>
                     </div>
                 <% } else { %>
@@ -81,7 +81,7 @@
 
 <br>
 <!-- Section -->
-<section class="section section--grey" id="forum">
+<section class="section section__grey" id="forum">
     <div class="section__content section__content--fluid-width section__content--padding">
         <br>
         <h2 class="section__title section__title--centered">Some static content</h2>
