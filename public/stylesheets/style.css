@@ -1063,6 +1063,32 @@ h6 {
     color: #ff8d12;
 }
 
+.form-demo__login {
+    width: 300px;
+    /*float: left;*/
+    background-color: #000;
+    border: 1px solid #fff;
+    height: 63px;
+    line-height: 61px;
+    font-size: 18px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    color: #fff;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.form-demo__login:hover {
+    background-color: #fff;
+    border: 1px solid #000;
+    color: #000;
+}
+
+
 .form-demo__classCode {
     margin-bottom: 12px;
     width: 200px;
