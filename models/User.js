@@ -16,6 +16,10 @@ const userSchema = Schema({
     state: String,
     enrolledCourses: [ObjectID],
     ownedCourses: [ObjectID],
+    workEmail: String,
+    personalEmail: String,
+    phoneNumber: String,
+    bio: String // required for faculty members
 });
 
 module.exports = mongoose.model('User', userSchema);

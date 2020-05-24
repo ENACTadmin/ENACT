@@ -138,59 +138,33 @@ app.get('/', function (req, res) {
     })
 });
 
-//*******************************************
-//***********Other helpers*******************
-
-// route middleware to make sure a user is logged in
-// if not, res.locals.loggedIn will be assigned as FALSE
-function isLoggedIn(req, res, next) {
-    console.log("checking to see if they are authenticated!");
-    // if user is authenticated in the session, carry on
-    res.locals.loggedIn = false;
-    if (req.isAuthenticated()) {
-        console.log("user has been Authenticated");
-        res.locals.loggedIn = true;
-        return next();
-    } else {
-        console.log("user has not been authenticated...");
-        // res.send("you must login first!");
-        return next();
-    }
-}
-
 
 //*******************************************
 //***********Course related******************
 app.get('/createCourse',
-    // isLoggedIn,
     (req, res) => res.render('createCourse'))
 
 // rename this to /createCourse and update the ejs form
 app.post('/createNewCourse',
-    isLoggedIn,
     courseController.createNewClass
 )
 
 app.get('/showCourses',
-    isLoggedIn,
     courseController.showOwnedCourses
 )
 
 app.get('/showOneCourse/:courseId',
-    isLoggedIn,
     courseController.showOneCourse,
     resourceController.loadResources
 )
 
 app.get('/joinACourse',
-    isLoggedIn,
     (req, res) => {
         res.render('joinACourse')
     }
 )
 
 app.post('/joinCourse',
-    isLoggedIn,
     courseController.joinCourse
 )
 
@@ -198,7 +172,6 @@ app.post('/joinCourse',
 //***********Resource related****************
 
 app.get('/uploadToCourse/:courseId',
-    isLoggedIn,
     (req, res) => {
         res.render('uploadToCourse', {
             req: req
@@ -206,12 +179,10 @@ app.get('/uploadToCourse/:courseId',
     })
 
 app.post('/uploadResource/:courseId',
-    isLoggedIn,
     resourceController.uploadResource)
 
 //*******************************************
 //***********Profile related*****************
-
 
 
 // catch 404 and forward to error handler
@@ -226,7 +197,7 @@ app.use(function (err, req, res, next) {
     res.locals.error = req.app.get('env') === 'development' ? err : {};
     // render the error page
     res.status(err.status || 500);
-    res.render('error');
+    res.send("error message: " + err.message);
 });
 
 module.exports = app;
