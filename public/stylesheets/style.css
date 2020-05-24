@@ -6,22 +6,6 @@
     color: #EEEEEE !important;
 }
 
-#input {
-    white-space: pre-wrap;
-}
-
-#grey {
-    background-color: #f7f8f9;
-}
-
-#map {
-    height: 95%;
-}
-
-/*
-P.S: if you like my content maybe you will become a donator and donate some money? That helps me to create new awesome materials. https://www.paypal.me/melnik909
-*/
-
 /*for checkbox on tutorRating*/
 div label input {
     margin-right: 100px;
@@ -3386,10 +3370,6 @@ ul.grid__list--fmenu li a:hover {
         padding: 0 0 40px 0;
     }
 
-    /* .btn{
-    padding:8px 15px;
-    margin:0 5px;
-    } */
     .btn--play {
         padding-right: 40px;
     }
