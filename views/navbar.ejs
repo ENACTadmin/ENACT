@@ -6,6 +6,22 @@
                 <li>
                     <a class="header-link" id="header-link" href="/">HOME</a>
                 </li>
+                <% if (loggedIn) { %>
+                    <li>
+                        <a class="header-link" id="header-link" href="/userFunction">Settings</a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a class="header-link" href="/myProfile/<%= user._id %>">View/edit profile</a>
+                            </li>
+                            <li>
+                                <% if (locals.status === "admin") { %>
+                                    <a class="header-link" href="/showProfiles">View all profiles</a>
+                                <% } %>
+                            </li>
+                        </ul>
+                    </li>
+                <% } else { %>
+                <% } %>
 
                 <li class="header__btn header__btn--login">
                     <% if (!loggedIn) { %>
@@ -14,6 +30,7 @@
                         <a class="btn btn-outline-dark" href="/logout">Logout</a>
                     <% } %>
                 </li>
+
 
             </ul>
         </nav>
