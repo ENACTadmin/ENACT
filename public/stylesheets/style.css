@@ -1,5 +1,5 @@
 /*===============================================*/
-/* Customized CSS--BOOTSTRAP		 						 */
+/* Customized CSS--BOOTSTRAP
 /*===============================================*/
 
 .rating.text-center:hover {
@@ -77,122 +77,22 @@ li.borderless {
     border-left: 0 none;
 }
 
-/*
-=====
-LEVEL 1. rating related
-=====
-*/
-
-.rating {
-    --uiRatingSize: var(--ratingSize, 20px);
-    --uiRatingColor: var(--ratingColor, #ff7aca);
-    --uiRatingColorActive: var(--ratingColorActive, #ff7aca);
-
-    display: flex;
-    font-size: var(--uiRatingSize);
-    color: var(--uiRatingColor);
-    position: relative;
-}
-
-.rating__control {
-    position: absolute;
-    left: -9999px;
-}
-
-.rating__control:nth-of-type(1):focus ~ .rating__item:nth-of-type(1):before,
-.rating__control:nth-of-type(2):focus ~ .rating__item:nth-of-type(2):before,
-.rating__control:nth-of-type(3):focus ~ .rating__item:nth-of-type(3):before,
-.rating__control:nth-of-type(4):focus ~ .rating__item:nth-of-type(4):before,
-.rating__control:nth-of-type(5):focus ~ .rating__item:nth-of-type(5):before {
-    content: "";
-    box-shadow: 0 0 0 4px var(--uiRatingColorActive);
-
-    position: absolute;
-    top: -.15em;
-    right: 0;
-    bottom: -.15em;
-    left: 0;
-    z-index: -1;
-}
-
-.rating__item {
-    -webkit-tap-highlight-color: transparent;
-    cursor: pointer;
-    position: relative;
-    padding-left: .25em;
-    padding-right: .25em;
-}
-
-.rating__star {
-    display: block;
-    width: 1em;
-    height: 1em;
-    fill: currentColor;
-}
-
-.rating__label {
-    position: absolute;
-    top: 0;
-    left: -9999px;
-}
-
-.rating:hover,
-.rating__control:nth-of-type(1):checked ~ .rating__item:nth-of-type(1),
-.rating__control:nth-of-type(2):checked ~ .rating__item:nth-of-type(-n+2),
-.rating__control:nth-of-type(3):checked ~ .rating__item:nth-of-type(-n+3),
-.rating__control:nth-of-type(4):checked ~ .rating__item:nth-of-type(-n+4),
-.rating__control:nth-of-type(5):checked ~ .rating__item:nth-of-type(-n+5) {
-    color: var(--uiRatingColorActive);
-}
-
-.rating__item:hover ~ .rating__item {
-    color: var(--uiRatingColor);
-}
-
-/*
-=====
-LEVEL 2. SETTINGS
-=====
-*/
-
-.rating {
-    --ratingSize: 30px;
-    --ratingColor: #eee;
-    --ratingColorActive: #ffcc00;
-}
-
-/*------------------------------------------------------------------
-[Main Stylesheet]
-Author:	SmartTemplates
-Version:	1.0
-Created:	05 June 2018
-Last updated:	05 June 2018
-Template:	LATERAL | Landing page templates for SAAS companies
--------------------------------------------------------------------*/
-
 /*-----------------------------------------------------------------
 [Table of Contents]
 1. GENERAL
-2-1 HEADINGS
-3. HEADER
-4. SECTION
-5. GRID
-5.1 GRID ELEMENTS
-6. BUTTONS
-7. CUSTOM SECTIONS
-7.1 CUSTOM SECTION - INTRO
-7.2 CUSTOM SECTION - ABOUT
-7.3 CUSTOM SECTION - FEATURES
-7.4 CUSTOM SECTION - partners
-7.5 CUSTOM SECTION - PRICING
-7.6 CUSTOM SECTION - CTA
-7.7 CUSTOM SECTION - HOW IT WORKS (HIW)
-7.8 CUSTOM SECTION - SUPPORT
-7.9 CUSTOM SECTION - CLIENTS
-7.10 CUSTOM SECTION - CONTACT
-7.11 CUSTOM SECTION - LOGIN/SIGNUP MODAL
-8. FOOTER
-9. MEDIA QUERIES
+2. HEADINGS
+    2.1 HEADER
+3. SECTION
+4. GRID
+    4.1 GRID ELEMENTS
+5. BUTTONS
+6. CUSTOM SECTIONS
+    6.1 CUSTOM SECTION - INTRO
+    6.2 CUSTOM SECTION - ABOUT
+    6.3 CUSTOM SECTION - FEATURES
+    6.4 CUSTOM SECTION - PARTNERS
+7. FOOTER
+8. MEDIA QUERIES
 */
 
 /*===============================================*/
@@ -930,6 +830,7 @@ h6 {
     margin-right: 0 !important;
 }
 
+/*===============================================*/
 /* 4.1 GRID ELEMENTS   */
 /*===============================================*/
 
@@ -1016,6 +917,10 @@ h6 {
     -moz-transition: all 0.3s ease;
     transition: all 0.3s ease;
 }
+
+/*===============================================*/
+/*  6. CUSTOM SECTION	 			 */
+/*===============================================*/
 
 /*===============================================*/
 /*  6.1 CUSTOM SECTION - INTRO	 			 */
@@ -1517,91 +1422,7 @@ svg.svg-intro-bottom {
 }
 
 /*===============================================*/
-/*  7.8 CUSTOM SECTION - SUPPORT	 			 */
-/*===============================================*/
-.section--support {
-    position: relative;
-    background-color: #f7f8f9;
-}
-
-.section__content--support {
-    background-color: #fff;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
-    -moz-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
-    -webkit-box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
-    position: relative;
-    z-index: 333;
-}
-
-.svg-support-bottom {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 222;
-}
-
-.grid--support {
-    width: 100%;
-    color: #272b26;
-    display: flex;
-    position: relative;
-}
-
-.grid--support .grid__item {
-    margin: 0;
-    position: relative;
-    z-index: 222;
-}
-
-.grid--support .grid__item.grid__item--padding {
-    background: none;
-    width: calc((100% - 80px * 4) / 2);
-    padding: 80px;
-}
-
-.grid--support .grid__title {
-    font-size: 36px;
-    font-weight: 700;
-    padding: 0;
-    margin: 0 0 20px 0;
-}
-
-.grid--support .grid__text {
-    font-size: 18px;
-    padding: 0;
-}
-
-.grid--support .grid__more {
-    color: #fff;
-    font-size: 18px;
-    font-weight: 300;
-    letter-spacing: 1px;
-    background-color: #ff8d12;
-    padding: 20px 62px;
-    margin: 10px 0 0 0;
-    float: right;
-    border: 1px #ff8d12 solid;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    transition: all 0.3s ease;
-}
-
-.grid--support .grid__more:hover {
-    color: #ff8d12;
-    background: none;
-    border: 1px #ff8d12 solid;
-}
-
-/*===============================================*/
-/*  8. FOOTER 	 						 */
+/*  7. FOOTER 	 						 */
 /*===============================================*/
 /* BLOCK - footer */
 .footer {
@@ -1707,7 +1528,7 @@ ul.grid__list--fmenu li a:hover {
 }
 
 /*===============================================*/
-/* 9. MEDIA QUERIES   			 */
+/* 8. MEDIA QUERIES   			 */
 /*===============================================*/
 /*===============================================*/
 /* Laptops max 1400 px		 */
@@ -1729,10 +1550,6 @@ ul.grid__list--fmenu li a:hover {
 
     svg.svg-intro-bottom {
         height: 70%;
-    }
-
-    .pricing {
-        width: 90%;
     }
 
 }
@@ -2136,16 +1953,6 @@ ul.grid__list--fmenu li a:hover {
 
     .svg-form-left {
         display: none;
-    }
-
-    /*  CTA 	 */
-    /*---------------*/
-    .section--cta {
-        padding: 20px 0;
-    }
-
-    svg.svg-cta-bottom {
-        height: 20px;
     }
 
     /*  Modal	 */
