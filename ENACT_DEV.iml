@@ -5,7 +5,6 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="noddejs" level="application" />
     <orderEntry type="library" name="script" level="project" />
   </component>
 </module>

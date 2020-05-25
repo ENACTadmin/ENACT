@@ -6,6 +6,25 @@
                 <li>
                     <a class="header-link" id="header-link" href="/">HOME</a>
                 </li>
+
+                <% if (loggedIn) { %>
+                <li>
+                    <a class="header-link" id="header-link" href="/courseFunction">Courses</a>
+                    <ul class="sub-menu">
+                        <li>
+                            <% if (locals.status === "admin" || locals.status === "faculty") { %>
+                            <a class="header-link" href="/createCourse">Create a course</a>
+                            <% } %>
+                        </li>
+                        <li>
+                            <a class="header-link" href="/joinACourse">Join a course</a>
+                        </li>
+                    </ul>
+                </li>
+                <% } else { %>
+                <% } %>
+
+
                 <% if (loggedIn) { %>
                     <li>
                         <a class="header-link" id="header-link" href="/userFunction">Settings</a>
@@ -22,6 +41,7 @@
                     </li>
                 <% } else { %>
                 <% } %>
+
 
                 <li class="header__btn header__btn--login">
                     <% if (!loggedIn) { %>
