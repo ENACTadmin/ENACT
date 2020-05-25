@@ -77,7 +77,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 //*******************************************
 //***********Login authorization*************
 
-let facultyList = []
+let facultyList = ["nicolezhang@brandeis.edu"]
 let adminList = ["bbdhy96@gmail.com"]
 // here is where we check and assign user's status
 app.use((req, res, next) => {
@@ -90,10 +90,12 @@ app.use((req, res, next) => {
             res.locals.user = req.user;
             res.locals.loggedIn = true;
             // set appropriate status
-            if (facultyList.includes(googleEmail))
-                req.locals.status = "faculty"
-            if (adminList.includes(googleEmail))
+            if (facultyList.includes(googleEmail)) {
+                res.locals.status = "faculty"
+            }
+            else if (adminList.includes(googleEmail)) {
                 res.locals.status = "admin"
+            }
             console.log("user has been Authenticated. Status: " + res.locals.status)
         } else {
             res.locals.loggedIn = false
