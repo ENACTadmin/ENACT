@@ -68,18 +68,19 @@ exports.showOwnedCourses = async (req, res, next) => {
     if (!req.user)
         next()
     let coursesOwned =
-        await Course.find({ownerId: req.user._id}, 'courseName coursePin')
+        await Course.find({ownerId: req.user._id}, 'courseName semester coursePin')
     res.locals.coursesOwned = coursesOwned
     // res.locals.coursesTAing = []
     //
-    // let registrations =
-    //     await  CourseMember.find({studentId:req.user._id},'courseId')
-    // res.locals.registeredCourses = registrations.map((x)=>x.courseId)
-    //
-    // let coursesTaken =
-    //     await Course.find({_id:{$in:res.locals.registeredCourses}},'name')
-    // res.locals.coursesTaken = coursesTaken
-    //
+    let registeredCourses =
+        await  CourseMember.find({studentId:req.user._id},'courseId')
+    res.locals.registeredCourses = registeredCourses.map((x)=>x.courseId)
+
+    let coursesTaken =
+        await Course.find({_id:{$in:res.locals.registeredCourses}},'courseName semester ownerId')
+    res.locals.coursesTaken = coursesTaken
+
+
     // res.locals.title = "PRA"
     res.render('showCourses');
 }
