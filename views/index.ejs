@@ -11,17 +11,24 @@
                 <% } %>
                 <div class="intro__subtitle" style="color: black;">Welcome to ENACT Digital platform!</div>
                 <% if (loggedIn) { %>
+                    <div class="form-demo">
+                        <a href="/showCourses"><input type="submit" name="submit" class="form-demo__submit"
+                                                        value="SHOW YOUR COURSES"></a>
+                    </div>
+                    <br>
                     <% if (status === 'admin' || status === 'faculty') { %>
                         <div class="form-demo">
                             <a href="/createCourse"><input type="submit" name="submit" class="form-demo__submit"
                                                            value="CREATE A COURSE"></a>
                         </div>
                     <% } %>
-                    <br>
-                    <div class="form-demo">
-                        <a href="/JoinACourse"><input type="submit" name="submit" class="form-demo__submit"
-                                                      value="JOIN A COURSE"></a>
-                    </div>
+                    <% if (status != 'admin' && status != 'faculty') { %>
+                        <br>
+                        <div class="form-demo">
+                            <a href="/JoinACourse"><input type="submit" name="submit" class="form-demo__submit"
+                                                          value="JOIN A COURSE"></a>
+                        </div>
+                    <% } %>
                     <br>
                     <div class="form-demo">
                         <a href="/forumFunction"><input type="submit" name="submit" class="form-demo__submit"

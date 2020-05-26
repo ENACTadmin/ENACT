@@ -37,18 +37,15 @@ exports.createNewClass = async (req, res, next) => {
                 officeHourLocation: req.body.officeHourLocation
             }
         )
-
         newCourse.save()
-            .then(() => {
-                res.redirect('/showCourses');
-            })
-            .catch(error => {
-                res.send(error);
-            });
+        res.redirect('/showCourses')
     } catch (e) {
         next(e)
     }
 }
+
+
+
 
 /**
  * get course pin, a 7-digit randomly generated number
