@@ -11,26 +11,25 @@
                 <% } %>
                 <div class="intro__subtitle" style="color: black;">Welcome to ENACT Digital platform!</div>
                 <% if (loggedIn) { %>
-                    <div class="form-demo">
+                    <div class="form-demo" data-aos="fade-up">
                         <a href="/showCourses"><input type="submit" name="submit" class="form-demo__submit"
-                                                        value="SHOW YOUR COURSES"></a>
+                                                      value="OWNED COURSES"></a>
                     </div>
                     <br>
                     <% if (status === 'admin' || status === 'faculty') { %>
-                        <div class="form-demo">
+                        <div class="form-demo" data-aos="fade-up"  data-aos-delay="100">
                             <a href="/createCourse"><input type="submit" name="submit" class="form-demo__submit"
                                                            value="CREATE A COURSE"></a>
                         </div>
                     <% } %>
                     <% if (status != 'admin' && status != 'faculty') { %>
-                        <br>
-                        <div class="form-demo">
+                        <div class="form-demo" data-aos="fade-up"  data-aos-delay="100">
                             <a href="/JoinACourse"><input type="submit" name="submit" class="form-demo__submit"
                                                           value="JOIN A COURSE"></a>
                         </div>
                     <% } %>
                     <br>
-                    <div class="form-demo">
+                    <div class="form-demo" data-aos="fade-up"  data-aos-delay="200">
                         <a href="/forumFunction"><input type="submit" name="submit" class="form-demo__submit"
                                                         value="FIND SOME RESOURCES"></a>
                     </div>
@@ -49,7 +48,7 @@
     <br><br><br>
     <div class="section__content section__content--fluid-width">
         <div class="grid grid--3col">
-            <div class="grid__item">
+            <div class="grid__item" data-aos="fade-up">
                 <h3 class="grid__title"><span>TO BE REPLACED</span></h3>
                 <p class="grid__text">The Educational Network for Active Civic Transformation is a national program
                     engaging undergraduates at colleges and universities in state-level legislative change by learning
@@ -61,7 +60,7 @@
             </div>
 
 
-            <div class="grid__item">
+            <div class="grid__item" data-aos="fade-up" data-aos-delay="100">
                 <h3 class="grid__title"><span>TO BE REPLACED</span></h3>
                 <p class="grid__text">The Educational Network for Active Civic Transformation is a national program
                     engaging undergraduates at colleges and universities in state-level legislative change by learning
@@ -72,7 +71,7 @@
                 <br>
             </div>
 
-            <div class="grid__item">
+            <div class="grid__item" data-aos="fade-up" data-aos-delay="200">
                 <h3 class="grid__title"><span>TO BE REPLACED</span></h3>
                 <p class="grid__text">The Educational Network for Active Civic Transformation is a national program
                     engaging undergraduates at colleges and universities in state-level legislative change by learning
@@ -93,17 +92,17 @@
         <br>
         <h2 class="section__title section__title--centered">Some static content</h2>
         <div class="partners">
-            <div class="partners__content swiper-wrapper">
+            <div class="partners__content swiper-wrapper" data-aos="fade-up">
                 <div class="partners__slide swiper-slide">
                     Test sample
                 </div>
             </div>
-            <div class="partners__content swiper-wrapper">
+            <div class="partners__content swiper-wrapper" data-aos="fade-up"  data-aos-delay="100">
                 <div class="partners__slide swiper-slide">
                     Test sample
                 </div>
             </div>
-            <div class="partners__content swiper-wrapper">
+            <div class="partners__content swiper-wrapper" data-aos="fade-up"  data-aos-delay="200">
                 <div class="partners__slide swiper-slide">
                     Test sample
                 </div>
@@ -124,21 +123,21 @@
         <br><br><br>
         <div class="grid grid--3col">
 
-            <div class="partners__slide__grey grid__item">
+            <div class="partners__slide__grey grid__item" data-aos="fade-up">
                 <h3 class="grid__title"><span>TO BE REPLACED</span></h3>
                 <p class="grid__text">
                     TO BE REPLACED TEXT
                 </p>
             </div>
 
-            <div class="partners__slide__grey grid__item">
+            <div class="partners__slide__grey grid__item" data-aos="fade-up"  data-aos-delay="100">
                 <h3 class="grid__title"><span>TO BE REPLACED</span></h3>
                 <p class="grid__text">
                     TO BE REPLACED TEXT
                 </p>
             </div>
 
-            <div class="partners__slide__grey grid__item">
+            <div class="partners__slide__grey grid__item" data-aos="fade-up"  data-aos-delay="200">
                 <h3 class="grid__title"><span>TO BE REPLACED</span></h3>
                 <p class="grid__text">
                     TO BE REPLACED TEXT
@@ -148,5 +147,7 @@
         <div class="clear"></div>
     </div>
 </section>
+
+
 
 <%- include('footer'); -%>

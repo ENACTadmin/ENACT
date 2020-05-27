@@ -2,8 +2,8 @@ $(document).ready(function () {
     "use strict";
 
     function navScroll() {
-        var window_top = $(window).scrollTop();
-        var div_top = $('body').offset().top;
+        let window_top = $(window).scrollTop();
+        let div_top = $('body').offset().top;
         if (window_top > div_top) {
             $('.header').addClass('header--sticky');
             $('.header__menu ul ul').addClass('submenu-header-sticky');
@@ -18,11 +18,9 @@ $(document).ready(function () {
     });
     navScroll();
 
-    // $(document).on("scroll", onScroll);
-
-    var delegate = function (criteria, listener) {
+    let delegate = function (criteria, listener) {
         return function (e) {
-            var el = e.target;
+            let el = e.target;
             do {
                 if (!criteria(el)) continue;
                 e.delegateTarget = el;
@@ -31,16 +29,16 @@ $(document).ready(function () {
             } while ((el = el.parentNode));
         };
     };
-    var toolbar = document.querySelector(".header__menu");
-    var buttonsFilter = function (elem) {
+    let toolbar = document.querySelector(".header__menu");
+    let buttonsFilter = function (elem) {
         return elem.classList && elem.classList.contains("header-link");
     };
-    var buttonHandler = function (e) {
-        var button = e.delegateTarget;
+    let buttonHandler = function (e) {
+        let button = e.delegateTarget;
         if (!button.classList.contains("active")) {
             button.classList.add("active");
-            var target = button.hash;
-            var $target = $(target);
+            let target = button.hash;
+            let $target = $(target);
 
             $('html, body').stop().animate({
                 // 'scrollTop': $target.offset().top
@@ -54,25 +52,9 @@ $(document).ready(function () {
     };
     toolbar.addEventListener("click", delegate(buttonsFilter, buttonHandler));
 
-    // function onScroll(event){
-    //
-    // 	var scrollPos = $(document).scrollTop();
-    // 	$('.header__menu ul li a#header-link').each(function () {
-    // 		var currLink = $(this);
-    // 		var refElement = $(currLink.attr("href"));
-    // 		if (refElement.position().top <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
-    // 			$('.header__menu ul li a#header-link').removeClass("selected");
-    // 			currLink.addClass("active");
-    // 		}
-    // 		else{
-    // 			currLink.removeClass("active");
-    // 		}
-    // 	});
-    // }
-
     $.fn.menumaker = function (options) {
 
-        var cssmenu = $(this), settings = $.extend({
+        let cssmenu = $(this), settings = $.extend({
             title: "Menu",
             format: "dropdown",
             sticky: false
@@ -82,8 +64,7 @@ $(document).ready(function () {
             cssmenu.prepend('<div class="menu-button"></div>');
             $(this).find(".menu-button").on('click', function () {
                 $(this).parent().parent().parent().toggleClass('menu-open');
-
-                var mainmenu = $(this).next('ul');
+                let mainmenu = $(this).next('ul');
                 mainmenu.toggleClass('open');
                 if (mainmenu.hasClass('open')) {
                     mainmenu.show();
@@ -97,7 +78,7 @@ $(document).ready(function () {
                 });
             });
 
-            var multiTg = function () {
+            let multiTg = function () {
                 cssmenu.find(".menu-item-has-children").prepend('<span class="submenu-button"></span>');
                 cssmenu.find('.submenu-button').on('click', function () {
                     $(this).toggleClass('submenu-opened');

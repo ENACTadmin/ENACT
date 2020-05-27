@@ -1,33 +1,36 @@
+<script src="/js/menu1.js"></script>
+<script>
+    AOS.init();
+</script>
+
 <header class="header">
     <div class="header__content header__content--fluid-width">
         <a class="header__logo-title" href="/">ENACT</a>
         <nav class="header__menu">
             <ul>
                 <li>
-                    <a class="header-link" id="header-link" href="/">HOME</a>
+                    <a class="header-link" id="header-link" href="/" data-aos="fade-left">HOME</a>
                 </li>
-
-                <% if (loggedIn) { %>
                 <li>
-                    <a class="header-link" id="header-link" href="/courseFunction">Courses</a>
-                    <ul class="sub-menu">
-                        <li>
-                            <% if (locals.status === "admin" || locals.status === "faculty") { %>
-                            <a class="header-link" href="/createCourse">Create a course</a>
-                            <% } %>
-                        </li>
-                        <li>
-                            <a class="header-link" href="/joinACourse">Join a course</a>
-                        </li>
-                    </ul>
+                    <% if (loggedIn) { %>
+                        <a class="header-link" id="header-link" href="/courseFunction" data-aos="fade-left">Courses</a>
+                        <ul class="sub-menu">
+                            <li>
+                                <% if (locals.status === "admin" || locals.status === "faculty") { %>
+                                    <a class="header-link" href="/createCourse">Create a course</a>
+                                <% } %>
+                            </li>
+                            <li>
+                                <a class="header-link" href="/joinACourse">Join a course</a>
+                            </li>
+                        </ul>
+                    <% } else { %>
+                    <% } %>
                 </li>
-                <% } else { %>
-                <% } %>
-
 
                 <% if (loggedIn) { %>
                     <li>
-                        <a class="header-link" id="header-link" href="/userFunction">Settings</a>
+                        <a class="header-link" id="header-link" href="/userFunction" data-aos="fade-left">Settings</a>
                         <ul class="sub-menu">
                             <li>
                                 <a class="header-link" href="/myProfile/<%= user._id %>">View/edit profile</a>
@@ -42,12 +45,11 @@
                 <% } else { %>
                 <% } %>
 
-
                 <li class="header__btn header__btn--login">
                     <% if (!loggedIn) { %>
-                        <a class="btn btn-outline-dark" href="/auth/google">Login with Google</a>
+                        <a class="btn btn-outline-dark" href="/auth/google" data-aos="fade-left">Login with Google</a>
                     <% } else { %>
-                        <a class="btn btn-outline-dark" href="/logout">Logout</a>
+                        <a class="btn btn-outline-dark" href="/logout" data-aos="fade-left">Logout</a>
                     <% } %>
                 </li>
 

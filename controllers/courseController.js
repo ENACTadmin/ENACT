@@ -11,6 +11,7 @@ const CourseMember = require('../models/CourseMember');
  * @param next
  * @returns {Promise<void>}
  */
+let coursePin;
 exports.createNewClass = async (req, res, next) => {
     //console.dir(req.body)
     if (false && !req.user.googleemail.endsWith("edu") && res.locals.status !== 'faculty') {
@@ -21,7 +22,7 @@ exports.createNewClass = async (req, res, next) => {
         return
     }
     try {
-        let coursePin = await getCoursePin()
+        coursePin = await getCoursePin()
         //console.dir(req.user)
         let newCourse = new Course(
             {
@@ -37,15 +38,34 @@ exports.createNewClass = async (req, res, next) => {
                 officeHourLocation: req.body.officeHourLocation
             }
         )
-        newCourse.save()
-        res.redirect('/showCourses')
+        // await until the newCourse is saved properly
+        await newCourse.save()
+        next()
     } catch (e) {
         next(e)
     }
 }
 
-
-
+/**
+ * add created course to the list of owned courses
+ * @param req
+ * @param res
+ * @param next
+ * @returns {Promise<void>}
+ */
+exports.addToOwnedCourses = async (req, res, next) => {
+    try {
+        console.log("in add to owned")
+        let courseInfo = await Course.findOne({
+            coursePin: coursePin
+        })
+        await req.user.ownedCourses.push(courseInfo._id)
+        await req.user.save()
+        res.redirect('/showOneCourse/' + courseInfo._id)
+    } catch (e) {
+        next(e)
+    }
+}
 
 /**
  * get course pin, a 7-digit randomly generated number
@@ -73,15 +93,13 @@ exports.showOwnedCourses = async (req, res, next) => {
     // res.locals.coursesTAing = []
     //
     let registeredCourses =
-        await  CourseMember.find({studentId:req.user._id},'courseId')
-    res.locals.registeredCourses = registeredCourses.map((x)=>x.courseId)
+        await CourseMember.find({studentId: req.user._id}, 'courseId')
+    res.locals.registeredCourses = registeredCourses.map((x) => x.courseId)
 
     let coursesTaken =
-        await Course.find({_id:{$in:res.locals.registeredCourses}},'courseName semester ownerId')
+        await Course.find({_id: {$in: res.locals.registeredCourses}}, 'courseName semester ownerId')
     res.locals.coursesTaken = coursesTaken
 
-
-    // res.locals.title = "PRA"
     res.render('showCourses');
 }
 
