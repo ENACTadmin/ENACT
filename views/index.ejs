@@ -13,23 +13,23 @@
                 <% if (loggedIn) { %>
                     <div class="form-demo" data-aos="fade-up">
                         <a href="/showCourses"><input type="submit" name="submit" class="form-demo__submit"
-                                                      value="OWNED COURSES"></a>
+                                                      value="MY COURSES"></a>
                     </div>
                     <br>
+                    <!--allow admin or faculty to create courses-->
                     <% if (status === 'admin' || status === 'faculty') { %>
-                        <div class="form-demo" data-aos="fade-up"  data-aos-delay="100">
+                        <div class="form-demo" data-aos="fade-up" data-aos-delay="100">
                             <a href="/createCourse"><input type="submit" name="submit" class="form-demo__submit"
                                                            value="CREATE A COURSE"></a>
                         </div>
-                    <% } %>
-                    <% if (status != 'admin' && status != 'faculty') { %>
-                        <div class="form-demo" data-aos="fade-up"  data-aos-delay="100">
+                    <% } else { %>
+                        <div class="form-demo" data-aos="fade-up" data-aos-delay="100">
                             <a href="/JoinACourse"><input type="submit" name="submit" class="form-demo__submit"
                                                           value="JOIN A COURSE"></a>
                         </div>
                     <% } %>
                     <br>
-                    <div class="form-demo" data-aos="fade-up"  data-aos-delay="200">
+                    <div class="form-demo" data-aos="fade-up" data-aos-delay="200">
                         <a href="/forumFunction"><input type="submit" name="submit" class="form-demo__submit"
                                                         value="FIND SOME RESOURCES"></a>
                     </div>
@@ -97,12 +97,12 @@
                     Test sample
                 </div>
             </div>
-            <div class="partners__content swiper-wrapper" data-aos="fade-up"  data-aos-delay="100">
+            <div class="partners__content swiper-wrapper" data-aos="fade-up" data-aos-delay="100">
                 <div class="partners__slide swiper-slide">
                     Test sample
                 </div>
             </div>
-            <div class="partners__content swiper-wrapper" data-aos="fade-up"  data-aos-delay="200">
+            <div class="partners__content swiper-wrapper" data-aos="fade-up" data-aos-delay="200">
                 <div class="partners__slide swiper-slide">
                     Test sample
                 </div>
@@ -130,14 +130,14 @@
                 </p>
             </div>
 
-            <div class="partners__slide__grey grid__item" data-aos="fade-up"  data-aos-delay="100">
+            <div class="partners__slide__grey grid__item" data-aos="fade-up" data-aos-delay="100">
                 <h3 class="grid__title"><span>TO BE REPLACED</span></h3>
                 <p class="grid__text">
                     TO BE REPLACED TEXT
                 </p>
             </div>
 
-            <div class="partners__slide__grey grid__item" data-aos="fade-up"  data-aos-delay="200">
+            <div class="partners__slide__grey grid__item" data-aos="fade-up" data-aos-delay="200">
                 <h3 class="grid__title"><span>TO BE REPLACED</span></h3>
                 <p class="grid__text">
                     TO BE REPLACED TEXT
@@ -147,7 +147,6 @@
         <div class="clear"></div>
     </div>
 </section>
-
 
 
 <%- include('footer'); -%>
