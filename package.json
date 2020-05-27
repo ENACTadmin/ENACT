@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "aos": "^2.3.4",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.5.0",
     "connect-flash": "^0.1.1",
@@ -16,6 +17,7 @@
     "express-session": "^1.17.1",
     "flash": "^1.1.0",
     "http-errors": "^1.7.3",
+    "jquery": "^3.5.1",
     "mongoose": "^5.9.15",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.4",

@@ -4,8 +4,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const flash = require('connect-flash');
-session = require("express-session");
-bodyParser = require("body-parser");
+const session = require("express-session");
+const bodyParser = require("body-parser");
 
 // Models!
 const Course = require('./models/Course');
@@ -92,8 +92,7 @@ app.use((req, res, next) => {
             // set appropriate status
             if (facultyList.includes(googleEmail)) {
                 res.locals.status = "faculty"
-            }
-            else if (adminList.includes(googleEmail)) {
+            } else if (adminList.includes(googleEmail)) {
                 res.locals.status = "admin"
             }
             console.log("user has been Authenticated. Status: " + res.locals.status)
@@ -148,7 +147,8 @@ app.get('/createCourse',
 
 // rename this to /createCourse and update the ejs form
 app.post('/createNewCourse',
-    courseController.createNewClass
+    courseController.createNewClass,
+    courseController.addToOwnedCourses
 )
 
 app.get('/showCourses',
