@@ -186,7 +186,24 @@ app.post('/uploadResource/:courseId',
 //*******************************************
 //***********Profile related*****************
 
+//show all profiles from all users
+app.get('/myProfile',
+    (req, res) => {
+        if (res.locals.user.userName === undefined) {
+            res.render('updateProfile')
+        } else {
+            res.render('myProfile')
+        }
+    }
+)
 
+//show all profiles from all users
+app.post('/updateProfile',
+    profileController.updateProfile
+)
+
+//*******************************************
+//*************Error related*****************
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     next(createError(404));
