@@ -11,6 +11,7 @@ const bodyParser = require("body-parser");
 const Course = require('./models/Course');
 const Resource = require('./models/Resource');
 const User = require('./models/User');
+const Faculty = require('./models/Faculty')
 
 //*******************************************
 //***********Controllers*********************
@@ -77,28 +78,26 @@ app.use(bodyParser.urlencoded({extended: false}));
 //*******************************************
 //***********Login authorization*************
 
-let facultyList = ["nicolezhang@brandeis.edu"]
 let adminList = ["bbdhy96@gmail.com"]
 // here is where we check and assign user's status
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
     res.locals.title = "ENACT";
     res.locals.loggedIn = false;
     res.locals.status = "student"
     if (req.isAuthenticated()) {
         let googleEmail = req.user.googleemail
-        if (googleEmail.endsWith("edu") || googleEmail.endsWith("@gmail.com")) {
-            res.locals.user = req.user;
-            res.locals.loggedIn = true;
-            // set appropriate status
-            if (facultyList.includes(googleEmail)) {
-                res.locals.status = "faculty"
-            } else if (adminList.includes(googleEmail)) {
-                res.locals.status = "admin"
-            }
-            console.log("user has been Authenticated. Status: " + res.locals.status)
+        res.locals.user = req.user;
+        res.locals.loggedIn = true;
+        // set appropriate status
+        if (adminList.includes(googleEmail)) {
+            res.locals.status = 'admin'
         } else {
-            res.locals.loggedIn = false
+            let user = await Faculty.findOne({email: googleEmail})
+            if (user) {
+                res.locals.status = user.status
+            }
         }
+        console.log("user has been Authenticated. Status: " + res.locals.status)
     }
     next()
 });
@@ -201,6 +200,16 @@ app.get('/myProfile',
 app.post('/updateProfile',
     profileController.updateProfile
 )
+
+app.get('/assignFaculty',
+    profileController.loadFaculty
+)
+
+
+app.post('/assignNewFaculty',
+    profileController.assignFaculty
+)
+
 
 //*******************************************
 //*************Error related*****************
