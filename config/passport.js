@@ -56,7 +56,7 @@ module.exports = function (passport) {
                         return done(err);
 
                     if (user) {
-                        console.log(`the user was found ${user}`);
+                        // console.log(`the user was found ${user}`);
                         // if a user is found, log them in
                         return done(null, user);
                     } else {

@@ -40,6 +40,11 @@
                                     <a class="header-link" href="/showProfiles">View all profiles</a>
                                 <% } %>
                             </li>
+                            <li>
+                                <% if (locals.status === "admin") { %>
+                                    <a class="header-link" href="/assignFaculty">Set up a new faculty</a>
+                                <% } %>
+                            </li>
                         </ul>
                     </li>
                 <% } else { %>
@@ -52,8 +57,6 @@
                         <a class="btn btn-outline-dark" href="/logout" data-aos="fade-left">Logout</a>
                     <% } %>
                 </li>
-
-
             </ul>
         </nav>
     </div>
