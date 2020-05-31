@@ -13,12 +13,13 @@
 
 <section class="section section__grey">
     <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-sm-12"></div>
-            <div class="col-md-4 col-sm-12">
-                <% if (loggedIn) { %>
-                    <% console.log("params: " + req.params.courseId) %>
-                    <form method="post" action="/uploadResource/<%= req.params.courseId %>">
+        <form method="post" action="/uploadResource/<%= req.params.courseId %>">
+
+            <div class="row">
+                <div class="col-md-3 col-sm-12"></div>
+                <div class="col-md-6 col-sm-12">
+                    <% if (loggedIn) { %>
+                        <% console.log("params: " + req.params.courseId) %>
                         <div class="input-group-prepend">
                             <span class="input-group-text" style="width: 180px">Resource Name</span>
                             <input type="text" class="form-control" name="resourceName"
@@ -115,47 +116,56 @@
                             <input type="text" class="form-control" name="yearOfCreation"
                                    placeholder="e.g. 2018">
                         </div>
-                        <hr>
-                        <h3>Tag the resource</h3>
-                        <div class="input-group" style="width: 200px; padding-bottom: 10px">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <input type="checkbox" value="tagA"><br>
+
+
+                </div>
+
+                <div class="w-100"></div>
+                <div class="col-md-3 col-sm-12"></div>
+                <div class="col-md-6 col-sm-12">
+                    <hr>
+                    <h3>Tag the resource</h3>
+                </div>
+                <div class="w-100"></div>
+
+                <% for (let i = 0; i < tags.length;) { %>
+                    <div class="col-md-3"></div>
+                    <% for (let j = 0; i < tags.length && j < 2; i++, j++) { %>
+                        <div class="col-md-3 col-sm-12 text-md-right">
+                            <div class="input-group" style="padding-bottom: 10px">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" value="<%= tags[i] %>"><br>
+                                    </div>
                                 </div>
+                                <input disabled type="text" class="form-control"
+                                       aria-label="Text input with checkbox" value="<%= tags[i] %>">
                             </div>
-                            <input disabled type="text" class="form-control"
-                                   aria-label="Text input with checkbox" value="Tag A">
                         </div>
-                        <div class="input-group" style="width: 200px; padding-bottom: 10px">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <input type="checkbox" value="tagB"><br>
-                                </div>
-                            </div>
-                            <input disabled type="text" class="form-control"
-                                   aria-label="Text input with checkbox" value="Tag B">
-                        </div>
-                        <div class="input-group" style="width: 200px; padding-bottom: 10px">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <input type="checkbox" value="tagC"><br>
-                                </div>
-                            </div>
-                            <input disabled type="text" class="form-control"
-                                   aria-label="Text input with checkbox" value="Tag C">
-                        </div>
-                        <input hidden id="tagsToReturn" type="text" class="form-control" name="tags" value="">
-                        <br>
-                        <input type="submit" name="submit" class="btn btn-outline-dark" value="Upload">
-                    </form>
-                <% } else { %>
-                    <div class="text-center partners__text">
-                        <h3>Please login to view this page</h3>
-                    </div>
+                    <% } %>
+                    <div class="w-100"></div>
                 <% } %>
+
+                <input hidden id="tagsToReturn" type="text" class="form-control" name="tags" value="">
+                <br>
+                <div class="w-100"></div>
+                <div class="col-md-3 col-sm-12"></div>
+                <div class="col-md-6 col-sm-12">
+                    <input type="submit" name="submit" class="btn btn-outline-dark" value="Upload">
+                </div>
             </div>
-        </div>
+
+            <% } else { %>
+                <div class="text-center partners__text">
+                    <h3>Please login to view this page</h3>
+                </div>
+            <% } %>
     </div>
+    </div>
+    </form>
+
+    </div>
+
 </section>
 
 <script>

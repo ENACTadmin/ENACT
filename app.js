@@ -174,13 +174,47 @@ app.post('/joinCourse',
 
 app.get('/uploadToCourse/:courseId',
     (req, res) => {
+        let tags = ['agriculture'
+            , 'arts and culture'
+            , 'cannabis'
+            , 'consumer protection'
+            , 'COVID-19'
+            , 'criminal justice'
+            , 'disability'
+            , 'education'
+            , 'elderly'
+            , 'energy'
+            , 'environment/climate change'
+            , 'gun control'
+            , 'healthcare'
+            , 'higher education'
+            , 'housing and homelessness'
+            , 'immigration'
+            , ' labor'
+            , 'LGBTQ+'
+            , 'mental health'
+            , 'opioids'
+            , 'public health'
+            , 'public safety'
+            , 'race'
+            , 'substance use and recovery'
+            , 'taxes'
+            , 'technology'
+            , 'tourism'
+            , 'transportation'
+            , 'veterans'
+            , 'violence and sexual assault'
+            , 'voting'
+            , 'women and gender']
         res.render('uploadToCourse', {
-            req: req
+            req: req,
+            tags: tags
         })
     })
 
 app.post('/uploadResource/:courseId',
-    resourceController.uploadResource)
+    resourceController.uploadResource
+)
 
 //*******************************************
 //***********Profile related*****************
@@ -197,6 +231,21 @@ app.get('/myProfile',
 )
 
 //show all profiles from all users
+app.get('/showProfile/:id',
+    profileController.findOneUser
+)
+
+
+app.get('/editMyProfile',
+    (req, res) => {
+        res.render('updateProfile')
+    })
+
+app.get('/showAllProfiles',
+    profileController.showAllProfiles
+)
+
+//show all profiles from all users
 app.post('/updateProfile',
     profileController.updateProfile
 )
@@ -204,7 +253,6 @@ app.post('/updateProfile',
 app.get('/assignFaculty',
     profileController.loadFaculty
 )
-
 
 app.post('/assignNewFaculty',
     profileController.assignFaculty
