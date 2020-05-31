@@ -1,0 +1,33 @@
+<%- include('header') -%>
+<%- include('navbar') -%>
+
+<section class="section section__grey">
+    <div class="section__content section__content--full-width">
+        <div class="jumbotron masthead text-center">
+            <div class="section__title section__title--centered">
+                All users are here
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section__grey">
+    <div class="container">
+        <ul class="list-group">
+            <% for(i = 0; i < profiles.length; i++){ %>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm">
+                            UserName: <a href="/showProfile/<%= profiles[i]._id %>"><%= profiles[i].userName %></a>
+                        </div>
+                        <div class="col-sm">
+                            User Email: <%= profiles[i].googleemail %>
+                        </div>
+                    </div>
+                </li>
+            <% } %>
+        </ul>
+    </div>
+</section>
+
+<%- include('footer') -%>

@@ -5,6 +5,19 @@ const CourseMember = require('../models/CourseMember');
 const Faculty = require('../models/Faculty');
 
 
+exports.findOneUser = async (req, res, next) => {
+    let userId = req.params.id
+    try {
+        let userInfo = await User.findOne({_id: userId})
+        res.render('showProfile', {
+            userInfo: userInfo
+        })
+    } catch (e) {
+        next(e)
+    }
+}
+
+
 exports.updateProfile = async (req, res, next) => {
     let userToUpdate = await User.findOne({_id: req.user._id})
     console.log("userInfo: " + JSON.stringify(userToUpdate))
@@ -15,7 +28,7 @@ exports.updateProfile = async (req, res, next) => {
         userToUpdate.phoneNumber = req.body.phoneNumber;
         userToUpdate.bio = req.body.bio;
         await userToUpdate.save()
-        res.render('myProfile')
+        res.redirect('/myProfile')
     } catch (e) {
         next(e)
     }
@@ -66,5 +79,16 @@ exports.loadFaculty = async (req, res, next) => {
         }
     } else {
         res.send("you are not admin in loading!")
+    }
+}
+
+exports.showAllProfiles = async (req, res, next) => {
+    let profiles = await User.find()
+    try {
+        res.render('showAllProfiles', {
+            profiles: profiles
+        })
+    } catch (e) {
+        next(e)
     }
 }

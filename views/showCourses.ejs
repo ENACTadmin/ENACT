@@ -15,58 +15,63 @@
 <section class="section section__grey">
     <div class="container">
         <div class="row">
-            <div class="col-md-4 col-sm-12"></div>
-            <div class="col-md-4 col-sm-12">
+            <div class="col-md-3 col-sm-12"></div>
+            <div class="col-md-6 col-sm-12">
                 <% if (loggedIn) { %>
                     <% if (locals.status === "faculty" || locals.status === "admin") { %>
                         <h2>&nbsp&nbsp&nbsp&nbsp&nbsp&nbspCourses You Are Teaching</h2>
                         <ul>
-                             <div class = "row">
-                             <div class="col-md-4 col-sm-12">Course Name</div>
-                             <div class="col-md-4 col-sm-12">Semester</div><div class="col-md-4 col-sm-12">Course Pin</div>
-                             </div>
-                             <br>
+                            <div class="row">
+                                <div class="col-md-4 col-sm-12">Course Name</div>
+                                <div class="col-md-4 col-sm-12">Semester</div>
+                                <div class="col-md-4 col-sm-12">Course Pin</div>
+                            </div>
+                            <br>
                             <% for(i = 0; i <= coursesOwned.length - 1; i++){ %>
-                            <li>
-                                <div class = "row">
-                                <div class="col-md-4 col-sm-12"><a href="/showOneCourse/<%= coursesOwned[i]._id %>"><%= coursesOwned[i].courseName %></a></div>
-                                <div class="col-md-4 col-sm-12"><%= coursesOwned[i].semester %></div><div class="col-md-4 col-sm-12"><%= coursesOwned[i].coursePin %></div>
-                                </div>
-                            </li>
+                                <li>
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12"><a
+                                                    href="/showOneCourse/<%= coursesOwned[i]._id %>"><%= coursesOwned[i].courseName %></a>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12"><%= coursesOwned[i].semester %></div>
+                                        <div class="col-md-4 col-sm-12"><%= coursesOwned[i].coursePin %></div>
+                                    </div>
+                                </li>
                             <% } %>
                         </ul>
-                    <%}else if(coursesTaken.length>0){%>
+                    <% }else if(coursesTaken.length > 0){ %>
                         <h2>&nbsp&nbsp&nbsp&nbsp&nbsp&nbspCourses You Enrolled In</h2>
                         <ul>
-                             <div class = "row">
-                             <div class="col-md-4 col-sm-12">Course Name</div>
-                             <div class="col-md-4 col-sm-12">Semester</div>
-                             </div>
-                             <br>
+                            <div class="row">
+                                <div class="col-md-4 col-sm-12">Course Name</div>
+                                <div class="col-md-4 col-sm-12">Semester</div>
+                            </div>
+                            <br>
                             <% for(i = 0; i <= coursesTaken.length - 1; i++){ %>
-                            <li>
-                                <div class = "row">
-                                <div class="col-md-4 col-sm-12"><a href="/showOneCourse/<%= coursesTaken[i]._id%>"><%= coursesTaken[i].courseName%></a></div>
-                                <div class="col-md-4 col-sm-12"><%= coursesTaken[i].semester %></div>
-                                </div>
-                            </li>
+                                <li>
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12"><a
+                                                    href="/showOneCourse/<%= coursesTaken[i]._id %>"><%= coursesTaken[i].courseName %></a>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12"><%= coursesTaken[i].semester %></div>
+                                    </div>
+                                </li>
                             <% } %>
                         </ul>
                     <% }else{ %>
-                         <div class="text-center partners__text">
-                                <h3>You didn't create or enroll in any courses</h3>
-                         </div>
-                    <%}%>
+                        <div class="text-center partners__text">
+                            <h3>You didn't create or enroll in any courses</h3>
+                        </div>
+                    <% } %>
                 <% } else { %>
-                <div class="text-center partners__text">
-                    <h3>Please login to view this page</h3>
-                </div>
+                    <div class="text-center partners__text">
+                        <h3>Please login to view this page</h3>
+                    </div>
                 <% } %>
             </div>
         </div>
     </div>
 </section>
-
 
 
 <%- include('footer'); -%>

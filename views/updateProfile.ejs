@@ -18,8 +18,8 @@
 <section class="section section__grey">
     <div class="container">
         <div class="row">
-            <div class="col-md-4 col-sm-12"></div>
-            <div class="col-md-4 col-sm-12">
+            <div class="col-md-3 col-sm-12"></div>
+            <div class="col-md-6 col-sm-12">
                 <!--                <% if (locals.user.profilePicURL) { %>-->
                 <!--                    <img src="<%= locals.user.profilePicURL %>" style="width:300px;">-->
                 <!--                    <br>-->
@@ -27,7 +27,7 @@
                 <!--                    <h4>No profile image uploaded</h4>-->
                 <!--                <% } %>-->
                 <!--                <br>-->
-                <!--                <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#myModal">-->
+                <!--                <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#myModal">-->
                 <!--                    Upload new profile image-->
                 <!--                </button>-->
                 <!--                <br>-->
@@ -41,7 +41,6 @@
                         <input type="text" class="form-control" name="userName" value="<%= locals.user.userName %>">
                     </div>
                     <br>
-
                     <!-- line break -->
                     <!--                    <div class="w-100"></div>-->
                     <!--                    <div class="input-group-prepend">-->
@@ -62,7 +61,8 @@
                     <div class="w-100"></div>
                     <div class="input-group-prepend">
                         <span class="input-group-text" style="width: 180px">Phone Number</span>
-                        <input type="text" class="form-control" name="phoneNumber" value="<%= locals.user.phoneNumber %>">
+                        <input type="text" class="form-control" name="phoneNumber"
+                               value="<%= locals.user.phoneNumber %>">
                     </div>
                     <br>
 
@@ -70,12 +70,11 @@
                     <div class="w-100"></div>
                     <div class="input-group-prepend">
                         <span class="input-group-text" style="width: 180px">Bio</span>
-                        <textarea type="text" class="form-control" name="bio" rows="4"
-                                  value="<%= locals.user.bio %>"></textarea>
+                        <textarea type="text" class="form-control" name="bio" rows="4"><%= locals.user.bio %></textarea>
                     </div>
                     <br>
 
-                    <input type="submit" class="btn btn-outline-primary" value="Save">
+                    <input type="submit" class="btn btn-outline-dark" value="Save">
 
                 </form>
                 <br>
@@ -132,7 +131,7 @@
 <!--                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
 <!--                <form method="POST" action="/save-details">-->
 <!--                    <input type="hidden" id="imageURL" name="imageURL">-->
-<!--                    <input type="submit" class="btn btn-outline-primary" value="Upload">-->
+<!--                    <input type="submit" class="btn btn-outline-dark" value="Upload">-->
 <!--                </form>-->
 <!--            </div>-->
 <!--        </div>-->
