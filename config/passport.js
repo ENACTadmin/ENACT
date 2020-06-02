@@ -12,7 +12,7 @@ const clientID = process.env.clientID || "960287962764-j4nvij4n7tlp1mng142c49kb0
 // const clientSecret = "Qde03Ut985sCMXZpyYNsaN39";
 const clientSecret = process.env.clientSecret || "Qde03Ut985sCMXZpyYNsaN39";
 // const callbackURL = "http://127.0.0.1:3500/login/authorized";
-const callbackURL = process.env.callback_URI || "http://127.0.0.1:3500/login/authorized";
+const callbackURL = process.env.callbackURL || "http://127.0.0.1:3500/login/authorized";
 
 
 module.exports = function (passport) {
