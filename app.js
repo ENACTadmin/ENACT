@@ -79,7 +79,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 //*******************************************
 //***********Login authorization*************
 
-let adminList = ["bbdhy96@gmail.com"]
+let adminList = ["bbdhy96@gmail.com","nicolezhang@brandeis.edu"]
 // here is where we check and assign user's status
 app.use(async (req, res, next) => {
     res.locals.title = "ENACT";
@@ -215,6 +215,14 @@ app.get('/uploadToCourse/:courseId',
 
 app.post('/uploadResource/:courseId',
     resourceController.uploadResource
+)
+
+app.get('/search',
+    (req, res) => res.render('search'))
+
+// rename this to /createCourse and update the ejs form
+app.post('/showResources',
+    resourceController.searchByFilled
 )
 
 //*******************************************

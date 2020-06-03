@@ -5,62 +5,26 @@
     <div class="section__content section__content--full-width">
         <div class="jumbotron masthead text-center">
             <div class="section__title section__title--centered">
-                Resource Upload
+                Find Some Resources
             </div>
+            <h2>Please fill in your requirements and leave others blank</h2>
         </div>
     </div>
 </section>
 
+
 <section class="section section__grey">
     <div class="container">
-        <form method="post" action="/uploadResource/<%= req.params.courseId %>">
+        <div class="row">
+            <div class="col-md-3 col-sm-12"></div>
+            <div class="col-md-6 col-sm-12">
+                <% if (loggedIn) { %>
+                    <form method="post" action="showResources">
 
-            <div class="row">
-                <div class="col-md-3 col-sm-12"></div>
-                <div class="col-md-6 col-sm-12">
-                    <% if (loggedIn) { %>
-                        <% console.log("params: " + req.params.courseId) %>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" style="width: 180px">Resource Name</span>
-                            <input type="text" class="form-control" name="resourceName"
-                                   placeholder="e.g. ENACT Introduction">
-                        </div>
-                        <br>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" style="width: 180px">Description</span>
-                            <textarea type="text" class="form-control" name="resourceDescription" rows="4"
-                                      placeholder="e.g. Detailed description"></textarea>
-                        </div>
-                        <br>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" style="width: 180px">URI</span>
-                            <input type="text" class="form-control" name="uri"
-                                   placeholder="e.g. URI">
-                        </div>
-                        <br>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" style="width: 180px">Resource Type</span>
-                            <select class="form-control" name="resourceType">
-                                <option selected value="null">Choose...</option>
-                                <option value="video">Video</option>
-                                <option value="document">Document</option>
-                                <option>...</option>
-                            </select>
-                        </div>
-                        <br>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" style="width: 180px">Resource Status</span>
-                            <select class="form-control" name="status">
-                                <option selected value="null">Choose...</option>
-                                <option value="public">Open to Public</option>
-                                <option value="privateToStudent">Open to ENACT Students</option>
-                                <option value="privateToProfessor">Open to ENACT Professors</option>
-                            </select>
-                        </div>
-                        <br>
                         <div class="input-group-prepend">
                             <span class="input-group-text" style="width: 180px">State</span>
                             <select class="form-control" name="state">
+                                <option selected value="empty">Choose ...</option>
                                 <option value="AL">Alabama</option>
                                 <option value="AK">Alaska</option>
                                 <option value="AZ">Arizona</option>
@@ -126,68 +90,33 @@
                             <input type="text" class="form-control" name="yearOfCreation"
                                    placeholder="e.g. 2018">
                         </div>
-
-
-                </div>
-
-                <div class="w-100"></div>
-                <div class="col-md-3 col-sm-12"></div>
-                <div class="col-md-6 col-sm-12">
-                    <hr>
-                    <h3>Tag the resource</h3>
-                </div>
-                <div class="w-100"></div>
-
-                <% for (let i = 0; i < tags.length;) { %>
-                    <div class="col-md-3"></div>
-                    <% for (let j = 0; i < tags.length && j < 2; i++, j++) { %>
-                        <div class="col-md-3 col-sm-12 text-md-right">
-                            <div class="input-group" style="padding-bottom: 10px">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <input type="checkbox" value="<%= tags[i] %>"><br>
-                                    </div>
-                                </div>
-                                <input disabled type="text" class="form-control"
-                                       aria-label="Text input with checkbox" value="<%= tags[i] %>">
-                            </div>
+                        <br>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="width: 180px">Resource Status</span>
+                            <% if (status === 'admin' || status === 'faculty') { %>
+                                <select class="form-control" name="status">
+                                    <option selected value="public">Open to Public</option>
+                                    <option value="privateToStudent">Open to ENACT Students</option>
+                                    <option value="privateToProfessor">Open to ENACT Professors</option>
+                                </select>
+                            <% } else { %>
+                                <select class="form-control" name="status">
+                                    <option selected value="public">Open to Public</option>
+                                    <option value="privateToStudent">Open to ENACT Students</option>
+                                </select>
+                            <% } %>
                         </div>
-                    <% } %>
-                    <div class="w-100"></div>
-                <% } %>
-
-                <input hidden id="tagsToReturn" type="text" class="form-control" name="tags" value="">
-                <br>
-                <div class="w-100"></div>
-                <div class="col-md-3 col-sm-12"></div>
-                <div class="col-md-6 col-sm-12">
-                    <input type="submit" name="submit" class="btn btn-outline-dark" value="Upload">
-                </div>
-            </div>
-
-            <% } else { %>
+                        <br>
+                        <input type="submit" name="submit" class="btn btn-outline-dark" value="Search">
+                    </form>
+                <% } else { %>
                 <div class="text-center partners__text">
                     <h3>Please login to view this page</h3>
                 </div>
-            <% } %>
+                <% } %>
+            </div>
+        </div>
     </div>
-    </div>
-    </form>
-
-    </div>
-
 </section>
-
-<script>
-    $(document).ready(function () {
-        let checkboxes = $(":checkbox");
-        checkboxes.on('change', function () {
-            let string = checkboxes.filter(":checked").map(function () {
-                return this.value;
-            }).get().join(", ");
-            $('#tagsToReturn').val(string);
-        });
-    });
-</script>
 
 <%- include('footer'); -%>

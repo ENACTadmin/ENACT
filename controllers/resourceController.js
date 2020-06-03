@@ -45,3 +45,42 @@ exports.loadResources = async (req, res, next) => {
         next(e)
     }
 }
+
+exports.searchByFilled = async (req, res, next) => {
+    let resourceInfo = null
+    try {
+        if(req.body.state == "empty" && req.body.institution == "" && req.body.yearOfCreation == ""){
+            resourceInfo =
+                await Resource.find({status:req.body.status})
+        }else if(req.body.state == "empty" && req.body.institution == ""){
+            resourceInfo =
+                await Resource.find({status: req.body.status,yearOfCreation:req.body.yearOfCreation})
+        }else if(req.body.state == "empty" && req.body.yearOfCreation == ""){
+            resourceInfo =
+                await Resource.find({status: req.body.status,institution:req.body.institution})
+        }else if(req.body.institution == "" && req.body.yearOfCreation == ""){
+            resourceInfo =
+                await Resource.find({status: req.body.status,state:req.body.state})
+        }else if(req.body.state == "empty"){
+            resourceInfo =
+                await Resource.find({status: req.body.status,yearOfCreation:req.body.yearOfCreation,institution:req.body.institution})
+        }else if(req.body.yearOfCreation == ""){
+            resourceInfo =
+                await Resource.find({status: req.body.status,institution:req.body.institution,state:req.body.state})
+        }else if(req.body.institution == ""){
+            resourceInfo =
+                await Resource.find({status: req.body.status,state:req.body.state,yearOfCreation:req.body.yearOfCreation})
+        }
+        else{
+            resourceInfo =
+                await Resource.find({status: req.body.status,state:req.body.state,yearOfCreation:req.body.yearOfCreation,institution:req.body.institution})
+        }
+
+
+        res.locals.resourceInfo = resourceInfo
+
+        res.render('showResources');
+    }catch(e){
+        next(e)
+    }
+}
