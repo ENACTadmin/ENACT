@@ -79,8 +79,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 //*******************************************
 //***********Login authorization*************
 
-let adminList = ["bbdhy96@gmail.com","nicolezhang@brandeis.edu"]
+let adminList = ["bbdhy96@gmail.com", "nicolezhang@brandeis.edu", "stimell@brandeis.edu", "djw@brandeis.edu"]
 // here is where we check and assign user's status
+// this runs every time when a req is received
 app.use(async (req, res, next) => {
     res.locals.title = "ENACT";
     res.locals.loggedIn = false;
@@ -92,11 +93,20 @@ app.use(async (req, res, next) => {
         // set appropriate status
         if (adminList.includes(googleEmail)) {
             res.locals.status = 'admin'
+            // let courseNames = Course.find({ownerId: req.user._id}, "courseName")
+            // res.locals.courseNames = courseNames
         } else {
             let user = await Faculty.findOne({email: googleEmail})
             if (user) {
                 res.locals.status = user.status
+                // let courseNames = Course.find({ownerId: req.user._id}, "courseName")
+                // res.locals.courseNames = courseNames
             }
+            // else {
+            //         let enrolledCourses = req.user.enrolledCourses
+            //         let courseNames = Course.find({_id: {$in: enrolledCourses}}, "courseName")
+            //         res.locals.courseNames = courseNames
+            //     }
         }
         console.log("user has been Authenticated. Status: " + res.locals.status)
     }
@@ -142,6 +152,7 @@ app.get('/', function (req, res) {
 
 //*******************************************
 //***********Course related******************
+
 app.get('/createCourse',
     (req, res) => res.render('createCourse'))
 
@@ -152,7 +163,9 @@ app.post('/createNewCourse',
 )
 
 app.get('/showCourses',
-    courseController.showOwnedCourses
+    courseController.showOwnedCourses,
+    (req, res) =>
+        res.render('showCourses')
 )
 
 app.get('/showOneCourse/:courseId',
@@ -220,7 +233,6 @@ app.post('/uploadResource/:courseId',
 app.get('/search',
     (req, res) => res.render('search'))
 
-// rename this to /createCourse and update the ejs form
 app.post('/showResources',
     resourceController.searchByFilled
 )
@@ -270,6 +282,7 @@ app.post('/assignNewFaculty',
 
 //*******************************************
 //*************Error related*****************
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     next(createError(404));

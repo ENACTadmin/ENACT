@@ -28,6 +28,7 @@ exports.createNewClass = async (req, res, next) => {
             {
                 courseName: req.body.courseName,
                 ownerId: req.user._id,
+                instructor: req.user.userName,
                 coursePin: coursePin,
                 semester: req.body.semester,
                 // city: req.body.city,
@@ -87,20 +88,26 @@ async function getCoursePin() {
 exports.showOwnedCourses = async (req, res, next) => {
     if (!req.user)
         next()
-    let coursesOwned =
-        await Course.find({ownerId: req.user._id}, 'courseName semester coursePin')
-    res.locals.coursesOwned = coursesOwned
-    // res.locals.coursesTAing = []
-    //
-    let registeredCourses =
-        await CourseMember.find({studentId: req.user._id}, 'courseId')
-    res.locals.registeredCourses = registeredCourses.map((x) => x.courseId)
+    try {
+        let coursesOwned =
+            await Course.find({ownerId: req.user._id}, 'courseName semester coursePin')
+        console.log("found course owned: " + coursesOwned)
+        res.locals.coursesOwned = coursesOwned
 
-    let coursesTaken =
-        await Course.find({_id: {$in: res.locals.registeredCourses}}, 'courseName semester ownerId')
-    res.locals.coursesTaken = coursesTaken
+        // list of enrolled courses
+        let registeredCourses =
+            await CourseMember.find({studentId: req.user._id}, 'courseId')
 
-    res.render('showCourses');
+        res.locals.registeredCourses = registeredCourses.map((x) => x.courseId)
+
+        let coursesTaken =
+            await Course.find({_id: {$in: res.locals.registeredCourses}}, 'courseName semester instructor')
+        res.locals.coursesTaken = coursesTaken
+        next()
+    } catch (e) {
+        next(e)
+    }
+
 }
 
 exports.showOneCourse = async (req, res, next) => {

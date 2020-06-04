@@ -16,7 +16,10 @@
                         <a class="header-link" id="header-link" href="#" data-aos="fade-left">Courses</a>
                         <ul class="sub-menu">
                             <li>
-                                <% if (locals.status === "admin" || locals.status === "faculty") { %>
+                                <a class="header-link" href="/showCourses">My courses</a>
+                            </li>
+                            <li>
+                                <% if (status === "admin" || status === "faculty") { %>
                                     <a class="header-link" href="/createCourse">Create a course</a>
                                 <% } %>
                             </li>
@@ -29,12 +32,12 @@
                 </li>
                 <li>
                     <% if (loggedIn) { %>
-                    <a class="header-link" id="header-link" href="#" data-aos="fade-left">Resources</a>
-                    <ul class="sub-menu">
-                        <li>
-                            <a class="header-link" href="/search">Find some resources</a>
-                        </li>
-                    </ul>
+                        <a class="header-link" id="header-link" href="#" data-aos="fade-left">Resources</a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a class="header-link" href="/search">Find some resources</a>
+                            </li>
+                        </ul>
                     <% } else { %>
                     <% } %>
                 </li>
@@ -47,12 +50,12 @@
                                 <a class="header-link" href="/myProfile">View/edit profile</a>
                             </li>
                             <li>
-                                <% if (locals.status === "admin") { %>
+                                <% if (status === "admin") { %>
                                     <a class="header-link" href="/showAllProfiles">View all profiles</a>
                                 <% } %>
                             </li>
                             <li>
-                                <% if (locals.status === "admin") { %>
+                                <% if (status === "admin") { %>
                                     <a class="header-link" href="/assignFaculty">Set up a new faculty</a>
                                 <% } %>
                             </li>
@@ -63,7 +66,7 @@
 
                 <li class="header__btn header__btn--login">
                     <% if (!loggedIn) { %>
-                        <a class="btn btn-outline-dark" href="/auth/google" data-aos="fade-left">Login with Google</a>
+                        <a class="btn btn-outline-dark" href="/auth/google" data-aos="fade-left">ENACT member login</a>
                     <% } else { %>
                         <a class="btn btn-outline-dark" href="/logout" data-aos="fade-left">Logout</a>
                     <% } %>
