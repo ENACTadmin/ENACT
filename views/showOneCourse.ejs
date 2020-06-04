@@ -1,5 +1,6 @@
 <%- include('header'); -%>
 <%- include('navbar'); -%>
+
 <section class="section">
     <div class="section__content section__content--full-width">
         <div class="jumbotron masthead text-center">
@@ -17,7 +18,7 @@
             <div class="row">
                 <% if (loggedIn) { %>
                     <!--left information bar-->
-                    <div class="col-md-3">
+                    <div class="col-md-3" data-aos="fade-right">
                         <div class="card">
                             <div class="card-header">
                                 <b>General Information</b>
@@ -45,7 +46,7 @@
                             </div>
                         </div>
                         <br>
-                        <div class="card">
+                        <div class="card" data-aos="fade-right" data-aos-delay="100">
                             <div class="card-header">
                                 <b>Tools</b>
                             </div>
@@ -68,7 +69,7 @@
                                             <a href="/uploadToCourse/<%= courseInfo._id %>">Upload Resources</a></li>
                                         <li class="list-group-item borderless"
                                             style="padding: 0 0 3px 0">
-                                            <a href="#">Search Resources</a></li>
+                                            <a href="/search">Search Resources</a></li>
                                     </ul>
                                 </div>
                             </div>

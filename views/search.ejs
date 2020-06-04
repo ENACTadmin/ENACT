@@ -7,7 +7,7 @@
             <div class="section__title section__title--centered">
                 Find Some Resources
             </div>
-            <h2>Please fill in your requirements and leave others blank</h2>
+            <h4>Please fill in your requirements and leave others blank</h4>
         </div>
     </div>
 </section>
@@ -20,7 +20,6 @@
             <div class="col-md-6 col-sm-12">
                 <% if (loggedIn) { %>
                     <form method="post" action="showResources">
-
                         <div class="input-group-prepend">
                             <span class="input-group-text" style="width: 180px">State</span>
                             <select class="form-control" name="state">
@@ -91,28 +90,22 @@
                                    placeholder="e.g. 2018">
                         </div>
                         <br>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" style="width: 180px">Resource Status</span>
-                            <% if (status === 'admin' || status === 'faculty') { %>
+                        <% if (status === 'admin' || status === 'faculty') { %>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="width: 180px">Resource Status</span>
                                 <select class="form-control" name="status">
-                                    <option selected value="public">Open to Public</option>
-                                    <option value="privateToStudent">Open to ENACT Students</option>
-                                    <option value="privateToProfessor">Open to ENACT Professors</option>
+                                    <option selected value="public">Open to everyone</option>
+                                    <option value="privateToProfessor">Open to ENACT professors</option>
                                 </select>
-                            <% } else { %>
-                                <select class="form-control" name="status">
-                                    <option selected value="public">Open to Public</option>
-                                    <option value="privateToStudent">Open to ENACT Students</option>
-                                </select>
-                            <% } %>
-                        </div>
-                        <br>
+                            </div>
+                            <br>
+                        <% } %>
                         <input type="submit" name="submit" class="btn btn-outline-dark" value="Search">
                     </form>
                 <% } else { %>
-                <div class="text-center partners__text">
-                    <h3>Please login to view this page</h3>
-                </div>
+                    <div class="text-center partners__text">
+                        <h3>Please login to view this page</h3>
+                    </div>
                 <% } %>
             </div>
         </div>

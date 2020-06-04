@@ -48,16 +48,23 @@
                             </select>
                         </div>
                         <br>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" style="width: 180px">Resource Status</span>
-                            <select class="form-control" name="status">
-                                <option selected value="null">Choose...</option>
-                                <option value="public">Open to Public</option>
-                                <option value="privateToStudent">Open to ENACT Students</option>
-                                <option value="privateToProfessor">Open to ENACT Professors</option>
-                            </select>
-                        </div>
-                        <br>
+                        <% if (status === 'admin' || status === 'faculty') { %>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="width: 180px">Resource Status</span>
+                                <select class="form-control" name="status">
+                                    <option value="public">Open to everyone</option>
+                                    <option value="privateToProfessor">Open to ENACT professors</option>
+                                </select>
+                            </div>
+                            <br>
+                        <% } else { %>
+                            <div hidden class="input-group-prepend">
+                                <span class="input-group-text" style="width: 180px">Resource Status</span>
+                                <select class="form-control" name="status">
+                                    <option selected value="public">Open to everyone</option>
+                                </select>
+                            </div>
+                        <% } %>
                         <div class="input-group-prepend">
                             <span class="input-group-text" style="width: 180px">State</span>
                             <select class="form-control" name="state">
@@ -127,7 +134,6 @@
                                    placeholder="e.g. 2018">
                         </div>
 
-
                 </div>
 
                 <div class="w-100"></div>
@@ -170,9 +176,7 @@
                     <h3>Please login to view this page</h3>
                 </div>
             <% } %>
-    </div>
-    </div>
-    </form>
+        </form>
 
     </div>
 

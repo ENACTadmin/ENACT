@@ -5,6 +5,7 @@ const objectID = mongoose.Schema.Types.ObjectID;
 
 const courseSchema = Schema({
     ownerId: objectID,
+    instructor: String,
     courseName: String,
     coursePin: String, // pin number to join the class
     tas: [objectID],
