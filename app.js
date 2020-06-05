@@ -93,20 +93,19 @@ app.use(async (req, res, next) => {
         // set appropriate status
         if (adminList.includes(googleEmail)) {
             res.locals.status = 'admin'
-            // let courseNames = Course.find({ownerId: req.user._id}, "courseName")
-            // res.locals.courseNames = courseNames
+            let courseInfoSet = await Course.find({ownerId: req.user._id})
+            res.locals.courseInfoSet = courseInfoSet
         } else {
             let user = await Faculty.findOne({email: googleEmail})
             if (user) {
                 res.locals.status = user.status
-                // let courseNames = Course.find({ownerId: req.user._id}, "courseName")
-                // res.locals.courseNames = courseNames
+                let courseInfoSet = await Course.find({ownerId: req.user._id})
+                res.locals.courseInfoSet = courseInfoSet
+            } else {
+                let enrolledCourses = req.user.enrolledCourses
+                let courseInfoSet = await Course.find({_id: {$in: enrolledCourses}})
+                res.locals.courseInfoSet = courseInfoSet
             }
-            // else {
-            //         let enrolledCourses = req.user.enrolledCourses
-            //         let courseNames = Course.find({_id: {$in: enrolledCourses}}, "courseName")
-            //         res.locals.courseNames = courseNames
-            //     }
         }
         console.log("user has been Authenticated. Status: " + res.locals.status)
     }
@@ -143,10 +142,7 @@ app.get('/login/authorized',
 
 //we can use this or the index router to handle req
 app.get('/', function (req, res) {
-    res.render('index', {
-        req: req,
-        user: req.user
-    })
+    res.render('index')
 });
 
 
@@ -163,7 +159,6 @@ app.post('/createNewCourse',
 )
 
 app.get('/showCourses',
-    courseController.showOwnedCourses,
     (req, res) =>
         res.render('showCourses')
 )
@@ -186,40 +181,41 @@ app.post('/joinCourse',
 //*******************************************
 //***********Resource related****************
 
+let tags = ['agriculture'
+    , 'arts and culture'
+    , 'cannabis'
+    , 'consumer protection'
+    , 'COVID-19'
+    , 'criminal justice'
+    , 'disability'
+    , 'education'
+    , 'elderly'
+    , 'energy'
+    , 'environment/climate change'
+    , 'gun control'
+    , 'healthcare'
+    , 'higher education'
+    , 'housing and homelessness'
+    , 'immigration'
+    , ' labor'
+    , 'LGBTQ+'
+    , 'mental health'
+    , 'opioids'
+    , 'public health'
+    , 'public safety'
+    , 'race'
+    , 'substance use and recovery'
+    , 'taxes'
+    , 'technology'
+    , 'tourism'
+    , 'transportation'
+    , 'veterans'
+    , 'violence and sexual assault'
+    , 'voting'
+    , 'women and gender']
+
 app.get('/uploadToCourse/:courseId',
     (req, res) => {
-        let tags = ['agriculture'
-            , 'arts and culture'
-            , 'cannabis'
-            , 'consumer protection'
-            , 'COVID-19'
-            , 'criminal justice'
-            , 'disability'
-            , 'education'
-            , 'elderly'
-            , 'energy'
-            , 'environment/climate change'
-            , 'gun control'
-            , 'healthcare'
-            , 'higher education'
-            , 'housing and homelessness'
-            , 'immigration'
-            , ' labor'
-            , 'LGBTQ+'
-            , 'mental health'
-            , 'opioids'
-            , 'public health'
-            , 'public safety'
-            , 'race'
-            , 'substance use and recovery'
-            , 'taxes'
-            , 'technology'
-            , 'tourism'
-            , 'transportation'
-            , 'veterans'
-            , 'violence and sexual assault'
-            , 'voting'
-            , 'women and gender']
         res.render('uploadToCourse', {
             req: req,
             tags: tags
@@ -235,6 +231,20 @@ app.get('/search',
 
 app.post('/showResources',
     resourceController.searchByFilled
+)
+
+app.get('/facultyExclusive',
+    resourceController.loadAllFacultyResources
+)
+
+app.get('/uploadToFaculty',
+    (req, res) => res.render('uploadToFaculty', {
+        tags: tags
+    })
+)
+
+app.post('/uploadToFacultyExclusive',
+    resourceController.uploadToFacultyExclusive
 )
 
 //*******************************************

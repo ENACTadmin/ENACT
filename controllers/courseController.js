@@ -85,40 +85,51 @@ async function getCoursePin() {
     return coursePin
 }
 
-exports.showOwnedCourses = async (req, res, next) => {
-    if (!req.user)
-        next()
-    try {
-        let coursesOwned =
-            await Course.find({ownerId: req.user._id}, 'courseName semester coursePin')
-        console.log("found course owned: " + coursesOwned)
-        res.locals.coursesOwned = coursesOwned
-
-        // list of enrolled courses
-        let registeredCourses =
-            await CourseMember.find({studentId: req.user._id}, 'courseId')
-
-        res.locals.registeredCourses = registeredCourses.map((x) => x.courseId)
-
-        let coursesTaken =
-            await Course.find({_id: {$in: res.locals.registeredCourses}}, 'courseName semester instructor')
-        res.locals.coursesTaken = coursesTaken
-        next()
-    } catch (e) {
-        next(e)
-    }
-
-}
+// exports.showOwnedCourses = async (req, res, next) => {
+//     if (!req.user)
+//         next()
+//     try {
+//         let coursesOwned =
+//             await Course.find({ownerId: req.user._id}, 'courseName semester coursePin')
+//         console.log("found course owned: " + coursesOwned)
+//         res.locals.coursesOwned = coursesOwned
+//
+//         // list of enrolled courses
+//         let registeredCourses =
+//             await CourseMember.find({studentId: req.user._id}, 'courseId')
+//
+//         res.locals.registeredCourses = registeredCourses.map((x) => x.courseId)
+//
+//         let coursesTaken =
+//             await Course.find({_id: {$in: res.locals.registeredCourses}}, 'courseName semester instructor')
+//         res.locals.coursesTaken = coursesTaken
+//         next()
+//     } catch (e) {
+//         next(e)
+//     }
+//
+// }
 
 exports.showOneCourse = async (req, res, next) => {
     let courseId = req.params.courseId;
     try {
         //courseInfo contains these fields
-        res.locals.courseInfo = await Course.findOne({_id: courseId}, 'ownerId courseName coursePin institution officeHour officeHourLocation')
-        let courseInfo = res.locals.courseInfo
-        let ownerInfo = await User.findOne({_id: courseInfo.ownerId}, 'googlename')
-        res.locals.ownerInfo = ownerInfo
-        next()
+        console.log("local set: " + res.locals.courseInfoSet)
+        let courseSet = res.locals.courseInfoSet
+        for (let i = 0; i < courseSet.length; i++) {
+            console.log("courseID: " + courseId)
+            console.log("course id: " + courseSet[i]._id)
+            if (courseSet[i]._id.toString() === courseId.toString()) {
+                console.log("equals")
+                res.locals.courseInfo = courseSet[i];
+                break
+            }
+        }
+        // res.locals.courseInfo = await Course.findOne({_id: courseId}, 'ownerId courseName coursePin institution officeHour officeHourLocation')
+        // let courseInfo = res.locals.courseInfo
+        // let ownerInfo = await User.findOne({_id: courseInfo.ownerId}, 'googlename')
+        // res.locals.ownerInfo = ownerInfo
+        await next()
     } catch (e) {
         next(e)
     }

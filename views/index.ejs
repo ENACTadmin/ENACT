@@ -1,5 +1,90 @@
 <%- include('header'); -%>
-<%- include('navbar'); -%>
+<!--<%- include('navbar'); -%>-->
+
+<script src="/js/menu1.js"></script>
+<script>
+    AOS.init();
+</script>
+
+<header class="header">
+    <div class="header__content header__content--fluid-width">
+        <a class="header__logo-title" href="/">
+            <div class="card-body" style="background-color: transparent">
+                <div class="card-text">
+                    <img style="height: 70px; width: 70px"
+                         src="https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg">
+                </div>
+            </div>
+        </a>
+        <a class="header__logo-title-1" style="margin-left: -10px" href="/">
+            <b>THE EDUCATIONAL NETWORK
+                <br>
+                FOR ACTIVE CIVIC TRANSFORMATION</b>
+        </a>
+        <nav class="header__menu">
+            <ul>
+                <li>
+                    <a class="header-link" id="header-link" href="/" data-aos="fade-left">HOME</a>
+                </li>
+                <li>
+                    <% if (loggedIn) { %>
+                        <a class="header-link" id="header-link" href="#" data-aos="fade-left">My Courses</a>
+                        <ul class="sub-menu">
+                            <% for (let i = 0; i < courseInfoSet.length; i++) { %>
+                                <li>
+                                    <a class="header-link"
+                                       href="/showOneCourse/<%= courseInfoSet[i]._id %>"><%= courseInfoSet[i].courseName %></a>
+                                </li>
+                            <% } %>
+                        </ul>
+                    <% } else { %>
+                    <% } %>
+                </li>
+                <li>
+                    <% if (loggedIn) { %>
+                        <a class="header-link" id="header-link" href="#" data-aos="fade-left">Resources</a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a class="header-link" href="/search">Find some resources</a>
+                            </li>
+                        </ul>
+                    <% } else { %>
+                    <% } %>
+                </li>
+
+                <% if (loggedIn) { %>
+                    <li>
+                        <a class="header-link" id="header-link" href="#" data-aos="fade-left">Settings</a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a class="header-link" href="/myProfile">View/edit profile</a>
+                            </li>
+                            <li>
+                                <% if (status === "admin") { %>
+                                    <a class="header-link" href="/showAllProfiles">View all profiles</a>
+                                <% } %>
+                            </li>
+                            <li>
+                                <% if (status === "admin") { %>
+                                    <a class="header-link" href="/assignFaculty">Set up a new faculty</a>
+                                <% } %>
+                            </li>
+                        </ul>
+                    </li>
+                <% } else { %>
+                <% } %>
+
+                <li class="header__btn header__btn--login">
+                    <% if (!loggedIn) { %>
+                        <a class="btn btn-outline-dark" href="/auth/google" data-aos="fade-left">ENACT member login</a>
+                    <% } else { %>
+                        <a class="btn btn-outline-dark" href="/logout" data-aos="fade-left">Logout</a>
+                    <% } %>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
 <!-- Section intro -->
 <section class="section section--intro section__grey" id="home">
@@ -7,34 +92,37 @@
         <div class="intro">
             <div class="intro__content">
                 <% if (loggedIn) { %>
-                    <div class="intro__subtitle" style="color: black;">Hi, <b><%= req.user.googlename %>!</b></div>
+                    <div class="intro__subtitle" style="color: black;">Dear <%= status %>, <b><%= user.googlename %></b>
+                    </div>
                 <% } %>
                 <div class="intro__subtitle" style="color: black;">Welcome to ENACT Digital platform!</div>
                 <% if (loggedIn) { %>
-                    <div class="form-demo" data-aos="fade-up">
-                        <a href="/showCourses"><input type="submit" name="submit" class="form-demo__submit"
-                                                      value="MY COURSES"></a>
-                    </div>
-                    <br>
-                    <!--allow admin or faculty to create courses-->
                     <% if (status === 'admin' || status === 'faculty') { %>
-                        <div class="form-demo" data-aos="fade-up" data-aos-delay="100">
-                            <a href="/createCourse"><input type="submit" name="submit" class="form-demo__submit"
-                                                           value="CREATE A COURSE"></a>
+                        <div class="form-demo" data-aos="fade-up">
+                            <a href="/showCourses"><input type="submit" name="submit" class="form-demo__submit"
+                                                          value="MANAGE or CREATE COURSES"></a>
                         </div>
                     <% } else { %>
-                        <div class="form-demo" data-aos="fade-up" data-aos-delay="100">
-                            <a href="/JoinACourse"><input type="submit" name="submit" class="form-demo__submit"
-                                                          value="JOIN A COURSE"></a>
+                        <div class="form-demo" data-aos="fade-up">
+                            <a href="/showCourses"><input type="submit" name="submit" class="form-demo__submit"
+                                                          value="MANAGE or ENROLL IN COURSES"></a>
                         </div>
                     <% } %>
                     <br>
-                    <div class="form-demo" data-aos="fade-up" data-aos-delay="200">
+                    <div class="form-demo" data-aos="fade-up" data-aos-delay="100">
                         <a href="/search"><input type="submit" name="submit" class="form-demo__submit"
-                                                 value="FIND SOME RESOURCES"></a>
+                                                 value="FIND RESOURCES"></a>
                     </div>
+                    <br>
+
+                    <% if (status === 'faculty' || status === 'admin') { %>
+                        <div class="form-demo" data-aos="fade-up" data-aos-delay="200">
+                            <a href="/facultyExclusive"><input type="submit" name="submit" class="form-demo__submit"
+                                                               value="FACULTY EXCLUSIVE"></a>
+                        </div>
+                    <% } %>
                 <% } else { %>
-                    <h2>IF YOU ARE AN<b style="color: #ff8d12"> ENACT PROGRAM MEMBER, PLEASE LOGIN</b></h2>
+                    <h2>IF YOU ARE AN<b style="color: #0253a4"> ENACT PROGRAM MEMBER, PLEASE LOGIN</b></h2>
                     <br>
                     <a href="/auth/google"><input type="submit" name="submit" class="form-demo__submit"
                                                   value="ENACT MEMBER LOGIN"></a>
@@ -45,12 +133,12 @@
 </section>
 
 <!-- Section features -->
-<section class="section section--features">
+<section class="section diagonal-gradient">
     <br><br><br>
-    <div class="section__content section__content--fluid-width">
+    <div class="section__content section__content--fluid-width section__content--padding--small">
         <div class="grid grid--3col">
-            <div class="grid__item" data-aos="fade-up">
-                <h3 class="grid__title"><span>TO BE REPLACED</span></h3>
+            <div class="grid__item partners__slide__grey" style="height: 500px" data-aos="fade-up">
+                <h3 class="grid__title"><span>What we do</span></h3>
                 <p class="grid__text">The Educational Network for Active Civic Transformation is a national program
                     engaging undergraduates at colleges and universities in state-level legislative change by learning
                     to work with legislators, staffers, and community organizations to advance policy. It is becoming a
@@ -60,9 +148,8 @@
                 <br>
             </div>
 
-
-            <div class="grid__item" data-aos="fade-up" data-aos-delay="100">
-                <h3 class="grid__title"><span>TO BE REPLACED</span></h3>
+            <div class="grid__item partners__slide__grey" style="height: 500px" data-aos="fade-up">
+                <h3 class="grid__title"><span>How we do it</span></h3>
                 <p class="grid__text">The Educational Network for Active Civic Transformation is a national program
                     engaging undergraduates at colleges and universities in state-level legislative change by learning
                     to work with legislators, staffers, and community organizations to advance policy. It is becoming a
@@ -72,8 +159,8 @@
                 <br>
             </div>
 
-            <div class="grid__item" data-aos="fade-up" data-aos-delay="200">
-                <h3 class="grid__title"><span>TO BE REPLACED</span></h3>
+            <div class="grid__item partners__slide__grey" style="height: 500px" data-aos="fade-up">
+                <h3 class="grid__title"><span>How to participate</span></h3>
                 <p class="grid__text">The Educational Network for Active Civic Transformation is a national program
                     engaging undergraduates at colleges and universities in state-level legislative change by learning
                     to work with legislators, staffers, and community organizations to advance policy. It is becoming a
@@ -82,33 +169,6 @@
                 <br>
                 <br>
             </div>
-        </div>
-    </div>
-</section>
-
-<br>
-<!-- Section -->
-<section class="section section__grey" id="forum">
-    <div class="section__content section__content--fluid-width section__content--padding">
-        <br>
-        <h2 class="section__title section__title--centered">Some static content</h2>
-        <div class="partners">
-            <div class="partners__content swiper-wrapper" data-aos="fade-up">
-                <div class="partners__slide swiper-slide">
-                    Test sample
-                </div>
-            </div>
-            <div class="partners__content swiper-wrapper" data-aos="fade-up" data-aos-delay="100">
-                <div class="partners__slide swiper-slide">
-                    Test sample
-                </div>
-            </div>
-            <div class="partners__content swiper-wrapper" data-aos="fade-up" data-aos-delay="200">
-                <div class="partners__slide swiper-slide">
-                    Test sample
-                </div>
-            </div>
-            <div class="partners__pagination swiper-pagination"></div>
         </div>
 
         <div class="clear"></div>
@@ -117,34 +177,166 @@
 </section>
 
 <!-- Section -->
-<section class="section" id="tutor">
+<section class="section section__grey">
     <div class="section__content section__content--fluid-width section__content--padding">
-        <h2 class="section__title section__title--centered">Some static content</h2>
-
-        <br><br><br>
+        <h2 class="section__title section__title--centered">ENACT Faculties</h2>
+        <br>
         <div class="grid grid--3col">
-
-            <div class="partners__slide__grey grid__item" data-aos="fade-up">
-                <h3 class="grid__title"><span>TO BE REPLACED</span></h3>
-                <p class="grid__text">
-                    TO BE REPLACED TEXT
-                </p>
+            <div class="partners__slide grid__item" style="height: 750px" data-aos="fade-up">
+                <div class="card-body">
+                    <img class="d-flex mr-3"
+                         src="https://www.brandeis.edu/ethics/images/advocacy/mstimell01_cropped.jpg"
+                         alt="Melissa Stimell"
+                         style="width: 100%; height:400px; object-fit: cover; border-radius: 30px;">
+                    <h3 style="text-align: center">Melissa Stimell</h3>
+                    <h4 style="text-align: center">Academic Program Director</h4>
+                    <hr>
+                    Melissa Stimell is a Professor of the Practice in the Legal Studies Program at Brandeis
+                    University, and Interim Director of the International Center for Ethics, Justice and Public
+                    Life.
+                    <br>
+                </div>
             </div>
-
-            <div class="partners__slide__grey grid__item" data-aos="fade-up" data-aos-delay="100">
-                <h3 class="grid__title"><span>TO BE REPLACED</span></h3>
-                <p class="grid__text">
-                    TO BE REPLACED TEXT
-                </p>
+            <div class="partners__slide grid__item" style="height: 750px" data-aos="fade-up">
+                <div class="card-body">
+                    <img class="d-flex mr-3" src="https://www.brandeis.edu/ethics/images/DJW%20photo.jpg"
+                         alt="David J. Weinstein"
+                         style="width: 100%; height: 400px; object-fit: cover; border-radius: 30px;">
+                    <h3 style="text-align: center">David J. Weinstein</h3>
+                    <h4 style="text-align: center">Assistant Director</h4>
+                    <hr>
+                    David Weinstein is Assistant Director of ENACT and Communications for the Ethics Center.
+                    <br>
+                </div>
             </div>
-
-            <div class="partners__slide__grey grid__item" data-aos="fade-up" data-aos-delay="200">
-                <h3 class="grid__title"><span>TO BE REPLACED</span></h3>
-                <p class="grid__text">
-                    TO BE REPLACED TEXT
-                </p>
+            <div class="partners__slide grid__item" style="height: 750px" data-aos="fade-up">
+                <div class="card-body">
+                    <img src="https://www.brandeis.edu/ethics/images/Terris_11.jpg"
+                         alt="Daniel Terris"
+                         style="width: 100%; height: 400px; object-fit: cover; border-radius: 30px;">
+                    <br>
+                    <h3 style="text-align: center">Daniel Terris</h3>
+                    <h4 style="text-align: center">Director Emeritus</h4>
+                    <hr>
+                    Daniel Terris became Director Emeritus of the International Center for Ethics, Justice and Public
+                    Life at Brandeis University in June 2018. He is now Dean of the Al-Quds Bard College of Arts and
+                    Sciences at Al-Quds University, a Palestinian institution.
+                    <br>
+                </div>
             </div>
         </div>
+        <div class="partners__pagination"></div>
+        <div class="clear"></div>
+    </div>
+</section>
+
+<!-- Section -->
+<section class="section diagonal-gradient">
+    <div class="section__content section__content--fluid-width section__content--padding">
+        <h2 class="section__title section__title--centered" style="color: white">Latest Resources</h2>
+        <br><br><br>
+        <div class="card blogBox moreBox">
+            <div class="card-body">
+                <h4>Resource Name</h4>
+                <div class="card-text">
+                    <ul class="list-group">
+                        <li class="list-group-item borderless"
+                            style="padding: 0 0 3px 10px">
+                            <b>Description: </b>
+                            some text here
+                        </li>
+                        <li class="list-group-item borderless"
+                            style="padding: 0 0 3px 10px">
+                            <b>State:</b>
+                            Massechusetts
+                        </li>
+                        <li class="list-group-item borderless"
+                            style="padding: 0 0 3px 10px">
+                            <b>Link: </b> <a href="#">link</a>
+                        </li>
+                        <li class="list-group-item borderless"
+                            style="padding: 0 0 3px 10px">
+                            <b>Institution: </b>
+                            Brandeis University
+                        </li>
+                        <li class="list-group-item borderless"
+                            style="padding: 0 0 3px 10px">
+                            <b>Categories:</b>
+                            Education
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="card blogBox moreBox">
+            <div class="card-body">
+                <h4>Resource Name</h4>
+                <div class="card-text">
+                    <ul class="list-group">
+                        <li class="list-group-item borderless"
+                            style="padding: 0 0 3px 10px">
+                            <b>Description: </b>
+                            some text here
+                        </li>
+                        <li class="list-group-item borderless"
+                            style="padding: 0 0 3px 10px">
+                            <b>State:</b>
+                            Massechusetts
+                        </li>
+                        <li class="list-group-item borderless"
+                            style="padding: 0 0 3px 10px">
+                            <b>Link: </b> <a href="#">link</a>
+                        </li>
+                        <li class="list-group-item borderless"
+                            style="padding: 0 0 3px 10px">
+                            <b>Institution: </b>
+                            Brandeis University
+                        </li>
+                        <li class="list-group-item borderless"
+                            style="padding: 0 0 3px 10px">
+                            <b>Categories:</b>
+                            Education
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="card blogBox moreBox">
+            <div class="card-body">
+                <h4>Resource Name</h4>
+                <div class="card-text">
+                    <ul class="list-group">
+                        <li class="list-group-item borderless"
+                            style="padding: 0 0 3px 10px">
+                            <b>Description: </b>
+                            some text here
+                        </li>
+                        <li class="list-group-item borderless"
+                            style="padding: 0 0 3px 10px">
+                            <b>State:</b>
+                            Massechusetts
+                        </li>
+                        <li class="list-group-item borderless"
+                            style="padding: 0 0 3px 10px">
+                            <b>Link: </b> <a href="#">link</a>
+                        </li>
+                        <li class="list-group-item borderless"
+                            style="padding: 0 0 3px 10px">
+                            <b>Institution: </b>
+                            Brandeis University
+                        </li>
+                        <li class="list-group-item borderless"
+                            style="padding: 0 0 3px 10px">
+                            <b>Categories:</b>
+                            Education
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <br>
         <div class="clear"></div>
     </div>
 </section>
