@@ -5,7 +5,7 @@
     <div class="section__content section__content--full-width">
         <div class="jumbotron masthead text-center">
             <div class="section__title section__title--centered">
-                Join A Course
+                Course enrollment
             </div>
         </div>
     </div>
@@ -20,10 +20,11 @@
                     <form method="post" action="joinCourse">
                         <div class="input-group-prepend">
                             <span class="input-group-text" style="width: 180px">Course Pin</span>
-                            <input type="text" class="form-control" name="coursePin" placeholder="e.g. 7-digit number">
+                            <input type="text" class="form-control" style="margin-right: 10px" name="coursePin"
+                                   placeholder="e.g. 7-digit number">
+                            <input type="submit" name="submit" class="btn btn-outline-dark" value="Enroll">
                         </div>
                         <br>
-                        <input type="submit" name="submit" class="btn btn-outline-dark" value="Join">
                     </form>
                 <% } else { %>
                     <div class="text-center partners__text">

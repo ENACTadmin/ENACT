@@ -1,0 +1,80 @@
+<%- include('header'); -%>
+<%- include('navbar'); -%>
+
+<section class="section">
+    <div class="section__content section__content--full-width">
+        <div class="jumbotron masthead text-center">
+            <div class="section__title section__title--centered">
+                Faculty exclusive resources
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section__grey">
+    <section class="section__content section__content--fluid-width">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <% if (loggedIn) { %>
+                        <div class="lead"><b>Upload new resources</b></div>
+                        <hr>
+
+                        <a class="btn btn-outline-primary" href="/uploadToFaculty" role="button">
+                            Upload faculty exclusive resources</a>
+                        <br>
+                        <br>
+
+                        <div class="lead"><b>Available resources</b></div>
+                        <hr>
+
+
+                        <% if (facultyExclusive.length !== 0) { %>
+                            <% for (let i = facultyExclusive.length - 1; i >= 0; i--) { %>
+                                <div class="card blogBox moreBox">
+                                    <div class="card-body">
+                                        <h4><%= facultyExclusive[i].name %></h4>
+                                        <div class="card-text">
+                                            <ul class="list-group">
+                                                <li class="list-group-item borderless"
+                                                    style="padding: 0 0 3px 10px">
+                                                    <b>Description: </b> <%= facultyExclusive[i].description %>
+                                                </li>
+                                                <li class="list-group-item borderless"
+                                                    style="padding: 0 0 3px 10px">
+                                                    <b>State:</b> <%= facultyExclusive[i].state %></li>
+                                                <li class="list-group-item borderless"
+                                                    style="padding: 0 0 3px 10px">
+                                                    <b>Link: </b> <a
+                                                            href="<%= facultyExclusive[i].uri %>"><%= facultyExclusive[i].uri %></a>
+                                                </li>
+                                                <li class="list-group-item borderless"
+                                                    style="padding: 0 0 3px 10px">
+                                                    <b>Institution: </b> <%= facultyExclusive[i].institution %>
+                                                </li>
+                                                <li class="list-group-item borderless"
+                                                    style="padding: 0 0 3px 10px">
+                                                    <b>Tags:</b> <%= facultyExclusive[i].tags %>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            <% } %>
+                        <% } else { %>
+                            No resource available yet
+                        <% } %>
+                </div>
+                <% } else { %>
+                    <div class="text-center partners__text">
+                        <h3>Please login to view this page</h3>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+        </div>
+    </section>
+</section>
+
+<%- include('footer'); -%>

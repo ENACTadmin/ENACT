@@ -5,7 +5,15 @@
 
 <header class="header">
     <div class="header__content header__content--fluid-width">
-        <a class="header__logo-title" href="/">ENACT</a>
+        <a class="header__logo-title" href="/">
+            <div class="card-body" style="background-color: transparent">
+                <div class="card-text">
+                    <img style="height: 70px; width: 70px"
+                         src="https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg">
+                </div>
+            </div>
+        </a>
+
         <nav class="header__menu">
             <ul>
                 <li>
@@ -15,17 +23,12 @@
                     <% if (loggedIn) { %>
                         <a class="header-link" id="header-link" href="#" data-aos="fade-left">Courses</a>
                         <ul class="sub-menu">
-                            <li>
-                                <a class="header-link" href="/showCourses">My courses</a>
-                            </li>
-                            <li>
-                                <% if (status === "admin" || status === "faculty") { %>
-                                    <a class="header-link" href="/createCourse">Create a course</a>
-                                <% } %>
-                            </li>
-                            <li>
-                                <a class="header-link" href="/joinACourse">Join a course</a>
-                            </li>
+                            <% for (let i = 0; i < courseInfoSet.length; i++) { %>
+                                <li>
+                                    <a class="header-link"
+                                       href="/showOneCourse/<%= courseInfoSet[i]._id %>"><%= courseInfoSet[i].courseName %></a>
+                                </li>
+                            <% } %>
                         </ul>
                     <% } else { %>
                     <% } %>
@@ -61,7 +64,6 @@
                             </li>
                         </ul>
                     </li>
-                <% } else { %>
                 <% } %>
 
                 <li class="header__btn header__btn--login">

@@ -95,10 +95,16 @@
                                 <span class="input-group-text" style="width: 180px">Resource Status</span>
                                 <select class="form-control" name="status">
                                     <option selected value="public">Open to everyone</option>
-                                    <option value="privateToProfessor">Open to ENACT professors</option>
+                                    <option value="privateToProfessor">Open to only ENACT professors</option>
                                 </select>
                             </div>
-                            <br>
+                        <% } else { %>
+                            <div hidden class="input-group-prepend">
+                                <span class="input-group-text" style="width: 180px">Resource Status</span>
+                                <select class="form-control" name="status">
+                                    <option selected value="privateToENACT">Open to only ENACT professors</option>
+                                </select>
+                            </div>
                         <% } %>
                         <input type="submit" name="submit" class="btn btn-outline-dark" value="Search">
                     </form>

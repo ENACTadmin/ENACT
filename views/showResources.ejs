@@ -20,9 +20,11 @@
                         <div class="card">
                             <div class="card-body">
                                 <% if (resourceInfo.length !== 0) { %>
-                                    <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
+                                    <% console.log("hell: " + resourceInfo)%>
+                                    <% for (let i = 0; i < resourceInfo.length; i++) { %>
                                         <div class="card blogBox moreBox">
                                             <div class="card-body">
+                                                <% console.log("status: " + resourceInfo[i].status)%>
                                                 <h4><%= resourceInfo[i].name %></h4>
                                                 <div class="card-text">
                                                     <ul class="list-group">

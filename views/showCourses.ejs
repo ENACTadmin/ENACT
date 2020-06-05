@@ -6,9 +6,16 @@
         <div class="jumbotron masthead text-center">
             <div class="section__title section__title--centered">
                 <% if (status === "faculty" || status === "admin") { %>
-                    Courses you are teaching
+                    Manage courses you are teaching
+                    <br>
+                    OR
+                    <a href="/createCourse">
+                        create a new course
+                    </a>
                 <% } else { %>
-                    Courses You Enrolled In
+                    Manage enrolled courses
+                    <br>
+                    OR enroll in a course
                 <% } %>
             </div>
         </div>
@@ -16,60 +23,100 @@
 </section>
 
 <section class="section section__grey">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3 col-sm-12"></div>
-            <div class="col-md-6 col-sm-12 text-center">
-                <% if (loggedIn) { %>
-                    <table class="table table-striped">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Course Name</th>
-                            <th scope="col">Semester</th>
-                            <th scope="col">
-                                <% if (status === "faculty" || status === "admin") { %>
-                                    Course Pin
-                                <% } else { %>
-                                    Instructor
-                                <% } %>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <% if (status === "faculty" || status === "admin") { %>
-                            <% for(let i = 0; i < coursesOwned.length; i++) { %>
-                                <tr>
-                                    <td>
-                                        <a href="/showOneCourse/<%= coursesOwned[i]._id %>"><%= coursesOwned[i].courseName %></a>
-                                    </td>
-                                    <td><%= coursesOwned[i].semester %></td>
-                                    <td>
-                                        <%= coursesOwned[i].coursePin %>
-                                    </td>
-                                </tr>
-                            <% } %>
-                        <% } else if (coursesTaken.length > 0) { %>
-                            <% for (let i = 0; i < coursesTaken.length; i++){ %>
-                                <tr>
-                                    <td>
-                                        <a href="/showOneCourse/<%= coursesTaken[i]._id %>"><%= coursesTaken[i].courseName %></a>
-                                    </td>
-                                    <td><%= coursesTaken[i].semester %></td>
-                                    <td><%= coursesTaken[i].instructor %></td>
-                                </tr>
-                            <% } %>
-                        </tbody>
+    <div class="section__content section__content--fluid-width">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 col-sm-12 text-center"></div>
+                <div class="col-md-8 col-sm-12">
+                    <% if (loggedIn) { %>
+                        <% if (status === 'faculty' || status === 'admin') { %>
+
                         <% } else { %>
-                            <div class="text-center partners__text">
-                                <h3>You didn't create or enroll in any courses</h3>
-                            </div>
+                            <div class="lead"><b>Enroll in a course</b></div>
+                            <hr>
+                            <form method="post" action="joinCourse">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" style="width: 180px">Course Pin</span>
+                                    <input type="text" class="form-control" style="margin-right: 10px" name="coursePin"
+                                           placeholder="e.g. 7-digit number">
+                                    <input type="submit" name="submit" class="btn btn-outline-dark" value="Enroll">
+                                </div>
+                                <br>
+                            </form>
+                            <br>
                         <% } %>
-                    </table>
-                <% } else { %>
-                    <div class="text-center partners__text">
-                        <h3>Please login to view this page</h3>
-                    </div>
-                <% } %>
+                        <% if (courseInfoSet.length !== 0) { %>
+                            <% if (status === 'faculty' || status === 'admin') { %>
+                                <div class="lead"><b>Owned courses</b></div>
+                            <% } else { %>
+                                <div class="lead"><b>Enrolled courses</b></div>
+                            <% } %>
+                            <hr>
+
+                            <table class="table table-striped">
+                                <thead style="background-color: #0253a4">
+                                <tr>
+                                    <th scope="col" style="color: white">Course Name</th>
+                                    <th scope="col" style="color: white">Semester</th>
+                                    <th scope="col" style="color: white">
+                                        <% if (status === "faculty" || status === "admin") { %>
+                                            Course Pin
+                                        <% } else { %>
+                                            Instructor
+                                        <% } %>
+                                    </th>
+                                    <th scope="col" style="color: white">
+                                        Action
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% if (status === "faculty" || status === "admin") { %>
+                                    <% for(let i = 0; i < courseInfoSet.length; i++) { %>
+                                        <tr>
+                                            <td>
+                                                <a href="/showOneCourse/<%= courseInfoSet[i]._id %>"><%= courseInfoSet[i].courseName %></a>
+                                            </td>
+                                            <td><%= courseInfoSet[i].semester %></td>
+                                            <td>
+                                                <%= courseInfoSet[i].coursePin %>
+                                            </td>
+                                            <td>
+                                                Edit/Delete
+                                            </td>
+                                        </tr>
+                                    <% } %>
+                                <% } else { %>
+                                    <% for (let i = 0; i < courseInfoSet.length; i++){ %>
+                                        <tr>
+                                            <td>
+                                                <a href="/showOneCourse/<%= courseInfoSet[i]._id %>"><%= courseInfoSet[i].courseName %></a>
+                                            </td>
+                                            <td><%= courseInfoSet[i].semester %></td>
+                                            <td><%= courseInfoSet[i].instructor %></td>
+                                            <td>Unenroll</td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                                <% } %>
+                            </table>
+                        <% } else { %>
+                            <% if (status === 'admin' || status === 'faculty') { %>
+                                <div class="text-center partners__text">
+                                    <h3>You haven't created any course yet</h3>
+                                </div>
+                            <% } else { %>
+                                <div class="text-center partners__text">
+                                    <h3>You haven't enrolled in any course yet</h3>
+                                </div>
+                            <% } %>
+                        <% } %>
+                    <% } else { %>
+                        <div class="text-center partners__text">
+                            <h3>Please login to view this page</h3>
+                        </div>
+                    <% } %>
+                </div>
             </div>
         </div>
     </div>
