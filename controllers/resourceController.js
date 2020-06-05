@@ -52,10 +52,15 @@ exports.searchByFilled = async (req, res, next) => {
     try {
         // 1) all fields empty
         if (req.body.state == "empty" && req.body.institution == "" && req.body.yearOfCreation == "") {
+            console.log("all empty")
             resourceInfo =
-                await Resource.find({
-                    status: req.body.status
-                })
+                await Resource.find({status: req.body.status})
+
+            // add public resources..
+            let someMoreResource = await Resource.find({status: "public"})
+            for (let i = 0; i < someMoreResource.length; i++) {
+                await resourceInfo.push(someMoreResource[i])
+            }
         }
 
         // 2) one field empty
@@ -114,10 +119,52 @@ exports.searchByFilled = async (req, res, next) => {
                 })
         }
 
-        res.render('showResources', {
-            resourceInfo: resourceInfo
-        });
+        console.log("res: " + resourceInfo)
 
+        res.locals.resourceInfo = resourceInfo
+
+        await res.render('showResources')
+
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.loadAllFacultyResources = async (req, res, next) => {
+    try {
+        let facultyExclusive = await Resource.find({status: 'privateToProfessor'})
+        res.render('facultyExclusive', {
+            facultyExclusive: facultyExclusive
+        })
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.uploadToFacultyExclusive = async (req, res, next) => {
+    try {
+        let tagsString = req.body.tags
+        let tags = tagsString.split(",")
+        console.log(tags)
+
+        let newResource = new Resource({
+            ownerId: req.user._id,
+            courseId: null,
+            status: req.body.status, // public/private to class/private to professors
+            createdAt: new Date(),
+            name: req.body.resourceName,
+            description: req.body.resourceDescription,
+            tags: tags, // tags as array
+            uri: req.body.uri, // universal resource identifier specific to the resource
+            state: req.body.state,
+            resourceType: req.body.type, // video/text document ...
+            institution: req.body.institution,
+            yearOfCreation: req.body.yearOfCreation // content's actual creation time
+        })
+
+        // save the new resource
+        await newResource.save()
+        res.redirect('/facultyExclusive')
     } catch (e) {
         next(e)
     }
