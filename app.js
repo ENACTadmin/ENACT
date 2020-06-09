@@ -141,9 +141,8 @@ app.get('/login/authorized',
 //***********Index page router***************
 
 //we can use this or the index router to handle req
-app.get('/', function (req, res) {
-    res.render('index')
-});
+app.get('/',
+    resourceController.loadPublicResources)
 
 
 //*******************************************

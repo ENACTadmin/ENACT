@@ -2,11 +2,8 @@
 /* Customized CSS--BOOTSTRAP
 /*===============================================*/
 
-.background-white {
-    background: white !important;
-    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.03);
-    -moz-box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.03);
-    -webkit-box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.03);
+.box-padding {
+    padding: 0 0 3px 10px
 }
 
 .rating.text-center:hover {

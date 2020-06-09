@@ -146,7 +146,6 @@ exports.uploadToFacultyExclusive = async (req, res, next) => {
         let tagsString = req.body.tags
         let tags = tagsString.split(",")
         console.log(tags)
-
         let newResource = new Resource({
             ownerId: req.user._id,
             courseId: null,
@@ -161,11 +160,22 @@ exports.uploadToFacultyExclusive = async (req, res, next) => {
             institution: req.body.institution,
             yearOfCreation: req.body.yearOfCreation // content's actual creation time
         })
-
         // save the new resource
         await newResource.save()
         res.redirect('/facultyExclusive')
     } catch (e) {
+        next(e)
+    }
+}
+
+exports.loadPublicResources = async (req, res, next) => {
+    try {
+        let publicRc = await Resource.find({status: 'public'}).sort({'createdAt': -1}).limit(2)
+
+        res.locals.publicRc = publicRc
+        await res.render('index')
+    } catch (e) {
+        console.log("error: " + e)
         next(e)
     }
 }
