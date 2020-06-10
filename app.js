@@ -65,15 +65,9 @@ const S3_BUCKET = process.env.S3_BUCKET || 'enact-resources'
 * the anticipated URL of the image.
 */
 app.get('/sign-s3', (req, res) => {
-    const s3 = new aws.S3({
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-    });
+    const s3 = new aws.S3();
     const fileName = req.query['file-name'];
-    console.log("file name: " + fileName)
     const fileType = req.query['file-type'];
-    console.log("file type: " + fileType)
-    console.log("s3 bucket: " + S3_BUCKET)
     const s3Params = {
         Bucket: S3_BUCKET,
         Key: fileName,
@@ -337,6 +331,9 @@ app.get('/assignFaculty',
 app.post('/assignNewFaculty',
     profileController.assignFaculty
 )
+
+
+app.get('/account', (req, res) => res.render('account'));
 
 
 //*******************************************
