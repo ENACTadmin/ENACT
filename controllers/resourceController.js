@@ -6,15 +6,14 @@ const Resource = require('../models/Resource')
 exports.uploadResource = async (req, res, next) => {
     console.log("in upload resource")
     const courseId = req.params.courseId
+    console.log("courseId: " + courseId)
     try {
-        console.log(typeof req.body.tags)
         let tagsString = req.body.tags
         let tags = tagsString.split(",")
-        console.log(tags)
 
         let newResource = new Resource({
             ownerId: req.user._id,
-            courseId: courseId,
+            // courseId: courseId,
             status: req.body.status, // public/private to class/private to professors
             createdAt: new Date(),
             name: req.body.resourceName,
@@ -26,10 +25,16 @@ exports.uploadResource = async (req, res, next) => {
             institution: req.body.institution,
             yearOfCreation: req.body.yearOfCreation // content's actual creation time
         })
-
+        if (courseId === undefined)
+            newResource[courseId] = null
+        else
+            newResource[courseId] = courseId
         // save the new resource
         await newResource.save()
-        res.redirect('/showOneCourse/' + courseId)
+        if (courseId === undefined)
+            res.redirect('/facultyExclusive')
+        else
+            res.redirect('/showOneCourse/' + courseId)
     } catch (e) {
         next(e)
     }
@@ -141,32 +146,32 @@ exports.loadAllFacultyResources = async (req, res, next) => {
     }
 }
 
-exports.uploadToFacultyExclusive = async (req, res, next) => {
-    try {
-        let tagsString = req.body.tags
-        let tags = tagsString.split(",")
-        console.log(tags)
-        let newResource = new Resource({
-            ownerId: req.user._id,
-            courseId: null,
-            status: req.body.status, // public/private to class/private to professors
-            createdAt: new Date(),
-            name: req.body.resourceName,
-            description: req.body.resourceDescription,
-            tags: tags, // tags as array
-            // uri: req.body.uri, // universal resource identifier specific to the resource
-            state: req.body.state,
-            resourceType: req.body.type, // video/text document ...
-            institution: req.body.institution,
-            yearOfCreation: req.body.yearOfCreation // content's actual creation time
-        })
-        // save the new resource
-        await newResource.save()
-        res.redirect('/facultyExclusive')
-    } catch (e) {
-        next(e)
-    }
-}
+// exports.uploadToFacultyExclusive = async (req, res, next) => {
+//     try {
+//         let tagsString = req.body.tags
+//         let tags = tagsString.split(",")
+//         console.log(tags)
+//         let newResource = new Resource({
+//             ownerId: req.user._id,
+//             courseId: null,
+//             status: req.body.status, // public/private to class/private to professors
+//             createdAt: new Date(),
+//             name: req.body.resourceName,
+//             description: req.body.resourceDescription,
+//             tags: tags, // tags as array
+//             // uri: req.body.uri, // universal resource identifier specific to the resource
+//             state: req.body.state,
+//             resourceType: req.body.type, // video/text document ...
+//             institution: req.body.institution,
+//             yearOfCreation: req.body.yearOfCreation // content's actual creation time
+//         })
+//         // save the new resource
+//         await newResource.save()
+//         res.redirect('/facultyExclusive')
+//     } catch (e) {
+//         next(e)
+//     }
+// }
 
 exports.loadPublicResources = async (req, res, next) => {
     try {

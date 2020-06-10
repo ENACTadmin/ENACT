@@ -187,7 +187,7 @@ Modal
     function initUpload() {
         const files = document.getElementById('file-input').files;
         const file = files[0];
-        if (file == null) {
+        if (file === null) {
             return alert('No file selected.');
         }
         getSignedRequest(file);
