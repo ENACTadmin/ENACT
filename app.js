@@ -66,8 +66,8 @@ const S3_BUCKET = process.env.S3_BUCKET || 'enact-resources'
 */
 app.get('/sign-s3', (req, res) => {
     const s3 = new aws.S3({
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID || 'AKIAJQNCEWFQLAAQYEAA',
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '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'
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
     });
     const fileName = req.query['file-name'];
     console.log("file name: " + fileName)
