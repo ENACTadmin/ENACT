@@ -154,7 +154,7 @@ exports.uploadToFacultyExclusive = async (req, res, next) => {
             name: req.body.resourceName,
             description: req.body.resourceDescription,
             tags: tags, // tags as array
-            uri: req.body.uri, // universal resource identifier specific to the resource
+            // uri: req.body.uri, // universal resource identifier specific to the resource
             state: req.body.state,
             resourceType: req.body.type, // video/text document ...
             institution: req.body.institution,
