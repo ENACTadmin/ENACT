@@ -65,7 +65,10 @@ const S3_BUCKET = process.env.S3_BUCKET || 'enact-resources'
 * the anticipated URL of the image.
 */
 app.get('/sign-s3', (req, res) => {
-    const s3 = new aws.S3();
+    const s3 = new aws.S3({
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID || 'AKIAJE3BEUSDBZEVPP4A',
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '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'
+    });
     const fileName = req.query['file-name'];
     const fileType = req.query['file-type'];
     const s3Params = {
@@ -287,7 +290,7 @@ app.get('/uploadToFaculty',
 )
 
 app.post('/uploadToFacultyExclusive',
-    resourceController.uploadToFacultyExclusive
+    resourceController.uploadResource
 )
 
 //*******************************************
