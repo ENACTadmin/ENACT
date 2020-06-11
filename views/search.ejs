@@ -100,6 +100,13 @@
                                 </select>
                             </div>
                         <% } else { %>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="width: 180px">Resource Status</span>
+                                <select class="form-control" name="status">
+                                    <option selected value="public">Open to everyone</option>
+                                    <option value="privateToENACT">Exclusive to ENACT members</option>
+                                </select>
+                            </div>
                         <% } %>
                         <br>
                         <input type="submit" name="submit" class="btn btn-outline-dark" value="Search">

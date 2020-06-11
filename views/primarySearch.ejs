@@ -21,13 +21,14 @@
                 <form method="post" action="showPrimaryResources">
                     <div class="input-group-prepend">
                         <input type="text" class="form-control" name="search"
-                               placeholder="Search for name and description">
+                               placeholder="Search for name or description">
+                        &nbsp
+                        <input type="submit" name="submit" class="btn btn-outline-dark" value="Search">
                     </div>
                     <div class="input-group-prepend">
                         <a href="/search"><u>advanced search</u></a>
                     </div>
                     <br>
-                    <input type="submit" name="submit" class="btn btn-outline-dark" value="Search">
                 </form>
                 <% } else { %>
                 <div class="text-center partners__text">
