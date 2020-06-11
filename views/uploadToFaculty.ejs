@@ -23,6 +23,7 @@
                             data-target="#myModal">
                         Upload the file
                     </button>
+                    <p class="uploaded"></p>
                 </div>
             </div>
             <br>
@@ -34,7 +35,7 @@
                         <hr>
                         <div class="input-group-prepend">
                             <span class="input-group-text" style="width: 180px">Resource Name</span>
-                            <input type="text" class="form-control" name="resourceName"
+                            <input type="text" id="resourceName" class="form-control" name="resourceName"
                                    placeholder="e.g. ENACT Introduction">
                         </div>
                         <br>
@@ -279,6 +280,8 @@
                     $('#fileName').show()
                     $('#fileType').text("File type: " + file.type)
                     $('#fileType').show()
+                    document.getElementById('resourceName').value = file.name.split(',')[0];
+                    $('.uploaded').text("Uploaded!")
                 } else {
                     alert('Could not upload file.');
                 }
