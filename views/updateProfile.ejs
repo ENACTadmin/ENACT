@@ -5,8 +5,8 @@
     <div class="section__content section__content--full-width">
         <div class="jumbotron masthead text-center">
             <div class="section__title section__title--centered">
-                <% if (locals.user.userName) { %>
-                    <%= locals.user.userName %>'s profile
+                <% if (user.userName) { %>
+                    <%= user.userName %>'s profile
                 <% } else { %>
                     Welcome to ENACT, please complete your profile first.
                 <% } %>
@@ -27,7 +27,7 @@
                 </button>
                 <br> <br>
 
-                <% if (locals.user.profilePicURL) { %>
+                <% if (user.profilePicURL) { %>
                     <img src="<%= locals.user.profilePicURL %>" style="width:300px;">
                 <% } else { %>
                     <h5>No profile image uploaded</h5>
@@ -141,7 +141,6 @@
 </div>
 
 <script>
-
     /*
     Function to carry out the actual PUT request to S3 using the signed request from the app.
     */
