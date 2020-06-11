@@ -5,7 +5,7 @@
     <div class="section__content section__content--full-width">
         <div class="jumbotron masthead text-center">
             <div class="section__title section__title--centered">
-                Resource Upload
+                Faculty Exclusive Resource Upload
             </div>
         </div>
     </div>
@@ -44,10 +44,10 @@
                             <textarea type="text" class="form-control" name="resourceDescription" rows="4"
                                       placeholder="e.g. Detailed description"></textarea>
                         </div>
-                        <br>
-                        <div class="input-group-prepend">
+                        <!--hidden-->
+                        <div hidden class="input-group-prepend">
                             <span class="input-group-text" style="width: 180px">URI</span>
-                            <input type="text" class="form-control" name="uri"
+                            <input type="text" id='fileURL' class="form-control" name="uri"
                                    placeholder="e.g. URI">
                         </div>
                         <br>
@@ -61,20 +61,11 @@
                             </select>
                         </div>
                         <br>
-                        <% if (status === 'admin') { %>
+                        <% if (status === 'admin' || status === 'faculty') { %>
                             <div class="input-group-prepend">
                                 <span class="input-group-text" style="width: 180px">Resource Status</span>
                                 <select class="form-control" name="status">
-                                    <option selected value="privateToProfessor">Open to only ENACT professors</option>
-                                    <option value="public">Open to public</option>
-                                </select>
-                            </div>
-                            <br>
-                        <% } else if (status === 'faculty') { %>
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" style="width: 180px">Resource Status</span>
-                                <select class="form-control" name="status">
-                                    <option selected value="privateToProfessor">Open to only ENACT professors</option>
+                                    <option selected value="privateToProfessor">Exclusive to ENACT professors</option>
                                 </select>
                             </div>
                             <br>
@@ -147,12 +138,16 @@
                             <input type="text" class="form-control" name="yearOfCreation"
                                    placeholder="e.g. 2018">
                         </div>
+
                     </div>
+
                     <div class="w-100"></div>
+                    <br>
                     <div class="col-md-3 col-sm-12"></div>
                     <div class="col-md-6 col-sm-12">
-                        <hr>
                         <h3>Tag the resource</h3>
+                        <hr>
+
                     </div>
                     <div class="w-100"></div>
 
@@ -176,19 +171,23 @@
 
                     <input hidden id="tagsToReturn" type="text" class="form-control" name="tags" value="">
                     <br>
+
                     <div class="w-100"></div>
                     <div class="col-md-3 col-sm-12"></div>
                     <div class="col-md-6 col-sm-12">
-                        <input type="submit" name="submit" class="btn btn-outline-dark" value="Upload">
+                        <input type="submit" name="submit" class="btn btn-outline-dark" value="Save">
                     </div>
                 </div>
             </form>
+            <br>
         <% } else { %>
             <div class="text-center partners__text">
                 <h3>Please login to view this page</h3>
             </div>
         <% } %>
+
     </div>
+
 </section>
 
 
@@ -275,6 +274,7 @@
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     document.getElementById('fileURL').value = url;
+
                     $('#closeBtn').show()
                     $('#fileName').text("File name: " + file.name)
                     $('#fileName').show()
