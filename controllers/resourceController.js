@@ -66,10 +66,6 @@ exports.loadResources = async (req, res, next) => {
 
 exports.primarySearch = async (req, res, next) => {
     let resourceInfo = null
-    let check = true
-    let i = 0
-    let k = 0
-    let z = 0
     try {
         if (res.locals.status === 'admin' || res.locals.status === 'faculty') {
 
@@ -79,21 +75,6 @@ exports.primarySearch = async (req, res, next) => {
                     {name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}}
                 ]
             })
-            // resourceInfo = await Resource.find({name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}})
-            // let someMoreResource = await Resource.find({
-            //     description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}
-            // })
-            // while (i < someMoreResource.length) {
-            //     for (let g = 0; g < resourceInfo.length; g++) {
-            //         if (resourceInfo[g]._id.equals(someMoreResource[i]._id)) {
-            //             check = false
-            //         }
-            //     }
-            //     if (check) {
-            //         await resourceInfo.push(someMoreResource[i])
-            //     }
-            //     i++
-            // }
         } else {
             resourceInfo = await Resource.find({
                 $or: [
@@ -107,43 +88,6 @@ exports.primarySearch = async (req, res, next) => {
                     }
                 ],
             })
-            // let someMoreResource = await Resource.find({
-            //     name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-            //     status: "public"
-            // })
-            // for (let i = 0; i < someMoreResource.length; i++) {
-            //     await resourceInfo.push(someMoreResource[i])
-            // }
-            // let extraResource = await Resource.find({
-            //     description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-            //     status: "privateToENACT"
-            // })
-            // while (k < extraResource.length) {
-            //     for (let g = 0; g < resourceInfo.length; g++) {
-            //         if (resourceInfo[g]._id.equals(extraResource[k]._id)) {
-            //             check = false
-            //         }
-            //     }
-            //     if (check == true) {
-            //         await resourceInfo.push(extraResource[k])
-            //     }
-            //     k++
-            // }
-            // let extraMoreResource = await Resource.find({
-            //     description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-            //     status: "public"
-            // })
-            // while (z < extraMoreResource.length) {
-            //     for (let y = 0; y < resourceInfo.length; y++) {
-            //         if (resourceInfo[y]._id.equals(extraMoreResource[z]._id)) {
-            //             check = false
-            //         }
-            //     }
-            //     if (check == true) {
-            //         await resourceInfo.push(extraMoreResource[z])
-            //     }
-            //     z++
-            // }
         }
         res.locals.resourceInfo = resourceInfo
         res.render('./pages/showPrimaryResources')
@@ -186,18 +130,14 @@ exports.searchByFilled = async (req, res, next) => {
                     status: req.body.status,
                     state: req.body.state
                 })
-        }
-
-        else if (req.body.state == "empty") {
+        } else if (req.body.state == "empty") {
             resourceInfo =
                 await Resource.find({
                     status: req.body.status,
                     yearOfCreation: req.body.yearOfCreation,
                     institution: req.body.institution
                 })
-        }
-
-        else if (req.body.yearOfCreation == "") {
+        } else if (req.body.yearOfCreation == "") {
             resourceInfo =
                 await Resource.find({
                     status: req.body.status,
