@@ -10,25 +10,37 @@ exports.uploadResource = async (req, res, next) => {
     try {
         let tagsString = req.body.tags
         let tags = tagsString.split(",")
-
-        let newResource = new Resource({
-            ownerId: req.user._id,
-            // courseId: courseId,
-            status: req.body.status, // public/private to class/private to professors
-            createdAt: new Date(),
-            name: req.body.resourceName,
-            description: req.body.resourceDescription,
-            tags: tags, // tags as array
-            uri: req.body.uri, // universal resource identifier specific to the resource
-            state: req.body.state,
-            resourceType: req.body.type, // video/text document ...
-            institution: req.body.institution,
-            yearOfCreation: req.body.yearOfCreation // content's actual creation time
-        })
-        if (courseId === undefined)
-            newResource[courseId] = null
-        else
-            newResource[courseId] = courseId
+        let newResource
+        if (courseId === undefined) {
+            newResource = new Resource({
+                ownerId: req.user._id,
+                status: req.body.status, // public/private to class/private to professors
+                createdAt: new Date(),
+                name: req.body.resourceName,
+                description: req.body.resourceDescription,
+                tags: tags, // tags as array
+                uri: req.body.uri, // universal resource identifier specific to the resource
+                state: req.body.state,
+                resourceType: req.body.type, // video/text document ...
+                institution: req.body.institution,
+                yearOfCreation: req.body.yearOfCreation // content's actual creation time
+            })
+        } else {
+            newResource = new Resource({
+                ownerId: req.user._id,
+                courseId: courseId,
+                status: req.body.status, // public/private to class/private to professors
+                createdAt: new Date(),
+                name: req.body.resourceName,
+                description: req.body.resourceDescription,
+                tags: tags, // tags as array
+                uri: req.body.uri, // universal resource identifier specific to the resource
+                state: req.body.state,
+                resourceType: req.body.type, // video/text document ...
+                institution: req.body.institution,
+                yearOfCreation: req.body.yearOfCreation // content's actual creation time
+            })
+        }
         // save the new resource
         await newResource.save()
         if (courseId === undefined)
@@ -58,66 +70,80 @@ exports.primarySearch = async (req, res, next) => {
     let i = 0
     let k = 0
     let z = 0
-    try{
+    try {
+        if (res.locals.status === 'admin' || res.locals.status === 'faculty') {
 
-        if(res.locals.status === 'admin' || res.locals.status === 'faculty'){
-            resourceInfo = await Resource.find({name: {'$regex':'.*'+req.body.search+'.*','$options' : 'i' }})
-            let someMoreResource = await Resource.find({
-                description: {'$regex':'.*'+req.body.search+'.*','$options' : 'i' }
-            })
-            while(i < someMoreResource.length) {
-                for(let g = 0; g < resourceInfo.length ; g++){
-                   if(resourceInfo[g]._id.equals(someMoreResource[i]._id)){
-                       check = false
-                   }
-                }
-                if(check == true) {
-                    await resourceInfo.push(someMoreResource[i])
-                }
-                i++
-            }
-        }else{
             resourceInfo = await Resource.find({
-                name: {'$regex':'.*'+req.body.search+'.*','$options' : 'i' },
-                status:"privateToENACT"
+                $or: [
+                    {description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}},
+                    {name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}}
+                ]
             })
-            let someMoreResource = await Resource.find({
-                name: {'$regex':'.*'+req.body.search+'.*','$options' : 'i' },
-                status: "public"
-            })
-            for (let i = 0; i < someMoreResource.length; i++) {
-                await resourceInfo.push(someMoreResource[i])
-            }
-            let extraResource = await Resource.find({
-                description: {'$regex':'.*'+req.body.search+'.*','$options' : 'i' },
-                status:"privateToENACT"
-            })
-            while(k < extraResource.length) {
-                for(let g = 0; g < resourceInfo.length ; g++){
-                    if(resourceInfo[g]._id.equals(extraResource[k]._id)){
-                        check = false
+            // resourceInfo = await Resource.find({name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}})
+            // let someMoreResource = await Resource.find({
+            //     description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}
+            // })
+            // while (i < someMoreResource.length) {
+            //     for (let g = 0; g < resourceInfo.length; g++) {
+            //         if (resourceInfo[g]._id.equals(someMoreResource[i]._id)) {
+            //             check = false
+            //         }
+            //     }
+            //     if (check) {
+            //         await resourceInfo.push(someMoreResource[i])
+            //     }
+            //     i++
+            // }
+        } else {
+            resourceInfo = await Resource.find({
+                $or: [
+                    {
+                        description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
+                        status: {$in: ["privateToENACT", "public"]}
+                    },
+                    {
+                        name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
+                        status: {$in: ["privateToENACT", "public"]}
                     }
-                }
-                if(check == true) {
-                    await resourceInfo.push(extraResource[k])
-                }
-                k++
-            }
-            let extraMoreResource = await Resource.find({
-                description: {'$regex':'.*'+req.body.search+'.*','$options' : 'i' },
-                status:"public"
+                ],
             })
-            while(z < extraMoreResource.length) {
-                for(let y = 0; y < resourceInfo.length ; y++){
-                    if(resourceInfo[y]._id.equals(extraMoreResource[z]._id)){
-                        check = false
-                    }
-                }
-                if(check == true) {
-                    await resourceInfo.push(extraMoreResource[z])
-                }
-                z++
-            }
+            // let someMoreResource = await Resource.find({
+            //     name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
+            //     status: "public"
+            // })
+            // for (let i = 0; i < someMoreResource.length; i++) {
+            //     await resourceInfo.push(someMoreResource[i])
+            // }
+            // let extraResource = await Resource.find({
+            //     description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
+            //     status: "privateToENACT"
+            // })
+            // while (k < extraResource.length) {
+            //     for (let g = 0; g < resourceInfo.length; g++) {
+            //         if (resourceInfo[g]._id.equals(extraResource[k]._id)) {
+            //             check = false
+            //         }
+            //     }
+            //     if (check == true) {
+            //         await resourceInfo.push(extraResource[k])
+            //     }
+            //     k++
+            // }
+            // let extraMoreResource = await Resource.find({
+            //     description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
+            //     status: "public"
+            // })
+            // while (z < extraMoreResource.length) {
+            //     for (let y = 0; y < resourceInfo.length; y++) {
+            //         if (resourceInfo[y]._id.equals(extraMoreResource[z]._id)) {
+            //             check = false
+            //         }
+            //     }
+            //     if (check == true) {
+            //         await resourceInfo.push(extraMoreResource[z])
+            //     }
+            //     z++
+            // }
         }
         res.locals.resourceInfo = resourceInfo
         await res.render('showPrimaryResources')
@@ -130,72 +156,73 @@ exports.primarySearch = async (req, res, next) => {
 exports.searchByFilled = async (req, res, next) => {
     let resourceInfo = null
     try {
+        // require status
+        if (req.body.state == "empty" && req.body.institution == "" && req.body.yearOfCreation == "") {
+            console.log("all empty")
+            resourceInfo =
+                await Resource.find({status: req.body.status})
+        }
 
-            // require status
-            if (req.body.state == "empty" && req.body.institution == "" && req.body.yearOfCreation == "") {
-                console.log("all empty")
-                resourceInfo =
-                    await Resource.find({status: req.body.status})
-            }
+        // require status and yearOfCreation
+        else if (req.body.state == "empty" && req.body.institution == "") {
+            resourceInfo =
+                await Resource.find({
+                    status: req.body.status,
+                    yearOfCreation: req.body.yearOfCreation
+                })
+        }
+        // require status and institution
+        else if (req.body.state == "empty" && req.body.yearOfCreation == "") {
+            resourceInfo =
+                await Resource.find({
+                    status: req.body.status,
+                    institution: req.body.institution
+                })
+        }
+        //require status and state
+        else if (req.body.institution == "" && req.body.yearOfCreation == "") {
+            resourceInfo =
+                await Resource.find({
+                    status: req.body.status,
+                    state: req.body.state
+                })
+        }
 
-            // require status and yearOfCreation
-            else if (req.body.state == "empty" && req.body.institution == "") {
-                resourceInfo =
-                    await Resource.find({
-                        status: req.body.status,
-                        yearOfCreation: req.body.yearOfCreation
-                    })
+        else if (req.body.state == "empty") {
+            resourceInfo =
+                await Resource.find({
+                    status: req.body.status,
+                    yearOfCreation: req.body.yearOfCreation,
+                    institution: req.body.institution
+                })
+        }
 
-                // require status and institution
-            } else if (req.body.state == "empty" && req.body.yearOfCreation == "") {
-                resourceInfo =
-                    await Resource.find({
-                        status: req.body.status,
-                        institution: req.body.institution
-                    })
-                //require status and state
-            } else if (req.body.institution == "" && req.body.yearOfCreation == "") {
-                resourceInfo =
-                    await Resource.find({
-                        status: req.body.status,
-                        state: req.body.state
-                    })
-            }
+        else if (req.body.yearOfCreation == "") {
+            resourceInfo =
+                await Resource.find({
+                    status: req.body.status,
+                    institution: req.body.institution,
+                    state: req.body.state
+                })
+        } else if (req.body.institution == "") {
+            resourceInfo =
+                await Resource.find({
+                    status: req.body.status,
+                    state: req.body.state,
+                    yearOfCreation: req.body.yearOfCreation
+                })
+        }
 
-            // 3) two fields empty
-            else if (req.body.state == "empty") {
-                resourceInfo =
-                    await Resource.find({
-                        status: req.body.status,
-                        yearOfCreation: req.body.yearOfCreation,
-                        institution: req.body.institution
-                    })
-            } else if (req.body.yearOfCreation == "") {
-                resourceInfo =
-                    await Resource.find({
-                        status: req.body.status,
-                        institution: req.body.institution,
-                        state: req.body.state
-                    })
-            } else if (req.body.institution == "") {
-                resourceInfo =
-                    await Resource.find({
-                        status: req.body.status,
-                        state: req.body.state,
-                        yearOfCreation: req.body.yearOfCreation
-                    })
-            }
-
-            // all fields nonempty
-            else {
-                resourceInfo =
-                    await Resource.find({
-                        status: req.body.status,
-                        state: req.body.state,
-                        yearOfCreation: req.body.yearOfCreation,
-                        institution: req.body.institution
-                    })
-            }
+        // all fields nonempty
+        else {
+            resourceInfo =
+                await Resource.find({
+                    status: req.body.status,
+                    state: req.body.state,
+                    yearOfCreation: req.body.yearOfCreation,
+                    institution: req.body.institution
+                })
+        }
 
 
         console.log("res: " + resourceInfo)
@@ -219,33 +246,6 @@ exports.loadAllFacultyResources = async (req, res, next) => {
         next(e)
     }
 }
-
-// exports.uploadToFacultyExclusive = async (req, res, next) => {
-//     try {
-//         let tagsString = req.body.tags
-//         let tags = tagsString.split(",")
-//         console.log(tags)
-//         let newResource = new Resource({
-//             ownerId: req.user._id,
-//             courseId: null,
-//             status: req.body.status, // public/private to class/private to professors
-//             createdAt: new Date(),
-//             name: req.body.resourceName,
-//             description: req.body.resourceDescription,
-//             tags: tags, // tags as array
-//             // uri: req.body.uri, // universal resource identifier specific to the resource
-//             state: req.body.state,
-//             resourceType: req.body.type, // video/text document ...
-//             institution: req.body.institution,
-//             yearOfCreation: req.body.yearOfCreation // content's actual creation time
-//         })
-//         // save the new resource
-//         await newResource.save()
-//         res.redirect('/facultyExclusive')
-//     } catch (e) {
-//         next(e)
-//     }
-// }
 
 exports.loadPublicResources = async (req, res, next) => {
     try {

@@ -5,7 +5,7 @@
     <div class="section__content section__content--full-width">
         <div class="jumbotron masthead text-center">
             <div class="section__title section__title--centered">
-                Find Some Resources
+                Find Resources
             </div>
             <h4>Please click on search directly to see all available resources</h4>
         </div>
@@ -19,22 +19,22 @@
             <div class="col-md-3 col-sm-12"></div>
             <div class="col-md-6 col-sm-12">
                 <% if (loggedIn) { %>
-                <form method="post" action="showPrimaryResources">
-                    <div class="input-group-prepend">
-                        <input type="text" class="form-control" name="search"
-                               placeholder="Search for name or description">
-                        &nbsp
-                        <input type="submit" name="submit" class="btn btn-outline-dark" value="Search">
-                    </div>
-                    <div class="input-group-prepend">
-                        <a href="/search"><u>advanced search</u></a>
-                    </div>
-                    <br>
-                </form>
+                    <form method="post" action="showPrimaryResources">
+                        <div class="input-group-prepend">
+                            <input type="text" class="form-control" name="search"
+                                   placeholder="Search for resource name or description">
+                            &nbsp&nbsp&nbsp
+                            <input type="submit" name="submit" class="btn btn-outline-dark" value="Search">
+                        </div>
+                        <div class="input-group-prepend">
+                            <a href="/search"><u>advanced search</u></a>
+                        </div>
+                        <br>
+                    </form>
                 <% } else { %>
-                <div class="text-center partners__text">
-                    <h3>Please login to view this page</h3>
-                </div>
+                    <div class="text-center partners__text">
+                        <h3>Please login to view this page</h3>
+                    </div>
                 <% } %>
             </div>
         </div>
