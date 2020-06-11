@@ -1,29 +1,42 @@
-<%- include('header'); -%>
-<%- include('navbar'); -%>
+<%- include('../components/header'); -%>
+<%- include('../components/navbar'); -%>
 
-<section class="section">
-    <div class="section__content section__content--full-width">
+<section class="section diagonal-gradient">
+    <div class="section__content section__content--full-width diagonal-gradient">
         <div class="jumbotron masthead text-center">
             <div class="section__title section__title--centered">
-                Find Some Resources
+                Create a new course
             </div>
-            <h4>Please fill in your requirements and leave others blank</h4>
         </div>
     </div>
 </section>
 
-
-<section class="section section__grey">
+<section class="section section__grey" data-aos="fade-up">
     <div class="container">
         <div class="row">
             <div class="col-md-3 col-sm-12"></div>
             <div class="col-md-6 col-sm-12">
                 <% if (loggedIn) { %>
-                    <form method="post" action="showResources">
+                    <form method="post" action="/createNewCourse">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="width: 180px">Course Name</span>
+                            <input type="text" class="form-control" name="courseName" placeholder="e.g. Brandeis ENACT">
+                        </div>
+                        <br>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="width: 180px">Semester</span>
+                            <input type="text" class="form-control" name="semester" placeholder="e.g. SPR2020">
+                        </div>
+                        <br>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="width: 180px">Institution</span>
+                            <input type="text" class="form-control" name="institution"
+                                   placeholder="e.g. Brandeis University">
+                        </div>
+                        <br>
                         <div class="input-group-prepend">
                             <span class="input-group-text" style="width: 180px">State</span>
                             <select class="form-control" name="state">
-                                <option selected value="empty">Choose ...</option>
                                 <option value="AL">Alabama</option>
                                 <option value="AK">Alaska</option>
                                 <option value="AZ">Arizona</option>
@@ -79,37 +92,19 @@
                         </div>
                         <br>
                         <div class="input-group-prepend">
-                            <span class="input-group-text" style="width: 180px">Institution</span>
-                            <input type="text" class="form-control" name="institution"
-                                   placeholder="e.g. Brandeis University">
+                            <span class="input-group-text" style="width: 180px">Office Hour</span>
+                            <input type="text" class="form-control" name="officeHour" placeholder="e.g. Mon 3pm - 5pm">
                         </div>
                         <br>
                         <div class="input-group-prepend">
-                            <span class="input-group-text" style="width: 180px">Creation Year</span>
-                            <input type="text" class="form-control" name="yearOfCreation"
-                                   placeholder="e.g. 2018">
+                            <span class="input-group-text" style="width: 180px">Office Location</span>
+                            <input type="text" class="form-control" name="officeHourLocation"
+                                   placeholder="e.g. Volen 110">
                         </div>
                         <br>
-                        <% if (status === 'admin' || status === 'faculty') { %>
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" style="width: 180px">Resource Status</span>
-                                <select class="form-control" name="status">
-                                    <option selected value="public">Open to everyone</option>
-                                    <option value="privateToENACT">Exclusive to ENACT members</option>
-                                    <option value="privateToProfessor">Exclusive to ENACT professors</option>
-                                </select>
-                            </div>
-                        <% } else { %>
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" style="width: 180px">Resource Status</span>
-                                <select class="form-control" name="status">
-                                    <option selected value="public">Open to everyone</option>
-                                    <option value="privateToENACT">Exclusive to ENACT members</option>
-                                </select>
-                            </div>
-                        <% } %>
-                        <br>
-                        <input type="submit" name="submit" class="btn btn-outline-dark" value="Search">
+                        <input type="checkbox" name="norobot"> I am not a robot <br>
+                        <input type="checkbox" name="robot"> I am a robot<br><br>
+                        <input type="submit" name="submit" class="btn btn-outline-dark" value="Submit">
                     </form>
                 <% } else { %>
                     <div class="text-center partners__text">
@@ -121,4 +116,4 @@
     </div>
 </section>
 
-<%- include('footer'); -%>
+<%- include('../components/footer'); -%>

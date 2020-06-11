@@ -1,5 +1,5 @@
-<%- include('header'); -%>
-<%- include('navbar'); -%>
+<%- include('../components/header'); -%>
+<%- include('../components/navbar'); -%>
 
 <section class="section">
     <div class="section__content section__content--full-width">
@@ -12,7 +12,7 @@
     </div>
 </section>
 
-<section class="section section__grey">
+<section class="section section__grey" data-aos="fade-up">
     <section class="section__content section__content--fluid-width">
         <div class="container">
             <div class="row">
@@ -67,15 +67,22 @@
                                         <li class="list-group-item borderless"
                                             style="padding: 0 0 3px 0">
                                             <a href="/uploadToCourse/<%= courseInfo._id %>">Upload Resources</a></li>
-                                        <li class="list-group-item borderless"
-                                            style="padding: 0 0 3px 0">
-                                            <a href="/search">Search Resources</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-9">
+                        <form method="post" action="/showPrimaryResources">
+                            <div class="input-group-prepend">
+                                <input type="text" class="form-control" name="search"
+                                       placeholder="Search for resource name or description">
+                                &nbsp&nbsp&nbsp
+                                <input type="submit" name="submit" class="btn btn-outline-dark"
+                                       value="Search">
+                            </div>
+                            <br>
+                        </form>
                         <div class="card">
                             <div class="card-header">
                                 <b>Latest Resources</b>
@@ -123,4 +130,4 @@
     </section>
 </section>
 
-<%- include('footer'); -%>
+<%- include('../components/footer'); -%>

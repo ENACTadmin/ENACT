@@ -1,7 +1,8 @@
-<%- include('header') -%>
-<%- include('navbar') -%>
+<%- include('../components/header'); -%>
+<%- include('../components/navbar'); -%>
 
-<section class="section section__grey">
+
+<section class="section section__grey" data-aos="fade-up">
     <div class="section__content section__content--full-width">
         <div class="jumbotron masthead text-center">
             <div class="section__title section__title--centered">
@@ -11,7 +12,7 @@
     </div>
 </section>
 
-<section class="section section__grey">
+<section class="section section__grey" data-aos="fade-up">
     <div class="container">
         <ul class="list-group">
             <% for(i = 0; i < profiles.length; i++){ %>
@@ -30,4 +31,5 @@
     </div>
 </section>
 
-<%- include('footer') -%>
+<%- include('../components/footer'); -%>
+

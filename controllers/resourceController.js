@@ -56,7 +56,7 @@ exports.loadResources = async (req, res, next) => {
     const courseId = req.params.courseId
     try {
         let resources = await Resource.find({courseId: courseId})
-        res.render('showOneCourse', {
+        res.render('./pages/showOneCourse', {
             resourceInfo: resources
         })
     } catch (e) {
@@ -146,7 +146,7 @@ exports.primarySearch = async (req, res, next) => {
             // }
         }
         res.locals.resourceInfo = resourceInfo
-        await res.render('showPrimaryResources')
+        res.render('./pages/showPrimaryResources')
 
     } catch (e) {
         next(e)
@@ -229,7 +229,7 @@ exports.searchByFilled = async (req, res, next) => {
 
         res.locals.resourceInfo = resourceInfo
 
-        await res.render('showResources')
+        res.render('./pages/showResources')
 
     } catch (e) {
         next(e)
@@ -239,7 +239,7 @@ exports.searchByFilled = async (req, res, next) => {
 exports.loadAllFacultyResources = async (req, res, next) => {
     try {
         let facultyExclusive = await Resource.find({status: 'privateToProfessor'})
-        res.render('facultyExclusive', {
+        res.render('./pages/facultyExclusive', {
             facultyExclusive: facultyExclusive
         })
     } catch (e) {
@@ -250,9 +250,8 @@ exports.loadAllFacultyResources = async (req, res, next) => {
 exports.loadPublicResources = async (req, res, next) => {
     try {
         let publicRc = await Resource.find({status: 'public'}).sort({'createdAt': -1}).limit(2)
-
         res.locals.publicRc = publicRc
-        await res.render('index')
+        res.render('./pages/index')
     } catch (e) {
         console.log("error: " + e)
         next(e)

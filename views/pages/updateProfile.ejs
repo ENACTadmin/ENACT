@@ -1,5 +1,7 @@
-<%- include('header'); -%>
-<%- include('navbar'); -%>
+<%- include('../components/header'); -%>
+<%- include('../components/navbar'); -%>
+
+<script src="/js/aws.js"></script>
 
 <section class="section section--grey">
     <div class="section__content section__content--full-width">
@@ -15,7 +17,7 @@
     </div>
 </section>
 
-<section class="section section__grey">
+<section class="section section__grey" data-aos="fade-up">
     <div class="container">
         <div class="row">
             <div class="col-md-3 col-sm-12"></div>
@@ -25,7 +27,7 @@
                 <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#myModal">
                     Upload new profile image
                 </button>
-                <br> <br>
+                <br><br>
 
                 <% if (user.profilePicURL) { %>
                     <img src="<%= locals.user.profilePicURL %>" style="width:300px;">
@@ -42,22 +44,15 @@
                 <form action="/updateProfile" method="post">
                     <div class="input-group-prepend">
                         <span class="input-group-text" style="width: 180px">Username</span>
-                        <input type="text" class="form-control" name="userName" value="<%= locals.user.userName %>">
+                        <input type="text" class="form-control" name="userName" value="<%= user.userName %>">
                     </div>
                     <br>
-                    <!-- line break -->
-                    <!--                    <div class="w-100"></div>-->
-                    <!--                    <div class="input-group-prepend">-->
-                    <!--                        <span class="input-group-text" style="width: 180px">Work Email</span>-->
-                    <!--                        <input type="text" class="form-control" name="userName" value="<%= locals.user.googleemail %>">-->
-                    <!--                    </div>-->
-                    <!--                    <br>-->
-                    <!-- line break -->
+
                     <div class="w-100"></div>
                     <div class="input-group-prepend">
                         <span class="input-group-text" style="width: 180px">Personal Email</span>
                         <input type="text" class="form-control" name="personalEmail"
-                               value="<%= locals.user.personalEmail %>">
+                               value="<%= user.personalEmail %>">
                     </div>
                     <br>
 
@@ -66,7 +61,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" style="width: 180px">Phone Number</span>
                         <input type="text" class="form-control" name="phoneNumber"
-                               value="<%= locals.user.phoneNumber %>">
+                               value="<%= user.phoneNumber %>">
                     </div>
                     <br>
 
@@ -74,7 +69,7 @@
                     <div class="w-100"></div>
                     <div class="input-group-prepend">
                         <span class="input-group-text" style="width: 180px">Bio</span>
-                        <textarea type="text" class="form-control" name="bio" rows="4"><%= locals.user.bio %></textarea>
+                        <textarea type="text" class="form-control" name="bio" rows="4"><%= user.bio %></textarea>
                     </div>
                     <br>
 
@@ -159,50 +154,7 @@
         };
         xhr.send(file);
     }
-
-    /*
-    Function to get the temporary signed request from the app.
-    If request successful, continue to upload the file using this signed
-    request.
-    */
-    function getSignedRequest(file) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', `/sign-s3?file-name=${file.name}&file-type=${file.type}`);
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    const response = JSON.parse(xhr.responseText);
-                    uploadFile(file, response.signedRequest, response.url);
-                } else {
-                    alert('Could not get signed URL.');
-                }
-            }
-        };
-        xhr.send();
-    }
-
-    /*
-    Function called when file input updated. If there is a file selected, then
-    start upload procedure by asking for a signed request from the app.
-    */
-    function initUpload() {
-        const files = document.getElementById('file-input').files;
-        const file = files[0];
-        if (file === null) {
-            return alert('No file selected.');
-        }
-        getSignedRequest(file);
-    }
-
-    /*
-    Bind listeners when the page loads.
-    */
-    (() => {
-        document.getElementById('file-input').onchange = initUpload;
-    })
-    ();
-
 </script>
 
 
-<%- include('footer'); -%>
+<%- include('../components/footer'); -%>
