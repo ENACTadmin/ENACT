@@ -130,74 +130,73 @@ exports.primarySearch = async (req, res, next) => {
 exports.searchByFilled = async (req, res, next) => {
     let resourceInfo = null
     try {
-        // 1) all fields empty
-        if (req.body.state == "empty" && req.body.institution == "" && req.body.yearOfCreation == "") {
-            console.log("all empty")
-            resourceInfo =
-                await Resource.find({status: req.body.status})
 
-            // add public resources..
-            let someMoreResource = await Resource.find({status: "public"})
-            for (let i = 0; i < someMoreResource.length; i++) {
-                await resourceInfo.push(someMoreResource[i])
+            // require status
+            if (req.body.state == "empty" && req.body.institution == "" && req.body.yearOfCreation == "") {
+                console.log("all empty")
+                resourceInfo =
+                    await Resource.find({status: req.body.status})
             }
-        }
 
-        // 2) one field empty
-        else if (req.body.state == "empty" && req.body.institution == "") {
-            resourceInfo =
-                await Resource.find({
-                    status: req.body.status,
-                    yearOfCreation: req.body.yearOfCreation
-                })
-        } else if (req.body.state == "empty" && req.body.yearOfCreation == "") {
-            resourceInfo =
-                await Resource.find({
-                    status: req.body.status,
-                    institution: req.body.institution
-                })
-        } else if (req.body.institution == "" && req.body.yearOfCreation == "") {
-            resourceInfo =
-                await Resource.find({
-                    status: req.body.status,
-                    state: req.body.state
-                })
-        }
+            // require status and yearOfCreation
+            else if (req.body.state == "empty" && req.body.institution == "") {
+                resourceInfo =
+                    await Resource.find({
+                        status: req.body.status,
+                        yearOfCreation: req.body.yearOfCreation
+                    })
 
-        // 3) two fields empty
-        else if (req.body.state == "empty") {
-            resourceInfo =
-                await Resource.find({
-                    status: req.body.status,
-                    yearOfCreation: req.body.yearOfCreation,
-                    institution: req.body.institution
-                })
-        } else if (req.body.yearOfCreation == "") {
-            resourceInfo =
-                await Resource.find({
-                    status: req.body.status,
-                    institution: req.body.institution,
-                    state: req.body.state
-                })
-        } else if (req.body.institution == "") {
-            resourceInfo =
-                await Resource.find({
-                    status: req.body.status,
-                    state: req.body.state,
-                    yearOfCreation: req.body.yearOfCreation
-                })
-        }
+                // require status and institution
+            } else if (req.body.state == "empty" && req.body.yearOfCreation == "") {
+                resourceInfo =
+                    await Resource.find({
+                        status: req.body.status,
+                        institution: req.body.institution
+                    })
+                //require status and state
+            } else if (req.body.institution == "" && req.body.yearOfCreation == "") {
+                resourceInfo =
+                    await Resource.find({
+                        status: req.body.status,
+                        state: req.body.state
+                    })
+            }
 
-        // all fields nonempty
-        else {
-            resourceInfo =
-                await Resource.find({
-                    status: req.body.status,
-                    state: req.body.state,
-                    yearOfCreation: req.body.yearOfCreation,
-                    institution: req.body.institution
-                })
-        }
+            // 3) two fields empty
+            else if (req.body.state == "empty") {
+                resourceInfo =
+                    await Resource.find({
+                        status: req.body.status,
+                        yearOfCreation: req.body.yearOfCreation,
+                        institution: req.body.institution
+                    })
+            } else if (req.body.yearOfCreation == "") {
+                resourceInfo =
+                    await Resource.find({
+                        status: req.body.status,
+                        institution: req.body.institution,
+                        state: req.body.state
+                    })
+            } else if (req.body.institution == "") {
+                resourceInfo =
+                    await Resource.find({
+                        status: req.body.status,
+                        state: req.body.state,
+                        yearOfCreation: req.body.yearOfCreation
+                    })
+            }
+
+            // all fields nonempty
+            else {
+                resourceInfo =
+                    await Resource.find({
+                        status: req.body.status,
+                        state: req.body.state,
+                        yearOfCreation: req.body.yearOfCreation,
+                        institution: req.body.institution
+                    })
+            }
+
 
         console.log("res: " + resourceInfo)
 
