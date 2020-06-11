@@ -280,7 +280,7 @@
                     $('#fileName').show()
                     $('#fileType').text("File type: " + file.type)
                     $('#fileType').show()
-                    document.getElementById('resourceName').value = file.name.split(',')[0];
+                    document.getElementById('resourceName').value = file.name.split('.')[0];
                     $('.uploaded').text("Uploaded!")
                 } else {
                     alert('Could not upload file.');
