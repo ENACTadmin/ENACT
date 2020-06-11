@@ -92,3 +92,14 @@ exports.showAllProfiles = async (req, res, next) => {
         next(e)
     }
 }
+
+exports.updateProfileImageURL = async (req, res, next) => {
+    // let userToUpdate = await User.findOne({_id: req.user._id})
+    let userToUpdate = res.locals.user
+    try {
+        userToUpdate.profilePicURL = req.body.imageURL;
+        await userToUpdate.save()
+    } catch (e) {
+        next(e)
+    }
+}

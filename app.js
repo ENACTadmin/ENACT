@@ -341,10 +341,10 @@ app.get('/assignFaculty',
 app.post('/assignNewFaculty',
     profileController.assignFaculty
 )
-
-
-app.get('/account', (req, res) => res.render('account'));
-
+//show all profiles from all users
+app.post('/saveProfileImageURL',
+    profileController.updateProfileImageURL
+)
 
 //*******************************************
 //*************Error related*****************
