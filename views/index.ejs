@@ -211,16 +211,13 @@
             </div>
             <div class="partners__slide grid__item" style="height: 750px" data-aos="fade-up">
                 <div class="card-body">
-                    <img src="https://www.brandeis.edu/ethics/images/Terris_11.jpg"
-                         alt="Daniel Terris"
+                    <img class="d-flex mr-3" src="https://www.brandeis.edu/ethics/images/DJW%20photo.jpg"
+                         alt="David J. Weinstein"
                          style="width: 100%; height: 400px; object-fit: cover; border-radius: 30px;">
-                    <br>
-                    <h3 style="text-align: center">Daniel Terris</h3>
-                    <h4 style="text-align: center">Director Emeritus</h4>
+                    <h3 style="text-align: center">David J. Weinstein (needs replacement later)</h3>
+                    <h4 style="text-align: center">Assistant Director</h4>
                     <hr>
-                    Daniel Terris became Director Emeritus of the International Center for Ethics, Justice and Public
-                    Life at Brandeis University in June 2018. He is now Dean of the Al-Quds Bard College of Arts and
-                    Sciences at Al-Quds University, a Palestinian institution.
+                    David Weinstein is Assistant Director of ENACT and Communications for the Ethics Center.
                     <br>
                 </div>
             </div>
@@ -233,109 +230,50 @@
 <!-- Section -->
 <section class="section diagonal-gradient">
     <div class="section__content section__content--fluid-width section__content--padding">
-        <h2 class="section__title section__title--centered" style="color: white">Latest Resources</h2>
+        <h2 class="section__title section__title--centered" style="color: white">Most Recently Uploaded</h2>
         <br><br><br>
-        <div class="card blogBox moreBox">
-            <div class="card-body">
-                <h4>Resource Name</h4>
-                <div class="card-text">
-                    <ul class="list-group">
-                        <li class="list-group-item borderless"
-                            style="padding: 0 0 3px 10px">
-                            <b>Description: </b>
-                            some text here
-                        </li>
-                        <li class="list-group-item borderless"
-                            style="padding: 0 0 3px 10px">
-                            <b>State:</b>
-                            Massechusetts
-                        </li>
-                        <li class="list-group-item borderless"
-                            style="padding: 0 0 3px 10px">
-                            <b>Link: </b> <a href="#">link</a>
-                        </li>
-                        <li class="list-group-item borderless"
-                            style="padding: 0 0 3px 10px">
-                            <b>Institution: </b>
-                            Brandeis University
-                        </li>
-                        <li class="list-group-item borderless"
-                            style="padding: 0 0 3px 10px">
-                            <b>Categories:</b>
-                            Education
-                        </li>
-                    </ul>
+        <% for (let i = 0; i < publicRc.length; i++) { %>
+            <div class="card blogBox moreBox" data-aos="fade-up">
+                <div class="card-body">
+                    <h4>
+                        Name: <%= publicRc[i].name %>
+                    </h4>
+                    <div class="card-text">
+                        <ul class="list-group">
+                            <li class="list-group-item borderless box-padding">
+                                <b>Description: </b>
+                                <%= publicRc[i].description %>
+                            </li>
+                            <li class="list-group-item borderless box-padding">
+                                <b>State:</b>
+                                <%= publicRc[i].state %>
+                            </li>
+                            <li class="list-group-item borderless box-padding">
+                                <b>Link: </b>
+                                <a href="<%= publicRc[i].uri %>"><%= publicRc[i].uri %></a>
+                            </li>
+                            <li class="list-group-item borderless box-padding">
+                                <b>Institution: </b>
+                                <%= publicRc[i].institution %>
+                            </li>
+                            <li class="list-group-item borderless box-padding">
+                                <b>Categories:</b>
+                                <%= publicRc[i].tags %>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
+            <br>
+        <% } %>
+
         <br>
-        <div class="card blogBox moreBox">
-            <div class="card-body">
-                <h4>Resource Name</h4>
-                <div class="card-text">
-                    <ul class="list-group">
-                        <li class="list-group-item borderless"
-                            style="padding: 0 0 3px 10px">
-                            <b>Description: </b>
-                            some text here
-                        </li>
-                        <li class="list-group-item borderless"
-                            style="padding: 0 0 3px 10px">
-                            <b>State:</b>
-                            Massechusetts
-                        </li>
-                        <li class="list-group-item borderless"
-                            style="padding: 0 0 3px 10px">
-                            <b>Link: </b> <a href="#">link</a>
-                        </li>
-                        <li class="list-group-item borderless"
-                            style="padding: 0 0 3px 10px">
-                            <b>Institution: </b>
-                            Brandeis University
-                        </li>
-                        <li class="list-group-item borderless"
-                            style="padding: 0 0 3px 10px">
-                            <b>Categories:</b>
-                            Education
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
         <br>
-        <div class="card blogBox moreBox">
-            <div class="card-body">
-                <h4>Resource Name</h4>
-                <div class="card-text">
-                    <ul class="list-group">
-                        <li class="list-group-item borderless"
-                            style="padding: 0 0 3px 10px">
-                            <b>Description: </b>
-                            some text here
-                        </li>
-                        <li class="list-group-item borderless"
-                            style="padding: 0 0 3px 10px">
-                            <b>State:</b>
-                            Massechusetts
-                        </li>
-                        <li class="list-group-item borderless"
-                            style="padding: 0 0 3px 10px">
-                            <b>Link: </b> <a href="#">link</a>
-                        </li>
-                        <li class="list-group-item borderless"
-                            style="padding: 0 0 3px 10px">
-                            <b>Institution: </b>
-                            Brandeis University
-                        </li>
-                        <li class="list-group-item borderless"
-                            style="padding: 0 0 3px 10px">
-                            <b>Categories:</b>
-                            Education
-                        </li>
-                    </ul>
-                </div>
+        <% if (status === 'admin') { %>
+            <div class="text-center">
+                <a href="/uploadToPublic" class="btn-lg btn-primary">Manage</a>
             </div>
-        </div>
+        <% } %>
         <br>
         <div class="clear"></div>
     </div>

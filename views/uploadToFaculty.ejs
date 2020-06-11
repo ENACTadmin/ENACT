@@ -5,7 +5,7 @@
     <div class="section__content section__content--full-width">
         <div class="jumbotron masthead text-center">
             <div class="section__title section__title--centered">
-                Resource Upload
+                Faculty Exclusive Resource Upload
             </div>
         </div>
     </div>
@@ -13,15 +13,29 @@
 
 <section class="section section__grey">
     <div class="container">
-        <form method="post" action="/uploadToFacultyExclusive">
-
+        <% if (loggedIn) { %>
             <div class="row">
                 <div class="col-md-3 col-sm-12"></div>
                 <div class="col-md-6 col-sm-12">
-                    <% if (loggedIn) { %>
+                    <h3>Upload the file</h3>
+                    <hr>
+                    <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                            data-target="#myModal">
+                        Upload the file
+                    </button>
+                    <p class="uploaded"></p>
+                </div>
+            </div>
+            <br>
+            <form method="post" action="/uploadToFacultyExclusive">
+                <div class="row">
+                    <div class="col-md-3 col-sm-12"></div>
+                    <div class="col-md-6 col-sm-12">
+                        <h3>Basic information</h3>
+                        <hr>
                         <div class="input-group-prepend">
                             <span class="input-group-text" style="width: 180px">Resource Name</span>
-                            <input type="text" class="form-control" name="resourceName"
+                            <input type="text" id="resourceName" class="form-control" name="resourceName"
                                    placeholder="e.g. ENACT Introduction">
                         </div>
                         <br>
@@ -30,10 +44,10 @@
                             <textarea type="text" class="form-control" name="resourceDescription" rows="4"
                                       placeholder="e.g. Detailed description"></textarea>
                         </div>
-                        <br>
-                        <div class="input-group-prepend">
+                        <!--hidden-->
+                        <div hidden class="input-group-prepend">
                             <span class="input-group-text" style="width: 180px">URI</span>
-                            <input type="text" class="form-control" name="uri"
+                            <input type="text" id='fileURL' class="form-control" name="uri"
                                    placeholder="e.g. URI">
                         </div>
                         <br>
@@ -47,23 +61,14 @@
                             </select>
                         </div>
                         <br>
-                        <% if (status === 'admin') { %>
-                            <div hidden class="input-group-prepend">
-                                <span class="input-group-text" style="width: 180px">Resource Status</span>
-                                <select class="form-control" name="status">
-                                    <option value="public">Open to public</option>
-                                    <option value="privateToENACT">Open to all ENACT members</option>
-                                    <option selected value="privateToProfessor">Open to only ENACT professors</option>
-                                </select>
-                            </div>
-                        <% } else if (status === 'faculty') { %>
+                        <% if (status === 'admin' || status === 'faculty') { %>
                             <div class="input-group-prepend">
                                 <span class="input-group-text" style="width: 180px">Resource Status</span>
                                 <select class="form-control" name="status">
-                                    <option value="privateToENACT">Open to all ENACT members</option>
-                                    <option selected value="privateToProfessor">Open to only ENACT professors</option>
+                                    <option selected value="privateToProfessor">Exclusive to ENACT professors</option>
                                 </select>
                             </div>
+                            <br>
                         <% } %>
                         <div class="input-group-prepend">
                             <span class="input-group-text" style="width: 180px">State</span>
@@ -134,56 +139,98 @@
                                    placeholder="e.g. 2018">
                         </div>
 
-                </div>
+                    </div>
 
-                <div class="w-100"></div>
-                <div class="col-md-3 col-sm-12"></div>
-                <div class="col-md-6 col-sm-12">
-                    <hr>
-                    <h3>Tag the resource</h3>
-                </div>
-                <div class="w-100"></div>
-
-                <% for (let i = 0; i < tags.length;) { %>
-                    <div class="col-md-3"></div>
-                    <% for (let j = 0; i < tags.length && j < 2; i++, j++) { %>
-                        <div class="col-md-3 col-sm-12 text-md-right">
-                            <div class="input-group" style="padding-bottom: 10px">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <input type="checkbox" value="<%= tags[i] %>"><br>
-                                    </div>
-                                </div>
-                                <input disabled type="text" class="form-control"
-                                       aria-label="Text input with checkbox" value="<%= tags[i] %>">
-                            </div>
-                        </div>
-                    <% } %>
                     <div class="w-100"></div>
-                <% } %>
+                    <br>
+                    <div class="col-md-3 col-sm-12"></div>
+                    <div class="col-md-6 col-sm-12">
+                        <h3>Tag the resource</h3>
+                        <hr>
 
-                <input hidden id="tagsToReturn" type="text" class="form-control" name="tags" value="">
-                <br>
-                <div class="w-100"></div>
-                <div class="col-md-3 col-sm-12"></div>
-                <div class="col-md-6 col-sm-12">
-                    <input type="submit" name="submit" class="btn btn-outline-dark" value="Upload">
+                    </div>
+                    <div class="w-100"></div>
+
+                    <% for (let i = 0; i < tags.length;) { %>
+                        <div class="col-md-3"></div>
+                        <% for (let j = 0; i < tags.length && j < 2; i++, j++) { %>
+                            <div class="col-md-3 col-sm-12 text-md-right">
+                                <div class="input-group" style="padding-bottom: 10px">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <input type="checkbox" value="<%= tags[i] %>"><br>
+                                        </div>
+                                    </div>
+                                    <input disabled type="text" class="form-control"
+                                           aria-label="Text input with checkbox" value="<%= tags[i] %>">
+                                </div>
+                            </div>
+                        <% } %>
+                        <div class="w-100"></div>
+                    <% } %>
+
+                    <input hidden id="tagsToReturn" type="text" class="form-control" name="tags" value="">
+                    <br>
+
+                    <div class="w-100"></div>
+                    <div class="col-md-3 col-sm-12"></div>
+                    <div class="col-md-6 col-sm-12">
+                        <input type="submit" name="submit" class="btn btn-outline-dark" value="Save">
+                    </div>
                 </div>
+            </form>
+            <br>
+        <% } else { %>
+            <div class="text-center partners__text">
+                <h3>Please login to view this page</h3>
             </div>
-
-            <% } else { %>
-                <div class="text-center partners__text">
-                    <h3>Please login to view this page</h3>
-                </div>
-            <% } %>
-        </form>
+        <% } %>
 
     </div>
 
 </section>
 
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload file</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <br><br>
+                    <div class="col-md-12 col-sm-12">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Upload File</span>
+                            <input type="file" class="form-control" id="file-input">
+                        </div>
+                        <br>
+                        <b>Upload status:</b>
+                        <p class="uploaded">Not uploaded</p>
+                        <hr>
+                        <h5 id="fileName">File Name: </h5>
+                        <h5 id="fileType">File Type: </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeBtn" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function () {
+        $('#closeBtn').hide()
+        $('#fileName').hide()
+        $('#fileType').hide()
         let checkboxes = $(":checkbox");
         checkboxes.on('change', function () {
             let string = checkboxes.filter(":checked").map(function () {
@@ -192,6 +239,58 @@
             $('#tagsToReturn').val(string);
         });
     });
+
+    (() => {
+        document.getElementById("file-input").onchange = () => {
+            const files = document.getElementById('file-input').files;
+            const file = files[0];
+            if (file === null) {
+                return alert('No file selected.');
+            }
+            getSignedRequest(file);
+        };
+    })();
+
+    function getSignedRequest(file) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', `/sign-s3?file-name=${file.name}&file-type=${file.type}`);
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    uploadFile(file, response.signedRequest, response.url);
+                } else {
+                    alert('Could not get signed URL.');
+                }
+            }
+        };
+        xhr.send();
+    }
+
+    function uploadFile(file, signedRequest, url) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('PUT', signedRequest);
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    document.getElementById('fileURL').value = url;
+
+                    $('#closeBtn').show()
+                    $('#fileName').text("File name: " + file.name)
+                    $('#fileName').show()
+                    $('#fileType').text("File type: " + file.type)
+                    $('#fileType').show()
+                    document.getElementById('resourceName').value = file.name.split('.')[0];
+                    $('.uploaded').text("Uploaded!")
+                } else {
+                    alert('Could not upload file.');
+                }
+            }
+        };
+        xhr.send(file);
+    }
+
+
 </script>
 
 <%- include('footer'); -%>
