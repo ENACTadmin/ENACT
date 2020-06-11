@@ -99,6 +99,7 @@ exports.updateProfileImageURL = async (req, res, next) => {
     try {
         userToUpdate.profilePicURL = req.body.imageURL;
         await userToUpdate.save()
+        res.redirect('back')
     } catch (e) {
         next(e)
     }
