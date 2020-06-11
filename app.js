@@ -272,6 +272,13 @@ app.post('/uploadResource/:courseId',
     resourceController.uploadResource
 )
 
+app.get('/primarySearch',
+    (req, res) => res.render('primarySearch'))
+
+app.post('/showPrimaryResources',
+    resourceController.primarySearch
+)
+
 app.get('/search',
     (req, res) => res.render('search'))
 
