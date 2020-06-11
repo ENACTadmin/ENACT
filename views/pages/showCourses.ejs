@@ -1,5 +1,5 @@
-<%- include('header'); -%>
-<%- include('navbar'); -%>
+<%- include('../components/header'); -%>
+<%- include('../components/navbar'); -%>
 
 <section class="section">
     <div class="section__content section__content--full-width">
@@ -22,7 +22,7 @@
     </div>
 </section>
 
-<section class="section section__grey">
+<section class="section section__grey" data-aos="fade-up">
     <div class="section__content section__content--fluid-width">
         <div class="container">
             <div class="row">
@@ -34,7 +34,7 @@
                         <% } else { %>
                             <div class="lead"><b>Enroll in a course</b></div>
                             <hr>
-                            <form method="post" action="joinCourse">
+                            <form method="post" action="/joinCourse">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" style="width: 180px">Course Pin</span>
                                     <input type="text" class="form-control" style="margin-right: 10px" name="coursePin"
@@ -123,4 +123,4 @@
 </section>
 
 
-<%- include('footer'); -%>
+<%- include('../components/footer'); -%>

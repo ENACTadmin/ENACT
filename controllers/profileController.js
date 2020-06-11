@@ -9,7 +9,7 @@ exports.findOneUser = async (req, res, next) => {
     let userId = req.params.id
     try {
         let userInfo = await User.findOne({_id: userId})
-        res.render('showProfile', {
+        res.render('./pages/showProfile', {
             userInfo: userInfo
         })
     } catch (e) {
@@ -70,7 +70,7 @@ exports.loadFaculty = async (req, res, next) => {
                 approvedByList.push(user.userName)
             }
             console.log("list: " + approvedList.toString())
-            res.render('assignFaculty', {
+            res.render('./pages/assignFaculty', {
                 approvedList: approvedList,
                 approvedByList: approvedByList
             })
@@ -85,7 +85,7 @@ exports.loadFaculty = async (req, res, next) => {
 exports.showAllProfiles = async (req, res, next) => {
     let profiles = await User.find()
     try {
-        res.render('showAllProfiles', {
+        res.render('./pages/showAllProfiles', {
             profiles: profiles
         })
     } catch (e) {

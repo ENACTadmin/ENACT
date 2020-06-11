@@ -1,5 +1,5 @@
-<%- include('header'); -%>
-<%- include('navbar'); -%>
+<%- include('../components/header'); -%>
+<%- include('../components/navbar'); -%>
 
 <section class="section">
     <div class="section__content section__content--full-width">
@@ -11,7 +11,7 @@
     </div>
 </section>
 
-<section class="section section__grey">
+<section class="section section__grey" data-aos="fade-up">
     <section class="section__content section__content--fluid-width">
         <div class="container">
             <div class="row">
@@ -34,7 +34,7 @@
                                                             <b>State:</b> <%= resourceInfo[i].state %></li>
                                                         <li class="list-group-item borderless box-padding">
                                                             <b>Link: </b> <a
-                                                                    href="<%= resourceInfo[i].uri %>"><%= resourceInfo[i].uri %></a>
+                                                                    href="<%= resourceInfo[i].uri %>">click me</a>
                                                         </li>
                                                         <li class="list-group-item borderless box-padding">
                                                             <b>Institution: </b> <%= resourceInfo[i].institution %></li>
@@ -64,4 +64,4 @@
 </section>
 
 
-<%- include('footer'); -%>
+<%- include('../components/footer'); -%>

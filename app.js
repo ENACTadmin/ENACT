@@ -66,8 +66,8 @@ const S3_BUCKET = process.env.S3_BUCKET || 'enact-resources'
 */
 app.get('/sign-s3', (req, res) => {
     const s3 = new aws.S3({
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID || 'AKIAIST4QPERXSLHHEWQ',
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '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'
     });
     const fileName = req.query['file-name'];
     const fileType = req.query['file-type'];
@@ -159,10 +159,6 @@ app.use(async (req, res, next) => {
     next()
 });
 
-app.get('/loginerror', function (req, res) {
-    res.render('loginerror', {})
-});
-
 // route for logging out
 app.get('/logout', function (req, res) {
     req.session.destroy((error) => {
@@ -174,7 +170,8 @@ app.get('/logout', function (req, res) {
 });
 
 // ask for authentication
-app.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
+app.get('/auth/google', passport.authenticate('google',
+    {scope: ['profile', 'email']}));
 
 // google returns authorized back to the URL below
 app.get('/login/authorized',
@@ -196,7 +193,7 @@ app.get('/',
 //***********Course related******************
 
 app.get('/createCourse',
-    (req, res) => res.render('createCourse'))
+    (req, res) => res.render('./pages/createCourse'))
 
 // rename this to /createCourse and update the ejs form
 app.post('/createNewCourse',
@@ -206,7 +203,7 @@ app.post('/createNewCourse',
 
 app.get('/showCourses',
     (req, res) =>
-        res.render('showCourses')
+        res.render('./pages/showCourses')
 )
 
 app.get('/showOneCourse/:courseId',
@@ -216,7 +213,7 @@ app.get('/showOneCourse/:courseId',
 
 app.get('/joinACourse',
     (req, res) => {
-        res.render('joinACourse')
+        res.render('./pages/joinACourse')
     }
 )
 
@@ -262,7 +259,7 @@ let tags = ['agriculture'
 
 app.get('/uploadToCourse/:courseId',
     (req, res) => {
-        res.render('uploadToCourse', {
+        res.render('./pages/uploadToCourse', {
             req: req,
             tags: tags
         })
@@ -273,14 +270,14 @@ app.post('/uploadResource/:courseId',
 )
 
 app.get('/primarySearch',
-    (req, res) => res.render('primarySearch'))
+    (req, res) => res.render('./pages/primarySearch'))
 
 app.post('/showPrimaryResources',
     resourceController.primarySearch
 )
 
 app.get('/search',
-    (req, res) => res.render('search'))
+    (req, res) => res.render('./pages/search'))
 
 app.post('/showResources',
     resourceController.searchByFilled
@@ -291,7 +288,7 @@ app.get('/facultyExclusive',
 )
 
 app.get('/uploadToFaculty',
-    (req, res) => res.render('uploadToFaculty', {
+    (req, res) => res.render('./pages/uploadToFaculty', {
         tags: tags
     })
 )
@@ -307,9 +304,9 @@ app.post('/uploadToFacultyExclusive',
 app.get('/myProfile',
     (req, res) => {
         if (res.locals.user.userName === undefined) {
-            res.render('updateProfile')
+            res.render('./pages/updateProfile')
         } else {
-            res.render('myProfile')
+            res.render('./pages/myProfile')
         }
     }
 )
@@ -322,7 +319,7 @@ app.get('/showProfile/:id',
 
 app.get('/editMyProfile',
     (req, res) => {
-        res.render('updateProfile')
+        res.render('./pages/updateProfile')
     })
 
 app.get('/showAllProfiles',

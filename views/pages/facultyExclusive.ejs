@@ -1,5 +1,5 @@
-<%- include('header'); -%>
-<%- include('navbar'); -%>
+<%- include('../components/header'); -%>
+<%- include('../components/navbar'); -%>
 
 <section class="section">
     <div class="section__content section__content--full-width">
@@ -11,7 +11,7 @@
     </div>
 </section>
 
-<section class="section section__grey">
+<section class="section section__grey" data-aos="fade-up">
     <section class="section__content section__content--fluid-width">
         <div class="container">
             <div class="row">
@@ -43,8 +43,7 @@
                                                 </li>
                                                 <li class="list-group-item borderless box-padding">
                                                     <b>Link: </b>
-                                                    <a href="<%= facultyExclusive[i].uri %>"><%= facultyExclusive[i].uri %>
-                                                    </a>
+                                                    <a href="<%= facultyExclusive[i].uri %>">click me</a>
                                                 </li>
                                                 <li class="list-group-item borderless box-padding">
                                                     <b>Institution: </b> <%= facultyExclusive[i].institution %>
@@ -73,4 +72,4 @@
     </section>
 </section>
 
-<%- include('footer'); -%>
+<%- include('../components/footer'); -%>

@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
     console.log("first time user!");
     res.redirect('/')
   } else {
-    res.render('index', {
+    res.render('./pages/index', {
       req: req,
       title: 'ENACT'
     })
