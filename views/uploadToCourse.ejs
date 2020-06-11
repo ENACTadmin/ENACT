@@ -61,17 +61,7 @@
                             </select>
                         </div>
                         <br>
-                        <% if (status === 'admin') { %>
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" style="width: 180px">Resource Status</span>
-                                <select class="form-control" name="status">
-                                    <option value="public">Open to public</option>
-                                    <option selected value="privateToENACT">Open to all ENACT members</option>
-                                    <option value="privateToProfessor">Exclusive to ENACT professors</option>
-                                </select>
-                            </div>
-                            <br>
-                        <% } else if (status === 'faculty') { %>
+                        <% if (status === 'admin' || status === 'faculty') { %>
                             <div class="input-group-prepend">
                                 <span class="input-group-text" style="width: 180px">Resource Status</span>
                                 <select class="form-control" name="status">
@@ -292,6 +282,7 @@
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     document.getElementById('fileURL').value = url;
+
                     $('#closeBtn').show()
                     $('#fileName').text("File name: " + file.name)
                     $('#fileName').show()
