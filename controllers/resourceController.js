@@ -1,6 +1,6 @@
 'use strict';
-// const Course = require('../models/Course');
-// const User = require('../models/User');
+const Course = require('../models/Course');
+const User = require('../models/User');
 const Resource = require('../models/Resource')
 
 exports.uploadResource = async (req, res, next) => {
@@ -10,7 +10,7 @@ exports.uploadResource = async (req, res, next) => {
     try {
         let tagsString = req.body.tags
         let tags = tagsString.split(",")
-        let newResource
+        let newResource = null
         if (courseId === undefined) {
             newResource = new Resource({
                 ownerId: req.user._id,
@@ -19,27 +19,49 @@ exports.uploadResource = async (req, res, next) => {
                 name: req.body.resourceName,
                 description: req.body.resourceDescription,
                 tags: tags, // tags as array
-                uri: req.body.uri, // universal resource identifier specific to the resource
+                uri: req.body.uri, // universal resource identifier specIdific to the resource
                 state: req.body.state,
                 resourceType: req.body.type, // video/text document ...
                 institution: req.body.institution,
                 yearOfCreation: req.body.yearOfCreation // content's actual creation time
             })
         } else {
-            newResource = new Resource({
-                ownerId: req.user._id,
-                courseId: courseId,
-                status: req.body.status, // public/private to class/private to professors
-                createdAt: new Date(),
-                name: req.body.resourceName,
-                description: req.body.resourceDescription,
-                tags: tags, // tags as array
-                uri: req.body.uri, // universal resource identifier specific to the resource
-                state: req.body.state,
-                resourceType: req.body.type, // video/text document ...
-                institution: req.body.institution,
-                yearOfCreation: req.body.yearOfCreation // content's actual creation time
-            })
+            const checkStatus = 'UnderReview'
+            if(res.locals.status == "student"){
+                let facultyInfo = await Course.findOne({_id: courseId})
+                newResource = new Resource({
+                    ownerId: req.user._id,
+                    courseId: courseId,
+                    status: req.body.status, // public/private to class/private to professors
+                    createdAt: new Date(),
+                    name: req.body.resourceName,
+                    description: req.body.resourceDescription,
+                    tags: tags, // tags as array
+                    uri: req.body.uri, // universal resource identifier specific to the resource
+                    state: req.body.state,
+                    resourceType: req.body.type, // video/text document ...
+                    institution: req.body.institution,
+                    yearOfCreation: req.body.yearOfCreation,// content's actual creation time
+                    facultyId: facultyInfo.ownerId, //belong to which faculty to approve
+                    checkStatus: checkStatus
+                })
+            }else{
+                newResource = new Resource({
+                    ownerId: req.user._id,
+                    courseId: courseId,
+                    status: req.body.status, // public/private to class/private to professors
+                    createdAt: new Date(),
+                    name: req.body.resourceName,
+                    description: req.body.resourceDescription,
+                    tags: tags, // tags as array
+                    uri: req.body.uri, // universal resource identifier specific to the resource
+                    state: req.body.state,
+                    resourceType: req.body.type, // video/text document ...
+                    institution: req.body.institution,
+                    yearOfCreation: req.body.yearOfCreation,// content's actual creation time
+                })
+            }
+
         }
         // save the new resource
         await newResource.save()
@@ -665,6 +687,21 @@ exports.loadPublicResources = async (req, res, next) => {
         let publicRc = await Resource.find({status: 'public'}).sort({'createdAt': -1}).limit(2)
         res.locals.publicRc = publicRc
         res.render('./pages/index')
+    } catch (e) {
+        console.log("error: " + e)
+        next(e)
+    }
+}
+
+exports.loadUnderReviewResources = async (req, res, next) => {
+    try {
+        let resourceInfo =
+            await Resource.find({
+                checkStatus: 'UnderReview',
+                facultyId : req.user._id
+            }).sort({'createdAt': -1})
+        res.locals.resourceInfo = resourceInfo
+        res.render('./pages/reviewResource')
     } catch (e) {
         console.log("error: " + e)
         next(e)

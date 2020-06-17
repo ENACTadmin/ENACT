@@ -261,6 +261,15 @@ app.post('/uploadToFacultyExclusive',
     resourceController.uploadResource
 )
 
+
+//*******************************************
+//***********Notification related*****************
+
+
+app.get('/reviewResource',
+    resourceController.loadUnderReviewResources
+)
+
 //*******************************************
 //***********Profile related*****************
 
