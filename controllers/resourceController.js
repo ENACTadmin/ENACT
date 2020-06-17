@@ -27,7 +27,7 @@ exports.uploadResource = async (req, res, next) => {
             })
         } else {
             const checkStatus = 'UnderReview'
-            if(res.locals.status == "student"){
+            if (res.locals.status == "student") {
                 let facultyInfo = await Course.findOne({_id: courseId})
                 newResource = new Resource({
                     ownerId: req.user._id,
@@ -45,7 +45,7 @@ exports.uploadResource = async (req, res, next) => {
                     facultyId: facultyInfo.ownerId, //belong to which faculty to approve
                     checkStatus: checkStatus
                 })
-            }else{
+            } else {
                 newResource = new Resource({
                     ownerId: req.user._id,
                     courseId: courseId,
@@ -698,7 +698,7 @@ exports.loadUnderReviewResources = async (req, res, next) => {
         let resourceInfo =
             await Resource.find({
                 checkStatus: 'UnderReview',
-                facultyId : req.user._id
+                facultyId: req.user._id
             }).sort({'createdAt': -1})
         res.locals.resourceInfo = resourceInfo
         res.render('./pages/reviewResource')
