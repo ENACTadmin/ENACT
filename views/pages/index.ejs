@@ -52,14 +52,14 @@
                 </li>
                 <li>
                     <% if (loggedIn) { %>
-                    <a class="header-link" id="header-link" href="#" data-aos="fade-left">Notifications</a>
-                    <ul class="sub-menu">
-                        <li>
-                            <% if (status === "faculty" ||status === "admin") { %>
-                            <a class="header-link" href="/reviewResource">Resources under review</a>
-                            <% } %>
-                        </li>
-                    </ul>
+                        <a class="header-link" id="header-link" href="#" data-aos="fade-left">Notifications</a>
+                        <ul class="sub-menu">
+                            <li>
+                                <% if (status === "faculty" || status === "admin") { %>
+                                    <a class="header-link" href="/reviewResource">Resources under review</a>
+                                <% } %>
+                            </li>
+                        </ul>
                     <% } else { %>
                     <% } %>
                 </li>
@@ -85,7 +85,6 @@
                     </li>
                 <% } else { %>
                 <% } %>
-
 
                 <li class="header__btn header__btn--login">
                     <% if (!loggedIn) { %>
@@ -124,7 +123,7 @@
                     <br>
                     <div class="form-demo" data-aos="fade-up" data-aos-delay="100">
                         <a href="/primarySearch"><input type="submit" name="submit" class="form-demo__submit"
-                                                 value="FIND RESOURCES"></a>
+                                                        value="FIND RESOURCES"></a>
                     </div>
                     <br>
 
@@ -192,7 +191,7 @@
 <!-- Section -->
 <section class="section section__grey">
     <div class="section__content section__content--fluid-width section__content--padding">
-        <h2 class="section__title section__title--centered">ENACT Faculties</h2>
+        <h2 class="section__title section__title--centered">ENACT Faculty</h2>
         <br>
         <div class="grid grid--3col">
             <div class="partners__slide grid__item" style="height: 750px" data-aos="fade-up">

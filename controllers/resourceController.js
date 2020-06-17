@@ -120,30 +120,8 @@ exports.primarySearch = async (req, res, next) => {
 
 exports.searchByFilled = async (req, res, next) => {
     let resourceInfo = null
+
     try {
-        if (res.locals.status === 'admin' || res.locals.status === 'faculty') {
-            resourceInfo = await Resource.find({
-                $or: [
-                    {description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}},
-                    {name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}}
-                ]
-            })
-        }
-        // student search
-        else {
-            resourceInfo = await Resource.find({
-                $or: [
-                    {
-                        description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                        status: {$in: ["privateToENACT", "public"]}
-                    },
-                    {
-                        name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                        status: {$in: ["privateToENACT", "public"]}
-                    }
-                ],
-            })
-        }
         // -----------------------------------------------------------------
         // --------------------admin or faculty search----------------------
         // -----------------------------------------------------------------
@@ -661,7 +639,26 @@ exports.searchByFilled = async (req, res, next) => {
             }
         }
 
-        res.locals.resourceInfo = resourceInfo
+        // -----------------------------------------------------------------
+        // ---------------------------tag filter----------------------------
+        // -----------------------------------------------------------------
+
+        let filteredResource = []
+        if (req.body.tags.length > 0) {
+            console.log("tag used")
+            for (let m = 0; m < resourceInfo.length; m++) {
+                let tagged = await req.body.tags.split(',')
+                let result = tagged.every(val => resourceInfo[m].tags.includes(val));
+                if (result) {
+                    filteredResource.push(resourceInfo[m])
+                }
+            }
+        } else {
+            console.log("tag not used")
+            filteredResource = resourceInfo
+        }
+
+        res.locals.resourceInfo = filteredResource
 
         res.render('./pages/showResources')
 
