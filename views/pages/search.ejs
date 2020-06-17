@@ -5,9 +5,9 @@
     <div class="section__content section__content--full-width">
         <div class="jumbotron masthead text-center">
             <div class="section__title section__title--centered">
-                Find Some Resources
+                Advanced Search
             </div>
-            <h4>Please fill in your requirements and leave others blank</h4>
+            <h4>Apply filters to search results</h4>
         </div>
     </div>
 </section>
@@ -15,11 +15,20 @@
 
 <section class="section section__grey" data-aos="fade-up">
     <div class="container">
-        <div class="row">
-            <div class="col-md-3 col-sm-12"></div>
-            <div class="col-md-6 col-sm-12">
-                <% if (loggedIn) { %>
-                    <form method="post" action="/showResources">
+        <% if (loggedIn) { %>
+            <form method="post" action="/showResources">
+                <div class="row">
+                    <div class="col-md-3 col-sm-12"></div>
+                    <div class="col-md-6 col-sm-12">
+                        <h3>General Search</h3>
+                        <hr>
+                        <div class="input-group-prepend">
+                            <input type="text" class="form-control" name="search"
+                                   placeholder="Resource name or description">
+                        </div>
+                        <br>
+                        <h3>Filters</h3>
+                        <hr>
                         <div class="input-group-prepend">
                             <span class="input-group-text" style="width: 180px">State</span>
                             <select class="form-control" name="state">
@@ -78,23 +87,16 @@
                             </select>
                         </div>
                         <br>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" style="width: 180px">Institution</span>
-                            <input type="text" class="form-control" name="institution"
-                                   placeholder="e.g. Brandeis University">
-                        </div>
+                        <%- include('../components/component-institutionSelector') -%>
                         <br>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" style="width: 180px">Creation Year</span>
-                            <input type="text" class="form-control" name="yearOfCreation"
-                                   placeholder="e.g. 2018">
-                        </div>
+                        <%- include('../components/component-yearOfCreationSelector') -%>
                         <br>
                         <% if (status === 'admin' || status === 'faculty') { %>
                             <div class="input-group-prepend">
                                 <span class="input-group-text" style="width: 180px">Resource Status</span>
                                 <select class="form-control" name="status">
-                                    <option selected value="public">Open to everyone</option>
+                                    <option value="all">All resources</option>
+                                    <option value="public">Open to public</option>
                                     <option value="privateToENACT">Exclusive to ENACT members</option>
                                     <option value="privateToProfessor">Exclusive to ENACT professors</option>
                                 </select>
@@ -109,16 +111,26 @@
                             </div>
                         <% } %>
                         <br>
-                        <input type="submit" name="submit" class="btn btn-outline-dark" value="Search">
-                    </form>
-                <% } else { %>
-                    <div class="text-center partners__text">
-                        <h3>Please login to view this page</h3>
                     </div>
-                <% } %>
+                </div>
+                <div class="row">
+                    <%- include('../components/component-tagSelector') -%>
+                    <br>
+                    <div class="w-100"></div>
+                    <div class="col-md-3 col-sm-12"></div>
+                    <br>
+                    <div class="col-md-6 col-sm-12">
+                        <input type="submit" name="submit" class="btn btn-dark" value="Search">
+                    </div>
+                </div>
+            </form>
+        <% } else { %>
+            <div class="text-center partners__text">
+                <h3>Please login to view this page</h3>
             </div>
-        </div>
+        <% } %>
     </div>
 </section>
+
 
 <%- include('../components/footer'); -%>

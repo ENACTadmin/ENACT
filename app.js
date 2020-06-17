@@ -224,44 +224,10 @@ app.post('/joinCourse',
 //*******************************************
 //***********Resource related****************
 
-let tags = ['agriculture'
-    , 'arts and culture'
-    , 'cannabis'
-    , 'consumer protection'
-    , 'COVID-19'
-    , 'criminal justice'
-    , 'disability'
-    , 'education'
-    , 'elderly'
-    , 'energy'
-    , 'environment/climate change'
-    , 'gun control'
-    , 'healthcare'
-    , 'higher education'
-    , 'housing and homelessness'
-    , 'immigration'
-    , ' labor'
-    , 'LGBTQ+'
-    , 'mental health'
-    , 'opioids'
-    , 'public health'
-    , 'public safety'
-    , 'race'
-    , 'substance use and recovery'
-    , 'taxes'
-    , 'technology'
-    , 'tourism'
-    , 'transportation'
-    , 'veterans'
-    , 'violence and sexual assault'
-    , 'voting'
-    , 'women and gender']
-
 app.get('/uploadToCourse/:courseId',
     (req, res) => {
         res.render('./pages/uploadToCourse', {
-            req: req,
-            tags: tags
+            req: req
         })
     })
 
@@ -288,9 +254,7 @@ app.get('/facultyExclusive',
 )
 
 app.get('/uploadToFaculty',
-    (req, res) => res.render('./pages/uploadToFaculty', {
-        tags: tags
-    })
+    (req, res) => res.render('./pages/uploadToFaculty')
 )
 
 app.post('/uploadToFacultyExclusive',
