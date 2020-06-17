@@ -15,7 +15,10 @@ const resourceSchema = Schema({
     state: String,
     resourceType: String, // video/text document ...
     institution: String,
-    yearOfCreation: Number // content's actual creation time
+    yearOfCreation: Number, // content's actual creation time
+    facultyId: ObjectID, //belong to which faculty to approve
+    checkStatus: String, //what is the status of student resources that required faculty to check, UnderReview/deny/approve/public
+    review: String  // given by faculty to student resources
 });
 
 module.exports = mongoose.model('Resource', resourceSchema);
