@@ -1,3 +1,4 @@
+
 'use strict';
 const Course = require('../models/Course');
 const User = require('../models/User');
@@ -176,7 +177,7 @@ exports.searchByFilled = async (req, res, next) => {
                 }
             }
 
-                // situation 2: 2 fields are filled other than status
+            // situation 2: 2 fields are filled other than status
 
             // require status and yearOfCreation
             else if (req.body.state == "empty" && req.body.institution == "") {
@@ -358,8 +359,8 @@ exports.searchByFilled = async (req, res, next) => {
             }
         }
 
-            // -----------------------------------------------------------------
-            // -------------------------student search--------------------------
+        // -----------------------------------------------------------------
+        // -------------------------student search--------------------------
         // -----------------------------------------------------------------
         else {
             // situation 1: only status is filled
@@ -398,7 +399,7 @@ exports.searchByFilled = async (req, res, next) => {
                 }
             }
 
-                // situation 2: 2 fields are filled other than status
+            // situation 2: 2 fields are filled other than status
 
             // require status and yearOfCreation
             else if (req.body.state == "empty" && req.body.institution == "") {
