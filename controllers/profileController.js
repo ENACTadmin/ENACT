@@ -20,7 +20,6 @@ exports.findOneUser = async (req, res, next) => {
 
 exports.updateProfile = async (req, res, next) => {
     let userToUpdate = await User.findOne({_id: req.user._id})
-    console.log("userInfo: " + JSON.stringify(userToUpdate))
     try {
         userToUpdate.userName = req.body.userName;
         userToUpdate.workEmail = req.body.workEmail;

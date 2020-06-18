@@ -1,0 +1,222 @@
+<%- include('../components/header'); -%>
+<%- include('../components/navbar'); -%>
+
+<script src="/js/aws.js"></script>
+
+<section class="section">
+    <div class="section__content section__content--full-width">
+        <div class="jumbotron masthead text-center">
+            <div class="section__title section__title--centered">
+                Update metadata of <%= resourceInfo.name %>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section__grey" data-aos="fade-up">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-12"></div>
+            <div class="col-md-6 col-sm-12">
+                <h3>Upload the file</h3>
+                <hr>
+                <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                        data-target="#myModal">
+                    Upload the file
+                </button>
+                <p class="uploaded"></p>
+            </div>
+        </div>
+        <br>
+        <form method="post" action="/updateResource/<%= resourceInfo._id %>">
+            <div class="row">
+                <div class="col-md-3 col-sm-12"></div>
+                <div class="col-md-6 col-sm-12">
+                    <h3>Basic information</h3>
+                    <hr>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="width: 180px">Resource Name</span>
+                        <input type="text" id="resourceName" class="form-control" name="resourceName"
+                               value="<%= resourceInfo.name %>">
+                    </div>
+                    <br>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="width: 180px">Description</span>
+                        <textarea type="text" class="form-control" name="resourceDescription"
+                                  rows="4"><%= resourceInfo.description %></textarea>
+                    </div>
+                    <br>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="width: 180px">URI</span>
+                        <input type="text" id='fileURL' class="form-control" name="uri"
+                               value="<%= resourceInfo.uri %>">
+                    </div>
+                    <br>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="width: 180px">Resource Type</span>
+                        <select id="typeSelect" class="form-control" name="resourceType">
+                            <option value="null">Choose...</option>
+                            <option value="video">Video</option>
+                            <option value="document">Document</option>
+                        </select>
+                    </div>
+                    <br>
+                    <%- include('../components/component-stateSelector') -%>
+                    <br>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="width: 180px">Institution</span>
+                        <input type="text" class="form-control" name="institution"
+                               value="<%= resourceInfo.institution %>">
+                    </div>
+                    <br>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="width: 180px">Creation Year</span>
+                        <input type="text" class="form-control" name="yearOfCreation"
+                               value="<%= resourceInfo.yearOfCreation %>">
+                    </div>
+                    <br>
+                    <% if (status === 'admin' || status === 'faculty') { %>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="width: 180px">Resource Status</span>
+                            <select id="statusSelect" class="form-control" name="status">
+                                <option value="privateToENACT">Exclusive to all ENACT members</option>
+                                <option value="privateToProfessor">Exclusive to ENACT professors</option>
+                                <option value="public">Open to public</option>
+                            </select>
+                        </div>
+                        <br>
+                    <% } else { %>
+                        <div hidden class="input-group-prepend">
+                            <span class="input-group-text" style="width: 180px">Resource Status</span>
+                            <select id="statusSelect" class="form-control" name="status">
+                                <option value="privateToENACT">Exclusive to all ENACT members</option>
+                                <option value="public">Open to public</option>
+                            </select>
+                        </div>
+                    <% } %>
+                </div>
+
+                <div class="w-100"></div>
+                <br>
+                <div class="col-md-3 col-sm-12"></div>
+                <div class="col-md-6 col-sm-12">
+                    <h3>Tag the resource</h3>
+                    <hr>
+                </div>
+                <div class="w-100"></div>
+                <%- include('../components/component-tagSelector') -%>
+                <br>
+                <div class="w-100"></div>
+                <div class="col-md-3 col-sm-12"></div>
+                <div class="col-md-6 col-sm-12">
+                    <input type="submit" name="submit" class="btn btn-outline-dark" value="Save">
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload file</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <br><br>
+                    <div class="col-md-12 col-sm-12">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Upload File</span>
+                            <input type="file" class="form-control" id="file-input">
+                        </div>
+                        <br>
+                        <b>Upload status:</b>
+                        <p class="uploaded">Not uploaded</p>
+                        <hr>
+                        <h5 id="fileName">File Name: </h5>
+                        <h5 id="fileType">File Type: </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeBtn" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p hidden id="typeFromServer">"<%= resourceInfo.resourceType %>"</p>
+<p hidden id="stateFromServer">"<%= resourceInfo.state %>"</p>
+<p hidden id="statusFromServer">"<%= resourceInfo.status %>"</p>
+<p hidden id="tagsFromServer">"<%= resourceInfo.tags %>"</p>
+
+
+<script>
+    $(document).ready(function () {
+        let realType = $('#typeFromServer').text()
+        realType = realType.substring(1, realType.length - 1)
+        $('#typeSelect option').each(function () {
+            if ($(this).val() === realType) {
+                $(this).prop('selected', true)
+            }
+        })
+        let state = $('#stateFromServer').text()
+        state = state.substring(1, state.length - 1)
+        $('#stateSelect option').each(function () {
+            if ($(this).val() === state) {
+                $(this).prop('selected', true)
+            }
+        })
+        let status = $('#statusFromServer').text()
+        status = status.substring(1, status.length - 1)
+        $('#statusSelect option').each(function () {
+            if ($(this).val() === status) {
+                $(this).prop('selected', true)
+            }
+        })
+        let tags = $("#tagsFromServer").text()
+        tags = tags.substring(1, tags.length - 1)
+        let tagsArray = tags.split(',')
+        $(':checkbox').each(function () {
+            if (tagsArray.includes($(this).val())) {
+                $(this).prop('checked', true)
+            }
+        })
+        let checkboxes = $(":checkbox");
+        checkboxes.on('change', function () {
+            let string = checkboxes.filter(":checked").map(function () {
+                return this.value;
+            }).get().join(",");
+            $('#tagsToReturn').val(string);
+        });
+    })
+
+    /*
+    Function to carry out the actual PUT request to S3 using the signed request from the app.
+    */
+    function uploadFile(file, signedRequest, url) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('PUT', signedRequest);
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    document.getElementById('preview').src = url;
+                    document.getElementById('imageURL').value = url;
+                } else {
+                    alert('Could not upload file.');
+                }
+            }
+        };
+        xhr.send(file);
+    }
+</script>
+
+
+<%- include('../components/footer'); -%>

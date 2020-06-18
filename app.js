@@ -261,10 +261,16 @@ app.post('/uploadToFacultyExclusive',
     resourceController.uploadResource
 )
 
+app.get('/updateOneResource/:resourceId',
+    resourceController.loadOneResource
+)
+
+app.post('/updateResource/:resourceId',
+    resourceController.updateResource
+)
 
 //*******************************************
-//***********Notification related*****************
-
+//***********Notification related************
 
 app.get('/reviewResource',
     resourceController.loadUnderReviewResources,
