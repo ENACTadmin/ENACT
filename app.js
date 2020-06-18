@@ -273,8 +273,8 @@ app.post('/updateResource/:resourceId',
 //***********Notification related************
 
 app.get('/reviewResource',
-    resourceController.loadUnderReviewResources,
-    resourceController.approveResources
+    resourceController.loadUnderReviewResources
+    // resourceController.approveResources
 )
 
 app.get('/approved')
