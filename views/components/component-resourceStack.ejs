@@ -1,0 +1,39 @@
+<div class="card-body">
+    <% if (resourceInfo.length !== 0) { %>
+        <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
+            <div class="card blogBox moreBox">
+                <div class="card-body">
+                    <h4><%= resourceInfo[i].name %></h4>
+                    <div class="card-text">
+                        <ul class="list-group">
+                            <li class="list-group-item borderless box-padding">
+                                <b>Description: </b> <%= resourceInfo[i].description %></li>
+                            <li class="list-group-item borderless box-padding">
+                                <b>State:</b> <%= resourceInfo[i].state %></li>
+                            <li class="list-group-item borderless box-padding">
+                                <b>Link: </b> <a href="<%= resourceInfo[i].uri %>">click me</a>
+
+                            </li>
+                            <li class="list-group-item borderless box-padding">
+                                <b>Institution: </b> <%= resourceInfo[i].institution %></li>
+                            <li class="list-group-item borderless box-padding">
+                                <b>Tags:</b> <%= resourceInfo[i].tags %>
+                            </li>
+                            <% if (status === 'admin' || status === 'faculty') { %>
+                                <li class="list-group-item borderless box-padding">
+                                    <b>Actions:</b>
+                                    <a href="#" type="button">Star</a>,
+                                    <a href="/updateOneResource/<%= resourceInfo[i]._id %>" type="button">Edit</a>,
+                                    <a href="#" type="button">Remove</a>
+                                </li>
+                            <% } %>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <br>
+        <% } %>
+    <% } else { %>
+        No resource available yet
+    <% } %>
+</div>

@@ -4,13 +4,12 @@ const User = require('../models/User');
 const Resource = require('../models/Resource')
 
 exports.uploadResource = async (req, res, next) => {
-    console.log("in upload resource")
     const courseId = req.params.courseId
-    console.log("courseId: " + courseId)
+    console.log("in upload Resource")
     try {
         let tagsString = req.body.tags
         let tags = tagsString.split(",")
-        let newResource = null
+        let newResource
         if (courseId === undefined) {
             newResource = new Resource({
                 ownerId: req.user._id,
@@ -21,7 +20,7 @@ exports.uploadResource = async (req, res, next) => {
                 tags: tags, // tags as array
                 uri: req.body.uri, // universal resource identifier specIdific to the resource
                 state: req.body.state,
-                resourceType: req.body.type, // video/text document ...
+                resourceType: req.body.resourceType, // video/text document ...
                 institution: req.body.institution,
                 yearOfCreation: req.body.yearOfCreation // content's actual creation time
             })
@@ -39,7 +38,7 @@ exports.uploadResource = async (req, res, next) => {
                     tags: tags, // tags as array
                     uri: req.body.uri, // universal resource identifier specific to the resource
                     state: req.body.state,
-                    resourceType: req.body.type, // video/text document ...
+                    resourceType: req.body.resourceType, // video/text document ...
                     institution: req.body.institution,
                     yearOfCreation: req.body.yearOfCreation,// content's actual creation time
                     facultyId: facultyInfo.ownerId, //belong to which faculty to approve
@@ -56,7 +55,7 @@ exports.uploadResource = async (req, res, next) => {
                     tags: tags, // tags as array
                     uri: req.body.uri, // universal resource identifier specific to the resource
                     state: req.body.state,
-                    resourceType: req.body.type, // video/text document ...
+                    resourceType: req.body.resourceType, // video/text document ...
                     institution: req.body.institution,
                     yearOfCreation: req.body.yearOfCreation,// content's actual creation time
                 })
@@ -69,6 +68,32 @@ exports.uploadResource = async (req, res, next) => {
             res.redirect('/facultyExclusive')
         else
             res.redirect('/showOneCourse/' + courseId)
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.updateResource = async (req, res, next) => {
+    const resourceId = req.params.resourceId
+    try {
+        let tagsString = req.body.tags
+        let tags = tagsString.split(",")
+        console.log("tags here: ", tags)
+        let oldResource = await Resource.findOne({_id: resourceId})
+        oldResource.name = req.body.resourceName
+        oldResource.status = req.body.status
+        oldResource.description = req.body.resourceDescription
+        oldResource.uri = req.body.uri
+        oldResource.resourceType = req.body.resourceType
+        oldResource.institution = req.body.institution
+        oldResource.yearOfCreation = req.body.yearOfCreation
+        oldResource.tags = tags
+        await oldResource.save()
+        // save the new resource
+        if (oldResource.courseId === undefined)
+            res.redirect('/facultyExclusive')
+        else
+            res.redirect('/showOneCourse/' + oldResource.courseId)
     } catch (e) {
         next(e)
     }
@@ -670,9 +695,9 @@ exports.searchByFilled = async (req, res, next) => {
 
 exports.loadAllFacultyResources = async (req, res, next) => {
     try {
-        let facultyExclusive = await Resource.find({status: 'privateToProfessor'})
+        let resourceInfo = await Resource.find({status: 'privateToProfessor'})
         res.render('./pages/facultyExclusive', {
-            facultyExclusive: facultyExclusive
+            resourceInfo: resourceInfo
         })
     } catch (e) {
         next(e)
@@ -692,15 +717,25 @@ exports.loadPublicResources = async (req, res, next) => {
 
 exports.loadUnderReviewResources = async (req, res, next) => {
     try {
-        let resourceInfo =
-            await Resource.find({
-                checkStatus: 'UnderReview',
-                facultyId: req.user._id
-            }).sort({'createdAt': -1})
+        let resourceInfo = await Resource.find({
+            checkStatus: 'UnderReview',
+            facultyId: req.user._id
+        }).sort({'createdAt': -1})
         res.locals.resourceInfo = resourceInfo
         res.render('./pages/reviewResource')
     } catch (e) {
         console.log("error: " + e)
+        next(e)
+    }
+}
+
+exports.loadOneResource = async (req, res, next) => {
+    try {
+        let resourceId = await req.params.resourceId
+        let resourceInfo = await Resource.findOne({_id: resourceId})
+        res.locals.resourceInfo = resourceInfo
+        res.render('./pages/updateResource')
+    } catch (e) {
         next(e)
     }
 }
