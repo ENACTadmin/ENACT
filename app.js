@@ -269,6 +269,10 @@ app.post('/updateResource/:resourceId',
     resourceController.updateResource
 )
 
+app.post('/removeResource/:resourceId',
+    resourceController.removeResource
+)
+
 //*******************************************
 //***********Notification related************
 

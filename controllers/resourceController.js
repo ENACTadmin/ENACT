@@ -739,3 +739,14 @@ exports.loadOneResource = async (req, res, next) => {
         next(e)
     }
 }
+
+
+exports.removeResource = async (req, res, next) => {
+    try {
+        let resourceId = await req.params.resourceId
+        await Resource.deleteOne({_id: resourceId})
+        res.redirect('/primarySearch')
+    } catch (e) {
+        next(e)
+    }
+}
