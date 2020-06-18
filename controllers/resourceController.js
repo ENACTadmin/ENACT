@@ -1,4 +1,3 @@
-
 'use strict';
 const Course = require('../models/Course');
 const User = require('../models/User');
@@ -75,26 +74,23 @@ exports.uploadResource = async (req, res, next) => {
 }
 
 exports.updateResource = async (req, res, next) => {
-    const resourceId = req.params.resourceId
+    const resourceId = await req.params.resourceId
     try {
-        let tagsString = req.body.tags
+        let tagsString = await req.body.tags
         let tags = tagsString.split(",")
-        console.log("tags here: ", tags)
         let oldResource = await Resource.findOne({_id: resourceId})
-        oldResource.name = req.body.resourceName
-        oldResource.status = req.body.status
-        oldResource.description = req.body.resourceDescription
-        oldResource.uri = req.body.uri
-        oldResource.resourceType = req.body.resourceType
-        oldResource.institution = req.body.institution
-        oldResource.yearOfCreation = req.body.yearOfCreation
-        oldResource.tags = tags
+        oldResource.name = await req.body.resourceName
+        oldResource.status = await req.body.status
+        oldResource.description = await req.body.resourceDescription
+        oldResource.uri = await req.body.uri
+        oldResource.state = await req.body.state
+        oldResource.resourceType = await req.body.resourceType
+        oldResource.institution = await req.body.institution
+        oldResource.yearOfCreation = await req.body.yearOfCreation
+        oldResource.tags = await tags
         await oldResource.save()
         // save the new resource
-        if (oldResource.courseId === undefined)
-            res.redirect('/facultyExclusive')
-        else
-            res.redirect('/showOneCourse/' + oldResource.courseId)
+        res.redirect('back')
     } catch (e) {
         next(e)
     }
@@ -177,7 +173,7 @@ exports.searchByFilled = async (req, res, next) => {
                 }
             }
 
-            // situation 2: 2 fields are filled other than status
+                // situation 2: 2 fields are filled other than status
 
             // require status and yearOfCreation
             else if (req.body.state == "empty" && req.body.institution == "") {
@@ -359,8 +355,8 @@ exports.searchByFilled = async (req, res, next) => {
             }
         }
 
-        // -----------------------------------------------------------------
-        // -------------------------student search--------------------------
+            // -----------------------------------------------------------------
+            // -------------------------student search--------------------------
         // -----------------------------------------------------------------
         else {
             // situation 1: only status is filled
@@ -399,7 +395,7 @@ exports.searchByFilled = async (req, res, next) => {
                 }
             }
 
-            // situation 2: 2 fields are filled other than status
+                // situation 2: 2 fields are filled other than status
 
             // require status and yearOfCreation
             else if (req.body.state == "empty" && req.body.institution == "") {
@@ -741,12 +737,12 @@ exports.loadOneResource = async (req, res, next) => {
     }
 }
 
-
 exports.removeResource = async (req, res, next) => {
     try {
         let resourceId = await req.params.resourceId
         await Resource.deleteOne({_id: resourceId})
-        res.redirect('/primarySearch')
+        console.log('url: ', req.url)
+        res.redirect('back')
     } catch (e) {
         next(e)
     }
