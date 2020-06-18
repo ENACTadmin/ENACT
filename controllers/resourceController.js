@@ -1,20 +1,19 @@
+
 'use strict';
 const Course = require('../models/Course');
 const User = require('../models/User');
 const Resource = require('../models/Resource')
 
 exports.uploadResource = async (req, res, next) => {
-    console.log("in upload resource")
     const courseId = req.params.courseId
-    console.log("courseId: " + courseId)
+    console.log("in upload Resource")
     try {
         let tagsString = req.body.tags
         let tags = tagsString.split(",")
-        let newResource = null
+        let newResource
         if (courseId === undefined) {
             newResource = new Resource({
                 ownerId: req.user._id,
-                ownerName: req.user.googlename,
                 status: req.body.status, // public/private to class/private to professors
                 createdAt: new Date(),
                 name: req.body.resourceName,
@@ -22,7 +21,7 @@ exports.uploadResource = async (req, res, next) => {
                 tags: tags, // tags as array
                 uri: req.body.uri, // universal resource identifier specIdific to the resource
                 state: req.body.state,
-                resourceType: req.body.type, // video/text document ...
+                resourceType: req.body.resourceType, // video/text document ...
                 institution: req.body.institution,
                 yearOfCreation: req.body.yearOfCreation // content's actual creation time
             })
@@ -32,7 +31,6 @@ exports.uploadResource = async (req, res, next) => {
                 let facultyInfo = await Course.findOne({_id: courseId})
                 newResource = new Resource({
                     ownerId: req.user._id,
-                    ownerName: req.user.googlename,
                     courseId: courseId,
                     status: req.body.status, // public/private to class/private to professors
                     createdAt: new Date(),
@@ -41,7 +39,7 @@ exports.uploadResource = async (req, res, next) => {
                     tags: tags, // tags as array
                     uri: req.body.uri, // universal resource identifier specific to the resource
                     state: req.body.state,
-                    resourceType: req.body.type, // video/text document ...
+                    resourceType: req.body.resourceType, // video/text document ...
                     institution: req.body.institution,
                     yearOfCreation: req.body.yearOfCreation,// content's actual creation time
                     facultyId: facultyInfo.ownerId, //belong to which faculty to approve
@@ -50,7 +48,6 @@ exports.uploadResource = async (req, res, next) => {
             } else {
                 newResource = new Resource({
                     ownerId: req.user._id,
-                    ownerName: req.user.googlename,
                     courseId: courseId,
                     status: req.body.status, // public/private to class/private to professors
                     createdAt: new Date(),
@@ -59,7 +56,7 @@ exports.uploadResource = async (req, res, next) => {
                     tags: tags, // tags as array
                     uri: req.body.uri, // universal resource identifier specific to the resource
                     state: req.body.state,
-                    resourceType: req.body.type, // video/text document ...
+                    resourceType: req.body.resourceType, // video/text document ...
                     institution: req.body.institution,
                     yearOfCreation: req.body.yearOfCreation,// content's actual creation time
                 })
@@ -72,6 +69,32 @@ exports.uploadResource = async (req, res, next) => {
             res.redirect('/facultyExclusive')
         else
             res.redirect('/showOneCourse/' + courseId)
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.updateResource = async (req, res, next) => {
+    const resourceId = req.params.resourceId
+    try {
+        let tagsString = req.body.tags
+        let tags = tagsString.split(",")
+        console.log("tags here: ", tags)
+        let oldResource = await Resource.findOne({_id: resourceId})
+        oldResource.name = req.body.resourceName
+        oldResource.status = req.body.status
+        oldResource.description = req.body.resourceDescription
+        oldResource.uri = req.body.uri
+        oldResource.resourceType = req.body.resourceType
+        oldResource.institution = req.body.institution
+        oldResource.yearOfCreation = req.body.yearOfCreation
+        oldResource.tags = tags
+        await oldResource.save()
+        // save the new resource
+        if (oldResource.courseId === undefined)
+            res.redirect('/facultyExclusive')
+        else
+            res.redirect('/showOneCourse/' + oldResource.courseId)
     } catch (e) {
         next(e)
     }
@@ -154,7 +177,7 @@ exports.searchByFilled = async (req, res, next) => {
                 }
             }
 
-                // situation 2: 2 fields are filled other than status
+            // situation 2: 2 fields are filled other than status
 
             // require status and yearOfCreation
             else if (req.body.state == "empty" && req.body.institution == "") {
@@ -336,8 +359,8 @@ exports.searchByFilled = async (req, res, next) => {
             }
         }
 
-            // -----------------------------------------------------------------
-            // -------------------------student search--------------------------
+        // -----------------------------------------------------------------
+        // -------------------------student search--------------------------
         // -----------------------------------------------------------------
         else {
             // situation 1: only status is filled
@@ -376,7 +399,7 @@ exports.searchByFilled = async (req, res, next) => {
                 }
             }
 
-                // situation 2: 2 fields are filled other than status
+            // situation 2: 2 fields are filled other than status
 
             // require status and yearOfCreation
             else if (req.body.state == "empty" && req.body.institution == "") {
@@ -673,9 +696,9 @@ exports.searchByFilled = async (req, res, next) => {
 
 exports.loadAllFacultyResources = async (req, res, next) => {
     try {
-        let facultyExclusive = await Resource.find({status: 'privateToProfessor'})
+        let resourceInfo = await Resource.find({status: 'privateToProfessor'})
         res.render('./pages/facultyExclusive', {
-            facultyExclusive: facultyExclusive
+            resourceInfo: resourceInfo
         })
     } catch (e) {
         next(e)
@@ -695,11 +718,10 @@ exports.loadPublicResources = async (req, res, next) => {
 
 exports.loadUnderReviewResources = async (req, res, next) => {
     try {
-        let resourceInfo =
-            await Resource.find({
-                checkStatus: 'UnderReview',
-                facultyId: req.user._id
-            }).sort({'createdAt': -1})
+        let resourceInfo = await Resource.find({
+            checkStatus: 'UnderReview',
+            facultyId: req.user._id
+        }).sort({'createdAt': -1})
         res.locals.resourceInfo = resourceInfo
         res.render('./pages/reviewResource')
     } catch (e) {
@@ -708,16 +730,13 @@ exports.loadUnderReviewResources = async (req, res, next) => {
     }
 }
 
-exports.approveResources = async (req, res, next) => {
+exports.loadOneResource = async (req, res, next) => {
     try {
-        const checkboxes = req.body.checked
-            for(let i=0; i<checkboxes.length; i++){
-                let resource = Resource.find({_id: checkboxes[i]})
-                resource.checkStatus = "Approve"
-            }
-        res.render('./pages/approved')
+        let resourceId = await req.params.resourceId
+        let resourceInfo = await Resource.findOne({_id: resourceId})
+        res.locals.resourceInfo = resourceInfo
+        res.render('./pages/updateResource')
     } catch (e) {
-        console.log("error: " + e)
         next(e)
     }
 }
