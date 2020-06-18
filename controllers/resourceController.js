@@ -14,6 +14,7 @@ exports.uploadResource = async (req, res, next) => {
         if (courseId === undefined) {
             newResource = new Resource({
                 ownerId: req.user._id,
+                ownerName: req.user.googlename,
                 status: req.body.status, // public/private to class/private to professors
                 createdAt: new Date(),
                 name: req.body.resourceName,
@@ -31,6 +32,7 @@ exports.uploadResource = async (req, res, next) => {
                 let facultyInfo = await Course.findOne({_id: courseId})
                 newResource = new Resource({
                     ownerId: req.user._id,
+                    ownerName: req.user.googlename,
                     courseId: courseId,
                     status: req.body.status, // public/private to class/private to professors
                     createdAt: new Date(),
@@ -48,6 +50,7 @@ exports.uploadResource = async (req, res, next) => {
             } else {
                 newResource = new Resource({
                     ownerId: req.user._id,
+                    ownerName: req.user.googlename,
                     courseId: courseId,
                     status: req.body.status, // public/private to class/private to professors
                     createdAt: new Date(),
@@ -699,6 +702,20 @@ exports.loadUnderReviewResources = async (req, res, next) => {
             }).sort({'createdAt': -1})
         res.locals.resourceInfo = resourceInfo
         res.render('./pages/reviewResource')
+    } catch (e) {
+        console.log("error: " + e)
+        next(e)
+    }
+}
+
+exports.approveResources = async (req, res, next) => {
+    try {
+        const checkboxes = req.body.checked
+            for(let i=0; i<checkboxes.length; i++){
+                let resource = Resource.find({_id: checkboxes[i]})
+                resource.checkStatus = "Approve"
+            }
+        res.render('./pages/approved')
     } catch (e) {
         console.log("error: " + e)
         next(e)

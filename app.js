@@ -267,8 +267,11 @@ app.post('/uploadToFacultyExclusive',
 
 
 app.get('/reviewResource',
-    resourceController.loadUnderReviewResources
+    resourceController.loadUnderReviewResources,
+    resourceController.approveResources
 )
+
+app.get('/approved')
 
 //*******************************************
 //***********Profile related*****************
