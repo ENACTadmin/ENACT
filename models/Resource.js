@@ -5,6 +5,7 @@ const ObjectID = mongoose.Schema.Types.ObjectID;
 
 const resourceSchema = Schema({
     ownerId: ObjectID,
+    ownerName: String,
     courseId: ObjectID,
     status: String, // public/private to class/private to professors
     createdAt: Date,
