@@ -18,44 +18,11 @@
                 <% if (loggedIn) { %>
                     <div class="col-md-12 col-sm-12">
                         <div class="card">
-                            <div class="card-body">
-                                <% if (resourceInfo.length !== 0) { %>
-                                    <% for (let i = 0; i < resourceInfo.length; i++) { %>
-                                        <div class="card blogBox moreBox">
-                                            <div class="card-body">
-                                                <% console.log("status: " + resourceInfo[i].status) %>
-                                                <h4><%= resourceInfo[i].name %></h4>
-                                                <div class="card-text">
-                                                    <ul class="list-group">
-                                                        <li class="list-group-item borderless box-padding">
-                                                            <b>Description: </b> <%= resourceInfo[i].description %></li>
-                                                        <li class="list-group-item borderless box-padding">
-                                                            <b>State:</b> <%= resourceInfo[i].state %></li>
-                                                        <li class="list-group-item borderless box-padding">
-                                                            <b>Link: </b> <a
-                                                                    href="<%= resourceInfo[i].uri %>"><%= resourceInfo[i].uri %></a>
-                                                        </li>
-                                                        <li class="list-group-item borderless box-padding">
-                                                            <b>Institution: </b> <%= resourceInfo[i].institution %></li>
-                                                        <li class="list-group-item borderless box-padding">
-                                                            <b>Tags:</b> <%= resourceInfo[i].tags %>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <br>
-                                    <% } %>
-                                <% } else { %>
-                                    No resource available yet
-                                <% } %>
-                            </div>
+                            <%- include('../components/component-resourceStack'); -%>
                         </div>
                     </div>
                 <% } else { %>
-                    <div class="text-center partners__text">
-                        <h3>Please login to view this page</h3>
-                    </div>
+                    <%- include('../components/component-loginToView'); -%>
                 <% } %>
             </div>
         </div>
