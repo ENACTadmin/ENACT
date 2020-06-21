@@ -874,9 +874,9 @@ h6 {
 /* ELEMENT  grid__text  */
 /* --------------------  */
 .grid__text {
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     line-height: 26px;
-    margin: 5%;
+    margin: 3%;
 }
 
 .grid__text span {
@@ -1620,6 +1620,10 @@ ul.grid__list--fmenu li a:hover {
         top: 20px;
     }
 
+    .jumbotron.masthead {
+        padding-top: 20% !important;
+    }
+
     /*  MENU 	 */
     /*---------------*/
     .menu-open {
@@ -2082,6 +2086,10 @@ ul.grid__list--fmenu li a:hover {
         height: 50px;
     }
 
+    .jumbotron.masthead {
+        padding-top: 20% !important;
+    }
+
     .menu-button {
         right: 2%;
         top: 10px;
@@ -2132,6 +2140,10 @@ ul.grid__list--fmenu li a:hover {
         padding: 0 0 10px 0;
     }
 
+    .jumbotron.masthead {
+        padding-top: 20% !important;
+    }
+
     .intro__subtitle {
         font-size: 16px;
         padding: 0 5% 10px 5%;
@@ -2160,6 +2172,10 @@ ul.grid__list--fmenu li a:hover {
         line-height: 22px;
     }
 
+    .jumbotron.masthead {
+        padding-top: 20% !important;
+    }
+
     .intro__description {
         font-size: 12px;
         padding: 0 0 40px 0;
@@ -2182,6 +2198,10 @@ ul.grid__list--fmenu li a:hover {
         font-size: 24px;
         line-height: 28px;
         padding: 0 0 5px 0;
+    }
+
+    .jumbotron.masthead {
+        padding-top: 20% !important;
     }
 
     .intro__subtitle {

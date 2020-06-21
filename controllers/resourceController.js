@@ -1,7 +1,6 @@
 'use strict';
 const Course = require('../models/Course');
-const User = require('../models/User');
-const Resource = require('../models/Resource')
+const Resource = require('../models/Resource');
 
 exports.uploadResource = async (req, res, next) => {
     const courseId = req.params.courseId
@@ -701,10 +700,15 @@ exports.loadAllFacultyResources = async (req, res, next) => {
     }
 }
 
+let fileData = require('../public/js/slideShow')
 exports.loadPublicResources = async (req, res, next) => {
     try {
         let publicRc = await Resource.find({status: 'public'}).sort({'createdAt': -1}).limit(2)
         res.locals.publicRc = publicRc
+        let imagePaths = fileData.getPath('slideShow')
+        let facultyPaths = fileData.getPath('faculty')
+        res.locals.imagePaths = imagePaths
+        res.locals.facultyPaths = facultyPaths
         res.render('./pages/index')
     } catch (e) {
         console.log("error: " + e)
