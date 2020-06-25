@@ -261,10 +261,6 @@ app.post('/uploadToFacultyExclusive',
     resourceController.uploadResource
 )
 
-app.get('/updateOneResource/:resourceId',
-    resourceController.loadOneResource
-)
-
 app.post('/updateResource/:resourceId',
     resourceController.updateResource
 )
