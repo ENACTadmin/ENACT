@@ -1,39 +1,39 @@
 <%- include('../components/header'); -%>
 
-<script src="/js/menu.js"></script>
+<script src='/js/menu.js'></script>
 
 <script>
     AOS.init();
 </script>
 
-<header class="header">
-    <div class="header__content header__content--fluid-width">
-        <a class="header__logo-title" href="/">
-            <div class="card-body" style="background-color: transparent">
-                <div class="card-text">
-                    <img style="height: 70px; width: 70px"
-                         src="https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg">
+<header class='header'>
+    <div class='header__content header__content--fluid-width'>
+        <a class='header__logo-title' href='/'>
+            <div class='card-body' style='background-color: transparent'>
+                <div class='card-text'>
+                    <img style='height: 70px; width: 70px'
+                         src='https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg'>
                 </div>
             </div>
         </a>
-        <a class="header__logo-title-1" style="margin-left: -10px" href="/">
+        <a class='header__logo-title-1' style='margin-left: -10px' href='/'>
             <b>THE EDUCATIONAL NETWORK
                 <br>
                 FOR ACTIVE CIVIC TRANSFORMATION</b>
         </a>
-        <nav class="header__menu">
+        <nav class='header__menu'>
             <ul>
                 <li>
-                    <a class="header-link" id="header-link" href="/" data-aos="fade-left">HOME</a>
+                    <a class='header-link' id='header-link' href='/' data-aos='fade-left'>HOME</a>
                 </li>
                 <li>
                     <% if (loggedIn) { %>
-                        <a class="header-link" id="header-link" href="#" data-aos="fade-left">My Courses</a>
-                        <ul class="sub-menu">
+                        <a class='header-link' id='header-link' href='#' data-aos='fade-left'>My Courses</a>
+                        <ul class='sub-menu'>
                             <% for (let i = 0; i < courseInfoSet.length; i++) { %>
                                 <li>
-                                    <a class="header-link"
-                                       href="/showOneCourse/<%= courseInfoSet[i]._id %>"><%= courseInfoSet[i].courseName %></a>
+                                    <a class='header-link'
+                                       href='/showOneCourse/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName %></a>
                                 </li>
                             <% } %>
                         </ul>
@@ -42,10 +42,10 @@
                 </li>
                 <li>
                     <% if (loggedIn) { %>
-                        <a class="header-link" id="header-link" href="#" data-aos="fade-left">Resources</a>
-                        <ul class="sub-menu">
+                        <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Resources</a>
+                        <ul class='sub-menu'>
                             <li>
-                                <a class="header-link" href="/primarySearch">Find some resources</a>
+                                <a class='header-link' href='/primarySearch'>Find some resources</a>
                             </li>
                         </ul>
                     <% } else { %>
@@ -53,11 +53,11 @@
                 </li>
                 <li>
                     <% if (loggedIn) { %>
-                        <a class="header-link" id="header-link" href="#" data-aos="fade-left">Notifications</a>
-                        <ul class="sub-menu">
+                        <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Notifications</a>
+                        <ul class='sub-menu'>
                             <li>
-                                <% if (status === "faculty" || status === "admin") { %>
-                                    <a class="header-link" href="/reviewResource">Resources under review</a>
+                                <% if (status === 'faculty' || status === 'admin') { %>
+                                    <a class='header-link' href='/reviewResource'>Resources under review</a>
                                 <% } %>
                             </li>
                         </ul>
@@ -67,19 +67,19 @@
 
                 <% if (loggedIn) { %>
                     <li>
-                        <a class="header-link" id="header-link" href="#" data-aos="fade-left">Settings</a>
-                        <ul class="sub-menu">
+                        <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Settings</a>
+                        <ul class='sub-menu'>
                             <li>
-                                <a class="header-link" href="/myProfile">View/edit profile</a>
+                                <a class='header-link' href='/myProfile'>View/edit profile</a>
                             </li>
                             <li>
-                                <% if (status === "admin") { %>
-                                    <a class="header-link" href="/showAllProfiles">View all profiles</a>
+                                <% if (status === 'admin') { %>
+                                    <a class='header-link' href='/showAllProfiles'>View all profiles</a>
                                 <% } %>
                             </li>
                             <li>
-                                <% if (status === "admin") { %>
-                                    <a class="header-link" href="/assignFaculty">Set up a new faculty</a>
+                                <% if (status === 'admin') { %>
+                                    <a class='header-link' href='/assignFaculty'>Set up a new faculty</a>
                                 <% } %>
                             </li>
                         </ul>
@@ -87,11 +87,11 @@
                 <% } else { %>
                 <% } %>
 
-                <li class="header__btn header__btn--login">
+                <li class='header__btn header__btn--login'>
                     <% if (!loggedIn) { %>
-                        <a class="btn btn-outline-dark" href="/auth/google" data-aos="fade-left">ENACT member login</a>
+                        <a class='btn btn-outline-dark' href='/auth/google' data-aos='fade-left'>ENACT member login</a>
                     <% } else { %>
-                        <a class="btn btn-outline-dark" href="/logout" data-aos="fade-left">Logout</a>
+                        <a class='btn btn-outline-dark' href='/logout' data-aos='fade-left'>Logout</a>
                     <% } %>
                 </li>
             </ul>
@@ -100,45 +100,45 @@
 </header>
 
 <!-- Section intro -->
-<section class="section section--intro section__grey" id="home">
-    <div class="section__content section__content--full-width">
-        <div class="intro">
-            <div class="intro__content">
+<section class='section section--intro section__grey' id='home'>
+    <div class='section__content section__content--full-width'>
+        <div class='intro'>
+            <div class='intro__content'>
                 <% if (loggedIn) { %>
-                    <div class="intro__subtitle" style="color: black;">Dear <%= status %>, <b><%= user.googlename %></b>
+                    <div class='intro__subtitle' style='color: black;'>Dear <%= status %>, <b><%= user.googlename %></b>
                     </div>
                 <% } %>
-                <div class="intro__subtitle" style="color: black;">Welcome to ENACT Digital platform!</div>
+                <div class='intro__subtitle' style='color: black;'>Welcome to ENACT Digital platform!</div>
                 <% if (loggedIn) { %>
                     <% if (status === 'admin' || status === 'faculty') { %>
-                        <div class="form-demo" data-aos="fade-up">
-                            <a href="/showCourses"><input type="submit" name="submit" class="form-demo__submit"
-                                                          value="MANAGE or CREATE COURSES"></a>
+                        <div class='form-demo' data-aos='fade-up'>
+                            <a href='/showCourses'><input type='submit' name='submit' class='form-demo__submit'
+                                                          value='MANAGE or CREATE COURSES'></a>
                         </div>
                     <% } else { %>
-                        <div class="form-demo" data-aos="fade-up">
-                            <a href="/showCourses"><input type="submit" name="submit" class="form-demo__submit"
-                                                          value="MANAGE or ENROLL IN COURSES"></a>
+                        <div class='form-demo' data-aos='fade-up'>
+                            <a href='/showCourses'><input type='submit' name='submit' class='form-demo__submit'
+                                                          value='MANAGE or ENROLL IN COURSES'></a>
                         </div>
                     <% } %>
                     <br>
-                    <div class="form-demo" data-aos="fade-up" data-aos-delay="100">
-                        <a href="/primarySearch"><input type="submit" name="submit" class="form-demo__submit"
-                                                        value="FIND RESOURCES"></a>
+                    <div class='form-demo' data-aos='fade-up' data-aos-delay='100'>
+                        <a href='/primarySearch'><input type='submit' name='submit' class='form-demo__submit'
+                                                        value='FIND RESOURCES'></a>
                     </div>
                     <br>
 
                     <% if (status === 'faculty' || status === 'admin') { %>
-                        <div class="form-demo" data-aos="fade-up" data-aos-delay="200">
-                            <a href="/facultyExclusive"><input type="submit" name="submit" class="form-demo__submit"
-                                                               value="FACULTY EXCLUSIVE"></a>
+                        <div class='form-demo' data-aos='fade-up' data-aos-delay='200'>
+                            <a href='/facultyExclusive'><input type='submit' name='submit' class='form-demo__submit'
+                                                               value='FACULTY EXCLUSIVE'></a>
                         </div>
                     <% } %>
                 <% } else { %>
-                    <h2>IF YOU ARE AN<b style="color: #0253a4"> ENACT PROGRAM MEMBER, PLEASE LOGIN</b></h2>
+                    <h2>IF YOU ARE AN<b style='color: #0253a4'> ENACT PROGRAM MEMBER, PLEASE LOGIN</b></h2>
                     <br>
-                    <a href="/auth/google"><input type="submit" name="submit" class="form-demo__submit"
-                                                  value="ENACT MEMBER LOGIN"></a>
+                    <a href='/auth/google'><input type='submit' name='submit' class='form-demo__submit'
+                                                  value='ENACT MEMBER LOGIN'></a>
                 <% } %>
             </div>
         </div>
@@ -146,13 +146,13 @@
 </section>
 
 <!-- Section features -->
-<section class="section diagonal-gradient">
+<section class='section diagonal-gradient'>
     <br><br><br>
-    <div class="section__content section__content--fluid-width section__content--padding--small">
-        <div class="grid grid--3col">
-            <div class="grid__item partners__slide__grey" style="height: 500px" data-aos="fade-up">
-                <h3 class="grid__title"><span>What we do</span></h3>
-                <p class="grid__text">The Educational Network for Active Civic Transformation is a national program
+    <div class='section__content section__content--fluid-width section__content--padding--small'>
+        <div class='grid grid--3col'>
+            <div class='grid__item partners__slide__grey' style='height: 500px' data-aos='fade-up'>
+                <h3 class='grid__title'><span>What we do</span></h3>
+                <p class='grid__text'>The Educational Network for Active Civic Transformation is a national program
                     engaging undergraduates at colleges and universities in state-level legislative change by learning
                     to work with legislators, staffers, and community organizations to advance policy. It is becoming a
                     major voice in addressing challenges to American democracy by engaging young people around the
@@ -161,26 +161,26 @@
                 <br>
             </div>
 
-            <div class="grid__item partners__slide__grey" style="height: 500px" data-aos="fade-up">
-                <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="<%= imagePaths[0] %>"
-                                 style="width: 100%; height: 480px; object-fit: cover; border-radius: 30px;"
-                                 class="d-block w-100" alt="...">
-                            <div class="carousel-caption d-none d-md-block"
-                                 style="color: black; background-color: white; opacity: 0.8; border-radius: 15px; padding: 5%">
+            <div class='grid__item partners__slide__grey' style='height: 500px' data-aos='fade-up'>
+                <div id='carouselExampleSlidesOnly' class='carousel slide' data-ride='carousel'>
+                    <div class='carousel-inner'>
+                        <div class='carousel-item active'>
+                            <img src='<%= imagePaths[0] %>'
+                                 style='width: 100%; height: 480px; object-fit: cover; border-radius: 30px;'
+                                 class='d-block w-100' alt='...'>
+                            <div class='carousel-caption d-none d-md-block'
+                                 style='color: black; background-color: white; opacity: 0.8; border-radius: 15px; padding: 5%'>
                                 <h5>First slide label</h5>
                                 <p>Some text to describe</p>
                             </div>
                         </div>
                         <% for (let i = 1; i < imagePaths.length; i++) { %>
-                            <div class="carousel-item">
-                                <img src="<%= imagePaths[i] %>"
-                                     style="width: 100%; height: 480px; object-fit: cover; border-radius: 30px;"
-                                     class="d-block w-100" alt="...">
-                                <div class="carousel-caption d-none d-md-block"
-                                     style="color: black; background-color: white; opacity: 0.8; border-radius: 15px; padding: 5%">
+                            <div class='carousel-item'>
+                                <img src='<%= imagePaths[i] %>'
+                                     style='width: 100%; height: 480px; object-fit: cover; border-radius: 30px;'
+                                     class='d-block w-100' alt='...'>
+                                <div class='carousel-caption d-none d-md-block'
+                                     style='color: black; background-color: white; opacity: 0.8; border-radius: 15px; padding: 5%'>
                                     <h5>Other slide label</h5>
                                     <p>Some text to describe</p>
                                 </div>
@@ -190,9 +190,9 @@
                 </div>
             </div>
 
-            <div class="grid__item partners__slide__grey" style="height: 500px" data-aos="fade-up">
-                <h3 class="grid__title"><span>How to participate</span></h3>
-                <p class="grid__text">
+            <div class='grid__item partners__slide__grey' style='height: 500px' data-aos='fade-up'>
+                <h3 class='grid__title'><span>How to participate</span></h3>
+                <p class='grid__text'>
                     <b>• Workshop</b>: ENACT launched with a workshop at Brandeis University in May 2016.
                     Under the leadership of the program’s academic director, ENACT Fellows shared ideas and work on
                     course development. Read about the 2016 ENACT Institute and the 2018 ENACT Institute at Brandeis
@@ -213,26 +213,26 @@
             </div>
         </div>
 
-        <div class="clear"></div>
+        <div class='clear'></div>
 
     </div>
 </section>
 
 <!-- Section -->
-<section class="section section__grey">
-    <div class="section__content section__content--fluid-width section__content--padding">
-        <h2 class="section__title section__title--centered">ENACT Faculty</h2>
+<section class='section section__grey'>
+    <div class='section__content section__content--fluid-width section__content--padding'>
+        <h2 class='section__title section__title--centered'>ENACT Faculty</h2>
         <br>
-        <div class="grid grid--3col">
-            <div class="partners__slide grid__item" style="height: 750px" data-aos="fade-up">
-                <div class="card-body">
-                    <img class="d-flex mr-3"
-                         src="https://www.brandeis.edu/ethics/images/advocacy/mstimell01_cropped.jpg"
-                         alt="Melissa Stimell"
-                         style="width: 100%; height:400px; object-fit: cover; border-radius: 30px;">
+        <div class='grid grid--3col'>
+            <div class='partners__slide grid__item' style='height: 750px' data-aos='fade-up'>
+                <div class='card-body'>
+                    <img class='d-flex mr-3'
+                         src='https://www.brandeis.edu/ethics/images/advocacy/mstimell01_cropped.jpg'
+                         alt='Melissa Stimell'
+                         style='width: 100%; height:400px; object-fit: cover; border-radius: 30px;'>
                     <br>
-                    <h3 style="text-align: center">Melissa Stimell</h3>
-                    <h4 style="text-align: center">Academic Program Director</h4>
+                    <h3 style='text-align: center'>Melissa Stimell</h3>
+                    <h4 style='text-align: center'>Academic Program Director</h4>
                     <hr>
                     Melissa Stimell is a Professor of the Practice in the Legal Studies Program at Brandeis
                     University, and Interim Director of the International Center for Ethics, Justice and Public
@@ -240,47 +240,47 @@
                     <br>
                 </div>
             </div>
-            <div class="partners__slide grid__item" style="height: 750px" data-aos="fade-up">
-                <div class="card-body">
-                    <img class="d-flex mr-3" src="https://www.brandeis.edu/ethics/images/DJW%20photo.jpg"
-                         alt="David J. Weinstein"
-                         style="width: 100%; height: 400px; object-fit: cover; border-radius: 30px;">
+            <div class='partners__slide grid__item' style='height: 750px' data-aos='fade-up'>
+                <div class='card-body'>
+                    <img class='d-flex mr-3' src='https://www.brandeis.edu/ethics/images/DJW%20photo.jpg'
+                         alt='David J. Weinstein'
+                         style='width: 100%; height: 400px; object-fit: cover; border-radius: 30px;'>
                     <br>
 
-                    <h3 style="text-align: center">David J. Weinstein</h3>
-                    <h4 style="text-align: center">Assistant Director</h4>
+                    <h3 style='text-align: center'>David J. Weinstein</h3>
+                    <h4 style='text-align: center'>Assistant Director</h4>
                     <hr>
                     David Weinstein is Assistant Director of ENACT and Communications for the Ethics Center.
                     <br>
                 </div>
             </div>
-            <div class="partners__slide grid__item" style="height: 750px" data-aos="fade-up">
-                <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="card-body">
-                                <img class="d-flex mr-3"
-                                     src="<%= facultyPaths[0][0] %>"
-                                     alt="..."
-                                     style="width: 100%; height: 400px; object-fit: cover; border-radius: 30px;">
+            <div class='partners__slide grid__item' style='height: 750px' data-aos='fade-up'>
+                <div id='carouselExampleSlidesOnly' class='carousel slide' data-ride='carousel'>
+                    <div class='carousel-inner'>
+                        <div class='carousel-item active'>
+                            <div class='card-body'>
+                                <img class='d-flex mr-3'
+                                     src='<%= facultyPaths[0][0] %>'
+                                     alt='...'
+                                     style='width: 100%; height: 400px; object-fit: cover; border-radius: 30px;'>
                                 <br>
-                                <h3 style="text-align: center"><%= facultyPaths[0][1] %></h3>
-                                <h4 style="text-align: center">Faculty Fellow</h4>
+                                <h3 style='text-align: center'><%= facultyPaths[0][1] %></h3>
+                                <h4 style='text-align: center'>Faculty Fellow</h4>
                                 <hr>
                                 <%= facultyPaths[0][2] %>
                                 <br>
                             </div>
                         </div>
                         <% for (let i = 1; i < facultyPaths.length; i++) { %>
-                            <div class="carousel-item">
-                                <div class="card-body">
-                                    <img class="d-flex mr-3"
-                                         src="<%= facultyPaths[i][0] %>"
-                                         alt="..."
-                                         style="width: 100%; height: 400px; object-fit: cover; border-radius: 30px;">
+                            <div class='carousel-item'>
+                                <div class='card-body'>
+                                    <img class='d-flex mr-3'
+                                         src='<%= facultyPaths[i][0] %>'
+                                         alt='...'
+                                         style='width: 100%; height: 400px; object-fit: cover; border-radius: 30px;'>
                                     <br>
-                                    <h3 style="text-align: center"><%= facultyPaths[i][1] %></h3>
-                                    <h4 style="text-align: center">Faculty Fellow</h4>
+                                    <h3 style='text-align: center'><%= facultyPaths[i][1] %></h3>
+                                    <h4 style='text-align: center'>Faculty Fellow</h4>
                                     <hr>
                                     <%= facultyPaths[i][2] %>
                                     <br>
@@ -292,41 +292,41 @@
 
             </div>
         </div>
-        <div class="partners__pagination"></div>
-        <div class="clear"></div>
+        <div class='partners__pagination'></div>
+        <div class='clear'></div>
     </div>
 </section>
 
 <!-- Section -->
-<section class="section diagonal-gradient">
-    <div class="section__content section__content--fluid-width section__content--padding">
-        <h2 class="section__title section__title--centered" style="color: white">Most Recently Uploaded</h2>
+<section class='section diagonal-gradient'>
+    <div class='section__content section__content--fluid-width section__content--padding'>
+        <h2 class='section__title section__title--centered' style='color: white'>Most Recently Uploaded</h2>
         <br><br><br>
         <% for (let i = 0; i < publicRc.length; i++) { %>
-            <div class="card blogBox moreBox" data-aos="fade-up">
-                <div class="card-body">
+            <div class='card blogBox moreBox' data-aos='fade-up'>
+                <div class='card-body'>
                     <h4>
                         Name: <%= publicRc[i].name %>
                     </h4>
-                    <div class="card-text">
-                        <ul class="list-group">
-                            <li class="list-group-item borderless box-padding">
+                    <div class='card-text'>
+                        <ul class='list-group'>
+                            <li class='list-group-item borderless box-padding'>
                                 <b>Description: </b>
                                 <%= publicRc[i].description %>
                             </li>
-                            <li class="list-group-item borderless box-padding">
+                            <li class='list-group-item borderless box-padding'>
                                 <b>State:</b>
                                 <%= publicRc[i].state %>
                             </li>
-                            <li class="list-group-item borderless box-padding">
+                            <li class='list-group-item borderless box-padding'>
                                 <b>Link: </b>
-                                <a href="<%= publicRc[i].uri %>"><%= publicRc[i].uri %></a>
+                                <a href='<%= publicRc[i].uri %>'><%= publicRc[i].uri %></a>
                             </li>
-                            <li class="list-group-item borderless box-padding">
+                            <li class='list-group-item borderless box-padding'>
                                 <b>Institution: </b>
                                 <%= publicRc[i].institution %>
                             </li>
-                            <li class="list-group-item borderless box-padding">
+                            <li class='list-group-item borderless box-padding'>
                                 <b>Categories:</b>
                                 <%= publicRc[i].tags %>
                             </li>
@@ -340,12 +340,12 @@
         <br>
         <br>
         <% if (status === 'admin') { %>
-            <div class="text-center">
-                <a href="/uploadToPublic" class="btn-lg btn-primary">Manage</a>
+            <div class='text-center'>
+                <a href='/uploadToPublic' class='btn-lg btn-primary'>Manage</a>
             </div>
         <% } %>
         <br>
-        <div class="clear"></div>
+        <div class='clear'></div>
     </div>
 </section>
 

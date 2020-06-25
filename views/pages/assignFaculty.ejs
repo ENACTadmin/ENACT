@@ -1,10 +1,10 @@
 <%- include('../components/header'); -%>
 <%- include('../components/navbar'); -%>
 
-<section class="section section--grey">
-    <div class="section__content section__content--full-width">
-        <div class="jumbotron masthead text-center">
-            <div class="section__title section__title--centered">
+<section class='section section--grey'>
+    <div class='section__content section__content--full-width'>
+        <div class='jumbotron masthead text-center'>
+            <div class='section__title section__title--centered'>
                 <% if (user.userName) { %>
                     Set up a new faculty
                 <% } %>
@@ -13,26 +13,26 @@
     </div>
 </section>
 
-<section class="section section__grey" data-aos="fade-up">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3 col-sm-12"></div>
-            <div class="col-md-6 col-sm-12">
-                <form action="/assignNewFaculty" method="post">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" style="width: 180px">Email</span>
-                        <input type="text" style="margin-right: 20px" class="form-control" name="email" value="">
-                        <input type="submit" class="btn btn-outline-dark" value="Assign">
+<section class='section section__grey' data-aos='fade-up'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-md-3 col-sm-12'></div>
+            <div class='col-md-6 col-sm-12'>
+                <form action='/assignNewFaculty' method='post'>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 180px'>Email</span>
+                        <input type='text' style='margin-right: 20px' class='form-control' name='email' value=''>
+                        <input type='submit' class='btn btn-outline-dark' value='Assign'>
                     </div>
                 </form>
                 <hr>
                 <h4>Approved list</h4>
                 <br>
                 <% for (let i = 0; i < approvedList.length; i++) { %>
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" style="width: 180px">Email</span>
-                        <input disabled type="text" class="form-control" value="<%= approvedList[i].email %>">
-                        <input disabled type="text" class="form-control" value="By: <%= approvedByList[i] %>">
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 180px'>Email</span>
+                        <input disabled type='text' class='form-control' value='<%= approvedList[i].email %>'>
+                        <input disabled type='text' class='form-control' value='By: <%= approvedByList[i] %>'>
                     </div>
                     <br>
                 <% } %>
