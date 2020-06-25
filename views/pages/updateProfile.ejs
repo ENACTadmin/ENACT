@@ -1,12 +1,13 @@
 <%- include('../components/header'); -%>
 <%- include('../components/navbar'); -%>
 
-<script src="/js/aws.js"></script>
+<script src='/js/aws.js'></script>
+<script src='/js/updateProfile.js'></script>
 
-<section class="section section--grey">
-    <div class="section__content section__content--full-width">
-        <div class="jumbotron masthead text-center">
-            <div class="section__title section__title--centered">
+<section class='section section--grey'>
+    <div class='section__content section__content--full-width'>
+        <div class='jumbotron masthead text-center'>
+            <div class='section__title section__title--centered'>
                 <% if (user.userName) { %>
                     <%= user.userName %>'s profile
                 <% } else { %>
@@ -17,63 +18,63 @@
     </div>
 </section>
 
-<section class="section section__grey" data-aos="fade-up">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3 col-sm-12"></div>
-            <div class="col-md-6 col-sm-12">
+<section class='section section__grey' data-aos='fade-up'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-md-3 col-sm-12'></div>
+            <div class='col-md-6 col-sm-12'>
                 <h3>Profile image</h3>
                 <hr>
-                <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#myModal">
+                <button type='button' class='btn btn-outline-dark' data-toggle='modal' data-target='#myModal'>
                     Upload new profile image
                 </button>
                 <br><br>
 
                 <% if (user.profilePicURL) { %>
-                    <img src="<%= locals.user.profilePicURL %>" style="width:300px;">
+                    <img src='<%= locals.user.profilePicURL %>' style='width:300px;'>
                 <% } else { %>
                     <h5>No profile image uploaded</h5>
                 <% } %>
 
                 <br>
                 <br>
-                <div class="w-100"></div>
+                <div class='w-100'></div>
                 <!--                 form: update personal info -->
                 <h3>Basic information</h3>
                 <hr>
-                <form action="/updateProfile" method="post">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" style="width: 180px">Username</span>
-                        <input type="text" class="form-control" name="userName" value="<%= user.userName %>">
+                <form action='/updateProfile' method='post'>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 180px'>Username</span>
+                        <input type='text' class='form-control' name='userName' value='<%= user.userName %>'>
                     </div>
                     <br>
 
-                    <div class="w-100"></div>
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" style="width: 180px">Personal Email</span>
-                        <input type="text" class="form-control" name="personalEmail"
-                               value="<%= user.personalEmail %>">
-                    </div>
-                    <br>
-
-                    <!-- line break -->
-                    <div class="w-100"></div>
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" style="width: 180px">Phone Number</span>
-                        <input type="text" class="form-control" name="phoneNumber"
-                               value="<%= user.phoneNumber %>">
+                    <div class='w-100'></div>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 180px'>Personal Email</span>
+                        <input type='text' class='form-control' name='personalEmail'
+                               value='<%= user.personalEmail %>'>
                     </div>
                     <br>
 
                     <!-- line break -->
-                    <div class="w-100"></div>
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" style="width: 180px">Bio</span>
-                        <textarea type="text" class="form-control" name="bio" rows="4"><%= user.bio %></textarea>
+                    <div class='w-100'></div>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 180px'>Phone Number</span>
+                        <input type='text' class='form-control' name='phoneNumber'
+                               value='<%= user.phoneNumber %>'>
                     </div>
                     <br>
 
-                    <input type="submit" class="btn btn-outline-dark" value="Save">
+                    <!-- line break -->
+                    <div class='w-100'></div>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 180px'>Bio</span>
+                        <textarea type='text' class='form-control' name='bio' rows='4'><%= user.bio %></textarea>
+                    </div>
+                    <br>
+
+                    <input type='submit' class='btn btn-outline-dark' value='Save'>
 
                 </form>
                 <br>
@@ -86,75 +87,48 @@
 </section>
 <!-- edit profile page -->
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Upload profile image</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel'
+     aria-hidden='true'>
+    <div class='modal-dialog' role='document'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <h5 class='modal-title' id='exampleModalLabel'>Upload profile image</h5>
+                <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-
-                <div class="row">
-
+            <div class='modal-body'>
+                <div class='row'>
                     <br><br>
-                    <div class="col-md-12 col-sm-12">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Upload photo</span>
-                            <input type="file" class="form-control" id="file-input">
+                    <div class='col-md-12 col-sm-12'>
+                        <div class='input-group-prepend'>
+                            <span class='input-group-text' id='basic-addon1'>Upload photo</span>
+                            <input type='file' class='form-control' id='file-input'>
                         </div>
                         <hr>
-
                     </div>
-                    <div class="col-md-12 col-sm-12">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" style="width: 180px">Preview</span>
+                    <div class='col-md-12 col-sm-12'>
+                        <div class='input-group-prepend'>
+                            <span class='input-group-text' style='width: 180px'>Preview</span>
                         </div>
                     </div>
-
                     <br>
-                    <div class="col-md-12 col-sm-12">
-                        <img style="border:1px solid gray; width:100%;"
-                             src="data:image/png;base64,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"
-                             id="preview">
+                    <div class='col-md-12 col-sm-12'>
+                        <img style='border:1px solid gray; width:100%;'
+                             src='data:image/png;base64,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'
+                             id='preview'>
                     </div>
-
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <form method="POST" action="/saveProfileImageURL">
-                    <input type="hidden" id="imageURL" name="imageURL">
-                    <input type="submit" class="btn btn-outline-dark" value="Upload">
+            <div class='modal-footer'>
+                <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
+                <form method='POST' action='/saveProfileImageURL'>
+                    <input type='hidden' id='imageURL' name='imageURL'>
+                    <input type='submit' class='btn btn-outline-dark' value='Upload'>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    /*
-    Function to carry out the actual PUT request to S3 using the signed request from the app.
-    */
-    function uploadFile(file, signedRequest, url) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('PUT', signedRequest);
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    document.getElementById('preview').src = url;
-                    document.getElementById('imageURL').value = url;
-                } else {
-                    alert('Could not upload file.');
-                }
-            }
-        };
-        xhr.send(file);
-    }
-</script>
-
 
 <%- include('../components/footer'); -%>

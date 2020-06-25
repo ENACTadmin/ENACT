@@ -1,5 +1,4 @@
-<%
-let tags = ['agriculture'
+<% let tags = ['agriculture'
     , 'arts and culture'
     , 'cannabis'
     , 'consumer protection'
@@ -33,21 +32,21 @@ let tags = ['agriculture'
     , 'women and gender'] %>
 
 <% for (let i = 0; i < tags.length;) { %>
-    <div class="col-md-3 col-sm-12"></div>
+    <div class='col-md-3 col-sm-12'></div>
     <% for (let j = 0; i < tags.length && j < 2; i++, j++) { %>
-        <div class="col-md-3 col-sm-12 text-md-right">
-            <div class="input-group" style="padding-bottom: 10px">
-                <div class="input-group-prepend">
-                    <div class="input-group-text">
-                        <input class="checkbox-double" type="checkbox" value="<%= tags[i] %>"><br>
+        <div class='col-md-3 col-sm-12 text-md-right'>
+            <div class='input-group' style='padding-bottom: 10px'>
+                <div class='input-group-prepend'>
+                    <div class='input-group-text'>
+                        <input class='checkbox-double' type='checkbox' value='<%= tags[i] %>'><br>
                     </div>
                 </div>
-                <input disabled type="text" class="form-control"
-                       aria-label="Text input with checkbox" value="<%= tags[i] %>">
+                <input disabled type='text' class='form-control'
+                       aria-label='Text input with checkbox' value='<%= tags[i] %>'>
             </div>
         </div>
     <% } %>
-    <div class="w-100"></div>
+    <div class='w-100'></div>
 <% } %>
 
-<input hidden id="tagsToReturn" type="text" class="form-control" name="tags" value="">
+<input hidden id='tagsToReturn' type='text' class='form-control' name='tags' value=''>

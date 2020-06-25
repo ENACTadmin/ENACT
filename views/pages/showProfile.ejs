@@ -1,62 +1,61 @@
 <%- include('../components/header'); -%>
 <%- include('../components/navbar'); -%>
 
-<section class="section">
-    <div class="section__content section__content--full-width">
-        <div class="jumbotron masthead text-center">
-            <div class="section__title section__title--centered">
+<section class='section'>
+    <div class='section__content section__content--full-width'>
+        <div class='jumbotron masthead text-center'>
+            <div class='section__title section__title--centered'>
                 <%= userInfo.userName %>'s profile
             </div>
         </div>
     </div>
 </section>
 
-<section class="section section__grey" data-aos="fade-up">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3 col-sm-12"></div>
-            <div class="col-md-6 col-sm-12">
+<section class='section section__grey' data-aos='fade-up'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-md-3 col-sm-12'></div>
+            <div class='col-md-6 col-sm-12'>
                 <h3><b>User Profile:</b></h3>
                 <hr>
-                <div class="input-group-prepend">
-                    <span class="input-group-text" style="width: 180px">Username</span>
-                    <input disabled type="text" class="form-control" value="<%= userInfo.userName %>">
+                <div class='input-group-prepend'>
+                    <span class='input-group-text' style='width: 180px'>Username</span>
+                    <input disabled type='text' class='form-control' value='<%= userInfo.userName %>'>
                 </div>
 
                 <br>
 
-                <div class="input-group-prepend">
-                    <span class="input-group-text" style="width: 180px">Work Email</span>
-                    <input disabled type="text" class="form-control" value="<%= userInfo.googleemail %>">
+                <div class='input-group-prepend'>
+                    <span class='input-group-text' style='width: 180px'>Work Email</span>
+                    <input disabled type='text' class='form-control' value='<%= userInfo.googleemail %>'>
                 </div>
 
                 <br>
 
-                <div class="input-group-prepend">
-                    <span class="input-group-text" style="width: 180px">Personal Email</span>
-                    <input disabled type="text" class="form-control" value="<%= userInfo.personalEmail %>">
+                <div class='input-group-prepend'>
+                    <span class='input-group-text' style='width: 180px'>Personal Email</span>
+                    <input disabled type='text' class='form-control' value='<%= userInfo.personalEmail %>'>
                 </div>
 
                 <br>
 
-                <div class="input-group-prepend">
-                    <span class="input-group-text" style="width: 180px">Phone Number</span>
-                    <input disabled type="text" class="form-control" value="<%= userInfo.phoneNumber %>">
+                <div class='input-group-prepend'>
+                    <span class='input-group-text' style='width: 180px'>Phone Number</span>
+                    <input disabled type='text' class='form-control' value='<%= userInfo.phoneNumber %>'>
                 </div>
 
                 <br>
 
-                <div class="input-group-prepend">
-                    <span class="input-group-text" style="width: 180px">Bio</span>
-                    <textarea disabled type="text" class="form-control"><%= userInfo.bio %></textarea>
+                <div class='input-group-prepend'>
+                    <span class='input-group-text' style='width: 180px'>Bio</span>
+                    <textarea disabled type='text' class='form-control'><%= userInfo.bio %></textarea>
                 </div>
 
                 <br>
 
-                <div class="input-group-prepend">
-                    <span class="input-group-text" style="width: 180px">Status</span>
-                    <input disabled type="text" class="form-control" value="<%= locals.status %>">
-                    <% console.log("stttatus: " + userInfo.status) %>
+                <div class='input-group-prepend'>
+                    <span class='input-group-text' style='width: 180px'>Status</span>
+                    <input disabled type='text' class='form-control' value='<%= locals.status %>'>
                 </div>
 
             </div>

@@ -1,38 +1,42 @@
-<div class="card-body">
+<div class='card-body'>
     <% if (resourceInfo.length !== 0) { %>
         <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
-            <div class="card blogBox moreBox">
-                <div class="card-body">
+            <div class='card blogBox moreBox'>
+                <div class='card-body'>
                     <h4><%= resourceInfo[i].name %></h4>
-                    <div class="card-text">
-                        <ul class="list-group">
-                            <li class="list-group-item borderless box-padding">
+                    <div class='card-text'>
+                        <ul class='list-group'>
+                            <li class='list-group-item borderless box-padding'>
                                 <b>Description: </b> <%= resourceInfo[i].description %></li>
-                            <li class="list-group-item borderless box-padding">
+                            <li class='list-group-item borderless box-padding'>
                                 <b>State:</b> <%= resourceInfo[i].state %></li>
-                            <li class="list-group-item borderless box-padding">
-                                <b>Link: </b> <a href="<%= resourceInfo[i].uri %>">click me</a>
+                            <li class='list-group-item borderless box-padding'>
+                                <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click me</a>
 
                             </li>
-                            <li class="list-group-item borderless box-padding">
+                            <li class='list-group-item borderless box-padding'>
                                 <b>Institution: </b> <%= resourceInfo[i].institution %></li>
-                            <li class="list-group-item borderless box-padding">
+                            <li class='list-group-item borderless box-padding'>
                                 <b>Tags:</b> <%= resourceInfo[i].tags %>
                             </li>
-                            <li class="list-group-item borderless box-padding">
-                                <b>Actions:</b>
-                                <a href="#" type="button" class="btn-sm btn btn-outline-warning"
-                                   style="border:0px solid transparent">Star</a>
-                                <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id) { %>
-                                    <a class="btn-sm btn btn-outline-info" style="border:0px solid transparent"
-                                       href="/updateOneResource/<%= resourceInfo[i]._id %>"
-                                       type="button">Edit</a>
-                                    <button type="button" class="btn btn-outline-danger"
-                                            style="border:0px solid transparent" data-toggle="modal"
-                                            data-target="#deleteModal<%= resourceInfo[i]._id %>">
-                                        Delete
-                                    </button>
-                                <% } %>
+                            <li class='list-group-item borderless box-padding'>
+                                <form method='post' action='/starResource/<%= resourceInfo[i]._id %>'>
+                                    <b>Actions:</b>
+                                    <input type='submit' style='border:0px solid transparent' name='submit'
+                                           class='btn btn-outline-warning' value='Star'>
+                                    <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id) { %>
+                                        <button type='button' class='btn btn-outline-info'
+                                                style='border:0px solid transparent' data-toggle='modal'
+                                                data-target='#editModal<%= resourceInfo[i]._id %>'>
+                                            Edit
+                                        </button>
+                                        <button type='button' class='btn btn-outline-danger'
+                                                style='border:0px solid transparent' data-toggle='modal'
+                                                data-target='#deleteModal<%= resourceInfo[i]._id %>'>
+                                            Delete
+                                        </button>
+                                    <% } %>
+                                </form>
                             </li>
                         </ul>
                     </div>

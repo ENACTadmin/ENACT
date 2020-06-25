@@ -262,10 +262,6 @@ app.post('/uploadToFacultyExclusive',
     resourceController.uploadResource
 )
 
-app.get('/updateOneResource/:resourceId',
-    resourceController.loadOneResource
-)
-
 app.post('/updateResource/:resourceId',
     resourceController.updateResource
 )
@@ -273,6 +269,19 @@ app.post('/updateResource/:resourceId',
 app.post('/removeResource/:resourceId',
     resourceController.removeResource
 )
+
+app.post('/starResource/:resourceId',
+    resourceController.starResource
+)
+
+app.get('/showStarredResources',
+    resourceController.showStarredResources
+)
+
+app.post('/unstarResource/:resourceId',
+    resourceController.unstarResource
+)
+
 
 //*******************************************
 //***********Notification related************

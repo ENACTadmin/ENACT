@@ -1,10 +1,10 @@
 <%- include('../components/header'); -%>
 <%- include('../components/navbar'); -%>
 
-<section class="section">
-    <div class="section__content section__content--full-width">
-        <div class="jumbotron masthead text-center">
-            <div class="section__title section__title--centered">
+<section class='section'>
+    <div class='section__content section__content--full-width'>
+        <div class='jumbotron masthead text-center'>
+            <div class='section__title section__title--centered'>
                 Find Resources
             </div>
             <h4>Please click on search directly to see all available resources</h4>
@@ -13,20 +13,20 @@
 </section>
 
 
-<section class="section section__grey" data-aos="fade-up">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3 col-sm-12"></div>
-            <div class="col-md-6 col-sm-12">
+<section class='section section__grey' data-aos='fade-up'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-md-3 col-sm-12'></div>
+            <div class='col-md-6 col-sm-12'>
                 <% if (loggedIn) { %>
-                    <form method="post" action="/showPrimaryResources">
-                        <div class="input-group-prepend">
-                            <input type="text" class="form-control" name="search"
-                                   placeholder="Search for resource name or description">
+                    <form method='post' action='/showPrimaryResources'>
+                        <div class='input-group-prepend'>
+                            <input type='text' class='form-control' name='search'
+                                   placeholder='Search for resource name or description'>
                             &nbsp&nbsp&nbsp
-                            <input type="submit" name="submit" class="btn btn-dark" value="Search">
+                            <input type='submit' name='submit' class='btn btn-dark' value='Search'>
                             &nbsp&nbsp&nbsp
-                            <a href="/search" class="btn btn-large btn-warning" style="width: 300px">Advanced Search</a>
+                            <a href='/search' class='btn btn-large btn-warning' style='width: 300px'>Advanced Search</a>
                         </div>
                     </form>
                 <% } else { %>
