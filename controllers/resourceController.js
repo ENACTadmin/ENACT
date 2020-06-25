@@ -731,17 +731,6 @@ exports.loadUnderReviewResources = async (req, res, next) => {
     }
 }
 
-exports.loadOneResource = async (req, res, next) => {
-    try {
-        let resourceId = await req.params.resourceId
-        let resourceInfo = await Resource.findOne({_id: resourceId})
-        res.locals.resourceInfo = resourceInfo
-        res.render('./pages/updateResource')
-    } catch (e) {
-        next(e)
-    }
-}
-
 exports.removeResource = async (req, res, next) => {
     try {
         let resourceId = await req.params.resourceId
@@ -751,4 +740,12 @@ exports.removeResource = async (req, res, next) => {
     } catch (e) {
         next(e)
     }
+}
+
+exports.starResource = async (req, res, next) => {
+
+}
+
+exports.showStaredResources = async (req, res, next) => {
+
 }
