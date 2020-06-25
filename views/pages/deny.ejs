@@ -1,0 +1,78 @@
+<%- include('../components/header'); -%>
+<%- include('../components/navbar'); -%>
+
+<section class="section">
+    <div class="section__content section__content--full-width">
+        <div class="jumbotron masthead text-center">
+            <div class="section__title section__title--centered">
+                You have denied the following resources
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section__grey" data-aos="fade-up">
+    <section class="section__content section__content--fluid-width">
+        <div class="container">
+            <div class="row">
+                <% if (loggedIn) { %>
+                <div class="col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <% for (let i = 0; i < resourceInfo.length; i++) { %>
+                                <div class="col-sm-11">
+                                    <div class="card blogBox moreBox">
+                                        <div class="card-body">
+                                            <% console.log("status: " + resourceInfo[i].status) %>
+                                            <h4><%= resourceInfo[i].name %></h4>
+                                            <div class="card-text">
+                                                <ul class="list-group">
+                                                    <li class="list-group-item borderless box-padding">
+                                                        <b>Author: </b> <%= resourceInfo[i].ownerName %></li>
+                                                    <li class="list-group-item borderless box-padding">
+                                                        <b>Description: </b> <%= resourceInfo[i].description %></li>
+                                                    <li class="list-group-item borderless box-padding">
+                                                        <b>State:</b> <%= resourceInfo[i].state %></li>
+                                                    <li class="list-group-item borderless box-padding">
+                                                        <b>Link: </b> <a
+                                                                href="<%= resourceInfo[i].uri %>"><%= resourceInfo[i].uri %></a>
+                                                    </li>
+                                                    <li class="list-group-item borderless box-padding">
+                                                        <b>Institution: </b> <%= resourceInfo[i].institution %></li>
+                                                    <li class="list-group-item borderless box-padding">
+                                                        <b>Tags:</b> <%= resourceInfo[i].tags %>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card blogBox moreBox">
+                                        <div class="card-body">
+                                            <h5>Leaving a feedback to the above resource owner?</h5>
+                                        <div class="col-sm-11">
+                                            <form>
+                                                <textarea id="review" name="review<%= resourceInfo[i]._id %>" style="resize: none;min-width: 100%" rows="4"></textarea>
+                                                <br>
+                                                <input type="submit" name="submit<%= resourceInfo[i]._id %>" class="btn-sm btn btn-outline-info" value="Send">
+                                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                <input type="submit" name="resume<%= resourceInfo[i]._id %>" class="btn-sm btn btn-outline-warning" value="Resume the above resource to UnderReview">
+                                            </form>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <br>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+                <% } else { %>
+                <%- include('../components/component-loginToView'); -%>
+                <% } %>
+            </div>
+        </div>
+    </section>
+</section>
+
+
+<%- include('../components/footer'); -%>
