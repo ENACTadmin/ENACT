@@ -24,9 +24,6 @@
                                 <a href='#' type='button' class='btn-sm btn btn-outline-warning'
                                    style='border:0px solid transparent'>Star</a>
                                 <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id) { %>
-<!--                                    <a class='btn-sm btn btn-outline-info' style='border:0px solid transparent'-->
-<!--                                       href='/updateOneResource/<%= resourceInfo[i]._id %>'-->
-<!--                                       type='button'>Edit</a>-->
                                     <button type='button' class='btn btn-outline-info'
                                             style='border:0px solid transparent' data-toggle='modal'
                                             data-target='#editModal<%= resourceInfo[i]._id %>'>
