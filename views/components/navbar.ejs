@@ -1,32 +1,32 @@
-<script src="/js/menu.js"></script>
+<script src='/js/menu.js'></script>
 <script>
     AOS.init();
 </script>
 
-<header class="header">
-    <div class="header__content header__content--fluid-width">
-        <a class="header__logo-title" href="/">
-            <div class="card-body" style="background-color: transparent">
-                <div class="card-text">
-                    <img style="height: 70px; width: 70px"
-                         src="https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg">
+<header class='header'>
+    <div class='header__content header__content--fluid-width'>
+        <a class='header__logo-title' href='/'>
+            <div class='card-body' style='background-color: transparent'>
+                <div class='card-text'>
+                    <img style='height: 70px; width: 70px'
+                         src='https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg'>
                 </div>
             </div>
         </a>
 
-        <nav class="header__menu">
+        <nav class='header__menu'>
             <ul>
                 <li>
-                    <a class="header-link" id="header-link" href="/" data-aos="fade-left">HOME</a>
+                    <a class='header-link' id='header-link' href='/' data-aos='fade-left'>HOME</a>
                 </li>
                 <li>
                     <% if (loggedIn) { %>
-                        <a class="header-link" id="header-link" href="#" data-aos="fade-left">Courses</a>
-                        <ul class="sub-menu">
+                        <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Courses</a>
+                        <ul class='sub-menu'>
                             <% for (let i = 0; i < courseInfoSet.length; i++) { %>
                                 <li>
-                                    <a class="header-link"
-                                       href="/showOneCourse/<%= courseInfoSet[i]._id %>"><%= courseInfoSet[i].courseName %></a>
+                                    <a class='header-link'
+                                       href='/showOneCourse/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName %></a>
                                 </li>
                             <% } %>
                         </ul>
@@ -35,10 +35,10 @@
                 </li>
                 <li>
                     <% if (loggedIn) { %>
-                        <a class="header-link" id="header-link" href="#" data-aos="fade-left">Resources</a>
-                        <ul class="sub-menu">
+                        <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Resources</a>
+                        <ul class='sub-menu'>
                             <li>
-                                <a class="header-link" href="/primarySearch">Find some resources</a>
+                                <a class='header-link' href='/primarySearch'>Find some resources</a>
                             </li>
                         </ul>
                     <% } else { %>
@@ -47,11 +47,11 @@
 
                 <li>
                     <% if (loggedIn) { %>
-                    <a class="header-link" id="header-link" href="#" data-aos="fade-left">Notifications</a>
-                    <ul class="sub-menu">
+                    <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Notifications</a>
+                    <ul class='sub-menu'>
                         <li>
-                            <% if (status === "faculty" || status === "admin") { %>
-                            <a class="header-link" href="/reviewResource">Resources under review</a>
+                            <% if (status === 'faculty' || status === 'admin') { %>
+                            <a class='header-link' href='/reviewResource'>Resources under review</a>
                             <% } %>
                         </li>
                     </ul>
@@ -61,30 +61,30 @@
 
                 <% if (loggedIn) { %>
                     <li>
-                        <a class="header-link" id="header-link" href="#" data-aos="fade-left">Settings</a>
-                        <ul class="sub-menu">
+                        <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Settings</a>
+                        <ul class='sub-menu'>
                             <li>
-                                <a class="header-link" href="/myProfile">View/edit profile</a>
+                                <a class='header-link' href='/myProfile'>View/edit profile</a>
                             </li>
                             <li>
-                                <% if (status === "admin") { %>
-                                    <a class="header-link" href="/showAllProfiles">View all profiles</a>
+                                <% if (status === 'admin') { %>
+                                    <a class='header-link' href='/showAllProfiles'>View all profiles</a>
                                 <% } %>
                             </li>
                             <li>
-                                <% if (status === "admin") { %>
-                                    <a class="header-link" href="/assignFaculty">Set up a new faculty</a>
+                                <% if (status === 'admin') { %>
+                                    <a class='header-link' href='/assignFaculty'>Set up a new faculty</a>
                                 <% } %>
                             </li>
                         </ul>
                     </li>
                 <% } %>
 
-                <li class="header__btn header__btn--login">
+                <li class='header__btn header__btn--login'>
                     <% if (!loggedIn) { %>
-                        <a class="btn btn-outline-dark" href="/auth/google" data-aos="fade-left">ENACT member login</a>
+                        <a class='btn btn-outline-dark' href='/auth/google' data-aos='fade-left'>ENACT member login</a>
                     <% } else { %>
-                        <a class="btn btn-outline-dark" href="/logout" data-aos="fade-left">Logout</a>
+                        <a class='btn btn-outline-dark' href='/logout' data-aos='fade-left'>Logout</a>
                     <% } %>
                 </li>
             </ul>

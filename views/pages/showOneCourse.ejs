@@ -1,10 +1,47 @@
 <%- include('../components/header'); -%>
 <%- include('../components/navbar'); -%>
 
-<section class="section">
-    <div class="section__content section__content--full-width">
-        <div class="jumbotron masthead text-center">
-            <div class="section__title section__title--centered">
+<%
+let tags = ['agriculture'
+    , 'arts and culture'
+    , 'cannabis'
+    , 'consumer protection'
+    , 'COVID-19'
+    , 'criminal justice'
+    , 'disability'
+    , 'education'
+    , 'elderly'
+    , 'energy'
+    , 'environment/climate change'
+    , 'gun control'
+    , 'healthcare'
+    , 'higher education'
+    , 'housing and homelessness'
+    , 'immigration'
+    , ' labor'
+    , 'LGBTQ+'
+    , 'mental health'
+    , 'opioids'
+    , 'public health'
+    , 'public safety'
+    , 'race'
+    , 'substance use and recovery'
+    , 'taxes'
+    , 'technology'
+    , 'tourism'
+    , 'transportation'
+    , 'veterans'
+    , 'violence and sexual assault'
+    , 'voting'
+    , 'women and gender']
+
+let id_set = []
+%>
+
+<section class='section'>
+    <div class='section__content section__content--full-width'>
+        <div class='jumbotron masthead text-center'>
+            <div class='section__title section__title--centered'>
                 <%= courseInfo.courseName %>
                 <br>
             </div>
@@ -12,79 +49,79 @@
     </div>
 </section>
 
-<section class="section section__grey" data-aos="fade-up">
-    <section class="section__content section__content--fluid-width">
-        <div class="container">
-            <div class="row">
+<section class='section section__grey' data-aos='fade-up'>
+    <section class='section__content section__content--fluid-width'>
+        <div class='container'>
+            <div class='row'>
                 <% if (loggedIn) { %>
                     <!--left information bar-->
-                    <div class="col-md-3" data-aos="fade-right">
-                        <div class="card">
-                            <div class="card-header">
+                    <div class='col-md-3' data-aos='fade-right'>
+                        <div class='card'>
+                            <div class='card-header'>
                                 <b>General Information</b>
                             </div>
                             <!--content-->
-                            <div class="card-body">
-                                <div class="card-text">
-                                    <ul class="list-group">
-                                        <li class="list-group-item borderless" style="padding: 0 0 3px 0">
+                            <div class='card-body'>
+                                <div class='card-text'>
+                                    <ul class='list-group'>
+                                        <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
                                             <b>Instructor:</b> <%= courseInfo.instructor %></li>
-                                        <li class="list-group-item borderless" style="padding: 0 0 3px 0">
+                                        <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
                                             <b>Office
                                                 Hour:</b> <%= courseInfo.officeHour %></li>
-                                        <li class="list-group-item borderless" style="padding: 0 0 3px 0">
+                                        <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
                                             <b>Office
                                                 Location:</b> <%= courseInfo.officeHourLocation %></li>
-                                        <li class="list-group-item borderless" style="padding: 0 0 3px 0">
+                                        <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
                                             <b>Institution: </b> <%= courseInfo.institution %></li>
-                                        <li class="list-group-item borderless" style="padding: 0 0 3px 0">
+                                        <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
                                             <b>Syllabus:</b>
-                                            <a href="#">Click me</a>
+                                            <a href='#'>Click me</a>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                         <br>
-                        <div class="card" data-aos="fade-right" data-aos-delay="100">
-                            <div class="card-header">
+                        <div class='card' data-aos='fade-right' data-aos-delay='100'>
+                            <div class='card-header'>
                                 <b>Tools</b>
                             </div>
-                            <div class="card-body">
-                                <div class="card-text">
-                                    <ul class="list-group">
+                            <div class='card-body'>
+                                <div class='card-text'>
+                                    <ul class='list-group'>
                                         <% if (status === 'faculty' || status === 'admin') { %>
-                                            <li class="list-group-item borderless"
-                                                style="padding: 0 0 3px 0">
-                                                <a href="#">Update Syllabus</a></li>
-                                            <li class="list-group-item borderless"
-                                                style="padding: 0 0 3px 0">
-                                                <a href="#">Assign TAs</a></li>
-                                            <li class="list-group-item borderless"
-                                                style="padding: 0 0 3px 0">
+                                            <li class='list-group-item borderless'
+                                                style='padding: 0 0 3px 0'>
+                                                <a href='#'>Update Syllabus</a></li>
+                                            <li class='list-group-item borderless'
+                                                style='padding: 0 0 3px 0'>
+                                                <a href='#'>Assign TAs</a></li>
+                                            <li class='list-group-item borderless'
+                                                style='padding: 0 0 3px 0'>
                                                 Pin code: <%= courseInfo.coursePin %></li>
                                         <% } %>
-                                        <li class="list-group-item borderless"
-                                            style="padding: 0 0 3px 0">
-                                            <a href="/uploadToCourse/<%= courseInfo._id %>">Upload Resources</a></li>
+                                        <li class='list-group-item borderless'
+                                            style='padding: 0 0 3px 0'>
+                                            <a href='/uploadToCourse/<%= courseInfo._id %>'>Upload Resources</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-9">
-                        <form method="post" action="/showPrimaryResources">
-                            <div class="input-group-prepend">
-                                <input type="text" class="form-control" name="search"
-                                       placeholder="Search for resource name or description">
+                    <div class='col-md-9'>
+                        <form method='post' action='/showPrimaryResources'>
+                            <div class='input-group-prepend'>
+                                <input type='text' class='form-control' name='search'
+                                       placeholder='Search for resource name or description'>
                                 &nbsp&nbsp&nbsp
-                                <input type="submit" name="submit" class="btn btn-outline-dark"
-                                       value="Search">
+                                <input type='submit' name='submit' class='btn btn-outline-dark'
+                                       value='Search'>
                             </div>
                             <br>
                         </form>
-                        <div class="card">
-                            <div class="card-header">
+                        <div class='card'>
+                            <div class='card-header'>
                                 <b>Latest Resources</b>
                             </div>
                             <%- include('../components/component-resourceStack'); -%>
@@ -101,29 +138,29 @@
 <% if (resourceInfo.length !== 0) { %>
     <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
         <!-- Modal -->
-        <div class="modal fade" id="deleteModal<%= resourceInfo[i]._id %>" tabindex="-1" role="dialog"
-             aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Delete?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+        <div class='modal fade' id='deleteModal<%= resourceInfo[i]._id %>' tabindex='-1' role='dialog'
+             aria-labelledby='exampleModalLabel'
+             aria-hidden='true'>
+            <div class='modal-dialog' role='document'>
+                <div class='modal-content'>
+                    <div class='modal-header'>
+                        <h5 class='modal-title' id='exampleModalLabel'>Delete?</h5>
+                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                            <span aria-hidden='true'>&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12">
+                    <div class='modal-body'>
+                        <div class='row'>
+                            <div class='col-md-12 col-sm-12'>
                                 <h4>Are you sure you want to delete this resource permanently?</h4>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <form method="post" action="/removeResource/<%= resourceInfo[i]._id %>">
-                            <input type="submit" name="submit" class="btn btn-outline-danger" value="Delete">
+                    <div class='modal-footer'>
+                        <form method='post' action='/removeResource/<%= resourceInfo[i]._id %>'>
+                            <input type='submit' name='submit' class='btn btn-outline-danger' value='Delete'>
                         </form>
-                        <button type="button" id="closeBtn" class="btn btn-outline-secondary" data-dismiss="modal">
+                        <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>
                             Close
                         </button>
                     </div>
@@ -133,64 +170,258 @@
     <% } %>
 <% } %>
 
-<script>
-    $(document).ready(function () {
-        let realType = $('#typeFromServer').text()
-        realType = realType.substring(1, realType.length - 1)
-        $('#typeSelect option').each(function () {
-            if ($(this).val() === realType) {
-                $(this).prop('selected', true)
-            }
-        })
-        let state = $('#stateFromServer').text()
-        state = state.substring(1, state.length - 1)
-        $('#stateSelect option').each(function () {
-            if ($(this).val() === state) {
-                $(this).prop('selected', true)
-            }
-        })
-        let status = $('#statusFromServer').text()
-        status = status.substring(1, status.length - 1)
-        $('#statusSelect option').each(function () {
-            if ($(this).val() === status) {
-                $(this).prop('selected', true)
-            }
-        })
-        let tags = $("#tagsFromServer").text()
-        tags = tags.substring(1, tags.length - 1)
-        let tagsArray = tags.split(',')
-        $(':checkbox').each(function () {
-            if (tagsArray.includes($(this).val())) {
-                $(this).prop('checked', true)
-            }
-        })
-        let checkboxes = $(":checkbox");
-        checkboxes.on('change', function () {
-            let string = checkboxes.filter(":checked").map(function () {
-                return this.value;
-            }).get().join(",");
-            $('#tagsToReturn').val(string);
-        });
-    })
+<% if (resourceInfo.length !== 0) { %>
+    <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
+        <!-- Modal -->
+        <div class='modal fade' id='editModal<%= resourceInfo[i]._id %>' tabindex='-1' role='dialog'
+             aria-labelledby='exampleModalLabel'
+             aria-hidden='true'>
+            <div class='modal-dialog' role='document'>
+                <form method='post' action='/updateResource/<%= resourceInfo[i]._id %>'>
+                    <div class='modal-content'>
+                        <div class='modal-header'>
+                            <h5 class='modal-title' id='exampleModalLabel'>Edit</h5>
+                            <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                                <span aria-hidden='true'>&times;</span>
+                            </button>
+                        </div>
+                        <div class='modal-body'>
+                            <div class='row'>
+                                <div class='col-md-12 col-sm-12'>
+                                    <h3>Basic information</h3>
+                                    <hr>
+                                    <div class='input-group-prepend'>
+                                        <span class='input-group-text' style='width: 180px'>Resource Name</span>
+                                        <input type='text' id='resourceName' class='form-control'
+                                               name='resourceName'
+                                               value='<%= resourceInfo[i].name %>'>
+                                    </div>
+                                    <br>
+                                    <div class='input-group-prepend'>
+                                        <span class='input-group-text' style='width: 180px'>Description</span>
+                                        <textarea type='text' class='form-control' name='resourceDescription'
+                                                  rows='4'><%= resourceInfo[i].description %></textarea>
+                                    </div>
+                                    <br>
+                                    <div class='input-group-prepend'>
+                                        <span class='input-group-text' style='width: 180px'>URI</span>
+                                        <input type='text' id='fileURL' class='form-control' name='uri'
+                                               value='<%= resourceInfo[i].uri %>'>
+                                    </div>
+                                    <br>
+                                    <div class='input-group-prepend'>
+                                        <span class='input-group-text' style='width: 180px'>Resource Type</span>
+                                        <select id='typeSelect<%= resourceInfo[i]._id %>' class='form-control'
+                                                name='resourceType'>
+                                            <option value='null'>Choose...</option>
+                                            <option value='video'>Video</option>
+                                            <option value='document'>Document</option>
+                                        </select>
+                                    </div>
+                                    <br>
+                                    <div class='input-group-prepend'>
+                                        <span class='input-group-text' style='width: 180px'>State</span>
+                                        <select id='stateSelect<%= resourceInfo[i]._id %>' class='form-control'
+                                                name='state'>
+                                            <option value='AL'>Alabama</option>
+                                            <option value='AK'>Alaska</option>
+                                            <option value='AZ'>Arizona</option>
+                                            <option value='AR'>Arkansas</option>
+                                            <option value='CA'>California</option>
+                                            <option value='CO'>Colorado</option>
+                                            <option value='CT'>Connecticut</option>
+                                            <option value='DE'>Delaware</option>
+                                            <option value='DC'>District Of Columbia</option>
+                                            <option value='FL'>Florida</option>
+                                            <option value='GA'>Georgia</option>
+                                            <option value='HI'>Hawaii</option>
+                                            <option value='ID'>Idaho</option>
+                                            <option value='IL'>Illinois</option>
+                                            <option value='IN'>Indiana</option>
+                                            <option value='IA'>Iowa</option>
+                                            <option value='KS'>Kansas</option>
+                                            <option value='KY'>Kentucky</option>
+                                            <option value='LA'>Louisiana</option>
+                                            <option value='ME'>Maine</option>
+                                            <option value='MD'>Maryland</option>
+                                            <option value='MA'>Massachusetts</option>
+                                            <option value='MI'>Michigan</option>
+                                            <option value='MN'>Minnesota</option>
+                                            <option value='MS'>Mississippi</option>
+                                            <option value='MO'>Missouri</option>
+                                            <option value='MT'>Montana</option>
+                                            <option value='NE'>Nebraska</option>
+                                            <option value='NV'>Nevada</option>
+                                            <option value='NH'>New Hampshire</option>
+                                            <option value='NJ'>New Jersey</option>
+                                            <option value='NM'>New Mexico</option>
+                                            <option value='NY'>New York</option>
+                                            <option value='NC'>North Carolina</option>
+                                            <option value='ND'>North Dakota</option>
+                                            <option value='OH'>Ohio</option>
+                                            <option value='OK'>Oklahoma</option>
+                                            <option value='OR'>Oregon</option>
+                                            <option value='PA'>Pennsylvania</option>
+                                            <option value='RI'>Rhode Island</option>
+                                            <option value='SC'>South Carolina</option>
+                                            <option value='SD'>South Dakota</option>
+                                            <option value='TN'>Tennessee</option>
+                                            <option value='TX'>Texas</option>
+                                            <option value='UT'>Utah</option>
+                                            <option value='VT'>Vermont</option>
+                                            <option value='VA'>Virginia</option>
+                                            <option value='WA'>Washington</option>
+                                            <option value='WV'>West Virginia</option>
+                                            <option value='WI'>Wisconsin</option>
+                                            <option value='WY'>Wyoming</option>
+                                        </select>
+                                    </div>
+                                    <br>
+                                    <div class='input-group-prepend'>
+                                        <span class='input-group-text' style='width: 180px'>Institution</span>
+                                        <input type='text' class='form-control' name='institution'
+                                               value='<%= resourceInfo[i].institution %>'>
+                                    </div>
+                                    <br>
+                                    <div class='input-group-prepend'>
+                                        <span class='input-group-text' style='width: 180px'>Creation Year</span>
+                                        <input type='text' class='form-control' name='yearOfCreation'
+                                               value='<%= resourceInfo[i].yearOfCreation %>'>
+                                    </div>
+                                    <br>
+                                    <% if (status === 'admin' || status === 'faculty') { %>
+                                        <div class='input-group-prepend'>
+                                                <span class='input-group-text'
+                                                      style='width: 180px'>Resource Status</span>
+                                            <select id='statusSelect<%= resourceInfo[i]._id %>' class='form-control'
+                                                    name='status'>
+                                                <option value='privateToENACT'>Exclusive to all ENACT members
+                                                </option>
+                                                <option value='privateToProfessor'>Exclusive to ENACT professors
+                                                </option>
+                                                <option value='public'>Open to public</option>
+                                            </select>
+                                        </div>
+                                        <br>
+                                    <% } else { %>
+                                        <div hidden class='input-group-prepend'>
+                                                <span class='input-group-text'
+                                                      style='width: 180px'>Resource Status</span>
+                                            <select id='statusSelect<%= resourceInfo[i]._id %>' class='form-control'
+                                                    name='status'>
+                                                <option value='privateToENACT'>Exclusive to all ENACT members
+                                                </option>
+                                                <option value='public'>Open to public</option>
+                                            </select>
+                                        </div>
+                                    <% } %>
+                                </div>
 
-    /*
-    Function to carry out the actual PUT request to S3 using the signed request from the app.
-    */
-    function uploadFile(file, signedRequest, url) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('PUT', signedRequest);
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    document.getElementById('preview').src = url;
-                    document.getElementById('imageURL').value = url;
-                } else {
-                    alert('Could not upload file.');
-                }
+                                <div class='w-100'></div>
+                                <br>
+                                <div class='col-md-12 col-sm-12'>
+                                    <h3>Tag the resource</h3>
+                                    <hr>
+                                </div>
+                                <div class='w-100'></div>
+                                <% for (let m = 0; m < tags.length;) { %>
+                                    <% for (let r = 0; m < tags.length && r < 2; m++, r++) { %>
+                                        <div class='col-md-6 col-sm-12 text-md-right'>
+                                            <div class='input-group' style='padding-bottom: 10px'>
+                                                <div class='input-group-prepend'>
+                                                    <div class='input-group-text'>
+                                                        <input class='checkbox-double'
+                                                               id="<%= resourceInfo[i]._id %>"
+                                                               type='checkbox'
+                                                               value='<%= tags[m] %>'><br>
+                                                    </div>
+                                                </div>
+                                                <input disabled type='text' class='form-control'
+                                                       aria-label='Text input with checkbox' value='<%= tags[m] %>'>
+                                            </div>
+                                        </div>
+                                    <% } %>
+                                    <div class='w-100'></div>
+                                <% } %>
+
+                                <input hidden id='tagsToReturn<%= resourceInfo[i]._id %>' type='text'
+                                       class='form-control' name='selectedTags' value=''>
+                                <br>
+                                <div class='w-100'></div>
+
+                            </div>
+                        </div>
+                        <div class='modal-footer'>
+                            <input type='submit' name='submit' class='btn btn-outline-primary' value='Save'>
+                            <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <p hidden id='typeFromServer<%= resourceInfo[i]._id %>'>'<%= resourceInfo[i].resourceType %>'</p>
+        <p hidden id='stateFromServer<%= resourceInfo[i]._id %>'>'<%= resourceInfo[i].state %>'</p>
+        <p hidden id='statusFromServer<%= resourceInfo[i]._id %>'>'<%= resourceInfo[i].status %>'</p>
+        <p hidden id='tagsFromServer<%= resourceInfo[i]._id %>'>'<%= resourceInfo[i].tags %>'</p>
+        <% id_set.push(resourceInfo[i]._id) %>
+    <% } %>
+<% } %>
+
+<p hidden id='idSet'><%= id_set %></p>
+
+<script>
+    function load() {
+        let id_set = $('#idSet').text()
+        if (id_set.length !== 0) {
+            let id_set_array = id_set.split(',')
+            console.log('arr: ', id_set_array)
+            for (let i = 0; i < id_set_array.length; i++) {
+                let realType = $('#typeFromServer' + id_set_array[i]).text()
+                realType = realType.substring(1, realType.length - 1)
+                $('#typeSelect' + id_set_array[i] + ' option').each(function () {
+                    if ($(this).val() === realType) {
+                        $(this).prop('selected', true)
+                    }
+                })
+                let state = $('#stateFromServer' + id_set_array[i]).text()
+                state = state.substring(1, state.length - 1)
+                $('#stateSelect' + id_set_array[i] + ' option').each(function () {
+                    if ($(this).val() === state) {
+                        $(this).prop('selected', true)
+                    }
+                })
+                let status = $('#statusFromServer' + id_set_array[i]).text()
+                status = status.substring(1, status.length - 1)
+                $('#statusSelect' + id_set_array[i] + ' option').each(function () {
+                    if ($(this).val() === status) {
+                        $(this).prop('selected', true)
+                    }
+                })
+                let tags = $('#tagsFromServer' + id_set_array[i]).text()
+                console.log('tags from server: ', tags)
+                tags = tags.substring(1, tags.length - 1)
+                let tagsArray = tags.split(',')
+                $(':checkbox').filter('#' + id_set_array[i]).each(function () {
+                    if (tagsArray.includes($(this).val())) {
+                        $(this).prop('checked', true)
+                    }
+                })
+                let checkboxes = $(':checkbox').filter('#' + id_set_array[i]);
+                checkboxes.on('change', function () {
+                    let string = checkboxes.filter(':checked').map(function () {
+                        return this.value;
+                    }).get().join(',');
+                    console.log('string is now: ', string)
+                    $('#tagsToReturn' + id_set_array[i]).val(string);
+                });
             }
-        };
-        xhr.send(file);
+        }
     }
+
+    load()
 </script>
+
 
 <%- include('../components/footer'); -%>

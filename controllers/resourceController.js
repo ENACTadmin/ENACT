@@ -75,8 +75,9 @@ exports.uploadResource = async (req, res, next) => {
 exports.updateResource = async (req, res, next) => {
     const resourceId = await req.params.resourceId
     try {
-        let tagsString = await req.body.tags
+        let tagsString = await req.body.selectedTags
         let tags = tagsString.split(",")
+        console.log("tags received: ", tags)
         let oldResource = await Resource.findOne({_id: resourceId})
         oldResource.name = await req.body.resourceName
         oldResource.status = await req.body.status

@@ -1,38 +1,38 @@
 <%- include('../components/header'); -%>
 <%- include('../components/navbar'); -%>
 
-<script src="/js/aws.js"></script>
+<script src='/js/aws.js'></script>
 
-<section class="section">
-    <div class="section__content section__content--full-width">
-        <div class="jumbotron masthead text-center">
-            <div class="section__title section__title--centered">
+<section class='section'>
+    <div class='section__content section__content--full-width'>
+        <div class='jumbotron masthead text-center'>
+            <div class='section__title section__title--centered'>
                 Faculty Exclusive Resource Upload
             </div>
         </div>
     </div>
 </section>
 
-<section class="section section__grey" data-aos="fade-up">
-    <div class="container">
+<section class='section section__grey' data-aos='fade-up'>
+    <div class='container'>
         <% if (loggedIn) { %>
-            <div class="row">
-                <div class="col-md-3 col-sm-12"></div>
-                <div class="col-md-6 col-sm-12">
+            <div class='row'>
+                <div class='col-md-3 col-sm-12'></div>
+                <div class='col-md-6 col-sm-12'>
                     <h3>Upload the file</h3>
                     <hr>
-                    <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                            data-target="#myModal">
+                    <button type='button' class='btn btn-outline-primary' data-toggle='modal'
+                            data-target='#myModal'>
                         Upload the file
                     </button>
-                    <p class="uploaded"></p>
+                    <p class='uploaded'></p>
                 </div>
             </div>
             <br>
-            <form method="post" action="/uploadToFacultyExclusive">
-                <div class="row">
-                    <div class="col-md-3 col-sm-12"></div>
-                    <div class="col-md-6 col-sm-12">
+            <form method='post' action='/uploadToFacultyExclusive'>
+                <div class='row'>
+                    <div class='col-md-3 col-sm-12'></div>
+                    <div class='col-md-6 col-sm-12'>
                         <h3>Basic information</h3>
                         <hr>
                         <%- include('../components/component-basicInfo') -%>
@@ -44,34 +44,34 @@
                         <%- include('../components/component-yearOfCreationSelector') -%>
                         <br>
                         <% if (status === 'admin' || status === 'faculty') { %>
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" style="width: 180px">Resource Status</span>
-                                <select class="form-control" name="status">
-                                    <option selected value="privateToProfessor">Exclusive to ENACT professors</option>
+                            <div class='input-group-prepend'>
+                                <span class='input-group-text' style='width: 180px'>Resource Status</span>
+                                <select class='form-control' name='status'>
+                                    <option selected value='privateToProfessor'>Exclusive to ENACT professors</option>
                                 </select>
                             </div>
                             <br>
                         <% } %>
                     </div>
 
-                    <div class="w-100"></div>
+                    <div class='w-100'></div>
                     <br>
-                    <div class="col-md-3 col-sm-12"></div>
-                    <div class="col-md-6 col-sm-12">
+                    <div class='col-md-3 col-sm-12'></div>
+                    <div class='col-md-6 col-sm-12'>
                         <h3>Tag the resource</h3>
                         <hr>
 
                     </div>
-                    <div class="w-100"></div>
+                    <div class='w-100'></div>
 
                     <%- include('../components/component-tagSelector') -%>
 
                     <br>
 
-                    <div class="w-100"></div>
-                    <div class="col-md-3 col-sm-12"></div>
-                    <div class="col-md-6 col-sm-12">
-                        <input type="submit" name="submit" class="btn btn-outline-dark" value="Save">
+                    <div class='w-100'></div>
+                    <div class='col-md-3 col-sm-12'></div>
+                    <div class='col-md-6 col-sm-12'>
+                        <input type='submit' name='submit' class='btn btn-outline-dark' value='Save'>
                     </div>
                 </div>
             </form>
@@ -84,35 +84,35 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Upload file</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel'
+     aria-hidden='true'>
+    <div class='modal-dialog' role='document'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <h5 class='modal-title' id='exampleModalLabel'>Upload file</h5>
+                <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="row">
+            <div class='modal-body'>
+                <div class='row'>
                     <br><br>
-                    <div class="col-md-12 col-sm-12">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Upload File</span>
-                            <input type="file" class="form-control" id="file-input">
+                    <div class='col-md-12 col-sm-12'>
+                        <div class='input-group-prepend'>
+                            <span class='input-group-text' id='basic-addon1'>Upload File</span>
+                            <input type='file' class='form-control' id='file-input'>
                         </div>
                         <br>
                         <b>Upload status:</b>
-                        <p class="uploaded">Not uploaded</p>
+                        <p class='uploaded'>Not uploaded</p>
                         <hr>
-                        <h5 id="fileName">File Name: </h5>
-                        <h5 id="fileType">File Type: </h5>
+                        <h5 id='fileName'>File Name: </h5>
+                        <h5 id='fileType'>File Type: </h5>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" id="closeBtn" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <div class='modal-footer'>
+                <button type='button' id='closeBtn' class='btn btn-secondary' data-dismiss='modal'>Close</button>
             </div>
         </div>
     </div>
@@ -123,11 +123,11 @@
         $('#closeBtn').hide()
         $('#fileName').hide()
         $('#fileType').hide()
-        let checkboxes = $(":checkbox");
+        let checkboxes = $(':checkbox');
         checkboxes.on('change', function () {
-            let string = checkboxes.filter(":checked").map(function () {
+            let string = checkboxes.filter(':checked').map(function () {
                 return this.value;
-            }).get().join(",");
+            }).get().join(',');
             $('#tagsToReturn').val(string);
         });
     });
@@ -141,11 +141,11 @@
                     document.getElementById('fileURL').value = url;
                     document.getElementById('resourceName').value = file.name.split('.')[0];
                     $('#closeBtn').show()
-                    $('#fileName').text("File name: " + file.name)
+                    $('#fileName').text('File name: ' + file.name)
                     $('#fileName').show()
-                    $('#fileType').text("File type: " + file.type)
+                    $('#fileType').text('File type: ' + file.type)
                     $('#fileType').show()
-                    $('.uploaded').text("Uploaded!")
+                    $('.uploaded').text('Uploaded!')
                 } else {
                     alert('Could not upload file.');
                 }

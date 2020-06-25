@@ -88,7 +88,6 @@ exports.showOneCourse = async (req, res, next) => {
     let courseId = req.params.courseId;
     try {
         //courseInfo contains these fields
-        console.log("local set: " + res.locals.courseInfoSet)
         let courseSet = res.locals.courseInfoSet
         for (let i = 0; i < courseSet.length; i++) {
             if (courseSet[i]._id.toString() === courseId.toString()) {
