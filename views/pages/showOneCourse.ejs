@@ -1,10 +1,47 @@
 <%- include('../components/header'); -%>
 <%- include('../components/navbar'); -%>
 
-<section class="section">
-    <div class="section__content section__content--full-width">
-        <div class="jumbotron masthead text-center">
-            <div class="section__title section__title--centered">
+<script src='/js/editModal.js'></script>
+
+<% let tags = ['agriculture'
+    , 'arts and culture'
+    , 'cannabis'
+    , 'consumer protection'
+    , 'COVID-19'
+    , 'criminal justice'
+    , 'disability'
+    , 'education'
+    , 'elderly'
+    , 'energy'
+    , 'environment/climate change'
+    , 'gun control'
+    , 'healthcare'
+    , 'higher education'
+    , 'housing and homelessness'
+    , 'immigration'
+    , ' labor'
+    , 'LGBTQ+'
+    , 'mental health'
+    , 'opioids'
+    , 'public health'
+    , 'public safety'
+    , 'race'
+    , 'substance use and recovery'
+    , 'taxes'
+    , 'technology'
+    , 'tourism'
+    , 'transportation'
+    , 'veterans'
+    , 'violence and sexual assault'
+    , 'voting'
+    , 'women and gender']
+
+let id_set = [] %>
+
+<section class='section'>
+    <div class='section__content section__content--full-width'>
+        <div class='jumbotron masthead text-center'>
+            <div class='section__title section__title--centered'>
                 <%= courseInfo.courseName %>
                 <br>
             </div>
@@ -12,79 +49,79 @@
     </div>
 </section>
 
-<section class="section section__grey" data-aos="fade-up">
-    <section class="section__content section__content--fluid-width">
-        <div class="container">
-            <div class="row">
+<section class='section section__grey' data-aos='fade-up'>
+    <section class='section__content section__content--fluid-width'>
+        <div class='container'>
+            <div class='row'>
                 <% if (loggedIn) { %>
                     <!--left information bar-->
-                    <div class="col-md-3" data-aos="fade-right">
-                        <div class="card">
-                            <div class="card-header">
+                    <div class='col-md-3' data-aos='fade-right'>
+                        <div class='card'>
+                            <div class='card-header'>
                                 <b>General Information</b>
                             </div>
                             <!--content-->
-                            <div class="card-body">
-                                <div class="card-text">
-                                    <ul class="list-group">
-                                        <li class="list-group-item borderless" style="padding: 0 0 3px 0">
+                            <div class='card-body'>
+                                <div class='card-text'>
+                                    <ul class='list-group'>
+                                        <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
                                             <b>Instructor:</b> <%= courseInfo.instructor %></li>
-                                        <li class="list-group-item borderless" style="padding: 0 0 3px 0">
+                                        <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
                                             <b>Office
                                                 Hour:</b> <%= courseInfo.officeHour %></li>
-                                        <li class="list-group-item borderless" style="padding: 0 0 3px 0">
+                                        <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
                                             <b>Office
                                                 Location:</b> <%= courseInfo.officeHourLocation %></li>
-                                        <li class="list-group-item borderless" style="padding: 0 0 3px 0">
+                                        <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
                                             <b>Institution: </b> <%= courseInfo.institution %></li>
-                                        <li class="list-group-item borderless" style="padding: 0 0 3px 0">
+                                        <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
                                             <b>Syllabus:</b>
-                                            <a href="#">Click me</a>
+                                            <a href='#'>Click me</a>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                         <br>
-                        <div class="card" data-aos="fade-right" data-aos-delay="100">
-                            <div class="card-header">
+                        <div class='card' data-aos='fade-right' data-aos-delay='100'>
+                            <div class='card-header'>
                                 <b>Tools</b>
                             </div>
-                            <div class="card-body">
-                                <div class="card-text">
-                                    <ul class="list-group">
+                            <div class='card-body'>
+                                <div class='card-text'>
+                                    <ul class='list-group'>
                                         <% if (status === 'faculty' || status === 'admin') { %>
-                                            <li class="list-group-item borderless"
-                                                style="padding: 0 0 3px 0">
-                                                <a href="#">Update Syllabus</a></li>
-                                            <li class="list-group-item borderless"
-                                                style="padding: 0 0 3px 0">
-                                                <a href="#">Assign TAs</a></li>
-                                            <li class="list-group-item borderless"
-                                                style="padding: 0 0 3px 0">
+                                            <li class='list-group-item borderless'
+                                                style='padding: 0 0 3px 0'>
+                                                <a href='#'>Update Syllabus</a></li>
+                                            <li class='list-group-item borderless'
+                                                style='padding: 0 0 3px 0'>
+                                                <a href='#'>Assign TAs</a></li>
+                                            <li class='list-group-item borderless'
+                                                style='padding: 0 0 3px 0'>
                                                 Pin code: <%= courseInfo.coursePin %></li>
                                         <% } %>
-                                        <li class="list-group-item borderless"
-                                            style="padding: 0 0 3px 0">
-                                            <a href="/uploadToCourse/<%= courseInfo._id %>">Upload Resources</a></li>
+                                        <li class='list-group-item borderless'
+                                            style='padding: 0 0 3px 0'>
+                                            <a href='/uploadToCourse/<%= courseInfo._id %>'>Upload Resources</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-9">
-                        <form method="post" action="/showPrimaryResources">
-                            <div class="input-group-prepend">
-                                <input type="text" class="form-control" name="search"
-                                       placeholder="Search for resource name or description">
+                    <div class='col-md-9'>
+                        <form method='post' action='/showPrimaryResources'>
+                            <div class='input-group-prepend'>
+                                <input type='text' class='form-control' name='search'
+                                       placeholder='Search for resource name or description'>
                                 &nbsp&nbsp&nbsp
-                                <input type="submit" name="submit" class="btn btn-outline-dark"
-                                       value="Search">
+                                <input type='submit' name='submit' class='btn btn-outline-dark'
+                                       value='Search'>
                             </div>
                             <br>
                         </form>
-                        <div class="card">
-                            <div class="card-header">
+                        <div class='card'>
+                            <div class='card-header'>
                                 <b>Latest Resources</b>
                             </div>
                             <%- include('../components/component-resourceStack'); -%>
@@ -101,29 +138,29 @@
 <% if (resourceInfo.length !== 0) { %>
     <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
         <!-- Modal -->
-        <div class="modal fade" id="deleteModal<%= resourceInfo[i]._id %>" tabindex="-1" role="dialog"
-             aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Delete?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+        <div class='modal fade' id='deleteModal<%= resourceInfo[i]._id %>' tabindex='-1' role='dialog'
+             aria-labelledby='exampleModalLabel'
+             aria-hidden='true'>
+            <div class='modal-dialog' role='document'>
+                <div class='modal-content'>
+                    <div class='modal-header'>
+                        <h5 class='modal-title' id='exampleModalLabel'>Delete?</h5>
+                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                            <span aria-hidden='true'>&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12">
+                    <div class='modal-body'>
+                        <div class='row'>
+                            <div class='col-md-12 col-sm-12'>
                                 <h4>Are you sure you want to delete this resource permanently?</h4>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <form method="post" action="/removeResource/<%= resourceInfo[i]._id %>">
-                            <input type="submit" name="submit" class="btn btn-outline-danger" value="Delete">
+                    <div class='modal-footer'>
+                        <form method='post' action='/removeResource/<%= resourceInfo[i]._id %>'>
+                            <input type='submit' name='submit' class='btn btn-outline-danger' value='Delete'>
                         </form>
-                        <button type="button" id="closeBtn" class="btn btn-outline-secondary" data-dismiss="modal">
+                        <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>
                             Close
                         </button>
                     </div>
@@ -133,64 +170,6 @@
     <% } %>
 <% } %>
 
-<script>
-    $(document).ready(function () {
-        let realType = $('#typeFromServer').text()
-        realType = realType.substring(1, realType.length - 1)
-        $('#typeSelect option').each(function () {
-            if ($(this).val() === realType) {
-                $(this).prop('selected', true)
-            }
-        })
-        let state = $('#stateFromServer').text()
-        state = state.substring(1, state.length - 1)
-        $('#stateSelect option').each(function () {
-            if ($(this).val() === state) {
-                $(this).prop('selected', true)
-            }
-        })
-        let status = $('#statusFromServer').text()
-        status = status.substring(1, status.length - 1)
-        $('#statusSelect option').each(function () {
-            if ($(this).val() === status) {
-                $(this).prop('selected', true)
-            }
-        })
-        let tags = $("#tagsFromServer").text()
-        tags = tags.substring(1, tags.length - 1)
-        let tagsArray = tags.split(',')
-        $(':checkbox').each(function () {
-            if (tagsArray.includes($(this).val())) {
-                $(this).prop('checked', true)
-            }
-        })
-        let checkboxes = $(":checkbox");
-        checkboxes.on('change', function () {
-            let string = checkboxes.filter(":checked").map(function () {
-                return this.value;
-            }).get().join(",");
-            $('#tagsToReturn').val(string);
-        });
-    })
-
-    /*
-    Function to carry out the actual PUT request to S3 using the signed request from the app.
-    */
-    function uploadFile(file, signedRequest, url) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('PUT', signedRequest);
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    document.getElementById('preview').src = url;
-                    document.getElementById('imageURL').value = url;
-                } else {
-                    alert('Could not upload file.');
-                }
-            }
-        };
-        xhr.send(file);
-    }
-</script>
+<%- include('../components/component-editModal'); -%>
 
 <%- include('../components/footer'); -%>
