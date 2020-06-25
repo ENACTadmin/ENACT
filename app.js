@@ -269,6 +269,19 @@ app.post('/removeResource/:resourceId',
     resourceController.removeResource
 )
 
+app.post('/starResource/:resourceId',
+    resourceController.starResource
+)
+
+app.get('/showStarredResources',
+    resourceController.showStarredResources
+)
+
+app.post('/unstarResource/:resourceId',
+    resourceController.unstarResource
+)
+
+
 //*******************************************
 //***********Notification related************
 
