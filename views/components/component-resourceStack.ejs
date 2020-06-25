@@ -20,21 +20,23 @@
                                 <b>Tags:</b> <%= resourceInfo[i].tags %>
                             </li>
                             <li class='list-group-item borderless box-padding'>
-                                <b>Actions:</b>
-                                <a href='#' type='button' class='btn-sm btn btn-outline-warning'
-                                   style='border:0px solid transparent'>Star</a>
-                                <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id) { %>
-                                    <button type='button' class='btn btn-outline-info'
-                                            style='border:0px solid transparent' data-toggle='modal'
-                                            data-target='#editModal<%= resourceInfo[i]._id %>'>
-                                        Edit
-                                    </button>
-                                    <button type='button' class='btn btn-outline-danger'
-                                            style='border:0px solid transparent' data-toggle='modal'
-                                            data-target='#deleteModal<%= resourceInfo[i]._id %>'>
-                                        Delete
-                                    </button>
-                                <% } %>
+                                <form method='post' action='/starResource/<%= resourceInfo[i]._id %>'>
+                                    <b>Actions:</b>
+                                    <input type='submit' style='border:0px solid transparent' name='submit'
+                                           class='btn btn-outline-warning' value='Star'>
+                                    <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id) { %>
+                                        <button type='button' class='btn btn-outline-info'
+                                                style='border:0px solid transparent' data-toggle='modal'
+                                                data-target='#editModal<%= resourceInfo[i]._id %>'>
+                                            Edit
+                                        </button>
+                                        <button type='button' class='btn btn-outline-danger'
+                                                style='border:0px solid transparent' data-toggle='modal'
+                                                data-target='#deleteModal<%= resourceInfo[i]._id %>'>
+                                            Delete
+                                        </button>
+                                    <% } %>
+                                </form>
                             </li>
                         </ul>
                     </div>

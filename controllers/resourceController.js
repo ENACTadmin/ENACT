@@ -1,6 +1,8 @@
 'use strict';
 const Course = require('../models/Course');
 const Resource = require('../models/Resource');
+const ResourceSet = require('../models/ResourceSet');
+
 
 exports.uploadResource = async (req, res, next) => {
     const courseId = req.params.courseId
@@ -743,9 +745,58 @@ exports.removeResource = async (req, res, next) => {
 }
 
 exports.starResource = async (req, res, next) => {
-
+    try {
+        let resourceId = await req.params.resourceId
+        let resourceSet = await ResourceSet.findOne({ownerId: req.user._id})
+        let resourceIds = resourceSet.resources
+        let newResourceIds
+        if (!resourceIds) {
+            newResourceIds = [resourceId]
+        } else {
+            newResourceIds = [resourceId].concat(resourceIds)
+        }
+        // save to db
+        resourceSet.resources = newResourceIds
+        await resourceSet.save()
+        res.redirect('back')
+    } catch (e) {
+        next(e)
+    }
 }
 
-exports.showStaredResources = async (req, res, next) => {
+exports.showStarredResources = async (req, res, next) => {
+    try {
+        let resourceInfo = []
+        let resourceSet = await ResourceSet.findOne({ownerId: req.user._id})
+        console.log(resourceSet)
+        if (resourceSet.length !== 0) {
+            let resourceInfoIds = await resourceSet.resources
+            resourceInfo = await Resource.find({_id: {$in: resourceInfoIds}})
+        }
+        res.locals.resourceInfo = resourceInfo
+        res.render('./pages/showStarredResources')
+    } catch (e) {
+        next(e)
+    }
+}
 
+exports.unstarResource = async (req, res, next) => {
+    try {
+        let resourceId = await req.params.resourceId
+        let resourceSet = await ResourceSet.findOne({ownerId: req.user._id})
+        let resourceIds = resourceSet.resources
+        console.log("ids: ", resourceIds)
+        let newResourceIds = []
+        for (let i = 0; i < resourceIds.length; i++) {
+            if (resourceIds[i].toString() !== resourceId) {
+                newResourceIds.push(resourceIds[i])
+            }
+        }
+        console.log("new id: ", newResourceIds)
+        resourceSet.resources = newResourceIds
+        await resourceSet.save()
+        res.redirect('back')
+    } catch (e) {
+        next(e)
+    }
 }
