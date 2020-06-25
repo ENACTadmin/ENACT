@@ -716,19 +716,6 @@ exports.loadPublicResources = async (req, res, next) => {
     }
 }
 
-exports.loadUnderReviewResources = async (req, res, next) => {
-    try {
-        let resourceInfo = await Resource.find({
-            checkStatus: 'UnderReview',
-            facultyId: req.user._id
-        }).sort({'createdAt': -1})
-        res.locals.resourceInfo = resourceInfo
-        res.render('./pages/reviewResource')
-    } catch (e) {
-        console.log("error: " + e)
-        next(e)
-    }
-}
 
 exports.loadOneResource = async (req, res, next) => {
     try {
@@ -751,3 +738,6 @@ exports.removeResource = async (req, res, next) => {
         next(e)
     }
 }
+
+
+
