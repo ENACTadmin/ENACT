@@ -19,6 +19,7 @@ const Faculty = require('./models/Faculty')
 const courseController = require('./controllers/courseController');
 const resourceController = require('./controllers/resourceController');
 const profileController = require('./controllers/profileController');
+const notificationController = require('./controllers/notificationController');
 
 
 //*******************************************
@@ -286,11 +287,23 @@ app.post('/unstarResource/:resourceId',
 //***********Notification related************
 
 app.get('/reviewResource',
-    resourceController.loadUnderReviewResources
-    // resourceController.approveResources
+    notificationController.loadUnderReviewResources
 )
 
-app.get('/approved')
+app.post('/approve',
+    notificationController.approve
+)
+
+app.post('/toPublic',
+    notificationController.toPublic
+)
+
+app.post('/deny',
+    notificationController.deny
+)
+
+
+
 
 //*******************************************
 //***********Profile related*****************

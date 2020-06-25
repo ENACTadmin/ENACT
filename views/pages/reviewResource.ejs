@@ -21,18 +21,17 @@
                         <div class='card'>
                             <div class='card-body'>
                                 <% if (resourceInfo.length !== 0) { %>
-                                    <form>
-                                        <div class='form-group row'>
-                                            <div class='col-sm-1'></div>
-                                            <div class='col-sm-11'>
-                                                <a href = '/approved'><input type='submit' name='approve' class='btn btn-success' value='Post Checked Resources to ENACT'></a>
+                                    <form method="post" >
+                                        <div class="form-group row">
+                                            <div class="col-sm-1"></div>
+                                            <div class="col-sm-11">
+                                                <input type="submit" class="btn btn-success" formaction="/approve" value="Post Checked Resources to ENACT">
                                                 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                                <input type='submit' id='public' class='btn btn-warning' value='Post Checked Resources to Public'>
+                                                <input type="submit" formaction="/toPublic" class="btn btn-warning" value="Submit Checked Resources to Admins to be posted to public">
                                                 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                                <input type='submit' id='deny' class='btn btn-secondary' value='Deny Checked Resources'>
+                                                <input type="submit"  formaction="/deny" class="btn btn-secondary" value="Deny Checked Resources">
                                             </div>
                                         </div>
-
                                     <% for (let i = 0; i < resourceInfo.length; i++) { %>
                                         <div class='form-group row'>
                                             <div class='col-sm-1'>
@@ -71,10 +70,11 @@
                                             </div>
                                             </div>
                                         </div>
+                                        <% } %>
 
                                         </form>
                                         <br>
-                                    <% } %>
+
                                 <% } else { %>
                                     There is no resource under review.
                                 <% } %>
