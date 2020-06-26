@@ -102,6 +102,14 @@ exports.loadResources = async (req, res, next) => {
     const courseId = req.params.courseId
     try {
         let resources = await Resource.find({courseId: courseId})
+        let starred = await ResourceSet.findOne({ownerId: req.user._id})
+        let resourceIds = null
+        console.log("stared ", starred)
+        if (starred) {
+            resourceIds = await starred.resources
+        }
+        console.log("resourceIds: ", resourceIds)
+        res.locals.resourceIds = resourceIds
         res.render('./pages/showOneCourse', {
             resourceInfo: resources
         })
@@ -735,6 +743,17 @@ exports.starResource = async (req, res, next) => {
     try {
         let resourceId = await req.params.resourceId
         let resourceSet = await ResourceSet.findOne({ownerId: req.user._id})
+        // if resourceSet collection is empty, then create a new instance
+        if (!resourceSet) {
+            let newResourceSet = new ResourceSet({
+                ownerId: req.user._id,
+                name: 'favorite',
+                createdAt: new Date()
+            })
+            await newResourceSet.save()
+            resourceSet = newResourceSet
+        }
+        // use the newly created instance or the one in the database
         let resourceIds = resourceSet.resources
         let newResourceIds
         if (!resourceIds) {
@@ -753,10 +772,13 @@ exports.starResource = async (req, res, next) => {
 
 exports.showStarredResources = async (req, res, next) => {
     try {
-        let resourceInfo = []
+        let resourceInfo = null
         let resourceSet = await ResourceSet.findOne({ownerId: req.user._id})
         console.log(resourceSet)
-        if (resourceSet.length !== 0) {
+        if (!resourceSet) {
+            console.log('resource set empty')
+        } else {
+            console.log('resource set not empty')
             let resourceInfoIds = await resourceSet.resources
             resourceInfo = await Resource.find({_id: {$in: resourceInfoIds}})
         }
