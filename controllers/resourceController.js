@@ -703,6 +703,14 @@ exports.searchByFilled = async (req, res, next) => {
 exports.loadAllFacultyResources = async (req, res, next) => {
     try {
         let resourceInfo = await Resource.find({status: 'privateToProfessor'})
+        let starred = await ResourceSet.findOne({ownerId: req.user._id})
+        let resourceIds = null
+        console.log("starred ", starred)
+        if (starred) {
+            resourceIds = await starred.resources
+        }
+        console.log("resourceIds: ", resourceIds)
+        res.locals.resourceIds = resourceIds
         res.render('./pages/facultyExclusive', {
             resourceInfo: resourceInfo
         })
@@ -809,6 +817,3 @@ exports.unstarResource = async (req, res, next) => {
         next(e)
     }
 }
-
-
-
