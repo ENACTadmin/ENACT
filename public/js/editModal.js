@@ -2,7 +2,6 @@ $(document).ready(function () {
     let id_set = $('#idSet').text()
     if (id_set.length !== 0) {
         let id_set_array = id_set.split(',')
-        console.log('arr: ', id_set_array)
         for (let i = 0; i < id_set_array.length; i++) {
             let realType = $('#typeFromServer' + id_set_array[i]).text()
             realType = realType.substring(1, realType.length - 1)
@@ -26,7 +25,6 @@ $(document).ready(function () {
                 }
             })
             let tags = $('#tagsFromServer' + id_set_array[i]).text()
-            console.log('tags from server: ', tags)
             tags = tags.substring(1, tags.length - 1)
             let tagsArray = tags.split(',')
             $(':checkbox').filter('#' + id_set_array[i]).each(function () {
