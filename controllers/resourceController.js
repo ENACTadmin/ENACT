@@ -27,6 +27,7 @@ exports.uploadResource = async (req, res, next) => {
             })
         } else {
             const checkStatus = 'UnderReview'
+            const publicStatus = 'no'
             if (res.locals.status == "student") {
                 let facultyInfo = await Course.findOne({_id: courseId})
                 newResource = new Resource({
@@ -43,7 +44,8 @@ exports.uploadResource = async (req, res, next) => {
                     institution: req.body.institution,
                     yearOfCreation: req.body.yearOfCreation,// content's actual creation time
                     facultyId: facultyInfo.ownerId, //belong to which faculty to approve
-                    checkStatus: checkStatus
+                    checkStatus: checkStatus,
+                    publicStatus: publicStatus
                 })
             } else {
                 newResource = new Resource({
@@ -100,11 +102,16 @@ exports.updateResource = async (req, res, next) => {
 
 exports.loadResources = async (req, res, next) => {
     const courseId = req.params.courseId
+    const checkStatus = 'approve'
     try {
-        let resources = await Resource.find({courseId: courseId})
+        let resources = await Resource.find({
+            courseId: courseId,
+            checkStatus: checkStatus
+        })
         let starred = await ResourceSet.findOne({ownerId: req.user._id})
         let resourceIds = null
         console.log("stared ", starred)
+        console.log("hi", resources)
         if (starred) {
             resourceIds = await starred.resources
         }
@@ -120,9 +127,11 @@ exports.loadResources = async (req, res, next) => {
 
 exports.primarySearch = async (req, res, next) => {
     let resourceInfo = null
+    const checkStatus = 'approve'
     try {
         if (res.locals.status === 'admin' || res.locals.status === 'faculty') {
             resourceInfo = await Resource.find({
+                checkStatus: checkStatus,
                 $or: [
                     {description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}},
                     {name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}}
@@ -130,6 +139,7 @@ exports.primarySearch = async (req, res, next) => {
             })
         } else {
             resourceInfo = await Resource.find({
+                checkStatus: checkStatus,
                 $or: [
                     {
                         description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
@@ -165,6 +175,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search for all resources
                 if (req.body.status === "all") {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         $or: [
                             {description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}},
                             {name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}}
@@ -174,6 +185,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search resources under a certain status
                 else {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         status: req.body.status,
                         $or: [
                             {description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}},
@@ -190,6 +202,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search for all resources
                 if (req.body.status === "all") {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         yearOfCreation: req.body.yearOfCreation,
                         $or: [
                             {description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}},
@@ -200,6 +213,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search resources under a certain status
                 else {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         status: req.body.status,
                         yearOfCreation: req.body.yearOfCreation,
                         $or: [
@@ -214,6 +228,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search for all resources
                 if (req.body.status === "all") {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         institution: req.body.institution,
                         $or: [
                             {description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}},
@@ -224,6 +239,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search resources under a certain status
                 else {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         status: req.body.status,
                         institution: req.body.institution,
                         $or: [
@@ -238,6 +254,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search for all resources
                 if (req.body.status === "all") {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         state: req.body.state,
                         $or: [
                             {description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}},
@@ -248,6 +265,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search resources under a certain status
                 else {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         state: req.body.state,
                         status: req.body.status,
                         $or: [
@@ -264,6 +282,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search for all resources
                 if (req.body.status === "all") {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         yearOfCreation: req.body.yearOfCreation,
                         institution: req.body.institution,
                         $or: [
@@ -275,6 +294,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search resources under a certain status
                 else {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         status: req.body.status,
                         yearOfCreation: req.body.yearOfCreation,
                         institution: req.body.institution,
@@ -288,6 +308,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search for all resources
                 if (req.body.status === "all") {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         institution: req.body.institution,
                         state: req.body.state,
                         $or: [
@@ -299,6 +320,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search resources under a certain status
                 else {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         status: req.body.status,
                         institution: req.body.institution,
                         state: req.body.state,
@@ -312,6 +334,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search for all resources
                 if (req.body.status === "all") {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         state: req.body.state,
                         yearOfCreation: req.body.yearOfCreation,
                         $or: [
@@ -323,6 +346,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search resources under a certain status
                 else {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         status: req.body.status,
                         state: req.body.state,
                         yearOfCreation: req.body.yearOfCreation,
@@ -340,6 +364,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search for all resources
                 if (req.body.status === "all") {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         state: req.body.state,
                         yearOfCreation: req.body.yearOfCreation,
                         institution: req.body.institution,
@@ -352,6 +377,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search resources under a certain status
                 else {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         status: req.body.status,
                         state: req.body.state,
                         yearOfCreation: req.body.yearOfCreation,
@@ -375,6 +401,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search for all resources
                 if (req.body.status === "all") {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         $or: [
                             {
                                 description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
@@ -390,6 +417,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search resources under a certain status
                 else {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         status: req.body.status,
                         $or: [
                             {
@@ -412,6 +440,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search for all resources
                 if (req.body.status === "all") {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         yearOfCreation: req.body.yearOfCreation,
                         $or: [
                             {
@@ -428,6 +457,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search resources under a certain status
                 else {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         status: req.body.status,
                         yearOfCreation: req.body.yearOfCreation,
                         $or: [
@@ -448,6 +478,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search for all resources
                 if (req.body.status === "all") {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         institution: req.body.institution,
                         $or: [
                             {
@@ -464,6 +495,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search resources under a certain status
                 else {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         status: req.body.status,
                         institution: req.body.institution,
                         $or: [
@@ -484,6 +516,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search for all resources
                 if (req.body.status === "all") {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         state: req.body.state,
                         $or: [
                             {
@@ -500,6 +533,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search resources under a certain status
                 else {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         state: req.body.state,
                         status: req.body.status,
                         $or: [
@@ -522,6 +556,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search for all resources
                 if (req.body.status === "all") {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         yearOfCreation: req.body.yearOfCreation,
                         institution: req.body.institution,
                         $or: [
@@ -539,6 +574,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search resources under a certain status
                 else {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         status: req.body.status,
                         yearOfCreation: req.body.yearOfCreation,
                         institution: req.body.institution,
@@ -558,6 +594,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search for all resources
                 if (req.body.status === "all") {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         institution: req.body.institution,
                         state: req.body.state,
                         $or: [
@@ -575,6 +612,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search resources under a certain status
                 else {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         status: req.body.status,
                         institution: req.body.institution,
                         state: req.body.state,
@@ -594,6 +632,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search for all resources
                 if (req.body.status === "all") {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         state: req.body.state,
                         yearOfCreation: req.body.yearOfCreation,
                         $or: [
@@ -611,6 +650,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search resources under a certain status
                 else {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         status: req.body.status,
                         state: req.body.state,
                         yearOfCreation: req.body.yearOfCreation,
@@ -634,6 +674,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search for all resources
                 if (req.body.status === "all") {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         state: req.body.state,
                         yearOfCreation: req.body.yearOfCreation,
                         institution: req.body.institution,
@@ -652,6 +693,7 @@ exports.searchByFilled = async (req, res, next) => {
                 // search resources under a certain status
                 else {
                     resourceInfo = await Resource.find({
+                        checkStatus: 'approve',
                         status: req.body.status,
                         state: req.body.state,
                         yearOfCreation: req.body.yearOfCreation,
