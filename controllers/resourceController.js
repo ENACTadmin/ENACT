@@ -111,7 +111,6 @@ exports.loadResources = async (req, res, next) => {
         let starred = await ResourceSet.findOne({ownerId: req.user._id})
         let resourceIds = null
         console.log("stared ", starred)
-        console.log("hi", resources)
         if (starred) {
             resourceIds = await starred.resources
         }
