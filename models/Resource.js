@@ -18,7 +18,8 @@ const resourceSchema = Schema({
     institution: String,
     yearOfCreation: Number, // content's actual creation time
     facultyId: ObjectID, //belong to which faculty to approve
-    checkStatus: String, //what is the status of student resources that required faculty to check, UnderReview/deny/approve/public
+    checkStatus: String, //what is the status of student resources that required faculty to check, UnderReview/deny/approve
+    publicStatus: String, //yes or no
     review: String  // given by faculty to student resources
 });
 

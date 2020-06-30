@@ -52,7 +52,8 @@ exports.toPublic = async (req, res, next) => {
         let resourceInfo = await Resource.find({_id:resourceId})
 
         for (let i = 0; i < resourceInfo.length; i++) {
-            resourceInfo[i].checkStatus = 'public'
+            resourceInfo[i].checkStatus = 'approve'
+            resourceInfo[i].publicStatus ='yes'
             resourceInfo[i].save()
         }
 
