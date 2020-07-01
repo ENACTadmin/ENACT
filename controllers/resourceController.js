@@ -23,7 +23,8 @@ exports.uploadResource = async (req, res, next) => {
                 state: req.body.state,
                 resourceType: req.body.resourceType, // video/text document ...
                 institution: req.body.institution,
-                yearOfCreation: req.body.yearOfCreation // content's actual creation time
+                yearOfCreation: req.body.yearOfCreation,
+                checkStatus: 'approve'// content's actual creation time
             })
         } else {
             const checkStatus = 'underReview'
@@ -863,4 +864,15 @@ exports.checkUserName = async (req, res, next) => {
         res.redirect('/myProfile')
     }
     next()
+}
+
+exports.showMyResources = async (req, res, next) => {
+    try {
+        let resourceInfo = await Resource.find({ownerId: req.user._id})
+        res.render('./pages/myResourcesFaculty', {
+            resourceInfo: resourceInfo
+        })
+    } catch (e) {
+        next(e)
+    }
 }

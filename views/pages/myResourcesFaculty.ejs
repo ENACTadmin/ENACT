@@ -1,0 +1,110 @@
+<%- include('../components/header'); -%>
+<%- include('../components/navbar'); -%>
+
+<section class='section'>
+    <div class='section__content section__content--full-width'>
+        <div class='jumbotron masthead text-center'>
+            <div class='section__title section__title--centered'>
+                My Resources
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class='section section__grey' data-aos='fade-up'>
+    <section class='section__content section__content--fluid-width'>
+        <div class='container'>
+            <div class='row'>
+                <% if (loggedIn) { %>
+                <div class='col-md-12 col-sm-12'>
+                    <div class='card'>
+                        <div class='card-body'>
+                            <% if (resourceInfo && resourceInfo.length > 0) { %>
+                                <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
+                                    <div class='card blogBox moreBox'>
+                                        <div class='card-body'>
+                                            <h4><%= resourceInfo[i].name %></h4>
+                                            <div class='card-text'>
+                                                <ul class='list-group'>
+                                                    <li class='list-group-item borderless box-padding'>
+                                                        <b>Description: </b> <%= resourceInfo[i].description %></li>
+                                                    <li class='list-group-item borderless box-padding'>
+                                                        <b>State:</b> <%= resourceInfo[i].state %></li>
+                                                    <li class='list-group-item borderless box-padding'>
+                                                        <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click me</a>
+                                                    </li>
+                                                    <li class='list-group-item borderless box-padding'>
+                                                        <b>Institution: </b> <%= resourceInfo[i].institution %></li>
+                                                    <li class='list-group-item borderless box-padding'>
+                                                        <b>Tags:</b> <%= resourceInfo[i].tags %>
+                                                    </li>
+                                                    <li class='list-group-item borderless box-padding'>
+                                                        <!--force inline display-->
+                                                            <button type='button' class='btn btn-outline-info'
+                                                                    style='border:0 solid transparent' data-toggle='modal'
+                                                                    data-target='#editModal<%= resourceInfo[i]._id %>'>
+                                                                Edit
+                                                            </button>
+                                                            <button type='button' class='btn btn-outline-danger'
+                                                                    style='border:0px solid transparent' data-toggle='modal'
+                                                                    data-target='#deleteModal<%= resourceInfo[i]._id %>'>
+                                                                Delete
+                                                            </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                <% } %>
+                            <% } else { %>
+                                No resource available yet
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+                <% } else { %>
+                    <%- include('../components/component-loginToView'); -%>
+                <% } %>
+            </div>
+        </div>
+    </section>
+</section>
+
+<% if (resourceInfo.length !== 0) { %>
+    <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
+        <!-- Modal -->
+        <div class='modal fade' id='deleteModal<%= resourceInfo[i]._id %>' tabindex='-1' role='dialog'
+             aria-labelledby='exampleModalLabel'
+             aria-hidden='true'>
+            <div class='modal-dialog' role='document'>
+                <div class='modal-content'>
+                    <div class='modal-header'>
+                        <h5 class='modal-title' id='exampleModalLabel'>Delete?</h5>
+                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                            <span aria-hidden='true'>&times;</span>
+                        </button>
+                    </div>
+                    <div class='modal-body'>
+                        <div class='row'>
+                            <div class='col-md-12 col-sm-12'>
+                                <h4>Are you sure you want to delete this resource permanently?</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='modal-footer'>
+                        <form method='post' action='/removeResource/<%= resourceInfo[i]._id %>'>
+                            <input type='submit' name='submit' class='btn btn-outline-danger' value='Delete'>
+                        </form>
+                        <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% } %>
+<% } %>
+
+<%- include('../components/component-editModal'); -%>
+<%- include('../components/footer'); -%>

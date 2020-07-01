@@ -305,6 +305,10 @@ app.post('/unstarResource/:resourceId',
     resourceController.unstarResource
 )
 
+app.get('/myResourcesFaculty',
+    resourceController.showMyResources,
+    resourceController.checkUserName
+)
 
 //*******************************************
 //***********Notification related************
