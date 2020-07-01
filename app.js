@@ -382,12 +382,12 @@ app.post('/saveProfileImageURL',
 
 //*******************************************
 //************Message related****************
-app.get('/message/:sender/:receiver',
+app.get('/message/:sender/:receiver/:resourceId',
     resourceController.checkUserName,
     messageController.loadMessagingPage
 )
 
-app.post('/saveMessage/:sender/:receiver',
+app.post('/saveMessage/:sender/:receiver/:resourceId',
     messageController.saveMessage
 )
 

@@ -11,6 +11,7 @@
                     Messages between <%= senderInfo.userName %> & <%= receiverInfo.userName %>
                 <% } %>
             </div>
+            <h3>Leave a post here and the recipient will receive an email notification <u>with your email hidden</u></h3>
         </div>
     </div>
 </section>
@@ -19,6 +20,30 @@
     <div class="container">
         <div class="row">
             <div class="col">
+                <h3>Relevant resource</h3>
+                <hr>
+                <div class='card blogBox moreBox'>
+                    <div class='card-body'>
+                        <h4><%= resourceInfo.name %></h4>
+                        <div class='card-text'>
+                            <ul class='list-group'>
+                                <li class='list-group-item borderless box-padding'>
+                                    <b>Description: </b> <%= resourceInfo.description %></li>
+                                <li class='list-group-item borderless box-padding'>
+                                    <b>State:</b> <%= resourceInfo.state %></li>
+                                <li class='list-group-item borderless box-padding'>
+                                    <b>Link: </b> <a href='<%= resourceInfo.uri %>'>click me</a>
+                                </li>
+                                <li class='list-group-item borderless box-padding'>
+                                    <b>Institution: </b> <%= resourceInfo.institution %></li>
+                                <li class='list-group-item borderless box-padding'>
+                                    <b>Tags:</b> <%= resourceInfo.tags %>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <br>
                 <h3>Messages</h3>
                 <hr>
                 <% for (let i = 0; i < messageInfo.length; i++) { %>
@@ -69,7 +94,7 @@
                 <div class="card">
                     <h5 class="card-header">Leave a message here:</h5>
                     <div class="card-body">
-                        <form action="/saveMessage/<%= senderInfo._id %>/<%= receiverInfo._id %>"
+                        <form action="/saveMessage/<%= senderInfo._id %>/<%= receiverInfo._id %>/<%= resourceInfo._id%>"
                               method="post">
                             <% if (messageInfo.length === 0) { %>
                                 <div class='input-group-prepend' style="display: inline">

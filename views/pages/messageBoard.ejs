@@ -15,7 +15,7 @@
 
 <section class="section section__grey">
     <div class="container">
-        <h3>Inbox</h3>
+        <h3>Inbox (Someone is interested in my work!)</h3>
         <hr>
         <div class="row">
             <% loop1: for (let i = 0; i < messageInfo.length; i++) { %>
@@ -31,7 +31,7 @@
                                 <h5 style="display: inline">subject: </h5><%= messageInfo[i].subject %>
                                 <br>
                                 <br>
-                                <a href="/message/<%= messageInfo[i].senderId %>/<%= messageInfo[i].receiverId %>"><input
+                                <a href="/message/<%= messageInfo[i].senderId %>/<%= messageInfo[i].receiverId %>/<%= messageInfo[i].relevantResourceId %>"><input
                                             class="btn btn-sm btn-outline-primary" type="submit"
                                             value="CONTINUE"></a>
                             </div>
@@ -46,7 +46,7 @@
 
 <section class="section section__grey">
     <div class="container">
-        <h3>Sent</h3>
+        <h3>Sent (I am interested others' work)</h3>
         <hr>
         <div class="row">
             <% loop1: for (let i = 0; i < messageInfo.length; i++) { %>
@@ -62,7 +62,7 @@
                                 <h5 style="display: inline">subject: </h5><%= messageInfo[i].subject %>
                                 <br>
                                 <br>
-                                <a href="/message/<%= messageInfo[i].senderId %>/<%= messageInfo[i].receiverId %>"><input
+                                <a href="/message/<%= messageInfo[i].senderId %>/<%= messageInfo[i].receiverId %>/<%= messageInfo[i].relevantResourceId %>"><input
                                             class="btn btn-sm btn-outline-primary" type="submit"
                                             value="CONTINUE"></a>
                             </div>
