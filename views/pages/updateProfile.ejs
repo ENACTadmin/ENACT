@@ -14,6 +14,7 @@
                     Welcome to ENACT, please complete your profile first.
                 <% } %>
             </div>
+            <h2><u><b style="color: #0253a4">Bold</b></u> fields are REQUIRED</h2>
         </div>
     </div>
 </section>
@@ -44,8 +45,16 @@
                 <hr>
                 <form action='/updateProfile' method='post'>
                     <div class='input-group-prepend'>
-                        <span class='input-group-text' style='width: 180px'>Username</span>
+                        <span class='input-group-text' style='width: 180px'><b>Username</b></span>
                         <input type='text' class='form-control' name='userName' value='<%= user.userName %>'>
+                    </div>
+                    <br>
+
+                    <div class='w-100'></div>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 180px'><b>Work Email</b></span>
+                        <input disabled type='text' class='form-control' name='workEmail'
+                               value='<%= user.googleemail %>'>
                     </div>
                     <br>
 
@@ -73,10 +82,11 @@
                         <textarea type='text' class='form-control' name='bio' rows='4'><%= user.bio %></textarea>
                     </div>
                     <br>
-
                     <input type='submit' class='btn btn-outline-dark' value='Save'>
 
                 </form>
+
+
                 <br>
 
             </div>

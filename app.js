@@ -187,6 +187,7 @@ app.get('/login/authorized',
 
 //we can use this or the index router to handle req
 app.get('/',
+    resourceController.checkUserName,
     resourceController.loadPublicResources)
 
 
@@ -194,31 +195,38 @@ app.get('/',
 //***********Course related******************
 
 app.get('/createCourse',
-    (req, res) => res.render('./pages/createCourse'))
+    resourceController.checkUserName,
+    (req, res) =>
+        res.render('./pages/createCourse'))
 
 // rename this to /createCourse and update the ejs form
 app.post('/createNewCourse',
+    resourceController.checkUserName,
     courseController.createNewClass,
     courseController.addToOwnedCourses
 )
 
 app.get('/showCourses',
+    resourceController.checkUserName,
     (req, res) =>
         res.render('./pages/showCourses')
 )
 
 app.get('/showOneCourse/:courseId',
+    resourceController.checkUserName,
     courseController.showOneCourse,
     resourceController.loadResources
 )
 
 app.get('/joinACourse',
+    resourceController.checkUserName,
     (req, res) => {
         res.render('./pages/joinACourse')
     }
 )
 
 app.post('/joinCourse',
+    resourceController.checkUserName,
     courseController.joinCourse
 )
 
@@ -226,6 +234,7 @@ app.post('/joinCourse',
 //***********Resource related****************
 
 app.get('/uploadToCourse/:courseId',
+    resourceController.checkUserName,
     (req, res) => {
         res.render('./pages/uploadToCourse', {
             req: req
@@ -233,52 +242,68 @@ app.get('/uploadToCourse/:courseId',
     })
 
 app.post('/uploadResource/:courseId',
+    resourceController.checkUserName,
     resourceController.uploadResource
 )
 
 app.get('/primarySearch',
-    (req, res) => res.render('./pages/primarySearch'))
+    resourceController.checkUserName,
+    (req, res) =>
+        res.render('./pages/primarySearch'))
 
 app.post('/showPrimaryResources',
+    resourceController.checkUserName,
     resourceController.primarySearch
 )
 
 app.get('/search',
-    (req, res) => res.render('./pages/search'))
+    resourceController.checkUserName,
+    (req, res) =>
+        res.render('./pages/search'))
 
 app.post('/showResources',
+    resourceController.checkUserName,
     resourceController.searchByFilled
 )
 
 app.get('/facultyExclusive',
+    resourceController.checkUserName,
     resourceController.loadAllFacultyResources
 )
 
 app.get('/uploadToFaculty',
-    (req, res) => res.render('./pages/uploadToFaculty')
+    resourceController.checkUserName,
+    (req, res) =>
+        res.render('./pages/uploadToFaculty')
 )
 
 app.post('/uploadToFacultyExclusive',
+    resourceController.checkUserName,
     resourceController.uploadResource
 )
 
 app.post('/updateResource/:resourceId',
+    resourceController.checkUserName,
     resourceController.updateResource
 )
 
 app.post('/removeResource/:resourceId',
+    resourceController.checkUserName,
     resourceController.removeResource
 )
 
 app.post('/starResource/:resourceId',
+    resourceController.checkUserName,
     resourceController.starResource
 )
 
 app.get('/showStarredResources',
+    resourceController.checkUserName,
     resourceController.showStarredResources
 )
 
 app.post('/unstarResource/:resourceId',
+    resourceController.checkUserName,
     resourceController.unstarResource
 )
 
@@ -287,22 +312,24 @@ app.post('/unstarResource/:resourceId',
 //***********Notification related************
 
 app.get('/reviewResource',
+    resourceController.checkUserName,
     notificationController.loadUnderReviewResources
 )
 
 app.post('/approve',
+    resourceController.checkUserName,
     notificationController.approve
 )
 
 app.post('/toPublic',
+    resourceController.checkUserName,
     notificationController.toPublic
 )
 
 app.post('/deny',
+    resourceController.checkUserName,
     notificationController.deny
 )
-
-
 
 
 //*******************************************
@@ -321,6 +348,7 @@ app.get('/myProfile',
 
 //show all profiles from all users
 app.get('/showProfile/:id',
+    resourceController.checkUserName,
     profileController.findOneUser
 )
 
@@ -331,6 +359,7 @@ app.get('/editMyProfile',
     })
 
 app.get('/showAllProfiles',
+    resourceController.checkUserName,
     profileController.showAllProfiles
 )
 
@@ -340,14 +369,17 @@ app.post('/updateProfile',
 )
 
 app.get('/assignFaculty',
+    resourceController.checkUserName,
     profileController.loadFaculty
 )
 
 app.post('/assignNewFaculty',
+    resourceController.checkUserName,
     profileController.assignFaculty
 )
 //show all profiles from all users
 app.post('/saveProfileImageURL',
+    resourceController.checkUserName,
     profileController.updateProfileImageURL
 )
 

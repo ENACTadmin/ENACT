@@ -735,8 +735,7 @@ exports.searchByFilled = async (req, res, next) => {
 
         res.render('./pages/showResources')
 
-    } catch
-        (e) {
+    } catch (e) {
         next(e)
     }
 }
@@ -857,4 +856,12 @@ exports.unstarResource = async (req, res, next) => {
     } catch (e) {
         next(e)
     }
+}
+
+exports.checkUserName = async (req, res, next) => {
+    if (req.user && !req.user.userName) {
+        console.log("first time user!");
+        res.redirect('/myProfile')
+    }
+    next()
 }
