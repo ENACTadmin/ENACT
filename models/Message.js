@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const messageSchema = Schema({
-    // relevantResourceId: ObjectId,
+    relevantResourceId: ObjectId,
     senderId: ObjectId,
     receiverId: ObjectId,
     sentBy: ObjectId,

@@ -8,17 +8,18 @@ exports.loadMessagingPage = async (req, res, next) => {
     try {
         let senderId = await req.params.sender
         let receiverId = await req.params.receiver
-        // let resourceId = await req.params.resourceId
+        let resourceId = await req.params.resourceId
+        console.log("idid: ", resourceId)
         let senderInfo = await User.findOne({_id: senderId})
         let receiverInfo = await User.findOne({_id: receiverId})
-        // let resourceInfo = await Resource.findOne({_id: resourceId})
+        let resourceInfo = await Resource.findOne({_id: resourceId})
+        console.log('info: ', resourceInfo)
         res.locals.senderInfo = await senderInfo
         res.locals.receiverInfo = await receiverInfo
-        // res.locals.resourceInfo = await resourceInfo
+        res.locals.resourceInfo = await resourceInfo
         let messageInfo = Message.find({
             $or: [
                 {senderId: senderId, receiverId: receiverId},
-                // {senderId: receiverId, receiverId: senderId}
             ]
         }).sort({createdAt: 1})
         res.locals.messageInfo = await messageInfo
@@ -43,6 +44,7 @@ exports.saveMessage = async (req, res, next) => {
             receiverId: await req.params.receiver,
             sentBy: sentBy,
             receivedBy: receivedBy,
+            relevantResourceId: await req.params.resourceId,
             subject: await req.body.subject,
             message: await req.body.message,
             createdAt: new Date()
