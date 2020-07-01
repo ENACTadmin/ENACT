@@ -26,9 +26,9 @@ exports.uploadResource = async (req, res, next) => {
                 yearOfCreation: req.body.yearOfCreation // content's actual creation time
             })
         } else {
-            const checkStatus = 'UnderReview'
-            const publicStatus = 'no'
-            if (res.locals.status == "student") {
+            const checkStatus = 'underReview'
+            // student uploaded resource
+            if (res.locals.status === "student") {
                 let facultyInfo = await Course.findOne({_id: courseId})
                 newResource = new Resource({
                     ownerId: req.user._id,
@@ -45,9 +45,10 @@ exports.uploadResource = async (req, res, next) => {
                     yearOfCreation: req.body.yearOfCreation,// content's actual creation time
                     facultyId: facultyInfo.ownerId, //belong to which faculty to approve
                     checkStatus: checkStatus,
-                    publicStatus: publicStatus
                 })
-            } else {
+            }
+            // faculty/admin uploaded resource
+            else {
                 newResource = new Resource({
                     ownerId: req.user._id,
                     courseId: courseId,
@@ -61,9 +62,9 @@ exports.uploadResource = async (req, res, next) => {
                     resourceType: req.body.resourceType, // video/text document ...
                     institution: req.body.institution,
                     yearOfCreation: req.body.yearOfCreation,// content's actual creation time
+                    checkStatus: 'approve',
                 })
             }
-
         }
         // save the new resource
         await newResource.save()
@@ -110,11 +111,9 @@ exports.loadResources = async (req, res, next) => {
         })
         let starred = await ResourceSet.findOne({ownerId: req.user._id})
         let resourceIds = null
-        console.log("stared ", starred)
         if (starred) {
             resourceIds = await starred.resources
         }
-        console.log("resourceIds: ", resourceIds)
         res.locals.resourceIds = resourceIds
         res.render('./pages/showOneCourse', {
             resourceInfo: resources
