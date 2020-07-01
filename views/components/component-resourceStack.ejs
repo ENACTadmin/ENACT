@@ -26,14 +26,14 @@
                                           action='/unstarResource/<%= resourceInfo[i]._id %>'>
                                         <b>Actions:</b>
                                         <input type='submit' style='border:0px solid transparent' name='submit'
-                                               class='btn btn-outline-warning' value='Unstar'>
+                                               class='btn btn-outline-danger' value='&#9829;'>
                                     </form>
                                 <% } else { %>
                                     <form style="display: inline" method='post'
                                           action='/starResource/<%= resourceInfo[i]._id %>'>
                                         <b>Actions:</b>
                                         <input type='submit' style='border:0px solid transparent' name='submit'
-                                               class='btn btn-outline-warning' value='Star'>
+                                               class='btn btn-outline-danger' value='&#9825;'>
                                     </form>
                                 <% } %>
                                 <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id.toString()) { %>
@@ -42,14 +42,14 @@
                                             data-target='#editModal<%= resourceInfo[i]._id %>'>
                                         Edit
                                     </button>
-                                    <button type='button' class='btn btn-outline-danger'
+                                    <button type='button' class='btn btn-outline-warning'
                                             style='border:0px solid transparent' data-toggle='modal'
                                             data-target='#deleteModal<%= resourceInfo[i]._id %>'>
                                         Delete
                                     </button>
                                 <% } %>
                                 <% if (resourceInfo[i].ownerId.toString() !== user._id.toString()) { %>
-                                    <a href="/message/<%= user._id %>/<%= resourceInfo[i].ownerId %>"><input
+                                    <a href="/message/<%= user._id %>/<%= resourceInfo[i].ownerId %>/<%= resourceInfo[i]._id %>"><input
                                                 class="btn btn-outline-primary" style='border:0px solid transparent'
                                                 type="button" value="Contact the author"></a>
                                 <% } %>
