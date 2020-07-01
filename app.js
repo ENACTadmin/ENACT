@@ -20,6 +20,7 @@ const courseController = require('./controllers/courseController');
 const resourceController = require('./controllers/resourceController');
 const profileController = require('./controllers/profileController');
 const notificationController = require('./controllers/notificationController');
+const messageController = require('./controllers/messageController');
 
 
 //*******************************************
@@ -201,7 +202,6 @@ app.get('/createCourse',
 
 // rename this to /createCourse and update the ejs form
 app.post('/createNewCourse',
-    resourceController.checkUserName,
     courseController.createNewClass,
     courseController.addToOwnedCourses
 )
@@ -226,7 +226,6 @@ app.get('/joinACourse',
 )
 
 app.post('/joinCourse',
-    resourceController.checkUserName,
     courseController.joinCourse
 )
 
@@ -242,17 +241,22 @@ app.get('/uploadToCourse/:courseId',
     })
 
 app.post('/uploadResource/:courseId',
-    resourceController.checkUserName,
     resourceController.uploadResource
 )
 
 app.get('/primarySearch',
     resourceController.checkUserName,
     (req, res) =>
-        res.render('./pages/primarySearch'))
+        res.render('./pages/primarySearch')
+)
+
+app.get('/uploadToPublic',
+    resourceController.checkUserName,
+    (req, res) =>
+        res.render('./pages/uploadToPublic')
+)
 
 app.post('/showPrimaryResources',
-    resourceController.checkUserName,
     resourceController.primarySearch
 )
 
@@ -262,7 +266,6 @@ app.get('/search',
         res.render('./pages/search'))
 
 app.post('/showResources',
-    resourceController.checkUserName,
     resourceController.searchByFilled
 )
 
@@ -278,22 +281,18 @@ app.get('/uploadToFaculty',
 )
 
 app.post('/uploadToFacultyExclusive',
-    resourceController.checkUserName,
     resourceController.uploadResource
 )
 
 app.post('/updateResource/:resourceId',
-    resourceController.checkUserName,
     resourceController.updateResource
 )
 
 app.post('/removeResource/:resourceId',
-    resourceController.checkUserName,
     resourceController.removeResource
 )
 
 app.post('/starResource/:resourceId',
-    resourceController.checkUserName,
     resourceController.starResource
 )
 
@@ -303,7 +302,6 @@ app.get('/showStarredResources',
 )
 
 app.post('/unstarResource/:resourceId',
-    resourceController.checkUserName,
     resourceController.unstarResource
 )
 
@@ -317,17 +315,14 @@ app.get('/reviewResource',
 )
 
 app.post('/approve',
-    resourceController.checkUserName,
     notificationController.approve
 )
 
 app.post('/toPublic',
-    resourceController.checkUserName,
     notificationController.toPublic
 )
 
 app.post('/deny',
-    resourceController.checkUserName,
     notificationController.deny
 )
 
@@ -374,15 +369,28 @@ app.get('/assignFaculty',
 )
 
 app.post('/assignNewFaculty',
-    resourceController.checkUserName,
     profileController.assignFaculty
 )
 //show all profiles from all users
 app.post('/saveProfileImageURL',
-    resourceController.checkUserName,
     profileController.updateProfileImageURL
 )
 
+//*******************************************
+//************Message related****************
+app.get('/message/:sender/:receiver',
+    resourceController.checkUserName,
+    messageController.loadMessagingPage
+)
+
+app.post('/saveMessage/:sender/:receiver',
+    messageController.saveMessage
+)
+
+app.get('/messageBoard',
+    resourceController.checkUserName,
+    messageController.loadMessageBoard
+)
 //*******************************************
 //*************Error related*****************
 

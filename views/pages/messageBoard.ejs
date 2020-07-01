@@ -1,0 +1,79 @@
+<%- include('../components/header'); -%>
+<%- include('../components/navbar'); -%>
+
+
+<section class="section">
+    <div class="section__content section__content--full-width">
+        <div class="jumbotron masthead text-center">
+            <div class="section__title section__title--centered">
+                Message Board
+            </div>
+            <h3>View all your In-mails here</h3>
+        </div>
+    </div>
+</section>
+
+<section class="section section__grey">
+    <div class="container">
+        <h3>Inbox</h3>
+        <hr>
+        <div class="row">
+            <% loop1: for (let i = 0; i < messageInfo.length; i++) { %>
+                <% for (let j = 0; j < i; j++) { %>
+                    <% if (messageInfo[i].senderId.equals(messageInfo[j].senderId) && messageInfo[i].receiverId.equals(messageInfo[j].receiverId)) { %>
+                        <% continue loop1 %>
+                    <% } %>
+                <% } %>
+                <% if (messageInfo[i].receiverId.equals(user._id)) { %>
+                    <div class="col-md-4 col-sm-12">
+                        <div class="card" style="border:0 solid transparent">
+                            <div class="card-body">
+                                <h5 style="display: inline">subject: </h5><%= messageInfo[i].subject %>
+                                <br>
+                                <br>
+                                <a href="/message/<%= messageInfo[i].senderId %>/<%= messageInfo[i].receiverId %>"><input
+                                            class="btn btn-sm btn-outline-primary" type="submit"
+                                            value="CONTINUE"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br><br>
+                <% } %>
+            <% } %>
+        </div>
+    </div>
+</section>
+
+<section class="section section__grey">
+    <div class="container">
+        <h3>Sent</h3>
+        <hr>
+        <div class="row">
+            <% loop1: for (let i = 0; i < messageInfo.length; i++) { %>
+                <% for (let j = 0; j < i; j++) { %>
+                    <% if (messageInfo[i].senderId.equals(messageInfo[j].senderId) && messageInfo[i].receiverId.equals(messageInfo[j].receiverId)) { %>
+                        <% continue loop1 %>
+                    <% } %>
+                <% } %>
+                <% if (messageInfo[i].senderId.equals(user._id)) { %>
+                    <div class="col-md-4 col-sm-12">
+                        <div class="card" style="border:0 solid transparent">
+                            <div class="card-body">
+                                <h5 style="display: inline">subject: </h5><%= messageInfo[i].subject %>
+                                <br>
+                                <br>
+                                <a href="/message/<%= messageInfo[i].senderId %>/<%= messageInfo[i].receiverId %>"><input
+                                            class="btn btn-sm btn-outline-primary" type="submit"
+                                            value="CONTINUE"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br><br>
+                <% } %>
+            <% } %>
+        </div>
+    </div>
+</section>
+
+<%- include('../components/footer'); -%>
+

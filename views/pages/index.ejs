@@ -63,6 +63,9 @@
                                     <a class='header-link' href='/reviewResource'>Resources under review</a>
                                 <% } %>
                             </li>
+                            <li>
+                                <a class='header-link' href='/messageBoard'>Message board</a>
+                            </li>
                         </ul>
                     <% } else { %>
                     <% } %>
@@ -108,7 +111,7 @@
         <div class='intro'>
             <div class='intro__content'>
                 <% if (loggedIn) { %>
-                    <div class='intro__subtitle' style='color: black;'>Dear <%= status %>, <b><%= user.googlename %></b>
+                    <div class='intro__subtitle' style='color: black;'>Dear <%= status %>, <b><%= user.userName %></b>
                     </div>
                 <% } %>
                 <div class='intro__subtitle' style='color: black;'>Welcome to ENACT Digital platform!</div>
@@ -194,22 +197,25 @@
             </div>
 
             <div class='grid__item partners__slide__grey' style='height: 500px' data-aos='fade-up'>
-                <h3 class='grid__title'><span>How to participate</span></h3>
+                <h3 class='grid__title'><span>The ENACT Model</span></h3>
                 <p class='grid__text'>
-                    <b>• Workshop</b>: ENACT launched with a workshop at Brandeis University in May 2016.
+                    <b style="color: #0253a4">• Workshop</b>: ENACT launched with a workshop at Brandeis University in
+                    May 2016.
                     Under the leadership of the program’s academic director, ENACT Fellows shared ideas and work on
                     course development. Read about the 2016 ENACT Institute and the 2018 ENACT Institute at Brandeis
                     University.
                     <br>
-                    <b>• Courses</b>: In ENACT courses students learn about participating in the legislative and
-                    advocacy
-                    process at the state level, with a substantial hands-on component in which they engage directly in
+                    <b style="color: #0253a4">• Courses</b>: In ENACT courses students learn about participating in the
+                    legislative and
+                    advocacy process at the state level, with a substantial hands-on component in which they engage
+                    directly in
                     that process, as in the “Advocacy for Policy Change” course at Brandeis. See the full list of ENACT
                     schools.
                     <br>
-                    <b>• Online Network</b>: The ENACT Network is a national in-person and online network of students,
-                    faculty,
-                    activists and legislators. It is a strategic and information hub for state-level players that
+                    <b style="color: #0253a4">• Online Network</b>: The ENACT Network is a national in-person and online
+                    network of students,
+                    faculty, activists and legislators. It is a strategic and information hub for state-level players
+                    that
                     enables them to connect with counterparts throughout the country.</p>
                 <br>
                 <br>
@@ -305,6 +311,13 @@
     <div class='section__content section__content--fluid-width section__content--padding'>
         <h2 class='section__title section__title--centered' style='color: white'>Most Recently Uploaded</h2>
         <br><br><br>
+        <% if (publicRc.length === 0) { %>
+            <div class="card">
+                <div class='card-body text-center'>
+                    <h4>No resource available yet</h4>
+                </div>
+            </div>
+        <% } %>
         <% for (let i = 0; i < publicRc.length; i++) { %>
             <div class='card blogBox moreBox' data-aos='fade-up'>
                 <div class='card-body'>

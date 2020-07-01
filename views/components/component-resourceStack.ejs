@@ -12,7 +12,6 @@
                                 <b>State:</b> <%= resourceInfo[i].state %></li>
                             <li class='list-group-item borderless box-padding'>
                                 <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click me</a>
-
                             </li>
                             <li class='list-group-item borderless box-padding'>
                                 <b>Institution: </b> <%= resourceInfo[i].institution %></li>
@@ -21,22 +20,14 @@
                             </li>
                             <li class='list-group-item borderless box-padding'>
                                 <!--force inline display-->
-                                <% if (resourceIds) { %>
-                                    <% if (resourceIds.includes(resourceInfo[i]._id)) { %>
-                                        <form style="display: inline" method='post'
-                                              action='/unstarResource/<%= resourceInfo[i]._id %>'>
-                                            <b>Actions:</b>
-                                            <input type='submit' style='border:0px solid transparent' name='submit'
-                                                   class='btn btn-outline-warning' value='Unstar'>
-                                        </form>
-                                    <% } else { %>
-                                        <form style="display: inline" method='post'
-                                              action='/starResource/<%= resourceInfo[i]._id %>'>
-                                            <b>Actions:</b>
-                                            <input type='submit' style='border:0px solid transparent' name='submit'
-                                                   class='btn btn-outline-warning' value='Star'>
-                                        </form>
-                                    <% } %>
+                                <!--if the user starred the resource-->
+                                <% if (resourceIds && resourceIds.includes(resourceInfo[i]._id)) { %>
+                                    <form style="display: inline" method='post'
+                                          action='/unstarResource/<%= resourceInfo[i]._id %>'>
+                                        <b>Actions:</b>
+                                        <input type='submit' style='border:0px solid transparent' name='submit'
+                                               class='btn btn-outline-warning' value='Unstar'>
+                                    </form>
                                 <% } else { %>
                                     <form style="display: inline" method='post'
                                           action='/starResource/<%= resourceInfo[i]._id %>'>
@@ -45,9 +36,9 @@
                                                class='btn btn-outline-warning' value='Star'>
                                     </form>
                                 <% } %>
-                                <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id) { %>
+                                <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id.toString()) { %>
                                     <button type='button' class='btn btn-outline-info'
-                                            style='border:0px solid transparent' data-toggle='modal'
+                                            style='border:0 solid transparent' data-toggle='modal'
                                             data-target='#editModal<%= resourceInfo[i]._id %>'>
                                         Edit
                                     </button>
@@ -56,6 +47,11 @@
                                             data-target='#deleteModal<%= resourceInfo[i]._id %>'>
                                         Delete
                                     </button>
+                                <% } %>
+                                <% if (resourceInfo[i].ownerId.toString() !== user._id.toString()) { %>
+                                    <a href="/message/<%= user._id %>/<%= resourceInfo[i].ownerId %>"><input
+                                                class="btn btn-outline-primary" style='border:0px solid transparent'
+                                                type="button" value="Contact the author"></a>
                                 <% } %>
                             </li>
                         </ul>

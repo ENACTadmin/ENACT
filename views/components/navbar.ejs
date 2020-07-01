@@ -50,14 +50,17 @@
 
                 <li>
                     <% if (loggedIn) { %>
-                    <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Notifications</a>
-                    <ul class='sub-menu'>
-                        <li>
-                            <% if (status === 'faculty' || status === 'admin') { %>
-                            <a class='header-link' href='/reviewResource'>Resources under review</a>
-                            <% } %>
-                        </li>
-                    </ul>
+                        <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Notifications</a>
+                        <ul class='sub-menu'>
+                            <li>
+                                <% if (status === 'faculty' || status === 'admin') { %>
+                                    <a class='header-link' href='/reviewResource'>Resources under review</a>
+                                <% } %>
+                            </li>
+                            <li>
+                                <a class='header-link' href='/messageBoard'>Message board</a>
+                            </li>
+                        </ul>
                     <% } else { %>
                     <% } %>
                 </li>

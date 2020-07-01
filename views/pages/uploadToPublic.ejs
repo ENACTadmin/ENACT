@@ -4,12 +4,11 @@
 <script src='/js/aws.js'></script>
 <script src='/js/uploadFile.js'></script>
 
-
 <section class='section'>
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
             <div class='section__title section__title--centered'>
-                ENACT-wide Resource Upload
+                Public Resource Upload
             </div>
         </div>
     </div>
@@ -31,7 +30,7 @@
                 </div>
             </div>
             <br>
-            <form method='post' action='/uploadResource/<%= req.params.courseId %>'>
+            <form method='post' action='/uploadToFacultyExclusive'>
                 <div class='row'>
                     <div class='col-md-3 col-sm-12'></div>
                     <div class='col-md-6 col-sm-12'>
@@ -49,20 +48,10 @@
                             <div class='input-group-prepend'>
                                 <span class='input-group-text' style='width: 180px'>Resource Status</span>
                                 <select class='form-control' name='status'>
-                                    <option selected value='privateToENACT'>Exclusive to all ENACT members</option>
-                                    <option value='privateToProfessor'>Exclusive to ENACT professors</option>
                                     <option value='public'>Open to public</option>
                                 </select>
                             </div>
                             <br>
-                        <% } else { %>
-                            <div hidden class='input-group-prepend'>
-                                <span class='input-group-text' style='width: 180px'>Resource Status</span>
-                                <select class='form-control' name='status'>
-                                    <option selected value='privateToENACT'>Exclusive to all ENACT members</option>
-                                    <option value='public'>Open to public</option>
-                                </select>
-                            </div>
                         <% } %>
                     </div>
 
@@ -72,10 +61,14 @@
                     <div class='col-md-6 col-sm-12'>
                         <h3>Tag the resource</h3>
                         <hr>
+
                     </div>
                     <div class='w-100'></div>
+
                     <%- include('../components/component-tagSelector') -%>
+
                     <br>
+
                     <div class='w-100'></div>
                     <div class='col-md-3 col-sm-12'></div>
                     <div class='col-md-6 col-sm-12'>

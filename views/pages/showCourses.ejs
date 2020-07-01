@@ -5,18 +5,7 @@
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
             <div class='section__title section__title--centered'>
-                <% if (status === 'faculty' || status === 'admin') { %>
-                    Manage courses you are teaching
-                    <br>
-                    OR
-                    <a href='/createCourse'>
-                        create a new course
-                    </a>
-                <% } else { %>
-                    Manage enrolled courses
-                    <br>
-                    OR enroll in a course
-                <% } %>
+                Course Management
             </div>
         </div>
     </div>
@@ -30,6 +19,13 @@
                 <div class='col-md-8 col-sm-12'>
                     <% if (loggedIn) { %>
                         <% if (status === 'faculty' || status === 'admin') { %>
+                            <div class='lead'><b>Create a new course</b></div>
+                            <hr>
+                            <a class="btn btn-lg btn-outline-primary" href='/createCourse'>
+                                create a new course
+                            </a>
+                            <br>
+                            <br>
 
                         <% } else { %>
                             <div class='lead'><b>Enroll in a course</b></div>

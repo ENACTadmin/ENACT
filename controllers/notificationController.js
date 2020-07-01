@@ -7,7 +7,7 @@ const User = require('../models/User');
 exports.loadUnderReviewResources = async (req, res, next) => {
     try {
         let resourceInfo = await Resource.find({
-            checkStatus: 'UnderReview',
+            checkStatus: 'underReview',
             facultyId: req.user._id
         }).sort({'createdAt': -1})
         res.locals.resourceInfo = resourceInfo
@@ -23,11 +23,11 @@ exports.approve = async (req, res, next) => {
     try {
         let resourceId = await req.body.checked
         console.log(req.body.checked)
-        let resourceInfo = await Resource.find({_id:resourceId})
-            for (let i = 0; i < resourceInfo.length; i++) {
-                resourceInfo[i].checkStatus = 'approve'
-                resourceInfo[i].save()
-            }
+        let resourceInfo = await Resource.find({_id: resourceId})
+        for (let i = 0; i < resourceInfo.length; i++) {
+            resourceInfo[i].checkStatus = 'approve'
+            resourceInfo[i].save()
+        }
         // }else if($_POST['action'].equals('Submit Checked Resources to Admins to be posted to public')){
         //     for (let i = 0; i < resourceInfo.length; i++) {
         //         resourceInfo[i].checkStatus = 'public'
@@ -49,14 +49,13 @@ exports.toPublic = async (req, res, next) => {
     try {
         let resourceId = await req.body.checked
         console.log(req.body.checked)
-        let resourceInfo = await Resource.find({_id:resourceId})
+        let resourceInfo = await Resource.find({_id: resourceId})
 
         for (let i = 0; i < resourceInfo.length; i++) {
             resourceInfo[i].checkStatus = 'approve'
-            resourceInfo[i].publicStatus ='yes'
+            resourceInfo[i].status = 'public'
             resourceInfo[i].save()
         }
-
         res.redirect('back')
     } catch (e) {
         next(e)
@@ -67,7 +66,7 @@ exports.deny = async (req, res, next) => {
     try {
         let resourceId = await req.body.checked
         console.log(req.body.checked)
-        let resourceInfo = await Resource.find({_id:resourceId})
+        let resourceInfo = await Resource.find({_id: resourceId})
 
         for (let i = 0; i < resourceInfo.length; i++) {
             resourceInfo[i].checkStatus = 'deny'
