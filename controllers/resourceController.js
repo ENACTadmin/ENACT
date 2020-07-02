@@ -24,7 +24,8 @@ exports.uploadResource = async (req, res, next) => {
                 state: req.body.state,
                 resourceType: req.body.resourceType, // video/text document ...
                 institution: req.body.institution,
-                yearOfCreation: req.body.yearOfCreation // content's actual creation time
+                yearOfCreation: req.body.yearOfCreation, // content's actual creation time
+                checkStatus: 'approve'
             })
         } else {
             const checkStatus = 'underReview'
@@ -923,6 +924,57 @@ exports.unstarResourceAlt = async (req, res, next) => {
         res.locals.resourceIds = newResourceIds
         res.locals.resourceInfo = resourceInfoSet
         res.render('./pages/showResources')
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.studentUpdateResource = async (req, res, next) => {
+    console.log('student')
+    const resourceId = await req.params.resourceId
+    try {
+        let tagsString = await req.body.selectedTags
+        let tags = tagsString.split(",")
+        console.log("tags received: ", tags)
+        let oldResource = await Resource.findOne({_id: resourceId})
+        oldResource.name = await req.body.resourceName
+        oldResource.status = await req.body.status
+        oldResource.description = await req.body.resourceDescription
+        oldResource.uri = await req.body.uri
+        oldResource.state = await req.body.state
+        oldResource.resourceType = await req.body.resourceType
+        oldResource.institution = await req.body.institution
+        oldResource.yearOfCreation = await req.body.yearOfCreation
+        oldResource.tags = await tags
+        oldResource.checkStatus = 'underReview'
+        await oldResource.save()
+        // save the new resource
+        res.redirect('back')
+    } catch (e) {
+        next(e)
+    }
+}
+
+
+exports.showMyResources = async (req, res, next) => {
+    try {
+        let resourceInfo = await Resource.find({ownerId: req.user._id})
+        res.render('./pages/myResourcesFaculty', {
+            resourceInfo: resourceInfo
+        })
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.showMyResourcesStudent = async (req, res, next) => {
+    try {
+        let resourceInfo = await Resource.find({
+            ownerId: req.user._id,
+        })
+        res.render('./pages/myResourcesStudent', {
+            resourceInfo: resourceInfo
+        })
     } catch (e) {
         next(e)
     }

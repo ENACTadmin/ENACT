@@ -313,7 +313,19 @@ app.post('/unstarResourceAlt/:resourceId',
     resourceController.unstarResourceAlt
 )
 
+app.get('/myResourcesFaculty',
+    resourceController.showMyResources,
+    resourceController.checkUserName
+)
 
+app.get('/myResourcesStudent',
+    resourceController.showMyResourcesStudent,
+    resourceController.checkUserName
+)
+
+app.post('/studentUpdateResource/:resourceId',
+    resourceController.studentUpdateResource
+)
 
 //*******************************************
 //***********Notification related************

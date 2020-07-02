@@ -24,8 +24,7 @@
                                         <div class='card blogBox moreBox'>
                                             <div class='card-body'>
                                                 <div class='row'>
-                                                <h4><%= resourceInfo[i].name %></h4>
-
+                                                    <h4><%= resourceInfo[i].name %></h4>
                                                 </div>
                                                 <div class='card-text'>
                                                     <ul class='list-group'>
@@ -34,36 +33,55 @@
                                                         <li class='list-group-item borderless box-padding'>
                                                             <b>State:</b> <%= resourceInfo[i].state %></li>
                                                         <li class='list-group-item borderless box-padding'>
-                                                            <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click me</a>
+                                                            <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click
+                                                                me</a>
                                                         </li>
                                                         <li class='list-group-item borderless box-padding'>
                                                             <b>Institution: </b> <%= resourceInfo[i].institution %></li>
                                                         <li class='list-group-item borderless box-padding'>
                                                             <b>Tags:</b> <%= resourceInfo[i].tags %>
                                                         </li>
-
                                                         <li class='list-group-item borderless box-padding'>
                                                             <!--force inline display-->
                                                             <button type='button' class='btn btn-outline-info'
-                                                                    style='border:0 solid transparent' data-toggle='modal'
+                                                                    style='border:0 solid transparent'
+                                                                    data-toggle='modal'
                                                                     data-target='#studentEditModal<%= resourceInfo[i]._id %>'>
                                                                 Edit
                                                             </button>
                                                             <button type='button' class='btn btn-outline-danger'
-                                                                    style='border:0px solid transparent' data-toggle='modal'
+                                                                    style='border:0px solid transparent'
+                                                                    data-toggle='modal'
                                                                     data-target='#deleteModal<%= resourceInfo[i]._id %>'>
                                                                 Delete
                                                             </button>
                                                         </li>
-
                                                         <li class='list-group-item borderless box-padding'>
-                                                            <% if (resourceInfo[i].checkStatus==='approve') { %>
-                                                                <input type="button" class="btn btn-success btn-sm" value="Approved Resources">
-                                                                <p class="text-danger">Be careful!Changing approved resources will require your resources be viewed again!</p>
-                                                            <% } else if (resourceInfo[i].checkStatus==='deny'){ %>
-                                                                <input type="button" class="btn btn-secondary btn-sm" value="Denied Resources">
+                                                            <% if (resourceInfo[i].checkStatus === 'approve') { %>
+                                                                <div class='col-md-7 col-sm-7'>
+                                                                    <div class="alert alert-success" role="alert">
+                                                                        <h4 class="alert-heading">Approved Resource</h4>
+                                                                        <p class="text-danger">Be careful!Changing
+                                                                            approved resources will require your
+                                                                            resources be viewed again!</p>
+                                                                    </div>
+                                                                </div>
+                                                            <% } else if (resourceInfo[i].checkStatus === 'deny'){ %>
+                                                                <div class='col-md-3 col-sm-3'>
+                                                                    <div class="alert alert-dark" role="alert">
+                                                                        <div class="text-center"><h4
+                                                                                    class="alert-heading">Denied
+                                                                                Resource</h4></div>
+                                                                    </div>
+                                                                </div>
                                                             <% } else { %>
-                                                                <input type="button" class="btn btn-warning btn-sm" value="Under Review Resources">
+                                                                <div class='col-md-3 col-sm-3'>
+                                                                    <div class="alert alert-primary" role="alert">
+                                                                        <div class="text-center"><h4
+                                                                                    class="alert-heading">Under Review
+                                                                                Resource</h4></div>
+                                                                    </div>
+                                                                </div>
                                                             <% } %>
                                                         </li>
                                                     </ul>
