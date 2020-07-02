@@ -310,6 +310,15 @@ app.get('/myResourcesFaculty',
     resourceController.checkUserName
 )
 
+app.get('/myResourcesStudent',
+    resourceController.showMyResourcesStudent,
+    resourceController.checkUserName
+)
+
+app.post('/studentUpdateResource/:resourceId',
+    resourceController.studentUpdateResource
+)
+
 //*******************************************
 //***********Notification related************
 
