@@ -1,6 +1,8 @@
 <%- include('../components/header'); -%>
 <%- include('../components/navbar'); -%>
 
+<script src='/js/editModal.js'></script>
+
 <section class='section'>
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
@@ -23,9 +25,7 @@
                                     <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
                                         <div class='card blogBox moreBox'>
                                             <div class='card-body'>
-                                                <div class='row'>
-                                                    <h4><%= resourceInfo[i].name %></h4>
-                                                </div>
+                                                <h4><%= resourceInfo[i].name %></h4>
                                                 <div class='card-text'>
                                                     <ul class='list-group'>
                                                         <li class='list-group-item borderless box-padding'>
@@ -41,7 +41,9 @@
                                                         <li class='list-group-item borderless box-padding'>
                                                             <b>Tags:</b> <%= resourceInfo[i].tags %>
                                                         </li>
-                                                        <li class='list-group-item borderless box-padding'>
+                                                        <li class='list-group-item borderless box-padding'
+                                                            style="display: inline">
+                                                            <b>Actions:</b>
                                                             <!--force inline display-->
                                                             <button type='button' class='btn btn-outline-info'
                                                                     style='border:0 solid transparent'
@@ -56,31 +58,30 @@
                                                                 Delete
                                                             </button>
                                                         </li>
-                                                        <li class='list-group-item borderless box-padding'>
+                                                        <li class='list-group-item borderless box-padding'
+                                                            style="display: inline">
+                                                            <b>Status:</b>
                                                             <% if (resourceInfo[i].checkStatus === 'approve') { %>
-                                                                <div class='col-md-7 col-sm-7'>
-                                                                    <div class="alert alert-success" role="alert">
-                                                                        <h4 class="alert-heading">Approved Resource</h4>
-                                                                        <p class="text-danger">Be careful!Changing
-                                                                            approved resources will require your
-                                                                            resources be viewed again!</p>
-                                                                    </div>
+                                                                <div class="alert alert-success"
+                                                                     style="display: inline; padding: 0.25rem; margin-bottom: 0; position: relative; border: 1px solid transparent;"
+                                                                     role="alert">
+                                                                    <b>Approved</b>
                                                                 </div>
+                                                                <br>
+                                                                <br>
+                                                                <h5 class="text-danger">Notice: editing will
+                                                                    require new approval by faculty</h5>
                                                             <% } else if (resourceInfo[i].checkStatus === 'deny'){ %>
-                                                                <div class='col-md-3 col-sm-3'>
-                                                                    <div class="alert alert-dark" role="alert">
-                                                                        <div class="text-center"><h4
-                                                                                    class="alert-heading">Denied
-                                                                                Resource</h4></div>
-                                                                    </div>
+                                                                <div class="alert alert-danger"
+                                                                     style="display: inline; padding: 0.25rem; margin-bottom: 0; position: relative; border: 1px solid transparent;"
+                                                                     role="alert">
+                                                                    <b>Denied</b>
                                                                 </div>
                                                             <% } else { %>
-                                                                <div class='col-md-3 col-sm-3'>
-                                                                    <div class="alert alert-primary" role="alert">
-                                                                        <div class="text-center"><h4
-                                                                                    class="alert-heading">Under Review
-                                                                                Resource</h4></div>
-                                                                    </div>
+                                                                <div class="alert alert-warning"
+                                                                     style="display: inline; padding: 0.25rem; margin-bottom: 0; position: relative; border: 1px solid transparent;"
+                                                                     role="alert">
+                                                                    <b>Under review</b>
                                                                 </div>
                                                             <% } %>
                                                         </li>
@@ -121,7 +122,7 @@
                     <div class='modal-body'>
                         <div class='row'>
                             <div class='col-md-12 col-sm-12'>
-                                <h4>Are you sure you want to delete this resource permanently?</h4>
+                                <h5>Are you sure you want to delete this resource permanently?</h5>
                             </div>
                         </div>
                     </div>
