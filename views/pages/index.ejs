@@ -51,7 +51,11 @@
                                 <a class='header-link' href='/showStarredResources'>My favorites</a>
                             </li>
                             <li>
-                                <a class='header-link' href='/myResources'>My resources</a>
+                                <% if (status === 'faculty' || status === 'admin') { %>
+                                    <a class='header-link' href='/myResourcesFaculty'>My resources</a>
+                                <% } else { %>
+                                    <a class='header-link' href='/myResourcesStudent'>My resources</a>
+                                <% } %>
                             </li>
                         </ul>
                     <% } else { %>
