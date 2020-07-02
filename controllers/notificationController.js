@@ -67,3 +67,27 @@ exports.deny = async (req, res, next) => {
         next(e)
     }
 }
+
+exports.resume = async (req, res, next) => {
+    try {
+        const resourceId = req.params.resourceId
+        let oldResource = await Resource.findOne({_id: resourceId})
+        oldResource.checkStatus = 'underReview'
+        await oldResource.save()
+        await res.redirect('back')
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.comment = async (req, res, next) => {
+    try {
+        const resourceId = req.params.resourceId
+        let oldResource = await Resource.findOne({_id: resourceId})
+        oldResource.review = req.body.review
+        await oldResource.save()
+        await res.redirect('back')
+    } catch (e) {
+        next(e)
+    }
+}
