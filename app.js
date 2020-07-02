@@ -292,18 +292,27 @@ app.post('/removeResource/:resourceId',
     resourceController.removeResource
 )
 
-app.post('/starResource/:resourceId',
-    resourceController.starResource
-)
-
 app.get('/showStarredResources',
     resourceController.checkUserName,
     resourceController.showStarredResources
 )
 
+app.post('/starResource/:resourceId',
+    resourceController.starResource
+)
+
 app.post('/unstarResource/:resourceId',
     resourceController.unstarResource
 )
+
+app.post('/starResourceAlt/:resourceId',
+    resourceController.starResourceAlt
+)
+
+app.post('/unstarResourceAlt/:resourceId',
+    resourceController.unstarResourceAlt
+)
+
 
 
 //*******************************************
