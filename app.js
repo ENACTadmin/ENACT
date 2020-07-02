@@ -305,7 +305,6 @@ app.post('/unstarResource/:resourceId',
     resourceController.unstarResource
 )
 
-<<<<<<< HEAD
 app.post('/starResourceAlt/:resourceId',
     resourceController.starResourceAlt
 )
@@ -315,21 +314,6 @@ app.post('/unstarResourceAlt/:resourceId',
 )
 
 
-=======
-app.get('/myResourcesFaculty',
-    resourceController.showMyResources,
-    resourceController.checkUserName
-)
-
-app.get('/myResourcesStudent',
-    resourceController.showMyResourcesStudent,
-    resourceController.checkUserName
-)
-
-app.post('/studentUpdateResource/:resourceId',
-    resourceController.studentUpdateResource
-)
->>>>>>> 513d17d316f4c35e94b7f96011359e5aaa1b3995
 
 //*******************************************
 //***********Notification related************
