@@ -23,7 +23,10 @@
                                     <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
                                         <div class='card blogBox moreBox'>
                                             <div class='card-body'>
+                                                <div class='row'>
                                                 <h4><%= resourceInfo[i].name %></h4>
+
+                                                </div>
                                                 <div class='card-text'>
                                                     <ul class='list-group'>
                                                         <li class='list-group-item borderless box-padding'>
@@ -38,6 +41,7 @@
                                                         <li class='list-group-item borderless box-padding'>
                                                             <b>Tags:</b> <%= resourceInfo[i].tags %>
                                                         </li>
+
                                                         <li class='list-group-item borderless box-padding'>
                                                             <!--force inline display-->
                                                             <button type='button' class='btn btn-outline-info'
@@ -50,6 +54,17 @@
                                                                     data-target='#deleteModal<%= resourceInfo[i]._id %>'>
                                                                 Delete
                                                             </button>
+                                                        </li>
+
+                                                        <li class='list-group-item borderless box-padding'>
+                                                            <% if (resourceInfo[i].checkStatus==='approve') { %>
+                                                                <input type="button" class="btn btn-success btn-sm" value="Approved Resources">
+                                                                <p class="text-danger">Be careful!Changing approved resources will require your resources be viewed again!</p>
+                                                            <% } else if (resourceInfo[i].checkStatus==='deny'){ %>
+                                                                <input type="button" class="btn btn-secondary btn-sm" value="Denied Resources">
+                                                            <% } else { %>
+                                                                <input type="button" class="btn btn-warning btn-sm" value="Under Review Resources">
+                                                            <% } %>
                                                         </li>
                                                     </ul>
                                                 </div>
