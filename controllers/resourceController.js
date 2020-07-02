@@ -2,6 +2,7 @@
 const Course = require('../models/Course');
 const Resource = require('../models/Resource');
 const ResourceSet = require('../models/ResourceSet');
+let resourceInfoSet
 
 
 exports.uploadResource = async (req, res, next) => {
@@ -81,7 +82,7 @@ exports.updateResource = async (req, res, next) => {
     const resourceId = await req.params.resourceId
     try {
         let tagsString = await req.body.selectedTags
-        let tags = tagsString.split(",")
+        let tags = await tagsString.split(",")
         console.log("tags received: ", tags)
         let oldResource = await Resource.findOne({_id: resourceId})
         oldResource.name = await req.body.resourceName
@@ -95,7 +96,7 @@ exports.updateResource = async (req, res, next) => {
         oldResource.tags = await tags
         await oldResource.save()
         // save the new resource
-        res.redirect('back')
+        await res.redirect('back')
     } catch (e) {
         next(e)
     }
@@ -150,9 +151,15 @@ exports.primarySearch = async (req, res, next) => {
                 ],
             })
         }
+        let starred = await ResourceSet.findOne({ownerId: req.user._id})
+        let resourceIds = null
+        if (starred) {
+            resourceIds = await starred.resources
+        }
+        res.locals.resourceIds = resourceIds
         res.locals.resourceInfo = resourceInfo
+        resourceInfoSet = resourceInfo
         res.render('./pages/showResources')
-
     } catch (e) {
         next(e)
     }
@@ -863,4 +870,60 @@ exports.checkUserName = async (req, res, next) => {
         res.redirect('/myProfile')
     }
     next()
+}
+
+exports.starResourceAlt = async (req, res, next) => {
+    try {
+        let resourceId = await req.params.resourceId
+        let resourceSet = await ResourceSet.findOne({ownerId: req.user._id})
+        console.log("type: ", typeof resourceSet)
+        // if resourceSet collection is empty, then create a new instance
+        if (!resourceSet) {
+            let newResourceSet = new ResourceSet({
+                ownerId: req.user._id,
+                name: 'favorite',
+                createdAt: new Date()
+            })
+            await newResourceSet.save()
+            resourceSet = newResourceSet
+        }
+        // use the newly created instance or the one in the database
+        let resourceIds = resourceSet.resources
+        let newResourceIds
+        if (!resourceIds) {
+            newResourceIds = [resourceId]
+        } else {
+            newResourceIds = [resourceId].concat(resourceIds)
+        }
+        // save to db
+        resourceSet.resources = newResourceIds
+        await resourceSet.save()
+        res.locals.resourceIds = newResourceIds
+        res.locals.resourceInfo = resourceInfoSet
+        res.render('./pages/showResources')
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.unstarResourceAlt = async (req, res, next) => {
+    try {
+        let resourceId = await req.params.resourceId
+        let resourceSet = await ResourceSet.findOne({ownerId: req.user._id})
+        let resourceIds = resourceSet.resources
+        console.log("ids: ", resourceIds)
+        let newResourceIds = []
+        for (let i = 0; i < resourceIds.length; i++) {
+            if (resourceIds[i].toString() !== resourceId) {
+                newResourceIds.push(resourceIds[i])
+            }
+        }
+        resourceSet.resources = newResourceIds
+        await resourceSet.save()
+        res.locals.resourceIds = newResourceIds
+        res.locals.resourceInfo = resourceInfoSet
+        res.render('./pages/showResources')
+    } catch (e) {
+        next(e)
+    }
 }

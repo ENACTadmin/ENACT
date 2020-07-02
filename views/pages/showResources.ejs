@@ -42,10 +42,29 @@
                                                             <b>Tags:</b> <%= resourceInfo[i].tags %>
                                                         </li>
                                                         <li class='list-group-item borderless box-padding'>
-                                                            <b>Actions:</b>
-                                                            <a href='#' type='button'
-                                                               class='btn-sm btn btn-outline-warning'
-                                                               style='border:0px solid transparent'>Star</a>
+                                                            <% if (resourceIds && resourceIds.toString().includes(resourceInfo[i]._id.toString())) { %>
+                                                                <% console.log('Yes!!!') %>
+                                                                <form style="display: inline" method='post'
+                                                                      action='/unstarResourceAlt/<%= resourceInfo[i]._id %>'>
+                                                                    <b>Actions:</b>
+                                                                    <input type='submit'
+                                                                           style='border:0px solid transparent'
+                                                                           name='submit'
+                                                                           class='btn btn-outline-danger'
+                                                                           value='&#9829;'>
+                                                                </form>
+                                                            <% } else { %>
+                                                                <% console.log('No!!!') %>
+                                                                <form style="display: inline" method='post'
+                                                                      action='/starResourceAlt/<%= resourceInfo[i]._id %>'>
+                                                                    <b>Actions:</b>
+                                                                    <input type='submit'
+                                                                           style='border:0px solid transparent'
+                                                                           name='submit'
+                                                                           class='btn btn-outline-danger'
+                                                                           value='&#9825;'>
+                                                                </form>
+                                                            <% } %>
                                                         </li>
                                                     </ul>
                                                 </div>
