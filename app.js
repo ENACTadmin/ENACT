@@ -347,6 +347,14 @@ app.post('/deny',
     notificationController.deny
 )
 
+app.post('/resumeResource/:resourceId',
+    notificationController.resume
+)
+
+app.post('/commentResource/:resourceId',
+    notificationController.comment
+)
+
 
 //*******************************************
 //***********Profile related*****************
