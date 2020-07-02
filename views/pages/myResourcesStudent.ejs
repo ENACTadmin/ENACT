@@ -25,6 +25,7 @@
                                             <div class='card-body'>
                                                 <div class='row'>
                                                 <h4><%= resourceInfo[i].name %></h4>
+
                                                 </div>
                                                 <div class='card-text'>
                                                     <ul class='list-group'>
@@ -56,24 +57,14 @@
                                                         </li>
 
                                                         <li class='list-group-item borderless box-padding'>
-
                                                             <% if (resourceInfo[i].checkStatus==='approve') { %>
-                                                            <div class='col-md-7 col-sm-7'>
-                                                                <div class="alert alert-success" role="alert">
-                                                                    <h4 class="alert-heading">Approved Resource</h4>
-                                                                    <p class="text-danger">Be careful!Changing approved resources will require your resources be viewed again!</p>
-                                                                </div>
-                                                            </div>
+                                                                <input type="button" class="btn btn-success btn-sm" value="Approved Resources">
+                                                                <p class="text-danger">Be careful!Changing approved resources will require your resources be viewed again!</p>
                                                             <% } else if (resourceInfo[i].checkStatus==='deny'){ %>
-                                                                <div class='col-md-3 col-sm-3'>
-                                                                    <div class="alert alert-dark" role="alert"><div class="text-center"><h4 class="alert-heading">Denied Resource</h4></div>
-                                                                </div></div>
+                                                                <input type="button" class="btn btn-secondary btn-sm" value="Denied Resources">
                                                             <% } else { %>
-                                                                    <div class='col-md-3 col-sm-3'>
-                                                                        <div class="alert alert-primary" role="alert"><div class="text-center"><h4 class="alert-heading">Under Review Resource</h4></div>
-                                                                    </div></div>
+                                                                <input type="button" class="btn btn-warning btn-sm" value="Under Review Resources">
                                                             <% } %>
-
                                                         </li>
                                                     </ul>
                                                 </div>
