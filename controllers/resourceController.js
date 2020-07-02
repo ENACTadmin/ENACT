@@ -905,7 +905,9 @@ exports.showMyResources = async (req, res, next) => {
 
 exports.showMyResourcesStudent = async (req, res, next) => {
     try {
-        let resourceInfo = await Resource.find({ownerId: req.user._id})
+        let resourceInfo = await Resource.find({
+            ownerId: req.user._id,
+        })
         res.render('./pages/myResourcesStudent', {
             resourceInfo: resourceInfo
         })

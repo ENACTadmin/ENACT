@@ -28,17 +28,6 @@ exports.approve = async (req, res, next) => {
             resourceInfo[i].checkStatus = 'approve'
             resourceInfo[i].save()
         }
-        // }else if($_POST['action'].equals('Submit Checked Resources to Admins to be posted to public')){
-        //     for (let i = 0; i < resourceInfo.length; i++) {
-        //         resourceInfo[i].checkStatus = 'public'
-        //         resourceInfo[i].save()
-        //     }
-        // }else{
-        //     for (let i = 0; i < resourceInfo.length; i++) {
-        //         resourceInfo[i].checkStatus = 'deny'
-        //         resourceInfo[i].save()
-        //     }
-        // }
         res.redirect('back')
     } catch (e) {
         next(e)
