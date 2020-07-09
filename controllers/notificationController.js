@@ -7,11 +7,10 @@ const Message = require('../models/Message');
 
 exports.loadUnderReviewResources = async (req, res, next) => {
     try {
-        let resourceInfo = await Resource.find({
+        res.locals.resourceInfo = await Resource.find({
             checkStatus: 'underReview',
             facultyId: req.user._id
         }).sort({'createdAt': -1})
-        res.locals.resourceInfo = resourceInfo
         res.render('./pages/reviewResource')
     } catch (e) {
         console.log("error: " + e)
@@ -75,11 +74,10 @@ exports.resume = async (req, res, next) => {
         oldResource.checkStatus = 'underReview'
         await oldResource.save()
         let userId = req.user.id
-        let resourceInfo = await Resource.find({
+        res.locals.resourceInfo = await Resource.find({
             facultyId: userId,
             checkStatus: 'denytemp'
         })
-        res.locals.resourceInfo = resourceInfo
         res.render('./pages/deny')
     } catch (e) {
         next(e)
@@ -94,11 +92,10 @@ exports.comment = async (req, res, next) => {
         oldResource.checkStatus = 'deny'
         await oldResource.save()
         let userId = req.user.id
-        let resourceInfo = await Resource.find({
+        res.locals.resourceInfo = await Resource.find({
             facultyId: userId,
             checkStatus: 'denytemp'
         })
-        res.locals.resourceInfo = resourceInfo
         res.render('./pages/deny')
     } catch (e) {
         next(e)
@@ -116,11 +113,10 @@ exports.sendDeny = async (req, res, next) => {
             resourceInfo[i].checkStatus = 'deny'
             resourceInfo[i].save()
         }
-        let resourceInfo1 = await Resource.find({
+        res.locals.resourceInfo = await Resource.find({
             checkStatus: 'underReview',
             facultyId: req.user._id
         }).sort({'createdAt': -1})
-        res.locals.resourceInfo = resourceInfo1
         res.render('./pages/reviewResource')
     } catch (e) {
         next(e)

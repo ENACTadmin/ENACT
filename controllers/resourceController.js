@@ -22,7 +22,8 @@ exports.uploadResource = async (req, res, next) => {
                 tags: tags, // tags as array
                 uri: req.body.uri, // universal resource identifier specIdific to the resource
                 state: req.body.state,
-                resourceType: req.body.resourceType, // video/text document ...
+                contentType: req.body.contentType,
+                mediaType: req.body.mediaType, // video/text document ...
                 institution: req.body.institution,
                 yearOfCreation: req.body.yearOfCreation, // content's actual creation time
                 checkStatus: 'approve'
@@ -42,7 +43,8 @@ exports.uploadResource = async (req, res, next) => {
                     tags: tags, // tags as array
                     uri: req.body.uri, // universal resource identifier specific to the resource
                     state: req.body.state,
-                    resourceType: req.body.resourceType, // video/text document ...
+                    contentType: req.body.contentType,
+                    mediaType: req.body.mediaType, // video/text document ...
                     institution: req.body.institution,
                     yearOfCreation: req.body.yearOfCreation,// content's actual creation time
                     facultyId: facultyInfo.ownerId, //belong to which faculty to approve
@@ -61,7 +63,8 @@ exports.uploadResource = async (req, res, next) => {
                     tags: tags, // tags as array
                     uri: req.body.uri, // universal resource identifier specific to the resource
                     state: req.body.state,
-                    resourceType: req.body.resourceType, // video/text document ...
+                    contentType: req.body.contentType,
+                    mediaType: req.body.mediaType,
                     institution: req.body.institution,
                     yearOfCreation: req.body.yearOfCreation,// content's actual creation time
                     checkStatus: 'approve',
@@ -91,7 +94,8 @@ exports.updateResource = async (req, res, next) => {
         oldResource.description = await req.body.resourceDescription
         oldResource.uri = await req.body.uri
         oldResource.state = await req.body.state
-        oldResource.resourceType = await req.body.resourceType
+        oldResource.contentType = await req.body.contentType
+        oldResource.mediaType = await req.body.mediaType
         oldResource.institution = await req.body.institution
         oldResource.yearOfCreation = await req.body.yearOfCreation
         oldResource.tags = await tags
@@ -942,7 +946,8 @@ exports.studentUpdateResource = async (req, res, next) => {
         oldResource.description = await req.body.resourceDescription
         oldResource.uri = await req.body.uri
         oldResource.state = await req.body.state
-        oldResource.resourceType = await req.body.resourceType
+        oldResource.contentType = await req.body.contentType
+        oldResource.mediaType = await req.body.mediaType
         oldResource.institution = await req.body.institution
         oldResource.yearOfCreation = await req.body.yearOfCreation
         oldResource.tags = await tags

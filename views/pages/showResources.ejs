@@ -43,7 +43,6 @@
                                                         </li>
                                                         <li class='list-group-item borderless box-padding'>
                                                             <% if (resourceIds && resourceIds.toString().includes(resourceInfo[i]._id.toString())) { %>
-                                                                <% console.log('Yes!!!') %>
                                                                 <form style="display: inline" method='post'
                                                                       action='/unstarResourceAlt/<%= resourceInfo[i]._id %>'>
                                                                     <b>Actions:</b>
@@ -54,7 +53,6 @@
                                                                            value='&#9829;'>
                                                                 </form>
                                                             <% } else { %>
-                                                                <% console.log('No!!!') %>
                                                                 <form style="display: inline" method='post'
                                                                       action='/starResourceAlt/<%= resourceInfo[i]._id %>'>
                                                                     <b>Actions:</b>
