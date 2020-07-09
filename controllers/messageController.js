@@ -64,6 +64,11 @@ exports.loadMessageBoard = async (req, res, next) => {
                 {senderId: userId}, {receiverId: userId}
             ]
         })
+        let resourceInfo = await Resource.find({
+            checkStatus: 'underReview',
+            facultyId: req.user._id
+        })
+        res.locals.resourceNum = await resourceInfo.length
         res.locals.messageInfo = await messageInfo
         res.render('./pages/messageBoard')
     } catch (e) {
