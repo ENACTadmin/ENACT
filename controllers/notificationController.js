@@ -2,6 +2,7 @@
 const Course = require('../models/Course');
 const Resource = require('../models/Resource');
 const User = require('../models/User');
+const Message = require('../models/Message');
 
 
 exports.loadUnderReviewResources = async (req, res, next) => {
