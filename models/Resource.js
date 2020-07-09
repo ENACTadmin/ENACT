@@ -14,7 +14,8 @@ const resourceSchema = Schema({
     tags: [String], // tag the resource
     uri: String, // universal resource identifier specific to the resource
     state: String,
-    resourceType: String, // video/text document ...
+    mediaType: String, // video/text document ...
+    contentType: String, // pitch/research...
     institution: String,
     yearOfCreation: Number, // content's actual creation time
     facultyId: ObjectID, //belong to which faculty to approve
