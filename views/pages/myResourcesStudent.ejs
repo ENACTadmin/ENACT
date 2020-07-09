@@ -77,12 +77,22 @@
                                                                      role="alert">
                                                                     <b>Denied</b>
                                                                 </div>
-                                                            <% } else { %>
+                                                            <% } else if(resourceInfo[i].checkStatus === 'underReview'){ %>
                                                                 <div class="alert alert-warning"
                                                                      style="display: inline; padding: 0.25rem; margin-bottom: 0; position: relative; border: 1px solid transparent;"
                                                                      role="alert">
                                                                     <b>Under review</b>
                                                                 </div>
+                                                            <% } else{ %>
+                                                                <div class="alert alert-warning"
+                                                                     style="display: inline; padding: 0.25rem; margin-bottom: 0; position: relative; border: 1px solid transparent;"
+                                                                     role="alert">
+                                                                    <b>In Reviewing Progress</b>
+                                                                </div>
+                                                                <br>
+                                                                <br>
+                                                                <h5 class="text-danger">Notice: editing will
+                                                                    require new approval by faculty</h5>
                                                             <% } %>
                                                         </li>
                                                     </ul>

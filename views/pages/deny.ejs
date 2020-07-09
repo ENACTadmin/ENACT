@@ -5,7 +5,7 @@
     <div class="section__content section__content--full-width">
         <div class="jumbotron masthead text-center">
             <div class="section__title section__title--centered">
-                You have denied the following resources
+                Confirm Resources You denied
             </div>
         </div>
     </div>
@@ -57,8 +57,13 @@
                                         </div>
                                         <br>
                                     <% } %>
+                                        <form action="/sendDeny"  method="post">
+                                            <input type='submit' name='submit' class='form-demo__submit'
+                                                   value='Confirm all'>
+                                        </form>
+                                        <br>
                                 <% } else { %>
-                                    No resource available yet
+                                    You don't need to confirm any denied resources now. Please feel free to click the menu bar and go to another page.
                                 <% } %>
                             </div>
                         </div>
