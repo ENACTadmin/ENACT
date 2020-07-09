@@ -56,12 +56,10 @@ exports.deny = async (req, res, next) => {
         let resourceId = await req.body.checked
         console.log(req.body.checked)
         let resourceInfo = await Resource.find({_id: resourceId})
-
         for (let i = 0; i < resourceInfo.length; i++) {
-            resourceInfo[i].checkStatus = 'deny'
+            resourceInfo[i].checkStatus = 'denytemp'
             resourceInfo[i].save()
         }
-        res.locals.resourceInfo = resourceInfo
         res.render('./pages/deny')
     } catch (e) {
         next(e)
@@ -74,7 +72,7 @@ exports.resume = async (req, res, next) => {
         let oldResource = await Resource.findOne({_id: resourceId})
         oldResource.checkStatus = 'underReview'
         await oldResource.save()
-        await res.redirect('back')
+        res.render('./pages/deny')
     } catch (e) {
         next(e)
     }
@@ -85,8 +83,41 @@ exports.comment = async (req, res, next) => {
         const resourceId = req.params.resourceId
         let oldResource = await Resource.findOne({_id: resourceId})
         oldResource.review = req.body.review
+        oldResource.checkStatus = 'deny'
         await oldResource.save()
-        await res.redirect('back')
+        res.render('./pages/deny')
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.sendDeny = async (req, res, next) => {
+    try {
+        let userId = req.user.id
+        let resourceInfo = await Resource.find({
+            facultyId: userId,
+            checkStatus: 'denytemp'
+        })
+        for (let i = 0; i < resourceInfo.length; i++) {
+            resourceInfo[i].checkStatus = 'temp'
+            resourceInfo[i].save()
+        }
+        res.render('./pages/reviewResource')
+    } catch (e) {
+        next(e)
+    }
+}
+
+
+exports.loadTempDeny = async (req, res, next) => {
+    try {
+        let userId = req.user.id
+        let resourceInfo = await Resource.find({
+            facultyId: userId,
+            checkStatus: 'denytemp'
+        })
+        res.locals.resourceInfo = resourceInfo
+        res.render('./pages/deny')
     } catch (e) {
         next(e)
     }

@@ -15,6 +15,28 @@
 
 <section class="section section__grey">
     <div class="container">
+        <h3>System Message</h3>
+        <hr>
+        <div class="row">
+            <% if (resourceNum !== 0) { %>
+                <div class="col-md-4 col-sm-12">
+                    <div class="card" style="border:0 solid transparent">
+                        <div class="card-body">
+                            <h5 style="display: inline">subject: You have <%= resourceNum %> resources under review</h5>
+                            <br>
+                            <br>
+                            <a href="/reviewResource"><input class="btn btn-sm btn-outline-primary" type="submit" value="Go to review"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br><br>
+            <% } %>
+        </div>
+    </div>
+</section>
+
+<section class="section section__grey">
+    <div class="container">
         <h3>Inbox (Someone is interested in my work!)</h3>
         <hr>
         <div class="row">

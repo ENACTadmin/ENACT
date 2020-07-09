@@ -343,8 +343,9 @@ app.post('/toPublic',
     notificationController.toPublic
 )
 
-app.post('/deny',
-    notificationController.deny
+app.post('/tempdeny',
+    notificationController.deny,
+    notificationController.loadTempDeny
 )
 
 app.post('/resumeResource/:resourceId',
