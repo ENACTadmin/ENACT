@@ -15,22 +15,47 @@
 
 <section class="section section__grey">
     <div class="container">
-        <h3>System Message</h3>
+        <h3>System Tracker</h3>
         <hr>
         <div class="row">
-            <% if (resourceNum !== 0) { %>
                 <div class="col-md-4 col-sm-12">
-                    <div class="card" style="border:0 solid transparent">
-                        <div class="card-body">
-                            <h5 style="display: inline">subject: You have <%= resourceNum %> resources under review</h5>
+                    <% if (resourceNum !== 0) { %>
+                        <div class="card border-primary mb-3" style="max-width: 18rem;">
+                            <div class="card-header"><h3>Action Requested</h3></div>
+                            <div class="card-body">
+                            <h5 style="display: inline">You have <%= resourceNum %> resources under review</h5>
                             <br>
                             <br>
                             <a href="/reviewResource"><input class="btn btn-sm btn-outline-primary" type="submit" value="Go to review"></a>
                             </div>
                         </div>
+                    <% } %>
+                        <% if (approveInfo.length !== 0) { %>
+                        <div class="card border-success mb-3" style="max-width: 18rem;">
+                            <div class="card-header"><h3>Approved Info</h3></div>
+                            <div class="card-body">
+                                <h5 style="display: inline">Congratulations! You own <%= approveInfo.length %> approved resources.</h5>
+                                <br>
+                                <br>
+                                    <a href="/#"><input class="btn btn-sm btn-outline-success" type="submit" value="Go to my approved resources"></a>
+                            </div>
+                        </div>
                     </div>
-                    <br><br><br>
+                <% } %>
+                <% if (denyInfo.length !== 0) { %>
+                    <div class="card border-dark mb-3" style="max-width: 18rem;">
+                        <div class="card-header"><h3>Denied Info</h3></div>
+                        <div class="card-body">
+                            <h5 style="display: inline">Sorry, <%= approveInfo.length %> of your resources have been denied.</h5>
+                            <br>
+                            <br>
+                            <a href="/showDenied"><input class="btn btn-sm btn-outline-dark" type="submit" value="Review my denied resources"></a>
+                        </div>
+                    </div>
+            </div>
             <% } %>
+
+            <br><br><br>
         </div>
     </div>
 </section>
