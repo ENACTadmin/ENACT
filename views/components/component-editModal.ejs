@@ -73,9 +73,32 @@ let id_set = [] %>
                                     </div>
                                     <br>
                                     <div class='input-group-prepend'>
-                                        <span class='input-group-text' style='width: 180px'>Resource Type</span>
-                                        <select id='typeSelect<%= resourceInfo[i]._id %>' class='form-control'
-                                                name='resourceType'>
+                                        <span class='input-group-text' style='width: 180px'>Content Type</span>
+                                        <select id='contentTypeSelect<%= resourceInfo[i]._id %>' class='form-control'
+                                                name='contentType'>
+                                            <option value='null'>Choose...</option>
+                                            <option value='Testimony'>Testimony</option>
+                                            <option value='Op-Ed'>Op-Ed</option>
+                                            <option value='ResearchReport'>Research Report</option>
+                                            <option value='ElevatorSpeech'>Elevator Speech</option>
+                                            <option value='Storybook'>Storybook/Factsheet</option>
+                                            <option value='Script'>Script for meeting with Ways and Means Staff</option>
+                                            <option value='Journal'>Campaign Journal</option>
+                                            <option value='AdvocacyVideo'>Advocacy Video</option>
+                                            <option value='NextSteps'>Next Steps</option>
+                                            <option value='Portfolio'>Portfolio</option>
+                                            <option value='Flyer'>Flyer/handout</option>
+                                            <option value=PhotoVideo'>Photo</option>
+                                            <option value='Video'>Video</option>
+                                            <option value='PersonalReflection'>Personal reflection</option>
+                                            <option value='Presentations'>Presentations/Powerpoints</option>
+                                        </select>
+                                    </div>
+                                    <br>
+                                    <div class='input-group-prepend'>
+                                        <span class='input-group-text' style='width: 180px'>Media Type</span>
+                                        <select id='mediaTypeSelect<%= resourceInfo[i]._id %>' class='form-control'
+                                                name='mediaType'>
                                             <option value='null'>Choose...</option>
                                             <option value='video'>Video</option>
                                             <option value='document'>Document</option>
@@ -224,7 +247,8 @@ let id_set = [] %>
                 </form>
             </div>
         </div>
-        <p hidden id='typeFromServer<%= resourceInfo[i]._id %>'>'<%= resourceInfo[i].resourceType %>'</p>
+        <p hidden id='mediaTypeFromServer<%= resourceInfo[i]._id %>'>'<%= resourceInfo[i].mediaType %>'</p>
+        <p hidden id='contentTypeFromServer<%= resourceInfo[i]._id %>'>'<%= resourceInfo[i].contentType %>'</p>
         <p hidden id='stateFromServer<%= resourceInfo[i]._id %>'>'<%= resourceInfo[i].state %>'</p>
         <p hidden id='statusFromServer<%= resourceInfo[i]._id %>'>'<%= resourceInfo[i].status %>'</p>
         <p hidden id='tagsFromServer<%= resourceInfo[i]._id %>'>'<%= resourceInfo[i].tags %>'</p>
