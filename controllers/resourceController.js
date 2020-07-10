@@ -913,7 +913,7 @@ exports.starResourceAlt = async (req, res, next) => {
 
 exports.unstarResourceAlt = async (req, res, next) => {
     try {
-        let resourceId = await req.params.resourceId
+        let resourceId = req.params.resourceId
         let resourceSet = await ResourceSet.findOne({ownerId: req.user._id})
         let resourceIds = resourceSet.resources
         console.log("ids: ", resourceIds)
