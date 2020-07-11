@@ -83,22 +83,22 @@ exports.uploadResource = async (req, res, next) => {
 }
 
 exports.updateResource = async (req, res, next) => {
-    const resourceId = await req.params.resourceId
+    const resourceId = req.params.resourceId
     try {
-        let tagsString = await req.body.selectedTags
-        let tags = await tagsString.split(",")
+        let tagsString = req.body.selectedTags
+        let tags = tagsString.split(",")
         console.log("tags received: ", tags)
-        let oldResource = await Resource.findOne({_id: resourceId})
-        oldResource.name = await req.body.resourceName
-        oldResource.status = await req.body.status
-        oldResource.description = await req.body.resourceDescription
-        oldResource.uri = await req.body.uri
-        oldResource.state = await req.body.state
-        oldResource.contentType = await req.body.contentType
-        oldResource.mediaType = await req.body.mediaType
-        oldResource.institution = await req.body.institution
-        oldResource.yearOfCreation = await req.body.yearOfCreation
-        oldResource.tags = await tags
+        let oldResource = Resource.findOne({_id: resourceId})
+        oldResource.name = req.body.resourceName
+        oldResource.status = req.body.status
+        oldResource.description = req.body.resourceDescription
+        oldResource.uri = req.body.uri
+        oldResource.state = req.body.state
+        oldResource.contentType = req.body.contentType
+        oldResource.mediaType = req.body.mediaType
+        oldResource.institution = req.body.institution
+        oldResource.yearOfCreation = req.body.yearOfCreation
+        oldResource.tags = tags
         await oldResource.save()
         // save the new resource
         await res.redirect('back')
@@ -935,22 +935,21 @@ exports.unstarResourceAlt = async (req, res, next) => {
 
 exports.studentUpdateResource = async (req, res, next) => {
     console.log('student')
-    const resourceId = await req.params.resourceId
+    const resourceId = req.params.resourceId
     try {
-        let tagsString = await req.body.selectedTags
+        let tagsString = req.body.selectedTags
         let tags = tagsString.split(",")
-        console.log("tags received: ", tags)
         let oldResource = await Resource.findOne({_id: resourceId})
-        oldResource.name = await req.body.resourceName
-        oldResource.status = await req.body.status
-        oldResource.description = await req.body.resourceDescription
-        oldResource.uri = await req.body.uri
-        oldResource.state = await req.body.state
-        oldResource.contentType = await req.body.contentType
-        oldResource.mediaType = await req.body.mediaType
-        oldResource.institution = await req.body.institution
-        oldResource.yearOfCreation = await req.body.yearOfCreation
-        oldResource.tags = await tags
+        oldResource.name = req.body.resourceName
+        oldResource.status = req.body.status
+        oldResource.description = req.body.resourceDescription
+        oldResource.uri = req.body.uri
+        oldResource.state = req.body.state
+        oldResource.contentType = req.body.contentType
+        oldResource.mediaType = req.body.mediaType
+        oldResource.institution = req.body.institution
+        oldResource.yearOfCreation = req.body.yearOfCreation
+        oldResource.tags = tags
         oldResource.checkStatus = 'underReview'
         await oldResource.save()
         // save the new resource
