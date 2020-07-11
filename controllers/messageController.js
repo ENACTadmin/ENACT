@@ -6,18 +6,16 @@ const Message = require('../models/Message');
 
 exports.loadMessagingPage = async (req, res, next) => {
     try {
-        let senderId = await req.params.sender
-        let receiverId = await req.params.receiver
-        let resourceId = await req.params.resourceId
-        console.log("idid: ", resourceId)
+        let senderId = req.params.sender
+        let receiverId = req.params.receiver
+        let resourceId = req.params.resourceId
         let senderInfo = await User.findOne({_id: senderId})
         let receiverInfo = await User.findOne({_id: receiverId})
         let resourceInfo = await Resource.findOne({_id: resourceId})
-        console.log('info: ', resourceInfo)
-        res.locals.senderInfo = await senderInfo
-        res.locals.receiverInfo = await receiverInfo
-        res.locals.resourceInfo = await resourceInfo
-        let messageInfo = Message.find({
+        res.locals.senderInfo = senderInfo
+        res.locals.receiverInfo = receiverInfo
+        res.locals.resourceInfo = resourceInfo
+        let messageInfo = await Message.find({
             $or: [
                 {senderId: senderId, receiverId: receiverId},
             ]
@@ -31,28 +29,64 @@ exports.loadMessagingPage = async (req, res, next) => {
 
 exports.saveMessage = async (req, res, next) => {
     try {
-        let sentBy = await req.user._id
+        let sentBy = req.user._id
         let receivedBy
-        if (sentBy.equals(await req.params.sender)) {
-            receivedBy = await req.params.receiver
+        if (sentBy.equals(req.params.sender)) {
+            receivedBy = req.params.receiver
         } else {
-            receivedBy = await req.params.sender
+            receivedBy = req.params.sender
         }
-        console.log('sb: ', await req.body.subject)
         let newMessage = Message({
-            senderId: await req.params.sender,
-            receiverId: await req.params.receiver,
+            senderId: req.params.sender,
+            receiverId: req.params.receiver,
             sentBy: sentBy,
             receivedBy: receivedBy,
-            relevantResourceId: await req.params.resourceId,
-            subject: await req.body.subject,
-            message: await req.body.message,
+            relevantResourceId: req.params.resourceId,
+            subject: req.body.subject,
+            message: req.body.message,
             createdAt: new Date()
         })
         await newMessage.save()
+        let receiver = await User.findOne({_id: req.params.receiver})
+        let workEmail = receiver.googleemail
+        let userName = receiver.userName
+        send_email(workEmail, userName, newMessage, 'http://enact-brandeis.herokuapp.com/' + 'message/' + req.params.sender + '/' + req.params.receiver + '/' + req.params.resourceId)
         res.redirect('back')
     } catch (e) {
         next(e)
+    }
+}
+
+function send_email(workEmail, userName, message, url) {
+    const sgMail = require('@sendgrid/mail');
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY || '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');
+    if (message.subject) {
+        const msg = {
+            to: workEmail,
+            from: 'brandeisenact@gmail.com',
+            subject: 'ENACT Digital Platform: you have one new message from ' + userName,
+            text: 'ENACT Digital Platform: you have one new message from ' + userName,
+            html: 'Hi, <br><br>you received a message from ' + userName +
+                '<br>' + '<b>Subject</b>: ' + message.subject +
+                '<br>' + '<b>Content</b>: ' + message.message +
+                '<br>' + '<b>Time</b>: ' + message.createdAt +
+                '<br>' + '<b>Click <a href=' + url + '>' + 'here' + '</a>' + ' to reply</b>' +
+                '<br><br>' + 'ENACT Support'
+        };
+        sgMail.send(msg);
+    } else {
+        const msg = {
+            to: workEmail,
+            from: 'brandeisenact@gmail.com',
+            subject: 'ENACT Digital Platform: you have one new message from ' + userName,
+            text: 'ENACT Digital Platform: you have one new message from ' + userName,
+            html: 'Hi, <br><br>you received a message from' + userName +
+                '<br>' + '<b>Content</b>: ' + message.message +
+                '<br>' + '<b>Time</b>: ' + message.createdAt +
+                '<br>' + '<b>Click <a href=' + url + '>' + 'here' + '</a>' + ' to reply</b>' +
+                '<br><br>' + 'ENACT Support'
+        };
+        sgMail.send(msg);
     }
 }
 

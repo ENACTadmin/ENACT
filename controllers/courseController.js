@@ -14,7 +14,7 @@ const CourseMember = require('../models/CourseMember');
 let coursePin;
 exports.createNewClass = async (req, res, next) => {
     //console.dir(req.body)
-    if (false && !req.user.googleemail.endsWith("edu") && res.locals.status !== 'faculty') {
+    if (!req.user.googleemail.endsWith("edu") && res.locals.status !== 'faculty') {
         res.send("You must log in with an authorized faculty account to create a class. <a href='/logout'>Logout</a>")
         return
     } else if (!(req.body.norobot === 'on' && req.body.robot == undefined)) {

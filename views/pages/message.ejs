@@ -11,7 +11,8 @@
                     Messages between <%= senderInfo.userName %> & <%= receiverInfo.userName %>
                 <% } %>
             </div>
-            <h3>Leave a post here and the recipient will receive an email notification <u>with your email hidden</u></h3>
+            <h3>Leave a post here and the recipient will receive an email notification <u>with your email hidden</u>
+            </h3>
         </div>
     </div>
 </section>
@@ -94,7 +95,7 @@
                 <div class="card">
                     <h5 class="card-header">Leave a message here:</h5>
                     <div class="card-body">
-                        <form action="/saveMessage/<%= senderInfo._id %>/<%= receiverInfo._id %>/<%= resourceInfo._id%>"
+                        <form action="/saveMessage/<%= senderInfo._id %>/<%= receiverInfo._id %>/<%= resourceInfo._id %>"
                               method="post">
                             <% if (messageInfo.length === 0) { %>
                                 <div class='input-group-prepend' style="display: inline">
@@ -123,10 +124,12 @@
 
 
 <section class="section section__grey">
-    <div class="container">
-        <a href="/messageBoard"><input class="btn btn-outline-primary" type="button"
-                                       value="Return to Message Board"></a>
-    </div>
+    <% if (loggedIn) { %>
+        <div class="container">
+            <a href="/messageBoard"><input class="btn btn-outline-primary" type="button"
+                                           value="Return to Message Board"></a>
+        </div>
+    <% } %>
 </section>
 
 <%- include('../components/footer'); -%>
