@@ -88,7 +88,7 @@ exports.updateResource = async (req, res, next) => {
         let tagsString = req.body.selectedTags
         let tags = tagsString.split(",")
         console.log("tags received: ", tags)
-        let oldResource = Resource.findOne({_id: resourceId})
+        let oldResource = await Resource.findOne({_id: resourceId})
         oldResource.name = req.body.resourceName
         oldResource.status = req.body.status
         oldResource.description = req.body.resourceDescription
@@ -773,13 +773,12 @@ exports.loadAllFacultyResources = async (req, res, next) => {
 let fileData = require('../public/js/slideShow')
 exports.loadPublicResources = async (req, res, next) => {
     try {
-        let publicRc = await Resource.find({status: 'public'}).sort({'createdAt': -1}).limit(2)
-        res.locals.publicRc = publicRc
+        res.locals.resourceInfo = await Resource.find({status: 'public'}).sort({'createdAt': -1})
         let imagePaths = fileData.getPath('slideShow')
         let facultyPaths = fileData.getPath('faculty')
         res.locals.imagePaths = imagePaths
         res.locals.facultyPaths = facultyPaths
-        res.render('./pages/index')
+        next()
     } catch (e) {
         console.log("error: " + e)
         next(e)
@@ -979,6 +978,33 @@ exports.showMyResourcesStudent = async (req, res, next) => {
         res.render('./pages/myResourcesStudent', {
             resourceInfo: resourceInfo
         })
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.uploadToPublicResr = async (req, res, next) => {
+    try {
+        let tagsString = req.body.tags
+        let tags = tagsString.split(",")
+        let newResource
+        newResource = new Resource({
+            ownerId: req.user._id,
+            status: req.body.status, // public/private to class/private to professors
+            createdAt: new Date(),
+            name: req.body.resourceName,
+            description: req.body.resourceDescription,
+            tags: tags, // tags as array
+            uri: req.body.uri, // universal resource identifier specIdific to the resource
+            state: req.body.state,
+            contentType: req.body.contentType,
+            mediaType: req.body.mediaType, // video/text document ...
+            institution: req.body.institution,
+            yearOfCreation: req.body.yearOfCreation, // content's actual creation time
+            checkStatus: 'approve'
+        })
+        await newResource.save()
+        res.redirect('/managePublicResources')
     } catch (e) {
         next(e)
     }

@@ -32,7 +32,6 @@
                                                     <b>State:</b> <%= resourceInfo[i].state %></li>
                                                 <li class='list-group-item borderless box-padding'>
                                                     <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click me</a>
-
                                                 </li>
                                                 <li class='list-group-item borderless box-padding'>
                                                     <b>Institution: </b> <%= resourceInfo[i].institution %></li>
@@ -43,12 +42,12 @@
                                                     <form method='post'
                                                           action='/unstarResource/<%= resourceInfo[i]._id %>'>
                                                         <b>Actions:</b>
-                                                        <input type='submit' style='border:0px solid transparent'
+                                                        <input type='submit' style='border:0 solid transparent'
                                                                name='submit'
-                                                               class='btn btn-outline-warning' value='Unstar'>
+                                                               class='btn btn-outline-danger' value='&#9829;'>
                                                         <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id) { %>
                                                             <button type='button' class='btn btn-outline-info'
-                                                                    style='border:0px solid transparent'
+                                                                    style='border:0 solid transparent'
                                                                     data-toggle='modal'
                                                                     data-target='#editModal<%= resourceInfo[i]._id %>'>
                                                                 Edit

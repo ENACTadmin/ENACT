@@ -1,0 +1,88 @@
+<%- include('../components/header'); -%>
+<%- include('../components/navbar'); -%>
+
+<script src='/js/editModal.js'></script>
+
+<section class='section'>
+    <div class='section__content section__content--full-width'>
+        <div class='jumbotron masthead text-center'>
+            <div class='section__title section__title--centered'>
+                Manage Public Resources
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class='section section__grey' data-aos='fade-up'>
+    <div class='container'>
+        <h3>Upload new public resources</h3>
+        <hr>
+        <a href='/uploadToPublic' class='btn btn-outline-primary'>Upload new public resources</a>
+        <br>
+        <br>
+
+        <h3>Existing public resources</h3>
+        <hr>
+        <% if (resourceInfo.length === 0) { %>
+            <div class="card">
+                <div class='card-body text-center'>
+                    <h4>No resource available yet</h4>
+                </div>
+            </div>
+        <% } %>
+        <% for (let i = 0; i < resourceInfo.length; i++) { %>
+            <div class='card blogBox moreBox' data-aos='fade-up'>
+                <div class='card-body'>
+                    <h4>
+                        Name: <%= resourceInfo[i].name %>
+                    </h4>
+                    <div class='card-text'>
+                        <ul class='list-group'>
+                            <li class='list-group-item borderless box-padding'>
+                                <b>Description: </b>
+                                <%= resourceInfo[i].description %>
+                            </li>
+                            <li class='list-group-item borderless box-padding'>
+                                <b>State:</b>
+                                <%= resourceInfo[i].state %>
+                            </li>
+                            <li class='list-group-item borderless box-padding'>
+                                <b>Link: </b>
+                                <a href='<%= resourceInfo[i].uri %>'><%= resourceInfo[i].uri %></a>
+                            </li>
+                            <li class='list-group-item borderless box-padding'>
+                                <b>Institution: </b>
+                                <%= resourceInfo[i].institution %>
+                            </li>
+                            <li class='list-group-item borderless box-padding'>
+                                <b>Categories:</b>
+                                <%= resourceInfo[i].tags %>
+                            </li>
+                            <li class='list-group-item borderless box-padding'>
+                                <b>Actions:</b>
+                                <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id.toString()) { %>
+                                    <button type='button' class='btn btn-outline-info'
+                                            style='border:0 solid transparent' data-toggle='modal'
+                                            data-target='#editModal<%= resourceInfo[i]._id %>'>
+                                        Edit
+                                    </button>
+                                    <button type='button' class='btn btn-outline-warning'
+                                            style='border:0px solid transparent' data-toggle='modal'
+                                            data-target='#deleteModal<%= resourceInfo[i]._id %>'>
+                                        Delete
+                                    </button>
+                                <% } %>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <br>
+        <% } %>
+    </div>
+</section>
+
+<%- include('../components/component-editModal'); -%>
+
+<%- include('../components/footer'); -%>
