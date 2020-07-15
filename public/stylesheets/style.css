@@ -20,7 +20,7 @@
 }
 
 .header__menu ul li > a.header-link:hover {
-    color: #0253a4;
+    color: #0053a4;
 }
 
 .container {
@@ -66,7 +66,7 @@
 }
 
 .diagonal-gradient {
-    background: linear-gradient(to top left, black, #0253a4);
+    background: linear-gradient(to top left, black, #0053a4);
 }
 
 .card-body {
@@ -158,7 +158,7 @@ a img {
 
 a:hover {
     text-decoration: none;
-    color: #0253a4;
+    color: #0053a4;
 }
 
 img.responsive_image {
@@ -375,10 +375,10 @@ h6 {
 
 .header__menu > ul > li.header__btn--signup > a {
     color: #fff;
-    background-color: #0253a4;
+    background-color: #0053a4;
     padding: 0 22px;
     margin: 19px 0 0 25px;
-    border: 1px #0253a4 solid;
+    border: 1px #0053a4 solid;
 }
 
 .header__menu > ul > li.header__btn--login > a {
@@ -402,27 +402,27 @@ h6 {
 
 .header--sticky .header__menu ul li.header__btn--signup > a:hover, .menu-open .header__menu ul li.header__btn--signup > a:hover {
     background: none;
-    border: 1px #0253a4 solid;
-    color: #0253a4;
+    border: 1px #0053a4 solid;
+    color: #0053a4;
 }
 
 .header__menu ul li.header__btn--login > a:hover {
     background: none;
-    border: 1px #0253a4 solid;
+    border: 1px #0053a4 solid;
 }
 
 .header--sticky .header__menu ul li.header__btn--login > a:hover {
     background-color: #fff;
-    border: 1px #0253a4 solid;
-    color: #0253a4;
+    border: 1px #0053a4 solid;
+    color: #0053a4;
 }
 
 .header__menu ul li a:hover, .header__menu ul li a.selected, .header__menu ul li a.active {
-    color: #0253a4;
+    color: #0053a4;
 }
 
 .header--sticky .header__menu ul li a:hover, .header--sticky .header__menu ul li a.selected, .header--sticky .header__menu ul li a.active {
-    color: #0253a4;
+    color: #0053a4;
 }
 
 .header__menu ul li.header__btn--signup a.active {
@@ -952,9 +952,12 @@ h6 {
 /*===============================================*/
 .section--intro {
     width: 100%;
-    height: 100%;
+    height: 95%;
     position: relative;
     overflow: hidden;
+    background: url("https://www.brandeis.edu/about/images/brandeis-statue.jpg");
+    background-size: cover;
+    margin-top: 80px;
 }
 
 .section__content--intro {
@@ -970,8 +973,12 @@ h6 {
 }
 
 .intro__content {
+    margin-top: 15%;
+    padding-top: 40px;
+    padding-bottom: 40px;
     width: 100%;
     text-align: center;
+    background: black;
 }
 
 .intro__title {
@@ -988,7 +995,7 @@ h6 {
 
 .intro__subtitle {
     padding: 0 0 20px 0;
-    font-size: 26px;
+    font-size: 35px;
     line-height: 32px;
     color: #757e71;
     letter-spacing: 0;
@@ -997,7 +1004,7 @@ h6 {
 .intro__description {
     padding: 0 0 40px 0;
     font-size: 20px;
-    color: #0253a4;
+    color: #0053a4;
 }
 
 .intro__description span {
@@ -1064,16 +1071,19 @@ h6 {
 }
 
 .form-demo__submit {
+    margin: 10px;
+    /*margin-left: 10px;*/
+    /*margin-right: 10px;*/
     width: 300px;
     /*float: left;*/
-    background-color: #0253a4;
+    background-color: #fff;
     border: 1px solid #fff;
     height: 63px;
     line-height: 61px;
     font-size: 18px;
     letter-spacing: 1px;
     cursor: pointer;
-    color: #fff;
+    color: #000;
     -webkit-border-radius: 25px;
     -moz-border-radius: 25px;
     border-radius: 25px;
@@ -1083,9 +1093,9 @@ h6 {
 }
 
 .form-demo__submit:hover {
-    background-color: #fff;
-    border: 1px solid #0253a4;
-    color: #0253a4;
+    background-color: #f7f8f9;
+    border: 1px solid #fff;
+    color: #000;
 }
 
 .form-demo__login {
@@ -1144,7 +1154,7 @@ h6 {
     margin-bottom: 10px;
     width: 150px;
     /*float: left;*/
-    background-color: #0253a4;
+    background-color: #0053a4;
     border: 1px solid #fff;
     height: 42px;
     line-height: 40px;
@@ -1161,8 +1171,8 @@ h6 {
 
 .form-demo__forumEntry:hover {
     background-color: #fff;
-    border: 1px solid #0253a4;
-    color: #0253a4;
+    border: 1px solid #0053a4;
+    color: #0053a4;
 }
 
 svg.svg-intro-bottom {
@@ -1306,7 +1316,7 @@ svg.svg-intro-bottom {
 }
 
 .grid--features .grid__item--featured {
-    background-color: #0253a4;
+    background-color: #0053a4;
     background: -webkit-linear-gradient(60deg, #655afe, #a66bff);
     background: linear-gradient(60deg, #655afe, #a66bff);
     color: #fff;
@@ -1323,7 +1333,7 @@ svg.svg-intro-bottom {
     font-weight: 700;
     padding: 10px 0 20px 0;
     margin: 0;
-    color: #0253a4;
+    color: #0053a4;
 }
 
 .grid--more-features .grid__item .grid__title {
@@ -1447,7 +1457,7 @@ svg.svg-intro-bottom {
 }
 
 .partners__source a:hover {
-    color: #0253a4;
+    color: #0053a4;
 }
 
 .partners__pagination {
@@ -1462,13 +1472,13 @@ svg.svg-intro-bottom {
     height: 10px;
     display: inline-block;
     border-radius: 100%;
-    background: #0253a4;
+    background: #0053a4;
     opacity: 0.2;
 }
 
 .partners__pagination .swiper-pagination-bullet-active {
     opacity: 1;
-    background: #0253a4;
+    background: #0053a4;
 }
 
 /*===============================================*/
@@ -1565,7 +1575,7 @@ ul.grid__list--fmenu li a::after {
     display: block;
     width: 0;
     height: 1px;
-    background: #0253a4;
+    background: #0053a4;
     transition: width .3s;
 }
 
@@ -1574,7 +1584,7 @@ ul.grid__list--fmenu li a:hover::after {
 }
 
 ul.grid__list--fmenu li a:hover {
-    color: #0253a4;
+    color: #0053a4;
 }
 
 /*===============================================*/
@@ -2079,7 +2089,17 @@ ul.grid__list--fmenu li a:hover {
     }
 
     .header {
-        height: 50px;
+        height: 70px;
+    }
+
+    .section--intro {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        background: url("https://upload.wikimedia.org/wikipedia/commons/f/f7/Louis_Brandeis_statue_by_Robert_Berks.jpg");
+        background-size: cover;
+        margin-top: 70px;
     }
 
     .header__content {

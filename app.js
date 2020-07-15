@@ -189,7 +189,9 @@ app.get('/login/authorized',
 //we can use this or the index router to handle req
 app.get('/',
     resourceController.checkUserName,
-    resourceController.loadPublicResources)
+    resourceController.loadPublicResources,
+    (req, res) =>
+        res.render('./pages/index'))
 
 
 //*******************************************
@@ -256,6 +258,10 @@ app.get('/uploadToPublic',
         res.render('./pages/uploadToPublic')
 )
 
+app.post('/uploadToPublicResr',
+    resourceController.uploadToPublicResr
+)
+
 app.post('/showPrimaryResources',
     resourceController.primarySearch
 )
@@ -314,18 +320,23 @@ app.post('/unstarResourceAlt/:resourceId',
 )
 
 app.get('/myResourcesFaculty',
-    resourceController.showMyResources,
-    resourceController.checkUserName
+    resourceController.checkUserName,
+    resourceController.showMyResources
 )
 
 app.get('/myResourcesStudent',
-    resourceController.showMyResourcesStudent,
-    resourceController.checkUserName
+    resourceController.checkUserName,
+    resourceController.showMyResourcesStudent
 )
 
 app.post('/studentUpdateResource/:resourceId',
     resourceController.studentUpdateResource
 )
+
+app.get('/managePublicResources',
+    resourceController.loadPublicResources,
+    (req, res) =>
+        res.render('./pages/managePublicResources'))
 
 //*******************************************
 //***********Notification related************

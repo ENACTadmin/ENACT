@@ -59,7 +59,7 @@ exports.saveMessage = async (req, res, next) => {
 
 function send_email(workEmail, userName, message, url) {
     const sgMail = require('@sendgrid/mail');
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY || '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');
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     if (message.subject) {
         const msg = {
             to: workEmail,
