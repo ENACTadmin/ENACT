@@ -1,8 +1,8 @@
 <div class='card-body'>
     <% if (resourceInfo && resourceInfo.length > 0) { %>
         <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
-            <div class='card blogBox moreBox'>
-                <div class='card-body'>
+            <div class='card blogBox moreBox border-0'>
+                <div class='card-body border-0'>
                     <h4><%= resourceInfo[i].name %></h4>
                     <div class='card-text'>
                         <ul class='list-group'>
@@ -58,7 +58,7 @@
                     </div>
                 </div>
             </div>
-            <br>
+            <hr>
         <% } %>
     <% } else { %>
         No resource available yet

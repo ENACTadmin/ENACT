@@ -150,7 +150,7 @@
 </section>
 
 <!-- Section features -->
-<section class='section'>
+<section class='section section__grey'>
     <br><br><br>
     <h2 class='section__title section__title--centered'>The ENACT Program</h2>
     <br>
@@ -319,35 +319,33 @@
             </div>
         <% } %>
         <% for (let i = 0; i < resourceInfo.length && i < 3; i++) { %>
-            <div class='card blogBox moreBox' data-aos='fade-up'>
-                <div class='card-body'>
-                    <h4>
-                        Name: <%= resourceInfo[i].name %>
-                    </h4>
-                    <div class='card-text'>
-                        <ul class='list-group'>
-                            <li class='list-group-item borderless box-padding'>
-                                <b>Description: </b>
-                                <%= resourceInfo[i].description %>
-                            </li>
-                            <li class='list-group-item borderless box-padding'>
-                                <b>State:</b>
-                                <%= resourceInfo[i].state %>
-                            </li>
-                            <li class='list-group-item borderless box-padding'>
-                                <b>Link: </b>
-                                <a href='<%= resourceInfo[i].uri %>'><%= resourceInfo[i].uri %></a>
-                            </li>
-                            <li class='list-group-item borderless box-padding'>
-                                <b>Institution: </b>
-                                <%= resourceInfo[i].institution %>
-                            </li>
-                            <li class='list-group-item borderless box-padding'>
-                                <b>Categories:</b>
-                                <%= resourceInfo[i].tags %>
-                            </li>
-                        </ul>
-                    </div>
+            <div class='card-body border-0' style="border-radius: 30px">
+                <h4>
+                    <%= resourceInfo[i].name %>
+                </h4>
+                <div class='card-text'>
+                    <ul class='list-group'>
+                        <li class='list-group-item borderless box-padding'>
+                            <b>Description: </b>
+                            <%= resourceInfo[i].description %>
+                        </li>
+                        <li class='list-group-item borderless box-padding'>
+                            <b>State:</b>
+                            <%= resourceInfo[i].state %>
+                        </li>
+                        <li class='list-group-item borderless box-padding'>
+                            <b>Link: </b>
+                            <a href='<%= resourceInfo[i].uri %>'><%= resourceInfo[i].uri %></a>
+                        </li>
+                        <li class='list-group-item borderless box-padding'>
+                            <b>Institution: </b>
+                            <%= resourceInfo[i].institution %>
+                        </li>
+                        <li class='list-group-item borderless box-padding'>
+                            <b>Categories:</b>
+                            <%= resourceInfo[i].tags %>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <br>
@@ -357,8 +355,9 @@
         <br>
         <% if (status === 'admin') { %>
             <div class='text-center'>
-                <a href='/managePublicResources'><input type='button' name='submit' class='btn btn-lg btn-outline-primary'
-                                                 value='MANAGE PUBLIC RESOURCES'></a>
+                <a href='/managePublicResources'><input type='button' name='submit'
+                                                        class='btn btn-lg btn-outline-primary'
+                                                        value='MANAGE PUBLIC RESOURCES'></a>
             </div>
         <% } %>
         <br>
