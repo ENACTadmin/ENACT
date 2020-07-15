@@ -21,59 +21,66 @@
                         <div class='card'>
                             <div class='card-body'>
                                 <% if (resourceInfo.length !== 0) { %>
-                                    <form method="post" >
+                                    <form method="post">
                                         <div class="form-group row">
                                             <div class="col-sm-1"></div>
                                             <div class="col-sm-11">
-                                                <input type="submit" class="btn btn-success" formaction="/approve" value="Post Checked Resources to ENACT">
+                                                <input type="submit" class="btn btn-success" formaction="/approve"
+                                                       value="Post Checked Resources to ENACT">
                                                 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                                <input type="submit" formaction="/toPublic" class="btn btn-warning" value="Submit Checked Resources to Admins to be posted to public">
+                                                <input type="submit" formaction="/toPublic" class="btn btn-warning"
+                                                       value="Submit Checked Resources to Admins to be posted to public">
                                                 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                                <input type="submit"  formaction="/tempdeny" class="btn btn-secondary" value="Deny Checked Resources">
+                                                <input type="submit" formaction="/tempdeny" class="btn btn-secondary"
+                                                       value="Deny Checked Resources">
                                             </div>
                                         </div>
-                                    <% for (let i = 0; i < resourceInfo.length; i++) { %>
-                                        <div class='form-group row'>
-                                            <div class='col-sm-1'>
-                                                <br>
-                                                <br>
-                                                <br>
-                                                <br>
-                                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                                <input type='checkbox' name ='checked' value='<%= resourceInfo[i]._id %>'>
-                                            </div>
-                                            <div class='col-sm-11'>
-                                            <div class='card blogBox moreBox'>
-                                                <div class='card-body'>
-                                                    <% console.log('status: ' + resourceInfo[i].status) %>
-                                                    <h4><%= resourceInfo[i].name %></h4>
-                                                    <div class='card-text'>
-                                                        <ul class='list-group'>
-                                                            <li class='list-group-item borderless box-padding'>
-                                                                <b>Author: </b> <%= resourceInfo[i].ownerName %></li>
-                                                            <li class='list-group-item borderless box-padding'>
-                                                                <b>Description: </b> <%= resourceInfo[i].description %></li>
-                                                            <li class='list-group-item borderless box-padding'>
-                                                                <b>State:</b> <%= resourceInfo[i].state %></li>
-                                                            <li class='list-group-item borderless box-padding'>
-                                                                <b>Link: </b> <a
-                                                                        href='<%= resourceInfo[i].uri %>'><%= resourceInfo[i].uri %></a>
-                                                            </li>
-                                                            <li class='list-group-item borderless box-padding'>
-                                                                <b>Institution: </b> <%= resourceInfo[i].institution %></li>
-                                                            <li class='list-group-item borderless box-padding'>
-                                                                <b>Tags:</b> <%= resourceInfo[i].tags %>
-                                                            </li>
-                                                        </ul>
+                                        <% for (let i = 0; i < resourceInfo.length; i++) { %>
+                                            <div class='form-group row'>
+                                                <div class='col-sm-1'>
+                                                    <br>
+                                                    <br>
+                                                    <br>
+                                                    <br>
+                                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                    <input type='checkbox' name='checked'
+                                                           value='<%= resourceInfo[i]._id %>'>
+                                                </div>
+                                                <div class='col-sm-11'>
+                                                    <div class='card blogBox moreBox border-0'>
+                                                        <div class='card-body'>
+                                                            <% console.log('status: ' + resourceInfo[i].status) %>
+                                                            <h4><%= resourceInfo[i].name %></h4>
+                                                            <div class='card-text'>
+                                                                <ul class='list-group'>
+                                                                    <li class='list-group-item borderless box-padding'>
+                                                                        <b>Author: </b> <%= resourceInfo[i].ownerName %>
+                                                                    </li>
+                                                                    <li class='list-group-item borderless box-padding'>
+                                                                        <b>Description: </b> <%= resourceInfo[i].description %>
+                                                                    </li>
+                                                                    <li class='list-group-item borderless box-padding'>
+                                                                        <b>State:</b> <%= resourceInfo[i].state %></li>
+                                                                    <li class='list-group-item borderless box-padding'>
+                                                                        <b>Link: </b> <a
+                                                                                href='<%= resourceInfo[i].uri %>'><%= resourceInfo[i].uri %></a>
+                                                                    </li>
+                                                                    <li class='list-group-item borderless box-padding'>
+                                                                        <b>Institution: </b> <%= resourceInfo[i].institution %>
+                                                                    </li>
+                                                                    <li class='list-group-item borderless box-padding'>
+                                                                        <b>Tags:</b> <%= resourceInfo[i].tags %>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            </div>
-                                        </div>
                                         <% } %>
 
-                                        </form>
-                                        <br>
+                                    </form>
+                                    <hr>
 
                                 <% } else { %>
                                     There is no resource under review.
