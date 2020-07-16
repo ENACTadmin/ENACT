@@ -435,6 +435,10 @@ app.get('/messageBoard',
     resourceController.checkUserName,
     messageController.loadMessageBoard
 )
+
+app.get('/showDenied',
+    notificationController.loadDeniedResources
+)
 //*******************************************
 //*************Error related*****************
 
