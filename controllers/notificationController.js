@@ -136,3 +136,17 @@ exports.loadDeniedResources = async (req, res, next) => {
     }
 }
 
+exports.loadApprovedResources = async (req, res, next) => {
+    try {
+        res.locals.resourceInfo = await Resource.find({
+            checkStatus: 'approve',
+            ownerId: req.user._id
+        }).sort({'createdAt': -1})
+        res.render('./pages/approvedResources')
+    } catch (e) {
+        console.log("error: " + e)
+        next(e)
+    }
+}
+
+

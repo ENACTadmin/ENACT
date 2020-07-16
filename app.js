@@ -439,6 +439,10 @@ app.get('/messageBoard',
 app.get('/showDenied',
     notificationController.loadDeniedResources
 )
+
+app.get('/approvedResources',
+    notificationController.loadApprovedResources
+)
 //*******************************************
 //*************Error related*****************
 
