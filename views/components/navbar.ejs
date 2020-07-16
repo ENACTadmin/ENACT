@@ -67,22 +67,38 @@
                     <% } %>
                 </li>
 
+                <li>
+                    <% if (loggedIn) { %>
+                        <% if (status === 'admin') { %>
+                            <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Admin Special</a>
+                            <ul class='sub-menu'>
+                                <li>
+                                    <a class='header-link' href='/selectPubli'>Select public resources</a>
+
+                                </li>
+                                <li>
+
+                                    <a class='header-link' href='/showAllProfiles'>View all profiles</a>
+
+                                </li>
+                                <li>
+
+                                    <a class='header-link' href='/assignFaculty'>Set up a new faculty</a>
+
+                                </li>
+
+                            </ul>
+                        <% } else { %>
+                        <% } %>
+                    <% } %>
+                </li>
+
                 <% if (loggedIn) { %>
                     <li>
                         <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Settings</a>
                         <ul class='sub-menu'>
                             <li>
                                 <a class='header-link' href='/myProfile'>View/edit profile</a>
-                            </li>
-                            <li>
-                                <% if (status === 'admin') { %>
-                                    <a class='header-link' href='/showAllProfiles'>View all profiles</a>
-                                <% } %>
-                            </li>
-                            <li>
-                                <% if (status === 'admin') { %>
-                                    <a class='header-link' href='/assignFaculty'>Set up a new faculty</a>
-                                <% } %>
                             </li>
                         </ul>
                     </li>
