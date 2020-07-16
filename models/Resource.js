@@ -7,7 +7,7 @@ const resourceSchema = Schema({
     ownerId: ObjectID,
     ownerName: String,
     courseId: ObjectID,
-    status: String, // public/private to class/private to professors
+    status: String, // finalPublic/public/private to class/private to professors
     createdAt: Date,
     name: String,
     description: String,

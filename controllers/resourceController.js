@@ -773,7 +773,9 @@ exports.loadAllFacultyResources = async (req, res, next) => {
 let fileData = require('../public/js/slideShow')
 exports.loadPublicResources = async (req, res, next) => {
     try {
-        res.locals.resourceInfo = await Resource.find({status: 'public'}).sort({'createdAt': -1})
+        res.locals.resourceInfo = await Resource.find({
+            status: "finalPublic"
+        }).sort({'createdAt': -1})
         let imagePaths = fileData.getPath('slideShow')
         let facultyPaths = fileData.getPath('faculty')
         res.locals.imagePaths = imagePaths
@@ -784,6 +786,44 @@ exports.loadPublicResources = async (req, res, next) => {
         next(e)
     }
 }
+
+exports.loadAllPublicResources = async (req, res, next) => {
+    try {
+        res.locals.resourceInfo = await Resource.find({
+            status: {$in: ["finalPublic", "public"]}
+        }).sort({'createdAt': -1})
+        next()
+    } catch (e) {
+        console.log("error: " + e)
+        next(e)
+    }
+}
+
+
+exports.removePublicResource = async (req, res, next) => {
+    const resourceId = await req.params.resourceId
+    try {
+        let OldResource = await Resource.findOne({_id : resourceId})
+        OldResource.status = 'public'
+        await OldResource.save()
+        res.redirect('back')
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.postPublicResource = async (req, res, next) => {
+    const resourceId = await req.params.resourceId
+    try {
+        let OldResource = await Resource.findOne({_id : resourceId})
+        OldResource.status = 'finalPublic'
+        await OldResource.save()
+        res.redirect('back')
+    } catch (e) {
+        next(e)
+    }
+}
+
 
 
 exports.removeResource = async (req, res, next) => {

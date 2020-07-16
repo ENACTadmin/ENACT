@@ -298,6 +298,14 @@ app.post('/removeResource/:resourceId',
     resourceController.removeResource
 )
 
+app.post('/removePublicResource/:resourceId',
+    resourceController.removePublicResource
+)
+
+app.post('/postPublicResource/:resourceId',
+    resourceController.postPublicResource
+)
+
 app.get('/showStarredResources',
     resourceController.checkUserName,
     resourceController.showStarredResources
@@ -334,7 +342,7 @@ app.post('/studentUpdateResource/:resourceId',
 )
 
 app.get('/managePublicResources',
-    resourceController.loadPublicResources,
+    resourceController.loadAllPublicResources,
     (req, res) =>
         res.render('./pages/managePublicResources'))
 
