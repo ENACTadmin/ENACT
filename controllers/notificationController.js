@@ -123,4 +123,16 @@ exports.sendDeny = async (req, res, next) => {
     }
 }
 
+exports.loadDeniedResources = async (req, res, next) => {
+    try {
+        res.locals.resourceInfo = await Resource.find({
+            checkStatus: 'deny',
+            ownerId: req.user._id
+        }).sort({'createdAt': -1})
+        res.render('./pages/showDenied')
+    } catch (e) {
+        console.log("error: " + e)
+        next(e)
+    }
+}
 
