@@ -1,10 +1,10 @@
 <%- include('../components/header'); -%>
 <%- include('../components/navbar'); -%>
 
-<section class="section section--grey">
-    <div class="section__content section__content--full-width">
-        <div class="jumbotron masthead text-center">
-            <div class="section__title section__title--centered">
+<section class='section section--grey'>
+    <div class='section__content section__content--full-width'>
+        <div class='jumbotron masthead text-center'>
+            <div class='section__title section__title--centered'>
                 <% if (messageInfo.length > 0 && messageInfo[0].subject) { %>
                     <%= messageInfo[0].subject %>
                 <% } else { %>
@@ -17,13 +17,13 @@
     </div>
 </section>
 
-<section class="section section__grey">
-    <div class="container">
-        <div class="row">
-            <div class="col">
+<section class='section section__grey'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col'>
                 <h3>Relevant resource</h3>
                 <hr>
-                <div class='card blogBox moreBox border-0'>
+                <div class='card border-0'>
                     <div class='card-body'>
                         <h4><%= resourceInfo.name %></h4>
                         <div class='card-text'>
@@ -48,35 +48,35 @@
                 <h3>Messages</h3>
                 <hr>
                 <% for (let i = 0; i < messageInfo.length; i++) { %>
-                    <div class="media mb-3" id="description">
-                        <a href="/showProfile/<%= messageInfo[i].sentBy %>">
+                    <div class='media mb-3' id='description'>
+                        <a href='/showProfile/<%= messageInfo[i].sentBy %>'>
                             <% if (messageInfo[i].sentBy.equals(senderInfo._id)) { %>
-                                <img class="d-flex mr-3 rounded-circle"
-                                     id="profilePic"
-                                     src="
+                                <img class='d-flex mr-3 rounded-circle'
+                                     id='profilePic'
+                                     src='
                                      <% if (senderInfo.profilePicURL) { %>
                                         <%= senderInfo.profilePicURL %>
                                      <% } else { %>
                                          https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg
                                      <% } %>
-                                     "
-                                     width="40px" height="40px"
-                                     alt="user profile pic">
+                                     '
+                                     width='40px' height='40px'
+                                     alt='user profile pic'>
                             <% } else { %>
-                                <img class="d-flex mr-3 rounded-circle"
-                                     id="profilePic"
-                                     src="
+                                <img class='d-flex mr-3 rounded-circle'
+                                     id='profilePic'
+                                     src='
                                      <% if (receiverInfo.profilePicURL) { %>
                                         <%= receiverInfo.profilePicURL %>
                                      <% } else { %>
                                         data:image/png;base64,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
                                      <% } %>
-                                     "
-                                     width="40px" height="40px"
-                                     alt="user profile pic">
+                                     '
+                                     width='40px' height='40px'
+                                     alt='user profile pic'>
                             <% } %>
                         </a>
-                        <div class="media-body">
+                        <div class='media-body'>
                             <h6><%= messageInfo[i].message %></h6>
                         </div>
                     </div>
@@ -87,30 +87,30 @@
 </section>
 
 
-<section class="section section__grey">
-    <div class="container">
-        <div class="row">
-            <div class="col">
+<section class='section section__grey'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col'>
                 <!-- Comments Form -->
-                <div class="card">
-                    <h5 class="card-header">Leave a message here:</h5>
-                    <div class="card-body">
-                        <form action="/saveMessage/<%= senderInfo._id %>/<%= receiverInfo._id %>/<%= resourceInfo._id %>"
-                              method="post">
+                <div class='card'>
+                    <h5 class='card-header'>Leave a message here:</h5>
+                    <div class='card-body'>
+                        <form action='/saveMessage/<%= senderInfo._id %>/<%= receiverInfo._id %>/<%= resourceInfo._id %>'
+                              method='post'>
                             <% if (messageInfo.length === 0) { %>
-                                <div class='input-group-prepend' style="display: inline">
+                                <div class='input-group-prepend' style='display: inline'>
                                     Subject
-                                    <input type='text' class='form-control' name="subject">
+                                    <input type='text' class='form-control' name='subject'>
                                 </div>
                                 <br>
                             <% } %>
-                            <div class="form-group" style="display: inline">
+                            <div class='form-group' style='display: inline'>
                                 Message
-                                <textarea style="resize: none" class="form-control" name="message" rows="3"></textarea>
+                                <textarea style='resize: none' class='form-control' name='message' rows='3'></textarea>
                             </div>
                             <br>
                             <% if (loggedIn) { %>
-                                <button type="submit" class="btn btn-outline-primary">Send</button>
+                                <button type='submit' class='btn btn-outline-primary'>Send</button>
                             <% } else { %>
                                 Please login to submit.
                             <% } %>
@@ -122,12 +122,11 @@
     </div>
 </section>
 
-
-<section class="section section__grey">
+<section class='section section__grey'>
     <% if (loggedIn) { %>
-        <div class="container">
-            <a href="/messageBoard"><input class="btn btn-outline-primary" type="button"
-                                           value="Return to Message Board"></a>
+        <div class='container'>
+            <a href='/messageBoard'><input class='btn btn-outline-primary' type='button'
+                                           value='Return to Message Board'></a>
         </div>
     <% } %>
 </section>

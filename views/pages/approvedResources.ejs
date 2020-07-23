@@ -19,11 +19,11 @@
             <div class='row'>
                 <% if (loggedIn) { %>
                     <div class='col-md-12 col-sm-12'>
-                        <div class='card'>
+                        <div class='card border-0'>
                             <div class='card-body'>
                                 <% if (resourceInfo && resourceInfo.length > 0) { %>
                                     <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
-                                        <div class='card blogBox moreBox border-0'>
+                                        <div class='card border-0'>
                                             <div class='card-body'>
                                                 <h4><%= resourceInfo[i].name %></h4>
                                                 <div class='card-text'>
@@ -42,12 +42,12 @@
                                                             <b>Tags:</b> <%= resourceInfo[i].tags %>
                                                         </li>
                                                         <li class='list-group-item borderless box-padding'
-                                                            style="display: inline">
+                                                            style='display: inline'>
                                                             <b>Status:</b>
                                                             <% if (resourceInfo[i].checkStatus === 'approve') { %>
-                                                                <div class="alert alert-success"
-                                                                     style="display: inline; padding: 0.25rem; margin-bottom: 0; position: relative; border: 1px solid transparent;"
-                                                                     role="alert">
+                                                                <div class='alert alert-success'
+                                                                     style='display: inline; padding: 0.25rem; margin-bottom: 0; position: relative; border: 1px solid transparent;'
+                                                                     role='alert'>
                                                                     <b>Approved</b>
                                                                 </div>
                                                                 <br>
@@ -58,7 +58,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <hr>
+                                        <% if (i !== 0) { %>
+                                            <hr>
+                                        <% } %>
                                     <% } %>
                                 <% } else { %>
                                     No resource available yet

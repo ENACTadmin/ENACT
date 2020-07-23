@@ -1,14 +1,14 @@
 <%- include('../components/header'); -%>
 <%- include('../components/navbar'); -%>
 
-<section class="section">
-    <div class="section__content section__content--full-width">
-        <div class="jumbotron masthead text-center">
-            <div class="section__title section__title--centered">
+<section class='section'>
+    <div class='section__content section__content--full-width'>
+        <div class='jumbotron masthead text-center'>
+            <div class='section__title section__title--centered'>
                 Confirm Resources You denied
             </div>
             <% if (resourceInfo && resourceInfo.length > 0) { %>
-                <form action="/sendDeny"  method="post">
+                <form action='/sendDeny'  method='post'>
                     <input type='submit' name='submit' class='btn btn-large btn-warning' style='width: 500px'
                            value='Confirm all resources without sending comments'>
                 </form>
@@ -23,11 +23,11 @@
             <div class='row'>
                 <% if (loggedIn) { %>
                     <div class='col-md-12 col-sm-12'>
-                        <div class='card'>
+                        <div class='card border-0'>
                             <div class='card-body'>
                                 <% if (resourceInfo && resourceInfo.length > 0) { %>
                                     <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
-                                        <div class='card blogBox moreBox border-0'>
+                                        <div class='card border-0'>
                                             <div class='card-body'>
                                                 <h4><%= resourceInfo[i].name %></h4>
                                                 <div class='card-text'>
@@ -84,7 +84,7 @@
         <div class='modal fade' id='resumeModal<%= resourceInfo[i]._id %>' tabindex='-1' role='dialog'
              aria-labelledby='exampleModalLabel'
              aria-hidden='true'>
-            <div class='modal-dialog' role='document'>
+            <div class='modal-dialog modal-lg' role='document'>
                 <div class='modal-content'>
                     <div class='modal-header'>
                         <h5 class='modal-title' id='exampleModalLabel'>Resume?</h5>

@@ -19,11 +19,14 @@
             <div class='row'>
                 <% if (loggedIn) { %>
                 <div class='col-md-12 col-sm-12'>
-                    <div class='card'>
+                    <div class='card border-0'>
+                        <div class='card-header'>
+                            <b>My Resources</b>
+                        </div>
                         <div class='card-body'>
                             <% if (resourceInfo && resourceInfo.length > 0) { %>
                                 <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
-                                    <div class='card blogBox moreBox border-0'>
+                                    <div class='card border-0'>
                                         <div class='card-body'>
                                             <h4><%= resourceInfo[i].name %></h4>
                                             <div class='card-text'>
@@ -57,7 +60,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <hr>
+                                    <% if (i !== 0) { %>
+                                        <hr>
+                                    <% } %>
                                 <% } %>
                             <% } else { %>
                                 No resource available yet
@@ -79,7 +84,7 @@
         <div class='modal fade' id='deleteModal<%= resourceInfo[i]._id %>' tabindex='-1' role='dialog'
              aria-labelledby='exampleModalLabel'
              aria-hidden='true'>
-            <div class='modal-dialog' role='document'>
+            <div class='modal-dialog modal-lg' role='document'>
                 <div class='modal-content'>
                     <div class='modal-header'>
                         <h5 class='modal-title' id='exampleModalLabel'>Delete?</h5>

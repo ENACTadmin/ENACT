@@ -344,8 +344,30 @@ app.post('/studentUpdateResource/:resourceId',
 app.get('/managePublicResources',
     resourceController.loadAllPublicResources,
     (req, res) =>
-        res.render('./pages/managePublicResources'))
+        res.render('./pages/managePublicResources')
+)
 
+app.get('/showCollection/:resourceSetId',
+    resourceController.loadCollection,
+    (req, res) =>
+        res.render('./pages/showCollection')
+)
+
+app.post('/removeFromCollection/:collectionId/:resourceId',
+    resourceController.removeFromCollection
+)
+
+app.post('/addToCollection/:collectionId/:resourceId',
+    resourceController.addToCollection
+)
+
+app.post('/createCollection',
+    resourceController.createCollection
+)
+
+app.post('/deleteCollection/:collectionId',
+    resourceController.deleteCollection
+)
 //*******************************************
 //***********Notification related************
 

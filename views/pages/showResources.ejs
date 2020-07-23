@@ -8,8 +8,8 @@
                 Search Result
             </div>
             <h3>Not finding what you want? Please try</h3><a href='/search'
-                                                                               class='btn btn-large btn-warning'
-                                                                               style='width: 200px'>Advanced Search</a>
+                                                             class='btn btn-large btn-warning'
+                                                             style='width: 200px'>Advanced Search</a>
         </div>
     </div>
 </section>
@@ -20,11 +20,11 @@
             <div class='row'>
                 <% if (loggedIn) { %>
                     <div class='col-md-12 col-sm-12'>
-                        <div class='card'>
+                        <div class='card border-0'>
                             <div class='card-body'>
                                 <% if (resourceInfo.length !== 0) { %>
                                     <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
-                                        <div class='card blogBox moreBox border-0'>
+                                        <div class='card border-0'>
                                             <div class='card-body'>
                                                 <h4><%= resourceInfo[i].name %></h4>
                                                 <div class='card-text'>
@@ -44,7 +44,7 @@
                                                         </li>
                                                         <li class='list-group-item borderless box-padding'>
                                                             <% if (resourceIds && resourceIds.toString().includes(resourceInfo[i]._id.toString())) { %>
-                                                                <form style="display: inline" method='post'
+                                                                <form style='display: inline' method='post'
                                                                       action='/unstarResourceAlt/<%= resourceInfo[i]._id %>'>
                                                                     <b>Actions:</b>
                                                                     <input type='submit'
@@ -54,7 +54,7 @@
                                                                            value='&#9829;'>
                                                                 </form>
                                                             <% } else { %>
-                                                                <form style="display: inline" method='post'
+                                                                <form style='display: inline' method='post'
                                                                       action='/starResourceAlt/<%= resourceInfo[i]._id %>'>
                                                                     <b>Actions:</b>
                                                                     <input type='submit'
@@ -69,7 +69,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <hr>
+                                        <% if (i !== 0) { %>
+                                            <hr>
+                                        <% } %>
                                     <% } %>
                                 <% } else { %>
                                     No resource available yet
@@ -90,7 +92,7 @@
         <div class='modal fade' id='deleteModal' tabindex='-1' role='dialog'
              aria-labelledby='exampleModalLabel'
              aria-hidden='true'>
-            <div class='modal-dialog' role='document'>
+            <div class='modal-dialog modal-lg' role='document'>
                 <div class='modal-content'>
                     <div class='modal-header'>
                         <h5 class='modal-title' id='exampleModalLabel'>Delete?</h5>

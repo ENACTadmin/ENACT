@@ -778,7 +778,9 @@ exports.loadPublicResources = async (req, res, next) => {
         }).sort({'createdAt': -1})
         let imagePaths = fileData.getPath('slideShow')
         let facultyPaths = fileData.getPath('faculty')
+        let labelPaths = fileData.getPath('label')
         res.locals.imagePaths = imagePaths
+        res.locals.labelPaths = labelPaths
         res.locals.facultyPaths = facultyPaths
         next()
     } catch (e) {
@@ -803,7 +805,7 @@ exports.loadAllPublicResources = async (req, res, next) => {
 exports.removePublicResource = async (req, res, next) => {
     const resourceId = await req.params.resourceId
     try {
-        let OldResource = await Resource.findOne({_id : resourceId})
+        let OldResource = await Resource.findOne({_id: resourceId})
         OldResource.status = 'public'
         await OldResource.save()
         res.redirect('back')
@@ -815,7 +817,7 @@ exports.removePublicResource = async (req, res, next) => {
 exports.postPublicResource = async (req, res, next) => {
     const resourceId = await req.params.resourceId
     try {
-        let OldResource = await Resource.findOne({_id : resourceId})
+        let OldResource = await Resource.findOne({_id: resourceId})
         OldResource.status = 'finalPublic'
         await OldResource.save()
         res.redirect('back')
@@ -823,7 +825,6 @@ exports.postPublicResource = async (req, res, next) => {
         next(e)
     }
 }
-
 
 
 exports.removeResource = async (req, res, next) => {
@@ -871,7 +872,7 @@ exports.starResource = async (req, res, next) => {
 exports.showStarredResources = async (req, res, next) => {
     try {
         let resourceInfo = null
-        let resourceSet = await ResourceSet.findOne({ownerId: req.user._id})
+        let resourceSet = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
         console.log(resourceSet)
         if (!resourceSet) {
             console.log('resource set empty')
@@ -880,6 +881,8 @@ exports.showStarredResources = async (req, res, next) => {
             let resourceInfoIds = await resourceSet.resources
             resourceInfo = await Resource.find({_id: {$in: resourceInfoIds}})
         }
+        let allResourceSets = await ResourceSet.find({ownerId: req.user._id})
+        res.locals.allResourceSets = allResourceSets
         res.locals.resourceInfo = resourceInfo
         res.render('./pages/showStarredResources')
     } catch (e) {
@@ -890,7 +893,7 @@ exports.showStarredResources = async (req, res, next) => {
 exports.unstarResource = async (req, res, next) => {
     try {
         let resourceId = await req.params.resourceId
-        let resourceSet = await ResourceSet.findOne({ownerId: req.user._id})
+        let resourceSet = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
         let resourceIds = resourceSet.resources
         console.log("ids: ", resourceIds)
         let newResourceIds = []
@@ -1045,6 +1048,94 @@ exports.uploadToPublicResr = async (req, res, next) => {
         })
         await newResource.save()
         res.redirect('/managePublicResources')
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.loadCollection = async (req, res, next) => {
+    try {
+        let resourceSetId = req.params.resourceSetId
+        let resourceSet = await ResourceSet.findOne({_id: resourceSetId})
+        let resourceInfoIds = resourceSet.resources
+        let resourceInfo = await Resource.find({_id: {$in: resourceInfoIds}})
+        res.locals.resourceSet = resourceSet
+        res.locals.resourceInfo = resourceInfo
+        if (req.user) {
+            let allLikedResourceSet = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
+            let allLikedResourceIds = allLikedResourceSet.resources
+            let allLikedResourceInfo = await Resource.find({_id: {$in: allLikedResourceIds}})
+            res.locals.allLikedResourceInfo = allLikedResourceInfo
+        }
+        next()
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.removeFromCollection = async (req, res, next) => {
+    try {
+        let collectionId = req.params.collectionId
+        let resourceId = req.params.resourceId
+        let resourceSet = await ResourceSet.findOne({_id: collectionId})
+        let resourceIds = resourceSet.resources
+        console.log("ids: ", resourceIds)
+        let newResourceIds = []
+        for (let i = 0; i < resourceIds.length; i++) {
+            if (resourceIds[i].toString() !== resourceId) {
+                newResourceIds.push(resourceIds[i])
+            }
+        }
+        console.log("new id: ", newResourceIds)
+        resourceSet.resources = newResourceIds
+        await resourceSet.save()
+        res.redirect('back')
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.addToCollection = async (req, res, next) => {
+    try {
+        let collectionId = req.params.collectionId
+        let resourceId = req.params.resourceId
+        let resourceSet = await ResourceSet.findOne({_id: collectionId})
+        // use the newly created instance or the one in the database
+        let resourceIds = resourceSet.resources
+        let newResourceIds
+        if (!resourceIds) {
+            newResourceIds = [resourceId]
+        } else {
+            newResourceIds = [resourceId].concat(resourceIds)
+        }
+        // save to db
+        resourceSet.resources = newResourceIds
+        await resourceSet.save()
+        res.redirect('back')
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.createCollection = async (req, res, next) => {
+    try {
+        let newResourceSet = new ResourceSet({
+            ownerId: req.user._id,
+            name: req.body.collectionName,
+            createdAt: new Date()
+        })
+        await newResourceSet.save()
+        res.redirect('/showCollection/' + newResourceSet._id)
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.deleteCollection = async (req, res, next) => {
+    try {
+        let collectionId = req.params.collectionId
+        await ResourceSet.deleteOne({_id: collectionId})
+        res.redirect('/showStarredResources')
     } catch (e) {
         next(e)
     }

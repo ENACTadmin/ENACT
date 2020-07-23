@@ -77,27 +77,20 @@
                 <li>
                     <% if (loggedIn) { %>
                         <% if (status === 'admin') { %>
-                        <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Admin Special</a>
-                        <ul class='sub-menu'>
-                            <li>
+                            <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Admin Special</a>
+                            <ul class='sub-menu'>
+                                <li>
                                     <a class='header-link' href='/managePublicResources'>Manage public resources</a>
-
-                            </li>
-                            <li>
-
+                                </li>
+                                <li>
                                     <a class='header-link' href='/showAllProfiles'>View all profiles</a>
-
-                            </li>
-                            <li>
-
+                                </li>
+                                <li>
                                     <a class='header-link' href='/assignFaculty'>Set up a new faculty</a>
-
-                            </li>
-
-                        </ul>
-                    <% } else { %>
-                    <% } %>
+                                </li>
+                            </ul>
                         <% } %>
+                    <% } %>
                 </li>
 
                 <% if (loggedIn) { %>
@@ -126,18 +119,19 @@
 
 <!-- Section intro -->
 <section class='section section--intro section__grey' id='home'>
-    <div class='section__content section__content--full-width' style="font-weight: 800;">
+    <div class='section__content section__content--full-width' style='font-weight: 800;'>
         <div class='intro'>
-            <div class='intro__content' style="background: #0053a4;">
-                <% if (loggedIn) { %>
-                    <div class='intro__subtitle' style='color: white;'>Dear <%= status %>
-                        ,&nbsp<b><%= user.userName %></b>
-                    </div>
-                <% } %>
-                <div class='intro__subtitle' style='color: white;'>Welcome to ENACT Digital platform!</div>
+            <div class='intro__content' style='background: #0053a4;'>
+                <div class='intro__subtitle' data-aos='zoom-out-down' data-aos-duration='600' style='color: white;'>
+                    “The most important office, and the one which all of
+                    us can and should fill, is that of private citizen.”
+                </div>
+                <div class='intro__subtitle' data-aos='zoom-out-down' data-aos-duration='600' data-aos-delay='200'
+                     style='color: white'> - Louis D. Brandeis
+                </div>
                 <% if (loggedIn) { %>
                     <% if (status === 'admin' || status === 'faculty') { %>
-                        <div class='form-demo' data-aos='fade-up'>
+                        <div class='form-demo' data-aos='zoom-out-down' data-aos-duration='600' data-aos-delay='400'>
                             <a href='/showCourses'><input type='submit' name='submit' class='form-demo__submit'
                                                           value='MANAGE or CREATE COURSES'></a>
                             <a href='/primarySearch'><input type='submit' name='submit' class='form-demo__submit'
@@ -146,7 +140,7 @@
                                                                value='FACULTY EXCLUSIVE'></a>
                         </div>
                     <% } else { %>
-                        <div class='form-demo' data-aos='fade-up'>
+                        <div class='form-demo' data-aos='zoom-out-down' data-aos-duration='1000' data-aos-delay='400'>
                             <a href='/showCourses'><input type='submit' name='submit' class='form-demo__submit'
                                                           value='MANAGE or ENROLL IN COURSES'></a>
                             <a href='/primarySearch'><input type='submit' name='submit' class='form-demo__submit'
@@ -157,8 +151,9 @@
                     <!--                not logged in    -->
                 <% } else { %>
                     <br>
-                    <a href='/auth/google'><input type='submit' name='submit' class='form-demo__submit'
-                                                  value='ENACT MEMBER LOGIN'></a>
+                    <a href='/auth/google' data-aos='zoom-out-down' data-aos-duration='1000' data-aos-delay='400'><input
+                                type='submit' name='submit' class='form-demo__submit'
+                                value='ENACT MEMBER LOGIN'></a>
                 <% } %>
             </div>
         </div>
@@ -192,8 +187,7 @@
                                  class='d-block w-100' alt='...'>
                             <div class='carousel-caption d-none d-md-block'
                                  style='color: black; background-color: white; opacity: 0.8; border-radius: 15px; padding: 5%'>
-                                <h5>First slide label</h5>
-                                <p>Some text to describe</p>
+                                <p><b><%= labelPaths[0] %></b></p>
                             </div>
                         </div>
                         <% for (let i = 1; i < imagePaths.length; i++) { %>
@@ -203,8 +197,7 @@
                                      class='d-block w-100' alt='...'>
                                 <div class='carousel-caption d-none d-md-block'
                                      style='color: black; background-color: white; opacity: 0.8; border-radius: 15px; padding: 5%'>
-                                    <h5>Other slide label</h5>
-                                    <p>Some text to describe</p>
+                                    <p><b><%= labelPaths[i] %></b></p>
                                 </div>
                             </div>
                         <% } %>
@@ -215,20 +208,20 @@
             <div class='grid__item partners__slide__grey' style='height: 500px' data-aos='fade-up'>
                 <h3 class='grid__title'><span>The ENACT Model</span></h3>
                 <p class='grid__text'>
-                    <b style="color: #0053a4">• Workshop</b>: ENACT launched with a workshop at Brandeis University in
+                    <b style='color: #0053a4'>• Workshop</b>: ENACT launched with a workshop at Brandeis University in
                     May 2016.
                     Under the leadership of the program’s academic director, ENACT Fellows shared ideas and work on
                     course development. Read about the 2016 ENACT Institute and the 2018 ENACT Institute at Brandeis
                     University.
                     <br>
-                    <b style="color: #0053a4">• Courses</b>: In ENACT courses students learn about participating in the
+                    <b style='color: #0053a4'>• Courses</b>: In ENACT courses students learn about participating in the
                     legislative and
                     advocacy process at the state level, with a substantial hands-on component in which they engage
                     directly in
                     that process, as in the “Advocacy for Policy Change” course at Brandeis. See the full list of ENACT
                     schools.
                     <br>
-                    <b style="color: #0053a4">• Online Network</b>: The ENACT Network is a national in-person and online
+                    <b style='color: #0053a4'>• Online Network</b>: The ENACT Network is a national in-person and online
                     network of students,
                     faculty, activists and legislators. It is a strategic and information hub for state-level players
                     that
@@ -246,11 +239,11 @@
 <!-- Section -->
 <section class='section diagonal-gradient'>
     <div class='section__content section__content--fluid-width section__content--padding'>
-        <h2 class='section__title section__title--centered' style="color: white">ENACT Faculty</h2>
+        <h2 class='section__title section__title--centered' style='color: white'>ENACT Faculty</h2>
         <br>
         <div class='grid grid--3col'>
             <div class='partners__slide grid__item' style='height: 750px' data-aos='fade-up'>
-                <div class='card-body' style="border-radius: 30px">
+                <div class='card-body' style='border-radius: 30px'>
                     <img class='d-flex mr-3'
                          src='https://www.brandeis.edu/ethics/images/advocacy/mstimell01_cropped.jpg'
                          alt='Melissa Stimell'
@@ -266,7 +259,7 @@
                 </div>
             </div>
             <div class='partners__slide grid__item' style='height: 750px' data-aos='fade-up'>
-                <div class='card-body' style="border-radius: 30px">
+                <div class='card-body' style='border-radius: 30px'>
                     <img class='d-flex mr-3' src='https://www.brandeis.edu/ethics/images/DJW%20photo.jpg'
                          alt='David J. Weinstein'
                          style='width: 100%; height: 400px; object-fit: cover; border-radius: 30px;'>
@@ -283,7 +276,7 @@
                 <div id='carouselExampleSlidesOnly' class='carousel slide' data-ride='carousel'>
                     <div class='carousel-inner'>
                         <div class='carousel-item active'>
-                            <div class='card-body' style="border-radius: 30px">
+                            <div class='card-body' style='border-radius: 30px'>
                                 <img class='d-flex mr-3'
                                      src='<%= facultyPaths[0][0] %>'
                                      alt='...'
@@ -298,7 +291,7 @@
                         </div>
                         <% for (let i = 1; i < facultyPaths.length; i++) { %>
                             <div class='carousel-item'>
-                                <div class='card-body' style="border-radius: 30px">
+                                <div class='card-body' style='border-radius: 30px'>
                                     <img class='d-flex mr-3'
                                          src='<%= facultyPaths[i][0] %>'
                                          alt='...'
@@ -328,14 +321,14 @@
         <h2 class='section__title section__title--centered'>Most Recently Uploaded</h2>
         <br><br><br>
         <% if (resourceInfo.length === 0) { %>
-            <div class="card">
+            <div class='card'>
                 <div class='card-body text-center'>
                     <h4>No resource available yet</h4>
                 </div>
             </div>
         <% } %>
         <% for (let i = 0; i < resourceInfo.length && i < 3; i++) { %>
-            <div class='card-body border-0' style="border-radius: 30px">
+            <div class='card-body border-0' style='border-radius: 30px' data-aos='fade-up'>
                 <h4>
                     <%= resourceInfo[i].name %>
                 </h4>
@@ -370,7 +363,7 @@
         <br>
         <br>
         <% if (status === 'admin') { %>
-            <div class='text-center'>
+            <div class='text-center' data-aos='fade-up' data-aos-delay="100">
                 <a href='/managePublicResources'><input type='button' name='submit'
                                                         class='btn btn-lg btn-outline-primary'
                                                         value='MANAGE PUBLIC RESOURCES'></a>
