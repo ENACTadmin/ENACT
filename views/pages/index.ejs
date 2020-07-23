@@ -26,6 +26,14 @@
                 <li>
                     <a class='header-link' id='header-link' href='/' data-aos='fade-left'>HOME</a>
                 </li>
+
+                <li>
+                    <% if (!loggedIn) { %>
+                        <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Resources</a>
+                    <% } else { %>
+                    <% } %>
+                </li>
+
                 <li>
                     <% if (loggedIn) { %>
                         <a class='header-link' id='header-link' href='#' data-aos='fade-left'>My Courses</a>
