@@ -1,7 +1,7 @@
 <div class='card-body'>
     <% if (resourceInfo && resourceInfo.length > 0) { %>
         <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
-            <div class='card blogBox moreBox border-0'>
+            <div class='card border-0'>
                 <div class='card-body border-0'>
                     <h4><%= resourceInfo[i].name %></h4>
                     <div class='card-text'>
@@ -22,14 +22,14 @@
                                 <!--force inline display-->
                                 <!--if the user starred the resource-->
                                 <% if (resourceIds && resourceIds.includes(resourceInfo[i]._id)) { %>
-                                    <form style="display: inline" method='post'
+                                    <form style='display: inline' method='post'
                                           action='/unstarResource/<%= resourceInfo[i]._id %>'>
                                         <b>Actions:</b>
                                         <input type='submit' style='border:0px solid transparent' name='submit'
                                                class='btn btn-outline-danger' value='&#9829;'>
                                     </form>
                                 <% } else { %>
-                                    <form style="display: inline" method='post'
+                                    <form style='display: inline' method='post'
                                           action='/starResource/<%= resourceInfo[i]._id %>'>
                                         <b>Actions:</b>
                                         <input type='submit' style='border:0px solid transparent' name='submit'
@@ -49,16 +49,18 @@
                                     </button>
                                 <% } %>
                                 <% if (resourceInfo[i].ownerId.toString() !== user._id.toString()) { %>
-                                    <a href="/message/<%= user._id %>/<%= resourceInfo[i].ownerId %>/<%= resourceInfo[i]._id %>"><input
-                                                class="btn btn-outline-primary" style='border:0px solid transparent'
-                                                type="button" value="Contact the author"></a>
+                                    <a href='/message/<%= user._id %>/<%= resourceInfo[i].ownerId %>/<%= resourceInfo[i]._id %>'><input
+                                                class='btn btn-outline-primary' style='border:0px solid transparent'
+                                                type='button' value='Contact the author'></a>
                                 <% } %>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <hr>
+            <% if (i !== 0) { %>
+                <hr>
+            <% } %>
         <% } %>
     <% } else { %>
         No resource available yet

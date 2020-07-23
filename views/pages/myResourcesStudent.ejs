@@ -19,11 +19,14 @@
             <div class='row'>
                 <% if (loggedIn) { %>
                     <div class='col-md-12 col-sm-12'>
-                        <div class='card'>
+                        <div class='card border-0'>
+                            <div class='card-header'>
+                                <b>Resources</b>
+                            </div>
                             <div class='card-body'>
                                 <% if (resourceInfo && resourceInfo.length > 0) { %>
                                     <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
-                                        <div class='card blogBox moreBox border-0'>
+                                        <div class='card border-0'>
                                             <div class='card-body'>
                                                 <h4><%= resourceInfo[i].name %></h4>
                                                 <div class='card-text'>
@@ -42,39 +45,39 @@
                                                             <b>Tags:</b> <%= resourceInfo[i].tags %>
                                                         </li>
                                                         <li class='list-group-item borderless box-padding'
-                                                            style="display: inline">
+                                                            style='display: inline'>
                                                             <b>Status:</b>
                                                             <% if (resourceInfo[i].checkStatus === 'approve') { %>
-                                                                <div class="alert alert-success"
-                                                                     style="display: inline; padding: 0.25rem; margin-bottom: 0; position: relative; border: 1px solid transparent;"
-                                                                     role="alert">
+                                                                <div class='alert alert-success'
+                                                                     style='display: inline; padding: 0.25rem; margin-bottom: 0; position: relative; border: 1px solid transparent;'
+                                                                     role='alert'>
                                                                     <b>Approved</b>
                                                                 </div>
                                                                 <br>
                                                                 <br>
-                                                                <h5 class="text-danger">Notice: editing will
+                                                                <h5 class='text-danger'>Notice: editing will
                                                                     require new approval by faculty</h5>
                                                             <% } else if (resourceInfo[i].checkStatus === 'deny'){ %>
-                                                                <div class="alert alert-danger"
-                                                                     style="display: inline; padding: 0.25rem; margin-bottom: 0; position: relative; border: 1px solid transparent;"
-                                                                     role="alert">
+                                                                <div class='alert alert-danger'
+                                                                     style='display: inline; padding: 0.25rem; margin-bottom: 0; position: relative; border: 1px solid transparent;'
+                                                                     role='alert'>
                                                                     <b>Require to modify</b>
                                                                 </div>
                                                             <% } else if(resourceInfo[i].checkStatus === 'underReview'){ %>
-                                                                <div class="alert alert-warning"
-                                                                     style="display: inline; padding: 0.25rem; margin-bottom: 0; position: relative; border: 1px solid transparent;"
-                                                                     role="alert">
+                                                                <div class='alert alert-warning'
+                                                                     style='display: inline; padding: 0.25rem; margin-bottom: 0; position: relative; border: 1px solid transparent;'
+                                                                     role='alert'>
                                                                     <b>Under review</b>
                                                                 </div>
                                                             <% } else{ %>
-                                                                <div class="alert alert-warning"
-                                                                     style="display: inline; padding: 0.25rem; margin-bottom: 0; position: relative; border: 1px solid transparent;"
-                                                                     role="alert">
+                                                                <div class='alert alert-warning'
+                                                                     style='display: inline; padding: 0.25rem; margin-bottom: 0; position: relative; border: 1px solid transparent;'
+                                                                     role='alert'>
                                                                     <b>In Reviewing Progress</b>
                                                                 </div>
                                                                 <br>
                                                                 <br>
-                                                                <h5 class="text-danger">Notice: editing will
+                                                                <h5 class='text-danger'>Notice: editing will
                                                                     require new approval by faculty</h5>
                                                             <% } %>
                                                         </li>
@@ -83,7 +86,7 @@
                                                             <b>Comments from Professor: </b> <%= resourceInfo[i].review %></li>
                                                         <% } %>
                                                         <li class='list-group-item borderless box-padding'
-                                                            style="display: inline">
+                                                            style='display: inline'>
                                                             <b>Actions:</b>
                                                             <!--force inline display-->
                                                             <button type='button' class='btn btn-outline-info'
@@ -103,7 +106,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <hr>
+                                        <% if (i !== 0) { %>
+                                            <hr>
+                                        <% } %>
                                     <% } %>
                                 <% } else { %>
                                     No resource available yet
@@ -125,7 +130,7 @@
         <div class='modal fade' id='deleteModal<%= resourceInfo[i]._id %>' tabindex='-1' role='dialog'
              aria-labelledby='exampleModalLabel'
              aria-hidden='true'>
-            <div class='modal-dialog' role='document'>
+            <div class='modal-dialog modal-lg' role='document'>
                 <div class='modal-content'>
                     <div class='modal-header'>
                         <h5 class='modal-title' id='exampleModalLabel'>Delete?</h5>

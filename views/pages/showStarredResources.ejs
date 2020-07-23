@@ -7,7 +7,7 @@
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
             <div class='section__title section__title--centered'>
-                All My favorites
+                My favorites
             </div>
         </div>
     </div>
@@ -15,59 +15,96 @@
 
 <section class='section section__grey' data-aos='fade-up'>
     <div class='container'>
-        <div class="row">
+        <div class='row'>
             <% if (loggedIn) { %>
-                <% if (resourceInfo && resourceInfo.length > 0) { %>
-                    <div class="col-md-12 col-sm-12">
+                <div class='col-md-3 col-sm-12' data-aos='fade-right'>
+                    <div class='card border-0'>
+                        <div class='card-header'>
+                            <b>Collections</b>
+                        </div>
+                        <!--content-->
                         <div class='card-body'>
-                            <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
-                                <div class='card blogBox moreBox border-0'>
-                                    <div class='card-body'>
-                                        <h4><%= resourceInfo[i].name %></h4>
-                                        <div class='card-text'>
-                                            <ul class='list-group'>
-                                                <li class='list-group-item borderless box-padding'>
-                                                    <b>Description: </b> <%= resourceInfo[i].description %></li>
-                                                <li class='list-group-item borderless box-padding'>
-                                                    <b>State:</b> <%= resourceInfo[i].state %></li>
-                                                <li class='list-group-item borderless box-padding'>
-                                                    <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click me</a>
-                                                </li>
-                                                <li class='list-group-item borderless box-padding'>
-                                                    <b>Institution: </b> <%= resourceInfo[i].institution %></li>
-                                                <li class='list-group-item borderless box-padding'>
-                                                    <b>Tags:</b> <%= resourceInfo[i].tags %>
-                                                </li>
-                                                <li class='list-group-item borderless box-padding'>
-                                                    <form method='post'
-                                                          action='/unstarResource/<%= resourceInfo[i]._id %>'>
-                                                        <b>Actions:</b>
-                                                        <input type='submit' style='border:0 solid transparent'
-                                                               name='submit'
-                                                               class='btn btn-outline-danger' value='&#9829;'>
-                                                        <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id) { %>
-                                                            <button type='button' class='btn btn-outline-info'
-                                                                    style='border:0 solid transparent'
-                                                                    data-toggle='modal'
-                                                                    data-target='#editModal<%= resourceInfo[i]._id %>'>
-                                                                Edit
-                                                            </button>
-                                                        <% } %>
-                                                    </form>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr>
-                            <% } %>
+                            <div class='card-text'>
+                                <ul class='list-group'>
+                                    <% for (let i = 0; i < allResourceSets.length; i++) { %>
+                                        <% if (allResourceSets[i].name !== 'favorite') { %>
+                                            <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
+                                                -
+                                                <a href='/showCollection/<%= allResourceSets[i]._id %>'><%= allResourceSets[i].name %></a>
+                                            </li>
+                                        <% } %>
+                                    <% } %>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                <% } else { %>
-                    <div class='text-center partners__text'>
-                        <h3>You haven't starred any resources</h3>
+                    <br>
+                    <button type='button' class='btn btn-outline-primary'
+                            data-toggle='modal'
+                            data-target='#createCollection'>
+                        Create a new collection
+                    </button>
+                </div>
+                <div class='col-md-9 col-sm-12'>
+                    <div class='card'>
+                        <div class='card-header'>
+                            <b>Favorite resources</b>
+                        </div>
+                        <% if (resourceInfo && resourceInfo.length > 0) { %>
+                            <div class='card-body'>
+                                <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
+                                    <div class='card border-0'>
+                                        <div class='card-body'>
+                                            <h4><%= resourceInfo[i].name %></h4>
+                                            <div class='card-text'>
+                                                <ul class='list-group'>
+                                                    <li class='list-group-item borderless box-padding'>
+                                                        <b>Description: </b> <%= resourceInfo[i].description %></li>
+                                                    <li class='list-group-item borderless box-padding'>
+                                                        <b>State:</b> <%= resourceInfo[i].state %></li>
+                                                    <li class='list-group-item borderless box-padding'>
+                                                        <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click me</a>
+                                                    </li>
+                                                    <li class='list-group-item borderless box-padding'>
+                                                        <b>Institution: </b> <%= resourceInfo[i].institution %></li>
+                                                    <li class='list-group-item borderless box-padding'>
+                                                        <b>Tags:</b> <%= resourceInfo[i].tags %>
+                                                    </li>
+                                                    <li class='list-group-item borderless box-padding'>
+                                                        <form method='post'
+                                                              action='/unstarResource/<%= resourceInfo[i]._id %>'>
+                                                            <b>Actions:</b>
+                                                            <input type='submit' style='border:0 solid transparent'
+                                                                   name='submit'
+                                                                   class='btn btn-outline-danger' value='&#9829;'>
+                                                            <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id) { %>
+                                                                <button type='button' class='btn btn-outline-info'
+                                                                        style='border:0 solid transparent'
+                                                                        data-toggle='modal'
+                                                                        data-target='#editModal<%= resourceInfo[i]._id %>'>
+                                                                    Edit
+                                                                </button>
+                                                            <% } %>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% if (i !== 0) { %>
+                                        <hr>
+                                    <% } %>
+                                <% } %>
+                            </div>
                     </div>
-                <% } %>
+                    <% } else { %>
+                        <div class='card-body'>
+                            <div class='text-center partners__text'>
+                                <h3>You haven't liked any resources yet</h3>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
             <% } else { %>
                 <%- include('../components/component-loginToView'); -%>
             <% } %>
@@ -76,5 +113,38 @@
 </section>
 
 <%- include('../components/component-editModal'); -%>
+
+<div class='modal fade' id='createCollection' tabindex='-1' role='dialog'
+     aria-labelledby='exampleModalLabel'
+     aria-hidden='true'>
+    <div class='modal-dialog modal-lg' role='document'>
+        <form method='post' action='/createCollection'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h5 class='modal-title' id='exampleModalLabel'>Create a new collection</h5>
+                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                        <span aria-hidden='true'>&times;</span>
+                    </button>
+                </div>
+                <div class='modal-body'>
+                    <div class='row'>
+                        <div class='col-md-12 col-sm-12'>
+                            <div class='input-group-prepend'>
+                                <span class='input-group-text' style='width: 180px'>Collection name</span>
+                                <input type='text' id='collectionName' class='form-control' name='collectionName'>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class='modal-footer'>
+                    <input type='submit' name='submit' class='btn btn-outline-danger' value='Create'>
+                    <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>
+                        Close
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 <%- include('../components/footer'); -%>

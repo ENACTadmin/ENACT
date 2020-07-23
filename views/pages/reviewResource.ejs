@@ -18,21 +18,21 @@
             <div class='row'>
                 <% if (loggedIn) { %>
                     <div class='col-md-12 col-sm-12'>
-                        <div class='card'>
+                        <div class='card border-0'>
                             <div class='card-body'>
                                 <% if (resourceInfo.length !== 0) { %>
-                                    <form method="post">
-                                        <div class="form-group row">
-                                            <div class="col-sm-1"></div>
-                                            <div class="col-sm-11">
-                                                <input type="submit" class="btn btn-success" formaction="/approve"
-                                                       value="Post Checked Resources to ENACT">
+                                    <form method='post'>
+                                        <div class='form-group row'>
+                                            <div class='col-sm-1'></div>
+                                            <div class='col-sm-11'>
+                                                <input type='submit' class='btn btn-success' formaction='/approve'
+                                                       value='Post Checked Resources to ENACT'>
                                                 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                                <input type="submit" formaction="/toPublic" class="btn btn-warning"
-                                                       value="Submit Checked Resources to Admins to be posted to public">
+                                                <input type='submit' formaction='/toPublic' class='btn btn-warning'
+                                                       value='Submit Checked Resources to Admins to be posted to public'>
                                                 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                                <input type="submit" formaction="/tempdeny" class="btn btn-secondary"
-                                                       value="Deny Checked Resources">
+                                                <input type='submit' formaction='/tempdeny' class='btn btn-secondary'
+                                                       value='Deny Checked Resources'>
                                             </div>
                                         </div>
                                         <% for (let i = 0; i < resourceInfo.length; i++) { %>
@@ -47,7 +47,7 @@
                                                            value='<%= resourceInfo[i]._id %>'>
                                                 </div>
                                                 <div class='col-sm-11'>
-                                                    <div class='card blogBox moreBox border-0'>
+                                                    <div class='card border-0'>
                                                         <div class='card-body'>
                                                             <% console.log('status: ' + resourceInfo[i].status) %>
                                                             <h4><%= resourceInfo[i].name %></h4>

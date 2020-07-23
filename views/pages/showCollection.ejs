@@ -1,0 +1,269 @@
+<%- include('../components/header'); -%>
+<%- include('../components/navbar'); -%>
+
+<script src='/js/editModal.js'></script>
+
+<% console.log('111', resourceSet) %>
+<% console.log('111', resourceInfo) %>
+
+<section class='section'>
+    <div class='section__content section__content--full-width'>
+        <div class='jumbotron masthead text-center'>
+            <div class='section__title section__title--centered'>
+                <%= resourceSet.name %>
+            </div>
+            <% if (loggedIn) { %>
+                <% if (resourceSet.name !== 'favorite') { %>
+                    <button class='btn btn-large btn-warning'
+                            style='width: 200px' data-toggle="modal" data-target="#deleteModal">
+                        Delete this collection
+                    </button>
+                <% } %>
+                &nbsp;&nbsp;&nbsp;
+                <button class='btn btn-large btn-primary'
+                        style='width: 200px' data-toggle="modal" data-target="#shareModal">
+                    Generate sharable link
+                </button>
+            <% } %>
+        </div>
+    </div>
+</section>
+
+<section class='section section__grey' data-aos='fade-up'>
+    <div class='container'>
+        <h3>Resources in this collection</h3>
+        <hr>
+        <% if (resourceInfo.length === 0) { %>
+            <div class='card border-0'>
+                <div class='card-body text-center'>
+                    <h4>No resource in this collection</h4>
+                </div>
+            </div>
+        <% } %>
+        <% for (let i = 0; i < resourceInfo.length; i++) { %>
+            <div class='card border-0'>
+                <div class='card-body'>
+                    <h4>
+                        <%= resourceInfo[i].name %>
+                    </h4>
+                    <div class='card-text'>
+                        <ul class='list-group'>
+                            <li class='list-group-item borderless box-padding'>
+                                <b>Description: </b>
+                                <%= resourceInfo[i].description %>
+                            </li>
+                            <li class='list-group-item borderless box-padding'>
+                                <b>State:</b>
+                                <%= resourceInfo[i].state %>
+                            </li>
+                            <li class='list-group-item borderless box-padding'>
+                                <b>Link: </b>
+                                <a href='<%= resourceInfo[i].uri %>'><%= resourceInfo[i].uri %></a>
+                            </li>
+                            <li class='list-group-item borderless box-padding'>
+                                <b>Institution: </b>
+                                <%= resourceInfo[i].institution %>
+                            </li>
+                            <li class='list-group-item borderless box-padding'>
+                                <b>Categories:</b>
+                                <%= resourceInfo[i].tags %>
+                            </li>
+                            <li class='list-group-item borderless box-padding'>
+                                <b>Actions:</b>
+                                <% if (loggedIn) { %>
+                                    <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id.toString()) { %>
+                                        <button type='button' class='btn btn-outline-info'
+                                                style='border:0 solid transparent' data-toggle='modal'
+                                                data-target='#editModal<%= resourceInfo[i]._id %>'>
+                                            Edit
+                                        </button>
+                                        <button type='button' class='btn btn-outline-danger'
+                                                style='border:0px solid transparent'
+                                                data-toggle='modal'
+                                                data-target='#removeModal<%= resourceInfo[i]._id %>'>
+                                            Remove from this collection
+                                        </button>
+                                    <% } %>
+                                <% } %>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <br>
+        <% } %>
+    </div>
+    <br>
+</section>
+
+<% if (loggedIn) { %>
+    <section class='section section__grey' data-aos='fade-up'>
+        <div class='container'>
+            <h3>Liked but not in this collection</h3>
+            <hr>
+            <% for (let i = 0; i < allLikedResourceInfo.length; i++) { %>
+                <% if (!resourceSet.resources.includes(allLikedResourceInfo[i]._id)) { %>
+                    <div class='card border-0'>
+                        <div class='card-body'>
+                            <h4>
+                                <%= allLikedResourceInfo[i].name %>
+                            </h4>
+                            <div class='card-text'>
+                                <ul class='list-group'>
+                                    <li class='list-group-item borderless box-padding'>
+                                        <b>Description: </b>
+                                        <%= allLikedResourceInfo[i].description %>
+                                    </li>
+                                    <li class='list-group-item borderless box-padding'>
+                                        <b>State:</b>
+                                        <%= allLikedResourceInfo[i].state %>
+                                    </li>
+                                    <li class='list-group-item borderless box-padding'>
+                                        <b>Link: </b>
+                                        <a href='<%= allLikedResourceInfo[i].uri %>'><%= allLikedResourceInfo[i].uri %></a>
+                                    </li>
+                                    <li class='list-group-item borderless box-padding'>
+                                        <b>Institution: </b>
+                                        <%= allLikedResourceInfo[i].institution %>
+                                    </li>
+                                    <li class='list-group-item borderless box-padding'>
+                                        <b>Categories:</b>
+                                        <%= allLikedResourceInfo[i].tags %>
+                                    </li>
+                                    <li class='list-group-item borderless box-padding' style='display: inline'>
+                                        <b>Actions:</b>
+                                        <% if (status === 'admin' || status === 'faculty' || allLikedResourceInfo[i].ownerId.toString() === user._id.toString()) { %>
+                                            <form style='display: inline' method='post'
+                                                  action='/addToCollection/<%= resourceSet._id %>/<%= allLikedResourceInfo[i]._id %>'>
+                                                <input type='submit' style='border:0 solid transparent' name='submit'
+                                                       class='btn btn-outline-success' value='Add to this Collection'>
+                                            </form>
+                                        <% } %>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                <% } %>
+            <% } %>
+        </div>
+    </section>
+<% } %>
+
+<% if (loggedIn) { %>
+    <% if (resourceInfo.length !== 0) { %>
+        <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
+            <!-- Modal -->
+            <div class='modal fade' id='removeModal<%= resourceInfo[i]._id %>' tabindex='-1' role='dialog'
+                 aria-labelledby='exampleModalLabel'
+                 aria-hidden='true'>
+                <div class='modal-dialog modal-lg' role='document'>
+                    <div class='modal-content'>
+                        <div class='modal-header'>
+                            <h5 class='modal-title' id='exampleModalLabel'>Remove?</h5>
+                            <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                                <span aria-hidden='true'>&times;</span>
+                            </button>
+                        </div>
+                        <div class='modal-body'>
+                            <div class='row'>
+                                <div class='col-md-12 col-sm-12'>
+                                    <h5>Are you sure you want to remove this resource from this collection?</h5>
+                                    <h5>(The resource itself will not be deleted)</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='modal-footer'>
+                            <form method='post'
+                                  action='/removeFromCollection/<%= resourceSet._id %>/<%= resourceInfo[i]._id %>'>
+                                <input type='submit' name='submit' class='btn btn-outline-danger' value='Remove'>
+                            </form>
+                            <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    <% } %>
+
+    <!-- Modal -->
+    <div class='modal fade' id='deleteModal' tabindex='-1' role='dialog'
+         aria-labelledby='exampleModalLabel'
+         aria-hidden='true'>
+        <div class='modal-dialog modal-lg' role='document'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h5 class='modal-title' id='exampleModalLabel'>Delete this collection</h5>
+                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                        <span aria-hidden='true'>&times;</span>
+                    </button>
+                </div>
+                <div class='modal-body'>
+                    <div class='row'>
+                        <div class='col-md-12 col-sm-12'>
+                            <h5>Are you sure you want to delete this collection?</h5>
+                            <h5>(The resource itself will not be deleted)</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class='modal-footer'>
+                    <form method='post'
+                          action='/deleteCollection/<%= resourceSet._id %>'>
+                        <input type='submit' name='submit' class='btn btn-outline-danger' value='Delete'>
+                    </form>
+                    <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class='modal fade' id='shareModal' tabindex='-1' role='dialog'
+         aria-labelledby='exampleModalLabel'
+         aria-hidden='true'>
+        <div class='modal-dialog modal-lg' role='document'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h5 class='modal-title' id='exampleModalLabel'>Generate sharable link</h5>
+                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                        <span aria-hidden='true'>&times;</span>
+                    </button>
+                </div>
+                <div class='modal-body'>
+                    <div class='row'>
+                        <div class='col-md-12 col-sm-12'>
+                            <input style="width: 75%; display: inline" class="input-group-text" id="input" type="text"
+                                   value="http://enact-brandeis.herokuapp.com/showCollection/<%= resourceSet._id %>"/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button class="btn btn-primary" id="copy">Copy to clipboard</button>
+                        </div>
+                    </div>
+                </div>
+                <div class='modal-footer'>
+                    <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+<% } %>
+
+<script>
+    function copy() {
+        const copyText = document.querySelector("#input");
+        copyText.select();
+        document.execCommand("copy");
+    }
+
+    document.querySelector("#copy").addEventListener("click", copy);
+</script>
+
+<%- include('../components/component-editModal'); -%>
+
+<%- include('../components/footer'); -%>

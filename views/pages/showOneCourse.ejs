@@ -21,7 +21,7 @@
                 <% if (loggedIn) { %>
                     <!--left information bar-->
                     <div class='col-md-3' data-aos='fade-right'>
-                        <div class='card'>
+                        <div class='card border-0'>
                             <div class='card-header'>
                                 <b>General Information</b>
                             </div>
@@ -48,7 +48,7 @@
                             </div>
                         </div>
                         <br>
-                        <div class='card' data-aos='fade-right' data-aos-delay='100'>
+                        <div class='card border-0' data-aos='fade-right' data-aos-delay='100'>
                             <div class='card-header'>
                                 <b>Tools</b>
                             </div>
@@ -85,7 +85,7 @@
                             </div>
                             <br>
                         </form>
-                        <div class='card'>
+                        <div class='card border-0'>
                             <div class='card-header'>
                                 <b>Latest Resources</b>
                             </div>
@@ -106,7 +106,7 @@
         <div class='modal fade' id='deleteModal<%= resourceInfo[i]._id %>' tabindex='-1' role='dialog'
              aria-labelledby='exampleModalLabel'
              aria-hidden='true'>
-            <div class='modal-dialog' role='document'>
+            <div class='modal-dialog modal-lg' role='document'>
                 <div class='modal-content'>
                     <div class='modal-header'>
                         <h5 class='modal-title' id='exampleModalLabel'>Delete?</h5>

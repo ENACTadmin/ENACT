@@ -2,10 +2,10 @@
 <%- include('../components/navbar'); -%>
 
 
-<section class="section">
-    <div class="section__content section__content--full-width">
-        <div class="jumbotron masthead text-center">
-            <div class="section__title section__title--centered">
+<section class='section'>
+    <div class='section__content section__content--full-width'>
+        <div class='jumbotron masthead text-center'>
+            <div class='section__title section__title--centered'>
                 Message Board
             </div>
             <h3>View all your In-mails here</h3>
@@ -13,43 +13,43 @@
     </div>
 </section>
 
-<section class="section section__grey">
-    <div class="container">
+<section class='section section__grey'>
+    <div class='container'>
         <h3>System Tracker</h3>
         <hr>
-        <div class="row">
-                <div class="col-md-4 col-sm-12">
+        <div class='row'>
+                <div class='col-md-4 col-sm-12'>
                     <% if (resourceNum !== 0) { %>
-                        <div class="card border-primary mb-3" style="max-width: 18rem;">
-                            <div class="card-header"><h3>Action Requested</h3></div>
-                            <div class="card-body">
-                            <h5 style="display: inline">You have <%= resourceNum %> resources under review</h5>
+                        <div class='card border-primary mb-3' style='max-width: 18rem;'>
+                            <div class='card-header'><h3>Action Requested</h3></div>
+                            <div class='card-body'>
+                            <h5 style='display: inline'>You have <%= resourceNum %> resources under review</h5>
                             <br>
                             <br>
-                            <a href="/reviewResource"><input class="btn btn-sm btn-outline-primary" type="submit" value="Go to review"></a>
+                            <a href='/reviewResource'><input class='btn btn-sm btn-outline-primary' type='submit' value='Go to review'></a>
                             </div>
                         </div>
                     <% } %>
                         <% if (approveInfo.length !== 0) { %>
-                        <div class="card border-success mb-3" style="max-width: 18rem;">
-                            <div class="card-header"><h3>Approved Info</h3></div>
-                            <div class="card-body">
-                                <h5 style="display: inline">Congratulations! You own <%= approveInfo.length %> approved resources.</h5>
+                        <div class='card border-success mb-3' style='max-width: 18rem;'>
+                            <div class='card-header'><h3>Approved Info</h3></div>
+                            <div class='card-body'>
+                                <h5 style='display: inline'>Congratulations! You own <%= approveInfo.length %> approved resources.</h5>
                                 <br>
                                 <br>
-                                    <a href="/approvedResources"><input class="btn btn-sm btn-outline-success" type="submit" value="Go to my approved resources"></a>
+                                    <a href='/approvedResources'><input class='btn btn-sm btn-outline-success' type='submit' value='Go to my approved resources'></a>
                             </div>
                         </div>
                     </div>
                 <% } %>
                 <% if (denyInfo.length !== 0) { %>
-                    <div class="card border-dark mb-3" style="max-width: 18rem;">
-                        <div class="card-header"><h3>Required to Review Info</h3></div>
-                        <div class="card-body">
-                            <h5 style="display: inline">Sorry, <%= approveInfo.length %> of your resources need to be reviewed again.</h5>
+                    <div class='card border-dark mb-3' style='max-width: 18rem;'>
+                        <div class='card-header'><h3>Required to Review Info</h3></div>
+                        <div class='card-body'>
+                            <h5 style='display: inline'>Sorry, <%= approveInfo.length %> of your resources need to be reviewed again.</h5>
                             <br>
                             <br>
-                            <a href="/showDenied"><input class="btn btn-sm btn-outline-dark" type="submit" value="Review my resources"></a>
+                            <a href='/showDenied'><input class='btn btn-sm btn-outline-dark' type='submit' value='Review my resources'></a>
                         </div>
                     </div>
             </div>
@@ -60,11 +60,11 @@
     </div>
 </section>
 
-<section class="section section__grey">
-    <div class="container">
+<section class='section section__grey'>
+    <div class='container'>
         <h3>Inbox (Someone is interested in my work!)</h3>
         <hr>
-        <div class="row">
+        <div class='row'>
             <% loop1: for (let i = 0; i < messageInfo.length; i++) { %>
                 <% for (let j = 0; j < i; j++) { %>
                     <% if (messageInfo[i].senderId.equals(messageInfo[j].senderId) && messageInfo[i].receiverId.equals(messageInfo[j].receiverId)) { %>
@@ -72,15 +72,15 @@
                     <% } %>
                 <% } %>
                 <% if (messageInfo[i].receiverId.equals(user._id)) { %>
-                    <div class="col-md-4 col-sm-12">
-                        <div class="card" style="border:0 solid transparent">
-                            <div class="card-body">
-                                <h5 style="display: inline">subject: </h5><%= messageInfo[i].subject %>
+                    <div class='col-md-4 col-sm-12'>
+                        <div class='card' style='border:0 solid transparent'>
+                            <div class='card-body'>
+                                <h5 style='display: inline'>subject: </h5><%= messageInfo[i].subject %>
                                 <br>
                                 <br>
-                                <a href="/message/<%= messageInfo[i].senderId %>/<%= messageInfo[i].receiverId %>/<%= messageInfo[i].relevantResourceId %>"><input
-                                            class="btn btn-sm btn-outline-primary" type="submit"
-                                            value="CONTINUE"></a>
+                                <a href='/message/<%= messageInfo[i].senderId %>/<%= messageInfo[i].receiverId %>/<%= messageInfo[i].relevantResourceId %>'><input
+                                            class='btn btn-sm btn-outline-primary' type='submit'
+                                            value='CONTINUE'></a>
                             </div>
                         </div>
                     </div>
@@ -91,11 +91,11 @@
     </div>
 </section>
 
-<section class="section section__grey">
-    <div class="container">
+<section class='section section__grey'>
+    <div class='container'>
         <h3>Sent (I am interested others' work)</h3>
         <hr>
-        <div class="row">
+        <div class='row'>
             <% loop1: for (let i = 0; i < messageInfo.length; i++) { %>
                 <% for (let j = 0; j < i; j++) { %>
                     <% if (messageInfo[i].senderId.equals(messageInfo[j].senderId) && messageInfo[i].receiverId.equals(messageInfo[j].receiverId)) { %>
@@ -103,15 +103,15 @@
                     <% } %>
                 <% } %>
                 <% if (messageInfo[i].senderId.equals(user._id)) { %>
-                    <div class="col-md-4 col-sm-12">
-                        <div class="card" style="border:0 solid transparent">
-                            <div class="card-body">
-                                <h5 style="display: inline">subject: </h5><%= messageInfo[i].subject %>
+                    <div class='col-md-4 col-sm-12'>
+                        <div class='card' style='border:0 solid transparent'>
+                            <div class='card-body'>
+                                <h5 style='display: inline'>subject: </h5><%= messageInfo[i].subject %>
                                 <br>
                                 <br>
-                                <a href="/message/<%= messageInfo[i].senderId %>/<%= messageInfo[i].receiverId %>/<%= messageInfo[i].relevantResourceId %>"><input
-                                            class="btn btn-sm btn-outline-primary" type="submit"
-                                            value="CONTINUE"></a>
+                                <a href='/message/<%= messageInfo[i].senderId %>/<%= messageInfo[i].receiverId %>/<%= messageInfo[i].relevantResourceId %>'><input
+                                            class='btn btn-sm btn-outline-primary' type='submit'
+                                            value='CONTINUE'></a>
                             </div>
                         </div>
                     </div>
