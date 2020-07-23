@@ -266,6 +266,27 @@ app.post('/showPrimaryResources',
     resourceController.primarySearch
 )
 
+
+app.get('/publicPrimarySearch',
+    resourceController.checkUserName,
+    resourceController.showPublic
+)
+
+app.post('/showPublicPrimaryResources',
+    resourceController.primaryPublicSearch
+)
+
+app.get('/publicPrimarySearch-second',
+    resourceController.checkUserName,
+    (req, res) =>
+        res.render('./pages/publicPrimarySearch-second'
+        )
+)
+
+app.post('/showSecondPublicPrimaryResources',
+    resourceController.primarySecondPublicSearch
+)
+
 app.get('/search',
     resourceController.checkUserName,
     (req, res) =>
