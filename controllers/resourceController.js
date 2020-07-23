@@ -188,7 +188,7 @@ exports.primarySecondPublicSearch = async (req, res, next) => {
                 ],
         })
         res.locals.resourceInfo = resourceInfo
-        res.redirect('back')
+        res.render('./pages/publicPrimarySearch-second')
     } catch (e) {
         next(e)
     }
@@ -212,6 +212,7 @@ exports.primaryPublicSearch = async (req, res, next) => {
             ],
         })
         res.locals.resourceInfo = resourceInfo
+        console.log("hi"+resourceInfo)
         res.render('./pages/publicPrimarySearch-second')
     } catch (e) {
         next(e)
@@ -1192,7 +1193,8 @@ exports.deleteCollection = async (req, res, next) => {
 exports.showPublic = async (req, res, next) => {
     try {
         let resourceInfo = await Resource.find({
-            status: {$in: ["finalPublic", "public"]}
+            status: {$in: ["finalPublic", "public"]},
+            checkStatus: 'approve'
         })
         res.render('./pages/publicPrimarySearch', {
             resourceInfo: resourceInfo
