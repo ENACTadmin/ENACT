@@ -172,6 +172,7 @@ exports.primarySearch = async (req, res, next) => {
 
 exports.primarySecondPublicSearch = async (req, res, next) => {
     let resourceInfo = null
+    let allResource = null
     const checkStatus = 'approve'
     try {
         resourceInfo = await Resource.find({
@@ -188,6 +189,10 @@ exports.primarySecondPublicSearch = async (req, res, next) => {
                 ],
         })
         res.locals.resourceInfo = resourceInfo
+        allResource = await Resource.find({
+            checkStatus: 'approve'
+        })
+        res.locals.allresource = allResource
         res.render('./pages/publicPrimarySearch-second')
     } catch (e) {
         next(e)
@@ -196,6 +201,7 @@ exports.primarySecondPublicSearch = async (req, res, next) => {
 
 exports.primaryPublicSearch = async (req, res, next) => {
     let resourceInfo = null
+    let allResource = null
     const checkStatus = 'approve'
     try {
         resourceInfo = await Resource.find({
@@ -212,7 +218,10 @@ exports.primaryPublicSearch = async (req, res, next) => {
             ],
         })
         res.locals.resourceInfo = resourceInfo
-        console.log("hi"+resourceInfo)
+        allResource = await Resource.find({
+            checkStatus: 'approve'
+        })
+        res.locals.allresource = allResource
         res.render('./pages/publicPrimarySearch-second')
     } catch (e) {
         next(e)
@@ -1191,13 +1200,18 @@ exports.deleteCollection = async (req, res, next) => {
 }
 
 exports.showPublic = async (req, res, next) => {
+    let allResource = null
     try {
         let resourceInfo = await Resource.find({
             status: {$in: ["finalPublic", "public"]},
             checkStatus: 'approve'
         })
+        allResource = await Resource.find({
+            checkStatus: 'approve'
+        })
         res.render('./pages/publicPrimarySearch', {
-            resourceInfo: resourceInfo
+            resourceInfo: resourceInfo,
+            allResource : allResource
         })
     } catch (e) {
         next(e)
