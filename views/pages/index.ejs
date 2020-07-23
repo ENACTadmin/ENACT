@@ -377,6 +377,13 @@
                                                         value='MANAGE PUBLIC RESOURCES'></a>
             </div>
         <% } %>
+        <% if (!loggedIn) { %>
+            <div class='text-center' data-aos='fade-up' data-aos-delay="100">
+                <a href='/publicPrimarySearch'><input type='button' name='submit'
+                                                        class='btn btn-lg btn-outline-primary'
+                                                        value='Find More Resources'></a>
+            </div>
+        <% } %>
         <br>
         <div class='clear'></div>
     </div>

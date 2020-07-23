@@ -170,6 +170,54 @@ exports.primarySearch = async (req, res, next) => {
     }
 }
 
+exports.primarySecondPublicSearch = async (req, res, next) => {
+    let resourceInfo = null
+    const checkStatus = 'approve'
+    try {
+        resourceInfo = await Resource.find({
+            checkStatus: checkStatus,
+            $or: [
+                {
+                        description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
+                        status: {$in: ["finalPublic", "public"]}
+                        },
+                {
+                    name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
+                    status: {$in: ["finalPublic", "public"]}
+                }
+                ],
+        })
+        res.locals.resourceInfo = resourceInfo
+        res.redirect('back')
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.primaryPublicSearch = async (req, res, next) => {
+    let resourceInfo = null
+    const checkStatus = 'approve'
+    try {
+        resourceInfo = await Resource.find({
+            checkStatus: checkStatus,
+            $or: [
+                {
+                    description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
+                    status: {$in: ["finalPublic", "public"]}
+                    },
+                {
+                    name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
+                    status: {$in: ["finalPublic", "public"]}
+                }
+            ],
+        })
+        res.locals.resourceInfo = resourceInfo
+        res.render('./pages/publicPrimarySearch-second')
+    } catch (e) {
+        next(e)
+    }
+}
+
 exports.searchByFilled = async (req, res, next) => {
     let resourceInfo = null
 
@@ -1136,6 +1184,19 @@ exports.deleteCollection = async (req, res, next) => {
         let collectionId = req.params.collectionId
         await ResourceSet.deleteOne({_id: collectionId})
         res.redirect('/showStarredResources')
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.showPublic = async (req, res, next) => {
+    try {
+        let resourceInfo = await Resource.find({
+            status: {$in: ["finalPublic", "public"]}
+        })
+        res.render('./pages/publicPrimarySearch', {
+            resourceInfo: resourceInfo
+        })
     } catch (e) {
         next(e)
     }
