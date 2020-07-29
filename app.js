@@ -296,6 +296,15 @@ app.post('/showResources',
     resourceController.searchByFilled
 )
 
+app.get('/publicSearch',
+    resourceController.checkUserName,
+    (req, res) =>
+        res.render('./pages/publicSearch'))
+
+app.post('/showPublicResources',
+    resourceController.searchByFilledPublic
+)
+
 app.get('/facultyExclusive',
     resourceController.checkUserName,
     resourceController.loadAllFacultyResources
