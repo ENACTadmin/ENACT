@@ -30,6 +30,19 @@
                 <li>
                     <% if (!loggedIn) { %>
                         <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Resources</a>
+                        <ul class='sub-menu'>
+                            <li>
+                                <a class='header-link' href='/publicPrimarySearch'>Find some resources</a>
+                            </li>
+
+                        </ul>
+                    <% } else { %>
+                    <% } %>
+                </li>
+
+                <li>
+                    <% if (!loggedIn) { %>
+                        <a class='header-link' id='header-link' href='mailto:djw@brandeis.edu' data-aos='fade-left'>Contact Us</a>
                     <% } else { %>
                     <% } %>
                 </li>
