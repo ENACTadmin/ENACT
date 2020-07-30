@@ -42,7 +42,7 @@ exports.toPublic = async (req, res, next) => {
 
         for (let i = 0; i < resourceInfo.length; i++) {
             resourceInfo[i].checkStatus = 'approve'
-            resourceInfo[i].status = 'public'
+            resourceInfo[i].status = 'partPublic'
             resourceInfo[i].save()
         }
         res.redirect('back')
@@ -149,4 +149,43 @@ exports.loadApprovedResources = async (req, res, next) => {
     }
 }
 
+exports.loadPartPublicResources = async (req, res, next) => {
+    try {
+        res.locals.resourceInfo = await Resource.find({
+            status: 'partPublic'
+        }).sort({'createdAt': -1})
+        res.render('./pages/approvePublicResources')
+    } catch (e) {
+        console.log("error: " + e)
+        next(e)
+    }
+}
 
+exports.partPublicToPublic = async (req, res, next) => {
+    try {
+        let resourceId = await req.body.checked
+        let resourceInfo = await Resource.find({_id: resourceId})
+        for (let i = 0; i < resourceInfo.length; i++) {
+            resourceInfo[i].status = 'public'
+            resourceInfo[i].save()
+        }
+        res.redirect('back')
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.partPublicToENACT = async (req, res, next) => {
+    try {
+        let resourceId = await req.body.checked
+        let resourceInfo = await Resource.find({_id: resourceId})
+
+        for (let i = 0; i < resourceInfo.length; i++) {
+            resourceInfo[i].status = 'privateToENACT'
+            resourceInfo[i].save()
+        }
+        res.redirect('back')
+    } catch (e) {
+        next(e)
+    }
+}

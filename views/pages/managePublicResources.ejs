@@ -7,7 +7,7 @@
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
             <div class='section__title section__title--centered'>
-                Manage Public Resources
+                Manage Public Resources on Home Page
             </div>
         </div>
     </div>
@@ -23,58 +23,73 @@
                     <h4>No resource available yet</h4>
                 </div>
             </div>
-        <% } %>
-        <% for (let i = 0; i < resourceInfo.length; i++) { %>
-            <% if (resourceInfo[i].status === 'public') { %>
-                <div class='card border-0'>
-                    <div class='card-body'>
-                        <h4>
-                            <%= resourceInfo[i].name %>
-                        </h4>
-                        <div class='card-text'>
-                            <ul class='list-group'>
-                                <li class='list-group-item borderless box-padding'>
-                                    <b>Description: </b>
-                                    <%= resourceInfo[i].description %>
-                                </li>
-                                <li class='list-group-item borderless box-padding'>
-                                    <b>State:</b>
-                                    <%= resourceInfo[i].state %>
-                                </li>
-                                <li class='list-group-item borderless box-padding'>
-                                    <b>Link: </b>
-                                    <a href='<%= resourceInfo[i].uri %>'><%= resourceInfo[i].uri %></a>
-                                </li>
-                                <li class='list-group-item borderless box-padding'>
-                                    <b>Institution: </b>
-                                    <%= resourceInfo[i].institution %>
-                                </li>
-                                <li class='list-group-item borderless box-padding'>
-                                    <b>Categories:</b>
-                                    <%= resourceInfo[i].tags %>
-                                </li>
-                                <li class='list-group-item borderless box-padding'>
-                                    <b>Actions:</b>
-                                    <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id.toString()) { %>
-                                        <button type='button' class='btn btn-outline-info'
-                                                style='border:0 solid transparent' data-toggle='modal'
-                                                data-target='#editModal<%= resourceInfo[i]._id %>'>
-                                            Edit
-                                        </button>
-                                        <button type='button' class='btn btn-outline-danger'
-                                                style='border:0px solid transparent'
-                                                data-toggle='modal'
-                                                data-target='#selectModal<%= resourceInfo[i]._id %>'>
-                                            Display
-                                        </button>
-                                    <% } %>
-                                </li>
-
-                            </ul>
-                        </div>
+        <% } else{%>
+            <% let num = 0 %>
+            <% for (let i = 0; i < resourceInfo.length; i++) { %>
+                <% if (resourceInfo[i].status === 'finalPublic') { %>
+                    <% num = num +1 %>
+                <% } %>
+            <% } %>
+            <% if (num >= 3) { %>
+                <div class='card'>
+                    <div class='card-body text-center'>
+                        <h4>There are only three spots for public resources on the home page. Please remove one resources below if you want to add in a new one.</h4>
                     </div>
                 </div>
-                <br>
+            <% } else{%>
+                <% for (let i = 0; i < resourceInfo.length; i++) { %>
+                    <% if (resourceInfo[i].status === 'public') { %>
+                        <div class='card border-0'>
+                            <div class='card-body'>
+                                <h4>
+                                    <%= resourceInfo[i].name %>
+                                </h4>
+                                <div class='card-text'>
+                                    <ul class='list-group'>
+                                        <li class='list-group-item borderless box-padding'>
+                                            <b>Description: </b>
+                                            <%= resourceInfo[i].description %>
+                                        </li>
+                                        <li class='list-group-item borderless box-padding'>
+                                            <b>State:</b>
+                                            <%= resourceInfo[i].state %>
+                                        </li>
+                                        <li class='list-group-item borderless box-padding'>
+                                            <b>Link: </b>
+                                            <a href='<%= resourceInfo[i].uri %>'><%= resourceInfo[i].uri %></a>
+                                        </li>
+                                        <li class='list-group-item borderless box-padding'>
+                                            <b>Institution: </b>
+                                            <%= resourceInfo[i].institution %>
+                                        </li>
+                                        <li class='list-group-item borderless box-padding'>
+                                            <b>Categories:</b>
+                                            <%= resourceInfo[i].tags %>
+                                        </li>
+                                        <li class='list-group-item borderless box-padding'>
+                                            <b>Actions:</b>
+                                            <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id.toString()) { %>
+                                                <button type='button' class='btn btn-outline-info'
+                                                        style='border:0 solid transparent' data-toggle='modal'
+                                                        data-target='#editModal<%= resourceInfo[i]._id %>'>
+                                                    Edit
+                                                </button>
+                                                <button type='button' class='btn btn-outline-danger'
+                                                        style='border:0px solid transparent'
+                                                        data-toggle='modal'
+                                                        data-target='#selectModal<%= resourceInfo[i]._id %>'>
+                                                    Display
+                                                </button>
+                                            <% } %>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    <% } %>
+                <% } %>
             <% } %>
         <% } %>
     </div>
