@@ -66,11 +66,6 @@
                         <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Resources</a>
                         <ul class='sub-menu'>
                             <li>
-                                <% if (status === 'faculty' || status === 'admin') { %>
-                                    <a class='header-link' href='/reviewResource'>Resources under review</a>
-                                <% } %>
-                            </li>
-                            <li>
                                 <a class='header-link' href='/primarySearch'>Find some resources</a>
                             </li>
                             <li>
@@ -92,6 +87,27 @@
                         <a class='header-link' id='header-link' href='/messageBoard' data-aos='fade-left'>Message
                             board</a>
                     <% } else { %>
+                    <% } %>
+                </li>
+
+                <li>
+                    <% if (loggedIn) { %>
+                        <% if (status === 'admin' || status === 'faculty' ) { %>
+                            <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Faculty Special</a>
+                            <ul class='sub-menu'>
+                                <li>
+                                    <a class='header-link' href='/reviewResource'>Approve student resources</a>
+                                </li>
+                                <li>
+                                    <a class='header-link' href='/facultyExclusive'>Faculty exclusive resources</a>
+                                </li>
+                                <li>
+                                    <a class='header-link' href='/#'>WellSpring: Help your classes</a>
+                                </li>
+
+                            </ul>
+                        <% } else { %>
+                        <% } %>
                     <% } %>
                 </li>
 
