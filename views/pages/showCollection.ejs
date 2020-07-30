@@ -77,13 +77,13 @@
                                                 data-target='#editModal<%= resourceInfo[i]._id %>'>
                                             Edit
                                         </button>
-                                        <button type='button' class='btn btn-outline-danger'
-                                                style='border:0px solid transparent'
-                                                data-toggle='modal'
-                                                data-target='#removeModal<%= resourceInfo[i]._id %>'>
-                                            Remove from this collection
-                                        </button>
                                     <% } %>
+                                    <button type='button' class='btn btn-outline-danger'
+                                            style='border:0px solid transparent'
+                                            data-toggle='modal'
+                                            data-target='#removeModal<%= resourceInfo[i]._id %>'>
+                                        Remove from this collection
+                                    </button>
                                 <% } %>
                             </li>
                         </ul>
@@ -132,13 +132,11 @@
                                     </li>
                                     <li class='list-group-item borderless box-padding' style='display: inline'>
                                         <b>Actions:</b>
-                                        <% if (status === 'admin' || status === 'faculty' || allLikedResourceInfo[i].ownerId.toString() === user._id.toString()) { %>
-                                            <form style='display: inline' method='post'
-                                                  action='/addToCollection/<%= resourceSet._id %>/<%= allLikedResourceInfo[i]._id %>'>
-                                                <input type='submit' style='border:0 solid transparent' name='submit'
-                                                       class='btn btn-outline-success' value='Add to this Collection'>
-                                            </form>
-                                        <% } %>
+                                        <form style='display: inline' method='post'
+                                              action='/addToCollection/<%= resourceSet._id %>/<%= allLikedResourceInfo[i]._id %>'>
+                                            <input type='submit' style='border:0 solid transparent' name='submit'
+                                                   class='btn btn-outline-success' value='Add to this Collection'>
+                                        </form>
                                     </li>
                                 </ul>
                             </div>
