@@ -430,6 +430,17 @@ app.post('/sendDeny',
     notificationController.sendDeny
 )
 
+app.get('/approvePublicResources',
+    notificationController.loadPartPublicResources
+)
+app.post('/partPublicToPublic',
+    notificationController.partPublicToPublic
+)
+
+app.post('/partPublicToENACT',
+    notificationController.partPublicToENACT
+)
+
 
 //*******************************************
 //***********Profile related*****************
