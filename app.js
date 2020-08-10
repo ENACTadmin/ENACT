@@ -446,29 +446,24 @@ app.post('/partPublicToENACT',
 //***********Profile related*****************
 
 //show all profiles from all users
-app.get('/myProfile',
-    (req, res) => {
+app.get('/profile/view/:id',
+    (req, res, next) => {
         if (res.locals.user.userName === undefined) {
             res.render('./pages/updateProfile')
         } else {
-            res.render('./pages/myProfile')
+            next()
         }
-    }
-)
-
-//show all profiles from all users
-app.get('/showProfile/:id',
-    resourceController.checkUserName,
+    },
     profileController.findOneUser
 )
 
 
-app.get('/editMyProfile',
+app.get('/profile/edit',
     (req, res) => {
         res.render('./pages/updateProfile')
     })
 
-app.get('/showAllProfiles',
+app.get('/profiles',
     resourceController.checkUserName,
     profileController.showAllProfiles
 )

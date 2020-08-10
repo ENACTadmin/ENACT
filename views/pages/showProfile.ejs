@@ -16,8 +16,18 @@
         <div class='row'>
             <div class='col-md-3 col-sm-12'></div>
             <div class='col-md-6 col-sm-12'>
-                <h3><b>User Profile:</b></h3>
+
+                <h3><b>Basic information</b></h3>
                 <hr>
+
+                <% if (userInfo.profilePicURL) { %>
+                    <img src='<%= userInfo.profilePicURL %>' width='100%' alt='profile picture'>
+                <% } else { %>
+                    No profile image
+                <% } %>
+                <br>
+                <br>
+
                 <div class='input-group-prepend'>
                     <span class='input-group-text' style='width: 180px'>Username</span>
                     <input disabled type='text' class='form-control' value='<%= userInfo.userName %>'>
@@ -55,8 +65,14 @@
 
                 <div class='input-group-prepend'>
                     <span class='input-group-text' style='width: 180px'>Status</span>
-                    <input disabled type='text' class='form-control' value='<%= locals.status %>'>
+                    <input disabled type='text' class='form-control' value='<%= userInfo.status %>'>
                 </div>
+
+                <br>
+
+                <% if (user._id.equals(userInfo._id)) { %>
+                    <a class='btn btn-outline-dark' href='/profile/edit'>Edit</a>
+                <% } %>
 
             </div>
         </div>

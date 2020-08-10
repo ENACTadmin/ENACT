@@ -49,7 +49,7 @@
                 <hr>
                 <% for (let i = 0; i < messageInfo.length; i++) { %>
                     <div class='media mb-3' id='description'>
-                        <a href='/showProfile/<%= messageInfo[i].sentBy %>'>
+                        <a href='/profile/view/<%= messageInfo[i].sentBy %>'>
                             <% if (messageInfo[i].sentBy.equals(senderInfo._id)) { %>
                                 <img class='d-flex mr-3 rounded-circle'
                                      id='profilePic'
