@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const ObjectID = mongoose.Schema.Types.ObjectID;
 
 const Word2IdSchema = Schema({
-    word: String,
+    word: {type:String, index:true},
     ids: [ObjectID]
 });
 
