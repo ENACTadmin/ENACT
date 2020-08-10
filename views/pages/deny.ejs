@@ -78,7 +78,7 @@
     </section>
 </section>
 
-<% if (resourceInfo.length !== 0) { %>
+<% if (resourceInfo) { %>
     <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
         <!-- Modal -->
         <div class='modal fade' id='resumeModal<%= resourceInfo[i]._id %>' tabindex='-1' role='dialog'
