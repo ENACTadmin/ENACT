@@ -160,7 +160,7 @@
 </section>
 
 
-<% if (resourceInfo.length !== 0) { %>
+<% if (resourceInfo) { %>
     <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
         <!-- Modal -->
         <div class='modal fade' id='removeModal<%= resourceInfo[i]._id %>' tabindex='-1' role='dialog'
@@ -196,7 +196,7 @@
     <% } %>
 <% } %>
 
-<% if (resourceInfo.length !== 0) { %>
+<% if (resourceInfo) { %>
     <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
         <!-- Modal -->
         <div class='modal fade' id='selectModal<%= resourceInfo[i]._id %>' tabindex='-1' role='dialog'

@@ -20,16 +20,15 @@
 </section>
 
 
-<section class='section section__grey' data-aos='fade-up' style='height: 30%'>
+<section class='section section__grey' data-aos='fade-up'>
     <div class='container'>
         <div class='row'>
             <div class='col-md-3 col-sm-12'></div>
             <div class='col-md-6 col-sm-12'>
-
                 <form method='post' action='/showSecondPublicPrimaryResources'>
                     <div class='input-group-prepend'>
                         <input type='text' class='form-control' name='search'
-                               placeholder='Search for resource name or description'>
+                               placeholder='Search for anything'>
                         &nbsp&nbsp&nbsp
                         <input type='submit' name='submit' class='btn btn-dark' value='Search'>
                         &nbsp&nbsp&nbsp
@@ -46,9 +45,11 @@
         <div class='container'>
             <div class='row'>
                 <div class='col-md-12 col-sm-12'>
+                    <h3>All Public Resources</h3>
+                    <hr>
                     <div class='card border-0'>
                         <div class='card-body'>
-                            <% if (resourceInfo.length !== 0) { %>
+                            <% if (resourceInfo) { %>
                                 <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
                                     <div class='card border-0'>
                                         <div class='card-body'>

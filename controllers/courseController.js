@@ -17,7 +17,7 @@ exports.createNewClass = async (req, res, next) => {
     if (!req.user.googleemail.endsWith("edu") && res.locals.status !== 'faculty') {
         res.send("You must log in with an authorized faculty account to create a class. <a href='/logout'>Logout</a>")
         return
-    } else if (!(req.body.norobot === 'on' && req.body.robot == undefined)) {
+    } else if (!(req.body.norobot === 'on' && req.body.robot === undefined)) {
         res.send("no robots allowed!")
         return
     }
