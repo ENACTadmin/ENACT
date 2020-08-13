@@ -509,6 +509,10 @@ app.get('/showDenied',
 app.get('/approvedResources',
     notificationController.loadApprovedResources
 )
+
+app.get('/showPublic',
+    notificationController.loadMyPublicResources
+)
 //*******************************************
 //*************Error related*****************
 
