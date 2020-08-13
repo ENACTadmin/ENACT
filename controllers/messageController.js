@@ -110,10 +110,15 @@ exports.loadMessageBoard = async (req, res, next) => {
             checkStatus: 'deny',
             ownerId: req.user._id
         })
+        let publicInfo = await Resource.find({
+            status: 'public',
+            ownerId: req.user._id
+        })
         res.locals.resourceNum = await resourceInfo.length
         res.locals.messageInfo = await messageInfo
         res.locals.approveInfo = await approveInfo
         res.locals.denyInfo = await denyInfo
+        res.locals.publicInfo = await publicInfo
         res.render('./pages/messageBoard')
     } catch (e) {
         next(e)

@@ -19,7 +19,7 @@ exports.uploadResource = async (req, res, next) => {
                 status: req.body.status, // public/private to class/private to professors
                 createdAt: new Date(),
                 name: req.body.resourceName,
-                description: req.body.resourceDescription,
+                description: req.body.description,
                 tags: tags, // tags as array
                 uri: req.body.uri, // universal resource identifier specIdific to the resource
                 state: req.body.state,
@@ -40,7 +40,7 @@ exports.uploadResource = async (req, res, next) => {
                     status: req.body.status, // public/private to class/private to professors
                     createdAt: new Date(),
                     name: req.body.resourceName,
-                    description: req.body.resourceDescription,
+                    description: req.body.description,
                     tags: tags, // tags as array
                     uri: req.body.uri, // universal resource identifier specific to the resource
                     state: req.body.state,
@@ -60,7 +60,7 @@ exports.uploadResource = async (req, res, next) => {
                     status: req.body.status, // public/private to class/private to professors
                     createdAt: new Date(),
                     name: req.body.resourceName,
-                    description: req.body.resourceDescription,
+                    description: req.body.description,
                     tags: tags, // tags as array
                     uri: req.body.uri, // universal resource identifier specific to the resource
                     state: req.body.state,
