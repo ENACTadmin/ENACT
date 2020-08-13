@@ -30,29 +30,43 @@
                             </div>
                         </div>
                     <% } %>
-                        <% if (approveInfo) { %>
-                        <div class='card border-success mb-3' style='max-width: 18rem;'>
-                            <div class='card-header'><h3>Approved Info</h3></div>
-                            <div class='card-body'>
-                                <h5 style='display: inline'>Congratulations! You own <%= approveInfo.length %> approved resources.</h5>
-                                <br>
-                                <br>
-                                    <a href='/approvedResources'><input class='btn btn-sm btn-outline-success' type='submit' value='Go to my approved resources'></a>
+                        <% if (status === 'admin' || status === 'faculty') { %>
+
+                            <div class='card border-success mb-3' style='max-width: 18rem;'>
+                                <div class='card-header'><h3>Public Resources Info</h3></div>
+                                <div class='card-body'>
+                                    <h5 style='display: inline'>Congratulations! <%= publicInfo.length %> of your resources have been shown to public.</h5>
+                                    <br>
+                                    <br>
+                                    <a href='/showPublic'><input class='btn btn-sm btn-outline-success' type='submit' value='Go to my public resources'></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                <% } %>
-                <% if (denyInfo.length !== 0) { %>
-                    <div class='card border-dark mb-3' style='max-width: 18rem;'>
-                        <div class='card-header'><h3>Required to Review Info</h3></div>
-                        <div class='card-body'>
-                            <h5 style='display: inline'>Sorry, <%= approveInfo.length %> of your resources need to be reviewed again.</h5>
-                            <br>
-                            <br>
-                            <a href='/showDenied'><input class='btn btn-sm btn-outline-dark' type='submit' value='Review my resources'></a>
+                        <% }else{ %>
+                            <% if (approveInfo != 0) { %>
+                            <div class='card border-success mb-3' style='max-width: 18rem;'>
+                                <div class='card-header'><h3>Approved Info</h3></div>
+                                <div class='card-body'>
+                                    <h5 style='display: inline'>Congratulations! You own <%= approveInfo.length %> approved resources.</h5>
+                                    <br>
+                                    <br>
+                                        <a href='/approvedResources'><input class='btn btn-sm btn-outline-success' type='submit' value='Go to my approved resources'></a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-            </div>
+                    <% } %>
+                    <% if (denyInfo.length != 0) { %>
+                        <div class='card border-dark mb-3' style='max-width: 18rem;'>
+                            <div class='card-header'><h3>Required to Review Info</h3></div>
+                            <div class='card-body'>
+                                <h5 style='display: inline'>Sorry, <%= denyInfo.length %> of your resources need to be reviewed again.</h5>
+                                <br>
+                                <br>
+                                <a href='/showDenied'><input class='btn btn-sm btn-outline-dark' type='submit' value='Review my resources'></a>
+                            </div>
+                        </div>
+                </div>
+                <% } %>
             <% } %>
 
             <br><br><br>

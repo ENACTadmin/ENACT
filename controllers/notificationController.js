@@ -189,3 +189,16 @@ exports.partPublicToENACT = async (req, res, next) => {
         next(e)
     }
 }
+
+exports.loadMyPublicResources = async (req, res, next) => {
+    try {
+        res.locals.resourceInfo = await Resource.find({
+            status: 'public',
+            ownerId: req.user._id
+        }).sort({'createdAt': -1})
+        res.render('./pages/showPublic')
+    } catch (e) {
+        console.log("error: " + e)
+        next(e)
+    }
+}
