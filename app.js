@@ -127,7 +127,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 //*******************************************
 //***********Login authorization*************
-
 let adminList = ["bbdhy96@gmail.com", "nicolezhang@brandeis.edu", "stimell@brandeis.edu", "djw@brandeis.edu", "epevide@brandeis.edu"]
 // here is where we check and assign user's status
 // this runs every time when a req is received
