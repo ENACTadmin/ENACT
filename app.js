@@ -35,7 +35,7 @@ configPassport(passport);
 //***********Database connection*************
 
 // const MONGODB_URI = 'mongodb://localhost/ENACT';
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/ENACT';
+const MONGODB_URI = process.env.MONGODB_URI_IND || 'mongodb://localhost/ENACT';
 const mongoose = require('mongoose');
 
 // Makes connection asynchronously.  Mongoose will queue up database
