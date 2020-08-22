@@ -38,63 +38,68 @@ month[11] = "December";
                     </div>
                 </div>
 
-                <% if (loggedIn && (user.status === 'admin' || user.status === 'faculty')) { %>
-                    <div id="modal-view-event-add" class="modal modal-top fade calendar-modal">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <form action='/event/save' method='post' id="add-event">
-                                    <div class="modal-body">
-                                        <h4 class="text-blue h4 mb-10">Add Event Detail</h4>
-                                        <div class="form-group">
-                                            <label>Event name</label>
-                                            <input type="text" class="form-control" name="title">
+                <% console.log('status: ', status) %>
+                <% if (loggedIn) { %>
+                    <% if (status === 'admin' || status === 'faculty') { %>
+                        <div id="modal-view-event-add" class="modal modal-top fade calendar-modal">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <form action='/event/save' method='post' id="add-event">
+                                        <div class="modal-body">
+                                            <h4 class="text-blue h4 mb-10">Add Event Detail</h4>
+                                            <div class="form-group">
+                                                <label>Event name</label>
+                                                <input type="text" class="form-control" name="title">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Start Time</label>
+                                                <input autocomplete="off" type='text'
+                                                       class="datetimepicker form-control" name="start">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>End Time</label>
+                                                <input autocomplete="off" type='text'
+                                                       class="datetimepicker form-control" name="end">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Event Description</label>
+                                                <textarea class="form-control" name="description"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Event Link</label>
+                                                <input type="text" class="form-control" name="uri">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Event Color</label>
+                                                <select class="form-control" name="className">
+                                                    <option value="fc-bg-default">default</option>
+                                                    <option value="fc-bg-blue">blue</option>
+                                                    <option value="fc-bg-lightgreen">light green</option>
+                                                    <option value="fc-bg-pinkred">pink red</option>
+                                                    <option value="fc-bg-deepskyblue">deep skyblue</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Event Icon</label>
+                                                <select class="form-control" name="icon">
+                                                    <option value="circle">circle</option>
+                                                    <option value="cog">cog</option>
+                                                    <option value="group">group</option>
+                                                    <option value="suitcase">suitcase</option>
+                                                    <option value="calendar">calendar</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label>Start Time</label>
-                                            <input type='text' class="datetimepicker form-control" name="start">
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close
+                                            </button>
                                         </div>
-                                        <div class="form-group">
-                                            <label>End Time</label>
-                                            <input type='text' class="datetimepicker form-control" name="end">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Event Description</label>
-                                            <textarea class="form-control" name="description"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Event Link</label>
-                                            <input type="text" class="form-control" name="uri">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Event Color</label>
-                                            <select class="form-control" name="className">
-                                                <option value="fc-bg-default">default</option>
-                                                <option value="fc-bg-blue">blue</option>
-                                                <option value="fc-bg-lightgreen">light green</option>
-                                                <option value="fc-bg-pinkred">pink red</option>
-                                                <option value="fc-bg-deepskyblue">deep skyblue</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Event Icon</label>
-                                            <select class="form-control" name="icon">
-                                                <option value="circle">circle</option>
-                                                <option value="cog">cog</option>
-                                                <option value="group">group</option>
-                                                <option value="suitcase">suitcase</option>
-                                                <option value="calendar">calendar</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">Save</button>
-                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close
-                                        </button>
-                                    </div>
-                                </form>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    <% } %>
                 <% } %>
             </div>
         </div>
