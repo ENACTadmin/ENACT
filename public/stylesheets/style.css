@@ -2231,11 +2231,10 @@ ul.grid__list--fmenu li a:hover {
     }
 }
 
-
 /*
 *
 * ==========================================
-* Calendar
+* CUSTOM UTIL CLASSES
 * ==========================================
 *
 */
@@ -2322,15 +2321,28 @@ Calendar Styling */
     color: #ddd;
 }
 
-/*
-*
-* ==========================================
-* FOR DEMO PURPOSES
-* ==========================================
-*
-*/
-/*body {*/
-/*    min-height: 100vh;*/
-/*    background-color: #3ca55c;*/
-/*    background-image: linear-gradient(147deg, #3ca55c 0%, #b5ac49 100%);*/
-/*}*/
+/*==============================================================
+	Calendar Start
+==============================================================*/
+.calendar-wrap{}
+.calendar-wrap .fc-event.ui-draggable-handle{
+    padding: 5px;
+    margin-bottom: 5px;
+}
+.fc th{
+    font-weight: 500;
+    padding: 10px !important;
+    background: #e1e1f5;
+}
+.fc-day-grid-event .fc-time{
+    font-weight: 500 !important;
+}
+.fc-day-grid-event .fc-content{
+    padding: 3px 9px;
+}
+.fc-header-toolbar h2{
+    font-size: 24px;
+}
+/*==============================================================
+	Calendar End
+==============================================================*/

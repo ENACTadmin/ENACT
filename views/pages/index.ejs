@@ -160,8 +160,8 @@
     </div>
 </header>
 
-<!-- Section intro -->
-<section class='section section--intro section__grey' id='home'>
+<!-- Front intro -->
+<section class='section section--intro section__grey'>
     <div class='section__content section__content--full-width' style='font-weight: 800;'>
         <div class='intro'>
             <div class='intro__content' style='background: #0053a4;'>
@@ -203,7 +203,7 @@
     </div>
 </section>
 
-<!-- Section features -->
+<!-- ENACT Program intro -->
 <section class='section section__grey'>
     <br><br><br>
     <h2 class='section__title section__title--centered'>The ENACT Program</h2>
@@ -278,144 +278,17 @@
 
     </div>
 </section>
+
+<!-- Calendar -->
 <section class='section diagonal-gradient'>
-    <div class='section__content section__content--fluid-width section__content--padding'>
-        <div class="container py-5">
-            <!-- For Demo Purpose -->
-            <header class="text-center text-white mb-5">
-                <h2 class='section__title section__title--centered' style='color: white'>Upcoming Events</h2>
-            </header>
-
-            <!-- Calendar -->
-            <div class="calendar shadow bg-white p-5" data-aos='fade-up'>
-                <div class="d-flex align-items-center"><i class="fa fa-calendar fa-3x mr-3"></i>
-                    <h2 class="month font-weight-bold mb-0 text-uppercase">December 2019</h2>
-                </div>
-                <p class="font-italic text-muted mb-5">No events for this day.</p>
-                <ol class="day-names list-unstyled">
-                    <li class="font-weight-bold text-uppercase">Sun</li>
-                    <li class="font-weight-bold text-uppercase">Mon</li>
-                    <li class="font-weight-bold text-uppercase">Tue</li>
-                    <li class="font-weight-bold text-uppercase">Wed</li>
-                    <li class="font-weight-bold text-uppercase">Thu</li>
-                    <li class="font-weight-bold text-uppercase">Fri</li>
-                    <li class="font-weight-bold text-uppercase">Sat</li>
-                </ol>
-
-                <ol class="days list-unstyled">
-                    <li>
-                        <div class="date">1</div>
-                        <div class="event bg-success">Event with Long Name</div>
-                    </li>
-                    <li>
-                        <div class="date">2</div>
-                    </li>
-                    <li>
-                        <div class="date">3</div>
-                    </li>
-                    <li>
-                        <div class="date">4</div>
-                    </li>
-                    <li>
-                        <div class="date">5</div>
-                    </li>
-                    <li>
-                        <div class="date">6</div>
-                    </li>
-                    <li>
-                        <div class="date">7</div>
-                    </li>
-                    <li>
-                        <div class="date">8</div>
-                    </li>
-                    <li>
-                        <div class="date">9</div>
-                    </li>
-                    <li>
-                        <div class="date">10</div>
-                    </li>
-                    <li>
-                        <div class="date">11</div>
-                    </li>
-                    <li>
-                        <div class="date">12</div>
-                    </li>
-                    <li>
-                        <div class="date">13</div>
-                        <div class="event all-day begin span-2 bg-warning">Event Name</div>
-                    </li>
-                    <li>
-                        <div class="date">14</div>
-                    </li>
-                    <li>
-                        <div class="date">15</div>
-                        <div class="event all-day end bg-success">Event Name</div>
-                    </li>
-                    <li>
-                        <div class="date">16</div>
-                    </li>
-                    <li>
-                        <div class="date">17</div>
-                    </li>
-                    <li>
-                        <div class="date">18</div>
-                    </li>
-                    <li>
-                        <div class="date">19</div>
-                    </li>
-                    <li>
-                        <div class="date">20</div>
-                    </li>
-                    <li>
-                        <div class="date">21</div>
-                        <div class="event bg-primary">Event Name</div>
-                        <div class="event bg-success">Event Name</div>
-                    </li>
-                    <li>
-                        <div class="date">22</div>
-                        <div class="event bg-info">Event with Longer Name</div>
-                    </li>
-                    <li>
-                        <div class="date">23</div>
-                    </li>
-                    <li>
-                        <div class="date">24</div>
-                    </li>
-                    <li>
-                        <div class="date">25</div>
-                    </li>
-                    <li>
-                        <div class="date">26</div>
-                    </li>
-                    <li>
-                        <div class="date">27</div>
-                    </li>
-                    <li>
-                        <div class="date">28</div>
-                    </li>
-                    <li>
-                        <div class="date">29</div>
-                    </li>
-                    <li>
-                        <div class="date">30</div>
-                    </li>
-                    <li>
-                        <div class="date">31</div>
-                    </li>
-                    <li class="outside">
-                        <div class="date">1</div>
-                    </li>
-                    <li class="outside">
-                        <div class="date">2</div>
-                    </li>
-                    <li class="outside">
-                        <div class="date">3</div>
-                    </li>
-                    <li class="outside">
-                        <div class="date">4</div>
-                    </li>
-                </ol>
-            </div>
+    <div class='section__content section__content--fluid-width section__content--padding' data-aos="fade-up">
+        <h2 class='section__title section__title--centered' style="color: white">Event calendar</h2>
+        <%- include('../components/component-event'); -%>
+        <%- include('../components/component-eventImport'); -%>
+        <div class='text-center' data-aos='fade-up' data-aos-delay="100">
+            <a href='/events'><input type='button' name='submit'
+                                     class='btn btn-lg btn-light'
+                                     value='View more events'></a>
         </div>
     </div>
 </section>
@@ -427,7 +300,7 @@
         <h2 class='section__title section__title--centered'>ENACT Faculty</h2>
         <br>
         <div class='grid grid--3col'>
-            <div class='partners__slide grid__item' style='height: 750px' data-aos='fade-up'>
+            <div class='partners__slide grid__item' style='height: 750px' data-aos="fade-up">
                 <div class='card-body' style='border-radius: 30px'>
                     <img class='d-flex mr-3'
                          src='https://www.brandeis.edu/ethics/images/advocacy/mstimell01_cropped.jpg'
@@ -443,7 +316,7 @@
                     <br>
                 </div>
             </div>
-            <div class='partners__slide grid__item' style='height: 750px' data-aos='fade-up'>
+            <div class='partners__slide grid__item' style='height: 750px' data-aos="fade-up" data-aos-delay="200">
                 <div class='card-body' style='border-radius: 30px'>
                     <img class='d-flex mr-3' src='https://www.brandeis.edu/ethics/images/DJW%20photo.jpg'
                          alt='David J. Weinstein'
@@ -457,7 +330,7 @@
                     <br>
                 </div>
             </div>
-            <div class='partners__slide grid__item' style='height: 750px' data-aos='fade-up'>
+            <div class='partners__slide grid__item' style='height: 750px' data-aos="fade-up" data-aos-delay="400">
                 <div id='carouselExampleSlidesOnly' class='carousel slide' data-ride='carousel'>
                     <div class='carousel-inner'>
                         <div class='carousel-item active'>
@@ -502,7 +375,7 @@
 
 <!-- Section -->
 <section class='section diagonal-gradient'>
-    <div class='section__content section__content--fluid-width section__content--padding' data-aos='fade-up' >
+    <div class='section__content section__content--fluid-width section__content--padding' data-aos='fade-up'>
         <h2 class='section__title section__title--centered' style='color: white'>Public resources</h2>
         <br><br><br>
         <% if (resourceInfo.length === 0) { %>
@@ -550,14 +423,14 @@
         <% if (status === 'admin') { %>
             <div class='text-center' data-aos='fade-up' data-aos-delay="100">
                 <a href='/managePublicResources'><input type='button' name='submit'
-                                                        class='btn btn-lg btn-primary'
+                                                        class='btn btn-lg btn-light'
                                                         value='MANAGE PUBLIC RESOURCES'></a>
             </div>
         <% } %>
         <% if (!loggedIn) { %>
             <div class='text-center' data-aos='fade-up' data-aos-delay="100">
                 <a href='/publicPrimarySearch'><input type='button' name='submit'
-                                                      class='btn btn-lg btn-primary'
+                                                      class='btn btn-lg btn-light'
                                                       value='Find More Resources'></a>
             </div>
         <% } %>

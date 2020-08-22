@@ -12,6 +12,8 @@ const Course = require('./models/Course');
 const Resource = require('./models/Resource');
 const User = require('./models/User');
 const Faculty = require('./models/Faculty')
+const Event = require('./models/Event')
+
 
 //*******************************************
 //***********Controllers*********************
@@ -21,6 +23,7 @@ const resourceController = require('./controllers/resourceController');
 const profileController = require('./controllers/profileController');
 const notificationController = require('./controllers/notificationController');
 const messageController = require('./controllers/messageController');
+const eventController = require('./controllers/eventController');
 
 
 //*******************************************
@@ -40,7 +43,11 @@ const mongoose = require('mongoose');
 
 // Makes connection asynchronously.  Mongoose will queue up database
 // operations and release them when the connection is complete.
-mongoose.connect(MONGODB_URI, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(MONGODB_URI, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true
+});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
@@ -512,6 +519,42 @@ app.get('/approvedResources',
 app.get('/showPublic',
     notificationController.loadMyPublicResources
 )
+
+//*******************************************
+//*************Event related*****************
+
+app.get('/events',
+    async (req, res, next) => {
+        let eventsInfo = await Event.find({}).sort({start: -1})
+        res.locals.eventsInfo = eventsInfo
+        res.render('./pages/calendar')
+    }
+)
+
+app.get('/events/all',
+    async (req, res) => {
+        let now = new Date();
+        let eventsInfo = await Event.find({}).sort({start: -1})
+        for (let i = 0; i < eventsInfo.length; i++) {
+            eventsInfo[i].start = new Date(eventsInfo[i].start - (now.getTimezoneOffset() * 60000))
+            eventsInfo[i].end = new Date(eventsInfo[i].end - (now.getTimezoneOffset() * 60000))
+        }
+        return res.send(eventsInfo)
+    }
+)
+
+app.post('/event/delete/:eventId',
+    eventController.deleteEvent
+)
+
+app.post('/event/edit/:eventId',
+    eventController.editEvent
+)
+
+app.post('/event/save',
+    eventController.saveEvent
+)
+
 //*******************************************
 //*************Error related*****************
 
