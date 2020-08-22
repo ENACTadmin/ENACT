@@ -281,16 +281,16 @@
 
 <!-- Calendar -->
 <section class='section diagonal-gradient'>
-    <div class='section__content section__content--fluid-width section__content--padding' data-aos="fade-up">
-        <h2 class='section__title section__title--centered' style="color: white">Event calendar</h2>
+    <h2 class='section__title section__title--centered' style="color: white; padding-top: 80px">Event calendar</h2>
+    <section class="section__content">
         <%- include('../components/component-event'); -%>
         <%- include('../components/component-eventImport'); -%>
-        <div class='text-center' data-aos='fade-up' data-aos-delay="100">
+        <div class='text-center' data-aos='fade-up' style="padding-bottom: 80px" data-aos-delay="100">
             <a href='/events'><input type='button' name='submit'
                                      class='btn btn-lg btn-light'
                                      value='View more events'></a>
         </div>
-    </div>
+    </section>
 </section>
 
 
@@ -302,10 +302,10 @@
         <div class='grid grid--3col'>
             <div class='partners__slide grid__item' style='height: 750px' data-aos="fade-up">
                 <div class='card-body' style='border-radius: 30px'>
-                    <img class='d-flex mr-3'
+                    <img class='d-flex'
                          src='https://www.brandeis.edu/ethics/images/advocacy/mstimell01_cropped.jpg'
                          alt='Melissa Stimell'
-                         style='width: 100%; height:400px; object-fit: cover; border-radius: 30px;'>
+                         style='width: 100%; height:400px; object-fit: cover; border-radius: 30px'>
                     <br>
                     <h3 style='text-align: center'>Melissa Stimell</h3>
                     <h4 style='text-align: center'>Academic Program Director</h4>
@@ -320,7 +320,7 @@
                 <div class='card-body' style='border-radius: 30px'>
                     <img class='d-flex mr-3' src='https://www.brandeis.edu/ethics/images/DJW%20photo.jpg'
                          alt='David J. Weinstein'
-                         style='width: 100%; height: 400px; object-fit: cover; border-radius: 30px;'>
+                         style='width: 100%; height:400px; object-fit: cover; border-radius: 30px'>
                     <br>
 
                     <h3 style='text-align: center'>David J. Weinstein</h3>
