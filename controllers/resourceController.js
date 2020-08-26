@@ -116,7 +116,8 @@ exports.resetWord2Id = async (req, res, next) => {
         for(let i = 0; i < resources.length; i++) {
             await setWord2Id(resources[i]);
         }
-        res.send("finished")
+        alert('Finished!')
+        res.redirect('/')
     } catch (e) {
         next(e)
     }
