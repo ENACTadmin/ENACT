@@ -6,6 +6,7 @@ const Word2Id = require('../models/Word2Id');
 
 let resourceInfoSet
 
+
 exports.uploadResource = async (req, res, next) => {
     const courseId = req.params.courseId
     console.log("in upload Resource")
@@ -74,35 +75,50 @@ exports.uploadResource = async (req, res, next) => {
         }
         // save the new resource
         await newResource.save()
-        let fullContent = newResource.name + ',' + newResource.description + ',' + newResource.tags + ','
-            + newResource.state + ',' + newResource.contentType + ',' + newResource.mediaType + ','
-            + newResource.institution + ',' + newResource.yearOfCreation
-
-        let regex = /[^\s\.,!?]+/g;
-        let match = fullContent.match(regex);
-        for (let i = 0; i < match.length; i++) {
-            let word2Id = await Word2Id.findOne({word: match[i]})
-            console.log('hello:', word2Id)
-            // if not null
-            console.log(match[i])
-            if (match[i].toString() !== 'null') {
-                if (word2Id === null) {
-                    console.log('now setting new one')
-                    let newWord2Id = new Word2Id({
-                        word: match[i],
-                        ids: [newResource._id]
-                    })
-                    newWord2Id.save()
-                } else {
-                    word2Id.ids = await [newResource._id].concat(word2Id.ids)
-                    word2Id.save()
-                }
-            }
-        }
+        await setWord2Id(newResource);
         if (courseId === undefined)
             res.redirect('/facultyExclusive')
         else
             res.redirect('/showOneCourse/' + courseId)
+    } catch (e) {
+        next(e)
+    }
+}
+
+async function setWord2Id(newResource) {
+    let fullContent = newResource.name + ',' + newResource.description + ',' + newResource.tags + ','
+        + newResource.state + ',' + newResource.contentType + ',' + newResource.mediaType + ','
+        + newResource.institution + ',' + newResource.yearOfCreation
+
+    let regex = /[^\s\.,!?]+/g;
+    let match = fullContent.match(regex);
+    for (let i = 0; i < match.length; i++) {
+        let word2Id = await Word2Id.findOne({word: match[i]})
+        // if not null
+        console.log(match[i])
+        if (match[i].toString() !== 'null') {
+            if (word2Id === null) {
+                console.log('now setting new one')
+                let newWord2Id = new Word2Id({
+                    word: match[i],
+                    ids: [newResource._id]
+                })
+                newWord2Id.save()
+            } else {
+                word2Id.ids = await [newResource._id].concat(word2Id.ids)
+                word2Id.save()
+            }
+        }
+    }
+}
+
+exports.resetWord2Id = async (req, res, next) => {
+    try {
+        let resources = await Resource.find();
+        for(let i = 0; i < resources.length; i++) {
+            await setWord2Id(resources[i]);
+        }
+        res.send("finished")
     } catch (e) {
         next(e)
     }
