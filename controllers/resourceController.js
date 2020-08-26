@@ -95,18 +95,16 @@ async function setWord2Id(newResource) {
     for (let i = 0; i < match.length; i++) {
         let word2Id = await Word2Id.findOne({word: match[i]})
         // if not null
-        console.log(match[i])
         if (match[i].toString() !== 'null') {
             if (word2Id === null) {
-                console.log('now setting new one')
                 let newWord2Id = new Word2Id({
                     word: match[i],
                     ids: [newResource._id]
                 })
-                newWord2Id.save()
+                await newWord2Id.save()
             } else {
                 word2Id.ids = await [newResource._id].concat(word2Id.ids)
-                word2Id.save()
+                await word2Id.save()
             }
         }
     }
