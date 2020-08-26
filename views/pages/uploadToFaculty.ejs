@@ -36,7 +36,7 @@
                     <div class='col-md-6 col-sm-12'>
                         <h3>Basic information</h3>
                         <hr>
-                        <%- include('../components/component-basicInfo') -%>
+                        <%- include('../components/component-facultyBasicInfo') -%>
                         <br>
                         <%- include('../components/component-stateSelector') -%>
                         <br>
@@ -50,7 +50,7 @@
                                 <select class='form-control' name='status'>
                                     <option selected value='privateToProfessor'>Exclusive to ENACT professors</option>
                                     <option value='privateToENACT'>Exclusive to all ENACT members</option>
-                                    <option value='partPublic'>Open to public</option>
+                                    <option value='partPublic'>Open to public(Need to be approved by admins)</option>
                                 </select>
                             </div>
                             <br>
@@ -67,7 +67,7 @@
                     </div>
                     <div class='w-100'></div>
 
-                    <%- include('../components/component-tagSelector') -%>
+                    <%- include('../components/component-tagSelectorFaculty') -%>
 
                     <br>
 
