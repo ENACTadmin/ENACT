@@ -60,10 +60,18 @@
                                                         <b>Description: </b> <%= resourceInfo[i].description %></li>
                                                     <li class='list-group-item borderless box-padding'>
                                                         <b>State:</b> <%= resourceInfo[i].state %></li>
-                                                    <li class='list-group-item borderless box-padding'>
-                                                        <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click
-                                                            me</a>
-                                                    </li>
+                                                    <% if (resourceInfo[i].mediaType === 'video' && resourceInfo[i].uri.endsWith(".mp4")) { %>
+                                                        <li class='list-group-item borderless box-padding'>
+                                                            <iframe width="480" height="270" frameborder="0" allowtransparency="true" allowfullscreen
+                                                                    src="<%= resourceInfo[i].uri %>">
+                                                            </iframe>
+                                                        </li>
+                                                    <% } else { %>
+                                                        <li class='list-group-item borderless box-padding'>
+                                                            <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click
+                                                                me</a>
+                                                        </li>
+                                                    <% } %>
                                                     <li class='list-group-item borderless box-padding'>
                                                         <b>Institution: </b> <%= resourceInfo[i].institution %></li>
                                                     <li class='list-group-item borderless box-padding'>

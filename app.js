@@ -447,6 +447,9 @@ app.post('/partPublicToENACT',
     notificationController.partPublicToENACT
 )
 
+app.get('/secretFunction',
+    resourceController.resetWord2Id
+)
 
 //*******************************************
 //***********Profile related*****************
