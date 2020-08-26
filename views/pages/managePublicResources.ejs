@@ -23,20 +23,21 @@
                     <h4>No resource available yet</h4>
                 </div>
             </div>
-        <% } else{%>
+        <% } else{ %>
             <% let num = 0 %>
             <% for (let i = 0; i < resourceInfo.length; i++) { %>
                 <% if (resourceInfo[i].status === 'finalPublic') { %>
-                    <% num = num +1 %>
+                    <% num = num + 1 %>
                 <% } %>
             <% } %>
             <% if (num >= 3) { %>
                 <div class='card'>
                     <div class='card-body text-center'>
-                        <h4>There are only three spots for public resources on the home page. Please remove one resources below if you want to add in a new one.</h4>
+                        <h4>There are only three spots for public resources on the home page. Please remove one
+                            resources below if you want to add in a new one.</h4>
                     </div>
                 </div>
-            <% } else{%>
+            <% } else{ %>
                 <% for (let i = 0; i < resourceInfo.length; i++) { %>
                     <% if (resourceInfo[i].status === 'public') { %>
                         <div class='card border-0'>
