@@ -85,8 +85,7 @@
                 </li>
                 <li>
                     <% if (loggedIn) { %>
-                        <a class='header-link' id='header-link' href='/messageBoard' data-aos='fade-left'>Message
-                            board</a>
+                        <a class='header-link' id='header-link' href='/messageBoard' data-aos='fade-left'>Messages</a>
                     <% } else { %>
                     <% } %>
                 </li>
@@ -94,7 +93,7 @@
                 <li>
                     <% if (loggedIn) { %>
                         <% if (status === 'admin' || status === 'faculty' ) { %>
-                            <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Faculty Special</a>
+                            <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Faculty</a>
                             <ul class='sub-menu'>
                                 <li>
                                     <a class='header-link' href='/#'>Faculty guide</a>
@@ -117,7 +116,7 @@
                 <li>
                     <% if (loggedIn) { %>
                         <% if (status === 'admin') { %>
-                            <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Admin Special</a>
+                            <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Admin</a>
                             <ul class='sub-menu'>
                                 <li>
                                     <a class='header-link' href='/managePublicResources'>Manage home page resources</a>
