@@ -33,6 +33,8 @@ $(document).ready(function () {
             if (file === null) {
                 return alert('No file selected.');
             }
+            $('.uploaded').text('Uploading')
+            $('#uploadStatus').attr("src", "https://blog.brightonps.sa.edu.au/wp-content/uploads/2018/11/runningman.gif");
             getSignedRequest(file);
         };
     })();

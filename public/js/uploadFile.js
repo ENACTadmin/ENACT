@@ -17,14 +17,16 @@ function uploadFile(file, signedRequest, url) {
     xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
+                // autofill url
                 document.getElementById('fileURL').value = url;
-                document.getElementById('resourceName').value = file.name.split('.')[0];
+                // document.getElementById('resourceName').value = file.name.split('.')[0];
                 $('#closeBtn').show()
                 $('#fileName').text('File name: ' + file.name)
                 $('#fileName').show()
                 $('#fileType').text('File type: ' + file.type)
                 $('#fileType').show()
                 $('.uploaded').text('Uploaded!')
+                $('#uploadStatus').attr("src", "https://cdn0.iconfinder.com/data/icons/sports-colored-icons-3/48/110-512.png");
             } else {
                 alert('Could not upload file.');
             }
