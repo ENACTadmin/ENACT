@@ -4,7 +4,13 @@
 
 <script>
     AOS.init();
+    jQuery('#calendarIndex').live('pagebeforecreate', function(){
+        jQuery(document).empty();
+        // window.location.replace('/');
+    });
 </script>
+
+
 
 <header class='header header--sticky'>
     <div class='header__content header__content--fluid-width'>
@@ -32,7 +38,7 @@
                         <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Resources</a>
                         <ul class='sub-menu'>
                             <li>
-                                <a class='header-link' href='/publicPrimarySearch'>Find some resources</a>
+                                <a class='header-link' href='/resources/view/public/all'>Find some resources</a>
                             </li>
 
                         </ul>
@@ -174,18 +180,18 @@
                 <% if (loggedIn) { %>
                     <% if (status === 'admin' || status === 'faculty') { %>
                         <div class='form-demo' data-aos='zoom-out-down' data-aos-duration='600' data-aos-delay='400'>
-                            <a href='/showCourses'><input type='submit' name='submit' class='form-demo__submit'
-                                                          value='MANAGE or CREATE COURSES'></a>
-                            <a href='/primarySearch'><input type='submit' name='submit' class='form-demo__submit'
+                            <a href='/showCourses'><input type='submit' name='submit' class='form-demo__large'
+                                                          value='MANAGE/CREATE COURSES'></a>
+                            <a href='/primarySearch'><input type='submit' name='submit' class='form-demo__large'
                                                             value='FIND RESOURCES'></a>
-                            <a href='/facultyExclusive'><input type='submit' name='submit' class='form-demo__submit'
+                            <a href='/facultyExclusive'><input type='submit' name='submit' class='form-demo__large'
                                                                value='FACULTY EXCLUSIVE'></a>
                         </div>
                     <% } else { %>
                         <div class='form-demo' data-aos='zoom-out-down' data-aos-duration='1000' data-aos-delay='400'>
-                            <a href='/showCourses'><input type='submit' name='submit' class='form-demo__submit'
-                                                          value='MANAGE or ENROLL IN COURSES'></a>
-                            <a href='/primarySearch'><input type='submit' name='submit' class='form-demo__submit'
+                            <a href='/showCourses'><input type='submit' name='submit' class='form-demo__large'
+                                                          value='MANAGE/ENROLL IN COURSES'></a>
+                            <a href='/primarySearch'><input type='submit' name='submit' class='form-demo__large'
                                                             value='FIND RESOURCES'></a>
                         </div>
                     <% } %>
@@ -194,7 +200,7 @@
                 <% } else { %>
                     <br>
                     <a href='/auth/google' data-aos='zoom-out-down' data-aos-duration='1000' data-aos-delay='400'><input
-                                type='submit' name='submit' class='form-demo__submit'
+                                type='submit' name='submit' class='form-demo__large'
                                 value='ENACT MEMBER LOGIN'></a>
                 <% } %>
             </div>
@@ -281,7 +287,7 @@
 <!-- Calendar -->
 <section class='section diagonal-gradient'>
     <h2 class='section__title section__title--centered' style="color: white; padding-top: 80px">Event calendar</h2>
-    <section class="section__content">
+    <section class="section__content" id="calendarIndex">
         <%- include('../components/component-event'); -%>
         <%- include('../components/component-eventImport'); -%>
         <div class='text-center' data-aos='fade-up' style="padding-bottom: 80px" data-aos-delay="100">
@@ -428,9 +434,9 @@
         <% } %>
         <% if (!loggedIn) { %>
             <div class='text-center' data-aos='fade-up' data-aos-delay="100">
-                <a href='/publicPrimarySearch'><input type='button' name='submit'
-                                                      class='btn btn-lg btn-light'
-                                                      value='Find More Resources'></a>
+                <a href='/resources/view/public/all'><input type='button' name='submit'
+                                                            class='btn btn-lg btn-light'
+                                                            value='Find More Resources'></a>
             </div>
         <% } %>
         <br>

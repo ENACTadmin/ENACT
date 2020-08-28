@@ -10,7 +10,7 @@ exports.saveEvent = async (req, res, next) => {
             end: req.body.end,
             uri: req.body.uri,
             description: req.body.description,
-            className: req.body.className,
+            // className: req.body.className,
             icon: req.body.icon,
         })
         await newEvent.save()
@@ -28,8 +28,9 @@ exports.editEvent = async (req, res, next) => {
         eventToEdit.end = req.body.end
         eventToEdit.uri = req.body.uri
         eventToEdit.description = req.body.description
-        eventToEdit.className = req.body.className
+        // eventToEdit.className = req.body.className
         eventToEdit.icon = req.body.icon
+        eventToEdit.visibility = req.body.visibility
         await eventToEdit.save()
         res.redirect('back')
     } catch (e) {

@@ -10,8 +10,9 @@ const EventSchema = Schema({
     end: Date,
     uri: String,
     description: String,
-    className: String,
-    icon: String
+    // className: String,
+    icon: String,
+    visibility: String
 });
 
 module.exports = mongoose.model('Event', EventSchema);

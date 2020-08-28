@@ -22,7 +22,7 @@ month[11] = "December";
                     <div id='calendar'></div>
                 </div>
                 <!-- calendar modal -->
-                <div id="modal-view-event" class="modal modal-top fade calendar-modal">
+                <div id="modal-view-event" class="modal modal-top fade">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-body">
@@ -38,7 +38,6 @@ month[11] = "December";
                     </div>
                 </div>
 
-                <% console.log('status: ', status) %>
                 <% if (loggedIn) { %>
                     <% if (status === 'admin' || status === 'faculty') { %>
                         <div id="modal-view-event-add" class="modal modal-top fade calendar-modal">
@@ -66,19 +65,26 @@ month[11] = "December";
                                                 <textarea class="form-control" name="description"></textarea>
                                             </div>
                                             <div class="form-group">
+                                                <label>Visibility</label>
+                                                <select class="form-control" name="visibility">
+                                                    <option value="public">Open to public</option>
+                                                    <option value="member">Open to ENACT members only</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
                                                 <label>Event Link</label>
                                                 <input type="text" class="form-control" name="uri">
                                             </div>
-                                            <div class="form-group">
-                                                <label>Event Color</label>
-                                                <select class="form-control" name="className">
-                                                    <option value="fc-bg-default">default</option>
-                                                    <option value="fc-bg-blue">blue</option>
-                                                    <option value="fc-bg-lightgreen">light green</option>
-                                                    <option value="fc-bg-pinkred">pink red</option>
-                                                    <option value="fc-bg-deepskyblue">deep skyblue</option>
-                                                </select>
-                                            </div>
+<!--                                            <div class="form-group">-->
+<!--                                                <label>Event Color</label>-->
+<!--                                                <select class="form-control" name="className">-->
+<!--                                                    <option value="fc-bg-default">default</option>-->
+<!--                                                    <option value="fc-bg-blue">blue</option>-->
+<!--                                                    <option value="fc-bg-lightgreen">light green</option>-->
+<!--                                                    <option value="fc-bg-pinkred">pink red</option>-->
+<!--                                                    <option value="fc-bg-deepskyblue">deep skyblue</option>-->
+<!--                                                </select>-->
+<!--                                            </div>-->
                                             <div class="form-group">
                                                 <label>Event Icon</label>
                                                 <select class="form-control" name="icon">
