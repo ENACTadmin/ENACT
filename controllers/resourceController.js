@@ -113,7 +113,7 @@ async function setWord2Id(newResource) {
 exports.resetWord2Id = async (req, res, next) => {
     try {
         let resources = await Resource.find();
-        for(let i = 0; i < resources.length; i++) {
+        for (let i = 0; i < resources.length; i++) {
             await setWord2Id(resources[i]);
         }
         alert('Finished!')
@@ -156,7 +156,7 @@ exports.loadResources = async (req, res, next) => {
             courseId: courseId,
             checkStatus: checkStatus
         })
-        let starred = await ResourceSet.findOne({ownerId: req.user._id})
+        let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
         let resourceIds = null
         if (starred) {
             resourceIds = await starred.resources
@@ -177,6 +177,7 @@ exports.primarySearch = async (req, res, next) => {
         let regex = /[^\s\.,!?]+/g;
         let match = req.body.search.match(regex)
         if (match) {
+            // admin search
             if (res.locals.status === 'admin' || res.locals.status === 'faculty') {
                 for (let i = 0; i < match.length; i++) {
                     let word2Id = await Word2Id.findOne({word: match[i]})
@@ -190,7 +191,9 @@ exports.primarySearch = async (req, res, next) => {
                         }
                     }
                 }
-            } else {
+            }
+            // student search
+            else {
                 for (let i = 0; i < match.length; i++) {
                     let word2Id = await Word2Id.findOne({word: match[i]})
                     if (word2Id !== null) {
@@ -212,8 +215,20 @@ exports.primarySearch = async (req, res, next) => {
                     }
                 }
             }
+        } else {
+            if (res.locals.status === 'admin' || res.locals.status === 'faculty') {
+                resourceInfo = await Resource.find({
+                    checkStatus: checkStatus
+                })
+            } else {
+                resourceInfo = await Resource.find({
+                    checkStatus: checkStatus,
+                    status: {$in: ["privateToENACT", "public"]}
+                })
+            }
         }
-        let starred = await ResourceSet.findOne({ownerId: req.user._id})
+
+        let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
 
         let starredResourceIds = null
         if (starred) {
@@ -237,7 +252,7 @@ exports.primarySearch = async (req, res, next) => {
     }
 }
 
-exports.primarySecondPublicSearch = async (req, res, next) => {
+exports.primaryPublicSearch = async (req, res, next) => {
     let resourceInfo = null
     const checkStatus = 'approve'
     try {
@@ -264,52 +279,63 @@ exports.primarySecondPublicSearch = async (req, res, next) => {
                     }
                 }
             }
+        } else {
+            resourceInfo = await Resource.find({
+                checkStatus: checkStatus,
+                status: {$in: ["finalPublic", "public"]}
+            })
         }
-        // remove duplicates in resource objects
-        let uniqueResourceInfo = null
-        if (resourceInfo) {
-            let jsonObject = resourceInfo.map(JSON.stringify);
-            uniqueResourceInfo = Array.from(new Set(jsonObject)).map(JSON.parse);
-        }
-        res.locals.resourceInfo = uniqueResourceInfo
-        res.render('./pages/publicPrimarySearch-second')
+        res.render('./pages/publicPrimarySearch', {
+            resourceInfo: resourceInfo
+        })
     } catch (e) {
         next(e)
     }
 }
 
-exports.primaryPublicSearch = async (req, res, next) => {
-    let resourceInfo = null
-    let allResource = null
-    const checkStatus = 'approve'
-    try {
-        resourceInfo = await Resource.find({
-            checkStatus: checkStatus,
-            $or: [
-                {
-                    description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                    status: {$in: ["finalPublic", "public"]}
-                },
-                {
-                    name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                    status: {$in: ["finalPublic", "public"]}
-                }
-            ],
-        })
-        res.locals.resourceInfo = resourceInfo
-        allResource = await Resource.find({
-            checkStatus: 'approve'
-        })
-        res.locals.allresource = allResource
-        res.render('./pages/publicPrimarySearch-second')
-    } catch (e) {
-        next(e)
-    }
-}
+// exports.primaryPublicSearch = async (req, res, next) => {
+//     let resourceInfo = null
+//     const checkStatus = 'approve'
+//     try {
+//         let regex = /[^\s\.,!?]+/g;
+//         let match = req.body.search.match(regex)
+//         if (match) {
+//             for (let i = 0; i < match.length; i++) {
+//                 let word2Id = await Word2Id.findOne({word: match[i]})
+//                 if (word2Id !== null) {
+//                     let resourceIds = word2Id.ids
+//                     if (resourceInfo === null) {
+//                         resourceInfo = await Resource.find({
+//                             checkStatus: checkStatus,
+//                             _id: {$in: resourceIds},
+//                             status: {$in: ["finalPublic", "public"]}
+//                         })
+//                     } else {
+//                         let newResourceInfo = await Resource.find({
+//                             checkStatus: checkStatus,
+//                             _id: {$in: resourceIds},
+//                             status: {$in: ["finalPublic", "public"]}
+//                         })
+//                         resourceInfo = resourceInfo.concat(newResourceInfo)
+//                     }
+//                 }
+//             }
+//         } else {
+//             resourceInfo = await Resource.find({
+//                 checkStatus: checkStatus,
+//                 status: {$in: ["finalPublic", "public"]}
+//             })
+//         }
+//         res.render('./pages/publicPrimarySearch', {
+//             resourceInfo: resourceInfo
+//         })
+//     } catch (e) {
+//         next(e)
+//     }
+// }
 
 exports.searchByFilled = async (req, res, next) => {
     let resourceInfo = null
-
     try {
         // -----------------------------------------------------------------
         // --------------------admin or faculty search----------------------
@@ -891,7 +917,8 @@ exports.searchByFilled = async (req, res, next) => {
 exports.loadAllFacultyResources = async (req, res, next) => {
     try {
         let resourceInfo = await Resource.find({status: 'privateToProfessor'})
-        let starred = await ResourceSet.findOne({ownerId: req.user._id})
+        let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
+
         let resourceIds = null
         console.log("starred ", starred)
         if (starred) {
@@ -978,7 +1005,7 @@ exports.removeResource = async (req, res, next) => {
 exports.starResource = async (req, res, next) => {
     try {
         let resourceId = await req.params.resourceId
-        let resourceSet = await ResourceSet.findOne({ownerId: req.user._id})
+        let resourceSet = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
         // if resourceSet collection is empty, then create a new instance
         if (!resourceSet) {
             let newResourceSet = new ResourceSet({
@@ -1059,7 +1086,7 @@ exports.checkUserName = async (req, res, next) => {
 exports.starResourceAlt = async (req, res, next) => {
     try {
         let resourceId = await req.params.resourceId
-        let resourceSet = await ResourceSet.findOne({ownerId: req.user._id})
+        let resourceSet = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
         console.log("type: ", typeof resourceSet)
         // if resourceSet collection is empty, then create a new instance
         if (!resourceSet) {
@@ -1093,7 +1120,7 @@ exports.starResourceAlt = async (req, res, next) => {
 exports.unstarResourceAlt = async (req, res, next) => {
     try {
         let resourceId = req.params.resourceId
-        let resourceSet = await ResourceSet.findOne({ownerId: req.user._id})
+        let resourceSet = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
         let resourceIds = resourceSet.resources
         console.log("ids: ", resourceIds)
         let newResourceIds = []
@@ -1262,7 +1289,7 @@ exports.createCollection = async (req, res, next) => {
             createdAt: new Date()
         })
         await newResourceSet.save()
-        res.redirect('/showCollection/' + newResourceSet._id)
+        res.redirect('/collection/view/' + newResourceSet._id)
     } catch (e) {
         next(e)
     }
@@ -1279,18 +1306,13 @@ exports.deleteCollection = async (req, res, next) => {
 }
 
 exports.showPublic = async (req, res, next) => {
-    let allResource = null
     try {
         let resourceInfo = await Resource.find({
             status: {$in: ["finalPublic", "public"]},
             checkStatus: 'approve'
         })
-        allResource = await Resource.find({
-            checkStatus: 'approve'
-        })
         res.render('./pages/publicPrimarySearch', {
             resourceInfo: resourceInfo,
-            allResource: allResource
         })
     } catch (e) {
         next(e)

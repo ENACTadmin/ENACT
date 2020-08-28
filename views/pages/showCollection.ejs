@@ -236,9 +236,12 @@
                     <div class='row'>
                         <div class='col-md-12 col-sm-12'>
                             <input style="width: 75%; display: inline" class="input-group-text" id="input" type="text"
-                                   value="http://enact-brandeis.herokuapp.com/showCollection/<%= resourceSet._id %>"/>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <button class="btn btn-primary" id="copy">Copy to clipboard</button>
+                                   value="http://enact-brandeis.herokuapp.com/collection/view/<%= resourceSet._id %>"/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a class="btn btn-primary" href="mailto:abc@example.com?subject=ENACT notification: collection shared by <%= user.name %>&body=Link: http://enact-brandeis.herokuapp.com/collection/view/<%= resourceSet._id %>">
+                                Send email
+                            </a>
+<!--                            <button class="btn btn-primary" id="copy">Copy to clipboard</button>-->
                         </div>
                     </div>
                 </div>
@@ -252,15 +255,15 @@
     </div>
 <% } %>
 
-<script>
-    function copy() {
-        const copyText = document.querySelector("#input");
-        copyText.select();
-        document.execCommand("copy");
-    }
+<!--<script>-->
+<!--    function copy() {-->
+<!--        const copyText = document.querySelector("#input");-->
+<!--        copyText.select();-->
+<!--        document.execCommand("copy");-->
+<!--    }-->
 
-    document.querySelector("#copy").addEventListener("click", copy);
-</script>
+<!--    document.querySelector("#copy").addEventListener("click", copy);-->
+<!--</script>-->
 
 <%- include('../components/component-editModal'); -%>
 
