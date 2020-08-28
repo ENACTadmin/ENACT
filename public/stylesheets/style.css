@@ -1070,7 +1070,7 @@ h6 {
     color: #c6c6c6;
 }
 
-.form-demo__submit {
+.form-demo__large {
     margin: 10px;
     /*margin-left: 10px;*/
     /*margin-right: 10px;*/
@@ -1080,7 +1080,8 @@ h6 {
     border: 1px solid #fff;
     height: 63px;
     line-height: 61px;
-    font-size: 18px;
+    font-size: 16px;
+    font-weight: 600;
     letter-spacing: 1px;
     cursor: pointer;
     color: #000;
@@ -1092,7 +1093,7 @@ h6 {
     transition: all 0.3s ease;
 }
 
-.form-demo__submit:hover {
+.form-demo__large:hover {
     background-color: #f7f8f9;
     border: 1px solid #fff;
     color: #000;

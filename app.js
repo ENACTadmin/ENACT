@@ -137,6 +137,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 let adminList = ["bbdhy96@gmail.com", "stimell@brandeis.edu", "djw@brandeis.edu", "epevide@brandeis.edu"]
 // here is where we check and assign user's status
 // this runs every time when a req is received
+let loggedIn = false;
 app.use(async (req, res, next) => {
     res.locals.title = "ENACT";
     res.locals.loggedIn = false;
@@ -145,6 +146,7 @@ app.use(async (req, res, next) => {
         let googleEmail = req.user.googleemail
         res.locals.user = req.user;
         res.locals.loggedIn = true;
+        loggedIn = true;
         // set appropriate status
         if (adminList.includes(googleEmail)) {
             res.locals.status = 'admin'
@@ -167,11 +169,13 @@ app.use(async (req, res, next) => {
     next()
 });
 
+
 // route for logging out
 app.get('/logout', function (req, res) {
     req.session.destroy((error) => {
         console.log("Error in destroying session: " + error)
     });
+    loggedIn = false
     console.log("session has been destroyed");
     req.logout();
     res.redirect('/');
@@ -273,24 +277,20 @@ app.post('/showPrimaryResources',
 )
 
 
-app.get('/publicPrimarySearch',
+app.get('/resources/view/public/all',
     resourceController.checkUserName,
     resourceController.showPublic
 )
 
-app.post('/showPublicPrimaryResources',
-    resourceController.primaryPublicSearch
-)
 
-app.get('/publicPrimarySearch-second',
+app.get('/publicPrimarySearch',
     resourceController.checkUserName,
     (req, res) =>
-        res.render('./pages/publicPrimarySearch-second'
-        )
+        res.render('./pages/publicPrimarySearch')
 )
 
-app.post('/showSecondPublicPrimaryResources',
-    resourceController.primarySecondPublicSearch
+app.post('/resources/view/public/result',
+    resourceController.primaryPublicSearch
 )
 
 app.get('/search',
@@ -383,7 +383,7 @@ app.get('/managePublicResources',
         res.render('./pages/managePublicResources')
 )
 
-app.get('/showCollection/:resourceSetId',
+app.get('/collection/view/:resourceSetId',
     resourceController.loadCollection,
     (req, res) =>
         res.render('./pages/showCollection')
@@ -527,7 +527,7 @@ app.get('/showPublic',
 //*************Event related*****************
 
 app.get('/events',
-    async (req, res, next) => {
+    async (req, res) => {
         let eventsInfo = await Event.find({}).sort({start: -1})
         res.locals.eventsInfo = eventsInfo
         res.render('./pages/calendar')
@@ -537,7 +537,12 @@ app.get('/events',
 app.get('/events/all',
     async (req, res) => {
         let now = new Date();
-        let eventsInfo = await Event.find({}).sort({start: -1})
+        let eventsInfo = null;
+        if (loggedIn) {
+            eventsInfo = await Event.find({}).sort({start: -1})
+        } else {
+            eventsInfo = await Event.find({visibility: 'public'}).sort({start: -1})
+        }
         for (let i = 0; i < eventsInfo.length; i++) {
             eventsInfo[i].start = new Date(eventsInfo[i].start - (now.getTimezoneOffset() * 60000))
             eventsInfo[i].end = new Date(eventsInfo[i].end - (now.getTimezoneOffset() * 60000))
