@@ -36,57 +36,66 @@
                         <div class='card-body'>
                             <% if (eventsInfo.length !== 0) { %>
                                 <% for (let i = 0; i < eventsInfo.length; i++) { %>
-                                    <div class='card border-0'>
-                                        <div class='card-body'>
-                                            <h4><%= eventsInfo[i].title %></h4>
-                                            <div class='card-text'>
-                                                <ul class='list-group'>
-                                                    <li class='list-group-item borderless box-padding'>
-                                                        <b>Description: </b> <%= eventsInfo[i].description %>
-                                                    </li>
-                                                    <% if (eventsInfo[i].start !== null) { %>
+                                    <% if (loggedIn || eventsInfo[i].visibility === 'public') { %>
+                                        <div class='card border-0'>
+                                            <div class='card-body'>
+                                                <h4><%= eventsInfo[i].title %></h4>
+                                                <div class='card-text'>
+                                                    <ul class='list-group'>
                                                         <li class='list-group-item borderless box-padding'>
-                                                            <b>Starts at:</b>
-                                                            <%= eventsInfo[i].start %>
+                                                            <b>Description: </b> <%= eventsInfo[i].description %>
                                                         </li>
-                                                    <% } %>
-                                                    <% if (eventsInfo[i].end !== null) { %>
-                                                        <li class='list-group-item borderless box-padding'>
-                                                            <b>Ends at:</b>
-                                                            <%= eventsInfo[i].end %>
-                                                        </li>
-                                                    <% } %>
-                                                    <% if (eventsInfo[i].uri !== null) { %>
-                                                        <li class='list-group-item borderless box-padding'>
-                                                            <b>Link: </b> <a
-                                                                    href="<%= eventsInfo[i].uri %>"><%= eventsInfo[i].uri %></a>
-                                                        </li>
-                                                    <% } %>
+                                                        <% if (eventsInfo[i].start !== null) { %>
+                                                            <li class='list-group-item borderless box-padding'>
+                                                                <b>Starts at:</b>
+                                                                <%= eventsInfo[i].start %>
+                                                            </li>
+                                                        <% } %>
+                                                        <% if (eventsInfo[i].end !== null) { %>
+                                                            <li class='list-group-item borderless box-padding'>
+                                                                <b>Ends at:</b>
+                                                                <%= eventsInfo[i].end %>
+                                                            </li>
+                                                        <% } %>
+                                                        <% if (eventsInfo[i].uri !== null) { %>
+                                                            <li class='list-group-item borderless box-padding'>
+                                                                <b>Link: </b> <a
+                                                                        href="<%= eventsInfo[i].uri %>"><%= eventsInfo[i].uri %></a>
+                                                            </li>
+                                                        <% } %>
+                                                        <% if (eventsInfo[i].visibility !== null) { %>
+                                                            <li class='list-group-item borderless box-padding'>
+                                                                <b>Visibility: </b><%= eventsInfo[i].visibility %>
+                                                            </li>
+                                                        <% } %>
 
-                                                    <% if (loggedIn) { %>
-                                                        <li class='list-group-item borderless box-padding'
-                                                            style="display: inline">
-                                                            <b>Actions:</b>
-                                                            <button type='button' class='btn btn-sm btn-outline-info'
-                                                                    style='border:0 solid transparent'
-                                                                    data-toggle='modal'
-                                                                    data-target='#editModal<%= eventsInfo[i]._id %>'>
-                                                                Edit
-                                                            </button>
-                                                            <button type='button' class='btn btn-sm btn-outline-warning'
-                                                                    style='border:0px solid transparent'
-                                                                    data-toggle='modal'
-                                                                    data-target='#deleteModal<%= eventsInfo[i]._id %>'>
-                                                                Delete
-                                                            </button>
-                                                        </li>
-                                                    <% } %>
-                                                </ul>
+                                                        <% if (loggedIn) { %>
+                                                            <li class='list-group-item borderless box-padding'
+                                                                style="display: inline">
+                                                                <b>Actions:</b>
+                                                                <button type='button'
+                                                                        class='btn btn-sm btn-outline-info'
+                                                                        style='border:0 solid transparent'
+                                                                        data-toggle='modal'
+                                                                        data-target='#editModal<%= eventsInfo[i]._id %>'>
+                                                                    Edit
+                                                                </button>
+                                                                <button type='button'
+                                                                        class='btn btn-sm btn-outline-warning'
+                                                                        style='border:0px solid transparent'
+                                                                        data-toggle='modal'
+                                                                        data-target='#deleteModal<%= eventsInfo[i]._id %>'>
+                                                                    Delete
+                                                                </button>
+                                                            </li>
+                                                        <% } %>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <% if (i !== eventsInfo.length - 1) { %>
-                                        <hr>
+                                        <% if (i !== eventsInfo.length - 1) { %>
+                                            <hr>
+                                        <% } %>
                                     <% } %>
                                 <% } %>
                             <% } else { %>
@@ -122,6 +131,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class='modal-footer'>
                         <form method='post' action='/event/delete/<%= eventsInfo[i]._id %>'>
                             <input type='submit' name='submit' class='btn btn-outline-danger' value='Delete'>
@@ -152,43 +162,30 @@
                             </div>
                             <div class="form-group">
                                 <label>Start Time</label>
-                                <input type="text" class="datetimepicker form-control" name="start"
+                                <input autocomplete="off" type="text" class="datetimepicker form-control" name="start"
                                        value="<%= eventsInfo[i].start %>">
                             </div>
                             <div class="form-group">
                                 <label>End Date</label>
-                                <input type="text" class="datetimepicker form-control" name="end"
+                                <input autocomplete="off" type="text" class="datetimepicker form-control" name="end"
                                        value="<%= eventsInfo[i].end %>">
                             </div>
+
                             <div class="form-group">
                                 <label>Event Description</label>
                                 <textarea type="text" class="form-control"
                                           name="description"><%= eventsInfo[i].description %></textarea>
                             </div>
                             <div class="form-group">
+                                <label>Visibility</label>
+                                <select id="visibility<%= eventsInfo[i]._id %>" class="form-control" name="visibility">
+                                    <option value="public">Open to public</option>
+                                    <option value="member">Open to ENACT members only</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label>Event Link</label>
                                 <input type="text" class="form-control" name="uri" value="<%= eventsInfo[i].uri %>">
-                            </div>
-                            <div class="form-group">
-                                <label>Event Color</label>
-                                <select id='color<%= eventsInfo[i]._id %>' type="text" class="form-control"
-                                        name="className">
-                                    <option value="fc-bg-default">default</option>
-                                    <option value="fc-bg-blue">blue</option>
-                                    <option value="fc-bg-lightgreen">light green</option>
-                                    <option value="fc-bg-pinkred">pink red</option>
-                                    <option value="fc-bg-deepskyblue">deep skyblue</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Event Icon</label>
-                                <select id='icon<%= eventsInfo[i]._id %>' type="text" class="form-control" name="icon">
-                                    <option value="circle">circle</option>
-                                    <option value="cog">cog</option>
-                                    <option value="group">group</option>
-                                    <option value="suitcase">suitcase</option>
-                                    <option value="calendar">calendar</option>
-                                </select>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -201,8 +198,7 @@
             </div>
         </div>
 
-        <p hidden id='colorFromServer<%= eventsInfo[i]._id %>'><%= eventsInfo[i].color %></p>
-        <p hidden id='iconFromServer<%= eventsInfo[i]._id %>'><%= eventsInfo[i].icon %></p>
+        <p hidden id='visiFromServer<%= eventsInfo[i]._id %>'><%= eventsInfo[i].visibility %></p>
         <% id_set.push(eventsInfo[i]._id) %>
     <% } %>
 <% } %>
@@ -217,15 +213,9 @@
         if (id_set.length !== 0) {
             let id_set_array = id_set.split(',')
             for (let i = 0; i < id_set_array.length; i++) {
-                let realType = $('#colorFromServer' + id_set_array[i]).text()
-                $('#color' + id_set_array[i] + ' option').each(function () {
+                let realType = $('#visiFromServer' + id_set_array[i]).text()
+                $('#visibility' + id_set_array[i] + ' option').each(function () {
                     if ($(this).val() === realType) {
-                        $(this).prop('selected', true)
-                    }
-                })
-                let realType1 = $('#iconFromServer' + id_set_array[i]).text()
-                $('#icon' + id_set_array[i] + ' option').each(function () {
-                    if ($(this).val() === realType1) {
                         $(this).prop('selected', true)
                     }
                 })
