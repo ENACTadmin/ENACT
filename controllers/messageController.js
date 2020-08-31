@@ -48,7 +48,7 @@ exports.saveMessage = async (req, res, next) => {
         })
         await newMessage.save()
         let receiver = await User.findOne({_id: req.params.receiver})
-        let workEmail = receiver.googleemail
+        let workEmail = receiver.workEmail
         let userName = receiver.userName
         send_email(workEmail, userName, newMessage, 'http://enact-brandeis.herokuapp.com/' + 'message/' + req.params.sender + '/' + req.params.receiver + '/' + req.params.resourceId)
         res.redirect('back')
@@ -58,6 +58,7 @@ exports.saveMessage = async (req, res, next) => {
 }
 
 function send_email(workEmail, userName, message, url) {
+    console.log('email: ', workEmail)
     const sgMail = require('@sendgrid/mail');
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     if (message.subject) {
