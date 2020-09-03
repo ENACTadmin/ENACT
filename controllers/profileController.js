@@ -26,6 +26,7 @@ exports.updateProfile = async (req, res, next) => {
         userToUpdate.workEmail = req.body.workEmail;
         userToUpdate.personalEmail = req.body.personalEmail;
         userToUpdate.phoneNumber = req.body.phoneNumber;
+        userToUpdate.affiliation = req.body.affiliation;
         userToUpdate.bio = req.body.bio;
         await userToUpdate.save()
         if (toIndex)
