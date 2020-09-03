@@ -4,12 +4,7 @@
 
 <script>
     AOS.init();
-    jQuery('#calendarIndex').live('pagebeforecreate', function(){
-        jQuery(document).empty();
-        // window.location.replace('/');
-    });
 </script>
-
 
 
 <header class='header header--sticky'>
@@ -196,9 +191,12 @@
                         </div>
                     <% } %>
                     <br>
-                    <!--                not logged in    -->
                 <% } else { %>
                     <br>
+                    <a href='/resources/view/public/all' data-aos='zoom-out-down' data-aos-duration='1000'
+                       data-aos-delay='400'><input
+                                type='submit' name='submit' class='form-demo__large'
+                                value='PUBLIC ACCESS'></a>
                     <a href='/auth/google' data-aos='zoom-out-down' data-aos-duration='1000' data-aos-delay='400'><input
                                 type='submit' name='submit' class='form-demo__large'
                                 value='ENACT MEMBER LOGIN'></a>
@@ -298,11 +296,77 @@
     </section>
 </section>
 
+<!-- Public Resources Section -->
+<section class='section section__grey'>
+    <div class='section__content section__content--fluid-width section__content--padding' data-aos='fade-up'>
+        <h2 class='section__title section__title--centered'>Public resources</h2>
+        <br><br><br>
+        <% if (resourceInfo.length === 0) { %>
+            <div class='card'>
+                <div class='card-body text-center'>
+                    <h4>No resource available yet</h4>
+                </div>
+            </div>
+        <% } %>
+        <% for (let i = 0; i < resourceInfo.length && i < 3; i++) { %>
+            <div class='card-body border-0' style='border-radius: 30px' data-aos='fade-up'>
+                <h4>
+                    <%= resourceInfo[i].name %>
+                </h4>
+                <div class='card-text'>
+                    <ul class='list-group'>
+                        <li class='list-group-item borderless box-padding'>
+                            <b>Description: </b>
+                            <%= resourceInfo[i].description %>
+                        </li>
+                        <li class='list-group-item borderless box-padding'>
+                            <b>State:</b>
+                            <%= resourceInfo[i].state %>
+                        </li>
+                        <li class='list-group-item borderless box-padding'>
+                            <b>Link: </b>
+                            <a href='<%= resourceInfo[i].uri %>'><%= resourceInfo[i].uri %></a>
+                        </li>
+                        <li class='list-group-item borderless box-padding'>
+                            <b>Institution: </b>
+                            <%= resourceInfo[i].institution %>
+                        </li>
+                        <li class='list-group-item borderless box-padding'>
+                            <b>Categories:</b>
+                            <%= resourceInfo[i].tags %>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <br>
+        <% } %>
+
+        <br>
+        <br>
+        <% if (status === 'admin') { %>
+            <div class='text-center' data-aos='fade-up' data-aos-delay="100">
+                <a href='/managePublicResources'><input type='button' name='submit'
+                                                        class='btn btn-lg btn-primary'
+                                                        value='Manage Displayed Resources'></a>
+            </div>
+        <% } %>
+        <br>
+        <div class='text-center' data-aos='fade-up' data-aos-delay="100">
+            <a href='/resources/view/public/all'><input type='button' name='submit'
+                                                        class='btn btn-lg btn-primary'
+                                                        value='Find More Resources'></a>
+        </div>
+        <br>
+        <div class='clear'></div>
+    </div>
+</section>
+
+
 
 <!-- Section -->
-<section class='section section__grey'>
+<section class='section diagonal-gradient'>
     <div class='section__content section__content--fluid-width section__content--padding'>
-        <h2 class='section__title section__title--centered'>ENACT Faculty</h2>
+        <h2 class='section__title section__title--centered' style='color: white'>ENACT Faculty</h2>
         <br>
         <div class='grid grid--3col'>
             <div class='partners__slide grid__item' style='height: 750px' data-aos="fade-up">
@@ -378,70 +442,5 @@
     </div>
 </section>
 
-<!-- Section -->
-<section class='section diagonal-gradient'>
-    <div class='section__content section__content--fluid-width section__content--padding' data-aos='fade-up'>
-        <h2 class='section__title section__title--centered' style='color: white'>Public resources</h2>
-        <br><br><br>
-        <% if (resourceInfo.length === 0) { %>
-            <div class='card'>
-                <div class='card-body text-center'>
-                    <h4>No resource available yet</h4>
-                </div>
-            </div>
-        <% } %>
-        <% for (let i = 0; i < resourceInfo.length && i < 3; i++) { %>
-            <div class='card-body border-0' style='border-radius: 30px' data-aos='fade-up'>
-                <h4>
-                    <%= resourceInfo[i].name %>
-                </h4>
-                <div class='card-text'>
-                    <ul class='list-group'>
-                        <li class='list-group-item borderless box-padding'>
-                            <b>Description: </b>
-                            <%= resourceInfo[i].description %>
-                        </li>
-                        <li class='list-group-item borderless box-padding'>
-                            <b>State:</b>
-                            <%= resourceInfo[i].state %>
-                        </li>
-                        <li class='list-group-item borderless box-padding'>
-                            <b>Link: </b>
-                            <a href='<%= resourceInfo[i].uri %>'><%= resourceInfo[i].uri %></a>
-                        </li>
-                        <li class='list-group-item borderless box-padding'>
-                            <b>Institution: </b>
-                            <%= resourceInfo[i].institution %>
-                        </li>
-                        <li class='list-group-item borderless box-padding'>
-                            <b>Categories:</b>
-                            <%= resourceInfo[i].tags %>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <br>
-        <% } %>
-
-        <br>
-        <br>
-        <% if (status === 'admin') { %>
-            <div class='text-center' data-aos='fade-up' data-aos-delay="100">
-                <a href='/managePublicResources'><input type='button' name='submit'
-                                                        class='btn btn-lg btn-light'
-                                                        value='MANAGE PUBLIC RESOURCES'></a>
-            </div>
-        <% } %>
-        <% if (!loggedIn) { %>
-            <div class='text-center' data-aos='fade-up' data-aos-delay="100">
-                <a href='/resources/view/public/all'><input type='button' name='submit'
-                                                            class='btn btn-lg btn-light'
-                                                            value='Find More Resources'></a>
-            </div>
-        <% } %>
-        <br>
-        <div class='clear'></div>
-    </div>
-</section>
 
 <%- include('../components/footer'); -%>

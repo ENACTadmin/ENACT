@@ -299,7 +299,7 @@ app.get('/search',
     (req, res) =>
         res.render('./pages/search'))
 
-app.post('/showResources',
+app.post('/resources/search',
     resourceController.searchByFilled
 )
 

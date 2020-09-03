@@ -103,7 +103,34 @@ async function setWord2Id(newResource) {
                 })
                 await newWord2Id.save()
             } else {
-                word2Id.ids = await [newResource._id].concat(word2Id.ids)
+                if (!word2Id.ids.includes(newResource._id)) {
+                    word2Id.ids = await [newResource._id].concat(word2Id.ids)
+                    await word2Id.save()
+                }
+            }
+        }
+    }
+}
+
+async function removeWord2Id(oldResource) {
+    let fullContent = oldResource.name + ',' + oldResource.description + ',' + oldResource.tags + ','
+        + oldResource.state + ',' + oldResource.contentType + ',' + oldResource.mediaType + ','
+        + oldResource.institution + ',' + oldResource.yearOfCreation
+
+    let regex = /[^\s\.,!?]+/g;
+    let match = fullContent.match(regex);
+    console.log('match here: ', match)
+    for (let i = 0; i < match.length; i++) {
+        let word2Id = await Word2Id.findOne({word: match[i]})
+        // if not null
+        if (match[i].toString() !== 'null') {
+            if (word2Id === null) {
+                console.log("Impossible!!!")
+            } else {
+                console.log('before: ', word2Id.ids)
+                console.log('id to remove: ', oldResource._id)
+                await word2Id.ids.remove(oldResource._id)
+                console.log('after: ', word2Id.ids)
                 await word2Id.save()
             }
         }
@@ -116,7 +143,7 @@ exports.resetWord2Id = async (req, res, next) => {
         for (let i = 0; i < resources.length; i++) {
             await setWord2Id(resources[i]);
         }
-        alert('Finished!')
+        console.log('Finished!')
         res.redirect('/')
     } catch (e) {
         next(e)
@@ -130,6 +157,7 @@ exports.updateResource = async (req, res, next) => {
         let tags = tagsString.split(",")
         console.log("tags received: ", tags)
         let oldResource = await Resource.findOne({_id: resourceId})
+        await removeWord2Id(oldResource)
         oldResource.name = req.body.resourceName
         oldResource.status = req.body.status
         oldResource.description = req.body.resourceDescription
@@ -141,6 +169,8 @@ exports.updateResource = async (req, res, next) => {
         oldResource.yearOfCreation = req.body.yearOfCreation
         oldResource.tags = tags
         await oldResource.save()
+        // update word2Id
+        await setWord2Id(oldResource);
         // save the new resource
         await res.redirect('back')
     } catch (e) {
@@ -171,63 +201,9 @@ exports.loadResources = async (req, res, next) => {
 }
 
 exports.primarySearch = async (req, res, next) => {
-    let resourceInfo = null
-    const checkStatus = 'approve'
     try {
-        let regex = /[^\s\.,!?]+/g;
-        let match = req.body.search.match(regex)
-        if (match) {
-            // admin search
-            if (res.locals.status === 'admin' || res.locals.status === 'faculty') {
-                for (let i = 0; i < match.length; i++) {
-                    let word2Id = await Word2Id.findOne({word: match[i]})
-                    if (word2Id !== null) {
-                        let resourceIds = word2Id.ids
-                        if (resourceInfo === null) {
-                            resourceInfo = await Resource.find({_id: {$in: resourceIds}})
-                        } else {
-                            let newResourceInfo = await Resource.find({_id: {$in: resourceIds}})
-                            resourceInfo = resourceInfo.concat(newResourceInfo)
-                        }
-                    }
-                }
-            }
-            // student search
-            else {
-                for (let i = 0; i < match.length; i++) {
-                    let word2Id = await Word2Id.findOne({word: match[i]})
-                    if (word2Id !== null) {
-                        let resourceIds = word2Id.ids
-                        if (resourceInfo === null) {
-                            resourceInfo = await Resource.find({
-                                checkStatus: checkStatus,
-                                _id: {$in: resourceIds},
-                                status: {$in: ["privateToENACT", "public"]}
-                            })
-                        } else {
-                            let newResourceInfo = await Resource.find({
-                                checkStatus: checkStatus,
-                                _id: {$in: resourceIds},
-                                status: {$in: ["privateToENACT", "public"]}
-                            })
-                            resourceInfo = resourceInfo.concat(newResourceInfo)
-                        }
-                    }
-                }
-            }
-        } else {
-            if (res.locals.status === 'admin' || res.locals.status === 'faculty') {
-                resourceInfo = await Resource.find({
-                    checkStatus: checkStatus
-                })
-            } else {
-                resourceInfo = await Resource.find({
-                    checkStatus: checkStatus,
-                    status: {$in: ["privateToENACT", "public"]}
-                })
-            }
-        }
-
+        let resourceInfo = await invertedSearch(req, res);
+        console.log("resources: ", resourceInfo)
         let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
 
         let starredResourceIds = null
@@ -293,625 +269,130 @@ exports.primaryPublicSearch = async (req, res, next) => {
     }
 }
 
-// exports.primaryPublicSearch = async (req, res, next) => {
-//     let resourceInfo = null
-//     const checkStatus = 'approve'
-//     try {
-//         let regex = /[^\s\.,!?]+/g;
-//         let match = req.body.search.match(regex)
-//         if (match) {
-//             for (let i = 0; i < match.length; i++) {
-//                 let word2Id = await Word2Id.findOne({word: match[i]})
-//                 if (word2Id !== null) {
-//                     let resourceIds = word2Id.ids
-//                     if (resourceInfo === null) {
-//                         resourceInfo = await Resource.find({
-//                             checkStatus: checkStatus,
-//                             _id: {$in: resourceIds},
-//                             status: {$in: ["finalPublic", "public"]}
-//                         })
-//                     } else {
-//                         let newResourceInfo = await Resource.find({
-//                             checkStatus: checkStatus,
-//                             _id: {$in: resourceIds},
-//                             status: {$in: ["finalPublic", "public"]}
-//                         })
-//                         resourceInfo = resourceInfo.concat(newResourceInfo)
-//                     }
-//                 }
-//             }
-//         } else {
-//             resourceInfo = await Resource.find({
-//                 checkStatus: checkStatus,
-//                 status: {$in: ["finalPublic", "public"]}
-//             })
-//         }
-//         res.render('./pages/publicPrimarySearch', {
-//             resourceInfo: resourceInfo
-//         })
-//     } catch (e) {
-//         next(e)
-//     }
-// }
-
-exports.searchByFilled = async (req, res, next) => {
+async function invertedSearch(req, res) {
+    const checkStatus = 'approve'
     let resourceInfo = null
-    try {
-        // -----------------------------------------------------------------
-        // --------------------admin or faculty search----------------------
-        // -----------------------------------------------------------------
+    let regex = /[^\s\.,!?]+/g;
+    let match = req.body.search.match(regex)
+    console.log("match: ", match)
+    if (match) {
+        // admin search
         if (res.locals.status === 'admin' || res.locals.status === 'faculty') {
-
-            // situation 1: only status is filled
-
-            if (req.body.state === "empty" && req.body.institution === "" && req.body.yearOfCreation === "") {
-                // search for all resources
-                if (req.body.status === "all") {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        $or: [
-                            {description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}},
-                            {name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}}
-                        ]
-                    })
-                }
-                // search resources under a certain status
-                else {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        status: req.body.status,
-                        $or: [
-                            {description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}},
-                            {name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}}
-                        ]
-                    })
-                }
-            }
-
-                // situation 2: 2 fields are filled other than status
-
-            // require status and yearOfCreation
-            else if (req.body.state === "empty" && req.body.institution === "") {
-                // search for all resources
-                if (req.body.status === "all") {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        yearOfCreation: req.body.yearOfCreation,
-                        $or: [
-                            {description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}},
-                            {name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}}
-                        ]
-                    })
-                }
-                // search resources under a certain status
-                else {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        status: req.body.status,
-                        yearOfCreation: req.body.yearOfCreation,
-                        $or: [
-                            {description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}},
-                            {name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}}
-                        ]
-                    })
-                }
-            }
-            // require status and institution
-            else if (req.body.state === "empty" && req.body.yearOfCreation === "") {
-                // search for all resources
-                if (req.body.status === "all") {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        institution: req.body.institution,
-                        $or: [
-                            {description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}},
-                            {name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}}
-                        ]
-                    })
-                }
-                // search resources under a certain status
-                else {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        status: req.body.status,
-                        institution: req.body.institution,
-                        $or: [
-                            {description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}},
-                            {name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}}
-                        ]
-                    })
-                }
-            }
-            //require status and state
-            else if (req.body.institution === "" && req.body.yearOfCreation === "") {
-                // search for all resources
-                if (req.body.status === "all") {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        state: req.body.state,
-                        $or: [
-                            {description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}},
-                            {name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}}
-                        ]
-                    })
-                }
-                // search resources under a certain status
-                else {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        state: req.body.state,
-                        status: req.body.status,
-                        $or: [
-                            {description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}},
-                            {name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}}
-                        ]
-                    })
-                }
-            }
-
-            // situation 3: status is filled, other two of three fields are filled
-
-            else if (req.body.state === "empty") {
-                // search for all resources
-                if (req.body.status === "all") {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        yearOfCreation: req.body.yearOfCreation,
-                        institution: req.body.institution,
-                        $or: [
-                            {description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}},
-                            {name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}}
-                        ]
-                    })
-                }
-                // search resources under a certain status
-                else {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        status: req.body.status,
-                        yearOfCreation: req.body.yearOfCreation,
-                        institution: req.body.institution,
-                        $or: [
-                            {description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}},
-                            {name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}}
-                        ]
-                    })
-                }
-            } else if (req.body.yearOfCreation === "") {
-                // search for all resources
-                if (req.body.status === "all") {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        institution: req.body.institution,
-                        state: req.body.state,
-                        $or: [
-                            {description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}},
-                            {name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}}
-                        ]
-                    })
-                }
-                // search resources under a certain status
-                else {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        status: req.body.status,
-                        institution: req.body.institution,
-                        state: req.body.state,
-                        $or: [
-                            {description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}},
-                            {name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}}
-                        ]
-                    })
-                }
-            } else if (req.body.institution === "") {
-                // search for all resources
-                if (req.body.status === "all") {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        state: req.body.state,
-                        yearOfCreation: req.body.yearOfCreation,
-                        $or: [
-                            {description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}},
-                            {name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}}
-                        ]
-                    })
-                }
-                // search resources under a certain status
-                else {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        status: req.body.status,
-                        state: req.body.state,
-                        yearOfCreation: req.body.yearOfCreation,
-                        $or: [
-                            {description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}},
-                            {name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}}
-                        ]
-                    })
-                }
-            }
-
-            // situation 4: all fields nonempty
-
-            else {
-                // search for all resources
-                if (req.body.status === "all") {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        state: req.body.state,
-                        yearOfCreation: req.body.yearOfCreation,
-                        institution: req.body.institution,
-                        $or: [
-                            {description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}},
-                            {name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}}
-                        ]
-                    })
-                }
-                // search resources under a certain status
-                else {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        status: req.body.status,
-                        state: req.body.state,
-                        yearOfCreation: req.body.yearOfCreation,
-                        institution: req.body.institution,
-                        $or: [
-                            {description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}},
-                            {name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'}}
-                        ]
-                    })
+            for (let i = 0; i < match.length; i++) {
+                let word2Id = await Word2Id.findOne({word: match[i]})
+                console.log('123: ', word2Id)
+                if (word2Id !== null) {
+                    let resourceIds = word2Id.ids
+                    if (resourceInfo === null) {
+                        resourceInfo = await Resource.find({_id: {$in: resourceIds}})
+                    } else {
+                        let newResourceInfo = await Resource.find({_id: {$in: resourceIds}})
+                        resourceInfo = resourceInfo.concat(newResourceInfo)
+                    }
                 }
             }
         }
-
-            // -----------------------------------------------------------------
-            // -------------------------student search--------------------------
-        // -----------------------------------------------------------------
+        // student search
         else {
-            // situation 1: only status is filled
-
-            if (req.body.state === "empty" && req.body.institution === "" && req.body.yearOfCreation === "") {
-                // search for all resources
-                if (req.body.status === "all") {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        $or: [
-                            {
-                                description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            },
-                            {
-                                name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            }
-                        ]
-                    })
-                }
-                // search resources under a certain status
-                else {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        status: req.body.status,
-                        $or: [
-                            {
-                                description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            },
-                            {
-                                name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            }
-                        ]
-                    })
-                }
-            }
-
-                // situation 2: 2 fields are filled other than status
-
-            // require status and yearOfCreation
-            else if (req.body.state === "empty" && req.body.institution === "") {
-                // search for all resources
-                if (req.body.status === "all") {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        yearOfCreation: req.body.yearOfCreation,
-                        $or: [
-                            {
-                                description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            },
-                            {
-                                name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            }
-                        ]
-                    })
-                }
-                // search resources under a certain status
-                else {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        status: req.body.status,
-                        yearOfCreation: req.body.yearOfCreation,
-                        $or: [
-                            {
-                                description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            },
-                            {
-                                name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            }
-                        ]
-                    })
-                }
-            }
-            // require status and institution
-            else if (req.body.state === "empty" && req.body.yearOfCreation === "") {
-                // search for all resources
-                if (req.body.status === "all") {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        institution: req.body.institution,
-                        $or: [
-                            {
-                                description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            },
-                            {
-                                name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            }
-                        ]
-                    })
-                }
-                // search resources under a certain status
-                else {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        status: req.body.status,
-                        institution: req.body.institution,
-                        $or: [
-                            {
-                                description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            },
-                            {
-                                name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            }
-                        ]
-                    })
-                }
-            }
-            //require status and state
-            else if (req.body.institution === "" && req.body.yearOfCreation === "") {
-                // search for all resources
-                if (req.body.status === "all") {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        state: req.body.state,
-                        $or: [
-                            {
-                                description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            },
-                            {
-                                name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            }
-                        ]
-                    })
-                }
-                // search resources under a certain status
-                else {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        state: req.body.state,
-                        status: req.body.status,
-                        $or: [
-                            {
-                                description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            },
-                            {
-                                name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            }
-                        ]
-                    })
-                }
-            }
-
-            // situation 3: status is filled, other two of three fields are filled
-
-            else if (req.body.state === "empty") {
-                // search for all resources
-                if (req.body.status === "all") {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        yearOfCreation: req.body.yearOfCreation,
-                        institution: req.body.institution,
-                        $or: [
-                            {
-                                description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            },
-                            {
-                                name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            }
-                        ]
-                    })
-                }
-                // search resources under a certain status
-                else {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        status: req.body.status,
-                        yearOfCreation: req.body.yearOfCreation,
-                        institution: req.body.institution,
-                        $or: [
-                            {
-                                description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            },
-                            {
-                                name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            }
-                        ]
-                    })
-                }
-            } else if (req.body.yearOfCreation === "") {
-                // search for all resources
-                if (req.body.status === "all") {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        institution: req.body.institution,
-                        state: req.body.state,
-                        $or: [
-                            {
-                                description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            },
-                            {
-                                name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            }
-                        ]
-                    })
-                }
-                // search resources under a certain status
-                else {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        status: req.body.status,
-                        institution: req.body.institution,
-                        state: req.body.state,
-                        $or: [
-                            {
-                                description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            },
-                            {
-                                name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            }
-                        ]
-                    })
-                }
-            } else if (req.body.institution === "") {
-                // search for all resources
-                if (req.body.status === "all") {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        state: req.body.state,
-                        yearOfCreation: req.body.yearOfCreation,
-                        $or: [
-                            {
-                                description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            },
-                            {
-                                name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            }
-                        ]
-                    })
-                }
-                // search resources under a certain status
-                else {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        status: req.body.status,
-                        state: req.body.state,
-                        yearOfCreation: req.body.yearOfCreation,
-                        $or: [
-                            {
-                                description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            },
-                            {
-                                name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            }
-                        ]
-                    })
-                }
-            }
-
-            // situation 4: all fields nonempty
-
-            else {
-                // search for all resources
-                if (req.body.status === "all") {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        state: req.body.state,
-                        yearOfCreation: req.body.yearOfCreation,
-                        institution: req.body.institution,
-                        $or: [
-                            {
-                                description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            },
-                            {
-                                name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            }
-                        ]
-                    })
-                }
-                // search resources under a certain status
-                else {
-                    resourceInfo = await Resource.find({
-                        checkStatus: 'approve',
-                        status: req.body.status,
-                        state: req.body.state,
-                        yearOfCreation: req.body.yearOfCreation,
-                        institution: req.body.institution,
-                        $or: [
-                            {
-                                description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            },
-                            {
-                                name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                                status: {$in: ["privateToENACT", "public"]}
-                            }
-                        ]
-                    })
+            for (let i = 0; i < match.length; i++) {
+                let word2Id = await Word2Id.findOne({word: match[i]})
+                if (word2Id !== null) {
+                    let resourceIds = word2Id.ids
+                    if (resourceInfo === null) {
+                        resourceInfo = await Resource.find({
+                            checkStatus: checkStatus,
+                            _id: {$in: resourceIds},
+                            status: {$in: ["privateToENACT", "public"]}
+                        })
+                    } else {
+                        let newResourceInfo = await Resource.find({
+                            checkStatus: checkStatus,
+                            _id: {$in: resourceIds},
+                            status: {$in: ["privateToENACT", "public"]}
+                        })
+                        resourceInfo = resourceInfo.concat(newResourceInfo)
+                    }
                 }
             }
         }
-
-        // -----------------------------------------------------------------
-        // ---------------------------tag filter----------------------------
-        // -----------------------------------------------------------------
-
-        let filteredResource = []
-        if (req.body.tags.length > 0) {
-            console.log("tag used")
-            for (let m = 0; m < resourceInfo.length; m++) {
-                let tagged = await req.body.tags.split(',')
-                let result = tagged.every(val => resourceInfo[m].tags.includes(val));
-                if (result) {
-                    filteredResource.push(resourceInfo[m])
-                }
-            }
-        } else {
-            console.log("tag not used")
-            filteredResource = resourceInfo
-        }
-
-        res.locals.resourceInfo = filteredResource
-
-        res.render('./pages/showResources')
-
-    } catch (e) {
-        next(e)
     }
+    // empty param search
+    else {
+        if (res.locals.status === 'admin' || res.locals.status === 'faculty') {
+            resourceInfo = await Resource.find({
+                checkStatus: checkStatus
+            })
+        } else {
+            resourceInfo = await Resource.find({
+                checkStatus: checkStatus,
+                status: {$in: ["privateToENACT", "public"]}
+            })
+        }
+    }
+    return resourceInfo
+}
+
+exports.searchByFilled = async (req, res) => {
+    let resourceInfo = await invertedSearch(req, res);
+    let filtered = resourceInfo;
+
+    let local_state = req.body.state !== 'empty' ? req.body.state : null
+
+    if (local_state) {
+        filtered = filtered.filter(({state}) => state === local_state);
+    }
+
+    let local_institution = req.body.institution
+
+    if (local_institution !== '') {
+        filtered = filtered.filter(({institution}) => institution === local_institution);
+    }
+
+    let local_yearOfCreation = req.body.yearOfCreation
+
+    if (local_yearOfCreation !== '') {
+        filtered = filtered.filter(({yearOfCreation}) => yearOfCreation === parseInt(local_yearOfCreation));
+    }
+
+    let local_status = req.body.status
+
+    if (local_status !== '' && local_status !== 'all') {
+        filtered = filtered.filter(({status}) => status === local_status);
+    }
+
+    let local_tags = req.body.tags
+
+    let filteredResource = []
+    if (req.body.tags.length > 0) {
+        console.log("tag used")
+        for (let m = 0; m < filtered.length; m++) {
+            let tagged = await req.body.tags.split(',')
+            let result = tagged.every(val => filtered[m].tags.includes(val));
+            if (result) {
+                filteredResource.push(filtered[m])
+            }
+        }
+    } else {
+        console.log("tag not used")
+        filteredResource = filtered
+    }
+
+    console.log('tags: ', local_tags)
+
+    let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
+
+    let starredResourceIds = null
+    if (starred) {
+        starredResourceIds = await starred.resources
+    }
+
+    res.locals.resourceIds = starredResourceIds
+
+    resourceInfoSet = filteredResource
+    res.render('./pages/showResources', {
+        resourceInfo: filteredResource,
+        resourceIds: starredResourceIds
+    })
 }
 
 exports.loadAllFacultyResources = async (req, res, next) => {
@@ -994,6 +475,8 @@ exports.postPublicResource = async (req, res, next) => {
 exports.removeResource = async (req, res, next) => {
     try {
         let resourceId = await req.params.resourceId
+        let resource = await Resource.findOne({_id: resourceId})
+        await removeWord2Id(resource)
         await Resource.deleteOne({_id: resourceId})
         console.log('url: ', req.url)
         res.redirect('back')
@@ -1320,163 +803,31 @@ exports.showPublic = async (req, res, next) => {
 }
 
 exports.searchByFilledPublic = async (req, res, next) => {
-    let resourceInfo = null
-
     try {
-        if (req.body.institution === "" && req.body.state === "empty" && req.body.yearOfCreation === "") {
-            // search for all resources
-            resourceInfo = await Resource.find({
-                checkStatus: 'approve',
-                $or: [
-                    {
-                        description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                        status: {$in: ["finalPublic", "public"]}
-                    },
-                    {
-                        name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                        status: {$in: ["finalPublic", "public"]}
-                    }
-                ]
-            })
-        }
-            // situation 1: 1 field is filled
+        let resourceInfo = await invertedSearch(req, res);
 
-        // require yearOfCreation
-        else if (req.body.institution === "" && req.body.state === "empty") {
-            // search for all resources
-            resourceInfo = await Resource.find({
-                checkStatus: 'approve',
-                yearOfCreation: req.body.yearOfCreation,
-                $or: [
-                    {
-                        description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                        status: {$in: ["finalPublic", "public"]}
-                    },
-                    {
-                        name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                        status: {$in: ["finalPublic", "public"]}
-                    }
-                ]
-            })
-        }
-        // require institution
-        else if (req.body.state === "empty" && req.body.yearOfCreation === "") {
-            // search for all resources
-            resourceInfo = await Resource.find({
-                checkStatus: 'approve',
-                institution: req.body.institution,
-                $or: [
-                    {
-                        description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                        status: {$in: ["finalPublic", "public"]}
-                    },
-                    {
-                        name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                        status: {$in: ["finalPublic", "public"]}
-                    }
-                ]
-            })
-        }
-        // require state
-        else if (req.body.institution === "" && req.body.yearOfCreation === "") {
-            // search for all resources
-            resourceInfo = await Resource.find({
-                checkStatus: 'approve',
-                state: req.body.state,
-                $or: [
-                    {
-                        description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                        status: {$in: ["finalPublic", "public"]}
-                    },
-                    {
-                        name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                        status: {$in: ["finalPublic", "public"]}
-                    }
-                ]
-            })
+        let filtered = resourceInfo;
+
+        let local_state = req.body.state !== 'empty' ? req.body.state : null
+
+        if (local_state) {
+            filtered = filtered.filter(({state}) => state === local_state);
         }
 
-        //require state and institution
-        else if (req.body.yearOfCreation === "") {
-            // search for all resources
-            resourceInfo = await Resource.find({
-                checkStatus: 'approve',
-                state: req.body.state,
-                institution: req.body.institution,
-                $or: [
-                    {
-                        description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                        status: {$in: ["finalPublic", "public"]}
-                    },
-                    {
-                        name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                        status: {$in: ["finalPublic", "public"]}
-                    }
-                ]
-            })
-        }
-        //require state and yearOfCreation
-        else if (req.body.institution === "") {
-            // search for all resources
-            resourceInfo = await Resource.find({
-                checkStatus: 'approve',
-                state: req.body.state,
-                yearOfCreation: req.body.yearOfCreation,
-                $or: [
-                    {
-                        description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                        status: {$in: ["finalPublic", "public"]}
-                    },
-                    {
-                        name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                        status: {$in: ["finalPublic", "public"]}
-                    }
-                ]
-            })
-        }
-        //require  institution and yearOfCreation
-        else if (req.body.state === "empty") {
-            // search for all resources
-            resourceInfo = await Resource.find({
-                checkStatus: 'approve',
-                institution: req.body.institution,
-                yearOfCreation: req.body.yearOfCreation,
-                $or: [
-                    {
-                        description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                        status: {$in: ["finalPublic", "public"]}
-                    },
-                    {
-                        name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                        status: {$in: ["finalPublic", "public"]}
-                    }
-                ]
-            })
+        let local_institution = req.body.institution
+
+        if (local_institution !== '') {
+            filtered = filtered.filter(({institution}) => institution === local_institution);
         }
 
+        let local_yearOfCreation = req.body.yearOfCreation
 
-        // situation 4: all fields nonempty
-
-        else {
-            // search for all resources
-            resourceInfo = await Resource.find({
-                checkStatus: 'approve',
-                status: req.body.status,
-                state: req.body.state,
-                yearOfCreation: req.body.yearOfCreation,
-                institution: req.body.institution,
-                $or: [
-                    {
-                        description: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                        status: {$in: ["finalPublic", "public"]}
-                    },
-                    {
-                        name: {'$regex': '.*' + req.body.search + '.*', '$options': 'i'},
-                        status: {$in: ["finalPublic", "public"]}
-                    }
-                ]
-            })
+        if (local_yearOfCreation !== '') {
+            filtered = filtered.filter(({yearOfCreation}) => yearOfCreation === parseInt(local_yearOfCreation));
         }
+
+        filtered = filtered.filter(({status}) => status === 'public');
+
 
         // -----------------------------------------------------------------
         // ---------------------------tag filter----------------------------
@@ -1485,20 +836,19 @@ exports.searchByFilledPublic = async (req, res, next) => {
         let filteredResource = []
         if (req.body.tags.length > 0) {
             console.log("tag used")
-            for (let m = 0; m < resourceInfo.length; m++) {
+            for (let m = 0; m < filtered.length; m++) {
                 let tagged = await req.body.tags.split(',')
-                let result = tagged.every(val => resourceInfo[m].tags.includes(val));
+                let result = tagged.every(val => filtered[m].tags.includes(val));
                 if (result) {
-                    filteredResource.push(resourceInfo[m])
+                    filteredResource.push(filtered[m])
                 }
             }
         } else {
             console.log("tag not used")
-            filteredResource = resourceInfo
+            filteredResource = filtered
         }
 
         res.locals.resourceInfo = filteredResource
-
         res.render('./pages/showPublicResources')
 
     } catch (e) {

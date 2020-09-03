@@ -19,6 +19,7 @@ const userSchema = Schema({
     workEmail: String,
     personalEmail: String,
     phoneNumber: String,
+    affiliation: String,
     bio: String // required for faculty members
 });
 

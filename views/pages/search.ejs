@@ -17,7 +17,7 @@
 <section class='section section__grey' data-aos='fade-up'>
     <div class='container'>
         <% if (loggedIn) { %>
-            <form method='post' action='/showResources'>
+            <form method='post' action='/resources/search'>
                 <div class='row'>
                     <div class='col-md-3 col-sm-12'></div>
                     <div class='col-md-6 col-sm-12'>
@@ -96,7 +96,7 @@
                             <div class='input-group-prepend'>
                                 <span class='input-group-text' style='width: 180px'>Resource Status</span>
                                 <select class='form-control' name='status'>
-                                    <option value='all'>All resources</option>
+                                    <option selected value='all'>All resources</option>
                                     <option value='public'>Open to public</option>
                                     <option value='privateToENACT'>Exclusive to ENACT members</option>
                                     <option value='privateToProfessor'>Exclusive to ENACT professors</option>
@@ -106,8 +106,9 @@
                             <div class='input-group-prepend'>
                                 <span class='input-group-text' style='width: 180px'>Resource Status</span>
                                 <select class='form-control' name='status'>
-                                    <option selected value='public'>Open to everyone</option>
-                                    <option value='privateToENACT'>Exclusive to ENACT members</option>
+                                    <option selected value='privateToENACT'>Exclusive to ENACT members</option>
+                                    <option value='public'>Open to public</option>
+                                    <option value='all'>All resources</option>
                                 </select>
                             </div>
                         <% } %>
