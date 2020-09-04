@@ -150,9 +150,11 @@
 
                 <li class='header__btn header__btn--login'>
                     <% if (!loggedIn) { %>
-                        <a class='btn btn-primary' style="color: white; font-weight: bold" href='/auth/google' data-aos='fade-left'>ENACT member login</a>
+                        <a class='btn btn-primary' style="color: white; font-weight: bold" href='/auth/google'
+                           data-aos='fade-left'>ENACT member login</a>
                     <% } else { %>
-                        <a class='btn btn-primary' style="color: white; font-weight: bold" href='/logout' data-aos='fade-left'>Logout</a>
+                        <a class='btn btn-primary' style="color: white; font-weight: bold" href='/logout'
+                           data-aos='fade-left'>Logout</a>
                     <% } %>
                 </li>
             </ul>
@@ -177,6 +179,8 @@
                         <div class='form-demo' data-aos='zoom-out-down' data-aos-duration='600' data-aos-delay='400'>
                             <a href='/showCourses'><input type='submit' name='submit' class='form-demo__large'
                                                           value='MANAGE/CREATE COURSES'></a>
+                            <a href='/primarySearch'><input type='submit' name='submit' class='form-demo__large'
+                                                            value='FIND RESOURCES'></a>
                             <a href='/facultyExclusive'><input type='submit' name='submit' class='form-demo__large'
                                                                value='FACULTY EXCLUSIVE'></a>
                         </div>
@@ -195,9 +199,9 @@
                        data-aos-delay='400'><input
                                 type='submit' name='submit' class='form-demo__large'
                                 value='PUBLIC RESOURCES'></a>
-<!--                    <a href='/auth/google' data-aos='zoom-out-down' data-aos-duration='1000' data-aos-delay='400'><input-->
-<!--                                type='submit' name='submit' class='form-demo__large'-->
-<!--                                value='ENACT MEMBER LOGIN'></a>-->
+                    <!--                    <a href='/auth/google' data-aos='zoom-out-down' data-aos-duration='1000' data-aos-delay='400'><input-->
+                    <!--                                type='submit' name='submit' class='form-demo__large'-->
+                    <!--                                value='ENACT MEMBER LOGIN'></a>-->
                 <% } %>
             </div>
         </div>
