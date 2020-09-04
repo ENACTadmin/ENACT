@@ -1,77 +1,77 @@
-<div class='card-body'>
-    <% if (resourceInfo && resourceInfo.length > 0) { %>
-        <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
-            <div class='card border-0'>
-                <div class='card-body border-0'>
-                    <h4><%= resourceInfo[i].name %></h4>
-                    <div class='card-text'>
-                        <ul class='list-group'>
-                            <li class='list-group-item borderless box-padding'>
-                                <b>Description: </b> <%= resourceInfo[i].description %></li>
-                            <li class='list-group-item borderless box-padding'>
-                                <b>State:</b> <%= resourceInfo[i].state %></li>
-                            <% if (resourceInfo[i].mediaType === 'video' && resourceInfo[i].uri.endsWith(".mp4")) { %>
-                                <li class='list-group-item borderless box-padding'>
-                                    <iframe width="480" height="270" frameborder="0" allowtransparency="true" allowfullscreen
-                                            src="<%= resourceInfo[i].uri %>">
-                                    </iframe>
-                                </li>
-                            <% } else { %>
-                                <li class='list-group-item borderless box-padding'>
-                                    <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click
-                                        me</a>
-                                </li>
-                            <% } %>
-                            <li class='list-group-item borderless box-padding'>
-                                <b>Institution: </b> <%= resourceInfo[i].institution %></li>
-                            <li class='list-group-item borderless box-padding'>
-                                <b>Tags:</b> <%= resourceInfo[i].tags %>
-                            </li>
-                            <li class='list-group-item borderless box-padding'>
-                                <!--force inline display-->
-                                <!--if the user starred the resource-->
-                                <% if (resourceIds && resourceIds.includes(resourceInfo[i]._id)) { %>
-                                    <form style='display: inline' method='post'
-                                          action='/unstarResource/<%= resourceInfo[i]._id %>'>
-                                        <b>Actions:</b>
-                                        <input type='submit' style='border:0px solid transparent' name='submit'
-                                               class='btn btn-outline-danger' value='&#9829;'>
-                                    </form>
-                                <% } else { %>
-                                    <form style='display: inline' method='post'
-                                          action='/starResource/<%= resourceInfo[i]._id %>'>
-                                        <b>Actions:</b>
-                                        <input type='submit' style='border:0px solid transparent' name='submit'
-                                               class='btn btn-outline-danger' value='&#9825;'>
-                                    </form>
-                                <% } %>
-                                <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id.toString()) { %>
-                                    <button type='button' class='btn btn-outline-info'
-                                            style='border:0 solid transparent' data-toggle='modal'
-                                            data-target='#editModal<%= resourceInfo[i]._id %>'>
-                                        Edit
-                                    </button>
-                                    <button type='button' class='btn btn-outline-warning'
-                                            style='border:0px solid transparent' data-toggle='modal'
-                                            data-target='#deleteModal<%= resourceInfo[i]._id %>'>
-                                        Delete
-                                    </button>
-                                <% } %>
-                                <% if (resourceInfo[i].ownerId.toString() !== user._id.toString()) { %>
-                                    <a href='/message/<%= user._id %>/<%= resourceInfo[i].ownerId %>/<%= resourceInfo[i]._id %>'><input
-                                                class='btn btn-outline-primary' style='border:0px solid transparent'
-                                                type='button' value='Contact the author'></a>
-                                <% } %>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+<!--<div class='card-body'>-->
+<% if (resourceInfo && resourceInfo.length > 0) { %>
+    <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
+        <div class='card-body'>
+            <h4><%= resourceInfo[i].name %></h4>
+            <div class='card-text'>
+                <ul class='list-group'>
+                    <li class='list-group-item borderless box-padding'>
+                        <b>Description: </b> <%= resourceInfo[i].description %></li>
+                    <li class='list-group-item borderless box-padding'>
+                        <b>State:</b> <%= resourceInfo[i].state %></li>
+                    <% if (resourceInfo[i].mediaType === 'video' && resourceInfo[i].uri.endsWith(".mp4")) { %>
+                        <li class='list-group-item borderless box-padding'>
+                            <iframe frameborder="0" allowtransparency="true" allowfullscreen
+                                    src="<%= resourceInfo[i].uri %>">
+                            </iframe>
+                        </li>
+                    <% } else { %>
+                        <li class='list-group-item borderless box-padding'>
+                            <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click
+                                me</a>
+                        </li>
+                    <% } %>
+                    <li class='list-group-item borderless box-padding'>
+                        <b>Institution: </b> <%= resourceInfo[i].institution %></li>
+                    <li class='list-group-item borderless box-padding'>
+                        <b>Tags:</b> <%= resourceInfo[i].tags %>
+                    </li>
+                    <li class='list-group-item borderless box-padding'>
+                        <!--force inline display-->
+                        <!--if the user starred the resource-->
+                        <% if (resourceIds && resourceIds.includes(resourceInfo[i]._id)) { %>
+                            <form style='display: inline' method='post'
+                                  action='/unstarResource/<%= resourceInfo[i]._id %>'>
+                                <b>Actions:</b>
+                                <input type='submit' style='border:0px solid transparent' name='submit'
+                                       class='btn btn-outline-danger' value='&#9829;'>
+                            </form>
+                        <% } else { %>
+                            <form style='display: inline' method='post'
+                                  action='/starResource/<%= resourceInfo[i]._id %>'>
+                                <b>Actions:</b>
+                                <input type='submit' style='border:0px solid transparent' name='submit'
+                                       class='btn btn-outline-danger' value='&#9825;'>
+                            </form>
+                        <% } %>
+                        <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id.toString()) { %>
+                            <button type='button' class='btn btn-outline-info'
+                                    style='border:0 solid transparent' data-toggle='modal'
+                                    data-target='#editModal<%= resourceInfo[i]._id %>'>
+                                Edit
+                            </button>
+                            <button type='button' class='btn btn-outline-warning'
+                                    style='border:0px solid transparent' data-toggle='modal'
+                                    data-target='#deleteModal<%= resourceInfo[i]._id %>'>
+                                Delete
+                            </button>
+                        <% } %>
+                        <% if (resourceInfo[i].ownerId.toString() !== user._id.toString()) { %>
+                            <a href='/messages/view/<%= user._id %>/<%= resourceInfo[i].ownerId %>/<%= resourceInfo[i]._id %>'><input
+                                        class='btn btn-outline-primary' style='border:0px solid transparent'
+                                        type='button' value='Contact the author'></a>
+                        <% } %>
+                    </li>
+                </ul>
             </div>
-            <% if (i !== 0) { %>
-                <hr>
-            <% } %>
+        </div>
+        <% if (i !== 0) { %>
+            <br>
         <% } %>
-    <% } else { %>
-        No resource available yet
     <% } %>
-</div>
+<% } else { %>
+    <div class='card-body text-center'>
+        No resource available yet
+    </div>
+<% } %>
+<!--</div>-->

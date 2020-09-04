@@ -18,40 +18,42 @@
         <h3>System Tracker</h3>
         <hr>
         <div class='row'>
-                <div class='col-md-4 col-sm-12'>
-                    <% if (resourceNum !== 0) { %>
-                        <div class='card border-primary mb-3' style='max-width: 18rem;'>
-                            <div class='card-header'><h3>Action Requested</h3></div>
-                            <div class='card-body'>
+            <div class='col-md-4 col-sm-12'>
+                <% if (resourceNum !== 0) { %>
+                    <div class='card border-primary mb-3' style='max-width: 18rem;'>
+                        <div class='card-header'><h3>Action Requested</h3></div>
+                        <div class='card-body'>
                             <h5 style='display: inline'>You have <%= resourceNum %> resources under review</h5>
                             <br>
                             <br>
-                            <a href='/reviewResource'><input class='btn btn-sm btn-outline-primary' type='submit' value='Go to review'></a>
-                            </div>
+                            <a href='/reviewResource'><input class='btn btn-sm btn-outline-primary' type='submit'
+                                                             value='Go to review'></a>
                         </div>
-                    <% } %>
-                        <% if (status === 'admin' || status === 'faculty') { %>
-
-                            <div class='card border-success mb-3' style='max-width: 18rem;'>
-                                <div class='card-header'><h3>Public Resources Info</h3></div>
-                                <div class='card-body'>
-                                    <h5 style='display: inline'>Congratulations! <%= publicInfo.length %> of your resources have been shown to public.</h5>
-                                    <br>
-                                    <br>
-                                    <a href='/showPublic'><input class='btn btn-sm btn-outline-success' type='submit' value='Go to my public resources'></a>
-                                </div>
-                            </div>
+                    </div>
+                <% } %>
+                <% if (status === 'admin' || status === 'faculty') { %>
+                    <div class='card border-success mb-3' style='max-width: 18rem;'>
+                        <div class='card-header'><h3>Public Resources Info</h3></div>
+                        <div class='card-body'>
+                            <h5 style='display: inline'>Congratulations! <%= publicInfo.length %> of your resources have
+                                been shown to the public.</h5>
+                            <br>
+                            <br>
+                            <a href='/showPublic'><input class='btn btn-sm btn-outline-success' type='submit'
+                                                         value='Go to my public resources'></a>
                         </div>
-                        <% }else{ %>
-                            <% if (approveInfo != 0) { %>
-                            <div class='card border-success mb-3' style='max-width: 18rem;'>
-                                <div class='card-header'><h3>Approved Info</h3></div>
-                                <div class='card-body'>
-                                    <h5 style='display: inline'>Congratulations! You own <%= approveInfo.length %> approved resources.</h5>
-                                    <br>
-                                    <br>
-                                        <a href='/approvedResources'><input class='btn btn-sm btn-outline-success' type='submit' value='Go to my approved resources'></a>
-                                </div>
+                    </div>
+                <% } else { %>
+                    <% if (approveInfo != 0) { %>
+                        <div class='card border-success mb-3' style='max-width: 18rem;'>
+                            <div class='card-header'><h3>Approved Info</h3></div>
+                            <div class='card-body'>
+                                <h5 style='display: inline'>Congratulations! You own <%= approveInfo.length %> approved
+                                    resources.</h5>
+                                <br>
+                                <br>
+                                <a href='/approvedResources'><input class='btn btn-sm btn-outline-success' type='submit'
+                                                                    value='Go to my approved resources'></a>
                             </div>
                         </div>
                     <% } %>
@@ -59,16 +61,18 @@
                         <div class='card border-dark mb-3' style='max-width: 18rem;'>
                             <div class='card-header'><h3>Required to Review Info</h3></div>
                             <div class='card-body'>
-                                <h5 style='display: inline'>Sorry, <%= denyInfo.length %> of your resources need to be reviewed again.</h5>
+                                <h5 style='display: inline'>Sorry, <%= denyInfo.length %> of your resources need to be
+                                    reviewed
+                                    again.</h5>
                                 <br>
                                 <br>
-                                <a href='/showDenied'><input class='btn btn-sm btn-outline-dark' type='submit' value='Review my resources'></a>
+                                <a href='/showDenied'><input class='btn btn-sm btn-outline-dark' type='submit'
+                                                             value='Review my resources'></a>
                             </div>
                         </div>
-                </div>
+                    <% } %>
                 <% } %>
-            <% } %>
-
+            </div>
             <br><br><br>
         </div>
     </div>
@@ -89,10 +93,36 @@
                     <div class='col-md-4 col-sm-12'>
                         <div class='card' style='border:0 solid transparent'>
                             <div class='card-body'>
-                                <h5 style='display: inline'>subject: </h5><%= messageInfo[i].subject %>
+                                <h5 style='display: inline'>Subject: </h5><%= messageInfo[i].subject %>
+                                <br>
+                                <h5 style='display: inline'>Type: </h5>Resource related
                                 <br>
                                 <br>
-                                <a href='/message/<%= messageInfo[i].senderId %>/<%= messageInfo[i].receiverId %>/<%= messageInfo[i].relevantResourceId %>'><input
+                                <a href='/messages/view/<%= messageInfo[i].senderId %>/<%= messageInfo[i].receiverId %>/<%= messageInfo[i].relevantResourceId %>'><input
+                                            class='btn btn-sm btn-outline-primary' type='submit'
+                                            value='CONTINUE'></a>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br><br>
+                <% } %>
+            <% } %>
+            <% loop2: for (let i = 0; i < messageInfo_general.length; i++) { %>
+                <% for (let j = 0; j < i; j++) { %>
+                    <% if (messageInfo_general[i].senderId.equals(messageInfo_general[j].senderId) && messageInfo_general[i].receiverId.equals(messageInfo_general[j].receiverId)) { %>
+                        <% continue loop2 %>
+                    <% } %>
+                <% } %>
+                <% if (messageInfo_general[i].receiverId.equals(user._id)) { %>
+                    <div class='col-md-4 col-sm-12'>
+                        <div class='card' style='border:0 solid transparent'>
+                            <div class='card-body'>
+                                <h5 style='display: inline'>Subject: </h5><%= messageInfo_general[i].subject %>
+                                <br>
+                                <h5 style='display: inline'>Type: </h5>general conversation
+                                <br>
+                                <br>
+                                <a href='/messages/view/<%= messageInfo_general[i].senderId %>/<%= messageInfo_general[i].receiverId %>/general'><input
                                             class='btn btn-sm btn-outline-primary' type='submit'
                                             value='CONTINUE'></a>
                             </div>
@@ -120,10 +150,36 @@
                     <div class='col-md-4 col-sm-12'>
                         <div class='card' style='border:0 solid transparent'>
                             <div class='card-body'>
-                                <h5 style='display: inline'>subject: </h5><%= messageInfo[i].subject %>
+                                <h5 style='display: inline'>Subject: </h5><%= messageInfo[i].subject %>
+                                <br>
+                                <h5 style='display: inline'>Type: </h5>Resource related
                                 <br>
                                 <br>
-                                <a href='/message/<%= messageInfo[i].senderId %>/<%= messageInfo[i].receiverId %>/<%= messageInfo[i].relevantResourceId %>'><input
+                                <a href='/messages/view/<%= messageInfo[i].senderId %>/<%= messageInfo[i].receiverId %>/<%= messageInfo[i].relevantResourceId %>'><input
+                                            class='btn btn-sm btn-outline-primary' type='submit'
+                                            value='CONTINUE'></a>
+                            </div>
+                        </div>
+                    </div>
+                    <br><br><br>
+                <% } %>
+            <% } %>
+            <% loop2: for (let i = 0; i < messageInfo_general.length; i++) { %>
+                <% for (let j = 0; j < i; j++) { %>
+                    <% if (messageInfo_general[i].senderId.equals(messageInfo_general[j].senderId) && messageInfo_general[i].receiverId.equals(messageInfo_general[j].receiverId)) { %>
+                        <% continue loop2 %>
+                    <% } %>
+                <% } %>
+                <% if (messageInfo_general[i].senderId.equals(user._id)) { %>
+                    <div class='col-md-4 col-sm-12'>
+                        <div class='card' style='border:0 solid transparent'>
+                            <div class='card-body'>
+                                <h5 style='display: inline'>Subject: </h5><%= messageInfo_general[i].subject %>
+                                <br>
+                                <h5 style='display: inline'>Type: </h5>general conversation
+                                <br>
+                                <br>
+                                <a href='/messages/view/<%= messageInfo_general[i].senderId %>/<%= messageInfo_general[i].receiverId %>/general'><input
                                             class='btn btn-sm btn-outline-primary' type='submit'
                                             value='CONTINUE'></a>
                             </div>

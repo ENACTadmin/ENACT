@@ -9,7 +9,6 @@ const bodyParser = require("body-parser");
 
 // Models!
 const Course = require('./models/Course');
-const Resource = require('./models/Resource');
 const User = require('./models/User');
 const Faculty = require('./models/Faculty')
 const Event = require('./models/Event')
@@ -140,7 +139,6 @@ let adminList = ["bbdhy96@gmail.com", "nicolezhang@brandeis.edu", "stimell@brand
 // this runs every time when a req is received
 let loggedIn = false;
 app.use(async (req, res, next) => {
-    res.locals.title = "ENACT";
     res.locals.loggedIn = false;
     res.locals.status = "student"
     if (req.isAuthenticated()) {
@@ -149,19 +147,26 @@ app.use(async (req, res, next) => {
         res.locals.loggedIn = true;
         loggedIn = true;
         // set appropriate status
+        let userInfo = await User.findOne({_id: req.user._id})
         if (adminList.includes(googleEmail)) {
             res.locals.status = 'admin'
             let courseInfoSet = await Course.find({ownerId: req.user._id})
+            userInfo.status = 'admin'
+            await userInfo.save()
             res.locals.courseInfoSet = courseInfoSet
         } else {
             let user = await Faculty.findOne({email: googleEmail})
             if (user) {
                 res.locals.status = user.status
+                userInfo.status = 'faculty'
+                await userInfo.save()
                 let courseInfoSet = await Course.find({ownerId: req.user._id})
                 res.locals.courseInfoSet = courseInfoSet
             } else {
                 let enrolledCourses = req.user.enrolledCourses
                 let courseInfoSet = await Course.find({_id: {$in: enrolledCourses}})
+                userInfo.status = 'student'
+                await userInfo.save()
                 res.locals.courseInfoSet = courseInfoSet
             }
         }
@@ -257,10 +262,10 @@ app.post('/uploadResource/:courseId',
     resourceController.uploadResource
 )
 
-app.get('/primarySearch',
+app.get('/resources/search/private/general',
     resourceController.checkUserName,
     (req, res) =>
-        res.render('./pages/primarySearch')
+        res.render('./pages/searchPrimary')
 )
 
 app.get('/uploadToPublic',
@@ -273,8 +278,17 @@ app.post('/uploadToPublicResr',
     resourceController.uploadToPublicResr
 )
 
-app.post('/showPrimaryResources',
+app.post('/resources/view/private/generalResult',
     resourceController.primarySearch
+)
+
+app.get('/resources/search/private/advanced',
+    resourceController.checkUserName,
+    (req, res) =>
+        res.render('./pages/search'))
+
+app.post('/resources/view/private/advancedResult',
+    resourceController.advancedSearch
 )
 
 
@@ -283,33 +297,23 @@ app.get('/resources/view/public/all',
     resourceController.showPublic
 )
 
-
-app.get('/publicPrimarySearch',
+app.get('/resources/search/public/general',
     resourceController.checkUserName,
     (req, res) =>
         res.render('./pages/publicPrimarySearch')
 )
 
-app.post('/resources/view/public/result',
+app.post('/resources/view/public/generalResult',
     resourceController.primaryPublicSearch
 )
 
-app.get('/search',
-    resourceController.checkUserName,
-    (req, res) =>
-        res.render('./pages/search'))
-
-app.post('/resources/search',
-    resourceController.searchByFilled
-)
-
-app.get('/publicSearch',
+app.get('/resources/search/public/advanced',
     resourceController.checkUserName,
     (req, res) =>
         res.render('./pages/publicSearch'))
 
-app.post('/showPublicResources',
-    resourceController.searchByFilledPublic
+app.post('/resources/view/public/advancedResult',
+    resourceController.advancedSearchPublic
 )
 
 app.get('/facultyExclusive',
@@ -467,19 +471,22 @@ app.get('/profile/view/:id',
     profileController.findOneUser
 )
 
+app.get('/profiles/view/faculty',
+    profileController.showFacultyProfiles
+)
 
 app.get('/profile/edit',
     (req, res) => {
         res.render('./pages/updateProfile')
     })
 
-app.get('/profiles',
+app.get('/profiles/view/all',
     resourceController.checkUserName,
     profileController.showAllProfiles
 )
 
 //show all profiles from all users
-app.post('/updateProfile',
+app.post('/profile/update',
     profileController.updateProfile
 )
 
@@ -498,16 +505,16 @@ app.post('/saveProfileImageURL',
 
 //*******************************************
 //************Message related****************
-app.get('/message/:sender/:receiver/:resourceId',
+app.get('/messages/view/:sender/:receiver/:resourceId',
     resourceController.checkUserName,
     messageController.loadMessagingPage
 )
 
-app.post('/saveMessage/:sender/:receiver/:resourceId',
+app.post('/messages/save/:sender/:receiver/:resourceId',
     messageController.saveMessage
 )
 
-app.get('/messageBoard',
+app.get('/messages/view/all',
     resourceController.checkUserName,
     messageController.loadMessageBoard
 )

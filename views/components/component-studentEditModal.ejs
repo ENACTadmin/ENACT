@@ -76,7 +76,7 @@ let id_set = [] %>
                                         <span class='input-group-text' style='width: 180px'>Content Type</span>
                                         <select id='contentTypeSelect<%= resourceInfo[i]._id %>' class='form-control'
                                                 name='contentType'>
-                                            <option value='null'>Choose...</option>
+                                            <option value='empty'>Choose...</option>
                                             <option value='Testimony'>Testimony</option>
                                             <option value='Op-Ed'>Op-Ed</option>
                                             <option value='ResearchReport'>Research Report</option>
@@ -88,7 +88,7 @@ let id_set = [] %>
                                             <option value='NextSteps'>Next Steps</option>
                                             <option value='Portfolio'>Portfolio</option>
                                             <option value='Flyer'>Flyer/handout</option>
-                                            <option value=PhotoVideo'>Photo</option>
+                                            <option value='photo'>Photo</option>
                                             <option value='Video'>Video</option>
                                             <option value='PersonalReflection'>Personal reflection</option>
                                             <option value='Presentations'>Presentations/Powerpoints</option>
@@ -99,9 +99,11 @@ let id_set = [] %>
                                         <span class='input-group-text' style='width: 180px'>Media Type</span>
                                         <select id='mediaTypeSelect<%= resourceInfo[i]._id %>' class='form-control'
                                                 name='mediaType'>
-                                            <option value='null'>Choose...</option>
-                                            <option value='video'>Video</option>
+                                            <option selected value='empty'>Choose...</option>
                                             <option value='document'>Document</option>
+                                            <option value='photo'>Photo</option>
+                                            <option value='PowerPoint'>PowerPoint</option>
+                                            <option value='video'>Video</option>
                                         </select>
                                     </div>
                                     <br>
@@ -206,7 +208,7 @@ let id_set = [] %>
                                 <div class='w-100'></div>
                                 <br>
                                 <div class='col-md-12 col-sm-12'>
-                                    <h3>Tag the resource</h3>
+                                    <h3>Area of the resource (Optional)</h3>
                                     <hr>
                                 </div>
                                 <div class='w-100'></div>

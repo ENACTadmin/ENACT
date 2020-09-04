@@ -15,83 +15,75 @@
 <section class='section section__grey' data-aos='fade-up'>
     <section class='section__content section__content--fluid-width'>
         <div class='container'>
-            <div class='row'>
-                <% if (loggedIn) { %>
-                    <div class='col-md-12 col-sm-12'>
-                        <div class='card border-0'>
-                            <div class='card-body'>
-                                <% if (resourceInfo) { %>
-                                    <form method='post'>
-                                        <div class='form-group row'>
-                                            <div class='col-sm-1'></div>
-                                            <div class='col-sm-11'>
-                                                <input type='submit' class='btn btn-success' formaction='/approve'
-                                                       value='Post Checked Resources to ENACT'>
-                                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                                <input type='submit' formaction='/toPublic' class='btn btn-warning'
-                                                       value='Submit Checked Resources to Admins to be posted to public'>
-                                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                                <input type='submit' formaction='/tempdeny' class='btn btn-secondary'
-                                                       value='Deny Checked Resources'>
-                                            </div>
-                                        </div>
-                                        <% for (let i = 0; i < resourceInfo.length; i++) { %>
-                                            <div class='form-group row'>
-                                                <div class='col-sm-1'>
-                                                    <br>
-                                                    <br>
-                                                    <br>
-                                                    <br>
-                                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                                    <input type='checkbox' name='checked'
-                                                           value='<%= resourceInfo[i]._id %>'>
-                                                </div>
-                                                <div class='col-sm-11'>
-                                                    <div class='card border-0'>
-                                                        <div class='card-body'>
-                                                            <% console.log('status: ' + resourceInfo[i].status) %>
-                                                            <h4><%= resourceInfo[i].name %></h4>
-                                                            <div class='card-text'>
-                                                                <ul class='list-group'>
-                                                                    <li class='list-group-item borderless box-padding'>
-                                                                        <b>Author: </b> <%= resourceInfo[i].ownerName %>
-                                                                    </li>
-                                                                    <li class='list-group-item borderless box-padding'>
-                                                                        <b>Description: </b> <%= resourceInfo[i].description %>
-                                                                    </li>
-                                                                    <li class='list-group-item borderless box-padding'>
-                                                                        <b>State:</b> <%= resourceInfo[i].state %></li>
-                                                                    <li class='list-group-item borderless box-padding'>
-                                                                        <b>Link: </b> <a
-                                                                                href='<%= resourceInfo[i].uri %>'><%= resourceInfo[i].uri %></a>
-                                                                    </li>
-                                                                    <li class='list-group-item borderless box-padding'>
-                                                                        <b>Institution: </b> <%= resourceInfo[i].institution %>
-                                                                    </li>
-                                                                    <li class='list-group-item borderless box-padding'>
-                                                                        <b>Tags:</b> <%= resourceInfo[i].tags %>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <% if (i !== resourceInfo.length - 1) { %>
-                                                <hr>
-                                            <% } %>
-                                        <% } %>
-                                    </form>
-                                <% } else { %>
-                                    There is no resource under review.
-                                <% } %>
+            <% if (loggedIn) { %>
+                <% if (resourceInfo && resourceInfo.length > 0) { %>
+                    <form method='post'>
+                        <div class='form-group row'>
+                            <div class='col-sm-1'></div>
+                            <div class='col-sm-11'>
+                                <input type='submit' class='btn btn-success' formaction='/approve'
+                                       value='Post Checked Resources to ENACT'>
+                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                <input type='submit' formaction='/toPublic' class='btn btn-warning'
+                                       value='Submit Checked Resources to Admins to be posted to public'>
+                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                <input type='submit' formaction='/tempdeny' class='btn btn-secondary'
+                                       value='Deny Checked Resources'>
                             </div>
                         </div>
-                    </div>
+                        <% for (let i = 0; i < resourceInfo.length; i++) { %>
+                            <div class='form-group row'>
+                                <div class='col-sm-1'>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <input type='checkbox' name='checked'
+                                           value='<%= resourceInfo[i]._id %>'>
+                                </div>
+                                <div class='col-sm-11'>
+                                    <div class='card-body'>
+                                        <% console.log('status: ' + resourceInfo[i].status) %>
+                                        <h4><%= resourceInfo[i].name %></h4>
+                                        <div class='card-text'>
+                                            <ul class='list-group'>
+                                                <li class='list-group-item borderless box-padding'>
+                                                    <b>Author: </b> <%= resourceInfo[i].ownerName %>
+                                                </li>
+                                                <li class='list-group-item borderless box-padding'>
+                                                    <b>Description: </b> <%= resourceInfo[i].description %>
+                                                </li>
+                                                <li class='list-group-item borderless box-padding'>
+                                                    <b>State:</b> <%= resourceInfo[i].state %></li>
+                                                <li class='list-group-item borderless box-padding'>
+                                                    <b>Link: </b> <a
+                                                            href='<%= resourceInfo[i].uri %>'><%= resourceInfo[i].uri %></a>
+                                                </li>
+                                                <li class='list-group-item borderless box-padding'>
+                                                    <b>Institution: </b> <%= resourceInfo[i].institution %>
+                                                </li>
+                                                <li class='list-group-item borderless box-padding'>
+                                                    <b>Tags:</b> <%= resourceInfo[i].tags %>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <% if (i !== resourceInfo.length - 1) { %>
+                                <hr>
+                            <% } %>
+                        <% } %>
+                    </form>
                 <% } else { %>
-                    <%- include('../components/component-loginToView'); -%>
+                    <div class="card-body text-center">
+                        There is no resource under review.
+                    </div>
                 <% } %>
-            </div>
+            <% } else { %>
+                <%- include('../components/component-loginToView'); -%>
+            <% } %>
         </div>
     </section>
 </section>

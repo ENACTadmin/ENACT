@@ -20,11 +20,8 @@
             <div class='row'>
                 <% if (loggedIn) { %>
                     <div class='col-md-12 col-sm-12'>
-                        <div class='card border-0'>
-                            <div class='card-body'>
                                 <% if (resourceInfo && resourceInfo.length > 0) { %>
                                     <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
-                                        <div class='card border-0'>
                                             <div class='card-body'>
                                                 <h4><%= resourceInfo[i].name %></h4>
                                                 <div class='card-text'>
@@ -110,17 +107,16 @@
                                                         </li>
                                                     </ul>
                                                 </div>
-                                            </div>
                                         </div>
                                         <% if (i !== 0) { %>
                                             <hr>
                                         <% } %>
                                     <% } %>
                                 <% } else { %>
-                                    No resource available yet
+                                        <div class='card-body text-center'>
+                                            No resource available yet
+                                        </div>
                                 <% } %>
-                            </div>
-                        </div>
                     </div>
                 <% } else { %>
                     <%- include('../components/component-loginToView'); -%>

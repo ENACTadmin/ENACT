@@ -10,7 +10,7 @@ const userSchema = Schema({
     googleemail: String,
     userName: String,
     profilePicURL: String,
-    status: String, // status of the user: student/faculty/administrator
+    status: String, // status of the user: student/faculty/admin
     zipcode: String,
     city: String,
     state: String,

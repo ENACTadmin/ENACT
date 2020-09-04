@@ -11,7 +11,7 @@ const resourceSchema = Schema({
     createdAt: Date,
     name: String,
     description: String,
-    tags: [String], // tag the resource
+    tags: [String], // Area of the resource (Optional)
     uri: String, // universal resource identifier specific to the resource
     state: String,
     mediaType: String, // video/text document ...

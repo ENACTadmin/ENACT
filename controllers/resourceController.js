@@ -92,8 +92,10 @@ async function setWord2Id(newResource) {
 
     let regex = /[^\s\.,!?]+/g;
     let match = fullContent.match(regex);
+    console.log('match: ', match)
     for (let i = 0; i < match.length; i++) {
-        let word2Id = await Word2Id.findOne({word: match[i]})
+        let newRegex = new RegExp(["^", match[i], "$"].join(""), "i");
+        let word2Id = await Word2Id.findOne({word: newRegex})
         // if not null
         if (match[i].toString() !== 'null') {
             if (word2Id === null) {
@@ -121,7 +123,8 @@ async function removeWord2Id(oldResource) {
     let match = fullContent.match(regex);
     console.log('match here: ', match)
     for (let i = 0; i < match.length; i++) {
-        let word2Id = await Word2Id.findOne({word: match[i]})
+        let newRegex = new RegExp(["^", match[i], "$"].join(""), "i");
+        let word2Id = await Word2Id.findOne({word: newRegex})
         // if not null
         if (match[i].toString() !== 'null') {
             if (word2Id === null) {
@@ -200,200 +203,6 @@ exports.loadResources = async (req, res, next) => {
     }
 }
 
-exports.primarySearch = async (req, res, next) => {
-    try {
-        let resourceInfo = await invertedSearch(req, res);
-        console.log("resources: ", resourceInfo)
-        let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
-
-        let starredResourceIds = null
-        if (starred) {
-            starredResourceIds = await starred.resources
-        }
-
-        // remove duplicates in resource objects
-        let uniqueResourceInfo = null
-        if (resourceInfo) {
-            let jsonObject = resourceInfo.map(JSON.stringify);
-            uniqueResourceInfo = Array.from(new Set(jsonObject)).map(JSON.parse);
-        }
-
-        res.locals.resourceIds = starredResourceIds
-        res.locals.resourceInfo = uniqueResourceInfo
-        resourceInfoSet = uniqueResourceInfo
-        res.render('./pages/showResources')
-    } catch
-        (e) {
-        next(e)
-    }
-}
-
-exports.primaryPublicSearch = async (req, res, next) => {
-    let resourceInfo = null
-    const checkStatus = 'approve'
-    try {
-        let regex = /[^\s\.,!?]+/g;
-        let match = req.body.search.match(regex)
-        if (match) {
-            for (let i = 0; i < match.length; i++) {
-                let word2Id = await Word2Id.findOne({word: match[i]})
-                if (word2Id !== null) {
-                    let resourceIds = word2Id.ids
-                    if (resourceInfo === null) {
-                        resourceInfo = await Resource.find({
-                            checkStatus: checkStatus,
-                            _id: {$in: resourceIds},
-                            status: {$in: ["finalPublic", "public"]}
-                        })
-                    } else {
-                        let newResourceInfo = await Resource.find({
-                            checkStatus: checkStatus,
-                            _id: {$in: resourceIds},
-                            status: {$in: ["finalPublic", "public"]}
-                        })
-                        resourceInfo = resourceInfo.concat(newResourceInfo)
-                    }
-                }
-            }
-        } else {
-            resourceInfo = await Resource.find({
-                checkStatus: checkStatus,
-                status: {$in: ["finalPublic", "public"]}
-            })
-        }
-        res.render('./pages/publicPrimarySearch', {
-            resourceInfo: resourceInfo
-        })
-    } catch (e) {
-        next(e)
-    }
-}
-
-async function invertedSearch(req, res) {
-    const checkStatus = 'approve'
-    let resourceInfo = null
-    let regex = /[^\s\.,!?]+/g;
-    let match = req.body.search.match(regex)
-    console.log("match: ", match)
-    if (match) {
-        // admin search
-        if (res.locals.status === 'admin' || res.locals.status === 'faculty') {
-            for (let i = 0; i < match.length; i++) {
-                let word2Id = await Word2Id.findOne({word: match[i]})
-                console.log('123: ', word2Id)
-                if (word2Id !== null) {
-                    let resourceIds = word2Id.ids
-                    if (resourceInfo === null) {
-                        resourceInfo = await Resource.find({_id: {$in: resourceIds}})
-                    } else {
-                        let newResourceInfo = await Resource.find({_id: {$in: resourceIds}})
-                        resourceInfo = resourceInfo.concat(newResourceInfo)
-                    }
-                }
-            }
-        }
-        // student search
-        else {
-            for (let i = 0; i < match.length; i++) {
-                let word2Id = await Word2Id.findOne({word: match[i]})
-                if (word2Id !== null) {
-                    let resourceIds = word2Id.ids
-                    if (resourceInfo === null) {
-                        resourceInfo = await Resource.find({
-                            checkStatus: checkStatus,
-                            _id: {$in: resourceIds},
-                            status: {$in: ["privateToENACT", "public"]}
-                        })
-                    } else {
-                        let newResourceInfo = await Resource.find({
-                            checkStatus: checkStatus,
-                            _id: {$in: resourceIds},
-                            status: {$in: ["privateToENACT", "public"]}
-                        })
-                        resourceInfo = resourceInfo.concat(newResourceInfo)
-                    }
-                }
-            }
-        }
-    }
-    // empty param search
-    else {
-        if (res.locals.status === 'admin' || res.locals.status === 'faculty') {
-            resourceInfo = await Resource.find({
-                checkStatus: checkStatus
-            })
-        } else {
-            resourceInfo = await Resource.find({
-                checkStatus: checkStatus,
-                status: {$in: ["privateToENACT", "public"]}
-            })
-        }
-    }
-    return resourceInfo
-}
-
-exports.searchByFilled = async (req, res) => {
-    let resourceInfo = await invertedSearch(req, res);
-    let filtered = resourceInfo;
-
-    let local_state = req.body.state !== 'empty' ? req.body.state : null
-
-    if (local_state) {
-        filtered = filtered.filter(({state}) => state === local_state);
-    }
-
-    let local_institution = req.body.institution
-
-    if (local_institution !== '') {
-        filtered = filtered.filter(({institution}) => institution === local_institution);
-    }
-
-    let local_yearOfCreation = req.body.yearOfCreation
-
-    if (local_yearOfCreation !== '') {
-        filtered = filtered.filter(({yearOfCreation}) => yearOfCreation === parseInt(local_yearOfCreation));
-    }
-
-    let local_status = req.body.status
-
-    if (local_status !== '' && local_status !== 'all') {
-        filtered = filtered.filter(({status}) => status === local_status);
-    }
-
-    let local_tags = req.body.tags
-
-    let filteredResource = []
-    if (req.body.tags.length > 0) {
-        console.log("tag used")
-        for (let m = 0; m < filtered.length; m++) {
-            let tagged = await req.body.tags.split(',')
-            let result = tagged.every(val => filtered[m].tags.includes(val));
-            if (result) {
-                filteredResource.push(filtered[m])
-            }
-        }
-    } else {
-        console.log("tag not used")
-        filteredResource = filtered
-    }
-
-    console.log('tags: ', local_tags)
-
-    let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
-
-    let starredResourceIds = null
-    if (starred) {
-        starredResourceIds = await starred.resources
-    }
-
-    res.locals.resourceIds = starredResourceIds
-
-    resourceInfoSet = filteredResource
-    res.render('./pages/showResources', {
-        resourceInfo: filteredResource,
-        resourceIds: starredResourceIds
-    })
-}
 
 exports.loadAllFacultyResources = async (req, res, next) => {
     try {
@@ -802,56 +611,286 @@ exports.showPublic = async (req, res, next) => {
     }
 }
 
-exports.searchByFilledPublic = async (req, res, next) => {
+
+// -----------------------------------------------
+//
+// --------------- General Search ----------------
+//
+// -----------------------------------------------
+
+exports.primarySearch = async (req, res, next) => {
     try {
         let resourceInfo = await invertedSearch(req, res);
+        console.log("resources: ", resourceInfo)
+        let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
 
-        let filtered = resourceInfo;
-
-        let local_state = req.body.state !== 'empty' ? req.body.state : null
-
-        if (local_state) {
-            filtered = filtered.filter(({state}) => state === local_state);
+        let starredResourceIds = null
+        if (starred) {
+            starredResourceIds = await starred.resources
         }
 
-        let local_institution = req.body.institution
-
-        if (local_institution !== '') {
-            filtered = filtered.filter(({institution}) => institution === local_institution);
+        // remove duplicates in resource objects
+        let uniqueResourceInfo = null
+        if (resourceInfo) {
+            let jsonObject = resourceInfo.map(JSON.stringify);
+            uniqueResourceInfo = Array.from(new Set(jsonObject)).map(JSON.parse);
         }
 
-        let local_yearOfCreation = req.body.yearOfCreation
+        res.locals.resourceIds = starredResourceIds
+        res.locals.resourceInfo = uniqueResourceInfo
+        resourceInfoSet = uniqueResourceInfo
+        res.render('./pages/showResources')
+    } catch
+        (e) {
+        next(e)
+    }
+}
 
-        if (local_yearOfCreation !== '') {
-            filtered = filtered.filter(({yearOfCreation}) => yearOfCreation === parseInt(local_yearOfCreation));
-        }
-
-        filtered = filtered.filter(({status}) => status === 'public');
-
-
-        // -----------------------------------------------------------------
-        // ---------------------------tag filter----------------------------
-        // -----------------------------------------------------------------
-
-        let filteredResource = []
-        if (req.body.tags.length > 0) {
-            console.log("tag used")
-            for (let m = 0; m < filtered.length; m++) {
-                let tagged = await req.body.tags.split(',')
-                let result = tagged.every(val => filtered[m].tags.includes(val));
-                if (result) {
-                    filteredResource.push(filtered[m])
+exports.primaryPublicSearch = async (req, res, next) => {
+    let resourceInfo = null
+    const checkStatus = 'approve'
+    try {
+        let regex = /[^\s\.,!?]+/g;
+        let match = req.body.search.match(regex)
+        if (match) {
+            for (let i = 0; i < match.length; i++) {
+                let newRegex = new RegExp(["^", match[i], "$"].join(""), "i");
+                let word2Id = await Word2Id.findOne({word: newRegex})
+                if (word2Id !== null) {
+                    let resourceIds = word2Id.ids
+                    if (resourceInfo === null) {
+                        resourceInfo = await Resource.find({
+                            checkStatus: checkStatus,
+                            _id: {$in: resourceIds},
+                            status: {$in: ["finalPublic", "public"]}
+                        })
+                    } else {
+                        let newResourceInfo = await Resource.find({
+                            checkStatus: checkStatus,
+                            _id: {$in: resourceIds},
+                            status: {$in: ["finalPublic", "public"]}
+                        })
+                        resourceInfo = resourceInfo.concat(newResourceInfo)
+                    }
                 }
             }
         } else {
-            console.log("tag not used")
-            filteredResource = filtered
+            resourceInfo = await Resource.find({
+                checkStatus: checkStatus,
+                status: {$in: ["finalPublic", "public"]}
+            })
         }
-
-        res.locals.resourceInfo = filteredResource
-        res.render('./pages/showPublicResources')
-
+        res.render('./pages/publicPrimarySearch', {
+            resourceInfo: resourceInfo
+        })
     } catch (e) {
         next(e)
     }
+}
+
+async function invertedSearch(req, res) {
+    const checkStatus = 'approve'
+    let resourceInfo = null
+    let regex = /[^\s\.,!?]+/g;
+    let match = req.body.search.match(regex)
+    if (match) {
+        // admin search
+        if (res.locals.status === 'admin' || res.locals.status === 'faculty') {
+            for (let i = 0; i < match.length; i++) {
+                let newRegex = new RegExp(["^", match[i], "$"].join(""), "i");
+                let word2Id = await Word2Id.findOne({word: newRegex})
+                if (word2Id !== null) {
+                    let resourceIds = word2Id.ids
+                    if (resourceInfo === null) {
+                        resourceInfo = await Resource.find({_id: {$in: resourceIds}})
+                    } else {
+                        let newResourceInfo = await Resource.find({_id: {$in: resourceIds}})
+                        resourceInfo = resourceInfo.concat(newResourceInfo)
+                    }
+                }
+            }
+        }
+        // student search
+        else {
+            for (let i = 0; i < match.length; i++) {
+                let newRegex = new RegExp(["^", match[i], "$"].join(""), "i");
+                let word2Id = await Word2Id.findOne({word: newRegex})
+                if (word2Id !== null) {
+                    let resourceIds = word2Id.ids
+                    if (resourceInfo === null) {
+                        resourceInfo = await Resource.find({
+                            checkStatus: checkStatus,
+                            _id: {$in: resourceIds},
+                            status: {$in: ["privateToENACT", "public", "finalPublic"]}
+                        })
+                    } else {
+                        let newResourceInfo = await Resource.find({
+                            checkStatus: checkStatus,
+                            _id: {$in: resourceIds},
+                            status: {$in: ["privateToENACT", "public", "finalPublic"]}
+                        })
+                        resourceInfo = resourceInfo.concat(newResourceInfo)
+                    }
+                }
+            }
+        }
+    }
+    // empty param search
+    else {
+        if (res.locals.status === 'admin' || res.locals.status === 'faculty') {
+            resourceInfo = await Resource.find({
+                checkStatus: checkStatus
+            })
+        } else {
+            resourceInfo = await Resource.find({
+                checkStatus: checkStatus,
+                status: {$in: ["privateToENACT", "public", "finalPublic"]}
+            })
+        }
+    }
+    return resourceInfo
+}
+
+
+// -----------------------------------------------
+//
+// --------------- Advanced Search ---------------
+//    
+// -----------------------------------------------
+
+exports.advancedSearch = async (req, res) => {
+
+    let resourceInfo = await invertedSearch(req, res);
+
+    let filtered = resourceInfo;
+
+    let local_state = req.body.state !== 'empty' ? req.body.state : null
+
+    console.log('state: ', local_state)
+
+    if (filtered && local_state) {
+        filtered = filtered.filter(({state}) => state.toUpperCase() === local_state.toUpperCase());
+    }
+
+    let local_institution = req.body.institution
+
+    if (filtered && local_institution !== '') {
+        filtered = filtered.filter(({institution}) => institution.toUpperCase() === local_institution.toUpperCase());
+    }
+
+    let local_yearOfCreation = req.body.yearOfCreation
+
+    if (filtered && local_yearOfCreation !== '') {
+        filtered = filtered.filter(({yearOfCreation}) => yearOfCreation === parseInt(local_yearOfCreation));
+    }
+
+    let local_contentType = req.body.contentType !== 'empty' ? req.body.contentType : null
+
+    if (filtered && local_contentType) {
+        filtered = filtered.filter(({contentType}) => contentType.toUpperCase() === local_contentType.toUpperCase());
+    }
+
+    let local_mediaType = req.body.mediaType !== 'empty' ? req.body.mediaType : null
+
+    if (filtered && local_mediaType) {
+        filtered = filtered.filter(({mediaType}) => mediaType.toUpperCase() === local_mediaType.toUpperCase());
+    }
+
+    let local_status = req.body.status
+
+    if (filtered && local_status !== '' && local_status !== 'all') {
+        filtered = filtered.filter(({status}) => status.toUpperCase() === local_status.toUpperCase());
+    }
+
+    let filteredResource = []
+    if (filtered && req.body.tags.length > 0) {
+        console.log("tag used")
+        for (let m = 0; m < filtered.length; m++) {
+            let tagged = await req.body.tags.split(',')
+            let result = tagged.every(val => filtered[m].tags.includes(val));
+            if (result) {
+                filteredResource.push(filtered[m])
+            }
+        }
+    } else {
+        console.log("tag not used")
+        filteredResource = filtered
+    }
+
+    let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
+
+    let starredResourceIds = null
+    if (starred) {
+        starredResourceIds = await starred.resources
+    }
+
+    res.locals.resourceIds = starredResourceIds
+
+    resourceInfoSet = filteredResource
+    res.render('./pages/showResources', {
+        resourceInfo: filteredResource,
+        resourceIds: starredResourceIds
+    })
+}
+
+exports.advancedSearchPublic = async (req, res, next) => {
+    let resourceInfo = await invertedSearch(req, res);
+
+    let filtered = resourceInfo;
+
+    let local_state = req.body.state !== 'empty' ? req.body.state : null
+
+    if (filtered && local_state) {
+        filtered = filtered.filter(({state}) => state.toUpperCase() === local_state.toUpperCase());
+    }
+
+    let local_institution = req.body.institution
+
+    if (filtered && local_institution !== '') {
+        filtered = filtered.filter(({institution}) => institution.toUpperCase() === local_institution.toUpperCase());
+    }
+
+    let local_yearOfCreation = req.body.yearOfCreation
+
+    if (filtered && local_yearOfCreation !== '') {
+        filtered = filtered.filter(({yearOfCreation}) => yearOfCreation === parseInt(local_yearOfCreation).toUpperCase());
+    }
+
+    let local_contentType = req.body.contentType !== 'empty' ? req.body.contentType : null
+
+    if (filtered && local_contentType) {
+        filtered = filtered.filter(({contentType}) => contentType.toUpperCase() === local_contentType.toUpperCase());
+    }
+
+    let local_mediaType = req.body.mediaType !== 'empty' ? req.body.mediaType : null
+
+    if (filtered && local_mediaType) {
+        filtered = filtered.filter(({mediaType}) => mediaType.toUpperCase() === local_mediaType.toUpperCase());
+    }
+
+    if (filtered) {
+        filtered = filtered.filter(({status}) => ['public', 'finalPublic'].includes(status));
+    }
+
+    // -----------------------------------------------------------------
+    // ---------------------------tag filter----------------------------
+    // -----------------------------------------------------------------
+
+    let filteredResource = []
+    if (req.body.tags.length > 0) {
+        console.log("tag used")
+        for (let m = 0; m < filtered.length; m++) {
+            let tagged = await req.body.tags.split(',')
+            let result = tagged.every(val => filtered[m].tags.includes(val));
+            if (result) {
+                filteredResource.push(filtered[m])
+            }
+        }
+    } else {
+        console.log("tag not used")
+        filteredResource = filtered
+    }
+
+    res.locals.resourceInfo = filteredResource
+    res.render('./pages/showPublicResources')
 }

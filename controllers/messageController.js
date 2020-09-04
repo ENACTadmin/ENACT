@@ -11,15 +11,31 @@ exports.loadMessagingPage = async (req, res, next) => {
         let resourceId = req.params.resourceId
         let senderInfo = await User.findOne({_id: senderId})
         let receiverInfo = await User.findOne({_id: receiverId})
-        let resourceInfo = await Resource.findOne({_id: resourceId})
+
+        let resourceInfo
+        if (resourceId === 'general') {
+            resourceInfo = null
+        } else {
+            resourceInfo = await Resource.findOne({_id: resourceId})
+        }
+
         res.locals.senderInfo = senderInfo
         res.locals.receiverInfo = receiverInfo
         res.locals.resourceInfo = resourceInfo
-        let messageInfo = await Message.find({
-            $or: [
-                {senderId: senderId, receiverId: receiverId},
-            ]
-        }).sort({createdAt: 1})
+        let messageInfo
+        if (resourceId === 'general') {
+            messageInfo = await Message.find({
+                $and: [
+                    {senderId: senderId, receiverId: receiverId, relevantResourceId: {$exists: false}},
+                ]
+            }).sort({createdAt: 1})
+        } else {
+            messageInfo = await Message.find({
+                $and: [
+                    {senderId: senderId, receiverId: receiverId, relevantResourceId: resourceId},
+                ]
+            }).sort({createdAt: 1})
+        }
         res.locals.messageInfo = await messageInfo
         res.render('./pages/message')
     } catch (e) {
@@ -36,16 +52,29 @@ exports.saveMessage = async (req, res, next) => {
         } else {
             receivedBy = req.params.sender
         }
-        let newMessage = Message({
-            senderId: req.params.sender,
-            receiverId: req.params.receiver,
-            sentBy: sentBy,
-            receivedBy: receivedBy,
-            relevantResourceId: req.params.resourceId,
-            subject: req.body.subject,
-            message: req.body.message,
-            createdAt: new Date()
-        })
+        let newMessage
+        if (req.params.resourceId === 'general') {
+            newMessage = Message({
+                senderId: req.params.sender,
+                receiverId: req.params.receiver,
+                sentBy: sentBy,
+                receivedBy: receivedBy,
+                subject: req.body.subject,
+                message: req.body.message,
+                createdAt: new Date()
+            })
+        } else {
+            newMessage = Message({
+                senderId: req.params.sender,
+                receiverId: req.params.receiver,
+                sentBy: sentBy,
+                receivedBy: receivedBy,
+                relevantResourceId: req.params.resourceId,
+                subject: req.body.subject,
+                message: req.body.message,
+                createdAt: new Date()
+            })
+        }
         await newMessage.save()
         let receiver = await User.findOne({_id: req.params.receiver})
         let workEmail = receiver.workEmail
@@ -95,8 +124,27 @@ exports.loadMessageBoard = async (req, res, next) => {
     try {
         let userId = req.user._id
         let messageInfo = await Message.find({
-            $or: [
-                {senderId: userId}, {receiverId: userId}
+            $and: [
+                {
+                    $or: [
+                        {senderId: userId}, {receiverId: userId}
+                    ]
+                },
+                {
+                    relevantResourceId: {$exists: true}
+                }
+            ]
+        })
+        let messageInfo_general = await Message.find({
+            $and: [
+                {
+                    $or: [
+                        {senderId: userId}, {receiverId: userId}
+                    ]
+                },
+                {
+                    relevantResourceId: {$exists: false}
+                }
             ]
         })
         let resourceInfo = await Resource.find({
@@ -117,6 +165,7 @@ exports.loadMessageBoard = async (req, res, next) => {
         })
         res.locals.resourceNum = await resourceInfo.length
         res.locals.messageInfo = await messageInfo
+        res.locals.messageInfo_general = await messageInfo_general
         res.locals.approveInfo = await approveInfo
         res.locals.denyInfo = await denyInfo
         res.locals.publicInfo = await publicInfo

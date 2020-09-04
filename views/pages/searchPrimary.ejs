@@ -19,14 +19,14 @@
             <div class='col-md-3 col-sm-12'></div>
             <div class='col-md-6 col-sm-12'>
                 <% if (loggedIn) { %>
-                    <form method='post' action='/showPrimaryResources'>
+                    <form method='post' action='/resources/view/private/generalResult'>
                         <div class='input-group-prepend'>
                             <input type='text' class='form-control' name='search'
                                    placeholder='Search for anything'>
                             &nbsp&nbsp&nbsp
                             <input type='submit' name='submit' class='btn btn-dark' value='Search'>
                             &nbsp&nbsp&nbsp
-                            <a href='/search' class='btn btn-large btn-warning' style='width: 300px'>Advanced Search</a>
+                            <a href='/resources/search/private/advanced' class='btn btn-large btn-warning' style='width: 300px'>Advanced Search</a>
                         </div>
                     </form>
                 <% } else { %>
