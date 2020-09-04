@@ -77,7 +77,7 @@ exports.uploadResource = async (req, res, next) => {
         await newResource.save()
         await setWord2Id(newResource);
         if (courseId === undefined)
-            res.redirect('/facultyExclusive')
+            res.redirect('/resources/view/faculty/all')
         else
             res.redirect('/showOneCourse/' + courseId)
     } catch (e) {
