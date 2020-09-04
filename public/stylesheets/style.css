@@ -412,7 +412,7 @@ h6 {
 }
 
 .header--sticky .header__menu ul li.header__btn--login > a:hover {
-    background-color: #fff;
+    background-color: darkblue;
     border: 1px #0053a4 solid;
     color: #0053a4;
 }

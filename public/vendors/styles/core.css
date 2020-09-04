@@ -5,7 +5,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 :root {
-    --blue: #0053a4;
+    --darkblue: #0053a4;
     --indigo: #6610f2;
     --purple: #6f42c1;
     --pink: #e83e8c;
@@ -2860,8 +2860,8 @@ a.btn.disabled, fieldset:disabled a.btn {
 
 .btn-primary:hover {
     color: #fff;
-    background-color: blue;
-    border-color: blue;
+    background-color: darkblue;
+    border-color: darkblue;
 }
 
 .btn-primary.focus, .btn-primary:focus {
@@ -2880,8 +2880,8 @@ a.btn.disabled, fieldset:disabled a.btn {
 
 .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle {
     color: #fff;
-    background-color: blue;
-    border-color: blue;
+    background-color: darkblue;
+    border-color: darkblue;
 }
 
 .btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show > .btn-primary.dropdown-toggle:focus {
@@ -14088,7 +14088,7 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
     color: #2aa198;
 }
 
-/* Solarized Blue */
+/* Solarized darkblue */
 .hljs-title,
 .hljs-section,
 .hljs-name,
