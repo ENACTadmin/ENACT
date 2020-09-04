@@ -25,14 +25,14 @@
         <div class='row'>
             <div class='col-md-3 col-sm-12'></div>
             <div class='col-md-6 col-sm-12'>
-                <form method='post' action='/resources/view/public/result'>
+                <form method='post' action='/resources/view/public/generalResult'>
                     <div class='input-group-prepend'>
                         <input type='text' class='form-control' name='search'
                                placeholder='Search for anything'>
                         &nbsp&nbsp&nbsp
                         <input type='submit' name='submit' class='btn btn-dark' value='Search'>
                         &nbsp&nbsp&nbsp
-                        <a href='/publicSearch' class='btn btn-large btn-warning' style='width: 300px'>Advanced
+                        <a href='/resources/search/public/advanced' class='btn btn-large btn-warning' style='width: 300px'>Advanced
                             Search</a>
                     </div>
                 </form>
@@ -48,50 +48,46 @@
                 <div class='col-md-12 col-sm-12'>
                     <h3>All Public Resources</h3>
                     <hr>
-                    <div class='card border-0'>
-                        <div class='card-body'>
-                            <% if (resourceInfo) { %>
-                                <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
-                                    <div class='card border-0'>
-                                        <div class='card-body'>
-                                            <h4><%= resourceInfo[i].name %></h4>
-                                            <div class='card-text'>
-                                                <ul class='list-group'>
-                                                    <li class='list-group-item borderless box-padding'>
-                                                        <b>Description: </b> <%= resourceInfo[i].description %></li>
-                                                    <li class='list-group-item borderless box-padding'>
-                                                        <b>State:</b> <%= resourceInfo[i].state %></li>
-                                                    <% if (resourceInfo[i].mediaType === 'video' && resourceInfo[i].uri.endsWith(".mp4")) { %>
-                                                        <li class='list-group-item borderless box-padding'>
-                                                            <iframe width="480" height="270" frameborder="0"
-                                                                    allowtransparency="true" allowfullscreen
-                                                                    src="<%= resourceInfo[i].uri %>">
-                                                            </iframe>
-                                                        </li>
-                                                    <% } else { %>
-                                                        <li class='list-group-item borderless box-padding'>
-                                                            <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click
-                                                                me</a>
-                                                        </li>
-                                                    <% } %>
-                                                    <li class='list-group-item borderless box-padding'>
-                                                        <b>Institution: </b> <%= resourceInfo[i].institution %></li>
-                                                    <li class='list-group-item borderless box-padding'>
-                                                        <b>Tags:</b> <%= resourceInfo[i].tags %>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <% if (i !== 0) { %>
-                                        <hr>
-                                    <% } %>
-                                <% } %>
-                            <% } else { %>
-                                No resource available yet
+                    <% if (resourceInfo) { %>
+                        <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
+                            <div class='card-body'>
+                                <h4><%= resourceInfo[i].name %></h4>
+                                <div class='card-text'>
+                                    <ul class='list-group'>
+                                        <li class='list-group-item borderless box-padding'>
+                                            <b>Description: </b> <%= resourceInfo[i].description %></li>
+                                        <li class='list-group-item borderless box-padding'>
+                                            <b>State:</b> <%= resourceInfo[i].state %></li>
+                                        <% if (resourceInfo[i].mediaType === 'video' && resourceInfo[i].uri.endsWith(".mp4")) { %>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <iframe width="480" height="270" frameborder="0"
+                                                        allowtransparency="true" allowfullscreen
+                                                        src="<%= resourceInfo[i].uri %>">
+                                                </iframe>
+                                            </li>
+                                        <% } else { %>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click
+                                                    me</a>
+                                            </li>
+                                        <% } %>
+                                        <li class='list-group-item borderless box-padding'>
+                                            <b>Institution: </b> <%= resourceInfo[i].institution %></li>
+                                        <li class='list-group-item borderless box-padding'>
+                                            <b>Tags:</b> <%= resourceInfo[i].tags %>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <% if (i !== 0) { %>
+                                <br>
                             <% } %>
+                        <% } %>
+                    <% } else { %>
+                        <div class='card-body text-center'>
+                            No resource available yet
                         </div>
-                    </div>
+                    <% } %>
                 </div>
             </div>
         </div>

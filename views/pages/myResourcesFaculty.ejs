@@ -19,67 +19,61 @@
             <div class='row'>
                 <% if (loggedIn) { %>
                     <div class='col-md-12 col-sm-12'>
-                        <div class='card border-0'>
-                            <div class='card-header'>
-                                <b>My Resources</b>
-                            </div>
-                            <div class='card-body'>
-                                <% if (resourceInfo && resourceInfo.length > 0) { %>
-                                    <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
-                                        <div class='card border-0'>
-                                            <div class='card-body'>
-                                                <h4><%= resourceInfo[i].name %></h4>
-                                                <div class='card-text'>
-                                                    <ul class='list-group'>
-                                                        <li class='list-group-item borderless box-padding'>
-                                                            <b>Description: </b> <%= resourceInfo[i].description %></li>
-                                                        <li class='list-group-item borderless box-padding'>
-                                                            <b>State:</b> <%= resourceInfo[i].state %></li>
-                                                        <% if (resourceInfo[i].mediaType === 'video' && resourceInfo[i].uri.endsWith(".mp4")) { %>
-                                                            <li class='list-group-item borderless box-padding'>
-                                                                <iframe width="480" height="270" frameborder="0" allowtransparency="true" allowfullscreen
-                                                                        src="<%= resourceInfo[i].uri %>">
-                                                                </iframe>
-                                                            </li>
-                                                        <% } else { %>
-                                                            <li class='list-group-item borderless box-padding'>
-                                                                <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click
-                                                                    me</a>
-                                                            </li>
-                                                        <% } %>
-                                                        <li class='list-group-item borderless box-padding'>
-                                                            <b>Institution: </b> <%= resourceInfo[i].institution %></li>
-                                                        <li class='list-group-item borderless box-padding'>
-                                                            <b>Tags:</b> <%= resourceInfo[i].tags %>
-                                                        </li>
-                                                        <li class='list-group-item borderless box-padding'>
-                                                            <b>Actions:</b>
-                                                            <button type='button' class='btn btn-outline-info'
-                                                                    style='border:0 solid transparent'
-                                                                    data-toggle='modal'
-                                                                    data-target='#editModal<%= resourceInfo[i]._id %>'>
-                                                                Edit
-                                                            </button>
-                                                            <button type='button' class='btn btn-outline-danger'
-                                                                    style='border:0px solid transparent'
-                                                                    data-toggle='modal'
-                                                                    data-target='#deleteModal<%= resourceInfo[i]._id %>'>
-                                                                Delete
-                                                            </button>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <% if (i !== 0) { %>
-                                            <hr>
-                                        <% } %>
-                                    <% } %>
-                                <% } else { %>
-                                    No resource available yet
+                        <% if (resourceInfo && resourceInfo.length > 0) { %>
+                            <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
+                                <div class='card-body'>
+                                    <h4><%= resourceInfo[i].name %></h4>
+                                    <div class='card-text'>
+                                        <ul class='list-group'>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>Description: </b> <%= resourceInfo[i].description %></li>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>State:</b> <%= resourceInfo[i].state %></li>
+                                            <% if (resourceInfo[i].mediaType === 'video' && resourceInfo[i].uri.endsWith(".mp4")) { %>
+                                                <li class='list-group-item borderless box-padding'>
+                                                    <iframe width="480" height="270" frameborder="0"
+                                                            allowtransparency="true" allowfullscreen
+                                                            src="<%= resourceInfo[i].uri %>">
+                                                    </iframe>
+                                                </li>
+                                            <% } else { %>
+                                                <li class='list-group-item borderless box-padding'>
+                                                    <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click
+                                                        me</a>
+                                                </li>
+                                            <% } %>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>Institution: </b> <%= resourceInfo[i].institution %></li>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>Tags:</b> <%= resourceInfo[i].tags %>
+                                            </li>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>Actions:</b>
+                                                <button type='button' class='btn btn-outline-info'
+                                                        style='border:0 solid transparent'
+                                                        data-toggle='modal'
+                                                        data-target='#editModal<%= resourceInfo[i]._id %>'>
+                                                    Edit
+                                                </button>
+                                                <button type='button' class='btn btn-outline-danger'
+                                                        style='border:0px solid transparent'
+                                                        data-toggle='modal'
+                                                        data-target='#deleteModal<%= resourceInfo[i]._id %>'>
+                                                    Delete
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <% if (i !== 0) { %>
+                                    <br>
                                 <% } %>
+                            <% } %>
+                        <% } else { %>
+                            <div class='card-body text-center'>
+                                No resource available yet
                             </div>
-                        </div>
+                        <% } %>
                     </div>
                 <% } else { %>
                     <%- include('../components/component-loginToView'); -%>

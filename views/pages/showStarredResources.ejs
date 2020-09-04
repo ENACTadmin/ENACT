@@ -46,57 +46,50 @@
                     </button>
                 </div>
                 <div class='col-md-9 col-sm-12'>
-                    <div class='card'>
-                        <div class='card-header'>
-                            <b>Favorite resources</b>
-                        </div>
-                        <% if (resourceInfo && resourceInfo.length > 0) { %>
+                    <h3>Favorite resources</h3>
+                    <hr>
+                    <% if (resourceInfo && resourceInfo.length > 0) { %>
+                        <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
                             <div class='card-body'>
-                                <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
-                                    <div class='card border-0'>
-                                        <div class='card-body'>
-                                            <h4><%= resourceInfo[i].name %></h4>
-                                            <div class='card-text'>
-                                                <ul class='list-group'>
-                                                    <li class='list-group-item borderless box-padding'>
-                                                        <b>Description: </b> <%= resourceInfo[i].description %></li>
-                                                    <li class='list-group-item borderless box-padding'>
-                                                        <b>State:</b> <%= resourceInfo[i].state %></li>
-                                                    <li class='list-group-item borderless box-padding'>
-                                                        <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click me</a>
-                                                    </li>
-                                                    <li class='list-group-item borderless box-padding'>
-                                                        <b>Institution: </b> <%= resourceInfo[i].institution %></li>
-                                                    <li class='list-group-item borderless box-padding'>
-                                                        <b>Tags:</b> <%= resourceInfo[i].tags %>
-                                                    </li>
-                                                    <li class='list-group-item borderless box-padding'>
-                                                        <form method='post'
-                                                              action='/unstarResource/<%= resourceInfo[i]._id %>'>
-                                                            <b>Actions:</b>
-                                                            <input type='submit' style='border:0 solid transparent'
-                                                                   name='submit'
-                                                                   class='btn btn-outline-danger' value='&#9829;'>
-                                                            <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id) { %>
-                                                                <button type='button' class='btn btn-outline-info'
-                                                                        style='border:0 solid transparent'
-                                                                        data-toggle='modal'
-                                                                        data-target='#editModal<%= resourceInfo[i]._id %>'>
-                                                                    Edit
-                                                                </button>
-                                                            <% } %>
-                                                        </form>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <% if (i !== 0) { %>
-                                        <hr>
-                                    <% } %>
-                                <% } %>
+                                <h4><%= resourceInfo[i].name %></h4>
+                                <div class='card-text'>
+                                    <ul class='list-group'>
+                                        <li class='list-group-item borderless box-padding'>
+                                            <b>Description: </b> <%= resourceInfo[i].description %></li>
+                                        <li class='list-group-item borderless box-padding'>
+                                            <b>State:</b> <%= resourceInfo[i].state %></li>
+                                        <li class='list-group-item borderless box-padding'>
+                                            <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click me</a>
+                                        </li>
+                                        <li class='list-group-item borderless box-padding'>
+                                            <b>Institution: </b> <%= resourceInfo[i].institution %></li>
+                                        <li class='list-group-item borderless box-padding'>
+                                            <b>Tags:</b> <%= resourceInfo[i].tags %>
+                                        </li>
+                                        <li class='list-group-item borderless box-padding'>
+                                            <form method='post'
+                                                  action='/unstarResource/<%= resourceInfo[i]._id %>'>
+                                                <b>Actions:</b>
+                                                <input type='submit' style='border:0 solid transparent'
+                                                       name='submit'
+                                                       class='btn btn-outline-danger' value='&#9829;'>
+                                                <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id) { %>
+                                                    <button type='button' class='btn btn-outline-info'
+                                                            style='border:0 solid transparent'
+                                                            data-toggle='modal'
+                                                            data-target='#editModal<%= resourceInfo[i]._id %>'>
+                                                        Edit
+                                                    </button>
+                                                <% } %>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                    </div>
+                            <% if (i !== 0) { %>
+                                <br>
+                            <% } %>
+                        <% } %>
                     <% } else { %>
                         <div class='card-body'>
                             <div class='text-center partners__text'>

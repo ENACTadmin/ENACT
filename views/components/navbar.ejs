@@ -1,4 +1,5 @@
 <script src='/js/menu.js'></script>
+
 <script>
     AOS.init();
 </script>
@@ -19,7 +20,6 @@
                 <li>
                     <a class='header-link' id='header-link' href='/' data-aos='fade-left'>HOME</a>
                 </li>
-
                 <li>
                     <% if (!loggedIn) { %>
                         <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Resources</a>
@@ -29,13 +29,13 @@
                             </li>
 
                         </ul>
-                    <% } else { %>
                     <% } %>
                 </li>
 
                 <li>
                     <% if (!loggedIn) { %>
-                        <a class='header-link' id='header-link' href='mailto:djw@brandeis.edu' data-aos='fade-left'>Contact Us</a>
+                        <a class='header-link' id='header-link' href='mailto:djw@brandeis.edu' data-aos='fade-left'>Contact
+                            Us</a>
                     <% } else { %>
                     <% } %>
                 </li>
@@ -51,7 +51,6 @@
                                 </li>
                             <% } %>
                         </ul>
-                    <% } else { %>
                     <% } %>
                 </li>
                 <li>
@@ -59,11 +58,13 @@
                         <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Resources</a>
                         <ul class='sub-menu'>
                             <li>
-                                <a class='header-link' href='/facultyExclusive'>Faculty exclusive resources</a>
+                                <a class='header-link' href='/resources/search/private/general'>Find some resources</a>
                             </li>
-                            <li>
-                                <a class='header-link' href='/primarySearch'>Find some resources</a>
-                            </li>
+                            <% if (status === 'faculty' || status === 'admin') { %>
+                                <li>
+                                    <a class='header-link' href='/uploadToFaculty'>Upload resources</a>
+                                </li>
+                            <% } %>
                             <li>
                                 <a class='header-link' href='/showStarredResources'>My favorites</a>
                             </li>
@@ -71,21 +72,16 @@
                                 <% if (status === 'faculty' || status === 'admin') { %>
                                     <a class='header-link' href='/myResourcesFaculty'>My resources</a>
                                 <% } else { %>
-                                        <a class='header-link' href='/myResourcesStudent'>My resources</a>
-                                    <% } %>
-                            </li>
-                            <li>
-                                <a class='header-link' href='/uploadToFaculty'>Upload resources</a>
+                                    <a class='header-link' href='/myResourcesStudent'>My resources</a>
+                                <% } %>
                             </li>
                         </ul>
-                    <% } else { %>
                     <% } %>
                 </li>
 
                 <li>
                     <% if (loggedIn) { %>
-                        <a class='header-link' id='header-link' href='/messageBoard' data-aos='fade-left'>Messages</a>
-                    <% } else { %>
+                        <a class='header-link' id='header-link' href='/messages/view/all' data-aos='fade-left'>Messages</a>
                     <% } %>
                 </li>
 
@@ -100,9 +96,17 @@
                                 <li>
                                     <a class='header-link' href='/reviewResource'>Approve student resources</a>
                                 </li>
-
+                                <li>
+                                    <a class='header-link' href='/profiles/view/faculty'>Faculty List</a>
+                                </li>
                             </ul>
                         <% } else { %>
+                            <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Faculty</a>
+                            <ul class='sub-menu'>
+                                <li>
+                                    <a class='header-link' href='/profiles/view/faculty'>Faculty List</a>
+                                </li>
+                            </ul>
                         <% } %>
                     <% } %>
                 </li>
@@ -114,24 +118,18 @@
                             <ul class='sub-menu'>
                                 <li>
                                     <a class='header-link' href='/managePublicResources'>Manage home page resources</a>
-
                                 </li>
                                 <li>
                                     <a class='header-link' href='/approvePublicResources'>Approve public resources</a>
                                 </li>
                                 <li>
-
-                                    <a class='header-link' href='/profiles'>View all profiles</a>
-
+                                    <a class='header-link' href='/profiles/view/all'>View all profiles</a>
                                 </li>
                                 <li>
-
                                     <a class='header-link' href='/assignFaculty'>Set up a new faculty</a>
-
                                 </li>
 
                             </ul>
-                        <% } else { %>
                         <% } %>
                     <% } %>
                 </li>
@@ -141,7 +139,7 @@
                         <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Settings</a>
                         <ul class='sub-menu'>
                             <li>
-                                <a class='header-link' href='/profile/view/<%=user._id%>'>View/edit profile</a>
+                                <a class='header-link' href='/profile/view/<%= user._id %>'>View/edit profile</a>
                             </li>
                         </ul>
                     </li>
@@ -149,11 +147,9 @@
 
                 <li class='header__btn header__btn--login'>
                     <% if (!loggedIn) { %>
-                        <a class='btn btn-primary' style="color: white; font-weight: bold" href='/auth/google'
-                           data-aos='fade-left'>ENACT member login</a>
+                        <a class='btn btn-outline-dark' href='/auth/google' data-aos='fade-left'>ENACT member login</a>
                     <% } else { %>
-                        <a class='btn btn-primary' style="color: white; font-weight: bold" href='/logout'
-                           data-aos='fade-left'>Logout</a>
+                        <a class='btn btn-outline-dark' href='/logout' data-aos='fade-left'>Logout</a>
                     <% } %>
                 </li>
             </ul>

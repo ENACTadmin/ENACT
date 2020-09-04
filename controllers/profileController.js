@@ -97,12 +97,24 @@ exports.showAllProfiles = async (req, res, next) => {
 }
 
 exports.updateProfileImageURL = async (req, res, next) => {
-    // let userToUpdate = await User.findOne({_id: req.user._id})
     let userToUpdate = res.locals.user
     try {
         userToUpdate.profilePicURL = req.body.imageURL;
         await userToUpdate.save()
         res.redirect('back')
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.showFacultyProfiles = async (req, res, next) => {
+    let profileInfo = await User.find({
+        status: {$in: ["faculty", "admin"]}
+    })
+    try {
+        res.render('./pages/facultyList', {
+            profileInfo: profileInfo
+        })
     } catch (e) {
         next(e)
     }

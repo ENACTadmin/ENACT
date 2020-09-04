@@ -37,7 +37,6 @@
                             </li>
 
                         </ul>
-                    <% } else { %>
                     <% } %>
                 </li>
 
@@ -45,7 +44,6 @@
                     <% if (!loggedIn) { %>
                         <a class='header-link' id='header-link' href='mailto:djw@brandeis.edu' data-aos='fade-left'>Contact
                             Us</a>
-                    <% } else { %>
                     <% } %>
                 </li>
 
@@ -60,7 +58,6 @@
                                 </li>
                             <% } %>
                         </ul>
-                    <% } else { %>
                     <% } %>
                 </li>
                 <li>
@@ -68,11 +65,13 @@
                         <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Resources</a>
                         <ul class='sub-menu'>
                             <li>
-                                <a class='header-link' href='/facultyExclusive'>Faculty exclusive resources</a>
+                                <a class='header-link' href='/resources/search/private/general'>Find some resources</a>
                             </li>
-                            <li>
-                                <a class='header-link' href='/primarySearch'>Find some resources</a>
-                            </li>
+                            <% if (status === 'faculty' || status === 'admin') { %>
+                                <li>
+                                    <a class='header-link' href='/uploadToFaculty'>Upload resources</a>
+                                </li>
+                            <% } %>
                             <li>
                                 <a class='header-link' href='/showStarredResources'>My favorites</a>
                             </li>
@@ -83,17 +82,12 @@
                                     <a class='header-link' href='/myResourcesStudent'>My resources</a>
                                 <% } %>
                             </li>
-                            <li>
-                                <a class='header-link' href='/uploadToFaculty'>Upload resources</a>
-                            </li>
                         </ul>
-                    <% } else { %>
                     <% } %>
                 </li>
                 <li>
                     <% if (loggedIn) { %>
-                        <a class='header-link' id='header-link' href='/messageBoard' data-aos='fade-left'>Messages</a>
-                    <% } else { %>
+                        <a class='header-link' id='header-link' href='/messages/view/all' data-aos='fade-left'>Messages</a>
                     <% } %>
                 </li>
 
@@ -108,8 +102,17 @@
                                 <li>
                                     <a class='header-link' href='/reviewResource'>Approve student resources</a>
                                 </li>
+                                <li>
+                                    <a class='header-link' href='/profiles/view/faculty'>Faculty List</a>
+                                </li>
                             </ul>
                         <% } else { %>
+                            <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Faculty</a>
+                            <ul class='sub-menu'>
+                                <li>
+                                    <a class='header-link' href='/profiles/view/faculty'>Faculty List</a>
+                                </li>
+                            </ul>
                         <% } %>
                     <% } %>
                 </li>
@@ -126,7 +129,7 @@
                                     <a class='header-link' href='/approvePublicResources'>Approve public resources</a>
                                 </li>
                                 <li>
-                                    <a class='header-link' href='/profiles'>View all profiles</a>
+                                    <a class='header-link' href='/profiles/view/all'>View all profiles</a>
                                 </li>
                                 <li>
                                     <a class='header-link' href='/assignFaculty'>Set up a new faculty</a>
@@ -145,7 +148,6 @@
                             </li>
                         </ul>
                     </li>
-                <% } else { %>
                 <% } %>
 
                 <li class='header__btn header__btn--login'>
@@ -179,17 +181,19 @@
                         <div class='form-demo' data-aos='zoom-out-down' data-aos-duration='600' data-aos-delay='400'>
                             <a href='/showCourses'><input type='submit' name='submit' class='form-demo__large'
                                                           value='MANAGE/CREATE COURSES'></a>
-                            <a href='/primarySearch'><input type='submit' name='submit' class='form-demo__large'
-                                                            value='FIND RESOURCES'></a>
+                            <a href='/resources/search/private/general'><input type='submit' name='submit'
+                                                                       class='form-demo__large'
+                                                                       value='FIND RESOURCES'></a>
                             <a href='/facultyExclusive'><input type='submit' name='submit' class='form-demo__large'
-                                                               value='FACULTY EXCLUSIVE'></a>
+                                                               value='FACULTY GUIDE'></a>
                         </div>
                     <% } else { %>
                         <div class='form-demo' data-aos='zoom-out-down' data-aos-duration='1000' data-aos-delay='400'>
                             <a href='/showCourses'><input type='submit' name='submit' class='form-demo__large'
                                                           value='MANAGE/ENROLL IN COURSES'></a>
-                            <a href='/primarySearch'><input type='submit' name='submit' class='form-demo__large'
-                                                            value='FIND RESOURCES'></a>
+                            <a href='/resources/search/private/general'><input type='submit' name='submit'
+                                                                       class='form-demo__large'
+                                                                       value='FIND RESOURCES'></a>
                         </div>
                     <% } %>
                     <br>
@@ -304,10 +308,8 @@
         <h2 class='section__title section__title--centered'>Public resources</h2>
         <br><br><br>
         <% if (resourceInfo.length === 0) { %>
-            <div class='card'>
-                <div class='card-body text-center'>
-                    <h4>No resource available yet</h4>
-                </div>
+            <div class='card-body text-center' style="border-radius: 30px">
+                <h4>No resource available yet</h4>
             </div>
         <% } %>
         <% for (let i = 0; i < resourceInfo.length && i < 3; i++) { %>

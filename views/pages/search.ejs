@@ -9,7 +9,9 @@
             <div class='section__title section__title--centered'>
                 Advanced Search
             </div>
-            <h4>Apply filters to search results</h4>
+            <!--            <h4>Apply filters to search results</h4>-->
+            <h4>Note: leave the field <b style="color: darkblue">BLANK</b> if not wishing to apply that filter</h4>
+
         </div>
     </div>
 </section>
@@ -17,7 +19,7 @@
 <section class='section section__grey' data-aos='fade-up'>
     <div class='container'>
         <% if (loggedIn) { %>
-            <form method='post' action='/resources/search'>
+            <form method='post' action='/resources/view/private/advancedResult'>
                 <div class='row'>
                     <div class='col-md-3 col-sm-12'></div>
                     <div class='col-md-6 col-sm-12'>
@@ -94,6 +96,68 @@
                         <br>
                         <% if (status === 'admin' || status === 'faculty') { %>
                             <div class='input-group-prepend'>
+                                <span class='input-group-text' style='width: 180px'>Content Type</span>
+                                <select class='form-control' name='contentType'>
+                                    <option selected value='empty'>Choose...</option>
+                                    <option value='Advocacy Video'>Advocacy Video</option>
+                                    <option value='Assignment Guidelines'>Assignment Guidelines</option>
+                                    <option value='Journal'>Campaign Journal</option>
+                                    <option value='Course Reading'>Course Reading</option>
+                                    <option value='Elevator Speech'>Elevator Speech</option>
+                                    <option value='ENACT Research'>ENACT Faculty Research</option>
+                                    <option value='Faculty Guide'>Faculty Guide</option>
+                                    <option value='Flyer'>Flyer/handout</option>
+                                    <option value='Next Steps'>Next Steps</option>
+                                    <option value='Online'>Online Teaching Resources</option>
+                                    <option value='Outlets'>Outlets for Publication</option>
+                                    <option value='Op-Ed'>Op-Ed</option>
+                                    <option value='Personal Reflection'>Personal reflection</option>
+                                    <option value='Portfolio'>Portfolio</option>
+                                    <option value='Presentations'>Presentations</option>
+                                    <option value='Research Report'>Student Research Report</option>
+                                    <option value='Rubrics'>Rubrics for grading</option>
+                                    <option value='Script'>Script for meeting with Ways and Means Staff</option>
+                                    <option value='State Legislative'>State Legislative Website Resources</option>
+                                    <option value='Syllabus'>Syllabus</option>
+                                    <option value='Handout'>Handout/Factsheet</option>
+                                    <option value='Testimony'>Testimony</option>
+                                </select>
+                            </div>
+                        <% } else { %>
+                            <div class='input-group-prepend'>
+                                <span class='input-group-text' style='width: 180px'>Content Type</span>
+                                <select class='form-control' name='contentType'>
+                                    <option selected value='empty'>Choose...</option>
+                                    <option value='Advocacy Video'>Advocacy Video</option>
+                                    <option value='Journal'>Campaign Journal</option>
+                                    <option value='Elevator Speech'>Elevator Speech</option>
+                                    <option value='Flyer'>Flyer/handout</option>
+                                    <option value='Next Steps'>Next Steps</option>
+                                    <option value='Op-Ed'>Op-Ed</option>
+                                    <option value='Personal Reflection'>Personal reflection</option>
+                                    <option value='Portfolio'>Portfolio</option>
+                                    <option value='Presentations'>Presentations</option>
+                                    <option value='Research Report'>Student Research Report</option>
+                                    <option value='Script'>Script for meeting with Ways and Means Staff</option>
+                                    <option value='Handout'>Handout/Factsheet</option>
+                                    <option value='Testimony'>Testimony</option>
+                                </select>
+                            </div>
+                        <% } %>
+                        <br>
+                        <div class='input-group-prepend'>
+                            <span class='input-group-text' style='width: 180px'>Media Type</span>
+                            <select class='form-control' name='mediaType'>
+                                <option selected value='empty'>Choose...</option>
+                                <option value='document'>Document</option>
+                                <option value='photo'>Photo</option>
+                                <option value='PowerPoint'>PowerPoint</option>
+                                <option value='video'>Video</option>
+                            </select>
+                        </div>
+                        <br>
+                        <% if (status === 'admin' || status === 'faculty') { %>
+                            <div class='input-group-prepend'>
                                 <span class='input-group-text' style='width: 180px'>Resource Status</span>
                                 <select class='form-control' name='status'>
                                     <option selected value='all'>All resources</option>
@@ -106,16 +170,23 @@
                             <div class='input-group-prepend'>
                                 <span class='input-group-text' style='width: 180px'>Resource Status</span>
                                 <select class='form-control' name='status'>
-                                    <option selected value='privateToENACT'>Exclusive to ENACT members</option>
+                                    <option selected value='all'>All resources</option>
                                     <option value='public'>Open to public</option>
-                                    <option value='all'>All resources</option>
+                                    <option value='privateToENACT'>Exclusive to ENACT members</option>
                                 </select>
                             </div>
                         <% } %>
                         <br>
                     </div>
                 </div>
+
                 <div class='row'>
+                    <div class='col-md-3 col-sm-12'></div>
+                    <div class='col-md-6 col-sm-12'>
+                        <h3>Tags of Areas</h3>
+                        <hr>
+                    </div>
+                    <div class='w-100'></div>
                     <%- include('../components/component-tagSelector') -%>
                     <br>
                     <div class='w-100'></div>

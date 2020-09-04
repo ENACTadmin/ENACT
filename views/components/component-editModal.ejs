@@ -72,36 +72,69 @@ let id_set = [] %>
                                                value='<%= resourceInfo[i].uri %>'>
                                     </div>
                                     <br>
-                                    <div class='input-group-prepend'>
-                                        <span class='input-group-text' style='width: 180px'>Content Type</span>
-                                        <select id='contentTypeSelect<%= resourceInfo[i]._id %>' class='form-control'
-                                                name='contentType'>
-                                            <option value='null'>Choose...</option>
-                                            <option value='Testimony'>Testimony</option>
-                                            <option value='Op-Ed'>Op-Ed</option>
-                                            <option value='ResearchReport'>Research Report</option>
-                                            <option value='ElevatorSpeech'>Elevator Speech</option>
-                                            <option value='Storybook'>Storybook/Factsheet</option>
-                                            <option value='Script'>Script for meeting with Ways and Means Staff</option>
-                                            <option value='Journal'>Campaign Journal</option>
-                                            <option value='AdvocacyVideo'>Advocacy Video</option>
-                                            <option value='NextSteps'>Next Steps</option>
-                                            <option value='Portfolio'>Portfolio</option>
-                                            <option value='Flyer'>Flyer/handout</option>
-                                            <option value=PhotoVideo'>Photo</option>
-                                            <option value='Video'>Video</option>
-                                            <option value='PersonalReflection'>Personal reflection</option>
-                                            <option value='Presentations'>Presentations/Powerpoints</option>
-                                        </select>
-                                    </div>
+                                    <% if (status === 'faculty' || status === 'admin') { %>
+                                        <div class='input-group-prepend'>
+                                            <span class='input-group-text' style='width: 180px'>Content Type</span>
+                                            <select id='contentTypeSelect<%= resourceInfo[i]._id %>'
+                                                    class='form-control' name='contentType'>
+                                                <option selected value='empty'>Choose...</option>
+                                                <option value='Advocacy Video'>Advocacy Video</option>
+                                                <option value='Assignment Guidelines'>Assignment Guidelines</option>
+                                                <option value='Journal'>Campaign Journal</option>
+                                                <option value='Course Reading'>Course Reading</option>
+                                                <option value='Elevator Speech'>Elevator Speech</option>
+                                                <option value='ENACT Research'>ENACT Faculty Research</option>
+                                                <option value='Faculty Guide'>Faculty Guide</option>
+                                                <option value='Flyer'>Flyer/handout</option>
+                                                <option value='Next Steps'>Next Steps</option>
+                                                <option value='Online'>Online Teaching Resources</option>
+                                                <option value='Outlets'>Outlets for Publication</option>
+                                                <option value='Op-Ed'>Op-Ed</option>
+                                                <option value='Personal Reflection'>Personal reflection</option>
+                                                <option value='Portfolio'>Portfolio</option>
+                                                <option value='Presentations'>Presentations</option>
+                                                <option value='Research Report'>Student Research Report</option>
+                                                <option value='Rubrics'>Rubrics for grading</option>
+                                                <option value='Script'>Script for meeting with Ways and Means Staff</option>
+                                                <option value='State Legislative'>State Legislative Website Resources</option>
+                                                <option value='Syllabus'>Syllabus</option>
+                                                <option value='Handout'>Handout/Factsheet</option>
+                                                <option value='Testimony'>Testimony</option>
+                                            </select>
+                                        </div>
+                                    <% } else { %>
+                                        <div class='input-group-prepend'>
+                                            <span class='input-group-text' style='width: 180px'>Content Type</span>
+                                            <select id='contentTypeSelect<%= resourceInfo[i]._id %>'
+                                                    class='form-control'
+                                                    name='contentType'>
+                                                <option selected value='empty'>Choose...</option>
+                                                <option value='Advocacy Video'>Advocacy Video</option>
+                                                <option value='Journal'>Campaign Journal</option>
+                                                <option value='Elevator Speech'>Elevator Speech</option>
+                                                <option value='Flyer'>Flyer/handout</option>
+                                                <option value='Next Steps'>Next Steps</option>
+                                                <option value='Op-Ed'>Op-Ed</option>
+                                                <option value='Personal Reflection'>Personal reflection</option>
+                                                <option value='Portfolio'>Portfolio</option>
+                                                <option value='Presentations'>Presentations</option>
+                                                <option value='Research Report'>Student Research Report</option>
+                                                <option value='Script'>Script for meeting with Ways and Means Staff</option>
+                                                <option value='Handout'>Handout/Factsheet</option>
+                                                <option value='Testimony'>Testimony</option>
+                                            </select>
+                                        </div>
+                                    <% } %>
                                     <br>
                                     <div class='input-group-prepend'>
                                         <span class='input-group-text' style='width: 180px'>Media Type</span>
                                         <select id='mediaTypeSelect<%= resourceInfo[i]._id %>' class='form-control'
                                                 name='mediaType'>
-                                            <option value='null'>Choose...</option>
-                                            <option value='video'>Video</option>
+                                            <option selected value='empty'>Choose...</option>
                                             <option value='document'>Document</option>
+                                            <option value='photo'>Photo</option>
+                                            <option value='PowerPoint'>PowerPoint</option>
+                                            <option value='video'>Video</option>
                                         </select>
                                     </div>
                                     <br>
@@ -209,7 +242,7 @@ let id_set = [] %>
                                 <div class='w-100'></div>
                                 <br>
                                 <div class='col-md-12 col-sm-12'>
-                                    <h3>Tag the resource</h3>
+                                    <h3>Area of the resource (Optional)</h3>
                                     <hr>
                                 </div>
                                 <div class='w-100'></div>

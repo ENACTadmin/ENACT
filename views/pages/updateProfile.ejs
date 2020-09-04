@@ -29,20 +29,18 @@
                     Upload new profile image
                 </button>
                 <br><br>
-
                 <% if (user.profilePicURL) { %>
                     <img src='<%= locals.user.profilePicURL %>' style='width:300px;'>
                 <% } else { %>
                     <h5>No profile image uploaded</h5>
                 <% } %>
 
-                <br>
-                <br>
+                <br><br>
                 <div class='w-100'></div>
                 <!--                 form: update personal info -->
                 <h3>Basic information</h3>
                 <hr>
-                <form action='/updateProfile' method='post'>
+                <form action='/profile/update' method='post'>
                     <div class='input-group-prepend'>
                         <span class='input-group-text' style='width: 180px'>Username</span>
                         <input type='text' class='form-control' name='userName' value='<%= user.userName %>'>
@@ -70,6 +68,7 @@
                     <div class='input-group-prepend'>
                         <span class='input-group-text' style='width: 380px'>Affiliation</span>
                         <input type='text' class='form-control' name='affiliation'
+                               placeholder="e.g. Brandeis University"
                                value='<%= user.affiliation %>'>
                     </div>
                     <br>
@@ -86,8 +85,9 @@
                     <!-- line break -->
                     <div class='w-100'></div>
                     <div class='input-group-prepend'>
-                        <span class='input-group-text' style='width: 180px'>Bio (Optional)</span>
-                        <textarea type='text' class='form-control' name='bio' rows='4'><%= user.bio %></textarea>
+                        <span class='input-group-text' style='width: 180px'>Bio</span>
+                        <textarea type='text' class='form-control' name='bio'
+                                  placeholder="I am a Visiting Assistant Professor in the Department of Political Science at Kent State University. I have been an ENACT fellow since 2016. I teach a Spring semester internship course that deals with Ohio’s full-time legislature. My academic focus is on voting rights, environmental policy and LGBTQ+ politics. In my free time, I enjoy fishing and am finishing my second book for publication." rows='6'><%= user.bio %></textarea>
                     </div>
                     <br>
                     <input type='submit' class='btn btn-outline-dark' value='Save'>
