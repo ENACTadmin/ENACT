@@ -46,7 +46,7 @@
                                 <a href="/profile/view/<%= profileInfo[i]._id %>"><%= profileInfo[i].userName %></a>
                             </div>
                             <div class="col-md-6 col-sm-6 align-self-center">
-                                <b>Bio: </b><br><%= profileInfo[i].bio %>
+                                <b>Bio: </b><br> <textarea disabled rows="6" style="width: 100%"><%= profileInfo[i].bio %></textarea>
                             </div>
                             <div class="col-md-2 col-sm-2 align-self-center">
                                 <b>Affiliation: </b><br><%= profileInfo[i].affiliation %>
