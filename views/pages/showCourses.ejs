@@ -21,7 +21,7 @@
                         <% if (status === 'faculty' || status === 'admin') { %>
                             <div class='lead'><b>Create a new course</b></div>
                             <hr>
-                            <a class='btn btn-lg btn-outline-primary' href='/createCourse'>
+                            <a class='btn btn-lg btn-outline-primary' href='/course'>
                                 create a new course
                             </a>
                             <br>
@@ -30,7 +30,7 @@
                         <% } else { %>
                             <div class='lead'><b>Enroll in a course</b></div>
                             <hr>
-                            <form method='post' action='/joinCourse'>
+                            <form method='post' action='/course/join'>
                                 <div class='input-group-prepend'>
                                     <span class='input-group-text' style='width: 180px'>Course Pin</span>
                                     <input type='text' class='form-control' style='margin-right: 10px' name='coursePin'
@@ -71,7 +71,7 @@
                                     <% for(let i = 0; i < courseInfoSet.length; i++) { %>
                                         <tr>
                                             <td>
-                                                <a href='/showOneCourse/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName %></a>
+                                                <a href='/course/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName %></a>
                                             </td>
                                             <td><%= courseInfoSet[i].semester %></td>
                                             <td>
@@ -86,7 +86,7 @@
                                     <% for (let i = 0; i < courseInfoSet.length; i++){ %>
                                         <tr>
                                             <td>
-                                                <a href='/showOneCourse/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName %></a>
+                                                <a href='/course/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName %></a>
                                             </td>
                                             <td><%= courseInfoSet[i].semester %></td>
                                             <td><%= courseInfoSet[i].instructor %></td>
