@@ -3,14 +3,9 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const flash = require('connect-flash');
 const session = require("express-session");
-const bodyParser = require("body-parser");
 
 // Models!
-const Course = require('./models/Course');
-const User = require('./models/User');
-const Faculty = require('./models/Faculty')
 const Event = require('./models/Event')
 
 
@@ -116,90 +111,15 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use('/', indexRouter);
-// app.use('/users', usersRouter);
-
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: false,
 }));
 
-// Register passport middleware
-app.use(flash());
-app.use(passport.initialize(1));
-app.use(passport.session(1));
-app.use(bodyParser.urlencoded({extended: false}));
-
-//*******************************************
-//***********Login authorization*************
-
-// will be moved to cloud later
-let adminList = ["bbdhy96@gmail.com", "nicolezhang@brandeis.edu", "stimell@brandeis.edu", "djw@brandeis.edu", "epevide@brandeis.edu"]
-
-// here is where we check and assign user's status
-// this runs every time when a req is received
-let loggedIn = false;
-app.use(async (req, res, next) => {
-    res.locals.loggedIn = false;
-    res.locals.status = "student"
-    if (req.isAuthenticated()) {
-        let googleEmail = req.user.googleemail
-        res.locals.user = req.user;
-        res.locals.loggedIn = true;
-        loggedIn = true;
-        // set appropriate status
-        let userInfo = await User.findOne({_id: req.user._id})
-        if (adminList.includes(googleEmail)) {
-            res.locals.status = 'admin'
-            let courseInfoSet = await Course.find({ownerId: req.user._id})
-            userInfo.status = 'admin'
-            await userInfo.save()
-            res.locals.courseInfoSet = courseInfoSet
-        } else {
-            let user = await Faculty.findOne({email: googleEmail})
-            if (user) {
-                res.locals.status = user.status
-                userInfo.status = 'faculty'
-                await userInfo.save()
-                let courseInfoSet = await Course.find({ownerId: req.user._id})
-                res.locals.courseInfoSet = courseInfoSet
-            } else {
-                let enrolledCourses = req.user.enrolledCourses
-                let courseInfoSet = await Course.find({_id: {$in: enrolledCourses}})
-                userInfo.status = 'student'
-                await userInfo.save()
-                res.locals.courseInfoSet = courseInfoSet
-            }
-        }
-        console.log("user has been Authenticated. Status: " + res.locals.status)
-    }
-    next()
-});
-
-
-// route for logging out
-app.get('/logout', function (req, res) {
-    req.session.destroy((error) => {
-        console.log("Error in destroying session: " + error)
-    });
-    loggedIn = false
-    console.log("session has been destroyed");
-    req.logout();
-    res.redirect('/');
-});
-
-// ask for authentication
-app.get('/auth/google', passport.authenticate('google',
-    {scope: ['profile', 'email']}));
-
-// google returns authorized back to the URL below
-app.get('/login/authorized',
-    passport.authenticate('google', {
-        successRedirect: '/',
-        failureRedirect: '/error'
-    })
-);
+// configure auth router
+const auth = require('./routes/auth')
+app.use(auth)
 
 //*******************************************
 //***********Index page router***************
@@ -211,41 +131,42 @@ app.get('/',
     (req, res) =>
         res.render('./pages/index'))
 
-
 //*******************************************
 //***********Course related******************
 
-app.get('/createCourse',
+app.get('/course',
     resourceController.checkUserName,
     (req, res) =>
         res.render('./pages/createCourse'))
 
 // rename this to /createCourse and update the ejs form
-app.post('/createNewCourse',
+app.post('/course',
     courseController.createNewClass,
     courseController.addToOwnedCourses
 )
 
-app.get('/showCourses',
+app.get('/courses',
     resourceController.checkUserName,
     (req, res) =>
         res.render('./pages/showCourses')
 )
 
-app.get('/showOneCourse/:courseId',
+app.get('/course/:courseId',
     resourceController.checkUserName,
     courseController.showOneCourse,
     resourceController.loadResources
 )
 
-app.get('/joinACourse',
+// render join course view
+app.get('/course/join',
     resourceController.checkUserName,
     (req, res) => {
         res.render('./pages/joinACourse')
     }
 )
 
-app.post('/joinCourse',
+// process join course
+app.post('/course/join',
     courseController.joinCourse
 )
 
@@ -547,8 +468,8 @@ app.get('/events',
 app.get('/events/all',
     async (req, res) => {
         let now = new Date();
-        let eventsInfo = null;
-        if (loggedIn) {
+        let eventsInfo;
+        if (res.locals.loggedIn) {
             eventsInfo = await Event.find({}).sort({start: -1})
         } else {
             eventsInfo = await Event.find({visibility: 'public'}).sort({start: -1})

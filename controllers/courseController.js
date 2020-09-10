@@ -13,8 +13,7 @@ const CourseMember = require('../models/CourseMember');
  */
 let coursePin;
 exports.createNewClass = async (req, res, next) => {
-    //console.dir(req.body)
-    if (!req.user.googleemail.endsWith("edu") && res.locals.status !== 'faculty') {
+    if (res.locals.status === 'student') {
         res.send("You must log in with an authorized faculty account to create a class. <a href='/logout'>Logout</a>")
         return
     } else if (!(req.body.norobot === 'on' && req.body.robot === undefined)) {
@@ -61,7 +60,7 @@ exports.addToOwnedCourses = async (req, res, next) => {
         })
         await req.user.ownedCourses.push(courseInfo._id)
         await req.user.save()
-        res.redirect('/showOneCourse/' + courseInfo._id)
+        res.redirect('/course/' + courseInfo._id)
     } catch (e) {
         next(e)
     }
@@ -126,7 +125,7 @@ exports.joinCourse = async (req, res, next) => {
         await req.user.enrolledCourses.push(courseInfo._id)
         await req.user.save()
         console.log("update finish")
-        res.redirect("/showOneCourse/" + courseInfo._id)
+        res.redirect("/course/" + courseInfo._id)
 
     } catch (e) {
         next(e)

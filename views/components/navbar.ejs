@@ -47,7 +47,7 @@
                             <% for (let i = 0; i < courseInfoSet.length; i++) { %>
                                 <li>
                                     <a class='header-link'
-                                       href='/showOneCourse/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName %></a>
+                                       href='/course/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName %></a>
                                 </li>
                             <% } %>
                         </ul>
@@ -148,7 +148,7 @@
 
                 <li class='header__btn header__btn--login'>
                     <% if (!loggedIn) { %>
-                        <a class='btn btn-outline-dark' href='/auth/google' data-aos='fade-left'>ENACT member login</a>
+                        <a class='btn btn-outline-dark' href='/login' data-aos='fade-left'>ENACT member login</a>
                     <% } else { %>
                         <a class='btn btn-outline-dark' href='/logout' data-aos='fade-left'>Logout</a>
                     <% } %>
