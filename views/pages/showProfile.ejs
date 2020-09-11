@@ -36,6 +36,13 @@
                 <br>
 
                 <div class='input-group-prepend'>
+                    <span class='input-group-text' style='width: 180px'>Pronouns</span>
+                    <input disabled type='text' class='form-control' value='<%= userInfo.pronoun %>'>
+                </div>
+
+                <br>
+
+                <div class='input-group-prepend'>
                     <span class='input-group-text' style='width: 180px'>Work Email</span>
                     <input disabled type='text' class='form-control' value='<%= userInfo.workEmail %>'>
                 </div>
@@ -57,6 +64,22 @@
                 <br>
 
                 <div class='input-group-prepend'>
+                    <span class='input-group-text' style='width: 180px'>Department</span>
+                    <input disabled type='text' class='form-control' value='<%= userInfo.department %>'>
+                </div>
+
+                <br>
+
+                <div class='input-group-prepend'>
+                    <span class='input-group-text' style='width: 180px'>State</span>
+                    <input disabled type='text' class='form-control' value='<%= userInfo.state %>'>
+                </div>
+
+                <br>
+
+
+
+                <div class='input-group-prepend'>
                     <span class='input-group-text' style='width: 180px'>Phone Number</span>
                     <input disabled type='text' class='form-control' value='<%= userInfo.phoneNumber %>'>
                 </div>
@@ -71,7 +94,7 @@
                 <br>
 
                 <% if (user._id.equals(userInfo._id)) { %>
-                    <a class='btn btn-outline-dark' href='/profile/edit'>Edit</a>
+                    <a class='btn btn-outline-dark' href='/profile/update'>Edit</a>
                 <% } %>
 
             </div>

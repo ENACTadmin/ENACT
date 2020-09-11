@@ -21,14 +21,6 @@ const eventController = require('./controllers/eventController');
 
 
 //*******************************************
-//***********Authentication******************
-
-// here we set up authentication with passport
-const passport = require('passport');
-const configPassport = require('./config/passport');
-configPassport(passport);
-
-//*******************************************
 //***********Database connection*************
 
 // const MONGODB_URI = 'mongodb://localhost/ENACT';
@@ -398,7 +390,7 @@ app.get('/profiles/view/faculty',
     profileController.showFacultyProfiles
 )
 
-app.get('/profile/edit',
+app.get('/profile/update',
     (req, res) => {
         res.render('./pages/updateProfile')
     })

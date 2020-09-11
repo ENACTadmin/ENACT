@@ -9,6 +9,7 @@ const userSchema = Schema({
     googlename: String,
     googleemail: String,
     userName: String,
+    password: String,
     profilePicURL: String,
     status: String, // status of the user: student/faculty/admin
     zipcode: String,
@@ -20,6 +21,8 @@ const userSchema = Schema({
     personalEmail: String,
     phoneNumber: String,
     affiliation: String,
+    department: String,
+    pronoun: String,
     bio: String // required for faculty members
 });
 

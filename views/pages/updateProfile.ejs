@@ -49,6 +49,23 @@
 
                     <div class='w-100'></div>
                     <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 380px'>Password (Top secret)</span>
+                        <input type='text' class='form-control' name='password'
+                               value='<%= user.password %>'>
+                    </div>
+                    <br>
+
+                    <div class='w-100'></div>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 180px'>Pronouns</span>
+                        <input type='text' class='form-control' name='pronoun'
+                               placeholder="e.g. He/him/his"
+                               value='<%= user.pronoun %>'>
+                    </div>
+                    <br>
+
+                    <div class='w-100'></div>
+                    <div class='input-group-prepend'>
                         <span class='input-group-text' style='width: 180px'>Work Email</span>
                         <input type='text' class='form-control' name='workEmail'
                                value='<%= user.workEmail %>'>
@@ -70,6 +87,23 @@
                         <input type='text' class='form-control' name='affiliation'
                                placeholder="e.g. Brandeis University"
                                value='<%= user.affiliation %>'>
+                    </div>
+                    <br>
+
+                    <div class='w-100'></div>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 380px'>Department (Optional for students)</span>
+                        <input type='text' class='form-control' name='department'
+                               value='<%= user.department %>'>
+                    </div>
+                    <br>
+
+                    <div class='w-100'></div>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 380px'>State (Optional for students)</span>
+                        <input type='text' class='form-control' name='state'
+                               placeholder="please use abbreviation: e.g. MA"
+                               value='<%= user.state %>'>
                     </div>
                     <br>
 

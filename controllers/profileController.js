@@ -23,8 +23,12 @@ exports.updateProfile = async (req, res, next) => {
         if (userToUpdate.userName === undefined)
             toIndex = true
         userToUpdate.userName = req.body.userName;
+        userToUpdate.password = req.body.password;
         userToUpdate.workEmail = req.body.workEmail;
         userToUpdate.personalEmail = req.body.personalEmail;
+        userToUpdate.state = req.body.state;
+        userToUpdate.department = req.body.department;
+        userToUpdate.pronoun = req.body.pronoun;
         userToUpdate.phoneNumber = req.body.phoneNumber;
         userToUpdate.affiliation = req.body.affiliation;
         userToUpdate.bio = req.body.bio;
