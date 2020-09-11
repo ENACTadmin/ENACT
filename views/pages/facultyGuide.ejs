@@ -7,6 +7,9 @@
             <div class='section__title section__title--centered'>
                 Faculty Guide
             </div>
+            <h3>Not finding what you want? Please try</h3><a href='/resources/search/private/advanced'
+                                                             class='btn btn-large btn-warning'
+                                                             style='width: 200px'>Advanced Search</a>
         </div>
     </div>
 </section>
@@ -17,38 +20,40 @@
             <div class='row'>
                 <% if (loggedIn) { %>
                     <div class='col-md-12 col-sm-12'>
-                        <% if (resourceInfo) { %>
-                            <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
+                        <h3>Syllabus</h3> Link to all syllabus: <a href="/resources/view/faculty/syllabus"><b>click me</b></a>
+                        <hr>
+                        <% if (syllabus && syllabus.length > 0) { %>
+                            <% for (let i = 0; i < syllabus.length; i++) { %>
                                 <div class='card-body'>
-                                    <h4><%= resourceInfo[i].name %></h4>
+                                    <h4><%= syllabus[i].name %></h4>
                                     <div class='card-text'>
                                         <ul class='list-group'>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>Description: </b> <%= resourceInfo[i].description %></li>
+                                                <b>Description: </b> <%= syllabus[i].description %></li>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>State:</b> <%= resourceInfo[i].state %></li>
-                                            <% if (resourceInfo[i].mediaType === 'video' && resourceInfo[i].uri.endsWith(".mp4")) { %>
+                                                <b>State:</b> <%= syllabus[i].state %></li>
+                                            <% if (syllabus[i].mediaType === 'video' && syllabus[i].uri.endsWith(".mp4")) { %>
                                                 <li class='list-group-item borderless box-padding'>
                                                     <iframe width="480" height="270" frameborder="0"
                                                             allowtransparency="true" allowfullscreen
-                                                            src="<%= resourceInfo[i].uri %>">
+                                                            src="<%= syllabus[i].uri %>">
                                                     </iframe>
                                                 </li>
                                             <% } else { %>
                                                 <li class='list-group-item borderless box-padding'>
-                                                    <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click
+                                                    <b>Link: </b> <a href='<%= syllabus[i].uri %>'>click
                                                         me</a>
                                                 </li>
                                             <% } %>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>Institution: </b> <%= resourceInfo[i].institution %></li>
+                                                <b>Institution: </b> <%= syllabus[i].institution %></li>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>Tags:</b> <%= resourceInfo[i].tags %>
+                                                <b>Tags:</b> <%= syllabus[i].tags %>
                                             </li>
                                             <li class='list-group-item borderless box-padding'>
-                                                <% if (resourceIds && resourceIds.toString().includes(resourceInfo[i]._id.toString())) { %>
+                                                <% if (resourceIds && resourceIds.toString().includes(syllabus[i]._id.toString())) { %>
                                                     <form style='display: inline' method='post'
-                                                          action='/unstarResourceAlt/<%= resourceInfo[i]._id %>'>
+                                                          action='/unstarResourceAlt/<%= syllabus[i]._id %>'>
                                                         <b>Actions:</b>
                                                         <input type='submit'
                                                                style='border:0px solid transparent'
@@ -58,7 +63,82 @@
                                                     </form>
                                                 <% } else { %>
                                                     <form style='display: inline' method='post'
-                                                          action='/starResourceAlt/<%= resourceInfo[i]._id %>'>
+                                                          action='/starResourceAlt/<%= syllabus[i]._id %>'>
+                                                        <b>Actions:</b>
+                                                        <input type='submit'
+                                                               style='border:0px solid transparent'
+                                                               name='submit'
+                                                               class='btn btn-outline-danger'
+                                                               value='&#9825;'>
+                                                    </form>
+                                                <% } %>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <% if (i !== syllabus.length - 1) { %>
+                                    <br>
+                                <% } %>
+                            <% } %>
+                        <% } else { %>
+                            <div class='card-body text-center'>
+                                No resource available yet
+                            </div>
+                        <% } %>
+                    </div>
+                <% } else { %>
+                    <%- include('../components/component-loginToView'); -%>
+                <% } %>
+            </div>
+            <br>
+            <div class='row'>
+                <% if (loggedIn) { %>
+                    <div class='col-md-12 col-sm-12'>
+                        <h3>Assignment Guidelines</h3>
+                        Link to all Assignment Guidelines: <a href="/resources/view/faculty/assignments"><b>click me</b></a>
+                        <hr>
+                        <% if (assignments && assignments.length > 0) { %>
+                            <% for (let i = assignments.length - 1; i >= 0; i--) { %>
+                                <div class='card-body'>
+                                    <h4><%= assignments[i].name %></h4>
+                                    <div class='card-text'>
+                                        <ul class='list-group'>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>Description: </b> <%= assignments[i].description %></li>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>State:</b> <%= assignments[i].state %></li>
+                                            <% if (assignments[i].mediaType === 'video' && assignments[i].uri.endsWith(".mp4")) { %>
+                                                <li class='list-group-item borderless box-padding'>
+                                                    <iframe width="480" height="270" frameborder="0"
+                                                            allowtransparency="true" allowfullscreen
+                                                            src="<%= assignments[i].uri %>">
+                                                    </iframe>
+                                                </li>
+                                            <% } else { %>
+                                                <li class='list-group-item borderless box-padding'>
+                                                    <b>Link: </b> <a href='<%= assignments[i].uri %>'>click
+                                                        me</a>
+                                                </li>
+                                            <% } %>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>Institution: </b> <%= assignments[i].institution %></li>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>Tags:</b> <%= assignments[i].tags %>
+                                            </li>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <% if (resourceIds && resourceIds.toString().includes(assignments[i]._id.toString())) { %>
+                                                    <form style='display: inline' method='post'
+                                                          action='/unstarResourceAlt/<%= assignments[i]._id %>'>
+                                                        <b>Actions:</b>
+                                                        <input type='submit'
+                                                               style='border:0px solid transparent'
+                                                               name='submit'
+                                                               class='btn btn-outline-danger'
+                                                               value='&#9829;'>
+                                                    </form>
+                                                <% } else { %>
+                                                    <form style='display: inline' method='post'
+                                                          action='/starResourceAlt/<%= assignments[i]._id %>'>
                                                         <b>Actions:</b>
                                                         <input type='submit'
                                                                style='border:0px solid transparent'
@@ -72,7 +152,159 @@
                                     </div>
                                 </div>
                                 <% if (i !== 0) { %>
-                                    <hr>
+                                    <br>
+                                <% } %>
+                            <% } %>
+                        <% } else { %>
+                            <div class='card-body text-center'>
+                                No resource available yet
+                            </div>
+                        <% } %>
+                    </div>
+                <% } else { %>
+                    <%- include('../components/component-loginToView'); -%>
+                <% } %>
+            </div>
+            <br>
+
+            <div class='row'>
+                <% if (loggedIn) { %>
+                    <div class='col-md-12 col-sm-12'>
+                        <h3>Rubrics</h3>
+                        Link to all rubrics: <a href="/resources/view/faculty/rubrics"><b>click me</b></a>
+                        <hr>
+                        <% if (rubrics && rubrics.length > 0) { %>
+                            <% for (let i = rubrics.length - 1; i >= 0; i--) { %>
+                                <div class='card-body'>
+                                    <h4><%= rubrics[i].name %></h4>
+                                    <div class='card-text'>
+                                        <ul class='list-group'>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>Description: </b> <%= rubrics[i].description %></li>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>State:</b> <%= rubrics[i].state %></li>
+                                            <% if (rubrics[i].mediaType === 'video' && rubrics[i].uri.endsWith(".mp4")) { %>
+                                                <li class='list-group-item borderless box-padding'>
+                                                    <iframe width="480" height="270" frameborder="0"
+                                                            allowtransparency="true" allowfullscreen
+                                                            src="<%= rubrics[i].uri %>">
+                                                    </iframe>
+                                                </li>
+                                            <% } else { %>
+                                                <li class='list-group-item borderless box-padding'>
+                                                    <b>Link: </b> <a href='<%= rubrics[i].uri %>'>click
+                                                        me</a>
+                                                </li>
+                                            <% } %>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>Institution: </b> <%= rubrics[i].institution %></li>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>Tags:</b> <%= rubrics[i].tags %>
+                                            </li>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <% if (resourceIds && resourceIds.toString().includes(rubrics[i]._id.toString())) { %>
+                                                    <form style='display: inline' method='post'
+                                                          action='/unstarResourceAlt/<%= rubrics[i]._id %>'>
+                                                        <b>Actions:</b>
+                                                        <input type='submit'
+                                                               style='border:0px solid transparent'
+                                                               name='submit'
+                                                               class='btn btn-outline-danger'
+                                                               value='&#9829;'>
+                                                    </form>
+                                                <% } else { %>
+                                                    <form style='display: inline' method='post'
+                                                          action='/starResourceAlt/<%= rubrics[i]._id %>'>
+                                                        <b>Actions:</b>
+                                                        <input type='submit'
+                                                               style='border:0px solid transparent'
+                                                               name='submit'
+                                                               class='btn btn-outline-danger'
+                                                               value='&#9825;'>
+                                                    </form>
+                                                <% } %>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <% if (i !== 0) { %>
+                                    <br>
+                                <% } %>
+                            <% } %>
+                        <% } else { %>
+                            <div class='card-body text-center'>
+                                No resource available yet
+                            </div>
+                        <% } %>
+                    </div>
+                <% } else { %>
+                    <%- include('../components/component-loginToView'); -%>
+                <% } %>
+            </div>
+            <br>
+
+            <div class='row'>
+                <% if (loggedIn) { %>
+                    <div class='col-md-12 col-sm-12'>
+                        <h3>General Guides</h3>
+                        Link to all faculty guides: <a href="/resources/view/faculty/guides"><b>click me</b></a>
+                        <hr>
+                        <% if (guides && guides.length > 0) { %>
+                            <% for (let i = guides.length - 1; i >= 0; i--) { %>
+                                <div class='card-body'>
+                                    <h4><%= guides[i].name %></h4>
+                                    <div class='card-text'>
+                                        <ul class='list-group'>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>Description: </b> <%= guides[i].description %></li>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>State:</b> <%= guides[i].state %></li>
+                                            <% if (guides[i].mediaType === 'video' && guides[i].uri.endsWith(".mp4")) { %>
+                                                <li class='list-group-item borderless box-padding'>
+                                                    <iframe width="480" height="270" frameborder="0"
+                                                            allowtransparency="true" allowfullscreen
+                                                            src="<%= guides[i].uri %>">
+                                                    </iframe>
+                                                </li>
+                                            <% } else { %>
+                                                <li class='list-group-item borderless box-padding'>
+                                                    <b>Link: </b> <a href='<%= guides[i].uri %>'>click
+                                                        me</a>
+                                                </li>
+                                            <% } %>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>Institution: </b> <%= guides[i].institution %></li>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>Tags:</b> <%= guides[i].tags %>
+                                            </li>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <% if (resourceIds && resourceIds.toString().includes(guides[i]._id.toString())) { %>
+                                                    <form style='display: inline' method='post'
+                                                          action='/unstarResourceAlt/<%= guides[i]._id %>'>
+                                                        <b>Actions:</b>
+                                                        <input type='submit'
+                                                               style='border:0px solid transparent'
+                                                               name='submit'
+                                                               class='btn btn-outline-danger'
+                                                               value='&#9829;'>
+                                                    </form>
+                                                <% } else { %>
+                                                    <form style='display: inline' method='post'
+                                                          action='/starResourceAlt/<%= guides[i]._id %>'>
+                                                        <b>Actions:</b>
+                                                        <input type='submit'
+                                                               style='border:0px solid transparent'
+                                                               name='submit'
+                                                               class='btn btn-outline-danger'
+                                                               value='&#9825;'>
+                                                    </form>
+                                                <% } %>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <% if (i !== 0) { %>
+                                    <br>
                                 <% } %>
                             <% } %>
                         <% } else { %>
@@ -88,39 +320,5 @@
         </div>
     </section>
 </section>
-
-<% if (resourceInfo) { %>
-    <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
-        <div class='modal fade' id='deleteModal' tabindex='-1' role='dialog'
-             aria-labelledby='exampleModalLabel'
-             aria-hidden='true'>
-            <div class='modal-dialog modal-lg' role='document'>
-                <div class='modal-content'>
-                    <div class='modal-header'>
-                        <h5 class='modal-title' id='exampleModalLabel'>Delete?</h5>
-                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                            <span aria-hidden='true'>&times;</span>
-                        </button>
-                    </div>
-                    <div class='modal-body'>
-                        <div class='row'>
-                            <div class='col-md-12 col-sm-12'>
-                                <h4>Are you sure you want to delete this resource permanently?</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div class='modal-footer'>
-                        <form method='post' action='/removeResource/<%= resourceInfo[i]._id %>'>
-                            <input type='submit' name='submit' class='btn btn-outline-danger' value='Delete'>
-                        </form>
-                        <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>
-                            Close
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <% } %>
-<% } %>
 
 <%- include('../components/footer'); -%>

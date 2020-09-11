@@ -6,7 +6,6 @@ const Word2Id = require('../models/Word2Id');
 
 let resourceInfoSet
 
-
 exports.uploadResource = async (req, res, next) => {
     const courseId = req.params.courseId
     console.log("in upload Resource")
@@ -77,7 +76,7 @@ exports.uploadResource = async (req, res, next) => {
         await newResource.save()
         await setWord2Id(newResource);
         if (courseId === undefined)
-            res.redirect('/resources/view/faculty/all')
+            res.redirect('/resources/view/faculty')
         else
             res.redirect('/course/' + courseId)
     } catch (e) {
@@ -206,19 +205,71 @@ exports.loadResources = async (req, res, next) => {
 
 exports.loadAllFacultyResources = async (req, res, next) => {
     try {
-        let resourceInfo = await Resource.find({status: 'privateToProfessor'})
-        let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
+        let syllabus = await Resource.find({
+            status: 'privateToProfessor',
+            'contentType': 'Syllabus'
+        }).sort({createdAt: -1}).limit(3)
+        let assignments = await Resource.find({
+            status: 'privateToProfessor',
+            'contentType': 'Assignment Guidelines'
+        }).sort({createdAt: -1}).limit(3)
+        let rubrics = await Resource.find({
+            status: 'privateToProfessor',
+            'contentType': 'Rubrics'
+        }).sort({createdAt: -1}).limit(3)
+        let guides = await Resource.find({
+            status: 'privateToProfessor',
+            'contentType': 'Faculty Guide'
+        }).sort({createdAt: -1}).limit(3)
 
+        let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
         let resourceIds = null
         console.log("starred ", starred)
         if (starred) {
             resourceIds = await starred.resources
         }
+
         console.log("resourceIds: ", resourceIds)
         res.locals.resourceIds = resourceIds
-        res.render('./pages/facultyExclusive', {
-            resourceInfo: resourceInfo
+        res.locals.syllabus = syllabus
+        res.locals.assignments = assignments
+        res.locals.rubrics = rubrics
+        res.locals.guides = guides
+        next()
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.loadSpecificContentType = async (req, res, next) => {
+    try {
+        let contentType = ''
+        if (req.params.contentType === 'syllabus')
+            contentType = 'Syllabus'
+        else if (req.params.contentType === 'assignments')
+            contentType = 'Assignment Guidelines'
+        else if (req.params.contentType === 'rubrics')
+            contentType = 'Rubrics'
+        else if (req.params.contentType === 'guides')
+            contentType = 'Faculty Guide'
+
+        let resourceInfo = await Resource.find({status: 'privateToProfessor', contentType: contentType})
+        console.log("here: ", resourceInfo)
+        let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
+        let resourceIds = null
+        console.log("starred ", starred)
+        if (starred) {
+            resourceIds = await starred.resources
+        }
+
+        console.log("resourceIds: ", resourceIds)
+        res.locals.resourceIds = resourceIds
+        res.locals.resourceInfo = resourceInfo
+
+        res.render('./pages/showResources', {
+            secretType: contentType
         })
+
     } catch (e) {
         next(e)
     }
@@ -403,7 +454,7 @@ exports.starResourceAlt = async (req, res, next) => {
         await resourceSet.save()
         res.locals.resourceIds = newResourceIds
         res.locals.resourceInfo = resourceInfoSet
-        res.render('./pages/showResources')
+        res.redirect('back')
     } catch (e) {
         next(e)
     }
@@ -425,7 +476,7 @@ exports.unstarResourceAlt = async (req, res, next) => {
         await resourceSet.save()
         res.locals.resourceIds = newResourceIds
         res.locals.resourceInfo = resourceInfoSet
-        res.render('./pages/showResources')
+        res.redirect('back')
     } catch (e) {
         next(e)
     }
@@ -639,7 +690,9 @@ exports.primarySearch = async (req, res, next) => {
         res.locals.resourceIds = starredResourceIds
         res.locals.resourceInfo = uniqueResourceInfo
         resourceInfoSet = uniqueResourceInfo
-        res.render('./pages/showResources')
+        res.render('./pages/showResources', {
+            secretType: 'Search Result'
+        })
     } catch
         (e) {
         next(e)
@@ -829,7 +882,8 @@ exports.advancedSearch = async (req, res) => {
     resourceInfoSet = filteredResource
     res.render('./pages/showResources', {
         resourceInfo: filteredResource,
-        resourceIds: starredResourceIds
+        resourceIds: starredResourceIds,
+        secretType: 'Search Result'
     })
 }
 
