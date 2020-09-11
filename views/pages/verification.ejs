@@ -1,0 +1,32 @@
+<%- include('../components/header'); -%>
+<%- include('../components/navbar'); -%>
+
+<section class='section'>
+    <div class='section__content section__content--full-width'>
+        <div class='jumbotron masthead text-center'>
+            <div class='section__title section__title--centered'>
+                Identity Verification
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class='section section__grey' data-aos='fade-up'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-md-3 col-sm-12'></div>
+            <div class='col-md-6 col-sm-12'>
+                <form method='post' action='/verification'>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 180px'>Secret code :)</span>
+                        <input type='text' class='form-control' style='margin-right: 10px' name='coursePin'
+                               placeholder='e.g. 7-digit number'>
+                        <input type='submit' name='submit' class='btn btn-outline-dark' value='Verify'>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('../components/footer'); -%>

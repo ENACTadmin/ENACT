@@ -2,6 +2,7 @@
 
 // load all the things we need
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 
 // load up the user model
 const User = require('../models/User');
@@ -16,7 +17,7 @@ const callbackURL = process.env.callbackURL || "http://127.0.0.1:3500/login/auth
 
 
 module.exports = function (passport) {
-    console.log("in passport")
+    console.log("In passport")
 
     // used to serialize the user for the session
     passport.serializeUser(function (user, done) {
@@ -94,5 +95,71 @@ module.exports = function (passport) {
                     }
                 });
             });
-        }));
+        })
+    );
+    passport.use('local', new LocalStrategy({
+            usernameField: 'userName',
+            passwordField: 'password'
+        },
+        function (username, password, done) {
+            console.log('In local login strategy')
+            User.findOne({userName: username}, function (err, user) {
+                console.log("found user is: ", user)
+                if (err) {
+                    return done(err);
+                }
+                if (!user) {
+                    return done(null, false, {message: 'Incorrect username.'});
+                }
+                if (user.password !== password) {
+                    return done(null, false, {message: 'Incorrect password.'});
+                }
+                return done(null, user);
+            });
+        }
+    ));
+    // =========================================================================
+    // LOCAL SIGNUP ============================================================
+    // =========================================================================
+    // we are using named strategies since we have one for login and one for signup
+    // by default, if there was no name, it would just be called 'local'
+
+    passport.use('local-signup', new LocalStrategy({
+            // by default, local strategy uses username and password, we will override with email
+            usernameField: 'userName',
+            passwordField: 'password'
+        },
+        function (username, password, done) {
+            // find a user whose email is the same as the forms email
+            // we are checking to see if the user trying to login already exists
+            console.log(username)
+            console.log(password)
+            User.findOne({userName: username}, function (err, user) {
+                console.log("found user is: ", user)
+                // if there are any errors, return the error
+                if (err)
+                    return done(err);
+                // check to see if theres already a user with that email
+                if (user) {
+                    return done(null, false, {message: 'That username is already taken.'});
+                } else {
+                    // if there is no user with that email
+                    // create the user
+                    var newUser = User();
+                    //
+                    // set the user's local credentials
+                    newUser.userName = username;
+                    newUser.password = password;
+
+                    console.log("bnew", newUser)
+                    // save the user
+                    newUser.save(function (err) {
+                        if (err)
+                            throw err;
+                        return done(null, newUser);
+                    });
+                }
+            });
+        }
+    ));
 };

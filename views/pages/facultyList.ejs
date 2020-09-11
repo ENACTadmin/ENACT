@@ -50,10 +50,15 @@
                                 <b>Bio: </b><br> <textarea disabled rows="6"
                                                            style="width: 100%"><%= profileInfo[i].bio %></textarea>
                             </div>
-                            <div class="col-md-2 col-sm-2 align-self-center">
+                            <div class="col-md-3 col-sm-3 align-self-center">
                                 <b>Affiliation: </b><br><%= profileInfo[i].affiliation %>
+                                <br>
+                                <b>Department: </b><br><%= profileInfo[i].department %>
+                                <br>
+                                <b>State: </b><br><%= profileInfo[i].state %>
+
                             </div>
-                            <div class="col-md-2 col-sm-2 align-self-center">
+                            <div class="col-md-1 col-sm-1 align-self-center">
                                 <% if (!user._id.equals(profileInfo[i]._id)) { %>
                                     <a href="/messages/view/<%= user._id %>/<%= profileInfo[i]._id %>/general"><input
                                                 class="btn btn-sm btn-outline-primary" type="button"
