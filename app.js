@@ -193,7 +193,7 @@ app.post('/uploadToPublicResr',
     resourceController.uploadToPublicResr
 )
 
-app.post('/resources/view/private/generalResult',
+app.post('/resources/search/private/general',
     resourceController.primarySearch
 )
 
@@ -202,7 +202,7 @@ app.get('/resources/search/private/advanced',
     (req, res) =>
         res.render('./pages/search'))
 
-app.post('/resources/view/private/advancedResult',
+app.post('/resources/search/private/advanced',
     resourceController.advancedSearch
 )
 
@@ -231,10 +231,19 @@ app.post('/resources/view/public/advancedResult',
     resourceController.advancedSearchPublic
 )
 
-app.get('/resources/view/faculty/all',
+app.get('/resources/view/faculty',
     resourceController.checkUserName,
-    resourceController.loadAllFacultyResources
+    resourceController.loadAllFacultyResources,
+    (req, res) =>
+        res.render('./pages/facultyGuide')
 )
+
+app.get('/resources/view/faculty/:contentType',
+    resourceController.checkUserName,
+    resourceController.loadSpecificContentType,
+)
+
+
 
 app.get('/uploadToFaculty',
     resourceController.checkUserName,
