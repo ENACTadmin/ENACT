@@ -73,6 +73,12 @@
                                                                value='&#9825;'>
                                                     </form>
                                                 <% } %>
+                                                <% if (syllabus[i].ownerId.toString() !== user._id.toString()) { %>
+                                                    <a href='/messages/view/<%= user._id %>/<%= syllabus[i].ownerId %>/<%= syllabus[i]._id %>'><input
+                                                                class='btn btn-outline-primary'
+                                                                style='border:0px solid transparent'
+                                                                type='button' value='Contact the author'></a>
+                                                <% } %>
                                             </li>
                                         </ul>
                                     </div>
@@ -147,6 +153,12 @@
                                                                class='btn btn-outline-danger'
                                                                value='&#9825;'>
                                                     </form>
+                                                <% } %>
+                                                <% if (assignments[i].ownerId.toString() !== user._id.toString()) { %>
+                                                    <a href='/messages/view/<%= user._id %>/<%= assignments[i].ownerId %>/<%= assignments[i]._id %>'><input
+                                                                class='btn btn-outline-primary'
+                                                                style='border:0px solid transparent'
+                                                                type='button' value='Contact the author'></a>
                                                 <% } %>
                                             </li>
                                         </ul>
@@ -223,6 +235,12 @@
                                                                class='btn btn-outline-danger'
                                                                value='&#9825;'>
                                                     </form>
+                                                <% } %>
+                                                <% if (rubrics[i].ownerId.toString() !== user._id.toString()) { %>
+                                                    <a href='/messages/view/<%= user._id %>/<%= rubrics[i].ownerId %>/<%= rubrics[i]._id %>'><input
+                                                                class='btn btn-outline-primary'
+                                                                style='border:0px solid transparent'
+                                                                type='button' value='Contact the author'></a>
                                                 <% } %>
                                             </li>
                                         </ul>
