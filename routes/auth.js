@@ -34,20 +34,20 @@ router.use(async (req, res, next) => {
     res.locals.loggedIn = false;
     res.locals.status = "student"
     if (req.isAuthenticated()) {
-        let googleEmail = req.user.googleemail
+        let email = req.user.workEmail || req.user.googleemail
         res.locals.user = req.user;
         res.locals.loggedIn = true;
         loggedIn = true;
         // set appropriate status
         let userInfo = await User.findOne({_id: req.user._id})
-        if (adminList.includes(googleEmail)) {
+        if (adminList.includes(email)) {
             res.locals.status = 'admin'
             let courseInfoSet = await Course.find({ownerId: req.user._id})
             userInfo.status = 'admin'
             await userInfo.save()
             res.locals.courseInfoSet = courseInfoSet
         } else {
-            let user = await Faculty.findOne({email: googleEmail})
+            let user = await Faculty.findOne({email: email})
             if (user) {
                 res.locals.status = user.status
                 userInfo.status = 'faculty'

@@ -126,7 +126,7 @@ module.exports = function (passport) {
 
     passport.use('local-signup', new LocalStrategy({
             // by default, local strategy uses username and password, we will override with email
-            usernameField: 'userName',
+            usernameField: 'email',
             passwordField: 'password'
         },
         function (username, password, done) {
@@ -134,7 +134,7 @@ module.exports = function (passport) {
             // we are checking to see if the user trying to login already exists
             console.log(username)
             console.log(password)
-            User.findOne({userName: username}, function (err, user) {
+            User.findOne({workEmail: username}, function (err, user) {
                 console.log("found user is: ", user)
                 // if there are any errors, return the error
                 if (err)
