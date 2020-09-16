@@ -414,12 +414,12 @@ app.post('/profile/update',
     profileController.updateProfile
 )
 
-app.get('/assignFaculty',
+app.get('/profiles/faculty/assign',
     resourceController.checkUserName,
     profileController.loadFaculty
 )
 
-app.post('/assignNewFaculty',
+app.post('/profiles/faculty/assign',
     profileController.assignFaculty
 )
 //show all profiles from all users

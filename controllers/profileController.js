@@ -73,8 +73,12 @@ exports.loadFaculty = async (req, res, next) => {
             let approvedList = await Faculty.find()
             let approvedByList = []
             for (let element of approvedList) {
-                let user = await User.findOne(element.approvedBy)
-                approvedByList.push(user.userName)
+                console.log("approved by: ", element.approvedBy)
+                let user = await User.findOne({_id: element.approvedBy})
+                if (user)
+                    approvedByList.push(user.userName)
+                else
+                    approvedByList.push("unknown")
             }
             console.log("list: " + approvedList.toString())
             res.render('./pages/assignFaculty', {
