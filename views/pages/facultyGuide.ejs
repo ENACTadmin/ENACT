@@ -20,7 +20,8 @@
             <div class='row'>
                 <% if (loggedIn) { %>
                     <div class='col-md-12 col-sm-12'>
-                        <h3>Syllabus</h3> Link to all syllabus: <a href="/resources/view/faculty/syllabus"><b>click me</b></a>
+                        <h3>Syllabus</h3> Link to all syllabus: <a href="/resources/view/faculty/syllabus"><b>click
+                                me</b></a>
                         <hr>
                         <% if (syllabus && syllabus.length > 0) { %>
                             <% for (let i = 0; i < syllabus.length; i++) { %>
@@ -246,8 +247,9 @@
             <div class='row'>
                 <% if (loggedIn) { %>
                     <div class='col-md-12 col-sm-12'>
-                        <h3>General Guides</h3>
-                        Link to all faculty guides: <a href="/resources/view/faculty/guides"><b>click me</b></a>
+                        <h3>Course Plannings</h3>
+                        Link to all course planning materials: <a href="/resources/view/faculty/plan"><b>click
+                                me</b></a>
                         <hr>
                         <% if (guides && guides.length > 0) { %>
                             <% for (let i = guides.length - 1; i >= 0; i--) { %>
@@ -298,6 +300,12 @@
                                                                class='btn btn-outline-danger'
                                                                value='&#9825;'>
                                                     </form>
+                                                <% } %>
+                                                <% if (guides[i].ownerId.toString() !== user._id.toString()) { %>
+                                                    <a href='/messages/view/<%= user._id %>/<%= guides[i].ownerId %>/<%= guides[i]._id %>'><input
+                                                                class='btn btn-outline-primary'
+                                                                style='border:0px solid transparent'
+                                                                type='button' value='Contact the author'></a>
                                                 <% } %>
                                             </li>
                                         </ul>
