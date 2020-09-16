@@ -98,12 +98,12 @@ module.exports = function (passport) {
         })
     );
     passport.use('local', new LocalStrategy({
-            usernameField: 'userName',
+            usernameField: 'email',
             passwordField: 'password'
         },
         function (username, password, done) {
             console.log('In local login strategy')
-            User.findOne({userName: username}, function (err, user) {
+            User.findOne({workEmail: username}, function (err, user) {
                 console.log("found user is: ", user)
                 if (err) {
                     return done(err);
@@ -148,10 +148,9 @@ module.exports = function (passport) {
                     var newUser = User();
                     //
                     // set the user's local credentials
-                    newUser.userName = username;
+                    newUser.workEmail = username;
                     newUser.password = password;
 
-                    console.log("bnew", newUser)
                     // save the user
                     newUser.save(function (err) {
                         if (err)
