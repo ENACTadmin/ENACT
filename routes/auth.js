@@ -23,9 +23,6 @@ router.use(bodyParser.urlencoded({extended: false}));
 //*******************************************
 //***********Login authorization*************
 
-// will be moved to cloud later
-let adminList = ["bbdhy96@gmail.com", "nicolezhang@brandeis.edu", "stimell@brandeis.edu", "djw@brandeis.edu", "epevide@brandeis.edu"]
-
 // here is where we check and assign user's status
 // this runs every time when a req is received
 let loggedIn = false;
@@ -34,7 +31,7 @@ router.use(async (req, res, next) => {
     res.locals.loggedIn = false;
     res.locals.status = "student"
     if (req.isAuthenticated()) {
-        let email = req.user.workEmail || req.user.googleemail
+        let email = req.user.googleemail || req.user.workEmail
         res.locals.user = req.user;
         res.locals.loggedIn = true;
         loggedIn = true;
@@ -101,6 +98,9 @@ router.post('/login',
     })
 );
 
+// will be moved to cloud later
+let adminList = ["bbdhy96@gmail.com", "nicolezhang@brandeis.edu", "stimell@brandeis.edu", "djw@brandeis.edu", "epevide@brandeis.edu"]
+
 router.get('/signup',
     (req, res) =>
         res.render('./pages/signup')
@@ -114,8 +114,14 @@ router.post('/signup',
 )
 
 router.get('/verification',
-    (req, res) => {
-        res.render('./pages/verification')
+    async (req, res) => {
+        let temp = await Faculty.findOne({email: {$in: [req.user.googleemail, req.user.workEmail]}})
+        console.log("faculty test: ", temp)
+        if (req.user.googleemail in adminList || req.user.workEmail in adminList || temp) {
+            res.redirect("/profile/update")
+        } else {
+            res.render('./pages/verification')
+        }
     }
 )
 
