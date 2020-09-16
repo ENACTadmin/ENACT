@@ -219,7 +219,7 @@ exports.loadAllFacultyResources = async (req, res, next) => {
         }).sort({createdAt: -1}).limit(3)
         let guides = await Resource.find({
             status: 'privateToProfessor',
-            'contentType': 'Faculty Guide'
+            'contentType': 'Course Planning'
         }).sort({createdAt: -1}).limit(3)
 
         let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
@@ -250,8 +250,8 @@ exports.loadSpecificContentType = async (req, res, next) => {
             contentType = 'Assignment Guidelines'
         else if (req.params.contentType === 'rubrics')
             contentType = 'Rubrics'
-        else if (req.params.contentType === 'guides')
-            contentType = 'Faculty Guide'
+        else if (req.params.contentType === 'plan')
+            contentType = 'Course Planning'
 
         let resourceInfo = await Resource.find({status: 'privateToProfessor', contentType: contentType})
         console.log("here: ", resourceInfo)
