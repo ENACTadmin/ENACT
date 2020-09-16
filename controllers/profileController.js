@@ -85,7 +85,7 @@ exports.loadFaculty = async (req, res, next) => {
             next(e)
         }
     } else {
-        res.send("you are not admin in loading!")
+        res.send("you are not admin in loading faculty!")
     }
 }
 
