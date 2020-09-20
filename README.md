@@ -8,7 +8,6 @@ Deployed on Heroku domain: [ENACT digital platform](https://enact-brandeis.herok
 
 Use the package manager [npm](https://www.npmjs.com/) to install ENACT digital platform.
 
-- 
 ```bash
 npm install
 ```
