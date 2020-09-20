@@ -14,5 +14,16 @@ Use the package manager [npm](https://www.npmjs.com/) to install ENACT digital p
 npm install
 ```
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+## Search
+
+### Full-text Search: implemented using ElasticSearch-styled "inverted index" as data structure behind the scene
+```
+/resources/search/public/general: full-text search for public usage
+/resources/search/public/advanced: advanced search for public usage
+/resources/search/private/general: full-text search for logged in members
+/resources/search/private/advanced: advanced search for logged in members
+```
+
+## Usage
+
+Passport auth is used to login, a local strategy and a google auth strategy were used.
