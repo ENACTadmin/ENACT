@@ -45,6 +45,49 @@ exports.createNewClass = async (req, res, next) => {
     }
 }
 
+exports.copyCourse = async (req, res, next) => {
+    try {
+        let oldCourse = await Course.findOne({_id: req.params.courseId})
+        coursePin = await getCoursePin()
+        let newCourse = new Course(
+            {
+                courseName: req.body.courseName,
+                ownerId: req.user._id,
+                instructor: req.user.userName,
+                coursePin: coursePin,
+                semester: req.body.semester,
+                // city: req.body.city,
+                state: oldCourse.state,
+                createdAt: new Date(),
+                institution: oldCourse.institution,
+                officeHour: req.body.officeHour,
+                officeHourLocation: req.body.officeHourLocation
+            }
+        )
+        // await until the courseToEdit is saved properly
+        await newCourse.save()
+        res.redirect('/courses')
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.editCourse = async (req, res, next) => {
+    try {
+        let courseToEdit = await Course.findOne({_id: req.params.courseId})
+        courseToEdit.courseName = req.body.courseName
+        courseToEdit.semester = req.body.semester
+        courseToEdit.institution = req.body.institution
+        courseToEdit.officeHour = req.body.officeHour
+        courseToEdit.officeHourLocation = req.body.officeHourLocation
+        // await until the courseToEdit is saved properly
+        await courseToEdit.save()
+        res.redirect('/courses')
+    } catch (e) {
+        next(e)
+    }
+}
+
 /**
  * add created course to the list of owned courses
  * @param req
@@ -60,7 +103,7 @@ exports.addToOwnedCourses = async (req, res, next) => {
         })
         await req.user.ownedCourses.push(courseInfo._id)
         await req.user.save()
-        res.redirect('/course/' + courseInfo._id)
+        res.redirect('/course/view/' + courseInfo._id)
     } catch (e) {
         next(e)
     }
@@ -125,7 +168,7 @@ exports.joinCourse = async (req, res, next) => {
         await req.user.enrolledCourses.push(courseInfo._id)
         await req.user.save()
         console.log("update finish")
-        res.redirect("/course/" + courseInfo._id)
+        res.redirect("/course/view/" + courseInfo._id)
 
     } catch (e) {
         next(e)

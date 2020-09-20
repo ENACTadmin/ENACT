@@ -78,7 +78,7 @@ exports.uploadResource = async (req, res, next) => {
         if (courseId === undefined)
             res.redirect('/resources/view/faculty')
         else
-            res.redirect('/course/' + courseId)
+            res.redirect('/course/view/' + courseId)
     } catch (e) {
         next(e)
     }
