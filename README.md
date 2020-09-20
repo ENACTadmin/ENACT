@@ -12,11 +12,11 @@ Use the package manager [npm](https://www.npmjs.com/) to install ENACT digital p
 npm install
 ```
 
-- If you have nodemon installed:
+If you have nodemon installed use nodemon to start:
 ```bash
 nodemon
 ```
-- Otherwise:
+Otherwise:
 ```bash
 npm start
 ```
