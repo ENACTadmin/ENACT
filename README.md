@@ -8,20 +8,19 @@ Deployed on Heroku domain: [ENACT digital platform](https://enact-brandeis.herok
 
 Use the package manager [npm](https://www.npmjs.com/) to install ENACT digital platform.
 
+- 
 ```bash
 npm install
 ```
 
-```bash
-npm start
-```
-
-or
-
+- If you have nodemon installed:
 ```bash
 nodemon
 ```
-if you have nodemon installed.
+- Otherwise:
+```bash
+npm start
+```
 
 For local installation, please remember to:
 - have MongoDB pre-installed
@@ -29,14 +28,13 @@ For local installation, please remember to:
 
 ## Technology stack
 
-Front End Technologies: EJS/Bootstrap/Jquery/Ajax
+- Front End Technologies: <b>EJS/Bootstrap/Jquery/Ajax</b>
 <br>
-Back End Technologies: Node.js/Express.js
+- Back End Technologies: <b>Node.js/Express.js/Passport.js</b>
 <br>
-Database: MongoDB
+- Database: <b>MongoDB</b>
 <br>
-Cloud services: AWS S3 Storage, Heroku, 
-
+- Cloud services: <b>AWS S3 Storage, Heroku</b>
 
 ## Search
 
