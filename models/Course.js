@@ -10,7 +10,6 @@ const courseSchema = Schema({
     coursePin: String, // pin number to join the class
     tas: [objectID],
     zipcode: String,
-    // city: String,
     state: String,
     semester: String,
     createdAt: Date,

@@ -7,6 +7,7 @@ const session = require("express-session");
 
 // Models!
 const Event = require('./models/Event')
+const Course = require('./models/Course')
 
 
 //*******************************************
@@ -98,10 +99,50 @@ app.get('/courses',
         res.render('./pages/showCourses')
 )
 
-app.get('/course/:courseId',
+app.get('/course/view/:courseId',
     resourceController.checkUserName,
     courseController.showOneCourse,
     resourceController.loadResources
+)
+
+app.get('/course/update/:courseId',
+    resourceController.checkUserName,
+    async (req, res) => {
+        let courseInfo = await Course.findOne({_id: req.params.courseId})
+        res.render('./pages/editCourse', {
+            courseInfo: courseInfo
+        })
+    }
+)
+
+app.post('/course/update/:courseId',
+    resourceController.checkUserName,
+    courseController.editCourse
+)
+
+
+app.get('/course/copy/:courseId',
+    resourceController.checkUserName,
+    async (req, res) => {
+        let courseInfo = await Course.findOne({_id: req.params.courseId})
+        res.render('./pages/copyCourse', {
+            courseInfo: courseInfo
+        })
+    }
+)
+
+
+app.post('/course/copy/:courseId',
+    resourceController.checkUserName,
+    courseController.copyCourse
+)
+
+app.post('/course/delete/:courseId',
+    resourceController.checkUserName,
+    async (req, res) => {
+        await Course.deleteOne({_id: req.params.courseId})
+        res.redirect('back')
+    }
 )
 
 // render join course view
