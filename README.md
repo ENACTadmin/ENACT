@@ -29,11 +29,8 @@ For local installation, please remember to:
 ## Technology stack
 
 - Front End Technologies: <b>EJS/Bootstrap/Jquery/Ajax</b>
-<br>
 - Back End Technologies: <b>Node.js/Express.js/Passport.js</b>
-<br>
 - Database: <b>MongoDB</b>
-<br>
 - Cloud services: <b>AWS S3 Storage, Heroku</b>
 
 ## Search
@@ -48,4 +45,4 @@ For local installation, please remember to:
 
 ## Usage
 
-Passport auth is used to login, a local strategy and a google auth strategy were used.
+Passport.js is used to login, you can either use google account to login or create a new profile locally.
