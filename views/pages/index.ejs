@@ -17,11 +17,13 @@
                 </div>
             </div>
         </a>
-        <a class='header__logo-title-1' style='margin-left: -10px' href='/'>
-            <b>THE EDUCATIONAL NETWORK
-                <br>
-                FOR ACTIVE CIVIC TRANSFORMATION</b>
-        </a>
+        <% if (!loggedIn) { %>
+            <a class='header__logo-title-1' style='margin-left: -10px' href='/'>
+                <b>THE EDUCATIONAL NETWORK
+                    <br>
+                    FOR ACTIVE CIVIC TRANSFORMATION</b>
+            </a>
+        <% } %>
         <nav class='header__menu'>
             <ul>
                 <li>
@@ -181,18 +183,18 @@
                     <% if (status === 'admin' || status === 'faculty') { %>
                         <div class='form-demo' data-aos='zoom-out-down' data-aos-duration='600' data-aos-delay='400'>
                             <a href='/courses'><input type='submit' name='submit' class='form-demo__large'
-                                                          value='MANAGE/CREATE COURSES'></a>
+                                                      value='MANAGE/CREATE COURSES'></a>
                             <a href='/resources/search/private/general'><input type='submit' name='submit'
                                                                                class='form-demo__large'
                                                                                value='FIND RESOURCES'></a>
                             <a href='/resources/view/faculty'><input type='submit' name='submit'
-                                                                         class='form-demo__large'
-                                                                         value='FACULTY GUIDE'></a>
+                                                                     class='form-demo__large'
+                                                                     value='FACULTY GUIDE'></a>
                         </div>
                     <% } else { %>
                         <div class='form-demo' data-aos='zoom-out-down' data-aos-duration='1000' data-aos-delay='400'>
                             <a href='/courses'><input type='submit' name='submit' class='form-demo__large'
-                                                          value='MANAGE/ENROLL IN COURSES'></a>
+                                                      value='MANAGE/ENROLL IN COURSES'></a>
                             <a href='/resources/search/private/general'><input type='submit' name='submit'
                                                                                class='form-demo__large'
                                                                                value='FIND RESOURCES'></a>
