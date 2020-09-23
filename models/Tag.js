@@ -5,9 +5,11 @@ const objectID = mongoose.Schema.Types.ObjectID;
 
 const tagSchema = Schema({
     ownerId: objectID,
+    ownerName: String,
     ownerStatus: String,
     status: String,
-    info: String
+    info: String,
+    reason: String
 });
 
 module.exports = mongoose.model('Tag', tagSchema);

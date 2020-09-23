@@ -498,6 +498,11 @@ app.post('/addTags',
     tagController.addTags
 )
 
+app.get('/approveTags',
+    tagController.loadUnderReviewTags
+)
+
+
 //*******************************************
 //*************Error related*****************
 
