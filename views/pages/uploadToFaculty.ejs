@@ -61,7 +61,12 @@
                     <br>
                     <div class='col-md-3 col-sm-12'></div>
                     <div class='col-md-6 col-sm-12'>
-                        <h3>Area of the resource (Optional)</h3>
+                        <h3>Area of the resource (Optional)
+                            <button type='button' class='btn btn-secondary' data-toggle='modal' data-target='#addTags'>
+                                Suggest a new area to admin
+                            </button>
+                        </h3>
+
                         <hr>
                     </div>
                     <div class='w-100'></div>
@@ -120,6 +125,41 @@
                 <button type='button' id='closeBtn' class='btn btn-secondary' data-dismiss='modal'>Close</button>
             </div>
         </div>
+    </div>
+</div>
+
+<div class='modal fade' id='addTags' tabindex='-1' role='dialog'
+     aria-labelledby='exampleModalLabel'
+     aria-hidden='true'>
+    <div class='modal-dialog modal-lg' role='document'>
+        <form method='post' action='/addTags'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <h5 class='modal-title' id='exampleModalLabel'>Suggesting a new area?</h5>
+                <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                </button>
+            </div>
+            <div class='modal-body'>
+                <div class='row'>
+                    <div class='col-md-12 col-sm-12'>
+                        <h4>Please fill in the area you would like to add. Your request will be process by our admin. </h4>
+                        <div class='input-group-prepend'>
+                            <input type='text' id='addingTag' class='form-control' name='addingTag'
+                                   placeholder='e.g. COVID-19'>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class='modal-footer'>
+                <input type='submit' name='submit' class='btn btn-outline-primary' value='Submit'>
+                <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>
+                    Close
+                </button>
+            </div>
+        </div>
+        </form>
     </div>
 </div>
 
