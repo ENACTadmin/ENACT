@@ -8,6 +8,7 @@ const session = require("express-session");
 // Models!
 const Event = require('./models/Event')
 const Course = require('./models/Course')
+const Tag = require('./models/Tag')
 
 
 //*******************************************
@@ -19,6 +20,7 @@ const profileController = require('./controllers/profileController');
 const notificationController = require('./controllers/notificationController');
 const messageController = require('./controllers/messageController');
 const eventController = require('./controllers/eventController');
+const tagController = require('./controllers/tagController');
 
 
 //*******************************************
@@ -488,6 +490,12 @@ app.post('/event/edit/:eventId',
 
 app.post('/event/save',
     eventController.saveEvent
+)
+
+//*******************************************
+//*************Tag related*****************
+app.post('/addTags',
+    tagController.addTags
 )
 
 //*******************************************
