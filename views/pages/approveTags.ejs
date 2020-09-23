@@ -1,0 +1,79 @@
+<%- include('../components/header'); -%>
+<%- include('../components/navbar'); -%>
+
+<section class='section'>
+    <div class='section__content section__content--full-width'>
+        <div class='jumbotron masthead text-center'>
+            <div class='section__title section__title--centered'>
+                Proposed Areas Under Review
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class='section section__grey' data-aos='fade-up'>
+    <section class='section__content section__content--fluid-width'>
+        <div class='container'>
+            <% if (loggedIn) { %>
+                <% if (tagsInfo) { %>
+                    <form method='post'>
+                        <div class='form-group row'>
+                            <div class='col-sm-1'></div>
+                            <div class='col-sm-11'>
+                                <input type='submit' class='btn btn-success'
+                                       formaction='/agreeTags'
+                                       value='Add the Area to Resource Uploading'>
+                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                <input type='submit' formaction='/denyTags'
+                                       class='btn btn-secondary'
+                                       value='Cancel the New Area Request'>
+                            </div>
+                        </div>
+                        <% for (let i = 0; i < tagsInfo.length; i++) { %>
+                            <div class='form-group row'>
+                                <div class='col-sm-1'>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <input type='checkbox' name='checked'
+                                           value='<%= tagsInfo[i]._id %>'>
+                                </div>
+                                <div class='col-sm-11'>
+                                    <div class='card-body'>
+                                        <div class='card-text'>
+                                            <h4><%= tagsInfo[i].info %></h4>
+                                            <ul class='list-group'>
+                                                <li class='list-group-item borderless box-padding'>
+                                                    <b>Author: </b> <%= tagsInfo[i].ownerName %>
+                                                </li>
+                                                <li class='list-group-item borderless box-padding'>
+                                                    <b>Author's identity: </b> <%= tagsInfo[i].ownerStatus %>
+                                                </li>
+                                                <li class='list-group-item borderless box-padding'>
+                                                    <b>Reason: </b> <%= tagsInfo[i].reason %>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% } %>
+                    </form>
+                <% } else { %>
+                    <div class="card-body text-center">
+                        There is proposed new area under review.
+                    </div>
+                <% } %>
+            <% } else { %>
+                <%- include('../components/component-loginToView'); -%>
+            <% } %>
+        </div>
+    </section>
+</section>
+
+
+<%- include('../components/footer'); -%>

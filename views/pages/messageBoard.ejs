@@ -32,6 +32,7 @@
                     </div>
                 <% } %>
                 <% if (status === 'admin' || status === 'faculty') { %>
+                    <% if(publicInfo.length != 0){%>
                     <div class='card border-success mb-3' style='max-width: 18rem;'>
                         <div class='card-header'><h3>Public Resources Info</h3></div>
                         <div class='card-body'>
@@ -43,8 +44,9 @@
                                                          value='Go to my public resources'></a>
                         </div>
                     </div>
+                    <% } %>
                 <% } else { %>
-                    <% if (approveInfo != 0) { %>
+                    <% if (approveInfo.length != 0) { %>
                         <div class='card border-success mb-3' style='max-width: 18rem;'>
                             <div class='card-header'><h3>Approved Info</h3></div>
                             <div class='card-body'>
