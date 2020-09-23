@@ -502,6 +502,13 @@ app.get('/approveTags',
     tagController.loadUnderReviewTags
 )
 
+app.post('/agreeTags',
+    tagController.agreeTags
+)
+
+app.post('/denyTags',
+    tagController.denyTags
+)
 
 //*******************************************
 //*************Error related*****************
