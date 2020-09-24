@@ -97,7 +97,7 @@
                         <% if (status === 'admin' || status === 'faculty') { %>
                             <div class='input-group-prepend'>
                                 <span class='input-group-text' style='width: 180px'>Content Type</span>
-                                <select class='form-control' name='contentType'>
+                                <select id="contentSelect" class='form-control' name='contentType'>
                                     <option selected value='empty'>Choose...</option>
                                     <option value='Advocacy Video'>Advocacy Video</option>
                                     <option value='Assignment Guidelines'>Assignment Guidelines</option>
@@ -126,7 +126,7 @@
                         <% } else { %>
                             <div class='input-group-prepend'>
                                 <span class='input-group-text' style='width: 180px'>Content Type</span>
-                                <select class='form-control' name='contentType'>
+                                <select id="contentSelect" class='form-control' name='contentType'>
                                     <option selected value='empty'>Choose...</option>
                                     <option value='Advocacy Video'>Advocacy Video</option>
                                     <option value='Journal'>Campaign Journal</option>

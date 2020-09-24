@@ -181,6 +181,10 @@ app.get('/resources/search/private/general',
         res.render('./pages/searchPrimary')
 )
 
+app.post('/resources/search/private/general',
+    resourceController.primarySearch
+)
+
 app.get('/uploadToPublic',
     resourceController.checkUserName,
     (req, res) =>
@@ -189,10 +193,6 @@ app.get('/uploadToPublic',
 
 app.post('/uploadToPublicResr',
     resourceController.uploadToPublicResr
-)
-
-app.post('/resources/search/private/general',
-    resourceController.primarySearch
 )
 
 app.get('/resources/search/private/advanced',

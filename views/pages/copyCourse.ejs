@@ -48,6 +48,14 @@
                                    placeholder='e.g. Volen 110' value="<%= courseInfo.officeHourLocation %>">
                         </div>
                         <br>
+                        <div class='input-group-prepend'>
+                            <span class='input-group-text' style='width: 180px'>Resources to copy</span>
+                            <select id='stateSelect' class='form-control' name='resourcesToCopy'>
+                                <option selected value='self'>Uploaded by me</option>
+                                <option value='none'>Nothing</option>
+                            </select>
+                        </div>
+                        <br>
                         <input type='submit' name='submit' class='btn btn-outline-dark' value='Submit'>
                     </form>
                 <% } else { %>

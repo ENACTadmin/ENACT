@@ -952,10 +952,10 @@ h6 {
 /*===============================================*/
 .section--intro {
     width: 100%;
-    height: 95%;
+    height: 96%;
     position: relative;
     overflow: hidden;
-    background: url("../images/Photos for ENACT platform slideshow/advocacysized.jpg");
+    background: url("../images/Photos for ENACT platform slideshow/Smith_Danley_Quinn.jpg");
     background-size: cover;
     margin-top: 80px;
 }
@@ -973,9 +973,9 @@ h6 {
 }
 
 .intro__content {
-    margin-top: 15%;
-    padding-top: 40px;
-    padding-bottom: 40px;
+    margin-top: 19%;
+    padding-top: 30px;
+    padding-bottom: 30px;
     width: 100%;
     text-align: center;
     background: black;

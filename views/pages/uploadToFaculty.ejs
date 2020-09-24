@@ -58,21 +58,9 @@
                     </div>
 
                     <div class='w-100'></div>
+
                     <br>
-                    <div class='col-md-3 col-sm-12'></div>
-                    <div class='col-md-6 col-sm-12'>
-                        <h3>Area of the resource (Optional)
-                            <button type='button' class='btn btn-secondary' data-toggle='modal' data-target='#addTags'>
-                                Suggest a new area to admin
-                            </button>
-                        </h3>
-
-                        <hr>
-                    </div>
-                    <div class='w-100'></div>
-
                     <%- include('../components/component-tagSelectorFaculty') -%>
-
                     <br>
 
                     <div class='w-100'></div>
@@ -143,9 +131,8 @@
             <div class='modal-body'>
                 <div class='row'>
                     <div class='col-md-12 col-sm-12'>
-                        <h4>Please fill in the area you would like to add. Your request will be process by our admin. </h4>
                         <div class='input-group-prepend'>
-                            <span class='input-group-text' style='width: 180px'>Area name</span>
+                            <span class='input-group-text' style='width: 180px'>Name</span>
                             <input type='text' id='addingTag' class='form-control' name='addingTag'
                                    placeholder='e.g. COVID-19'>
                         </div>
@@ -155,7 +142,8 @@
                             <textarea type='text' class='form-control' name='reason'
                                       rows='4'></textarea>
                         </div>
-
+                        <br>
+                        <h6>Note: your request will be processed by ENACT admin. </h6>
                     </div>
                 </div>
             </div>
