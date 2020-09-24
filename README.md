@@ -34,12 +34,10 @@ For local installation, please remember to:
 
 ## Search
 
-### Full-text Search: implemented using Elasticsearch-styled "inverted index" as data structure behind the scene
+### Full-text Search: implemented using ElasticSearch-styled "inverted index" as data structure behind the scene
 ```
-/resources/search/public/general: full-text search for public usage
-/resources/search/public/advanced: advanced search for public usage
-/resources/search/private/general: full-text search for logged in members
-/resources/search/private/advanced: advanced search for logged in members
+/resources/search/public/general: full-text search
+/resources/search/public/advanced: advanced search
 ```
 
 ## Usage
