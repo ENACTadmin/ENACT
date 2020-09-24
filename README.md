@@ -4,6 +4,10 @@ The Educational Network for Active Civic Transformation is a national program en
 
 Deployed on Heroku domain: [ENACT digital platform](https://enact-brandeis.herokuapp.com/)
 
+## Login
+
+For a sample tour, login via email: visitor@visitor.com; password: iam&&&avisitor (Remove &&&).
+
 ## Installation
 
 Use the package manager [npm](https://www.npmjs.com/) to install ENACT digital platform.
@@ -23,25 +27,51 @@ npm start
 
 For local installation, please remember to:
 - have MongoDB pre-installed
-- go to localhost:3500 as the port was pre-set to 3500
+- visit localhost:3500, to change port number, go to /bin/www
 
 ## Technology stack
 
-- Front End Technologies: <b>EJS/Bootstrap/Jquery/Ajax</b>
+- Front End Technologies: <b>EJS/Bootstrap/JQuery/Ajax</b>
 - Back End Technologies: <b>Node.js/Express.js/Passport.js</b>
 - Database: <b>MongoDB</b>
 - Cloud services: <b>AWS S3 Storage, Heroku</b>
 
-## Search
+## Key Functions
 
-### Full-text Search: implemented using Elasticsearch-styled "inverted index" as data structure behind the scene
+### Full-text Search: implemented using ElasticSearch-styled "inverted index" as data structure behind the scene
 ```
-/resources/search/public/general: full-text search for public usage
-/resources/search/public/advanced: advanced search for public usage
-/resources/search/private/general: full-text search for logged in members
-/resources/search/private/advanced: advanced search for logged in members
+/resources/search/public/general: full-text search (open to public)
+/resources/search/public/advanced: advanced search (open to public)
 ```
 
-## Usage
+### In-site Messages: in-side messages with email alert
+```
+/messages/view/all: notification center
+...
+```
 
-Passport.js is used to login, you can either use google account to login or create a new profile locally.
+### Resource Management: support basic CRUD, "like" a resource, create collections, share collections
+```
+/resources/view/favorite: view all favorited resources
+/resources/view/private: view all resources uploaded by yourself
+...
+```
+
+### Course Management: support basic CRUD, join a course, upload documents/videos to courses stored in AWS S3...
+```
+/courses: course CRUD & view all courses owned or enrolled
+/course/view/:courseId: view a specific course
+...
+```
+
+### Profile Management: support basic CRUD, view faculty profile list
+```
+/profile/view/:userId: view a specific profile
+/profiles/view/faculty: faculty list
+...
+```
+
+### Events Management: support basic CRUD
+```
+/events
+```
