@@ -27,7 +27,7 @@ For local installation, please remember to:
 
 ## Technology stack
 
-- Front End Technologies: <b>EJS/Bootstrap/Jquery/Ajax</b>
+- Front End Technologies: <b>EJS/Bootstrap/JQuery/Ajax</b>
 - Back End Technologies: <b>Node.js/Express.js/Passport.js</b>
 - Database: <b>MongoDB</b>
 - Cloud services: <b>AWS S3 Storage, Heroku</b>
