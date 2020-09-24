@@ -32,14 +32,55 @@ For local installation, please remember to:
 - Database: <b>MongoDB</b>
 - Cloud services: <b>AWS S3 Storage, Heroku</b>
 
-## Search
+## Key Functions
 
 ### Full-text Search: implemented using ElasticSearch-styled "inverted index" as data structure behind the scene
 ```
-/resources/search/public/general: full-text search
-/resources/search/public/advanced: advanced search
+/resources/search/public/general: full-text search (open to public)
+/resources/search/public/advanced: advanced search (open to public)
 ```
 
-## Usage
+### In-site Messages: in-side messages with email alert
+```
+/messages/view/all: notification center
+...
+```
 
-Passport.js is used to login, you can either use google account to login or create a new profile locally.
+### Resource Management: support basic CRUD, "like" a resource, create collections, share collections
+```
+/resources/view/favorite: view all favorited resources
+/resources/view/private: view all resources uploaded by yourself
+...
+```
+
+### Course Management: support basic CRUD, join a course, upload documents/videos to courses stored in AWS S3...
+```
+/courses: course CRUD & view all courses owned or enrolled
+/course/view/:courseId: view a specific course
+...
+```
+
+### Profile Management: support basic CRUD, view faculty profile list
+```
+/profile/view/:userId: view a specific profile
+/profiles/view/faculty: faculty list
+...
+```
+
+### Events Management: support basic CRUD
+```
+/events
+```
+
+### In-site messages: in-side messages with email alert
+```
+/messages/view/all: notification center
+...
+```
+
+
+## About Login
+
+Passport.js is used to login, you can either use a google account to login or create a new profile.
+
+For a sample tour, login via email: visitor@visitor.com; password: iam&&&avisitor (Remove &&&).
