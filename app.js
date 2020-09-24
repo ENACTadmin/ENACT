@@ -268,7 +268,7 @@ app.post('/postPublicResource/:resourceId',
     resourceController.postPublicResource
 )
 
-app.get('/showStarredResources',
+app.get('/resources/view/favorite',
     resourceController.checkUserName,
     resourceController.showStarredResources
 )
@@ -289,14 +289,9 @@ app.post('/unstarResourceAlt/:resourceId',
     resourceController.unstarResourceAlt
 )
 
-app.get('/myResourcesFaculty',
+app.get('/resources/view/private',
     resourceController.checkUserName,
     resourceController.showMyResources
-)
-
-app.get('/myResourcesStudent',
-    resourceController.checkUserName,
-    resourceController.showMyResourcesStudent
 )
 
 app.post('/studentUpdateResource/:resourceId',

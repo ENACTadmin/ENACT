@@ -19,7 +19,7 @@ exports.uploadResource = async (req, res, next) => {
                 status: req.body.status, // public/private to class/private to professors
                 createdAt: new Date(),
                 name: req.body.resourceName,
-                description: req.body.description,
+                description: req.body.resourceDescription,
                 tags: tags, // tags as array
                 uri: req.body.uri, // universal resource identifier specIdific to the resource
                 state: req.body.state,
@@ -508,26 +508,18 @@ exports.studentUpdateResource = async (req, res, next) => {
     }
 }
 
-
 exports.showMyResources = async (req, res, next) => {
     try {
         let resourceInfo = await Resource.find({ownerId: req.user._id})
-        res.render('./pages/myResourcesFaculty', {
-            resourceInfo: resourceInfo
-        })
-    } catch (e) {
-        next(e)
-    }
-}
-
-exports.showMyResourcesStudent = async (req, res, next) => {
-    try {
-        let resourceInfo = await Resource.find({
-            ownerId: req.user._id,
-        })
-        res.render('./pages/myResourcesStudent', {
-            resourceInfo: resourceInfo
-        })
+        if (req.user.status === 'student') {
+            res.render('./pages/myResourcesStudent', {
+                resourceInfo: resourceInfo
+            })
+        } else {
+            res.render('./pages/myResourcesFaculty', {
+                resourceInfo: resourceInfo
+            })
+        }
     } catch (e) {
         next(e)
     }
@@ -571,8 +563,7 @@ exports.loadCollection = async (req, res, next) => {
         if (req.user) {
             let allLikedResourceSet = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
             let allLikedResourceIds = allLikedResourceSet.resources
-            let allLikedResourceInfo = await Resource.find({_id: {$in: allLikedResourceIds}})
-            res.locals.allLikedResourceInfo = allLikedResourceInfo
+            res.locals.allLikedResourceInfo = await Resource.find({_id: {$in: allLikedResourceIds}})
         }
         next()
     } catch (e) {
@@ -642,7 +633,7 @@ exports.deleteCollection = async (req, res, next) => {
     try {
         let collectionId = req.params.collectionId
         await ResourceSet.deleteOne({_id: collectionId})
-        res.redirect('/showStarredResources')
+        res.redirect('/resources/view/favorite')
     } catch (e) {
         next(e)
     }

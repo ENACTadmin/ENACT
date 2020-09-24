@@ -74,13 +74,13 @@
                                 </li>
                             <% } %>
                             <li>
-                                <a class='header-link' href='/showStarredResources'>My favorites</a>
+                                <a class='header-link' href='/resources/view/favorite'>My favorites</a>
                             </li>
                             <li>
                                 <% if (status === 'faculty' || status === 'admin') { %>
-                                    <a class='header-link' href='/myResourcesFaculty'>My resources</a>
+                                    <a class='header-link' href='/resources/view/private'>My resources</a>
                                 <% } else { %>
-                                    <a class='header-link' href='/myResourcesStudent'>My resources</a>
+                                    <a class='header-link' href='/resources/view/private'>My resources</a>
                                 <% } %>
                             </li>
                         </ul>
