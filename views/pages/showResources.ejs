@@ -51,7 +51,7 @@
                                             <li class='list-group-item borderless box-padding'>
                                                 <% if (resourceIds && resourceIds.toString().includes(resourceInfo[i]._id.toString())) { %>
                                                     <form style='display: inline' method='post'
-                                                          action='/unstarResourceAlt/<%= resourceInfo[i]._id %>'>
+                                                          action='/resource/unstarAlt/<%= resourceInfo[i]._id %>'>
                                                         <b>Actions:</b>
                                                         <input type='submit'
                                                                style='border:0px solid transparent'
@@ -61,7 +61,7 @@
                                                     </form>
                                                 <% } else { %>
                                                     <form style='display: inline' method='post'
-                                                          action='/starResourceAlt/<%= resourceInfo[i]._id %>'>
+                                                          action='/resource/starAlt/<%= resourceInfo[i]._id %>'>
                                                         <b>Actions:</b>
                                                         <input type='submit'
                                                                style='border:0px solid transparent'
@@ -113,7 +113,7 @@
                         </div>
                     </div>
                     <div class='modal-footer'>
-                        <form method='post' action='/removeResource/<%= resourceInfo[i]._id %>'>
+                        <form method='post' action='/resource/remove/<%= resourceInfo[i]._id %>'>
                             <input type='submit' name='submit' class='btn btn-outline-danger' value='Delete'>
                         </form>
                         <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>

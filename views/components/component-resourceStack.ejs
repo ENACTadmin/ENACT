@@ -31,14 +31,14 @@
                         <!--if the user starred the resource-->
                         <% if (resourceIds && resourceIds.includes(resourceInfo[i]._id)) { %>
                             <form style='display: inline' method='post'
-                                  action='/unstarResource/<%= resourceInfo[i]._id %>'>
+                                  action='/resource/unstar/<%= resourceInfo[i]._id %>'>
                                 <b>Actions:</b>
                                 <input type='submit' style='border:0px solid transparent' name='submit'
                                        class='btn btn-outline-danger' value='&#9829;'>
                             </form>
                         <% } else { %>
                             <form style='display: inline' method='post'
-                                  action='/starResource/<%= resourceInfo[i]._id %>'>
+                                  action='/resource/star/<%= resourceInfo[i]._id %>'>
                                 <b>Actions:</b>
                                 <input type='submit' style='border:0px solid transparent' name='submit'
                                        class='btn btn-outline-danger' value='&#9825;'>

@@ -205,37 +205,41 @@ exports.loadResources = async (req, res, next) => {
 
 exports.loadAllFacultyResources = async (req, res, next) => {
     try {
-        let syllabus = await Resource.find({
-            status: 'privateToProfessor',
-            'contentType': 'Syllabus'
-        }).sort({createdAt: -1}).limit(3)
-        let assignments = await Resource.find({
-            status: 'privateToProfessor',
-            'contentType': 'Assignment Guidelines'
-        }).sort({createdAt: -1}).limit(3)
-        let rubrics = await Resource.find({
-            status: 'privateToProfessor',
-            'contentType': 'Rubrics'
-        }).sort({createdAt: -1}).limit(3)
-        let guides = await Resource.find({
-            status: 'privateToProfessor',
-            'contentType': 'Course Planning'
-        }).sort({createdAt: -1}).limit(3)
+        if (req.user.status !== 'admin' && req.user.status !== 'faculty')
+            res.send("You are not allowed here!")
+        else {
+            let syllabus = await Resource.find({
+                status: 'privateToProfessor',
+                'contentType': 'Syllabus'
+            }).sort({createdAt: -1}).limit(3)
+            let assignments = await Resource.find({
+                status: 'privateToProfessor',
+                'contentType': 'Assignment Guidelines'
+            }).sort({createdAt: -1}).limit(3)
+            let rubrics = await Resource.find({
+                status: 'privateToProfessor',
+                'contentType': 'Rubrics'
+            }).sort({createdAt: -1}).limit(3)
+            let guides = await Resource.find({
+                status: 'privateToProfessor',
+                'contentType': 'Course Planning'
+            }).sort({createdAt: -1}).limit(3)
 
-        let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
-        let resourceIds = null
-        console.log("starred ", starred)
-        if (starred) {
-            resourceIds = await starred.resources
+            let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
+            let resourceIds = null
+            console.log("starred ", starred)
+            if (starred) {
+                resourceIds = await starred.resources
+            }
+
+            console.log("resourceIds: ", resourceIds)
+            res.locals.resourceIds = resourceIds
+            res.locals.syllabus = syllabus
+            res.locals.assignments = assignments
+            res.locals.rubrics = rubrics
+            res.locals.guides = guides
+            next()
         }
-
-        console.log("resourceIds: ", resourceIds)
-        res.locals.resourceIds = resourceIds
-        res.locals.syllabus = syllabus
-        res.locals.assignments = assignments
-        res.locals.rubrics = rubrics
-        res.locals.guides = guides
-        next()
     } catch (e) {
         next(e)
     }
@@ -527,6 +531,7 @@ exports.showMyResources = async (req, res, next) => {
 
 exports.uploadToPublicResr = async (req, res, next) => {
     try {
+
         let tagsString = req.body.tags
         let tags = tagsString.split(",")
         let newResource
