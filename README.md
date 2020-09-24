@@ -4,6 +4,10 @@ The Educational Network for Active Civic Transformation is a national program en
 
 Deployed on Heroku domain: [ENACT digital platform](https://enact-brandeis.herokuapp.com/)
 
+## Login
+
+For a sample tour, login via email: visitor@visitor.com; password: iam&&&avisitor (Remove &&&).
+
 ## Installation
 
 Use the package manager [npm](https://www.npmjs.com/) to install ENACT digital platform.
@@ -71,16 +75,3 @@ For local installation, please remember to:
 ```
 /events
 ```
-
-### In-site messages: in-side messages with email alert
-```
-/messages/view/all: notification center
-...
-```
-
-
-## About Login
-
-Passport.js is used to login, you can either use a google account to login or create a new profile.
-
-For a sample tour, login via email: visitor@visitor.com; password: iam&&&avisitor (Remove &&&).
