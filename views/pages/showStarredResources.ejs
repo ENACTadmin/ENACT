@@ -39,11 +39,13 @@
                         </div>
                     </div>
                     <br>
-                    <button type='button' class='btn btn-outline-primary'
-                            data-toggle='modal'
-                            data-target='#createCollection'>
-                        Create a new collection
-                    </button>
+                    <% if (resourceInfo && resourceInfo.length > 0) { %>
+                        <button type='button' class='btn btn-outline-primary'
+                                data-toggle='modal'
+                                data-target='#createCollection'>
+                            Create a new collection
+                        </button>
+                    <% } %>
                 </div>
                 <div class='col-md-9 col-sm-12'>
                     <h3>Favorite resources</h3>

@@ -95,7 +95,7 @@
                                                             <button type='button' class='btn btn-outline-info'
                                                                     style='border:0 solid transparent'
                                                                     data-toggle='modal'
-                                                                    data-target='#studentEditModal<%= resourceInfo[i]._id %>'>
+                                                                    data-target='#editModal<%= resourceInfo[i]._id %>'>
                                                                 Edit
                                                             </button>
                                                             <button type='button' class='btn btn-outline-danger'
@@ -161,5 +161,5 @@
     <% } %>
 <% } %>
 
-<%- include('../components/component-studentEditModal'); -%>
+<%- include('../components/component-editModal'); -%>
 <%- include('../components/footer'); -%>
