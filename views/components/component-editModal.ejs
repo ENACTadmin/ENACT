@@ -30,6 +30,7 @@
     , 'violence and sexual assault'
     , 'voting'
     , 'women and gender']
+let syllabus = ['online course', 'course with internship content', 'full-semester course', 'half-semester course']
 
 let id_set = [] %>
 
@@ -53,25 +54,6 @@ let id_set = [] %>
                                 <div class='col-md-12 col-sm-12'>
                                     <h3>Basic information</h3>
                                     <hr>
-                                    <div class='input-group-prepend'>
-                                        <span class='input-group-text' style='width: 180px'>Resource Name</span>
-                                        <input type='text' id='resourceName' class='form-control'
-                                               name='resourceName'
-                                               value='<%= resourceInfo[i].name %>'>
-                                    </div>
-                                    <br>
-                                    <div class='input-group-prepend'>
-                                        <span class='input-group-text' style='width: 180px'>Description</span>
-                                        <textarea type='text' class='form-control' name='resourceDescription'
-                                                  rows='4'><%= resourceInfo[i].description %></textarea>
-                                    </div>
-                                    <br>
-                                    <div class='input-group-prepend'>
-                                        <span class='input-group-text' style='width: 180px'>URI</span>
-                                        <input type='text' id='fileURL' class='form-control' name='uri'
-                                               value='<%= resourceInfo[i].uri %>'>
-                                    </div>
-                                    <br>
                                     <% if (status === 'faculty' || status === 'admin') { %>
                                         <div class='input-group-prepend'>
                                             <span class='input-group-text' style='width: 180px'>Content Type</span>
@@ -79,25 +61,27 @@ let id_set = [] %>
                                                     class='form-control' name='contentType'>
                                                 <option selected value='empty'>Choose...</option>
                                                 <option value='Advocacy Video'>Advocacy Video</option>
-                                                <option value='Assignment Guidelines'>Assignment Guidelines (Faculty only)</option>
+                                                <option value='Assignment Guidelines'>Assignment Guidelines</option>
                                                 <option value='Journal'>Campaign Journal</option>
                                                 <option value='Course Reading'>Course Reading</option>
                                                 <option value='Elevator Speech'>Elevator Speech</option>
-                                                <option value='ENACT Research'>ENACT Faculty Research (Faculty only)</option>
+                                                <option value='ENACT Research'>ENACT Faculty Research</option>
                                                 <option value='Course Planning'>Course Planning</option>
                                                 <option value='Flyer'>Flyer/handout</option>
                                                 <option value='Next Steps'>Next Steps</option>
-                                                <option value='Online'>Online Teaching Resources (Faculty only)</option>
+                                                <option value='Online'>Online Teaching Resources</option>
                                                 <option value='Outlets'>Outlets for Publication</option>
                                                 <option value='Op-Ed'>Op-Ed</option>
                                                 <option value='Personal Reflection'>Personal reflection</option>
                                                 <option value='Portfolio'>Portfolio</option>
                                                 <option value='Presentations'>Presentations</option>
                                                 <option value='Research Report'>Student Research Report</option>
-                                                <option value='Rubrics'>Rubrics for grading (Faculty only)</option>
-                                                <option value='Script'>Script for meeting with Ways and Means Staff</option>
-                                                <option value='State Legislative'>State Legislative Website Resources (Faculty only)</option>
-                                                <option value='Syllabus'>Syllabus (Faculty only)</option>
+                                                <option value='Rubrics'>Rubrics for grading</option>
+                                                <option value='Script'>Script for meeting with Ways and Means Staff
+                                                </option>
+                                                <option value='State Legislative'>State Legislative Website Resources
+                                                </option>
+                                                <option value='Syllabus'>Syllabus</option>
                                                 <option value='Handout'>Handout/Factsheet</option>
                                                 <option value='Testimony'>Testimony</option>
                                             </select>
@@ -119,12 +103,32 @@ let id_set = [] %>
                                                 <option value='Portfolio'>Portfolio</option>
                                                 <option value='Presentations'>Presentations</option>
                                                 <option value='Research Report'>Student Research Report</option>
-                                                <option value='Script'>Script for meeting with Ways and Means Staff</option>
+                                                <option value='Script'>Script for meeting with Ways and Means Staff
+                                                </option>
                                                 <option value='Handout'>Handout/Factsheet</option>
                                                 <option value='Testimony'>Testimony</option>
                                             </select>
                                         </div>
                                     <% } %>
+                                    <br>
+                                    <div class='input-group-prepend'>
+                                        <span class='input-group-text' style='width: 180px'>Resource Name</span>
+                                        <input type='text' id='resourceName' class='form-control'
+                                               name='resourceName'
+                                               value='<%= resourceInfo[i].name %>'>
+                                    </div>
+                                    <br>
+                                    <div class='input-group-prepend'>
+                                        <span class='input-group-text' style='width: 180px'>Description</span>
+                                        <textarea type='text' class='form-control' name='resourceDescription'
+                                                  rows='4'><%= resourceInfo[i].description %></textarea>
+                                    </div>
+                                    <br>
+                                    <div class='input-group-prepend'>
+                                        <span class='input-group-text' style='width: 180px'>URI</span>
+                                        <input type='text' id='fileURL' class='form-control' name='uri'
+                                               value='<%= resourceInfo[i].uri %>'>
+                                    </div>
                                     <br>
                                     <div class='input-group-prepend'>
                                         <span class='input-group-text' style='width: 180px'>Media Type</span>
@@ -239,11 +243,23 @@ let id_set = [] %>
                                     <% } %>
                                 </div>
 
-                                <div class='w-100'></div>
                                 <br>
+
+                                <div class='toShow<%= resourceInfo[i]._id %> col-md-12 col-sm-12'
+                                     id="toShow<%= resourceInfo[i]._id %>">
+                                    <h3>Area of the resource (Optional)</h3>
+                                    <hr>
+                                </div>
+
+                                <div class='toShow2<%= resourceInfo[i]._id %> col-md-12 col-sm-12'
+                                     id="toShow<%= resourceInfo[i]._id %>">
+                                    <h3>Area of the resource (Optional)</h3>
+                                    <hr>
+                                </div>
+
                                 <% for (let m = 0; m < tags.length;) { %>
                                     <% for (let r = 0; m < tags.length && r < 2; m++, r++) { %>
-                                        <div class='col-md-6 col-sm-12 text-md-right'>
+                                        <div class='toShow<%= resourceInfo[i]._id %> col-md-6 col-sm-12 text-md-right'>
                                             <div class='input-group' style='padding-bottom: 10px'>
                                                 <div class='input-group-prepend'>
                                                     <div class='input-group-text'>
@@ -261,11 +277,30 @@ let id_set = [] %>
                                     <div class='w-100'></div>
                                 <% } %>
 
+                                <% for (let m = 0; m < syllabus.length;) { %>
+                                    <% for (let r = 0; m < syllabus.length && r < 2; m++, r++) { %>
+                                        <div class='toShow2<%= resourceInfo[i]._id %> col-md-6 col-sm-12 text-md-right'>
+                                            <div class='input-group' style='padding-bottom: 10px'>
+                                                <div class='input-group-prepend'>
+                                                    <div class='input-group-text'>
+                                                        <input class='checkbox-double'
+                                                               id='<%= resourceInfo[i]._id %>'
+                                                               type='checkbox'
+                                                               value='<%= syllabus[m] %>'><br>
+                                                    </div>
+                                                </div>
+                                                <input disabled type='text' class='form-control'
+                                                       aria-label='Text input with checkbox' value='<%= syllabus[m] %>'>
+                                            </div>
+                                        </div>
+                                    <% } %>
+                                    <div class='w-100'></div>
+                                <% } %>
+
                                 <input hidden id='tagsToReturn<%= resourceInfo[i]._id %>' type='text'
                                        class='form-control' name='selectedTags' value=''>
                                 <br>
                                 <div class='w-100'></div>
-
                             </div>
                         </div>
                         <div class='modal-footer'>
@@ -288,3 +323,40 @@ let id_set = [] %>
 <% } %>
 
 <p hidden id='idSet'><%= id_set %></p>
+
+<script>
+    $(document).ready(function () {
+        let id_set = $('#idSet').text()
+        if (id_set.length !== 0) {
+            let id_set_array = id_set.split(',')
+            for (let i = 0; i < id_set_array.length; i++) {
+                let text = $('#contentTypeSelect' + id_set_array[i] + ' option:selected').text();
+                console.log("text: ", text)
+                if (text === 'Choose...' || text === 'Assignment Guidelines' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
+                    $(".toShow" + id_set_array[i]).hide()
+                    $(".toShow2" + id_set_array[i]).hide()
+                } else if (text === 'Syllabus') {
+                    $(".toShow2" + id_set_array[i]).show()
+                    $(".toShow" + id_set_array[i]).hide()
+                } else {
+                    $(".toShow" + id_set_array[i]).show()
+                    $(".toShow2" + id_set_array[i]).hide()
+                }
+                $("#contentTypeSelect" + id_set_array[i]).on("change", function () {
+                    text = $('#contentTypeSelect' + id_set_array[i] + ' option:selected').text();
+                    console.log("text: ", text)
+                    if (text === 'Choose...' || text === 'Assignment Guidelines' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
+                        $(".toShow" + id_set_array[i]).hide()
+                        $(".toShow2" + id_set_array[i]).hide()
+                    } else if (text === 'Syllabus') {
+                        $(".toShow2" + id_set_array[i]).show()
+                        $(".toShow" + id_set_array[i]).hide()
+                    } else {
+                        $(".toShow" + id_set_array[i]).show()
+                        $(".toShow2" + id_set_array[i]).hide()
+                    }
+                })
+            }
+        }
+    })
+</script>

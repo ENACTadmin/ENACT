@@ -43,13 +43,11 @@ $(document).ready(function () {
             let string = checkboxes.filter(':checked').map(function () {
                 return this.value;
             }).get().join(',');
-            console.log('initial value for string ', i, ' is: ', string)
             $('#tagsToReturn' + id_set_array[i]).val(string);
             checkboxes.on('change', function () {
                 let string = checkboxes.filter(':checked').map(function () {
                     return this.value;
                 }).get().join(',');
-                console.log('string ', i, ' is now: ', string)
                 $('#tagsToReturn' + id_set_array[i]).val(string);
             });
         }

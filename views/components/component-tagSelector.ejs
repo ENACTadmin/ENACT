@@ -15,7 +15,7 @@ let tags = ['agriculture'
     , 'higher education'
     , 'housing and homelessness'
     , 'immigration'
-    , ' labor'
+    , 'labor'
     , 'LGBTQ+'
     , 'mental health'
     , 'opioids'
@@ -37,7 +37,10 @@ let syllabus = ['online course', 'course with internship content', 'full-semeste
 
 <div class='toShow col-md-3 col-sm-12'></div>
 <div class='toShow col-md-6 col-sm-12'>
-    <h3>Area of the resource (Optional)</h3>
+    <h3 style="display: inline">Area of the resource (Optional)</h3>
+    <button type='button' class='btn btn-sm btn-info' data-toggle='modal' data-target='#addTags'>
+        Suggest a new area to admin
+    </button>
     <hr>
 </div>
 
@@ -64,7 +67,10 @@ let syllabus = ['online course', 'course with internship content', 'full-semeste
 
 <div class='toShow2 col-md-3 col-sm-12'></div>
 <div class='toShow2 col-md-6 col-sm-12'>
-    <h3>Area of the resource (Optional)</h3>
+    <h3 style="display: inline">Area of the resource (Optional)</h3>
+    <button type='button' class='btn btn-sm btn-info' data-toggle='modal' data-target='#addTags'>
+        Suggest a new area to admin
+    </button>
     <hr>
 </div>
 <div class='w-100'></div>
@@ -87,44 +93,30 @@ let syllabus = ['online course', 'course with internship content', 'full-semeste
     <div class='w-100'></div>
 <% } %>
 
-<% for (let i = 0; i < syllabus.length;) { %>
-    <div class='toShow2 col-md-3 col-sm-12'></div>
-    <% for (let j = 0; i < syllabus.length || j < 2; i++, j++) { %>
-        <div class='toShow2 col-md-3 col-sm-12 text-md-right'>
-            <div class='input-group' style='padding-bottom: 10px'>
-                <div class='input-group-prepend'>
-                    <div class='input-group-text'>
-                        <input class='checkbox-double' type='checkbox' value='<%= syllabus[i] %>'><br>
-                    </div>
-                </div>
-                <input disabled type='text' class='form-control'
-                       aria-label='Text input with checkbox' value='<%= syllabus[i] %>'>
-            </div>
-        </div>
-    <% } %>
-    <div class='w-100'></div>
-<% } %>
-
 <input hidden id='tagsToReturn' type='text' class='form-control' name='tags' value=''>
 
 <script>
     $(document).ready(function () {
         let text = $('#contentSelect option:selected').text();
-        $(".toShow").hide()
-        $(".toShow2").hide()
+        if (text === 'Choose...' || text === 'Assignment Guidelines' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
+            $(".toShow").hide()
+            $(".toShow2").hide()
+        } else if (text === 'Syllabus') {
+            $(".toShow2").show()
+            $(".toShow").hide()
+        } else {
+            $(".toShow").show()
+            $(".toShow2").hide()
+        }
         $("#contentSelect").on("change", function () {
             text = $('#contentSelect option:selected').text();
-            console.log(text)
-            if (text === 'Assignment Guidelines' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
-                console.log("hide all")
+            if (text === 'Choose...' || text === 'Assignment Guidelines' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
                 $(".toShow").hide()
                 $(".toShow2").hide()
             } else if (text === 'Syllabus') {
-                console.log("hide 1")
                 $(".toShow2").show()
                 $(".toShow").hide()
             } else {
-                console.log("hide 2")
                 $(".toShow").show()
                 $(".toShow2").hide()
             }
