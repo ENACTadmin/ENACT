@@ -6,14 +6,13 @@
     AOS.init();
 </script>
 
-
 <header class='header header--sticky'>
     <div class='header__content header__content--fluid-width'>
         <a class='header__logo-title' href='/'>
             <div class='card-body' style='background-color: transparent'>
                 <div class='card-text'>
                     <img style='height: 70px; width: 70px'
-                         src='https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg'>
+                         src='https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg' alt="ENACT logo">
                 </div>
             </div>
         </a>
@@ -51,7 +50,7 @@
 
                 <li>
                     <% if (loggedIn) { %>
-                        <a class='header-link' id='header-link' href='#' data-aos='fade-left'>My Courses</a>
+                        <a class='header-link' id='header-link' href='/courses' data-aos='fade-left'>Courses</a>
                         <ul class='sub-menu'>
                             <% for (let i = 0; i < courseInfoSet.length; i++) { %>
                                 <li>
@@ -180,7 +179,7 @@
                     us can and should fill, is that of private citizen.”
                 </div>
                 <div class='intro__subtitle' data-aos='zoom-out-down' data-aos-duration='600' data-aos-delay='200'
-                     style='color: white'> - Louis D. Brandeis
+                     style='color: lightgreen'> - Supreme Court Justice, Louis D. Brandeis
                 </div>
                 <% if (loggedIn) { %>
                     <% if (status === 'admin' || status === 'faculty') { %>
@@ -210,9 +209,6 @@
                        data-aos-delay='400'><input
                                 type='submit' name='submit' class='form-demo__large'
                                 value='PUBLIC RESOURCES'></a>
-                    <!--                    <a href='/auth/google' data-aos='zoom-out-down' data-aos-duration='1000' data-aos-delay='400'><input-->
-                    <!--                                type='submit' name='submit' class='form-demo__large'-->
-                    <!--                                value='ENACT MEMBER LOGIN'></a>-->
                 <% } %>
             </div>
         </div>

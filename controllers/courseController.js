@@ -1,5 +1,6 @@
 'use strict';
 const Course = require('../models/Course');
+const Resource = require('../models/Resource');
 const User = require('../models/User');
 const CourseMember = require('../models/CourseMember');
 
@@ -66,6 +67,34 @@ exports.copyCourse = async (req, res, next) => {
         )
         // await until the courseToEdit is saved properly
         await newCourse.save()
+
+        // migrate existing instructor uploaded resources
+        if (req.body.resourcesToCopy === 'self') {
+            let oldResources = await Resource.find({courseId: req.params.courseId, ownerId: req.user._id})
+            if (oldResources.length > 0) {
+                for (let i = 0; i < oldResources.length; i++) {
+                    let oldResource = oldResources[i]
+                    console.log(oldResource.status)
+                    let newResource = new Resource({
+                        ownerId: req.user._id,
+                        courseId: newCourse._id,
+                        status: oldResource.status, // public/private to class/private to professors
+                        createdAt: new Date(),
+                        name: oldResource.name,
+                        description: oldResource.description,
+                        tags: oldResource.tags, // tags as array
+                        uri: oldResource.uri, // universal resource identifier specific to the resource
+                        state: oldResource.state,
+                        contentType: oldResource.contentType,
+                        mediaType: oldResource.mediaType,
+                        institution: oldResource.institution,
+                        yearOfCreation: oldResource.yearOfCreation,// content's actual creation time
+                        checkStatus: 'approve'
+                    })
+                    await newResource.save()
+                }
+            }
+        }
         res.redirect('/courses')
     } catch (e) {
         next(e)
