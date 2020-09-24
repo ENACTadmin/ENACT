@@ -7,9 +7,15 @@
             <div class='section__title section__title--centered'>
                 Faculty Guide
             </div>
-            <h3>Not finding what you want? Please try</h3><a href='/resources/search/private/advanced'
-                                                             class='btn btn-large btn-warning'
-                                                             style='width: 200px'>Advanced Search</a>
+            <h3 style="display:inline;">Not finding what you want? Please try &nbsp;</h3><a
+                    href='/resources/search/private/advanced'
+                    class='btn btn-large btn-warning'
+                    style='width: 200px'>Advanced Search</a>
+            <br><br>
+            <h3 style="display:inline;">Or, help the faculty community by </h3><a href='/resources/upload/faculty'
+                                                                                  class='btn btn-large btn-primary'
+                                                                                  style='width: 260px'>Upload Faculty
+                Resources</a>
         </div>
     </div>
 </section>
@@ -54,7 +60,7 @@
                                             <li class='list-group-item borderless box-padding'>
                                                 <% if (resourceIds && resourceIds.toString().includes(syllabus[i]._id.toString())) { %>
                                                     <form style='display: inline' method='post'
-                                                          action='/unstarResourceAlt/<%= syllabus[i]._id %>'>
+                                                          action='/resource/unstarAlt/<%= syllabus[i]._id %>'>
                                                         <b>Actions:</b>
                                                         <input type='submit'
                                                                style='border:0px solid transparent'
@@ -64,7 +70,7 @@
                                                     </form>
                                                 <% } else { %>
                                                     <form style='display: inline' method='post'
-                                                          action='/starResourceAlt/<%= syllabus[i]._id %>'>
+                                                          action='/resource/starAlt/<%= syllabus[i]._id %>'>
                                                         <b>Actions:</b>
                                                         <input type='submit'
                                                                style='border:0px solid transparent'
@@ -135,7 +141,7 @@
                                             <li class='list-group-item borderless box-padding'>
                                                 <% if (resourceIds && resourceIds.toString().includes(assignments[i]._id.toString())) { %>
                                                     <form style='display: inline' method='post'
-                                                          action='/unstarResourceAlt/<%= assignments[i]._id %>'>
+                                                          action='/resource/unstarAlt/<%= assignments[i]._id %>'>
                                                         <b>Actions:</b>
                                                         <input type='submit'
                                                                style='border:0px solid transparent'
@@ -145,7 +151,7 @@
                                                     </form>
                                                 <% } else { %>
                                                     <form style='display: inline' method='post'
-                                                          action='/starResourceAlt/<%= assignments[i]._id %>'>
+                                                          action='/resource/starAlt/<%= assignments[i]._id %>'>
                                                         <b>Actions:</b>
                                                         <input type='submit'
                                                                style='border:0px solid transparent'
@@ -217,7 +223,7 @@
                                             <li class='list-group-item borderless box-padding'>
                                                 <% if (resourceIds && resourceIds.toString().includes(rubrics[i]._id.toString())) { %>
                                                     <form style='display: inline' method='post'
-                                                          action='/unstarResourceAlt/<%= rubrics[i]._id %>'>
+                                                          action='/resource/unstarAlt/<%= rubrics[i]._id %>'>
                                                         <b>Actions:</b>
                                                         <input type='submit'
                                                                style='border:0px solid transparent'
@@ -227,7 +233,7 @@
                                                     </form>
                                                 <% } else { %>
                                                     <form style='display: inline' method='post'
-                                                          action='/starResourceAlt/<%= rubrics[i]._id %>'>
+                                                          action='/resource/starAlt/<%= rubrics[i]._id %>'>
                                                         <b>Actions:</b>
                                                         <input type='submit'
                                                                style='border:0px solid transparent'
@@ -300,7 +306,7 @@
                                             <li class='list-group-item borderless box-padding'>
                                                 <% if (resourceIds && resourceIds.toString().includes(guides[i]._id.toString())) { %>
                                                     <form style='display: inline' method='post'
-                                                          action='/unstarResourceAlt/<%= guides[i]._id %>'>
+                                                          action='/resource/unstarAlt/<%= guides[i]._id %>'>
                                                         <b>Actions:</b>
                                                         <input type='submit'
                                                                style='border:0px solid transparent'
@@ -310,7 +316,7 @@
                                                     </form>
                                                 <% } else { %>
                                                     <form style='display: inline' method='post'
-                                                          action='/starResourceAlt/<%= guides[i]._id %>'>
+                                                          action='/resource/starAlt/<%= guides[i]._id %>'>
                                                         <b>Actions:</b>
                                                         <input type='submit'
                                                                style='border:0px solid transparent'

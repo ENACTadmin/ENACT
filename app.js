@@ -163,7 +163,7 @@ app.post('/course/join',
 //*******************************************
 //***********Resource related****************
 
-app.get('/uploadToCourse/:courseId',
+app.get('/resource/upload/course/:courseId',
     resourceController.checkUserName,
     (req, res) => {
         res.render('./pages/uploadToCourse', {
@@ -171,7 +171,7 @@ app.get('/uploadToCourse/:courseId',
         })
     })
 
-app.post('/uploadResource/:courseId',
+app.post('/resource/upload/course/:courseId',
     resourceController.uploadResource
 )
 
@@ -185,13 +185,17 @@ app.post('/resources/search/private/general',
     resourceController.primarySearch
 )
 
-app.get('/uploadToPublic',
+app.get('/resource/upload/public',
     resourceController.checkUserName,
-    (req, res) =>
-        res.render('./pages/uploadToPublic')
+    (req, res) => {
+        if (req.user.status !== 'admin')
+            res.send("You are not admin!")
+        else
+            res.render('./pages/uploadToPublic')
+    }
 )
 
-app.post('/uploadToPublicResr',
+app.post('/resource/upload/public',
     resourceController.uploadToPublicResr
 )
 
@@ -242,13 +246,13 @@ app.get('/resources/view/faculty/:contentType',
 )
 
 
-app.get('/uploadToFaculty',
+app.get('/resource/upload/faculty',
     resourceController.checkUserName,
     (req, res) =>
         res.render('./pages/uploadToFaculty')
 )
 
-app.post('/uploadToFacultyExclusive',
+app.post('/resource/upload/faculty',
     resourceController.uploadResource
 )
 
@@ -256,15 +260,15 @@ app.post('/updateResource/:resourceId',
     resourceController.updateResource
 )
 
-app.post('/removeResource/:resourceId',
+app.post('/resource/remove/:resourceId',
     resourceController.removeResource
 )
 
-app.post('/removePublicResource/:resourceId',
+app.post('/resource/hide/:resourceId',
     resourceController.removePublicResource
 )
 
-app.post('/postPublicResource/:resourceId',
+app.post('/resource/show/:resourceId',
     resourceController.postPublicResource
 )
 
@@ -273,19 +277,19 @@ app.get('/resources/view/favorite',
     resourceController.showStarredResources
 )
 
-app.post('/starResource/:resourceId',
+app.post('/resource/star/:resourceId',
     resourceController.starResource
 )
 
-app.post('/unstarResource/:resourceId',
+app.post('/resource/unstar/:resourceId',
     resourceController.unstarResource
 )
 
-app.post('/starResourceAlt/:resourceId',
+app.post('/resource/starAlt/:resourceId',
     resourceController.starResourceAlt
 )
 
-app.post('/unstarResourceAlt/:resourceId',
+app.post('/resource/unstarAlt/:resourceId',
     resourceController.unstarResourceAlt
 )
 

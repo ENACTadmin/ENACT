@@ -68,7 +68,7 @@
                                         <% } %>
                                         <li class='list-group-item borderless'
                                             style='padding: 0 0 3px 0'>
-                                            <a href='/uploadToCourse/<%= courseInfo._id %>'>Upload Resources</a></li>
+                                            <a href='/resource/upload/course/<%= courseInfo._id %>'>Upload Resources</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -125,7 +125,7 @@
                         </div>
                     </div>
                     <div class='modal-footer'>
-                        <form method='post' action='/removeResource/<%= resourceInfo[i]._id %>'>
+                        <form method='post' action='/resource/remove/<%= resourceInfo[i]._id %>'>
                             <input type='submit' name='submit' class='btn btn-outline-danger' value='Delete'>
                         </form>
                         <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>

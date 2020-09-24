@@ -192,7 +192,7 @@ for (let i = 0; i < resourceInfo.length; i++) {
                         </div>
                     </div>
                     <div class='modal-footer'>
-                        <form method='post' action='/removePublicResource/<%= resourceInfo[i]._id %>'>
+                        <form method='post' action='/resource/hide/<%= resourceInfo[i]._id %>'>
                             <input type='submit' name='submit' class='btn btn-outline-danger' value='Remove'>
                         </form>
                         <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>
@@ -228,7 +228,7 @@ for (let i = 0; i < resourceInfo.length; i++) {
                         </div>
                     </div>
                     <div class='modal-footer'>
-                        <form method='post' action='/postPublicResource/<%= resourceInfo[i]._id %>'>
+                        <form method='post' action='/resource/show/<%= resourceInfo[i]._id %>'>
                             <input type='submit' name='submit' class='btn btn-outline-danger' value='Confirm'>
                         </form>
                         <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>
