@@ -23,7 +23,7 @@ npm start
 
 For local installation, please remember to:
 - have MongoDB pre-installed
-- visit localhost:3500, to change port number, go to /bin/www.js
+- visit localhost:3500, to change port number, go to /bin/www
 
 ## Technology stack
 
