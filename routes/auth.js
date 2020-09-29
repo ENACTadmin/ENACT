@@ -113,6 +113,67 @@ router.post('/signup',
     })
 )
 
+router.get('/reset',
+    (req, res) =>
+        res.render('./pages/login-reset')
+)
+
+router.post('/reset',
+    async (req, res) => {
+        let user = await User.findOne({
+            $or: [
+                {workEmail: req.body.email}, {googleemail: req.body.email}
+            ]
+        })
+        if (user) {
+            send_email(req.body.email, user._id)
+            res.send("<h1>Reset email sent, please check your email :) </h1><br><h1>Back to Login: <a href='/login'>Login</a></h1>")
+        } else {
+            res.send("<h1>Sry, your email is not registered in our system </h1><br><h1>Sign up if your are an ENACT member: <a href='/signup'>Sign Up</a></h1>")
+
+        }
+    }
+)
+
+router.get('/reset/:id',
+    async (req, res) => {
+        let user = await User.findOne({_id: req.params.id})
+        res.render('./pages/login-resetPwd', {
+            userIdParam: req.params.id,
+            emailFromServer: user.googleemail || user.workEmail
+        })
+    }
+)
+
+router.post('/reset/:id',
+    async (req, res, next) => {
+        console.log("in resetting password")
+        let user = await User.findOne({_id: req.params.id})
+        user.password = req.body.password
+        await user.save()
+        console.log('user saved')
+        next()
+    }, passport.authenticate('local-reset', {
+        successRedirect: '/',
+        failureRedirect: '/login'
+    })
+)
+
+function send_email(workEmail, userId) {
+    const sgMail = require('@sendgrid/mail');
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY || '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');
+    const msg = {
+        to: workEmail,
+        from: 'brandeisenact@gmail.com',
+        subject: 'ENACT Digital Platform: Password Reset',
+        text: 'Password Reset',
+        html: 'Password reset Link: http://localhost:3500/reset/' + userId
+        // html: 'Password reset Link: https://enact-brandeis.herokuapp.com/reset/' + userId
+    };
+    sgMail.send(msg);
+}
+
+
 router.get('/verification',
     async (req, res) => {
         let temp = await Faculty.findOne({email: {$in: [req.user.googleemail, req.user.workEmail]}})

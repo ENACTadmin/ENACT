@@ -231,7 +231,6 @@ exports.loadAllFacultyResources = async (req, res, next) => {
             if (starred) {
                 resourceIds = await starred.resources
             }
-
             console.log("resourceIds: ", resourceIds)
             res.locals.resourceIds = resourceIds
             res.locals.syllabus = syllabus

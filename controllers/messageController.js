@@ -96,7 +96,7 @@ function send_email(workEmail, userName, message, url) {
             from: 'brandeisenact@gmail.com',
             subject: 'ENACT Digital Platform: you have one new message from ' + userName,
             text: 'ENACT Digital Platform: you have one new message from ' + userName,
-            html: 'Hi, <br><br>you received a message from ' + userName +
+            html: 'Hi, <br><br>you received a message from  ' + userName +
                 '<br>' + '<b>Subject</b>: ' + message.subject +
                 '<br>' + '<b>Content</b>: ' + message.message +
                 '<br>' + '<b>Time</b>: ' + message.createdAt +
@@ -110,7 +110,7 @@ function send_email(workEmail, userName, message, url) {
             from: 'brandeisenact@gmail.com',
             subject: 'ENACT Digital Platform: you have one new message from ' + userName,
             text: 'ENACT Digital Platform: you have one new message from ' + userName,
-            html: 'Hi, <br><br>you received a message from' + userName +
+            html: 'Hi, <br><br>you received a message from ' + userName +
                 '<br>' + '<b>Content</b>: ' + message.message +
                 '<br>' + '<b>Time</b>: ' + message.createdAt +
                 '<br>' + '<b>Click <a href=' + url + '>' + 'here' + '</a>' + ' to reply</b>' +

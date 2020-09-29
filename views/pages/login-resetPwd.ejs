@@ -7,35 +7,26 @@
             <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
                 <div class="card card-signin my-5">
                     <div class="card-body">
-                        <h5 class="card-title text-center"><b>Sign In / Sign Up</b></h5>
-                        <form class="form-signin" action="/login" method="post">
-                            <div class="form-label-group">
-                                <input type="text" name="email" id="Username" class="form-control"
+                        <h5 class="card-title text-center"><b>Reset Password</b></h5>
+                        <% console.log(userIdParam) %>
+                        <% console.log(emailFromServer) %>
+                        <form class="form-signin" action="/reset/<%= userIdParam %>" method="post">
+                            <div hidden class="form-label-group">
+                                <input type="text" name="email" id="Username" class="form-control" value="<%= emailFromServer %>"
                                        placeholder="Username"
                                        required autofocus>
                                 <label for="Username">Email</label>
                             </div>
-
                             <div class="form-label-group">
                                 <input type="password" name="password" id="inputPassword" class="form-control"
-                                       placeholder="Password"
+                                       placeholder="New Password"
                                        required>
-                                <label for="inputPassword">Password</label>
+                                <label for="inputPassword">New Password</label>
                             </div>
-                            If you are an ENACT member, please <a href="/signup">SIGN UP</a>
                             <br>
-                            Forgot Password? <a href="/reset">RESET PASSWORD</a>
-                            <br>
-                            <br>
-
-                            <input name="submit" class="btn btn-lg btn-primary btn-block text-uppercase" value="sign in"
+                            <input name="submit" class="btn btn-lg btn-primary btn-block text-uppercase" value="save"
                                    type="submit">
-                            <hr class="my-4">
-                            <a href="/auth/google" class="btn btn-lg btn-google btn-block text-uppercase"><i
-                                        class="fa fa-google mr-2"></i> Sign in with Google
-                            </a>
                         </form>
-
                     </div>
                 </div>
             </div>
