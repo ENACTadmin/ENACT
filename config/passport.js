@@ -103,7 +103,11 @@ module.exports = function (passport) {
         },
         function (username, password, done) {
             console.log('In local login strategy')
-            User.findOne({workEmail: username}, function (err, user) {
+            User.findOne({
+                $or: [
+                    {workEmail: username}, {googleemail: username}
+                ]
+            }, function (err, user) {
                 console.log("found user is: ", user)
                 if (err) {
                     return done(err);
@@ -118,6 +122,37 @@ module.exports = function (passport) {
             });
         }
     ));
+
+    passport.use('local-reset', new LocalStrategy({
+            usernameField: 'email',
+            passwordField: 'password'
+        },
+        function (username, password, done) {
+            console.log('In local reset strategy')
+            console.log(username)
+            console.log(password)
+            User.findOne({
+                    $or: [
+                        {workEmail: username}, {googleemail: username}
+                    ]
+                }, function (err, user) {
+                    console.log("found user is: ", user)
+                    if (err) {
+                        return done(err);
+                    }
+                    if (!user) {
+                        return done(null, false, {message: 'Incorrect username.'});
+                    }
+                    if (user.password !== password) {
+                        return done(null, false, {message: 'Incorrect password.'});
+                    }
+                    return done(null, user);
+                }
+            )
+            ;
+        }
+    ));
+
     // =========================================================================
     // LOCAL SIGNUP ============================================================
     // =========================================================================
