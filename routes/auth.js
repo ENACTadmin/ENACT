@@ -161,14 +161,14 @@ router.post('/reset/:id',
 
 function send_email(workEmail, userId) {
     const sgMail = require('@sendgrid/mail');
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY || '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');
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const msg = {
         to: workEmail,
         from: 'brandeisenact@gmail.com',
         subject: 'ENACT Digital Platform: Password Reset',
         text: 'Password Reset',
-        html: 'Password reset Link: http://localhost:3500/reset/' + userId
-        // html: 'Password reset Link: https://enact-brandeis.herokuapp.com/reset/' + userId
+        // html: 'Password reset Link: http://localhost:3500/reset/' + userId
+        html: 'Password reset Link: https://enact-brandeis.herokuapp.com/reset/' + userId
     };
     sgMail.send(msg);
 }
