@@ -9,7 +9,8 @@ const tagSchema = Schema({
     ownerStatus: String,
     status: String,
     info: String,
-    reason: String
+    reason: String,
+    contentType: String
 });
 
 module.exports = mongoose.model('Tag', tagSchema);
