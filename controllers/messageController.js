@@ -2,6 +2,7 @@
 const Resource = require('../models/Resource');
 const User = require('../models/User');
 const Message = require('../models/Message');
+const Tag = require('../models/Tag');
 
 
 exports.loadMessagingPage = async (req, res, next) => {
@@ -163,12 +164,16 @@ exports.loadMessageBoard = async (req, res, next) => {
             status: 'public',
             ownerId: req.user._id
         })
+        let tagsInfo = await Tag.find({
+            ownerId: req.user._id
+        })
         res.locals.resourceNum = await resourceInfo.length
         res.locals.messageInfo = await messageInfo
         res.locals.messageInfo_general = await messageInfo_general
         res.locals.approveInfo = await approveInfo
         res.locals.denyInfo = await denyInfo
         res.locals.publicInfo = await publicInfo
+        res.locals.tagsInfo = await tagsInfo
         res.render('./pages/messageBoard')
     } catch (e) {
         next(e)

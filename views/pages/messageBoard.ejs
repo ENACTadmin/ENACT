@@ -75,6 +75,18 @@
                         </div>
                     <% } %>
                 <% } %>
+                    <% if (tagsInfo.length !== 0) { %>
+                        <div class='card border-success mb-3' style='max-width: 18rem;'>
+                            <div class='card-header'><h3>Proposed new areas</h3></div>
+                            <div class='card-body'>
+                                <h5 style='display: inline'> You have proposed <%= tagsInfo.length %> new areas to admin. </h5>
+                                <br>
+                                <br>
+                                <a href='/newAreas'><input class='btn btn-sm btn-outline-success' type='submit'
+                                                                    value='Go to my proposed areas'></a>
+                            </div>
+                        </div>
+                    <% } %>
             </div>
             <br><br><br>
         </div>

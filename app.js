@@ -509,6 +509,10 @@ app.post('/denyTags',
     tagController.denyTags
 )
 
+app.get('/newAreas',
+    tagController.loadTags
+)
+
 //*******************************************
 //*************Error related*****************
 

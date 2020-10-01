@@ -1,0 +1,54 @@
+<%- include('../components/header'); -%>
+<%- include('../components/navbar'); -%>
+
+<script src='/js/editModal.js'></script>
+
+<section class='section'>
+    <div class='section__content section__content--full-width'>
+        <div class='jumbotron masthead text-center'>
+            <div class='section__title section__title--centered'>
+                My Proposed New Areas
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class='section section__grey' data-aos='fade-up'>
+    <section class='section__content section__content--fluid-width'>
+        <div class='container'>
+            <div class='row'>
+                <% if (loggedIn) { %>
+                    <div class='col-md-12 col-sm-12'>
+                        <% if (tagsInfo && tagsInfo.length > 0) { %>
+                            <% for (let i = tagsInfo.length - 1; i >= 0; i--) { %>
+                                <div class='card-body'>
+                                    <h4><%= tagsInfo[i].info %></h4>
+                                    <div class='card-text'>
+                                        <ul class='list-group'>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>Reason: </b> <%= tagsInfo[i].reason %></li>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>Status:</b> <%= tagsInfo[i].status %></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <% if (i !== 0) { %>
+                                    <hr>
+                                <% } %>
+                            <% } %>
+                        <% } else { %>
+                            <div class='card-body text-center'>
+                                You haven't propose any new area for us.
+                            </div>
+                        <% } %>
+                    </div>
+                <% } else { %>
+                    <%- include('../components/component-loginToView'); -%>
+                <% } %>
+            </div>
+        </div>
+    </section>
+</section>
+
+
+<%- include('../components/footer'); -%>
