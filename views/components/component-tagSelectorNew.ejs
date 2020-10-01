@@ -1,0 +1,38 @@
+<div class='toShow col-md-3 col-sm-12'></div>
+<div class='toShow col-md-6 col-sm-12'>
+    <h3 style="display: inline">Area of the resource (Optional)</h3>
+    <button type='button' style="float: right" class='btn btn-sm btn-info' data-toggle='modal' data-target='#addTags'>
+        Suggest a new area
+    </button>
+    <hr>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        let text = $('#contentSelect option:selected').text();
+        if (text === 'Choose...' || text === 'Assignment Guidelines' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
+            $(".toShow").hide()
+            $(".toShow2").hide()
+        } else if (text === 'Syllabus') {
+            $(".toShow2").show()
+            $(".toShow").hide()
+        } else {
+            $(".toShow").show()
+            $(".toShow2").hide()
+        }
+        $("#contentSelect").on("change", function () {
+            text = $('#contentSelect option:selected').text();
+            if (text === 'Choose...' || text === 'Assignment Guidelines' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
+                $(".toShow").hide()
+                $(".toShow2").hide()
+            } else if (text === 'Syllabus') {
+                $(".toShow2").show()
+                $(".toShow").hide()
+            } else {
+                $(".toShow").show()
+                $(".toShow2").hide()
+            }
+        })
+    })
+</script>

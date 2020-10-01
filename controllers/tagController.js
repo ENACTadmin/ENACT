@@ -61,3 +61,15 @@ exports.denyTags = async (req, res, next) => {
         next(e)
     }
 }
+
+exports.loadTags = async (req, res, next) => {
+    try {
+        res.locals.tagsInfo = await Tag.find({
+            ownerId: req.user._id
+        }).sort({'createdAt': -1})
+        res.render('./pages/newAreas')
+    } catch (e) {
+        console.log("error: " + e)
+        next(e)
+    }
+}
