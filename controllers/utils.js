@@ -9,6 +9,7 @@ exports.checkUserName = async (req, res, next) => {
     if (req.user && !req.user.userName) {
         console.log("first time user!");
         res.redirect('/profile/view/' + req.user._id)
+        return
     }
     next()
 }
