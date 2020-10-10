@@ -397,7 +397,6 @@ app.get('/profiles/view/faculty',
 )
 
 app.get('/profile/update',
-    utils.checkUserName,
     (req, res) => {
         res.render('./pages/updateProfile')
     })
