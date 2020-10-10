@@ -9,6 +9,7 @@ const Course = require('../models/Course');
 const User = require('../models/User');
 const Faculty = require('../models/Faculty');
 const CourseMember = require('../models/CourseMember');
+const Verification = require('../models/Verification');
 
 
 const configPassport = require('../config/passport');
@@ -196,6 +197,14 @@ router.post('/verification',
                 await User.deleteOne({_id: req.user._id})
                 res.send("Pin code incorrect! <a href='/signup'>Click here to try again</a>")
             }
+
+            let newVerifiedMember = new Verification({
+                email: req.user.googleemail || req.user.workEmail
+            })
+
+            await newVerifiedMember.save()
+            console.log("verified member saved")
+
             let newCourseMember = new CourseMember({
                 studentId: req.user._id,
                 courseId: courseInfo._id,

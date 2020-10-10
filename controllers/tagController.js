@@ -1,6 +1,5 @@
 'use strict';
 const Tag = require('../models/Tag');
-const User = require('../models/User');
 
 exports.addTags = async (req, res, next) => {
     try {

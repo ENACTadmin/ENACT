@@ -21,6 +21,7 @@ const notificationController = require('./controllers/notificationController');
 const messageController = require('./controllers/messageController');
 const eventController = require('./controllers/eventController');
 const tagController = require('./controllers/tagController');
+const utils = require('./controllers/utils');
 
 
 //*******************************************
@@ -77,7 +78,7 @@ app.use(aws)
 
 //we can use this or the index router to handle req
 app.get('/',
-    resourceController.checkUserName,
+    utils.checkUserName,
     resourceController.loadPublicResources,
     (req, res) =>
         res.render('./pages/index'))
@@ -85,7 +86,7 @@ app.get('/',
 //*******************************************
 //***********Course related******************
 app.get('/course',
-    resourceController.checkUserName,
+    utils.checkUserName,
     (req, res) =>
         res.render('./pages/createCourse'))
 
@@ -96,19 +97,19 @@ app.post('/course',
 )
 
 app.get('/courses',
-    resourceController.checkUserName,
+    utils.checkUserName,
     (req, res) =>
         res.render('./pages/showCourses')
 )
 
 app.get('/course/view/:courseId',
-    resourceController.checkUserName,
+    utils.checkUserName,
     courseController.showOneCourse,
     resourceController.loadResources
 )
 
 app.get('/course/update/:courseId',
-    resourceController.checkUserName,
+    utils.checkUserName,
     async (req, res) => {
         let courseInfo = await Course.findOne({_id: req.params.courseId})
         res.render('./pages/editCourse', {
@@ -118,13 +119,13 @@ app.get('/course/update/:courseId',
 )
 
 app.post('/course/update/:courseId',
-    resourceController.checkUserName,
+    utils.checkUserName,
     courseController.editCourse
 )
 
 
 app.get('/course/copy/:courseId',
-    resourceController.checkUserName,
+    utils.checkUserName,
     async (req, res) => {
         let courseInfo = await Course.findOne({_id: req.params.courseId})
         res.render('./pages/copyCourse', {
@@ -135,12 +136,12 @@ app.get('/course/copy/:courseId',
 
 
 app.post('/course/copy/:courseId',
-    resourceController.checkUserName,
+    utils.checkUserName,
     courseController.copyCourse
 )
 
 app.post('/course/delete/:courseId',
-    resourceController.checkUserName,
+    utils.checkUserName,
     async (req, res) => {
         await Course.deleteOne({_id: req.params.courseId})
         res.redirect('back')
@@ -149,7 +150,7 @@ app.post('/course/delete/:courseId',
 
 // render join course view
 app.get('/course/join',
-    resourceController.checkUserName,
+    utils.checkUserName,
     (req, res) => {
         res.render('./pages/joinACourse')
     }
@@ -164,7 +165,7 @@ app.post('/course/join',
 //***********Resource related****************
 
 app.get('/resource/upload/course/:courseId',
-    resourceController.checkUserName,
+    utils.checkUserName,
     (req, res) => {
         res.render('./pages/uploadToCourse', {
             req: req
@@ -176,7 +177,7 @@ app.post('/resource/upload/course/:courseId',
 )
 
 app.get('/resources/search/private/general',
-    resourceController.checkUserName,
+    utils.checkUserName,
     (req, res) =>
         res.render('./pages/searchPrimary')
 )
@@ -186,7 +187,7 @@ app.post('/resources/search/private/general',
 )
 
 app.get('/resource/upload/public',
-    resourceController.checkUserName,
+    utils.checkUserName,
     (req, res) => {
         if (req.user.status !== 'admin')
             res.send("You are not admin!")
@@ -200,7 +201,7 @@ app.post('/resource/upload/public',
 )
 
 app.get('/resources/search/private/advanced',
-    resourceController.checkUserName,
+    utils.checkUserName,
     (req, res) =>
         res.render('./pages/search'))
 
@@ -210,12 +211,12 @@ app.post('/resources/search/private/advanced',
 
 
 app.get('/resources/view/public/all',
-    resourceController.checkUserName,
+    utils.checkUserName,
     resourceController.showPublic
 )
 
 app.get('/resources/search/public/general',
-    resourceController.checkUserName,
+    utils.checkUserName,
     (req, res) =>
         res.render('./pages/publicPrimarySearch')
 )
@@ -225,7 +226,7 @@ app.post('/resources/view/public/generalResult',
 )
 
 app.get('/resources/search/public/advanced',
-    resourceController.checkUserName,
+    utils.checkUserName,
     (req, res) =>
         res.render('./pages/publicSearch'))
 
@@ -234,20 +235,20 @@ app.post('/resources/view/public/advancedResult',
 )
 
 app.get('/resources/view/faculty',
-    resourceController.checkUserName,
+    utils.checkUserName,
     resourceController.loadAllFacultyResources,
     (req, res) =>
         res.render('./pages/facultyGuide')
 )
 
 app.get('/resources/view/faculty/:contentType',
-    resourceController.checkUserName,
+    utils.checkUserName,
     resourceController.loadSpecificContentType,
 )
 
 
 app.get('/resource/upload/faculty',
-    resourceController.checkUserName,
+    utils.checkUserName,
     (req, res) =>
         res.render('./pages/uploadToFaculty')
 )
@@ -273,7 +274,7 @@ app.post('/resource/show/:resourceId',
 )
 
 app.get('/resources/view/favorite',
-    resourceController.checkUserName,
+    utils.checkUserName,
     resourceController.showStarredResources
 )
 
@@ -294,7 +295,7 @@ app.post('/resource/unstarAlt/:resourceId',
 )
 
 app.get('/resources/view/private',
-    resourceController.checkUserName,
+    utils.checkUserName,
     resourceController.showMyResources
 )
 
@@ -333,7 +334,7 @@ app.post('/deleteCollection/:collectionId',
 //***********Notification related************
 
 app.get('/reviewResource',
-    resourceController.checkUserName,
+    utils.checkUserName,
     notificationController.loadUnderReviewResources
 )
 
@@ -396,12 +397,13 @@ app.get('/profiles/view/faculty',
 )
 
 app.get('/profile/update',
+    utils.checkUserName,
     (req, res) => {
         res.render('./pages/updateProfile')
     })
 
 app.get('/profiles/view/all',
-    resourceController.checkUserName,
+    utils.checkUserName,
     profileController.showAllProfiles
 )
 
@@ -411,7 +413,7 @@ app.post('/profile/update',
 )
 
 app.get('/profiles/faculty/assign',
-    resourceController.checkUserName,
+    utils.checkUserName,
     profileController.loadFaculty
 )
 
@@ -426,7 +428,7 @@ app.post('/saveProfileImageURL',
 //*******************************************
 //************Message related****************
 app.get('/messages/view/:sender/:receiver/:resourceId',
-    resourceController.checkUserName,
+    utils.checkUserName,
     messageController.loadMessagingPage
 )
 
@@ -435,7 +437,7 @@ app.post('/messages/save/:sender/:receiver/:resourceId',
 )
 
 app.get('/messages/view/all',
-    resourceController.checkUserName,
+    utils.checkUserName,
     messageController.loadMessageBoard
 )
 
