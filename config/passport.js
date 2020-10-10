@@ -171,6 +171,7 @@ module.exports = function (passport) {
             // we are checking to see if the user trying to login already exists
             console.log(username)
             console.log(password)
+            username = username.toLowerCase()
             User.findOne({workEmail: username}, function (err, user) {
                 console.log("found user is: ", user)
                 // if there are any errors, return the error
