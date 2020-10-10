@@ -110,7 +110,6 @@ module.exports = function (passport) {
                     {workEmail: username}, {googleemail: username}
                 ]
             }, function (err, user) {
-                console.log("found user is: ", user)
                 if (err) {
                     return done(err);
                 }
@@ -130,9 +129,6 @@ module.exports = function (passport) {
             passwordField: 'password'
         },
         function (username, password, done) {
-            console.log('In local reset strategy')
-            console.log(username)
-            console.log(password)
             User.findOne({
                     $or: [
                         {workEmail: username}, {googleemail: username}
@@ -169,9 +165,7 @@ module.exports = function (passport) {
         function (username, password, done) {
             // find a user whose email is the same as the forms email
             // we are checking to see if the user trying to login already exists
-            console.log(username)
             username = username.toLowerCase()
-            console.log("new: ", username)
             User.findOne({workEmail: username}, function (err, user) {
                 console.log("found user is: ", user)
                 // if there are any errors, return the error
@@ -186,8 +180,6 @@ module.exports = function (passport) {
                     var newUser = User();
                     //
                     // set the user's local credentials
-                    console.log("email received: ", username)
-                    console.log("email to store: ", username.toLowerCase())
                     newUser.workEmail = username.toLowerCase();
                     newUser.password = password;
 

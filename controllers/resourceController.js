@@ -421,14 +421,6 @@ exports.unstarResource = async (req, res, next) => {
     }
 }
 
-exports.checkUserName = async (req, res, next) => {
-    if (req.user && !req.user.userName) {
-        console.log("first time user!");
-        res.redirect('/profile/view/' + req.user._id)
-    }
-    next()
-}
-
 exports.starResourceAlt = async (req, res, next) => {
     try {
         let resourceId = await req.params.resourceId

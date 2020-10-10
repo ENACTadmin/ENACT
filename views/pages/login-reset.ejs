@@ -1,5 +1,36 @@
 <%- include('../components/header'); -%>
-<%- include('../components/navbar'); -%>
+<script src='/js/menu.js'></script>
+
+<script>
+    AOS.init();
+</script>
+
+<header class='header'>
+    <div class='header__content header__content--fluid-width'>
+        <a class='header__logo-title' href='/'>
+            <div class='card-body' style='background-color: transparent'>
+                <div class='card-text'>
+                    <img style='height: 70px; width: 70px'
+                         src='https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg'>
+                </div>
+            </div>
+        </a>
+        <nav class='header__menu'>
+            <ul>
+                <li>
+                    <a class='header-link' id='header-link' href='/' data-aos='fade-left'>HOME</a>
+                </li>
+                <li class='header__btn header__btn--login'>
+                    <% if (!loggedIn) { %>
+                        <a class='btn btn-outline-dark' href='/login' data-aos='fade-left'>ENACT member login</a>
+                    <% } else { %>
+                        <a class='btn btn-outline-dark' href='/logout' data-aos='fade-left'>Logout</a>
+                    <% } %>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
 
 <section class='section section__grey' data-aos='fade-up' style="height: 100%; padding-top: 8%">
     <div class="container">
@@ -16,7 +47,8 @@
                                 <label for="Username">Email</label>
                             </div>
                             <br>
-                            <input name="submit" class="btn btn-lg btn-primary btn-block text-uppercase" value="Send Reset Link"
+                            <input name="submit" class="btn btn-lg btn-primary btn-block text-uppercase"
+                                   value="Send Reset Link"
                                    type="submit">
                         </form>
                     </div>
