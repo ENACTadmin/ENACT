@@ -8,11 +8,8 @@ const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/User');
 
 // load the auth variables
-// const clientID = "960287962764-j4nvij4n7tlp1mng142c49kb0k9jmc1d.apps.googleusercontent.com";
 const clientID = process.env.clientID || "960287962764-j4nvij4n7tlp1mng142c49kb0k9jmc1d.apps.googleusercontent.com";
-// const clientSecret = "Qde03Ut985sCMXZpyYNsaN39";
 const clientSecret = process.env.clientSecret || "Qde03Ut985sCMXZpyYNsaN39";
-// const callbackURL = "http://127.0.0.1:3500/login/authorized";
 const callbackURL = process.env.callbackURL || "http://127.0.0.1:3500/login/authorized";
 
 
@@ -97,6 +94,11 @@ module.exports = function (passport) {
             });
         })
     );
+
+
+    // =========================================================================
+    // LOCAL ===================================================================
+    // =========================================================================
     passport.use('local', new LocalStrategy({
             usernameField: 'email',
             passwordField: 'password'
@@ -183,7 +185,9 @@ module.exports = function (passport) {
                     var newUser = User();
                     //
                     // set the user's local credentials
-                    newUser.workEmail = username;
+                    console.log("email received: ", username)
+                    console.log("email to store: ", username.toLowerCase())
+                    newUser.workEmail = username.toLowerCase();
                     newUser.password = password;
 
                     // save the user
