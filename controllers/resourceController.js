@@ -80,6 +80,7 @@ exports.uploadResource = async (req, res, next) => {
         else
             res.redirect('/course/view/' + courseId)
     } catch (e) {
+        console.log("I am in trouble!!!")
         next(e)
     }
 }
@@ -89,7 +90,7 @@ async function setWord2Id(newResource) {
         + newResource.state + ',' + newResource.contentType + ',' + newResource.mediaType + ','
         + newResource.institution + ',' + newResource.yearOfCreation
 
-    let regex = /[^\s\.,!?]+/g;
+    let regex = /[^\s\.,!?()]+/g;
     let match = fullContent.match(regex);
     console.log('match: ', match)
     for (let i = 0; i < match.length; i++) {
