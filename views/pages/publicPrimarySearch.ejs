@@ -60,10 +60,9 @@
                                             <b>State:</b> <%= resourceInfo[i].state %></li>
                                         <% if (resourceInfo[i].mediaType === 'video' && resourceInfo[i].uri.endsWith(".mp4")) { %>
                                             <li class='list-group-item borderless box-padding'>
-                                                <iframe width="480" height="270" frameborder="0"
-                                                        allowtransparency="true" allowfullscreen
-                                                        src="<%= resourceInfo[i].uri %>">
-                                                </iframe>
+                                                <video width="400" controls>
+                                                    <source src="<%= resourceInfo[i].uri %>" type="video/mp4">
+                                                </video>
                                             </li>
                                         <% } else { %>
                                             <li class='list-group-item borderless box-padding'>
