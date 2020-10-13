@@ -41,10 +41,9 @@
                                                 <b>State:</b> <%= syllabus[i].state %></li>
                                             <% if (syllabus[i].mediaType === 'video' && syllabus[i].uri.endsWith(".mp4")) { %>
                                                 <li class='list-group-item borderless box-padding'>
-                                                    <iframe width="480" height="270" frameborder="0"
-                                                            allowtransparency="true" allowfullscreen
-                                                            src="<%= syllabus[i].uri %>">
-                                                    </iframe>
+                                                    <video width="400" controls>
+                                                        <source src="<%= resourceInfo[i].uri %>" type="video/mp4">
+                                                    </video>
                                                 </li>
                                             <% } else { %>
                                                 <li class='list-group-item borderless box-padding'>
@@ -122,10 +121,9 @@
                                                 <b>State:</b> <%= assignments[i].state %></li>
                                             <% if (assignments[i].mediaType === 'video' && assignments[i].uri.endsWith(".mp4")) { %>
                                                 <li class='list-group-item borderless box-padding'>
-                                                    <iframe width="480" height="270" frameborder="0"
-                                                            allowtransparency="true" allowfullscreen
-                                                            src="<%= assignments[i].uri %>">
-                                                    </iframe>
+                                                    <video width="400" controls>
+                                                        <source src="<%= assignments[i].uri %>" type="video/mp4">
+                                                    </video>
                                                 </li>
                                             <% } else { %>
                                                 <li class='list-group-item borderless box-padding'>
@@ -204,10 +202,9 @@
                                                 <b>State:</b> <%= rubrics[i].state %></li>
                                             <% if (rubrics[i].mediaType === 'video' && rubrics[i].uri.endsWith(".mp4")) { %>
                                                 <li class='list-group-item borderless box-padding'>
-                                                    <iframe width="480" height="270" frameborder="0"
-                                                            allowtransparency="true" allowfullscreen
-                                                            src="<%= rubrics[i].uri %>">
-                                                    </iframe>
+                                                    <video width="400" controls>
+                                                        <source src="<%= rubrics[i].uri %>" type="video/mp4">
+                                                    </video>
                                                 </li>
                                             <% } else { %>
                                                 <li class='list-group-item borderless box-padding'>
@@ -287,10 +284,9 @@
                                                 <b>State:</b> <%= guides[i].state %></li>
                                             <% if (guides[i].mediaType === 'video' && guides[i].uri.endsWith(".mp4")) { %>
                                                 <li class='list-group-item borderless box-padding'>
-                                                    <iframe width="480" height="270" frameborder="0"
-                                                            allowtransparency="true" allowfullscreen
-                                                            src="<%= guides[i].uri %>">
-                                                    </iframe>
+                                                    <video width="400" controls>
+                                                        <source src="<%= guides[i].uri %>" type="video/mp4">
+                                                    </video>
                                                 </li>
                                             <% } else { %>
                                                 <li class='list-group-item borderless box-padding'>
