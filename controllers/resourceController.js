@@ -450,7 +450,9 @@ exports.starResourceAlt = async (req, res, next) => {
         await resourceSet.save()
         res.locals.resourceIds = newResourceIds
         res.locals.resourceInfo = resourceInfoSet
-        res.redirect('back')
+        res.render('./pages/showResources', {
+            secretType: 'Search Result'
+        })
     } catch (e) {
         next(e)
     }
@@ -472,7 +474,9 @@ exports.unstarResourceAlt = async (req, res, next) => {
         await resourceSet.save()
         res.locals.resourceIds = newResourceIds
         res.locals.resourceInfo = resourceInfoSet
-        res.redirect('back')
+        res.render('./pages/showResources', {
+            secretType: 'Search Result'
+        })
     } catch (e) {
         next(e)
     }
@@ -657,6 +661,8 @@ exports.showPublic = async (req, res, next) => {
 //
 // -----------------------------------------------
 
+let starredResourceIdsSet
+
 exports.primarySearch = async (req, res, next) => {
     try {
         let resourceInfo = await invertedSearch(req, res);
@@ -677,6 +683,7 @@ exports.primarySearch = async (req, res, next) => {
 
         res.locals.resourceIds = starredResourceIds
         res.locals.resourceInfo = uniqueResourceInfo
+        starredResourceIdsSet = starredResourceIds
         resourceInfoSet = uniqueResourceInfo
         res.render('./pages/showResources', {
             secretType: 'Search Result'
@@ -685,6 +692,14 @@ exports.primarySearch = async (req, res, next) => {
         (e) {
         next(e)
     }
+}
+
+exports.reloadSearch = async (req, res) => {
+    res.locals.resourceIds = starredResourceIdsSet
+    res.locals.resourceInfo = resourceInfoSet
+    res.render('./pages/showResources', {
+        secretType: 'Search Result'
+    })
 }
 
 exports.primaryPublicSearch = async (req, res, next) => {
