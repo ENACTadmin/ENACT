@@ -182,7 +182,11 @@ app.get('/resources/search/private/general',
         res.render('./pages/searchPrimary')
 )
 
-app.post('/resources/search/private/general',
+app.get('/resources/search/private/general/results',
+    resourceController.reloadSearch
+)
+
+app.post('/resources/search/private/general/results',
     resourceController.primarySearch
 )
 
