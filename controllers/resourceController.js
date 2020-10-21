@@ -121,7 +121,7 @@ async function removeWord2Id(oldResource) {
 
     let regex = /[^\s\.,!?()]+/g;
     let match = fullContent.match(regex);
-    console.log('match here: ', match)
+    console.log('match here: ', match);
     for (let i = 0; i < match.length; i++) {
         let newRegex = new RegExp(["^", match[i], "$"].join(""), "i");
         let word2Id = await Word2Id.findOne({word: newRegex})
