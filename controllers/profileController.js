@@ -115,9 +115,22 @@ exports.updateProfileImageURL = async (req, res, next) => {
     }
 }
 
+let special = ["stimell@brandeis.edu", "djw@brandeis.edu"]
 exports.showFacultyProfiles = async (req, res, next) => {
     let profileInfo = await User.find({
-        status: "faculty"
+        $or: [
+            {status: "faculty"},
+            {
+                workEmail: {
+                    $in: special
+                }
+            },
+            {
+                googleemail: {
+                    $in: special
+                }
+            },
+        ]
     })
     try {
         res.render('./pages/facultyList', {
