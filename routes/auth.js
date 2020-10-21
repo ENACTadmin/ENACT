@@ -180,6 +180,7 @@ router.get('/verification',
         console.log("email: ", req.user.workEmail)
         let temp = await Faculty.findOne({email: {$in: [req.user.googleemail, req.user.workEmail]}})
         console.log("faculty test: ", temp)
+        // if the user is an admin or faculty, skip verification step
         if (req.user.googleemail in adminList || req.user.workEmail in adminList || temp) {
             res.redirect("/profile/update")
         } else {
