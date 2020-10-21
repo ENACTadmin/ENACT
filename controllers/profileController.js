@@ -117,7 +117,7 @@ exports.updateProfileImageURL = async (req, res, next) => {
 
 exports.showFacultyProfiles = async (req, res, next) => {
     let profileInfo = await User.find({
-        status: {$in: ["faculty", "admin"]}
+        status: "faculty"
     })
     try {
         res.render('./pages/facultyList', {
