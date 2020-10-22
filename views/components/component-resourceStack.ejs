@@ -9,7 +9,7 @@
                         <b>Description: </b> <%= resourceInfo[i].description %></li>
                     <li class='list-group-item borderless box-padding'>
                         <b>State:</b> <%= resourceInfo[i].state %></li>
-                    <% if (resourceInfo[i].mediaType === 'video' && resourceInfo[i].uri.endsWith(".mp4")) { %>
+                    <% if (resourceInfo[i].mediaType === 'video') { %>
                         <li class='list-group-item borderless box-padding'>
                             <video width="400" controls>
                                 <source src="<%= resourceInfo[i].uri %>" type="video/mp4">
