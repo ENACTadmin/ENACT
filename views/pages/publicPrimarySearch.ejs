@@ -12,8 +12,8 @@
                 <h4>These resources show a selection of ENACT resources. You can join ENACT to see more resources.</h4>
                 <br>
                 <a href='mailto:enact@brandeis.edu'><input type='button' name='submit'
-                                                         class='btn btn-lg btn-outline-primary'
-                                                         value='Contact Us to join ENACT'></a>
+                                                           class='btn btn-lg btn-outline-primary'
+                                                           value='Contact Us to join ENACT'></a>
             </div>
         </div>
     </div>
@@ -32,7 +32,8 @@
                         &nbsp&nbsp&nbsp
                         <input type='submit' name='submit' class='btn btn-dark' value='Search'>
                         &nbsp&nbsp&nbsp
-                        <a href='/resources/search/public/advanced' class='btn btn-large btn-warning' style='width: 300px'>Advanced
+                        <a href='/resources/search/public/advanced' class='btn btn-large btn-warning'
+                           style='width: 300px'>Advanced
                             Search</a>
                     </div>
                 </form>
@@ -57,6 +58,9 @@
                                         <li class='list-group-item borderless box-padding'>
                                             <b>Description: </b> <%= resourceInfo[i].description %></li>
                                         <li class='list-group-item borderless box-padding'>
+                                            <b>Year: </b> <%= resourceInfo[i].yearOfCreation %>
+                                        </li>
+                                        <li class='list-group-item borderless box-padding'>
                                             <b>State:</b> <%= resourceInfo[i].state %></li>
                                         <% if (resourceInfo[i].mediaType === 'video') { %>
                                             <li class='list-group-item borderless box-padding'>
@@ -66,15 +70,17 @@
                                             </li>
                                         <% } else { %>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click
-                                                    me</a>
+                                                <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click me</a>
                                             </li>
                                         <% } %>
                                         <li class='list-group-item borderless box-padding'>
                                             <b>Institution: </b> <%= resourceInfo[i].institution %></li>
-                                        <li class='list-group-item borderless box-padding'>
-                                            <b>Tags:</b> <%= resourceInfo[i].tags %>
-                                        </li>
+                                        <% if (resourceInfo[i].tags.length >= 1 && resourceInfo[i].tags[0].length !== 0) { %>
+
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>Tags:</b> <%= resourceInfo[i].tags %>
+                                            </li>
+                                        <% } %>
                                     </ul>
                                 </div>
                             </div>
