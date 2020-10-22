@@ -8,7 +8,7 @@
                 Confirm Resources You denied
             </div>
             <% if (resourceInfo && resourceInfo.length > 0) { %>
-                <form action='/sendDeny'  method='post'>
+                <form action='/sendDeny' method='post'>
                     <input type='submit' name='submit' class='btn btn-large btn-warning' style='width: 500px'
                            value='Confirm all resources without sending comments'>
                 </form>
@@ -35,24 +35,32 @@
                                                         <li class='list-group-item borderless box-padding'>
                                                             <b>Description: </b> <%= resourceInfo[i].description %></li>
                                                         <li class='list-group-item borderless box-padding'>
+                                                            <b>Year: </b> <%= resourceInfo[i].yearOfCreation %>
+                                                        </li>
+                                                        <li class='list-group-item borderless box-padding'>
                                                             <b>State:</b> <%= resourceInfo[i].state %></li>
                                                         <li class='list-group-item borderless box-padding'>
                                                             <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click me</a>
                                                         </li>
                                                         <li class='list-group-item borderless box-padding'>
                                                             <b>Institution: </b> <%= resourceInfo[i].institution %></li>
-                                                        <li class='list-group-item borderless box-padding'>
-                                                            <b>Tags:</b> <%= resourceInfo[i].tags %>
-                                                        </li>
+                                                        <% if (resourceInfo[i].tags.length >= 1 && resourceInfo[i].tags[0].length !== 0) { %>
+
+                                                            <li class='list-group-item borderless box-padding'>
+                                                                <b>Tags:</b> <%= resourceInfo[i].tags %>
+                                                            </li>
+                                                        <% } %>
                                                         <li class='list-group-item borderless box-padding'>
                                                             <!--force inline display-->
                                                             <button type='button' class='btn btn-outline-info'
-                                                                    style='border:0 solid transparent' data-toggle='modal'
+                                                                    style='border:0 solid transparent'
+                                                                    data-toggle='modal'
                                                                     data-target='#commentModal<%= resourceInfo[i]._id %>'>
                                                                 Leave a comment to the resource owner
                                                             </button>
                                                             <button type='button' class='btn btn-outline-danger'
-                                                                    style='border:0px solid transparent' data-toggle='modal'
+                                                                    style='border:0px solid transparent'
+                                                                    data-toggle='modal'
                                                                     data-target='#resumeModal<%= resourceInfo[i]._id %>'>
                                                                 Leave the resource to under review status
                                                             </button>
@@ -63,9 +71,10 @@
                                         </div>
                                         <br>
                                     <% } %>
-                                        <br>
+                                    <br>
                                 <% } else { %>
-                                    You don't need to confirm any denied resources now. Please feel free to click the menu bar and go to another page.
+                                    You don't need to confirm any denied resources now. Please feel free to click the
+                                    menu bar and go to another page.
                                 <% } %>
                             </div>
                         </div>
