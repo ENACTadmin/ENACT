@@ -59,10 +59,12 @@
 
                             </div>
                             <div class="col-md-1 col-sm-1 align-self-center">
-                                <% if (!user._id.equals(profileInfo[i]._id)) { %>
-                                    <a href="/messages/view/<%= user._id %>/<%= profileInfo[i]._id %>/general"><input
-                                                class="btn btn-sm btn-outline-primary" type="button"
-                                                value="CONTACT"></a>
+                                <% if (loggedIn) { %>
+                                    <% if (!user._id.equals(profileInfo[i]._id)) { %>
+                                        <a href="/messages/view/<%= user._id %>/<%= profileInfo[i]._id %>/general"><input
+                                                    class="btn btn-sm btn-outline-primary" type="button"
+                                                    value="CONTACT"></a>
+                                    <% } %>
                                 <% } %>
                             </div>
                         </div>
