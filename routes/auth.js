@@ -100,7 +100,7 @@ router.post('/login',
 );
 
 // will be moved to cloud later
-let adminList = ["bbdhy96@gmail.com", "nicolezhang@brandeis.edu", "stimell@brandeis.edu", "djw@brandeis.edu", "epevide@brandeis.edu"]
+let adminList = ["bbdhy96@gmail.com", "bhershon@brandeis.edu", "nicolezhang@brandeis.edu", "stimell@brandeis.edu", "djw@brandeis.edu", "epevide@brandeis.edu"]
 
 router.get('/signup',
     (req, res) =>
