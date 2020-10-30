@@ -32,7 +32,14 @@ let bioPaths = [
         'Zachary D. Baumann is an Assistant Professor of Political Science at Nebraska Wesleyan University.' +
         ' His teaching and research interests lie in the field of American politics, focusing primarily on' +
         ' state government and policy, elections, and effective pedagogy.'
-    ]
+    ],
+    ['images/Photos for ENACT platform faculty show/anthony.jpg',
+        'Joseph Anthony',
+        'Dr. Joseph Anthony is a Visiting Assistant Professor in the department of Political Science at' +
+        'Oklahoma State University. Dr. Anthony researches elections administration, voting rights, social' +
+        'movements, political parties, and voting behavior.'
+    ],
+    ['address', 'name of the person', 'bio']
 ]
 
 let labels = [
