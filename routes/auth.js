@@ -100,7 +100,7 @@ router.post('/login',
 );
 
 // will be moved to cloud later
-let adminList = ["bbdhy96@gmail.com", "bhershon@brandeis.edu", "nicolezhang@brandeis.edu", "stimell@brandeis.edu", "djw@brandeis.edu", "epevide@brandeis.edu"]
+const adminList = ["bbdhy96@gmail.com", "bhershon@brandeis.edu", "nicolezhang@brandeis.edu", "stimell@brandeis.edu", "djw@brandeis.edu", "epevide@brandeis.edu"]
 
 router.get('/signup',
     (req, res) =>
@@ -177,11 +177,12 @@ function send_email(workEmail, userId) {
 
 router.get('/verification',
     async (req, res) => {
-        console.log("email: ", req.user.workEmail)
+        console.log("work email: ", req.user.workEmail)
         let temp = await Faculty.findOne({email: {$in: [req.user.googleemail, req.user.workEmail]}})
         console.log("faculty test: ", temp)
+        console.log("admin test: ", adminList.includes(req.user.googleemail) || adminList.includes(req.user.workEmail))
         // if the user is an admin or faculty, skip verification step
-        if (req.user.googleemail in adminList || req.user.workEmail in adminList || temp) {
+        if (adminList.includes(req.user.googleemail) || adminList.includes(req.user.workEmail) || temp) {
             res.redirect("/profile/update")
         } else {
             res.render('./pages/verification')
