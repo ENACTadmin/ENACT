@@ -38,8 +38,7 @@ let bioPaths = [
         'Dr. Joseph Anthony is a Visiting Assistant Professor in the department of Political Science at' +
         'Oklahoma State University. Dr. Anthony researches elections administration, voting rights, social' +
         'movements, political parties, and voting behavior.'
-    ],
-    ['address', 'name of the person', 'bio']
+    ]
 ]
 
 let labels = [
