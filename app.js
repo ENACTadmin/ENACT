@@ -83,6 +83,10 @@ app.get('/',
     (req, res) =>
         res.render('./pages/index'))
 
+app.get('/about',
+    (req, res) =>
+        res.render('./pages/about'))
+
 //*******************************************
 //***********Course related******************
 app.get('/course',
