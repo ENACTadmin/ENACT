@@ -53,9 +53,11 @@
                                             <% } %>
                                             <li class='list-group-item borderless box-padding'>
                                                 <b>Institution: </b> <%= syllabus[i].institution %></li>
-                                            <li class='list-group-item borderless box-padding'>
-                                                <b>Tags:</b> <%= syllabus[i].tags %>
-                                            </li>
+                                            <% if (syllabus[i].tags[0].length > 0) { %>
+                                                <li class='list-group-item borderless box-padding'>
+                                                    <b>Tags:</b> <%= syllabus[i].tags %>
+                                                </li>
+                                            <% } %>
                                             <li class='list-group-item borderless box-padding'>
                                                 <% if (resourceIds && resourceIds.toString().includes(syllabus[i]._id.toString())) { %>
                                                     <form style='display: inline' method='post'
@@ -133,9 +135,11 @@
                                             <% } %>
                                             <li class='list-group-item borderless box-padding'>
                                                 <b>Institution: </b> <%= assignments[i].institution %></li>
-                                            <li class='list-group-item borderless box-padding'>
-                                                <b>Tags:</b> <%= assignments[i].tags %>
-                                            </li>
+                                            <% if (assignments[i].tags[0].length > 0) { %>
+                                                <li class='list-group-item borderless box-padding'>
+                                                    <b>Tags:</b> <%= assignments[i].tags %>
+                                                </li>
+                                            <% } %>
                                             <li class='list-group-item borderless box-padding'>
                                                 <% if (resourceIds && resourceIds.toString().includes(assignments[i]._id.toString())) { %>
                                                     <form style='display: inline' method='post'
@@ -214,9 +218,11 @@
                                             <% } %>
                                             <li class='list-group-item borderless box-padding'>
                                                 <b>Institution: </b> <%= rubrics[i].institution %></li>
-                                            <li class='list-group-item borderless box-padding'>
-                                                <b>Tags:</b> <%= rubrics[i].tags %>
-                                            </li>
+                                            <% if (rubrics[i].tags[0].length > 0) { %>
+                                                <li class='list-group-item borderless box-padding'>
+                                                    <b>Tags:</b> <%= rubrics[i].tags %>
+                                                </li>
+                                            <% } %>
                                             <li class='list-group-item borderless box-padding'>
                                                 <% if (resourceIds && resourceIds.toString().includes(rubrics[i]._id.toString())) { %>
                                                     <form style='display: inline' method='post'
@@ -296,9 +302,11 @@
                                             <% } %>
                                             <li class='list-group-item borderless box-padding'>
                                                 <b>Institution: </b> <%= guides[i].institution %></li>
-                                            <li class='list-group-item borderless box-padding'>
-                                                <b>Tags:</b> <%= guides[i].tags %>
-                                            </li>
+                                            <% if (guides[i].tags[0].length > 0) { %>
+                                                <li class='list-group-item borderless box-padding'>
+                                                    <b>Tags:</b> <%= guides[i].tags %>
+                                                </li>
+                                            <% } %>
                                             <li class='list-group-item borderless box-padding'>
                                                 <% if (resourceIds && resourceIds.toString().includes(guides[i]._id.toString())) { %>
                                                     <form style='display: inline' method='post'

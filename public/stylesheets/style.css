@@ -2,6 +2,14 @@
 /* Customized CSS--BOOTSTRAP
 /*===============================================*/
 
+#profiles {
+    z-index: 21500000000 !important;
+}
+
+.ui-autocomplete {
+    z-index: 21500000000 !important;
+}
+
 .box-padding {
     padding: 0 0 3px 10px
 }

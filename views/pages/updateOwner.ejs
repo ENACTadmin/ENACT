@@ -1,0 +1,41 @@
+<%- include('../components/header'); -%>
+<%- include('../components/navbar'); -%>
+
+<script src="/js/autocomplete.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/disableautofill/src/jquery.disableAutoFill.min.js"></script>
+<script>
+    $('input[autofill="off"]').disableAutofill();
+</script>
+
+<% console.log("123", resource) %>
+<section class='section'>
+    <div class='section__content section__content--full-width'>
+        <div class='jumbotron masthead text-center'>
+            <div class='section__title section__title--centered'>
+                Update Owner for <%= resource.name %>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class='section section__grey' data-aos='fade-up'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-md-3 col-sm-12'></div>
+            <div class='col-md-6 col-sm-12'>
+                <form action='/resource/update/<%= resource._id %>/<%= req.params.option %>' method='post'>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 180px'>Author</span>
+                        <input autofill="off" autocomplete="off" id="profiles" type='text' style='margin-right: 20px'
+                               class='form-control' name='ownerName' value='<%= ownerName1 %>'>
+                        <input hidden autofill="off" autocomplete="off" id="ownerId" type='text' style='margin-right: 20px' class='form-control' name='ownerId'>
+                        <input type="submit" class="btn btn-outline-dark" value="SAVE">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('../components/footer'); -%>

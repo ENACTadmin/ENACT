@@ -1,0 +1,47 @@
+<%- include('../../components/header'); -%>
+<%- include('../../components/navbar'); -%>
+
+<section class='section'>
+    <div class='section__content section__content--full-width'>
+        <div class='jumbotron masthead text-center'>
+            <div class='section__title section__title--centered'>
+                Upload Success!
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class='section section__grey' data-aos='fade-up'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-md-3 col-sm-12'></div>
+            <div class='col-md-6 col-sm-12'>
+                <h3>Do you want to </h3>
+                <div class='input-group-prepend'>
+                    <% if (req.params.courseId) { %>
+                        <a href="/resource/upload/course/<%= req.params.courseId %>"
+                           class="btn btn-lg btn-primary">Upload another resource
+                        </a>
+                    <% } else { %>
+                        <a href="/resource/upload/faculty"
+                           class="btn btn-lg btn-primary">Upload another resource
+                        </a>
+                    <% } %>
+                    &nbsp&nbsp&nbsp&nbsp
+                    <% if (status === 'student') { %>
+                        <a href="/course/view/<%= req.params.courseId %>" class="btn btn-lg btn-info">
+                            Back to course
+                        </a>
+                    <% } else { %>
+                        <a href="/resources/view/faculty" class="btn btn-lg btn-info">
+                            View faculty guide
+                        </a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<%- include('../../components/footer'); -%>

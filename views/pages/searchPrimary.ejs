@@ -1,6 +1,13 @@
 <%- include('../components/header'); -%>
 <%- include('../components/navbar'); -%>
 
+<script src="/js/searchComplete.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/disableautofill/src/jquery.disableAutoFill.min.js"></script>
+<script>
+    $('input[autofill="off"]').disableAutofill();
+</script>
+
 <section class='section'>
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
@@ -21,16 +28,17 @@
                 <% if (loggedIn) { %>
                     <form method='post' action='/resources/search/private/general/results'>
                         <div class='input-group-prepend'>
-                            <input type='text' class='form-control' name='search'
+                            <input autofill="off" autocomplete="off" id="resources" type='text' class='form-control' name='search'
                                    placeholder='Search for anything'>
                             &nbsp&nbsp&nbsp
                             <input type='submit' name='submit' class='btn btn-dark' value='Search'>
                             &nbsp&nbsp&nbsp
-                            <a href='/resources/search/private/advanced' class='btn btn-large btn-warning' style='width: 300px'>Advanced Search</a>
+                            <a href='/resources/search/private/advanced' class='btn btn-large btn-warning'
+                               style='width: 300px'>Advanced Search</a>
                         </div>
                     </form>
                 <% } else { %>
-                    <%- include('../components/component-loginToView'); -%>
+                        <%- include('../components/component-loginToView'); -%>
                 <% } %>
             </div>
         </div>

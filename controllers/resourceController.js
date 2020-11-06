@@ -1,89 +1,15 @@
 'use strict';
 const Course = require('../models/Course');
+const User = require('../models/User');
 const Resource = require('../models/Resource');
 const ResourceSet = require('../models/ResourceSet');
 const Word2Id = require('../models/Word2Id');
 
 let resourceInfoSet
 
-exports.uploadResource = async (req, res, next) => {
-    const courseId = req.params.courseId
-    console.log("in upload Resource")
-    try {
-        let tagsString = req.body.tags
-        let tags = tagsString.split(",")
-        let newResource
-        if (courseId === undefined) {
-            newResource = new Resource({
-                ownerId: req.user._id,
-                status: req.body.status, // public/private to class/private to professors
-                createdAt: new Date(),
-                name: req.body.resourceName,
-                description: req.body.resourceDescription,
-                tags: tags, // tags as array
-                uri: req.body.uri, // universal resource identifier specIdific to the resource
-                state: req.body.state,
-                contentType: req.body.contentType,
-                mediaType: req.body.mediaType, // video/text document ...
-                institution: req.body.institution,
-                yearOfCreation: req.body.yearOfCreation, // content's actual creation time
-                checkStatus: 'approve'
-            })
-        } else {
-            const checkStatus = 'underReview'
-            // student uploaded resource
-            if (res.locals.status === "student") {
-                let facultyInfo = await Course.findOne({_id: courseId})
-                newResource = new Resource({
-                    ownerId: req.user._id,
-                    courseId: courseId,
-                    status: req.body.status, // public/private to class/private to professors
-                    createdAt: new Date(),
-                    name: req.body.resourceName,
-                    description: req.body.description,
-                    tags: tags, // tags as array
-                    uri: req.body.uri, // universal resource identifier specific to the resource
-                    state: req.body.state,
-                    contentType: req.body.contentType,
-                    mediaType: req.body.mediaType, // video/text document ...
-                    institution: req.body.institution,
-                    yearOfCreation: req.body.yearOfCreation,// content's actual creation time
-                    facultyId: facultyInfo.ownerId, //belong to which faculty to approve
-                    checkStatus: checkStatus,
-                })
-            }
-            // faculty/admin uploaded resource
-            else {
-                newResource = new Resource({
-                    ownerId: req.user._id,
-                    courseId: courseId,
-                    status: req.body.status, // public/private to class/private to professors
-                    createdAt: new Date(),
-                    name: req.body.resourceName,
-                    description: req.body.description,
-                    tags: tags, // tags as array
-                    uri: req.body.uri, // universal resource identifier specific to the resource
-                    state: req.body.state,
-                    contentType: req.body.contentType,
-                    mediaType: req.body.mediaType,
-                    institution: req.body.institution,
-                    yearOfCreation: req.body.yearOfCreation,// content's actual creation time
-                    checkStatus: 'approve',
-                })
-            }
-        }
-        // save the new resource
-        await newResource.save()
-        await setWord2Id(newResource);
-        if (courseId === undefined)
-            res.redirect('/resources/view/faculty')
-        else
-            res.redirect('/course/view/' + courseId)
-    } catch (e) {
-        console.log("I am in trouble!!!")
-        next(e)
-    }
-}
+
+//****************************************************
+//***********Database storage related*****************
 
 async function setWord2Id(newResource) {
     let fullContent = newResource.name + ',' + newResource.description + ',' + newResource.tags + ','
@@ -153,6 +79,91 @@ exports.resetWord2Id = async (req, res, next) => {
     }
 }
 
+//****************************************************
+//*******************CRUD related*********************
+exports.uploadResource = async (req, res, next) => {
+    const courseId = req.params.courseId
+    console.log("in upload Resource")
+    try {
+        let tagsString = req.body.tags
+        let tags = tagsString.split(",")
+        let newResource
+        if (courseId === undefined) {
+            newResource = new Resource({
+                ownerId: req.user._id,
+                status: req.body.status, // public/private to class/private to professors
+                createdAt: new Date(),
+                name: req.body.resourceName,
+                description: req.body.resourceDescription,
+                tags: tags, // tags as array
+                uri: req.body.uri, // universal resource identifier specIdific to the resource
+                state: req.body.state,
+                contentType: req.body.contentType,
+                mediaType: req.body.mediaType, // video/text document ...
+                institution: req.body.institution,
+                yearOfCreation: req.body.yearOfCreation, // content's actual creation time
+                checkStatus: 'approve'
+            })
+        } else {
+            const checkStatus = 'underReview'
+            // student uploaded resource
+            if (res.locals.status === "student") {
+                let facultyInfo = await Course.findOne({_id: courseId})
+                newResource = new Resource({
+                    ownerId: req.user._id,
+                    courseId: courseId,
+                    status: req.body.status, // public/private to class/private to professors
+                    createdAt: new Date(),
+                    name: req.body.resourceName,
+                    description: req.body.description,
+                    tags: tags, // tags as array
+                    uri: req.body.uri, // universal resource identifier specific to the resource
+                    state: req.body.state,
+                    contentType: req.body.contentType,
+                    mediaType: req.body.mediaType, // video/text document ...
+                    institution: req.body.institution,
+                    yearOfCreation: req.body.yearOfCreation,// content's actual creation time
+                    facultyId: facultyInfo.ownerId, //belong to which faculty to approve
+                    checkStatus: checkStatus,
+                })
+            }
+            // faculty/admin uploaded resource
+            else {
+                newResource = new Resource({
+                    ownerId: req.user._id,
+                    courseId: courseId,
+                    status: req.body.status, // public/private to class/private to professors
+                    createdAt: new Date(),
+                    name: req.body.resourceName,
+                    description: req.body.description,
+                    tags: tags, // tags as array
+                    uri: req.body.uri, // universal resource identifier specific to the resource
+                    state: req.body.state,
+                    contentType: req.body.contentType,
+                    mediaType: req.body.mediaType,
+                    institution: req.body.institution,
+                    yearOfCreation: req.body.yearOfCreation,// content's actual creation time
+                    checkStatus: 'approve',
+                })
+            }
+        }
+        // save the new resource
+        await newResource.save()
+        await setWord2Id(newResource);
+        // if (courseId === undefined)
+        //     res.redirect('/resources/view/faculty')
+        // else
+        //     res.redirect('/course/view/' + courseId)
+        res.render('./pages/resources/uploadSuccess', {
+            req: req,
+            courseId: courseId
+        })
+    } catch (e) {
+        console.log("Upload resource unsuccessful")
+        next(e)
+    }
+}
+
 exports.updateResource = async (req, res, next) => {
     const resourceId = req.params.resourceId
     try {
@@ -181,6 +192,115 @@ exports.updateResource = async (req, res, next) => {
     }
 }
 
+exports.removePublicResource = async (req, res, next) => {
+    const resourceId = await req.params.resourceId
+    try {
+        let OldResource = await Resource.findOne({_id: resourceId})
+        OldResource.status = 'public'
+        await OldResource.save()
+        res.redirect('back')
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.postPublicResource = async (req, res, next) => {
+    const resourceId = await req.params.resourceId
+    try {
+        let OldResource = await Resource.findOne({_id: resourceId})
+        OldResource.status = 'finalPublic'
+        await OldResource.save()
+        res.redirect('back')
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.removeResource = async (req, res, next) => {
+    try {
+        let resourceId = await req.params.resourceId
+        let resource = await Resource.findOne({_id: resourceId})
+        await removeWord2Id(resource)
+        await Resource.deleteOne({_id: resourceId})
+        console.log('url: ', req.url)
+        res.redirect('back')
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.studentUpdateResource = async (req, res, next) => {
+    console.log('student')
+    const resourceId = req.params.resourceId
+    try {
+        let tagsString = req.body.selectedTags
+        let tags = tagsString.split(",")
+        let oldResource = await Resource.findOne({_id: resourceId})
+        oldResource.name = req.body.resourceName
+        oldResource.status = req.body.status
+        oldResource.description = req.body.resourceDescription
+        oldResource.uri = req.body.uri
+        oldResource.state = req.body.state
+        oldResource.contentType = req.body.contentType
+        oldResource.mediaType = req.body.mediaType
+        oldResource.institution = req.body.institution
+        oldResource.yearOfCreation = req.body.yearOfCreation
+        oldResource.tags = tags
+        oldResource.checkStatus = 'underReview'
+        await oldResource.save()
+        // save the new resource
+        res.redirect('back')
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.uploadToPublicResr = async (req, res, next) => {
+    try {
+
+        let tagsString = req.body.tags
+        let tags = tagsString.split(",")
+        let newResource
+        newResource = new Resource({
+            ownerId: req.user._id,
+            status: req.body.status, // public/private to class/private to professors
+            createdAt: new Date(),
+            name: req.body.resourceName,
+            description: req.body.resourceDescription,
+            tags: tags, // tags as array
+            uri: req.body.uri, // universal resource identifier specIdific to the resource
+            state: req.body.state,
+            contentType: req.body.contentType,
+            mediaType: req.body.mediaType, // video/text document ...
+            institution: req.body.institution,
+            yearOfCreation: req.body.yearOfCreation, // content's actual creation time
+            checkStatus: 'approve'
+        })
+        await newResource.save()
+        res.redirect('/managePublicResources')
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.updateOwner = async (req, res, next) => {
+    try {
+        let resource = await Resource.findOne({_id: req.params.resourceId})
+        resource.ownerId = req.body.ownerId
+        let tempUser = await User.findOne({_id: req.body.ownerId})
+        resource.ownerName = tempUser.userName
+        await resource.save()
+        if (req.params.option === 'fav')
+            res.redirect('/resources/view/favorite')
+        else
+            res.redirect('/resources/view/private')
+    } catch (e) {
+        next(e)
+    }
+}
+
+//****************************************************
+//********************Load related********************
 exports.loadResources = async (req, res, next) => {
     const courseId = req.params.courseId
     const checkStatus = 'approve'
@@ -202,7 +322,6 @@ exports.loadResources = async (req, res, next) => {
         next(e)
     }
 }
-
 
 exports.loadAllFacultyResources = async (req, res, next) => {
     try {
@@ -310,45 +429,39 @@ exports.loadAllPublicResources = async (req, res, next) => {
     }
 }
 
-
-exports.removePublicResource = async (req, res, next) => {
-    const resourceId = await req.params.resourceId
+exports.showMyResources = async (req, res, next) => {
     try {
-        let OldResource = await Resource.findOne({_id: resourceId})
-        OldResource.status = 'public'
-        await OldResource.save()
-        res.redirect('back')
+        let resourceInfo = await Resource.find({ownerId: req.user._id})
+        if (req.user.status === 'student') {
+            res.render('./pages/myResourcesStudent', {
+                resourceInfo: resourceInfo
+            })
+        } else {
+            res.render('./pages/myResourcesFaculty', {
+                resourceInfo: resourceInfo
+            })
+        }
     } catch (e) {
         next(e)
     }
 }
 
-exports.postPublicResource = async (req, res, next) => {
-    const resourceId = await req.params.resourceId
+exports.showPublic = async (req, res, next) => {
     try {
-        let OldResource = await Resource.findOne({_id: resourceId})
-        OldResource.status = 'finalPublic'
-        await OldResource.save()
-        res.redirect('back')
+        let resourceInfo = await Resource.find({
+            status: {$in: ["finalPublic", "public"]},
+            checkStatus: 'approve'
+        })
+        res.render('./pages/publicPrimarySearch', {
+            resourceInfo: resourceInfo,
+        })
     } catch (e) {
         next(e)
     }
 }
 
-
-exports.removeResource = async (req, res, next) => {
-    try {
-        let resourceId = await req.params.resourceId
-        let resource = await Resource.findOne({_id: resourceId})
-        await removeWord2Id(resource)
-        await Resource.deleteOne({_id: resourceId})
-        console.log('url: ', req.url)
-        res.redirect('back')
-    } catch (e) {
-        next(e)
-    }
-}
-
+//****************************************************
+//****************Special operations******************
 exports.starResource = async (req, res, next) => {
     try {
         let resourceId = await req.params.resourceId
@@ -380,27 +493,6 @@ exports.starResource = async (req, res, next) => {
     }
 }
 
-exports.showStarredResources = async (req, res, next) => {
-    try {
-        let resourceInfo = null
-        let resourceSet = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
-        console.log(resourceSet)
-        if (!resourceSet) {
-            console.log('resource set empty')
-        } else {
-            console.log('resource set not empty')
-            let resourceInfoIds = await resourceSet.resources
-            resourceInfo = await Resource.find({_id: {$in: resourceInfoIds}})
-        }
-        let allResourceSets = await ResourceSet.find({ownerId: req.user._id})
-        res.locals.allResourceSets = allResourceSets
-        res.locals.resourceInfo = resourceInfo
-        res.render('./pages/showStarredResources')
-    } catch (e) {
-        next(e)
-    }
-}
-
 exports.unstarResource = async (req, res, next) => {
     try {
         let resourceId = await req.params.resourceId
@@ -420,17 +512,6 @@ exports.unstarResource = async (req, res, next) => {
     } catch (e) {
         next(e)
     }
-}
-
-let starredIds
-
-exports.reloadSearch = async (req, res) => {
-    res.locals.resourceIds = starredIds
-    res.locals.resourceInfo = resourceInfoSet
-    console.log("starred Ids: ", starredIds)
-    res.render('./pages/showResources', {
-        secretType: 'Search Result'
-    })
 }
 
 exports.starResourceAlt = async (req, res, next) => {
@@ -497,76 +578,28 @@ exports.unstarResourceAlt = async (req, res, next) => {
     }
 }
 
-exports.studentUpdateResource = async (req, res, next) => {
-    console.log('student')
-    const resourceId = req.params.resourceId
+exports.showStarredResources = async (req, res, next) => {
     try {
-        let tagsString = req.body.selectedTags
-        let tags = tagsString.split(",")
-        let oldResource = await Resource.findOne({_id: resourceId})
-        oldResource.name = req.body.resourceName
-        oldResource.status = req.body.status
-        oldResource.description = req.body.resourceDescription
-        oldResource.uri = req.body.uri
-        oldResource.state = req.body.state
-        oldResource.contentType = req.body.contentType
-        oldResource.mediaType = req.body.mediaType
-        oldResource.institution = req.body.institution
-        oldResource.yearOfCreation = req.body.yearOfCreation
-        oldResource.tags = tags
-        oldResource.checkStatus = 'underReview'
-        await oldResource.save()
-        // save the new resource
-        res.redirect('back')
-    } catch (e) {
-        next(e)
-    }
-}
-
-exports.showMyResources = async (req, res, next) => {
-    try {
-        let resourceInfo = await Resource.find({ownerId: req.user._id})
-        if (req.user.status === 'student') {
-            res.render('./pages/myResourcesStudent', {
-                resourceInfo: resourceInfo
-            })
+        let resourceInfo = null
+        let resourceSet = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
+        console.log(resourceSet)
+        if (!resourceSet) {
+            console.log('resource set empty')
         } else {
-            res.render('./pages/myResourcesFaculty', {
-                resourceInfo: resourceInfo
-            })
+            console.log('resource set not empty')
+            let resourceInfoIds = await resourceSet.resources
+            resourceInfo = await Resource.find({_id: {$in: resourceInfoIds}})
         }
+        let allResourceSets = await ResourceSet.find({ownerId: req.user._id})
+        res.locals.allResourceSets = allResourceSets
+        res.locals.resourceInfo = resourceInfo
+        res.render('./pages/showStarredResources')
     } catch (e) {
         next(e)
     }
 }
 
-exports.uploadToPublicResr = async (req, res, next) => {
-    try {
-
-        let tagsString = req.body.tags
-        let tags = tagsString.split(",")
-        let newResource
-        newResource = new Resource({
-            ownerId: req.user._id,
-            status: req.body.status, // public/private to class/private to professors
-            createdAt: new Date(),
-            name: req.body.resourceName,
-            description: req.body.resourceDescription,
-            tags: tags, // tags as array
-            uri: req.body.uri, // universal resource identifier specIdific to the resource
-            state: req.body.state,
-            contentType: req.body.contentType,
-            mediaType: req.body.mediaType, // video/text document ...
-            institution: req.body.institution,
-            yearOfCreation: req.body.yearOfCreation, // content's actual creation time
-            checkStatus: 'approve'
-        })
-        await newResource.save()
-        res.redirect('/managePublicResources')
-    } catch (e) {
-        next(e)
-    }
-}
+let starredIds
 
 exports.loadCollection = async (req, res, next) => {
     try {
@@ -655,26 +688,18 @@ exports.deleteCollection = async (req, res, next) => {
     }
 }
 
-exports.showPublic = async (req, res, next) => {
-    try {
-        let resourceInfo = await Resource.find({
-            status: {$in: ["finalPublic", "public"]},
-            checkStatus: 'approve'
-        })
-        res.render('./pages/publicPrimarySearch', {
-            resourceInfo: resourceInfo,
-        })
-    } catch (e) {
-        next(e)
-    }
-}
-
-
 // -----------------------------------------------
-//
 // --------------- General Search ----------------
-//
 // -----------------------------------------------
+
+exports.reloadSearch = async (req, res) => {
+    res.locals.resourceIds = starredIds
+    res.locals.resourceInfo = resourceInfoSet
+    console.log("starred Ids: ", starredIds)
+    res.render('./pages/showResources', {
+        secretType: 'Search Result'
+    })
+}
 
 exports.primarySearch = async (req, res, next) => {
     try {
@@ -813,9 +838,7 @@ async function invertedSearch(req, res) {
 
 
 // -----------------------------------------------
-//
 // --------------- Advanced Search ---------------
-//    
 // -----------------------------------------------
 
 exports.advancedSearch = async (req, res) => {

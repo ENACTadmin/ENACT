@@ -65,6 +65,11 @@
                                                         data-target='#deleteModal<%= resourceInfo[i]._id %>'>
                                                     Delete
                                                 </button>
+                                                <% if (status === 'admin') { %>
+                                                    <a href='/resource/update/<%= resourceInfo[i]._id %>/my'>
+                                                        <input class='btn btn-outline-primary' style='border:0px solid transparent'
+                                                               type='button' value='Change author'></a>
+                                                <% } %>
                                             </li>
                                         </ul>
                                     </div>

@@ -89,6 +89,11 @@
                                                         Edit
                                                     </button>
                                                 <% } %>
+                                                <% if (status === 'admin') { %>
+                                                    <a href='/resource/update/<%= resourceInfo[i]._id %>/fav'>
+                                                        <input class='btn btn-outline-primary' style='border:0px solid transparent'
+                                                               type='button' value='Change author'></a>
+                                                <% } %>
                                             </form>
                                         </li>
                                     </ul>

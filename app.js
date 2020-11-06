@@ -9,6 +9,9 @@ const session = require("express-session");
 const Event = require('./models/Event')
 const Course = require('./models/Course')
 const Tag = require('./models/Tag')
+const Resource = require('./models/Resource')
+const User = require('./models/User')
+
 
 
 //*******************************************
@@ -307,6 +310,31 @@ app.get('/resources/view/private',
     resourceController.showMyResources
 )
 
+app.get('/resources/all',
+    async (req, res) => {
+        let resources = await Resource.find()
+        return res.send(resources)
+    }
+)
+
+app.get('/resource/update/:resourceId/:option',
+    async (req, res) => {
+        let resource = await Resource.findOne({_id: req.params.resourceId})
+        let ownerId = resource.ownerId
+        let tempUser = await User.findOne({_id: ownerId})
+        let ownerName1 = tempUser.userName
+        res.render('./pages/updateOwner', {
+            resource: resource,
+            ownerName1: ownerName1,
+            req: req
+        })
+    }
+)
+
+app.post('/resource/update/:resourceId/:option',
+    resourceController.updateOwner
+)
+
 app.post('/studentUpdateResource/:resourceId',
     resourceController.studentUpdateResource
 )
@@ -485,6 +513,13 @@ app.get('/events/all',
             eventsInfo[i].end = new Date(eventsInfo[i].end - (now.getTimezoneOffset() * 60000))
         }
         return res.send(eventsInfo)
+    }
+)
+
+app.get('/profiles/all',
+    async (req, res) => {
+        let userProfiles = await User.find()
+        return res.send(userProfiles)
     }
 )
 
