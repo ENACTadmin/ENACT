@@ -25,7 +25,7 @@ $(document).ready(function () {
         fetch: function (text, update) {
             text = text.toLowerCase();
             // you can also use AJAX requests instead of preloaded data
-            var suggestions = resources.filter(n => (n.label !== undefined && n.label.toLowerCase().startsWith(text)))
+            var suggestions = resources.filter(n => (n.label !== undefined && n.label.toLowerCase().includes(text)))
             // console.log("suggestions: ", suggestions)
             update(suggestions);
         },
