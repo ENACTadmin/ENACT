@@ -90,6 +90,10 @@ app.get('/about',
     (req, res) =>
         res.render('./pages/about'))
 
+app.get('/help',
+    (req, res) =>
+        res.render('./pages/help'))
+
 //*******************************************
 //***********Course related******************
 app.get('/course',
