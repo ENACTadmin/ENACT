@@ -330,7 +330,6 @@ let id_set = [] %>
             let id_set_array = id_set.split(',')
             for (let i = 0; i < id_set_array.length; i++) {
                 let text = $('#contentTypeSelect' + id_set_array[i] + ' option:selected').text();
-                console.log("text: ", text)
                 if (text === 'Choose...' || text === 'Assignment Guidelines' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
                     $(".toShow" + id_set_array[i]).hide()
                     $(".toShow2" + id_set_array[i]).hide()
@@ -343,7 +342,6 @@ let id_set = [] %>
                 }
                 $("#contentTypeSelect" + id_set_array[i]).on("change", function () {
                     text = $('#contentTypeSelect' + id_set_array[i] + ' option:selected').text();
-                    console.log("text: ", text)
                     if (text === 'Choose...' || text === 'Assignment Guidelines' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
                         $(".toShow" + id_set_array[i]).hide()
                         $(".toShow2" + id_set_array[i]).hide()

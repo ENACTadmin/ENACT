@@ -8,8 +8,6 @@
                 <div class="card card-signin my-5">
                     <div class="card-body">
                         <h5 class="card-title text-center"><b>Reset Password</b></h5>
-                        <% console.log(userIdParam) %>
-                        <% console.log(emailFromServer) %>
                         <form class="form-signin" action="/reset/<%= userIdParam %>" method="post">
                             <div hidden class="form-label-group">
                                 <input type="text" name="email" id="Username" class="form-control" value="<%= emailFromServer %>"
