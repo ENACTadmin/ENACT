@@ -18,8 +18,6 @@ $(document).ready(function () {
         profiles[profile].label = profiles[profile].userName;
     }
 
-    console.log(profiles)
-
     var input = document.getElementById("profiles");
     var ownerId = document.getElementById("ownerId");
 
@@ -29,7 +27,6 @@ $(document).ready(function () {
             text = text.toLowerCase();
             // you can also use AJAX requests instead of preloaded data
             var suggestions = profiles.filter(n => (n.label !== undefined && n.label.toLowerCase().startsWith(text)))
-            console.log("suggestions: ", suggestions)
             update(suggestions);
         },
         onSelect: function (item) {
