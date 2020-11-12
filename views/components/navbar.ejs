@@ -154,6 +154,12 @@
                     </li>
                 <% } %>
 
+                <% if (loggedIn) { %>
+                    <li>
+                        <a class='header-link' id='header-link' href='/help' data-aos='fade-left'>Help</a>
+                    </li>
+                <% } %>
+
                 <li class='header__btn header__btn--login'>
                     <% if (!loggedIn) { %>
                         <a class='btn btn-outline-dark' href='/login' data-aos='fade-left'>ENACT member login</a>
