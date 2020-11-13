@@ -15,8 +15,12 @@ $(document).ready(function () {
     });
 
     for (var resource in resources) {
-        if (resources[resource].tags[0].length > 0)
-            resources[resource].label = resources[resource].name + " [" + resources[resource].tags + "] ";
+        // if (resources[resource].tags[0].length > 0)
+        //     resources[resource].label = resources[resource].name + " [" + resources[resource].tags + "] ";
+        // else
+        //     resources[resource].label = resources[resource].name;
+        if (resources[resource].contentType !== "empty")
+            resources[resource].label = resources[resource].name + " [" + resources[resource].contentType + "] ";
         else
             resources[resource].label = resources[resource].name;
     }
