@@ -88,9 +88,11 @@ exports.uploadResource = async (req, res, next) => {
         let tagsString = req.body.tags
         let tags = tagsString.split(",")
         let newResource
+        let currUser = await User.findOne({_id: req.user._id})
         if (courseId === undefined) {
             newResource = new Resource({
                 ownerId: req.user._id,
+                ownerName: currUser.userName,
                 status: req.body.status, // public/private to class/private to professors
                 createdAt: new Date(),
                 name: req.body.resourceName,
@@ -111,6 +113,7 @@ exports.uploadResource = async (req, res, next) => {
                 let facultyInfo = await Course.findOne({_id: courseId})
                 newResource = new Resource({
                     ownerId: req.user._id,
+                    ownerName: currUser.userName,
                     courseId: courseId,
                     status: req.body.status, // public/private to class/private to professors
                     createdAt: new Date(),
@@ -131,6 +134,7 @@ exports.uploadResource = async (req, res, next) => {
             else {
                 newResource = new Resource({
                     ownerId: req.user._id,
+                    ownerName: currUser.userName,
                     courseId: courseId,
                     status: req.body.status, // public/private to class/private to professors
                     createdAt: new Date(),
@@ -704,7 +708,7 @@ exports.reloadSearch = async (req, res) => {
 exports.primarySearch = async (req, res, next) => {
     try {
         let resourceInfo = await invertedSearch(req, res);
-        console.log("resources: ", resourceInfo)
+        // console.log("resources: ", resourceInfo)
         let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
 
         let starredResourceIds = null
