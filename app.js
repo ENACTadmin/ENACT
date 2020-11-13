@@ -438,6 +438,20 @@ app.get('/secretFunction',
     resourceController.resetWord2Id
 )
 
+app.get('/secretFunction2',
+    async (req, res) => {
+        let allRes = await Resource.find()
+        for (var resource in allRes) {
+            let author = await User.findOne(allRes[resource].ownerId)
+            if (author) {
+                allRes[resource].ownerName = author.userName
+                await allRes[resource].save()
+            }
+        }
+        res.send("Success!")
+    }
+)
+
 //*******************************************
 //***********Profile related*****************
 
