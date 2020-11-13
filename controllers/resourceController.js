@@ -16,7 +16,7 @@ async function setWord2Id(newResource) {
         + newResource.state + ',' + newResource.contentType + ',' + newResource.mediaType + ','
         + newResource.institution + ',' + newResource.yearOfCreation
 
-    let regex = /[^\s\.,!?()]+/g;
+    let regex = /[^\s\.,!?()\[\]]+/g;
     let match = fullContent.match(regex);
     console.log('match: ', match)
     for (let i = 0; i < match.length; i++) {
@@ -45,7 +45,7 @@ async function removeWord2Id(oldResource) {
         + oldResource.state + ',' + oldResource.contentType + ',' + oldResource.mediaType + ','
         + oldResource.institution + ',' + oldResource.yearOfCreation
 
-    let regex = /[^\s\.,!?()]+/g;
+    let regex = /[^\s\.,!?()\[\]]+/g;
     let match = fullContent.match(regex);
     console.log('match here: ', match);
     for (let i = 0; i < match.length; i++) {
@@ -735,7 +735,7 @@ exports.primaryPublicSearch = async (req, res, next) => {
     let resourceInfo = null
     const checkStatus = 'approve'
     try {
-        let regex = /[^\s\.,!?()]+/g;
+        let regex = /[^\s\.,!?()\[\]]+/g;
         let match = req.body.search.match(regex)
         if (match) {
             for (let i = 0; i < match.length; i++) {
@@ -776,7 +776,7 @@ exports.primaryPublicSearch = async (req, res, next) => {
 async function invertedSearch(req, res) {
     const checkStatus = 'approve'
     let resourceInfo = null
-    let regex = /[^\s\.,!?()]+/g;
+    let regex = /[^\s\.,!?()\[\]]+/g;
     let match = req.body.search.match(regex)
     if (match) {
         // admin search

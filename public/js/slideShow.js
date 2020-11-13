@@ -264,15 +264,15 @@ let labels = [
     'Students in Brandeis University\'s ENACT course meet at the Massachusetts State House with (now former) Representative Byron Rushing.',
     'ENACT Faculty Fellow Rob Glover of the Universuty of Maine (right) and former student  Harold "Trey" Stewart III, now a Maine State Representative, at the ENACT booth at the 2017 National COnference of State Legislatures Annual Legislative Summit.',
     'Brandeis ENACT students Francesca Pinto \'17 and Matthew Yan \'17 listen to Ashley Morales \'17 during the 2017 Brandeis "Present and Defend" presentation.',
-    'Community members and ENACT students participate in "Present and Defend" at Drake University in Iowa.',
-    'ENACT Faulty Fellow James Slack and his studenst during a visit to the Mississippi State Capitol Building.',
-    'Now former State Senator Richard Ross (R) and State Representative Jay Kaufman (D) speak to ENACT students at the Massachusetts State House.',
-    'ENACT Faculty Fellow Victor Eno of Florida Agricultural and Mechanical University participating in the ENACT Institute.',
-    'Professor Kathleen Cole of Metropolitan State University in Minneapolis, Minnesota, discusses the ENACT program with fellow ENACT Faculty Fellows.',
+    'ENACT Faculty Fellows at the Massachusetts State House with legislators and staff.',
     'Women\'s Engagement in Politics Forum: ENACT Academic Program Director Melissa Stimell, Mass. State Senator Cindy Friedman and Former New Hampshire Speaker of the House Terie Norelli (L-R).',
-    'ENACT Faculty Fellows speak with a legislative aide during a visit to the MAssachusetts State House.',
+    'ENACT Faculty Fellow Victor Eno of Florida Agricultural and Mechanical University participating in the ENACT Institute.',
+    'ENACT Faulty Fellow James Slack and his studenst during a visit to the Mississippi State Capitol Building.',
+    'Professor Kathleen Cole of Metropolitan State University in Minneapolis, Minnesota, discusses the ENACT program with fellow ENACT Faculty Fellows.',
+    'Now former State Senator Richard Ross (R) and State Representative Jay Kaufman (D) speak to ENACT students at the Massachusetts State House.',
     'Brandeis ENACT student Max Everson shares his ENACT experience with ENACT Faulty Fellows Michelle Inderbitzin of Oregon State and Jason Gainous of the University of Louisville.',
-    'ENACT Faculty Fellows at the Massachusetts State House with legislators and staff.'
+    'Community members and ENACT students participate in "Present and Defend" at Drake University in Iowa.',
+    'ENACT Faculty Fellows speak with a legislative aide during a visit to the Massachusetts State House.',
 ]
 
 exports.getPath = (info) => {

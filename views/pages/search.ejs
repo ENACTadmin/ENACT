@@ -2,6 +2,7 @@
 <%- include('../components/navbar'); -%>
 
 <script src='/js/search.js'></script>
+<script src='/js/showDesc.js'></script>
 
 <section class='section'>
     <div class='section__content section__content--full-width'>
@@ -9,9 +10,7 @@
             <div class='section__title section__title--centered'>
                 Advanced Search
             </div>
-            <!--            <h4>Apply filters to search results</h4>-->
             <h4>Note: leave the field <b style="color: darkblue">BLANK</b> if not wishing to apply that filter</h4>
-
         </div>
     </div>
 </section>
@@ -59,631 +58,109 @@
                                     <option value='Testimony'>Testimony</option>
                                 </select>
                             </div>
-                            <div class='toShow-AV'>
+                            <div class='toShowAll toShow-AV'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     student-created short videos about issues/bills</h5>
                                 <br>
                             </div>
-                            <div class='toShow-AG'>
+                            <div class='toShowAll toShow-AG'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     faculty-created class assignments and grading rubrics
                                 </h5>
                                 <br>
                             </div>
-                            <div class='toShow-CJ'>
+                            <div class='toShowAll toShow-CJ'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     student reflections on legislative work
                                 </h5>
                                 <br>
                             </div>
-                            <div class='toShow-CR'>
+                            <div class='toShowAll toShow-CR'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     faculty-suggested course readings
                                 </h5>
                                 <br>
                             </div>
-                            <div class='toShow-ES'>
+                            <div class='toShowAll toShow-ES'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     student-created 30-second pitch for bill
                                 </h5>
                                 <br>
                             </div>
-                            <div class='toShow-CP'>
+                            <div class='toShowAll toShow-CP'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     resources by and for faculty
                                 </h5>
                                 <br>
                             </div>
-                            <div class='toShow-FS'>
+                            <div class='toShowAll toShow-FS'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     student-created issue-based handouts/ interviews
                                 </h5>
                                 <br>
                             </div>
-                            <div class='toShow-NS'>
+                            <div class='toShowAll toShow-NS'>
                                 <h5 style="display: inline">
                                     student recommendations/analysis of next steps for a bill/issue
                                 </h5>
                                 <br>
                             </div>
-                            <div class='toShow-OE'>
+                            <div class='toShowAll toShow-OE'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     published and unpublished op-eds
                                 </h5>
                                 <br>
                             </div>
-                            <div class='toShow-PR'>
+                            <div class='toShowAll toShow-PR'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     writing about the ENACT experience by participants
                                 </h5>
                                 <br>
                             </div>
-                            <div class='toShow-Po'>
+                            <div class='toShowAll toShow-Po'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     student-created legislative portfolios
                                 </h5>
                                 <br>
                             </div>
-                            <div class='toShow-Pr'>
+                            <div class='toShowAll toShow-Pr'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     final “Present and Defend” presentations
                                 </h5>
                                 <br>
                             </div>
-                            <div class='toShow-SS'>
+                            <div class='toShowAll toShow-SS'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     student-created script on finances of bill/legislation
                                 </h5>
                                 <br>
                             </div>
-                            <div class='toShow-Sy'>
+                            <div class='toShowAll toShow-Sy'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     ENACT course syllabi
                                 </h5>
                                 <br>
                             </div>
-                            <div class='toShow-Te'>
+                            <div class='toShowAll toShow-Te'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     testimony delivered at a legislative hearing
                                 </h5>
                                 <br>
                             </div>
-                            <script>
-                                $(document).ready(function () {
-                                    let text = $('#contentSelect option:selected').text();
-                                    if (text === 'Assignment/Grading Rubric Guidelines') {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").show()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    } else if (text === 'Advocacy Video') {
-                                        $(".toShow-AV").show()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    } else if (text === 'Campaign Journal/Personal Reflections') {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").show()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    } else if (text === 'Course Reading') {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").show()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    } else if (text === 'Elevator Speech') {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").show()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    } else if (text === 'Course Planning') {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").show()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    } else if (text === 'Fact Sheet/Storybook') {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").show()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    } else if (text === 'Next Steps') {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").show()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    } else if (text === 'Op-Ed') {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").show()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    } else if (text === 'Essays about ENACT') {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").show()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    } else if (text === 'Portfolio') {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").show()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    } else if (text === 'Presentations') {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").show()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    } else if (text === 'Script for meeting with Ways and Means Staff') {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").show()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    } else if (text === 'Syllabus') {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").show()
-                                        $(".toShow-Te").hide()
-                                    } else if (text === 'Testimony') {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").show()
-                                    } else {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    }
-                                    $("#contentSelect").on("change", function () {
-                                        text = $('#contentSelect option:selected').text();
-                                        if (text === 'Assignment/Grading Rubric Guidelines') {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").show()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        } else if (text === 'Advocacy Video') {
-                                            $(".toShow-AV").show()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        } else if (text === 'Campaign Journal/Personal Reflections') {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").show()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        } else if (text === 'Course Reading') {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").show()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        } else if (text === 'Elevator Speech') {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").show()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        } else if (text === 'Course Planning') {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").show()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        } else if (text === 'Fact Sheet/Storybook') {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").show()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        } else if (text === 'Next Steps') {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").show()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        } else if (text === 'Op-Ed') {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").show()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        } else if (text === 'Essays about ENACT') {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").show()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        } else if (text === 'Portfolio') {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").show()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        } else if (text === 'Presentations') {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").show()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        } else if (text === 'Script for meeting with Ways and Means Staff') {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").show()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        } else if (text === 'Syllabus') {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").show()
-                                            $(".toShow-Te").hide()
-                                        } else if (text === 'Testimony') {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").show()
-                                        } else {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        }
-                                    })
-                                })
-                            </script>
                         <% } else { %>
                             <div class='input-group-prepend'>
                                 <span class='input-group-text' style='width: 180px'>Content Type</span>
@@ -705,483 +182,88 @@
                                     <option value='Testimony'>Testimony</option>
                                 </select>
                             </div>
-                            <div class='toShow-AV'>
+                            <div class='toShowAll toShow-AV'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     student-created short videos about issues/bills</h5>
                                 <br>
                             </div>
-                            <div class='toShow-CJ'>
+                            <div class='toShowAll toShow-CJ'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     student reflections on legislative work
                                 </h5>
                                 <br>
                             </div>
-                            <div class='toShow-ES'>
+                            <div class='toShowAll toShow-ES'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     student-created 30-second pitch for bill
                                 </h5>
                                 <br>
                             </div>
-                            <div class='toShow-CP'>
+                            <div class='toShowAll toShow-CP'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     resources by and for faculty
                                 </h5>
                                 <br>
                             </div>
-                            <div class='toShow-NS'>
+                            <div class='toShowAll toShow-NS'>
                                 <h5 style="display: inline">
                                     student recommendations/analysis of next steps for a bill/issue
                                 </h5>
                                 <br>
                             </div>
-                            <div class='toShow-OE'>
+                            <div class='toShowAll toShow-OE'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     published and unpublished op-eds
                                 </h5>
                                 <br>
                             </div>
-                            <div class='toShow-PR'>
+                            <div class='toShowAll toShow-PR'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     writing about the ENACT experience by participants
                                 </h5>
                                 <br>
                             </div>
-                            <div class='toShow-Po'>
+                            <div class='toShowAll toShow-Po'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     student-created legislative portfolios
                                 </h5>
                                 <br>
                             </div>
-                            <div class='toShow-Pr'>
+                            <div class='toShowAll toShow-Pr'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     final “Present and Defend” presentations
                                 </h5>
                                 <br>
                             </div>
-                            <div class='toShow-FS'>
+                            <div class='toShowAll toShow-FS'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     student-created issue-based handouts/ interviews
                                 </h5>
                                 <br>
                             </div>
-                            <div class='toShow-SS'>
+                            <div class='toShowAll toShow-SS'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     student-created script on finances of bill/legislation
                                 </h5>
                                 <br>
                             </div>
-                            <div class='toShow-Te'>
+                            <div class='toShowAll toShow-Te'>
                                 <h5 style="display: inline">
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <br>
                                     testimony delivered at a legislative hearing
                                 </h5>
                                 <br>
                             </div>
-
-                            <script>
-                                $(document).ready(function () {
-                                    let text = $('#contentSelect option:selected').text();
-                                    if (text === 'Advocacy Video') {
-                                        $(".toShow-AV").show()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    } else if (text === 'Campaign Journal/Personal Reflections') {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").show()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    }  else if (text === 'Elevator Speech') {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").show()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    }  else if (text === 'Fact Sheet/Storybook') {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").show()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    } else if (text === 'Next Steps') {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").show()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    } else if (text === 'Op-Ed') {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").show()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    } else if (text === 'Essays about ENACT') {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").show()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    } else if (text === 'Portfolio') {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").show()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    } else if (text === 'Presentations') {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").show()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    } else if (text === 'Script for meeting with Ways and Means Staff') {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").show()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    } else if (text === 'Testimony') {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").show()
-                                    } else {
-                                        $(".toShow-AV").hide()
-                                        $(".toShow-AG").hide()
-                                        $(".toShow-CJ").hide()
-                                        $(".toShow-CR").hide()
-                                        $(".toShow-ES").hide()
-                                        $(".toShow-CP").hide()
-                                        $(".toShow-FS").hide()
-                                        $(".toShow-NS").hide()
-                                        $(".toShow-OE").hide()
-                                        $(".toShow-PR").hide()
-                                        $(".toShow-Po").hide()
-                                        $(".toShow-Pr").hide()
-                                        $(".toShow-SS").hide()
-                                        $(".toShow-Sy").hide()
-                                        $(".toShow-Te").hide()
-                                    }
-                                    $("#contentSelect").on("change", function () {
-                                        text = $('#contentSelect option:selected').text();
-                                        if(text === 'Advocacy Video') {
-                                            $(".toShow-AV").show()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        } else if (text === 'Campaign Journal/Personal Reflections') {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").show()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        } else if (text === 'Elevator Speech') {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").show()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        } else if (text === 'Fact Sheet/Storybook') {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").show()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        } else if (text === 'Next Steps') {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").show()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        } else if (text === 'Op-Ed') {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").show()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        } else if (text === 'Essays about ENACT') {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").show()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        } else if (text === 'Portfolio') {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").show()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        } else if (text === 'Presentations') {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").show()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        } else if (text === 'Script for meeting with Ways and Means Staff') {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").show()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        } else if (text === 'Testimony') {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").show()
-                                        } else {
-                                            $(".toShow-AV").hide()
-                                            $(".toShow-AG").hide()
-                                            $(".toShow-CJ").hide()
-                                            $(".toShow-CR").hide()
-                                            $(".toShow-ES").hide()
-                                            $(".toShow-CP").hide()
-                                            $(".toShow-FS").hide()
-                                            $(".toShow-NS").hide()
-                                            $(".toShow-OE").hide()
-                                            $(".toShow-PR").hide()
-                                            $(".toShow-Po").hide()
-                                            $(".toShow-Pr").hide()
-                                            $(".toShow-SS").hide()
-                                            $(".toShow-Sy").hide()
-                                            $(".toShow-Te").hide()
-                                        }
-                                    })
-                                })
-                            </script>
                         <% } %>
                         <br>
                         <div class='input-group-prepend'>

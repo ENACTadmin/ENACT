@@ -15,7 +15,10 @@ $(document).ready(function () {
     });
 
     for (var resource in resources) {
-        resources[resource].label = resources[resource].name;
+        if (resources[resource].tags[0].length > 0)
+            resources[resource].label = resources[resource].name + " [" + resources[resource].tags + "] ";
+        else
+            resources[resource].label = resources[resource].name;
     }
 
     var input = document.getElementById("resources");
@@ -30,7 +33,7 @@ $(document).ready(function () {
             update(suggestions);
         },
         onSelect: function (item) {
-            input.value = item.name;
+            input.value = item.label;
         }
     });
 })

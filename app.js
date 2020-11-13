@@ -316,7 +316,28 @@ app.get('/resources/view/private',
 
 app.get('/resources/all',
     async (req, res) => {
-        let resources = await Resource.find()
+        let resources
+        // ENACT users
+        if (res.locals.loggedIn) {
+            // admin/student requesting
+            if (res.locals.status === 'admin' || res.locals.status === 'faculty')
+                resources = await Resource.find({
+                    checkStatus: 'approve'
+                })
+            else
+                resources = await Resource.find({
+                    checkStatus: 'approve',
+                    status: {$in: ["privateToENACT", "public", "finalPublic"]}
+                })
+        }
+        // public users
+        else {
+            resources = await Resource.find({
+                checkStatus: 'approve',
+                status: {$in: ["finalPublic", "public"]}
+            })
+            console.log("hello: ", resources)
+        }
         return res.send(resources)
     }
 )
