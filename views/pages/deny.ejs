@@ -43,9 +43,12 @@
                                                             <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click me</a>
                                                         </li>
                                                         <li class='list-group-item borderless box-padding'>
-                                                            <b>Institution: </b> <%= resourceInfo[i].institution %></li>
+                                                            <b>Institution: </b> <%= resourceInfo[i].institution %>
+                                                        </li>
+                                                        <li class='list-group-item borderless box-padding'>
+                                                            <b>Author: </b> <%= resourceInfo[i].ownerName %>
+                                                        </li>
                                                         <% if (resourceInfo[i].tags.length >= 1 && resourceInfo[i].tags[0].length !== 0) { %>
-
                                                             <li class='list-group-item borderless box-padding'>
                                                                 <b>Tags:</b> <%= resourceInfo[i].tags %>
                                                             </li>
