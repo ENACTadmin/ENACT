@@ -14,16 +14,16 @@
             <div class='section__title section__title--centered'>
                 Find Resources
             </div>
-            <h4>Please click on search directly to see all available resources</h4>
+            <h4>Click on search to see all available resources</h4>
         </div>
     </div>
 </section>
 
-<section class='section section__grey' data-aos='fade-up' style='height: 30%'>
+<section class='section section__grey' data-aos='fade-up' style='height: 40%'>
     <div class='container'>
         <div class='row'>
-            <div class='col-md-3 col-sm-12'></div>
-            <div class='col-md-6 col-sm-12'>
+            <div class='col-md-2 col-sm-12'></div>
+            <div class='col-md-8 col-sm-12'>
                 <% if (loggedIn) { %>
                     <form method='post' action='/resources/search/private/general/results'>
                         <div class='input-group-prepend'>
@@ -33,7 +33,7 @@
                             <input type='submit' name='submit' class='btn btn-dark' value='Search'>
                             &nbsp&nbsp&nbsp
                             <a href='/resources/search/private/advanced' class='btn btn-large btn-warning'
-                               style='width: 300px'>Advanced Search</a>
+                               style='width: 250px'>Advanced Search</a>
                         </div>
                     </form>
                 <% } else { %>
