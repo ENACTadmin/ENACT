@@ -20,17 +20,17 @@
             <div class='row'>
                 <div class='col-md-3 col-sm-12'></div>
                 <div class='col-md-6 col-sm-12'>
-                    <h3>Upload the file</h3>
+                    <h3>Upload the file to cloud</h3>
                     <hr>
                     <button type='button' class='btn btn-outline-primary' data-toggle='modal'
                             data-target='#myModal'>
-                        Upload the file
+                        File upload
                     </button>
                     <p class='uploaded'></p>
                 </div>
             </div>
             <br>
-            <form method='post' action='/resource/upload/faculty'>
+            <form id='form' method='post' action='/resource/upload/faculty'>
                 <div class='row'>
                     <div class='col-md-3 col-sm-12'></div>
                     <div class='col-md-6 col-sm-12'>
@@ -55,8 +55,23 @@
                             </div>
                             <br>
                         <% } %>
+                        <br>
+                        <h3>Authorship</h3>
+                        <hr>
+                        <div class="form-horizontal">
+                            <div class="input-group-prepend">
+                                <span class='input-group-text' style='width: 180px'>Name</span>
+                                <input disabled type='text' style="margin: 0 20px 0 0" class='form-control'
+                                       name='authorName' value=<%= user.userName %>>
+                                <span class='input-group-text' style='width: 180px'>Email</span>
+                                <input disabled type='text' style="margin: 0 20px 0 0" class='form-control'
+                                       name='authorEmail' value=<%= user.workEmail || user.googleemail %>>
+                            </div>
+                        </div>
+                        <br>
+                        <input class="btn btn-outline-primary" type='button' value='Add' id='addButton'/>
+                        <input class="btn btn-outline-primary" type='button' value='Remove' id='removeButton'/>
                     </div>
-
                     <div class='w-100'></div>
 
                     <br>
@@ -66,6 +81,8 @@
                     <div class='w-100'></div>
                     <div class='col-md-3 col-sm-12'></div>
                     <div class='col-md-6 col-sm-12'>
+                        <h3>Submission</h3>
+                        <hr>
                         <input type='submit' name='submit' class='btn btn-outline-dark' value='Save to ENACT database'>
                     </div>
                 </div>
@@ -149,6 +166,7 @@
                                     <option value='Elevator Speech'>Elevator Speech</option>
                                     <option value='ENACT Research'>ENACT Faculty Research</option>
                                     <option value='Flyer'>Fact Sheet/Storybook</option>
+                                    <option value='Letter to Legislator'>Letter to the Legislator</option>
                                     <option value='Next Steps'>Next Steps</option>
                                     <option value='Online'>Online Teaching Resources</option>
                                     <option value='Outlets'>Outlets for Publication</option>
@@ -184,5 +202,28 @@
         </form>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+
+        $("#addButton").click(function () {
+            var id = ($('.form-horizontal .input-group-prepend').length + 1).toString();
+            $('.form-horizontal').append('<br class="removeMe"><div class="input-group-prepend" id="input-group-prepend' + id + '">' +
+                '<span class="input-group-text" style="width: 180px">Name</span>' +
+                '<input class="form-control" type="text" name="authorName' + id + '" placeholder="Name ' + id + '" style="margin: 0 20px 0 0">' +
+                '<span class="input-group-text" style="width: 180px">Email</span>' +
+                '<input class="form-control" type="text" name="authorEmail' + id + '" placeholder="Email ' + id + '" style="margin: 0 20px 0 0">' +
+                '</div>');
+        });
+        $("#removeButton").click(function () {
+            if ($('.form-horizontal .input-group-prepend').length == 1) {
+                alert("No more text-box to remove");
+                return false;
+            }
+            $(".form-horizontal .input-group-prepend:last").remove();
+            $(".form-horizontal .removeMe:last").remove();
+        });
+    });
+</script>
 
 <%- include('../components/footer'); -%>
