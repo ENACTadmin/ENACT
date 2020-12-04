@@ -3,6 +3,7 @@ const Resource = require('../models/Resource');
 const User = require('../models/User');
 const Message = require('../models/Message');
 const Tag = require('../models/Tag');
+const AuthorAlt = require('../models/AuthorAlternative');
 
 
 exports.loadMessagingPage = async (req, res, next) => {
@@ -80,6 +81,15 @@ exports.saveMessage = async (req, res, next) => {
         let receiver = await User.findOne({_id: req.params.receiver})
         let workEmail = receiver.workEmail
         let userName = receiver.userName
+        // send email to alternative users
+        if (req.params.resourceId !== 'general') {
+            let otherAuthors = await AuthorAlt.find({resourceId: req.params.resourceId})
+            for (let i = 0; i < otherAuthors.length; i++) {
+                let name = otherAuthors[i];
+                let email = otherAuthors[i];
+                send_email(email, name, newMessage, 'http://enact-brandeis.herokuapp.com/' + 'message/' + req.params.sender + '/' + req.params.receiver + '/' + req.params.resourceId)
+            }
+        }
         send_email(workEmail, userName, newMessage, 'http://enact-brandeis.herokuapp.com/' + 'message/' + req.params.sender + '/' + req.params.receiver + '/' + req.params.resourceId)
         res.redirect('back')
     } catch (e) {
@@ -94,7 +104,7 @@ function send_email(workEmail, userName, message, url) {
     if (message.subject) {
         const msg = {
             to: workEmail,
-            from: 'brandeisenact@gmail.com',
+            from: 'enact@brandeis.edu',
             subject: 'ENACT Digital Platform: you have one new message from ' + userName,
             text: 'ENACT Digital Platform: you have one new message from ' + userName,
             html: 'Hi, <br><br>you received a message from  ' + userName +
@@ -102,20 +112,20 @@ function send_email(workEmail, userName, message, url) {
                 '<br>' + '<b>Content</b>: ' + message.message +
                 '<br>' + '<b>Time</b>: ' + message.createdAt +
                 '<br>' + '<b>Click <a href=' + url + '>' + 'here' + '</a>' + ' to reply</b>' +
-                '<br><br>' + 'ENACT Support'
+                '<br><br>' + 'ENACT Support Team'
         };
         sgMail.send(msg);
     } else {
         const msg = {
             to: workEmail,
-            from: 'brandeisenact@gmail.com',
+            from: 'enact@brandeis.edu',
             subject: 'ENACT Digital Platform: you have one new message from ' + userName,
             text: 'ENACT Digital Platform: you have one new message from ' + userName,
             html: 'Hi, <br><br>you received a message from ' + userName +
                 '<br>' + '<b>Content</b>: ' + message.message +
                 '<br>' + '<b>Time</b>: ' + message.createdAt +
                 '<br>' + '<b>Click <a href=' + url + '>' + 'here' + '</a>' + ' to reply</b>' +
-                '<br><br>' + 'ENACT Support'
+                '<br><br>' + 'ENACT Support Team'
         };
         sgMail.send(msg);
     }

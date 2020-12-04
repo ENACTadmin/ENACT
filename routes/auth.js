@@ -165,7 +165,7 @@ function send_email(workEmail, userId) {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const msg = {
         to: workEmail,
-        from: 'brandeisenact@gmail.com',
+        from: 'enact@brandeis.edu',
         subject: 'ENACT Digital Platform: Password Reset',
         text: 'Password Reset',
         // html: 'Password reset Link: http://localhost:3500/reset/' + userId
