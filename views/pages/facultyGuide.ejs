@@ -12,7 +12,7 @@
                     class='btn btn-large btn-warning'
                     style='width: 200px'>Advanced Search</a>
             <br><br>
-            <h3 style="display:inline;">Or, help the faculty community by </h3><a href='/resources/upload/faculty'
+            <h3 style="display:inline;">Or, help the faculty community by </h3><a href='/resource/upload/faculty'
                                                                                   class='btn btn-large btn-primary'
                                                                                   style='width: 260px'>Upload Faculty
                 Resources</a>
@@ -52,7 +52,11 @@
                                                 </li>
                                             <% } %>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>Institution: </b> <%= syllabus[i].institution %></li>
+                                                <b>Institution: </b> <%= syllabus[i].institution %>
+                                            </li>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>Author: </b> <%= syllabus[i].ownerName %>
+                                            </li>
                                             <% if (syllabus[i].tags[0].length > 0) { %>
                                                 <li class='list-group-item borderless box-padding'>
                                                     <b>Tags:</b> <%= syllabus[i].tags %>
@@ -129,12 +133,15 @@
                                                 </li>
                                             <% } else { %>
                                                 <li class='list-group-item borderless box-padding'>
-                                                    <b>Link: </b> <a href='<%= assignments[i].uri %>'>click
-                                                        me</a>
+                                                    <b>Link: </b> <a href='<%= assignments[i].uri %>'>click me</a>
                                                 </li>
                                             <% } %>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>Institution: </b> <%= assignments[i].institution %></li>
+                                                <b>Institution: </b> <%= assignments[i].institution %>
+                                            </li>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>Author: </b> <%= assignments[i].ownerName %>
+                                            </li>
                                             <% if (assignments[i].tags[0].length > 0) { %>
                                                 <li class='list-group-item borderless box-padding'>
                                                     <b>Tags:</b> <%= assignments[i].tags %>
@@ -217,7 +224,11 @@
                                                 </li>
                                             <% } %>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>Institution: </b> <%= rubrics[i].institution %></li>
+                                                <b>Institution: </b> <%= rubrics[i].institution %>
+                                            </li>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>Author: </b> <%= rubrics[i].ownerName %>
+                                            </li>
                                             <% if (rubrics[i].tags[0].length > 0) { %>
                                                 <li class='list-group-item borderless box-padding'>
                                                     <b>Tags:</b> <%= rubrics[i].tags %>
@@ -296,12 +307,15 @@
                                                 </li>
                                             <% } else { %>
                                                 <li class='list-group-item borderless box-padding'>
-                                                    <b>Link: </b> <a href='<%= guides[i].uri %>'>click
-                                                        me</a>
+                                                    <b>Link: </b> <a href='<%= guides[i].uri %>'>click me</a>
                                                 </li>
                                             <% } %>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>Institution: </b> <%= guides[i].institution %></li>
+                                                <b>Institution: </b> <%= guides[i].institution %>
+                                            </li>
+                                            <li class='list-group-item borderless box-padding'>
+                                                <b>Author: </b> <%= guides[i].ownerName %>
+                                            </li>
                                             <% if (guides[i].tags[0].length > 0) { %>
                                                 <li class='list-group-item borderless box-padding'>
                                                     <b>Tags:</b> <%= guides[i].tags %>

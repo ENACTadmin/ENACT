@@ -3,6 +3,7 @@
 
 <script src='/js/aws.js'></script>
 <script src='/js/uploadFile.js'></script>
+<script src='/js/authorship.js'></script>
 
 <section class='section'>
     <div class='section__content section__content--full-width'>
@@ -34,6 +35,25 @@
                 <div class='row'>
                     <div class='col-md-3 col-sm-12'></div>
                     <div class='col-md-6 col-sm-12'>
+                        <h3>Author(s)</h3>
+                        <hr>
+                        <h5 style="color: grey">Please make sure to spell the name and email correctly. <br>
+                            You will NOT be allowed to modify this section after submission</h5>
+                        <br>
+                        <div class="form-horizontal">
+                            <div class="input-group-prepend">
+                                <span class='input-group-text' style='width: 180px'>Name</span>
+                                <input disabled type='text' style="margin: 0 20px 0 0" class='form-control'
+                                       name='authorName' value=<%= user.userName %>>
+                                <span class='input-group-text' style='width: 180px'>Email</span>
+                                <input disabled type='text' style="margin: 0 20px 0 0" class='form-control'
+                                       name='authorEmail' value=<%= user.workEmail || user.googleemail %>>
+                            </div>
+                        </div>
+                        <br>
+                        <input class="btn btn-outline-primary" type='button' value='Add another author' id='addButton'/>
+                        <input class="btn btn-outline-info" type='button' value='Remove lastly entered author' id='removeButton'/>
+                        <br><br><br>
                         <h3>Basic information</h3>
                         <hr>
                         <%- include('../components/component-basicInfo') -%>
@@ -63,9 +83,6 @@
                                 </select>
                             </div>
                         <% } %>
-                        <br>
-                        <h3>Authorship</h3>
-                        <hr>
                     </div>
                     <div class='w-100'></div>
                     <br>

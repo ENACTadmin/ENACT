@@ -33,6 +33,11 @@
                             Back to course
                         </a>
                     <% } else { %>
+                        <% if (req.params.courseId) { %>
+                            <a href="/course/view/<%= req.params.courseId %>" class="btn btn-lg btn-success">
+                                Back to course
+                            </a>&nbsp&nbsp&nbsp&nbsp
+                        <% } %>
                         <a href="/resources/view/faculty" class="btn btn-lg btn-info">
                             View faculty guide
                         </a>
