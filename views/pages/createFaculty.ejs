@@ -14,23 +14,27 @@
 <section class='section section__grey' data-aos='fade-up'>
     <div class='container'>
         <div class='row'>
-            <div class='col-md-3 col-sm-12'></div>
-            <div class='col-md-6 col-sm-12'>
-                <form action='/profiles/faculty/assign' method='post'>
+            <div class='col-md-2 col-sm-12'></div>
+            <div class='col-md-8 col-sm-12'>
+                <form action='/profile/create/faculty' method='post'>
                     <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 180px'>Name</span>
+                        <input type='text' style='margin-right: 20px' class='form-control' name='userName' value=''>
                         <span class='input-group-text' style='width: 180px'>Email</span>
                         <input type='text' style='margin-right: 20px' class='form-control' name='email' value=''>
-                        <input type='submit' class='btn btn-outline-dark' value='Assign'>
+                        <input type='submit' class='btn btn-outline-dark' value='Create'>
                     </div>
                 </form>
+                <br>
                 <hr>
-                <h4>Approved list</h4>
+                <h4>Faculty List</h4>
                 <br>
                 <% for (let i = 0; i < approvedList.length; i++) { %>
                     <div class='input-group-prepend'>
                         <span class='input-group-text' style='width: 180px'>Email</span>
-                        <input disabled type='text' class='form-control' value='<%= approvedList[i].email %>'>
-                        <input disabled type='text' class='form-control' value='By: <%= approvedByList[i] %>'>
+                        <%= approvedList[i].userId %>
+                        <a disabled type='text' style='margin-right: 20px' class='form-control' href="/profile/view/<%= approvedList[i].userId %>"><%= approvedList[i].email %></a>
+                        <input disabled type='text' class='form-control' value='Created by: <%= approvedByList[i] %>'>
                     </div>
                     <br>
                 <% } %>

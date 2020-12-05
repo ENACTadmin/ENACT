@@ -456,7 +456,7 @@ app.get('/secretFunction2',
 
 //show all profiles from all users
 app.get('/profile/view/:id',
-    (req, res, next) => {
+    async (req, res, next) => {
         if (res.locals.user.userName === undefined) {
             res.render('./pages/updateProfile')
         } else {
@@ -498,13 +498,13 @@ app.post('/profile/update',
     profileController.updateProfile
 )
 
-app.get('/profiles/faculty/assign',
+app.get('/profile/create/faculty',
     utils.checkUserName,
     profileController.loadFaculty
 )
 
-app.post('/profiles/faculty/assign',
-    profileController.assignFaculty
+app.post('/profile/create/faculty',
+    profileController.createFaculty
 )
 //show all profiles from all users
 app.post('/saveProfileImageURL',

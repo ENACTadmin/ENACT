@@ -95,9 +95,15 @@ router.get('/login',
 router.post('/login',
     passport.authenticate('local', {
         successRedirect: '/',
-        failureRedirect: '/login'
+        failureRedirect: '/login-fail'
     })
 );
+
+router.get('/login-fail',
+    (req, res) =>
+        res.render('./pages/login-fail')
+)
+
 
 // will be moved to cloud later
 const adminList = ["bbdhy96@gmail.com", "enact@brandeis.edu", "bhershon@brandeis.edu", "nicolezhang@brandeis.edu", "stimell@brandeis.edu", "djw@brandeis.edu", "epevide@brandeis.edu"]
@@ -110,7 +116,7 @@ router.get('/signup',
 router.post('/signup',
     passport.authenticate('local-signup', {
         successRedirect: '/verification', // redirect to the secure profile section
-        failureRedirect: '/login' // redirect back to the signup page if there is an error
+        failureRedirect: '/login-fail' // redirect back to the fail page if there is an error
     })
 )
 
