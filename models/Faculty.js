@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 let FacultySchema = Schema({
+    userId: ObjectId,
     email: String, // work email that should not change
     status: String,
     approvedBy: ObjectId

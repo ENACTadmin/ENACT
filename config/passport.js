@@ -166,14 +166,19 @@ module.exports = function (passport) {
             // find a user whose email is the same as the forms email
             // we are checking to see if the user trying to login already exists
             username = username.toLowerCase()
-            User.findOne({workEmail: username}, function (err, user) {
+
+            User.findOne({
+                $or: [
+                    {workEmail: username}, {googleemail: username}
+                ]
+            }, function (err, user) {
                 console.log("found user is: ", user)
                 // if there are any errors, return the error
                 if (err)
                     return done(err);
                 // check to see if theres already a user with that email
                 if (user) {
-                    return done(null, false, {message: 'That username is already taken.'});
+                    return done(null, false, {message: 'That email is already taken.'});
                 } else {
                     // if there is no user with that email
                     // create the user

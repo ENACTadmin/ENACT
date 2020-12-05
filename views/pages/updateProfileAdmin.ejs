@@ -40,18 +40,10 @@
                 <!--                 form: update personal info -->
                 <h3>Basic information</h3>
                 <hr>
-                <form action='/profile/update' method='post'>
+                <form action='/profile/update/<%= account._id %>' method='post'>
                     <div class='input-group-prepend'>
                         <span class='input-group-text' style='width: 180px'>Full name</span>
                         <input type='text' class='form-control' name='userName' value='<%= account.userName %>'>
-                    </div>
-                    <br>
-
-                    <div class='w-100'></div>
-                    <div class='input-group-prepend'>
-                        <span class='input-group-text' style='width: 380px'>Password (Top secret)</span>
-                        <input type='text' class='form-control' name='password'
-                               value='<%= account.password %>'>
                     </div>
                     <br>
 

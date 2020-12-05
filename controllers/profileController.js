@@ -15,7 +15,6 @@ exports.findOneUser = async (req, res, next) => {
     }
 }
 
-
 exports.updateProfile = async (req, res, next) => {
     let userToUpdate = await User.findOne({_id: req.user._id})
     try {
@@ -46,7 +45,7 @@ exports.updateProfileAdmin = async (req, res, next) => {
     let userToUpdate = await User.findOne({_id: req.params.userId})
     try {
         userToUpdate.userName = req.body.userName;
-        userToUpdate.password = req.body.password;
+        // userToUpdate.password = req.body.password;
         userToUpdate.workEmail = req.body.workEmail;
         userToUpdate.personalEmail = req.body.personalEmail;
         userToUpdate.state = req.body.state;
@@ -56,30 +55,45 @@ exports.updateProfileAdmin = async (req, res, next) => {
         userToUpdate.affiliation = req.body.affiliation;
         userToUpdate.bio = req.body.bio;
         await userToUpdate.save()
-        if (toIndex)
-            res.redirect('/')
-        res.redirect('/')
+        console.log("update success!")
         res.redirect('/profile/view/' + req.params.userId)
     } catch (e) {
         next(e)
     }
 }
 
-exports.assignFaculty = async (req, res, next) => {
+exports.createFaculty = async (req, res, next) => {
     if (res.locals.status === 'admin') {
         try {
             let email = await req.body.email
+            let name = await req.body.userName
             let status = 'faculty'
+            let existUserCheck = await User.findOne({
+                $or: [
+                    {workEmail: email}, {googleemail: email}
+                ]
+            })
+            console.log(existUserCheck)
+            if (existUserCheck)
+                res.send("This user exists in our system, please contact developer.")
+            let newUser = new User({
+                workEmail: email,
+                userName: name,
+                status: status
+            })
+            await newUser.save()
             let newFaculty = new Faculty(
                 {
+                    userId: newUser._id,
                     email: email,
                     status: status,
                     approvedBy: res.locals.user._id,
                 }
             )
+            console.log("new faculty")
             // await until the newCourse is saved properly
             await newFaculty.save()
-            res.redirect('back')
+            res.redirect('/profile/update/' + newUser._id)
         } catch (e) {
             next(e)
         }
@@ -90,21 +104,18 @@ exports.assignFaculty = async (req, res, next) => {
 
 
 exports.loadFaculty = async (req, res, next) => {
-    console.log("status: " + res.locals.status)
     if (res.locals.status === 'admin') {
         try {
             let approvedList = await Faculty.find()
             let approvedByList = []
             for (let element of approvedList) {
-                console.log("approved by: ", element.approvedBy)
                 let user = await User.findOne({_id: element.approvedBy})
                 if (user)
                     approvedByList.push(user.userName)
                 else
                     approvedByList.push("unknown")
             }
-            console.log("list: " + approvedList.toString())
-            res.render('./pages/assignFaculty', {
+            res.render('./pages/createFaculty', {
                 approvedList: approvedList,
                 approvedByList: approvedByList
             })
