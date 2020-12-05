@@ -8,10 +8,9 @@ const session = require("express-session");
 // Models!
 const Event = require('./models/Event')
 const Course = require('./models/Course')
-const Tag = require('./models/Tag')
 const Resource = require('./models/Resource')
 const User = require('./models/User')
-
+const Faculty = require('./models/Faculty')
 
 //*******************************************
 //***********Controllers*********************
@@ -445,6 +444,27 @@ app.get('/secretFunction2',
             if (author) {
                 allRes[resource].ownerName = author.userName
                 await allRes[resource].save()
+            }
+        }
+        res.send("Success!")
+    }
+)
+
+app.get('/secretFunction3',
+    async (req, res) => {
+        let allFaculty = await Faculty.find()
+        for (var i in allFaculty) {
+            let faculty = await User.findOne({
+                $or: [
+                    {workEmail: allFaculty[i].email}, {googleemail: allFaculty[i].email}
+                ]
+            })
+            if (faculty) {
+                allFaculty[i].userId = faculty._id
+                await allFaculty[i].save()
+            } else {
+                console.log("to be deleted: ", allFaculty[i])
+                await Faculty.deleteOne({email: allFaculty[i].email})
             }
         }
         res.send("Success!")
