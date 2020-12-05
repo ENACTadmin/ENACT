@@ -160,7 +160,7 @@
             </div>
             <div class='modal-footer'>
                 <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
-                <form method='POST' action='/saveProfileImageURL'>
+                <form method='POST' action='/saveProfileImageURL-admin/<%= account._id %>'>
                     <input type='hidden' id='imageURL' name='imageURL'>
                     <input type='submit' class='btn btn-outline-dark' value='Upload'>
                 </form>
