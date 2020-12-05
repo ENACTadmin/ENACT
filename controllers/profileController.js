@@ -42,6 +42,29 @@ exports.updateProfile = async (req, res, next) => {
 }
 
 
+exports.updateProfileAdmin = async (req, res, next) => {
+    let userToUpdate = await User.findOne({_id: req.params.userId})
+    try {
+        userToUpdate.userName = req.body.userName;
+        userToUpdate.password = req.body.password;
+        userToUpdate.workEmail = req.body.workEmail;
+        userToUpdate.personalEmail = req.body.personalEmail;
+        userToUpdate.state = req.body.state;
+        userToUpdate.department = req.body.department;
+        userToUpdate.pronoun = req.body.pronoun;
+        userToUpdate.phoneNumber = req.body.phoneNumber;
+        userToUpdate.affiliation = req.body.affiliation;
+        userToUpdate.bio = req.body.bio;
+        await userToUpdate.save()
+        if (toIndex)
+            res.redirect('/')
+        res.redirect('/')
+        res.redirect('/profile/view/' + req.params.userId)
+    } catch (e) {
+        next(e)
+    }
+}
+
 exports.assignFaculty = async (req, res, next) => {
     if (res.locals.status === 'admin') {
         try {
