@@ -65,6 +65,12 @@
                                                     class="btn btn-sm btn-outline-primary" type="button"
                                                     value="CONTACT"></a>
                                     <% } %>
+                                    <% if (user.status === 'admin') { %>
+                                        <br><br>
+                                        <a href="/profile/update/<%= profileInfo[i]._id %>"><input
+                                                    class="btn btn-sm btn-outline-primary" type="button"
+                                                    value="Edit"></a>
+                                    <% } %>
                                 <% } %>
                             </div>
                         </div>

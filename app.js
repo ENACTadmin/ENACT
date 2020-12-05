@@ -13,7 +13,6 @@ const Resource = require('./models/Resource')
 const User = require('./models/User')
 
 
-
 //*******************************************
 //***********Controllers*********************
 
@@ -474,14 +473,27 @@ app.get('/profiles/view/faculty',
 app.get('/profile/update',
     (req, res) => {
         res.render('./pages/updateProfile')
-    })
+    }
+)
+
+app.get('/profile/update/:userId',
+    async (req, res) => {
+        let account = await User.findOne({_id: req.params.userId})
+        res.render('./pages/updateProfileAdmin', {
+            account: account
+        })
+    }
+)
+
+app.post('/profile/update/:userId',
+    profileController.updateProfileAdmin
+)
 
 app.get('/profiles/view/all',
     utils.checkUserName,
     profileController.showAllProfiles
 )
 
-//show all profiles from all users
 app.post('/profile/update',
     profileController.updateProfile
 )
