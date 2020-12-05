@@ -149,6 +149,17 @@ exports.updateProfileImageURL = async (req, res, next) => {
     }
 }
 
+exports.updateProfileImageURLAdmin = async (req, res, next) => {
+    let userToUpdate = await User.findOne({_id: req.params.userId})
+    try {
+        userToUpdate.profilePicURL = req.body.imageURL;
+        await userToUpdate.save()
+        res.redirect('back')
+    } catch (e) {
+        next(e)
+    }
+}
+
 let special = ["stimell@brandeis.edu", "djw@brandeis.edu"]
 exports.showFacultyProfiles = async (req, res, next) => {
     let profileInfo = await User.find({

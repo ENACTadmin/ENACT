@@ -506,10 +506,16 @@ app.get('/profile/create/faculty',
 app.post('/profile/create/faculty',
     profileController.createFaculty
 )
-//show all profiles from all users
+
 app.post('/saveProfileImageURL',
     profileController.updateProfileImageURL
 )
+
+//show all profiles from all users
+app.post('/saveProfileImageURL-admin/:userId',
+    profileController.updateProfileImageURLAdmin
+)
+
 
 //*******************************************
 //************Message related****************
