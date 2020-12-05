@@ -32,7 +32,6 @@
                 <% for (let i = 0; i < approvedList.length; i++) { %>
                     <div class='input-group-prepend'>
                         <span class='input-group-text' style='width: 180px'>Email</span>
-                        <%= approvedList[i].userId %>
                         <a disabled type='text' style='margin-right: 20px' class='form-control' href="/profile/view/<%= approvedList[i].userId %>"><%= approvedList[i].email %></a>
                         <input disabled type='text' class='form-control' value='Created by: <%= approvedByList[i] %>'>
                     </div>
