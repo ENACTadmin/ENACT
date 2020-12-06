@@ -471,12 +471,18 @@ app.get('/secretFunction3',
     }
 )
 
+//show all profiles from all users
+app.get('/profile/send/:id',
+    messageController.sendProfileEmail
+)
+
 //*******************************************
 //***********Profile related*****************
 
 //show all profiles from all users
 app.get('/profile/view/:id',
     async (req, res, next) => {
+        // update own profile first
         if (res.locals.user.userName === undefined) {
             res.render('./pages/updateProfile')
         } else {
@@ -500,7 +506,7 @@ app.get('/profile/update/:userId',
     async (req, res) => {
         let account = await User.findOne({_id: req.params.userId})
         res.render('./pages/updateProfileAdmin', {
-            account: account
+            account: account,
         })
     }
 )

@@ -8,7 +8,8 @@ exports.findOneUser = async (req, res, next) => {
     try {
         let userInfo = await User.findOne({_id: userId})
         res.render('./pages/showProfile', {
-            userInfo: userInfo
+            userInfo: userInfo,
+            sentStatus: 'Email Not Sent'
         })
     } catch (e) {
         next(e)
@@ -74,11 +75,13 @@ exports.createFaculty = async (req, res, next) => {
                 ]
             })
             console.log(existUserCheck)
+            let password = await getRandomPassword()
             if (existUserCheck)
                 res.send("This user exists in our system, please contact developer.")
             let newUser = new User({
                 workEmail: email,
                 userName: name,
+                password: password,
                 status: status
             })
             await newUser.save()
@@ -102,6 +105,11 @@ exports.createFaculty = async (req, res, next) => {
     }
 }
 
+async function getRandomPassword() {
+    // this only works if there are many fewer than 10000000 courses
+    // but that won't be an issue with this alpha version!
+    return Math.floor(Math.random() * 10000000)
+}
 
 exports.loadFaculty = async (req, res, next) => {
     if (res.locals.status === 'admin') {
