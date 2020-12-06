@@ -22,7 +22,7 @@
                             UserName: <a href='/profile/view/<%= profiles[i]._id %>'><%= profiles[i].userName %></a>
                         </div>
                         <div class='col-sm'>
-                            User Email: <%= profiles[i].googleemail %>
+                            User Email: <%= profiles[i].workEmail || profiles[i].googleemail %>
                         </div>
                     </div>
                 </li>
