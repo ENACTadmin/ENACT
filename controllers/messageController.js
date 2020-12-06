@@ -97,6 +97,32 @@ exports.saveMessage = async (req, res, next) => {
     }
 }
 
+exports.sendProfileEmail = async (req, res, next) => {
+    let userId = req.params.id
+    console.log("id: ", userId)
+    let currUser = await User.findOne({_id: userId})
+    let userName = currUser.userName
+    let email = currUser.workEmail || currUser.googleemail
+    let url = 'http://enact-brandeis.herokuapp.com/'
+    const sgMail = require('@sendgrid/mail');
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    const msg = {
+        to: email,
+        from: 'enact@brandeis.edu',
+        subject: 'ENACT Digital Platform: you have one new message from ' + userName,
+        text: 'ENACT Digital Platform: you have one new message from ' + userName,
+        html: 'Hi,' +
+            '<br>' + '  Your profile is set by ENACT admin, the default password is: ' + currUser.password + '<br>Please remember to change your password by navigating to Settings -> View/edit profile to change your password' +
+            '<br>' + '<b>  Click <a href=' + url + '>' + 'here' + '</a>' + ' to login</b>' +
+            '<br><br>' + 'ENACT Support Team'
+    };
+    await sgMail.send(msg);
+    res.render('./pages/showProfile', {
+        userInfo: currUser,
+        sentStatus: 'Email Sent'
+    })
+}
+
 function send_email(workEmail, userName, message, url) {
     console.log('email: ', workEmail)
     const sgMail = require('@sendgrid/mail');
