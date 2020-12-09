@@ -47,11 +47,13 @@ router.use(async (req, res, next) => {
         } else {
             let user = await Faculty.findOne({email: email})
             if (user) {
+                console.log("assigned as faculty")
                 res.locals.status = user.status
                 userInfo.status = 'faculty'
                 await userInfo.save()
                 res.locals.courseInfoSet = await Course.find({ownerId: req.user._id})
             } else {
+                console.log("assigned as student")
                 let enrolledCourses = req.user.enrolledCourses
                 let courseInfoSet = await Course.find({_id: {$in: enrolledCourses}})
                 userInfo.status = 'student'
