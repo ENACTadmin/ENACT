@@ -47,7 +47,6 @@ router.use(async (req, res, next) => {
         } else {
             let user = await Faculty.findOne({email: email})
             if (user) {
-                console.log("assigned as faculty")
                 res.locals.status = user.status
                 userInfo.status = 'faculty'
                 await userInfo.save()

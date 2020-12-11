@@ -14,6 +14,10 @@
             <div class='section__title section__title--centered'>
                 Update Owner for <%= resource.name %>
             </div>
+            <h4>If you do not see any pop-up suggestions after entering the new owner's name, that means the user is <b>not</b> in our system. </h4>
+            <a class="btn btn-outline-primary" href="/resources/view/favorite">Go back to my favorites</a>
+            &nbsp;
+            <a class="btn btn-outline-info" href="/resources/view/private">Go back my resources</a>
         </div>
     </div>
 </section>
@@ -27,10 +31,12 @@
                     <div class='input-group-prepend'>
                         <span class='input-group-text' style='width: 180px'>Author</span>
                         <input autofill="off" autocomplete="off" id="profiles" type='text' style='margin-right: 20px'
-                               class='form-control' name='ownerName' value='<%= ownerName1 %>'>
+                               class='form-control' name='ownerName'>
                         <input hidden autofill="off" autocomplete="off" id="ownerId" type='text' style='margin-right: 20px' class='form-control' name='ownerId'>
                         <input type="submit" class="btn btn-outline-dark" value="SAVE">
                     </div>
+                    <br>
+                    <h5>Current owner is: <%= ownerName1 %></h5>
                 </form>
             </div>
         </div>

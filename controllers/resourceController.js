@@ -209,6 +209,28 @@ exports.updateResource = async (req, res, next) => {
         // update word2Id
         await setWord2Id(oldResource);
         // save the new resource
+        // add additional authors
+        let authorNames = req.body.authorName
+        let authorEmails = req.body.authorEmail
+        if (authorNames) {
+            if (typeof authorNames === 'string') {
+                let newAuthor = new AuthorAlt({
+                    resourceId: oldResource._id,
+                    userName: authorNames,
+                    userEmail: authorEmails
+                })
+                await newAuthor.save()
+            } else {
+                for (let i = 0; i < authorNames.length; i++) {
+                    let newAuthor = new AuthorAlt({
+                        resourceId: oldResource._id,
+                        userName: authorNames[i],
+                        userEmail: authorEmails[i]
+                    })
+                    await newAuthor.save()
+                }
+            }
+        }
         await res.redirect('back')
     } catch (e) {
         next(e)
@@ -331,10 +353,19 @@ exports.updateOwner = async (req, res, next) => {
         let tempUser = await User.findOne({_id: req.body.ownerId})
         resource.ownerName = tempUser.userName
         await resource.save()
-        if (req.params.option === 'fav')
-            res.redirect('/resources/view/favorite')
-        else
-            res.redirect('/resources/view/private')
+        resource = await Resource.findOne({_id: req.params.resourceId})
+        let ownerId = resource.ownerId
+        tempUser = await User.findOne({_id: ownerId})
+        let ownerName1 = tempUser.userName
+        res.render('./pages/updateOwner', {
+            resource: resource,
+            ownerName1: ownerName1,
+            req: req
+        })
+        // if (req.params.option === 'fav')
+        //     res.redirect('/resources/view/favorite')
+        // else
+        //     res.redirect('/resources/view/private')
     } catch (e) {
         next(e)
     }
@@ -427,7 +458,10 @@ exports.loadSpecificContentType = async (req, res, next) => {
         else if (req.params.contentType === 'plan')
             contentType = 'Course Planning'
 
-        let resourceInfo = await Resource.find({status: 'privateToProfessor', contentType: contentType}).sort({yearOfCreation: 1})
+        let resourceInfo = await Resource.find({
+            status: 'privateToProfessor',
+            contentType: contentType
+        }).sort({yearOfCreation: 1})
         console.log("here: ", resourceInfo)
         let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
         let resourceIds = null
@@ -643,11 +677,13 @@ exports.showStarredResources = async (req, res, next) => {
         }
         let allResourceSets = await ResourceSet.find({ownerId: req.user._id})
         res.locals.allResourceSets = allResourceSets
-        for (let i = 0; i < resourceInfo.length; i++) {
-            let authors = await AuthorAlt.find({resourceId: resourceInfo[i]._id})
-            if (authors) {
-                for (let j = 0; j < authors.length; j++)
-                    resourceInfo[i].ownerName += (', ' + authors[j].userName)
+        if (resourceInfo) {
+            for (let i = 0; i < resourceInfo.length; i++) {
+                let authors = await AuthorAlt.find({resourceId: resourceInfo[i]._id})
+                if (authors) {
+                    for (let j = 0; j < authors.length; j++)
+                        resourceInfo[i].ownerName += (', ' + authors[j].userName)
+                }
             }
         }
         res.locals.resourceInfo = resourceInfo
@@ -776,11 +812,14 @@ exports.primarySearch = async (req, res, next) => {
             let jsonObject = resourceInfo.map(JSON.stringify);
             uniqueResourceInfo = Array.from(new Set(jsonObject)).map(JSON.parse);
         }
-        for (let i = 0; i < uniqueResourceInfo.length; i++) {
-            let authors = await AuthorAlt.find({resourceId: uniqueResourceInfo[i]._id})
-            if (authors) {
-                for (let j = 0; j < authors.length; j++)
-                    uniqueResourceInfo[i].ownerName += (', ' + authors[j].userName)
+
+        if (uniqueResourceInfo) {
+            for (let i = 0; i < uniqueResourceInfo.length; i++) {
+                let authors = await AuthorAlt.find({resourceId: uniqueResourceInfo[i]._id})
+                if (authors) {
+                    for (let j = 0; j < authors.length; j++)
+                        uniqueResourceInfo[i].ownerName += (', ' + authors[j].userName)
+                }
             }
         }
         res.locals.resourceIds = starredResourceIds
@@ -789,8 +828,7 @@ exports.primarySearch = async (req, res, next) => {
         res.render('./pages/showResources', {
             secretType: 'Search Result'
         })
-    } catch
-        (e) {
+    } catch (e) {
         next(e)
     }
 }
