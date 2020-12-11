@@ -3,17 +3,20 @@ $(document).ready(function () {
     if (id_set.length !== 0) {
         let id_set_array = id_set.split(',')
         for (let i = 0; i < id_set_array.length; i++) {
-            let realType = $('#contentTypeFromServer' + id_set_array[i]).text()
-            realType = realType.substring(1, realType.length - 1)
+            // let authors = $('#authorsFromServer' + id_set_array[i]).text()
+            // authors = authors.substring(1, contentType.length - 1)
+            // $('#contentTypeSelect' + id_set_array[i]).val()
+            let contentType = $('#contentTypeFromServer' + id_set_array[i]).text()
+            contentType = contentType.substring(1, contentType.length - 1)
             $('#contentTypeSelect' + id_set_array[i] + ' option').each(function () {
-                if ($(this).val() === realType) {
+                if ($(this).val() === contentType) {
                     $(this).prop('selected', true)
                 }
             })
-            let realType1 = $('#mediaTypeFromServer' + id_set_array[i]).text()
-            realType1 = realType1.substring(1, realType1.length - 1)
+            let mediaType = $('#mediaTypeFromServer' + id_set_array[i]).text()
+            mediaType = mediaType.substring(1, mediaType.length - 1)
             $('#mediaTypeSelect' + id_set_array[i] + ' option').each(function () {
-                if ($(this).val() === realType1) {
+                if ($(this).val() === mediaType) {
                     $(this).prop('selected', true)
                 }
             })

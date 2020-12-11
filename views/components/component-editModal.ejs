@@ -33,6 +33,9 @@
 let syllabus = ['online course', 'course with internship content', 'full-semester course', 'half-semester course']
 
 let id_set = [] %>
+
+<script src="/js/authorshipAlt.js"></script>
+
 <% if (resourceInfo) { %>
     <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
         <!-- Modal -->
@@ -51,6 +54,20 @@ let id_set = [] %>
                         <div class='modal-body'>
                             <div class='row'>
                                 <div class='col-md-12 col-sm-12'>
+                                    <h3>Author(s)</h3>
+                                    <hr>
+                                    <h5 style="color: grey">Please make sure to spell the name and email correctly. <br>
+                                        If you wish to remove one or more authors from the list, please contact us. </h5>
+                                    <h6>Existing authors: <%= resourceInfo[i].ownerName %></h6>
+                                    <div class="form-horizontal" id="form-horizontal<%= resourceInfo[i]._id %>">
+                                    </div>
+                                    <br>
+                                    <input class="btn btn-outline-primary" type='button' value='Add another author'
+                                           id='addButton<%= resourceInfo[i]._id %>'/>
+                                    <input class="btn btn-outline-info" type='button' value='Remove last entered author'
+                                           id='removeButton<%= resourceInfo[i]._id %>'/>
+                                    <br><br><br>
+
                                     <h3>Basic information</h3>
                                     <hr>
                                     <% if (status === 'faculty' || status === 'admin') { %>
@@ -60,28 +77,29 @@ let id_set = [] %>
                                                     class='form-control' name='contentType'>
                                                 <option selected value='empty'>Choose...</option>
                                                 <option value='Advocacy Video'>Advocacy Video</option>
-                                                <option value='Assignment Guidelines'>Assignment Guidelines</option>
-                                                <option value='Journal'>Campaign Journal</option>
+                                                <option value='Assignment Guidelines'>Assignment/Grading Rubric
+                                                    Guidelines
+                                                </option>
+                                                <option value='Journal'>Campaign Journal/Personal Reflections</option>
+                                                <option value='Course Planning'>Course Planning</option>
                                                 <option value='Course Reading'>Course Reading</option>
                                                 <option value='Elevator Speech'>Elevator Speech</option>
                                                 <option value='ENACT Research'>ENACT Faculty Research</option>
-                                                <option value='Course Planning'>Course Planning</option>
-                                                <option value='Flyer'>Flyer/handout</option>
+                                                <option value='Flyer'>Fact Sheet/Storybook</option>
+                                                <option value='Letter to Legislator'>Letter to the Legislator</option>
                                                 <option value='Next Steps'>Next Steps</option>
                                                 <option value='Online'>Online Teaching Resources</option>
                                                 <option value='Outlets'>Outlets for Publication</option>
                                                 <option value='Op-Ed'>Op-Ed</option>
-                                                <option value='Personal Reflection'>Personal reflection</option>
+                                                <option value='Personal Reflection'>Essays about ENACT</option>
                                                 <option value='Portfolio'>Portfolio</option>
                                                 <option value='Presentations'>Presentations</option>
                                                 <option value='Research Report'>Student Research Report</option>
-                                                <option value='Rubrics'>Rubrics for grading</option>
                                                 <option value='Script'>Script for meeting with Ways and Means Staff
                                                 </option>
                                                 <option value='State Legislative'>State Legislative Website Resources
                                                 </option>
                                                 <option value='Syllabus'>Syllabus</option>
-                                                <option value='Handout'>Handout/Factsheet</option>
                                                 <option value='Testimony'>Testimony</option>
                                             </select>
                                         </div>
@@ -93,18 +111,21 @@ let id_set = [] %>
                                                     name='contentType'>
                                                 <option selected value='empty'>Choose...</option>
                                                 <option value='Advocacy Video'>Advocacy Video</option>
-                                                <option value='Journal'>Campaign Journal</option>
+                                                <option value='Journal'>Campaign Journal/Personal Reflections</option>
                                                 <option value='Elevator Speech'>Elevator Speech</option>
-                                                <option value='Flyer'>Flyer/handout</option>
+                                                <option value='Flyer'>Fact Sheet/Storybook</option>
+                                                <option value='Letter to Legislator'>Letter to the Legislator</option>
                                                 <option value='Next Steps'>Next Steps</option>
+                                                <option value='Outlets'>Outlets for Publication</option>
                                                 <option value='Op-Ed'>Op-Ed</option>
-                                                <option value='Personal Reflection'>Personal reflection</option>
+                                                <option value='Personal Reflection'>Essays about ENACT</option>
                                                 <option value='Portfolio'>Portfolio</option>
                                                 <option value='Presentations'>Presentations</option>
                                                 <option value='Research Report'>Student Research Report</option>
                                                 <option value='Script'>Script for meeting with Ways and Means Staff
                                                 </option>
-                                                <option value='Handout'>Handout/Factsheet</option>
+                                                <option value='State Legislative'>State Legislative Website Resources
+                                                </option>
                                                 <option value='Testimony'>Testimony</option>
                                             </select>
                                         </div>
