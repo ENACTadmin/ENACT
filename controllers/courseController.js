@@ -101,7 +101,7 @@ exports.copyCourse = async (req, res, next) => {
     }
 }
 
-exports.editCourse = async (req, res, next) => {
+exports.updateCourse = async (req, res, next) => {
     try {
         let courseToEdit = await Course.findOne({_id: req.params.courseId})
         courseToEdit.courseName = req.body.courseName
@@ -109,6 +109,10 @@ exports.editCourse = async (req, res, next) => {
         courseToEdit.institution = req.body.institution
         courseToEdit.officeHour = req.body.officeHour
         courseToEdit.officeHourLocation = req.body.officeHourLocation
+        let tempId = req.body.ownerId
+        let tempUser = await User.findOne({_id: tempId})
+        courseToEdit.instructor = tempUser.userName
+        courseToEdit.ownerId = tempUser._id
         // await until the courseToEdit is saved properly
         await courseToEdit.save()
         res.redirect('/courses')

@@ -1,6 +1,8 @@
 <%- include('../components/header'); -%>
 <%- include('../components/navbar'); -%>
 
+<script src="/js/autocompleteAlt.js"></script>
+
 <section class='section diagonal-gradient'>
     <div class='section__content section__content--full-width diagonal-gradient'>
         <div class='jumbotron masthead text-center'>
@@ -20,12 +22,14 @@
                     <form method='post' action='/course/update/<%= courseInfo._id %>'>
                         <div class='input-group-prepend'>
                             <span class='input-group-text' style='width: 180px'>Course Name</span>
-                            <input type='text' class='form-control' name='courseName' value="<%= courseInfo.courseName %>" placeholder='e.g. Brandeis ENACT'>
+                            <input type='text' class='form-control' name='courseName'
+                                   value="<%= courseInfo.courseName %>" placeholder='e.g. Brandeis ENACT'>
                         </div>
                         <br>
                         <div class='input-group-prepend'>
                             <span class='input-group-text' style='width: 180px'>Semester</span>
-                            <input type='text' class='form-control' name='semester' placeholder='e.g. SPR2020' value="<%= courseInfo.semester %>">
+                            <input type='text' class='form-control' name='semester' placeholder='e.g. SPR2020'
+                                   value="<%= courseInfo.semester %>">
                         </div>
                         <br>
                         <div class='input-group-prepend'>
@@ -36,16 +40,26 @@
                         <br>
                         <div class='input-group-prepend'>
                             <span class='input-group-text' style='width: 180px'>Office Hour</span>
-                            <input type='text' class='form-control' name='officeHour' placeholder='e.g. Mon 3pm - 5pm' value="<%= courseInfo.officeHour %>">
+                            <input type='text' class='form-control' name='officeHour' placeholder='e.g. Mon 3pm - 5pm'
+                                   value="<%= courseInfo.officeHour %>">
                         </div>
                         <br>
+
                         <div class='input-group-prepend'>
                             <span class='input-group-text' style='width: 180px'>Office Location</span>
                             <input type='text' class='form-control' name='officeHourLocation'
                                    placeholder='e.g. Volen 110' value="<%= courseInfo.officeHourLocation %>">
                         </div>
                         <br>
-
+                        <div class='input-group-prepend'>
+                            <span class='input-group-text' style='width: 180px'>Owner</span>
+                            <input autofill="off" autocomplete="off" id="profiles"
+                                   placeholder="Current owner is: <%= courseInfo.instructor %>" type='text'
+                                   class='form-control' name='ownerName'>
+                            <input hidden autofill="off" autocomplete="off"
+                                   id="ownerId" type='text' style='margin-right: 20px' class='form-control' name='ownerId'>
+                        </div>
+                        <br>
                         <input type='submit' name='submit' class='btn btn-outline-dark' value='Submit'>
                     </form>
                 <% } else { %>
