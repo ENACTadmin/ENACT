@@ -61,8 +61,13 @@
                         <ul class='sub-menu'>
                             <% for (let i = 0; i < courseInfoSet.length; i++) { %>
                                 <li>
-                                    <a class='header-link'
-                                       href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName %></a>
+                                    <% if (courseInfoSet[i].courseName.length <= 20) { %>
+                                        <a class='header-link'
+                                           href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName %></a>
+                                    <% } else { %>
+                                        <a class='header-link'
+                                           href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName.substring(0, 20) + "..." %></a>
+                                    <% } %>
                                 </li>
                             <% } %>
                         </ul>
