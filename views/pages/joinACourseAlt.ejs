@@ -14,8 +14,8 @@
 <section class='section section__grey' data-aos='fade-up'>
     <div class='container'>
         <div class='row'>
-            <div class='col-md-3 col-sm-12'></div>
-            <div class='col-md-6 col-sm-12'>
+            <div class='col-md-2 col-sm-12'></div>
+            <div class='col-md-8 col-sm-12'>
                 <h5>Use Pin code to enroll</h5>
                 <hr>
                 <% if (loggedIn) { %>
@@ -52,7 +52,7 @@
                             } %>
                             <tr>
                                 <td>
-                                    <a href='/course/view/<%= courseInfo[i]._id %>'><%= courseInfo[i].courseName %></a>
+                                    <%= courseInfo[i].courseName %>
                                 </td>
                                 <td><%= courseInfo[i].semester %></td>
                                 <td>
