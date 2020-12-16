@@ -28,7 +28,7 @@ router.use(bodyParser.urlencoded({extended: false}));
 // this runs every time when a req is received
 let loggedIn = false;
 router.use(async (req, res, next) => {
-    // console.log("In router!")
+    console.log("In router!")
     res.locals.loggedIn = false;
     res.locals.status = "student"
     if (req.isAuthenticated()) {
@@ -40,7 +40,9 @@ router.use(async (req, res, next) => {
         let userInfo = await User.findOne({_id: req.user._id})
         if (adminList.includes(email)) {
             res.locals.status = 'admin'
-            let courseInfoSet = await Course.find({ownerId: req.user._id})
+            let enrolledCourses = req.user.enrolledCourses
+            let courseInfoSet = await Course.find({$or: [{_id: {$in: enrolledCourses}}, {ownerId: req.user._id}]})
+            // let courseInfoSet = await Course.find({ownerId: req.user._id})
             userInfo.status = 'admin'
             await userInfo.save()
             res.locals.courseInfoSet = courseInfoSet
@@ -60,7 +62,6 @@ router.use(async (req, res, next) => {
                 res.locals.courseInfoSet = courseInfoSet
             }
         }
-        console.log("user has been Authenticated. Status: " + res.locals.status)
     }
     next()
 });
