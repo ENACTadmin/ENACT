@@ -121,7 +121,7 @@ app.get('/course/update/:courseId',
     utils.checkUserName,
     async (req, res) => {
         let courseInfo = await Course.findOne({_id: req.params.courseId})
-        res.render('./pages/editCourse', {
+        res.render('./pages/updateCourse', {
             courseInfo: courseInfo
         })
     }
@@ -129,7 +129,7 @@ app.get('/course/update/:courseId',
 
 app.post('/course/update/:courseId',
     utils.checkUserName,
-    courseController.editCourse
+    courseController.updateCourse
 )
 
 
@@ -605,6 +605,23 @@ app.get('/profiles/all',
         return res.send(userProfiles)
     }
 )
+
+app.get('/profiles/faculties',
+    async (req, res) => {
+        console.log("status: ", req.user.status)
+        // if (req.user.status === 'admin') res.send("You are not admin!")
+        // else {
+        let userProfiles = await User.find({
+            $or: [
+                {status: 'faculty'}, {status: 'admin'}
+            ]
+        })
+        console.log("faculties: ", userProfiles)
+        return res.send(userProfiles)
+        // }
+    }
+)
+
 
 app.post('/event/delete/:eventId',
     eventController.deleteEvent
