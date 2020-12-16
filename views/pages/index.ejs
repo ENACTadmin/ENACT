@@ -194,7 +194,7 @@
 <section class='section section--intro section__grey'>
     <div class='section__content section__content--full-width' style='font-weight: 800;'>
         <div class='intro'>
-            <div class='intro__content' style='background: #0053a4;'>
+            <div class='intro__content'>
                 <div class='intro__subtitle' data-aos='zoom-out-down' data-aos-duration='600' style='color: white;'>
                     “The most important office, and the one which all of
                     us can and should fill, is that of private citizen.”
@@ -204,7 +204,7 @@
                 </div>
                 <% if (loggedIn) { %>
                     <% if (status === 'admin' || status === 'faculty') { %>
-                        <div class='form-demo' data-aos='zoom-out-down' data-aos-duration='600' data-aos-delay='400'>
+                        <div class='form-demo'>
                             <a href='/courses'><input type='submit' name='submit' class='form-demo__large'
                                                       value='MANAGE/CREATE COURSES'></a>
                             <a href='/resources/search/private/general'><input type='submit' name='submit'
@@ -215,7 +215,7 @@
                                                                      value='FACULTY GUIDE'></a>
                         </div>
                     <% } else { %>
-                        <div class='form-demo' data-aos='zoom-out-down' data-aos-duration='1000' data-aos-delay='400'>
+                        <div class='form-demo'>
                             <!--                            <a href='/courses'><input type='submit' name='submit' class='form-demo__large'-->
                             <!--                                                      value='MANAGE/ENROLL IN COURSES'></a>-->
                             <a href='/resources/search/private/general'><input type='submit' name='submit'
@@ -226,9 +226,8 @@
                     <br>
                 <% } else { %>
                     <br>
-                    <a href='/resources/view/public/all' data-aos='zoom-out-down' data-aos-duration='1000'
-                       data-aos-delay='400'><input
-                                type='submit' name='submit' class='form-demo__large'
+                    <a href='/resources/view/public/all'>
+                        <input type='submit' name='submit' class='form-demo__large'
                                 value='PUBLIC RESOURCES'></a>
                 <% } %>
             </div>

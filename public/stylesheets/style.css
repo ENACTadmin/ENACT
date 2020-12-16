@@ -960,10 +960,11 @@ h6 {
 /*===============================================*/
 .section--intro {
     width: 100%;
-    height: 96%;
+    height: 95%;
     position: relative;
     overflow: hidden;
-    background: url("../images/Photos for ENACT platform slideshow/Smith_Danley_Quinn.jpg");
+    /*background: url("../images/Screen Shot 2020-12-16 at 6.08.06 PM.png");*/
+    background: url("../images/index.jpg");
     background-size: cover;
     margin-top: 80px;
 }
@@ -981,12 +982,16 @@ h6 {
 }
 
 .intro__content {
-    margin-top: 15%;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    width: 100%;
-    text-align: center;
+    margin-top: 18%;
+    padding: 30px;
+    /*padding-top: 30px;*/
+    /*padding-bottom: 30px;*/
+    width: 60%;
+    text-align: left;
     background: black;
+    /*background: linear-gradient(to bottom right, black, #0053a4);*/
+
+
 }
 
 .intro__title {
@@ -1102,8 +1107,8 @@ h6 {
 }
 
 .form-demo__large:hover {
-    background-color: #f7f8f9;
-    border: 1px solid #fff;
+    background-color: #CCCDC6;
+    border: 1px solid #CCCDC6;
     color: #000;
 }
 
