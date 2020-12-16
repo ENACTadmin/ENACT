@@ -160,8 +160,16 @@ app.post('/course/delete/:courseId',
 // render join course view
 app.get('/course/join',
     utils.checkUserName,
-    (req, res) => {
-        res.render('./pages/joinACourse')
+    async (req, res) => {
+        if (req.user.status !== 'admin')
+            res.render('./pages/joinACourse')
+        else {
+            let courseInfo = await Course.find()
+            res.render('./pages/joinACourseAlt', {
+                enrolledCourses: req.user.enrolledCourses,
+                courseInfo: courseInfo
+            })
+        }
     }
 )
 
