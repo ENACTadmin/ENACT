@@ -52,12 +52,12 @@
                         <ul class='sub-menu'>
                             <% for (let i = 0; i < courseInfoSet.length; i++) { %>
                                 <li>
-                                    <% if (courseInfoSet[i].courseName.length <= 20) { %>
+                                    <% if (courseInfoSet[i].courseName.length <= 25) { %>
                                         <a class='header-link'
                                            href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName %></a>
                                     <% } else { %>
                                             <a class='header-link'
-                                               href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName.substring(0, 20) + "..." %></a>
+                                               href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName.substring(0, 25) + "..." %></a>
                                     <% } %>
                                 </li>
                             <% } %>
