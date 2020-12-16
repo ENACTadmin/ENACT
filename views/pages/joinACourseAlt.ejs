@@ -1,0 +1,74 @@
+<%- include('../components/header'); -%>
+<%- include('../components/navbar'); -%>
+
+<section class='section'>
+    <div class='section__content section__content--full-width'>
+        <div class='jumbotron masthead text-center'>
+            <div class='section__title section__title--centered'>
+                Course enrollment
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class='section section__grey' data-aos='fade-up'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-md-3 col-sm-12'></div>
+            <div class='col-md-6 col-sm-12'>
+                <h5>Use Pin code to enroll</h5>
+                <hr>
+                <% if (loggedIn) { %>
+                    <form method='post' action='/course/join'>
+                        <div class='input-group-prepend'>
+                            <span class='input-group-text' style='width: 180px'>Course Pin</span>
+                            <input type='text' class='form-control' style='margin-right: 10px' name='coursePin'
+                                   placeholder='e.g. 7-digit number'>
+                            <input type='submit' name='submit' class='btn btn-outline-dark' value='Enroll'>
+                        </div>
+                        <br>
+                    </form>
+                <% } else { %>
+                    <%- include('../components/component-loginToView'); -%>
+                <% } %>
+                <br>
+                <h5>Courses you haven't enrolled yet</h5>
+                <hr>
+                <table class='table table-striped'>
+                    <thead style='background-color: #0053a4'>
+                    <tr>
+                        <th scope='col' style='color: white'>Course Name</th>
+                        <th scope='col' style='color: white'>Semester</th>
+                        <th scope='col' style='color: white'>Course Pin</th>
+                        <th scope='col' style='color: white'>Instructor</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% if (status === 'admin') { %>
+                        <% for(let i = 0; i < courseInfo.length; i++) { %>
+                            <% if (enrolledCourses.includes(courseInfo[i]._id)) {
+                                // console.log("enrolled!")
+                                continue;
+                            } %>
+                            <tr>
+                                <td>
+                                    <a href='/course/view/<%= courseInfo[i]._id %>'><%= courseInfo[i].courseName %></a>
+                                </td>
+                                <td><%= courseInfo[i].semester %></td>
+                                <td>
+                                    <%= courseInfo[i].coursePin %>
+                                </td>
+                                <td>
+                                    <%= courseInfo[i].instructor %>
+                                </td>
+                            </tr>
+                        <% } %>
+                    <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('../components/footer'); -%>

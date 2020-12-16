@@ -194,7 +194,8 @@ exports.joinCourse = async (req, res, next) => {
         let enrolledCourses = req.user.enrolledCourses || []
 
         if (containsString(enrolledCourses, courseInfo._id)) {
-            console.log("enrolled already!")
+            console.log("Enrolled already!")
+            res.send("Enrolled already")
             return
         }
         // update user's enrolledCourses field
@@ -213,9 +214,10 @@ function containsString(list, elt) {
     list.forEach(e => {
         if (JSON.stringify(e) === JSON.stringify(elt)) {
             found = true
-        } else {
-            console.log(JSON.stringify(e) + "!=" + JSON.stringify(elt));
         }
+        // else {
+        //     console.log(JSON.stringify(e) + "!=" + JSON.stringify(elt));
+        // }
     });
     return found
 }
