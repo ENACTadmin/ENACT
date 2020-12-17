@@ -24,13 +24,17 @@ async function setWord2Id(newResource) {
         let word2Id = await Word2Id.findOne({word: newRegex})
         // if not null
         if (match[i].toString() !== 'null') {
+            // new word
             if (word2Id === null) {
                 let newWord2Id = new Word2Id({
                     word: match[i],
                     ids: [newResource._id]
                 })
                 await newWord2Id.save()
-            } else {
+            }
+            // existing word
+            else {
+                // remove duplicates
                 if (!word2Id.ids.includes(newResource._id)) {
                     word2Id.ids = await [newResource._id].concat(word2Id.ids)
                     await word2Id.save()
