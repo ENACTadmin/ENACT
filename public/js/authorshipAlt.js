@@ -13,7 +13,7 @@ $(document).ready(function () {
                     '</div>');
             });
             $("#removeButton" + id_set_array[i]).click(function () {
-                console.log($("#input-group-prepend" + id_set_array[i] + ".input-group-prepend").length)
+                // console.log($("#input-group-prepend" + id_set_array[i] + ".input-group-prepend").length)
                 if ($("#input-group-prepend" + id_set_array[i] + ".input-group-prepend").length == 0) {
                     alert("No more text-box to remove");
                     return false;

@@ -440,10 +440,12 @@ app.post('/partPublicToENACT',
     notificationController.partPublicToENACT
 )
 
+// reset word2id mappings
 app.get('/secretFunction',
     resourceController.resetWord2Id
 )
 
+// update author name for all resources
 app.get('/secretFunction2',
     async (req, res) => {
         let allRes = await Resource.find()
@@ -458,6 +460,7 @@ app.get('/secretFunction2',
     }
 )
 
+// remove faulty faculties
 app.get('/secretFunction3',
     async (req, res) => {
         let allFaculty = await Faculty.find()

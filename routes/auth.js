@@ -247,7 +247,7 @@ function containsString(list, elt) {
         if (JSON.stringify(e) === JSON.stringify(elt)) {
             found = true
         } else {
-            console.log(JSON.stringify(e) + "!=" + JSON.stringify(elt));
+            // console.log(JSON.stringify(e) + "!=" + JSON.stringify(elt));
         }
     });
     return found
