@@ -14,6 +14,7 @@
 <br>
 <div class='section section__grey' data-aos='fade-up'>
     <div class='container'>
+        <% if (loggedIn) { %>
         <div class='row'>
             <div class='col-md-3 col-sm-12'></div>
             <div class='col-md-6 col-sm-12'>
@@ -23,17 +24,18 @@
                     <video width="620px" controls>
                         <source src="../../videos/Faculty-Help.mp4" type="video/mp4">
                     </video>
-                <% } %>
-                <br>
-                <br>
-                <br>
+                <% }else{ %>
                 <h3>Student Tutorial</h3>
                 <hr>
                 <video width="620px" controls>
                     <source src="../../videos/Student-Help.mp4" type="video/mp4">
                 </video>
+                    <% } %>
             </div>
         </div>
+            <% } else { %>
+                <%- include('../components/component-loginToView'); -%>
+            <% } %>
     </div>
 </div>
 
