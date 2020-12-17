@@ -18,7 +18,7 @@ async function setWord2Id(newResource) {
 
     let regex = /[^\s\.,!?()\[\]]+/g;
     let match = fullContent.match(regex);
-    console.log('match: ', match)
+    // console.log('match: ', match)
     for (let i = 0; i < match.length; i++) {
         let newRegex = new RegExp(["^", match[i], "$"].join(""), "i");
         let word2Id = await Word2Id.findOne({word: newRegex})
@@ -47,7 +47,6 @@ async function removeWord2Id(oldResource) {
 
     let regex = /[^\s\.,!?()\[\]]+/g;
     let match = fullContent.match(regex);
-    console.log('match here: ', match);
     for (let i = 0; i < match.length; i++) {
         let newRegex = new RegExp(["^", match[i], "$"].join(""), "i");
         let word2Id = await Word2Id.findOne({word: newRegex})
@@ -583,14 +582,12 @@ exports.unstarResource = async (req, res, next) => {
         let resourceId = await req.params.resourceId
         let resourceSet = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
         let resourceIds = resourceSet.resources
-        console.log("ids: ", resourceIds)
         let newResourceIds = []
         for (let i = 0; i < resourceIds.length; i++) {
             if (resourceIds[i].toString() !== resourceId) {
                 newResourceIds.push(resourceIds[i])
             }
         }
-        console.log("new id: ", newResourceIds)
         resourceSet.resources = newResourceIds
         await resourceSet.save()
         res.redirect('back')
@@ -603,7 +600,6 @@ exports.starResourceAlt = async (req, res, next) => {
     try {
         let resourceId = await req.params.resourceId
         let resourceSet = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
-        console.log("type: ", typeof resourceSet)
         // if resourceSet collection is empty, then create a new instance
         if (!resourceSet) {
             let newResourceSet = new ResourceSet({
@@ -642,7 +638,7 @@ exports.unstarResourceAlt = async (req, res, next) => {
         let resourceId = req.params.resourceId
         let resourceSet = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
         let resourceIds = resourceSet.resources
-        console.log("ids: ", resourceIds)
+        // console.log("ids: ", resourceIds)
         let newResourceIds = []
         for (let i = 0; i < resourceIds.length; i++) {
             if (resourceIds[i].toString() !== resourceId) {
@@ -667,7 +663,7 @@ exports.showStarredResources = async (req, res, next) => {
     try {
         let resourceInfo = null
         let resourceSet = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
-        console.log(resourceSet)
+        // console.log(resourceSet)
         if (!resourceSet) {
             console.log('resource set empty')
         } else {
