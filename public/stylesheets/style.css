@@ -23,6 +23,7 @@
 }
 
 .header__menu ul li a.header-link {
+    font-size: medium;
     color: black;
     border: 0;
 }
@@ -1093,7 +1094,7 @@ h6 {
     border: 1px solid #fff;
     height: 63px;
     line-height: 61px;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 600;
     letter-spacing: 1px;
     cursor: pointer;

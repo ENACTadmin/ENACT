@@ -36,7 +36,6 @@
                             <li>
                                 <a class='header-link' href='/resources/view/public/all'>Find some resources</a>
                             </li>
-
                         </ul>
                     <% } %>
                 </li>
@@ -47,26 +46,24 @@
                             List</a>
                     <% } %>
                 </li>
-
                 <li>
                     <% if (!loggedIn) { %>
-                        <a class='header-link' id='header-link' href='mailto:eanct@brandeis.edu' data-aos='fade-left'>Contact
+                        <a class='header-link' id='header-link' href='mailto:enact@brandeis.edu' data-aos='fade-left'>Contact
                             Us</a>
                     <% } %>
                 </li>
-
                 <li>
                     <% if (loggedIn) { %>
                         <a class='header-link' id='header-link' href='/courses' data-aos='fade-left'>Courses</a>
                         <ul class='sub-menu'>
                             <% for (let i = 0; i < courseInfoSet.length; i++) { %>
                                 <li>
-                                    <% if (courseInfoSet[i].courseName.length <= 25) { %>
+                                    <% if (courseInfoSet[i].courseName.length <= 20) { %>
                                         <a class='header-link'
                                            href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName %></a>
                                     <% } else { %>
                                         <a class='header-link'
-                                           href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName.substring(0, 25) + "..." %></a>
+                                           href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName.substring(0, 20) + "..." %></a>
                                     <% } %>
                                 </li>
                             <% } %>
@@ -78,7 +75,7 @@
                         <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Resources</a>
                         <ul class='sub-menu'>
                             <li>
-                                <a class='header-link' href='/resources/search/private/general'>Find some resources</a>
+                                <a class='header-link' href='/resources/search/private/advanced'>Find some resources</a>
                             </li>
                             <% if (status === 'faculty' || status === 'admin') { %>
                                 <li>
@@ -117,7 +114,7 @@
                                     <a class='header-link' href='/profiles/view/faculty'>Faculty list</a>
                                 </li>
                                 <li>
-                                    <a class='header-link' href='/reviewResource'>Approve student resources</a>
+                                    <a class='header-link' href='/reviewResource'>Approve stdnt. resources</a>
                                 </li>
                             </ul>
                         <% } else { %>
@@ -140,10 +137,10 @@
                                     <a class='header-link' href='/approvePublicResources'>Approve public resources</a>
                                 </li>
                                 <li>
-                                    <a class='header-link' href='/approveTags'>Approve proposed new areas</a>
+                                    <a class='header-link' href='/approveTags'>Approve new tags</a>
                                 </li>
                                 <li>
-                                    <a class='header-link' href='/managePublicResources'>Manage home page resources</a>
+                                    <a class='header-link' href='/managePublicResources'>Home page resources</a>
                                 </li>
                                 <li>
                                     <a class='header-link' href='/profile/create/faculty'>Set up a new faculty</a>
@@ -161,18 +158,18 @@
 
                 <% if (loggedIn) { %>
                     <li>
-                        <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Settings</a>
+                        <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Settings & Help</a>
                         <ul class='sub-menu'>
                             <li>
-                                <a class='header-link' href='/profile/update'>View/edit profile</a>
+                                <a class='header-link' href='/profile/update'>Update profile</a>
+                            </li>
+                            <li>
+                                <a class='header-link' id='header-link' href='/about' data-aos='fade-left'>About Us</a>
+                            </li>
+                            <li>
+                                <a class='header-link' id='header-link' href='/help' data-aos='fade-left'>Help</a>
                             </li>
                         </ul>
-                    </li>
-                <% } %>
-
-                <% if (loggedIn) { %>
-                    <li>
-                        <a class='header-link' id='header-link' href='/help' data-aos='fade-left'>Help</a>
                     </li>
                 <% } %>
 
@@ -191,16 +188,15 @@
 </header>
 
 <!-- Front intro -->
-<section class='section section--intro section__grey'>
+<section class='section section--intro section__grey' data-aos='fade-down' data-aos-duration='600'>
     <div class='section__content section__content--full-width' style='font-weight: 800;'>
         <div class='intro'>
             <div class='intro__content'>
-                <div class='intro__subtitle' data-aos='zoom-out-down' data-aos-duration='600' style='color: white;'>
+                <div class='intro__subtitle' style='color: white;'>
                     “The most important office, and the one which all of
                     us can and should fill, is that of private citizen.”
                 </div>
-                <div class='intro__subtitle' data-aos='zoom-out-down' data-aos-duration='600' data-aos-delay='200'
-                     style='color: lightgreen'> - Supreme Court Justice Louis D. Brandeis
+                <div class='intro__subtitle' style='color: lightgreen'> - Supreme Court Justice Louis D. Brandeis
                 </div>
                 <% if (loggedIn) { %>
                     <% if (status === 'admin' || status === 'faculty') { %>
@@ -228,7 +224,7 @@
                     <br>
                     <a href='/resources/view/public/all'>
                         <input type='submit' name='submit' class='form-demo__large'
-                                value='PUBLIC RESOURCES'></a>
+                               value='PUBLIC RESOURCES'></a>
                 <% } %>
             </div>
         </div>
@@ -238,100 +234,47 @@
 <!-- ENACT Program intro -->
 <section class='section section__grey'>
     <br><br><br>
-    <h2 class='section__title section__title--centered'>The ENACT Program</h2>
+    <h2 class='section__title section__title--centered'>What you can do</h2>
     <br>
     <div class='section__content section__content--fluid-width section__content--padding--small'>
-        <div class='grid grid--3col'>
+        <div class='grid grid--2col'>
             <div class='grid__item partners__slide__grey' style='height: 500px' data-aos='fade-up'>
-                <h3 class='grid__title'><span>What we do</span></h3>
-                <p class='grid__text'>
-                    The <b style='color: #0053a4'>E</b>ducational <b style='color: #0053a4'>N</b>etwork for <b
-                            style='color: #0053a4'>A</b>ctive <b style='color: #0053a4'>C</b>ivic <b
-                            style='color: #0053a4'>T</b>ransformation is a national program
-                    engaging undergraduates at colleges and universities in state-level legislative change by
-                    learning
-                    to work with legislators, staffers, and community organizations to advance policy. It is
-                    becoming a
-                    major voice in addressing challenges to American democracy by engaging young people around
-                    the
-                    country in civic activism built on knowledge, cooperation, justice and integrity.</p>
-                <br>
-                <br>
-            </div>
-
-            <div class='grid__item partners__slide__grey' style='height: 500px' data-aos='fade-up'>
-                <div id='carouselExampleSlidesOnly' class='carousel slide' data-ride='carousel'>
-                    <div class='carousel-inner'>
-                        <div class='carousel-item active'>
-                            <img src='<%= imagePaths[0] %>'
-                                 style='width: 100%; height: 480px; object-fit: cover; border-radius: 30px;'
-                                 class='d-block w-100' alt='...'>
-                            <div class='carousel-caption d-none d-md-block'
-                                 style='right: 5%; left: 5%; color: black; background-color: white; opacity: 0.8; border-radius: 15px; padding: 5%'>
-                                <p><b><%= labelPaths[0] %></b></p>
-                            </div>
-                        </div>
-                        <% for (let i = 1; i < imagePaths.length; i++) { %>
-                            <div class='carousel-item'>
-                                <img src='<%= imagePaths[i] %>'
-                                     style='width: 100%; height: 480px; object-fit: cover; border-radius: 30px;'
-                                     class='d-block w-100' alt='...'>
-                                <div class='carousel-caption d-none d-md-block'
-                                     style='right: 5%; left: 5%; color: black; background-color: white; opacity: 0.8; border-radius: 15px; padding: 5%'>
-                                    <p><b><%= labelPaths[i] %></b></p>
-                                </div>
-                            </div>
-                        <% } %>
-                    </div>
-                </div>
-            </div>
-
-            <div class='grid__item partners__slide__grey' style='height: 500px' data-aos='fade-up'>
-                <h3 class='grid__title'><span>The ENACT Model</span></h3>
-                <p class='grid__text'>
-                    <b style='color: #0053a4'>• Workshop</b>: ENACT launched with a workshop at Brandeis University in
-                    May 2016. Under the leadership of the program’s academic director, ENACT Fellows shared ideas and
-                    work on course development.
-                    <!--                    Read about the 2016 ENACT Institute and the 2018 ENACT Institute at Brandeis-->
-                    <!--                    University.-->
-                    <br>
-                    <b style='color: #0053a4'>• Courses</b>: In ENACT courses students learn about participating in the
-                    legislative and
-                    advocacy process at the state level, with a substantial hands-on component in which they engage
-                    directly in that process, as in the “Advocacy for Policy Change” course at Brandeis.
-                    <!--                    See the full list of ENACT schools.-->
-                    <br>
-                    <b style='color: #0053a4'>• Online Network</b>: The ENACT Network is a national in-person and online
+                <h3 class='grid__title'><span>Search/Share Resources</span></h3>
+                <% if (loggedIn) { %>
+                    <a href="/resources/search/private/advanced"><img src="/images/search.jpg" style="height: 70%"
+                                                                      align="right"></a>
+                <% } else { %>
+                    <a href='/resources/search/public/advanced'><img src="/images/search.jpg" style="height: 70%"
+                                                                     align="right"></a>
+                <% } %>
+                <p class='grid__text' style="font-size: larger; line-height: 30px">
+                    The ENACT Network is a national in-person and online
                     network of students, faculty, activists and legislators. It is a strategic and information hub for
-                    state-level players that enables them to connect with counterparts throughout the country.</p>
-                <br>
-                <br>
+                    state-level players that enables them to connect with counterparts throughout the country.
+                    <br><br>
+                </p>
+                <b><p style="text-align: right; font-size: large">Click <span>&#8594;</span> to start!</p></b>
+            </div>
+            <div class='grid__item partners__slide__grey' style='height: 500px' data-aos='fade-up'>
+                <h3 class='grid__title'><span>Networking</span></h3>
+                <a href="/profiles/view/all"><img src="/images/networking.jpg" style="height: 70%" align="right"></a>
+                <p class='grid__text' style="font-size: larger; line-height: 30px">
+                    The ENACT Network is a national in-person and online
+                    network of students, faculty, activists and legislators. It is a strategic and information hub for
+                    state-level players that enables them to connect with counterparts throughout the country.
+                    <br><br>
+                </p>
+                <b><p style="text-align: right; font-size: large">Click <span>&#8594;</span> to start!</p></b>
             </div>
         </div>
-
         <div class='clear'></div>
-
     </div>
 </section>
 
-<!-- Calendar -->
-<section class='section diagonal-gradient'>
-    <h2 class='section__title section__title--centered' style="color: white; padding-top: 80px">Event calendar</h2>
-    <section class="section__content" id="calendarIndex">
-        <%- include('../components/component-event'); -%>
-        <%- include('../components/component-eventImport'); -%>
-        <div class='text-center' data-aos='fade-up' style="padding-bottom: 80px" data-aos-delay="100">
-            <a href='/events'><input type='button' name='submit'
-                                     class='btn btn-lg btn-light'
-                                     value='View more events'></a>
-        </div>
-    </section>
-</section>
-
 <!-- Public Resources Section -->
-<section class='section section__grey'>
+<section class='section diagonal-gradient'>
     <div class='section__content section__content--fluid-width section__content--padding' data-aos='fade-up'>
-        <h2 class='section__title section__title--centered'>Public resources</h2>
+        <h2 class='section__title section__title--centered' style="color: white">Public resources</h2>
         <br><br><br>
         <% if (resourceInfo.length === 0) { %>
             <div class='card-body text-center' style="border-radius: 30px">
@@ -370,25 +313,79 @@
             </div>
             <br>
         <% } %>
-
         <br>
         <br>
         <% if (status === 'admin') { %>
             <div class='text-center' data-aos='fade-up' data-aos-delay="100">
                 <a href='/managePublicResources'><input type='button' name='submit'
-                                                        class='btn btn-lg btn-primary'
+                                                        class='btn btn- btn-lg btn-light'
                                                         value='Manage Displayed Resources'></a>
             </div>
         <% } %>
         <br>
         <div class='text-center' data-aos='fade-up' data-aos-delay="100">
             <a href='/resources/view/public/all'><input type='button' name='submit'
-                                                        class='btn btn-lg btn-primary'
+                                                        class='btn btn-lg btn-light'
                                                         value='Find More Resources'></a>
         </div>
         <br>
         <div class='clear'></div>
     </div>
+</section>
+
+
+<!-- Calendar -->
+<section class='section section__grey'>
+    <h2 class='section__title section__title--centered' style="padding-top: 80px">Events</h2>
+    <section class='section__content section__content--fluid-width'>
+        <% if (eventsInfo.length !== 0) { %>
+            <% for (let i = 0; i < eventsInfo.length; i++) { %>
+                <% if (loggedIn || eventsInfo[i].visibility === 'public') { %>
+                    <div class='card border-0' style='border-radius: 30px'>
+                        <div class='card-body'>
+                            <h3><%= eventsInfo[i].title %></h3>
+                            <div class='card-text' style="font-size: 17px">
+                                <ul class='list-group'>
+                                    <li class='list-group-item borderless box-padding'>
+                                        <b>Description: </b> <%= eventsInfo[i].description %>
+                                    </li>
+                                    <% if (eventsInfo[i].start !== null) { %>
+                                        <li class='list-group-item borderless box-padding'>
+                                            <b>Starts at:</b>
+                                            <%= eventsInfo[i].start %>
+                                        </li>
+                                    <% } %>
+                                    <% if (eventsInfo[i].end !== null) { %>
+                                        <li class='list-group-item borderless box-padding'>
+                                            <b>Ends at:</b>
+                                            <%= eventsInfo[i].end %>
+                                        </li>
+                                    <% } %>
+                                    <% if (eventsInfo[i].uri !== null) { %>
+                                        <li class='list-group-item borderless box-padding'>
+                                            <b>Link: </b> <a
+                                                    href="<%= eventsInfo[i].uri %>"><%= eventsInfo[i].uri %></a>
+                                        </li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <% if (i !== eventsInfo.length - 1) { %>
+                        <br>
+                    <% } %>
+                <% } %>
+            <% } %>
+        <% } else { %>
+            No events available yet
+        <% } %>
+        <br><br><br>
+        <div class='text-center' data-aos='fade-up' style="padding-bottom: 80px" data-aos-delay="100">
+            <a href='/events'><input type='button' name='submit'
+                                     class='btn btn-lg btn-primary'
+                                     value='View more events'></a>
+        </div>
+    </section>
 </section>
 
 
@@ -408,9 +405,11 @@
                     <h3 style='text-align: center'>Melissa Stimell</h3>
                     <h4 style='text-align: center'>Academic Program Director</h4>
                     <hr>
-                    Melissa Stimell is a Professor of the Practice in the Legal Studies Program at Brandeis
-                    University, and Interim Director of the International Center for Ethics, Justice and Public
-                    Life.
+                    <p style="font-size: 18px">Melissa Stimell is a Professor of the Practice in the Legal Studies
+                        Program at Brandeis
+                        University, and Interim Director of the International Center for Ethics, Justice and Public
+                        Life.
+                    </p>
                     <br>
                 </div>
             </div>
@@ -423,7 +422,8 @@
                     <h3 style='text-align: center'>David J. Weinstein</h3>
                     <h4 style='text-align: center'>Assistant Director</h4>
                     <hr>
-                    David Weinstein is Assistant Director of ENACT and Communications for the Ethics Center.
+                    <p style="font-size: 18px">David Weinstein is Assistant Director of ENACT and Communications for the
+                        Ethics Center.</p>
                     <br>
                 </div>
             </div>
@@ -440,7 +440,7 @@
                                 <h3 style='text-align: center'><%= facultyPaths[0][1] %></h3>
                                 <h4 style='text-align: center'>Faculty Fellow</h4>
                                 <hr>
-                                <%= facultyPaths[0][2] %>
+                                <p style="font-size: 18px"><%= facultyPaths[0][2] %></p>
                                 <br>
                             </div>
                         </div>
@@ -455,7 +455,7 @@
                                     <h3 style='text-align: center'><%= facultyPaths[i][1] %></h3>
                                     <h4 style='text-align: center'>Faculty Fellow</h4>
                                     <hr>
-                                    <%= facultyPaths[i][2] %>
+                                    <p style="font-size: 18px"><%= facultyPaths[i][2] %></p>
                                     <br>
                                 </div>
                             </div>
@@ -468,6 +468,5 @@
         <div class='clear'></div>
     </div>
 </section>
-
 
 <%- include('../components/footer'); -%>

@@ -81,10 +81,14 @@ app.use(aws)
 app.get('/',
     utils.checkUserName,
     resourceController.loadPublicResources,
-    (req, res) =>
-        res.render('./pages/index'))
+    async (req, res) => {
+        let eventsInfo = await Event.find({}).sort({start: -1})
+        res.locals.eventsInfo = eventsInfo
+        res.render('./pages/index')
+    })
 
 app.get('/about',
+    resourceController.loadPublicResources,
     (req, res) =>
         res.render('./pages/about'))
 
