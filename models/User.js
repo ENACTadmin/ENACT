@@ -12,8 +12,7 @@ const userSchema = Schema({
     password: String,
     profilePicURL: String,
     status: String, // status of the user: student/faculty/admin
-    // zipcode: String,
-    // city: String,
+    linkedInURL: String,
     state: String,
     enrolledCourses: [ObjectID],
     ownedCourses: [ObjectID],

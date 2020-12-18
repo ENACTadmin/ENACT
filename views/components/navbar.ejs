@@ -48,16 +48,20 @@
 
                 <li>
                     <% if (loggedIn) { %>
-                        <a class='header-link' id='header-link' href='/courses' data-aos='fade-left'>Courses</a>
+                        <% if (status === 'student') { %>
+                            <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Courses</a>
+                        <% } else { %>
+                            <a class='header-link' id='header-link' href='/courses' data-aos='fade-left'>Courses</a>
+                        <% } %>
                         <ul class='sub-menu'>
                             <% for (let i = 0; i < courseInfoSet.length; i++) { %>
                                 <li>
-                                    <% if (courseInfoSet[i].courseName.length <= 25) { %>
+                                    <% if (courseInfoSet[i].courseName.length <= 20) { %>
                                         <a class='header-link'
                                            href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName %></a>
                                     <% } else { %>
-                                            <a class='header-link'
-                                               href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName.substring(0, 25) + "..." %></a>
+                                        <a class='header-link'
+                                           href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName.substring(0, 20) + "..." %></a>
                                     <% } %>
                                 </li>
                             <% } %>
@@ -109,7 +113,7 @@
                                     <a class='header-link' href='/profiles/view/faculty'>Faculty list</a>
                                 </li>
                                 <li>
-                                    <a class='header-link' href='/reviewResource'>Approve student resources</a>
+                                    <a class='header-link' href='/reviewResource'>Approve stdnt. resources</a>
                                 </li>
                             </ul>
                         <% } else { %>
@@ -132,10 +136,10 @@
                                     <a class='header-link' href='/approvePublicResources'>Approve public resources</a>
                                 </li>
                                 <li>
-                                    <a class='header-link' href='/approveTags'>Approve proposed new areas</a>
+                                    <a class='header-link' href='/approveTags'>Approve new tags</a>
                                 </li>
                                 <li>
-                                    <a class='header-link' href='/managePublicResources'>Manage home page resources</a>
+                                    <a class='header-link' href='/managePublicResources'>Home page resources</a>
                                 </li>
                                 <li>
                                     <a class='header-link' href='/profile/create/faculty'>Set up a new faculty</a>
@@ -153,18 +157,18 @@
 
                 <% if (loggedIn) { %>
                     <li>
-                        <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Settings</a>
+                        <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Settings & Help</a>
                         <ul class='sub-menu'>
                             <li>
-                                <a class='header-link' href='/profile/update'>View/edit profile</a>
+                                <a class='header-link' href='/profile/update'>Update profile</a>
+                            </li>
+                            <li>
+                                <a class='header-link' id='header-link' href='/about' data-aos='fade-left'>About Us</a>
+                            </li>
+                            <li>
+                                <a class='header-link' id='header-link' href='/help' data-aos='fade-left'>Help</a>
                             </li>
                         </ul>
-                    </li>
-                <% } %>
-
-                <% if (loggedIn) { %>
-                    <li>
-                        <a class='header-link' id='header-link' href='/help' data-aos='fade-left'>Help</a>
                     </li>
                 <% } %>
 

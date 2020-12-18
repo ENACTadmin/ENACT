@@ -28,6 +28,7 @@ exports.updateProfile = async (req, res, next) => {
         userToUpdate.personalEmail = req.body.personalEmail;
         userToUpdate.state = req.body.state;
         userToUpdate.department = req.body.department;
+        userToUpdate.linkedInURL = req.body.linkedInURL;
         userToUpdate.pronoun = req.body.pronoun;
         userToUpdate.phoneNumber = req.body.phoneNumber;
         userToUpdate.affiliation = req.body.affiliation;
@@ -51,6 +52,7 @@ exports.updateProfileAdmin = async (req, res, next) => {
         userToUpdate.personalEmail = req.body.personalEmail;
         userToUpdate.state = req.body.state;
         userToUpdate.department = req.body.department;
+        userToUpdate.linkedInURL = req.body.linkedInURL;
         userToUpdate.pronoun = req.body.pronoun;
         userToUpdate.phoneNumber = req.body.phoneNumber;
         userToUpdate.affiliation = req.body.affiliation;
