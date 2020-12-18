@@ -880,6 +880,7 @@ async function invertedSearch(req, res) {
     let resourceInfo = null
     let regex = /[^\s\.,!?()\[\]]+/g;
     let match = req.body.search.match(regex)
+    match = [...new Set(match)]
     if (match) {
         // admin search
         if (res.locals.status === 'admin' || res.locals.status === 'faculty') {
