@@ -2,6 +2,12 @@
 <%- include('../components/navbar'); -%>
 
 <script src='/js/search.js'></script>
+<script src='/js/showDesc.js'></script>
+<script src='/js/searchComplete.js'></script>
+<script src="/js/disableautofill.js"></script>
+<script>
+    $('input[autofill="off"]').disableAutofill();
+</script>
 
 <section class='section'>
     <div class='section__content section__content--full-width'>
@@ -20,15 +26,121 @@
             <div class='row'>
                 <div class='col-md-3 col-sm-12'></div>
                 <div class='col-md-6 col-sm-12'>
-                    <h3>General Search</h3>
+                    <h3>Keywords</h3>
                     <hr>
                     <div class='input-group-prepend'>
-                        <input type='text' class='form-control' name='search'
-                               placeholder='Resource name or description'>
+                        <input autofill="off" autocomplete="off" id="resources" type='text' class='form-control'
+                               name='search'
+                               placeholder='Search for anything'>
                     </div>
                     <br>
                     <h3>Filters</h3>
                     <hr>
+
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 180px'>Content Type</span>
+                        <select id="contentSelect" class='form-control' name='contentType'>
+                            <option selected value='empty'>Choose...</option>
+                            <option value='Advocacy Video'>Advocacy Video</option>
+                            <option value='Journal'>Campaign Journal/Personal Reflections</option>
+                            <option value='Elevator Speech'>Elevator Speech</option>
+                            <option value='Flyer'>Fact Sheet/Storybook</option>
+                            <option value='Letter to Legislator'>Letter to the Legislator</option>
+                            <option value='Next Steps'>Next Steps</option>
+                            <option value='Outlets'>Outlets for Publication</option>
+                            <option value='Op-Ed'>Op-Ed</option>
+                            <option value='Personal Reflection'>Essays about ENACT</option>
+                            <option value='Portfolio'>Portfolio</option>
+                            <option value='Presentations'>Presentations</option>
+                            <option value='Research Report'>Student Research Report</option>
+                            <option value='Script'>Script for meeting with Ways and Means Staff</option>
+                            <option value='State Legislative'>State Legislative Website Resources</option>
+                            <option value='Testimony'>Testimony</option>
+                        </select>
+                    </div>
+                    <div class='toShowAll toShow-AV'>
+                        <h5 style="display: inline">
+                            <br>
+                            student-created short videos about issues/bills</h5>
+                        <br>
+                    </div>
+                    <div class='toShowAll toShow-CJ'>
+                        <h5 style="display: inline">
+                            <br>
+                            student reflections on legislative work
+                        </h5>
+                        <br>
+                    </div>
+                    <div class='toShowAll toShow-ES'>
+                        <h5 style="display: inline">
+                            <br>
+                            student-created 30-second pitch for bill
+                        </h5>
+                        <br>
+                    </div>
+                    <div class='toShowAll toShow-CP'>
+                        <h5 style="display: inline">
+                            <br>
+                            resources by and for faculty
+                        </h5>
+                        <br>
+                    </div>
+                    <div class='toShowAll toShow-NS'>
+                        <h5 style="display: inline">
+                            student recommendations/analysis of next steps for a bill/issue
+                        </h5>
+                        <br>
+                    </div>
+                    <div class='toShowAll toShow-OE'>
+                        <h5 style="display: inline">
+                            <br>
+                            published and unpublished op-eds
+                        </h5>
+                        <br>
+                    </div>
+                    <div class='toShowAll toShow-PR'>
+                        <h5 style="display: inline">
+                            <br>
+                            writing about the ENACT experience by participants
+                        </h5>
+                        <br>
+                    </div>
+                    <div class='toShowAll toShow-Po'>
+                        <h5 style="display: inline">
+                            <br>
+                            student-created legislative portfolios
+                        </h5>
+                        <br>
+                    </div>
+                    <div class='toShowAll toShow-Pr'>
+                        <h5 style="display: inline">
+                            <br>
+                            final “Present and Defend” presentations
+                        </h5>
+                        <br>
+                    </div>
+                    <div class='toShowAll toShow-FS'>
+                        <h5 style="display: inline">
+                            <br>
+                            student-created issue-based handouts/ interviews
+                        </h5>
+                        <br>
+                    </div>
+                    <div class='toShowAll toShow-SS'>
+                        <h5 style="display: inline">
+                            <br>
+                            student-created script on finances of bill/legislation
+                        </h5>
+                        <br>
+                    </div>
+                    <div class='toShowAll toShow-Te'>
+                        <h5 style="display: inline">
+                            <br>
+                            testimony delivered at a legislative hearing
+                        </h5>
+                        <br>
+                    </div>
+                    <br>
                     <div class='input-group-prepend'>
                         <span class='input-group-text' style='width: 180px'>State</span>
                         <select class='form-control' name='state'>
@@ -92,27 +204,6 @@
                     <br>
                     <%- include('../components/component-yearOfCreationSelector') -%>
                     <br>
-
-                    <div class='input-group-prepend'>
-                        <span class='input-group-text' style='width: 180px'>Content Type</span>
-                        <select id="contentSelect" class='form-control' name='contentType'>
-                            <option selected value='empty'>Choose...</option>
-                            <option value='Advocacy Video'>Advocacy Video</option>
-                            <option value='Journal'>Campaign Journal</option>
-                            <option value='Elevator Speech'>Elevator Speech</option>
-                            <option value='Flyer'>Flyer/handout</option>
-                            <option value='Next Steps'>Next Steps</option>
-                            <option value='Op-Ed'>Op-Ed</option>
-                            <option value='Personal Reflection'>Personal reflection</option>
-                            <option value='Portfolio'>Portfolio</option>
-                            <option value='Presentations'>Presentations</option>
-                            <option value='Research Report'>Student Research Report</option>
-                            <option value='Script'>Script for meeting with Ways and Means Staff</option>
-                            <option value='Handout'>Handout/Factsheet</option>
-                            <option value='Testimony'>Testimony</option>
-                        </select>
-                    </div>
-                    <br>
                     <div class='input-group-prepend'>
                         <span class='input-group-text' style='width: 180px'>Media Type</span>
                         <select class='form-control' name='mediaType'>
@@ -124,20 +215,33 @@
                         </select>
                     </div>
                     <br>
+                    <% if (status === 'admin' || status === 'faculty') { %>
+                        <div class='input-group-prepend'>
+                            <span class='input-group-text' style='width: 180px'>Resource Status</span>
+                            <select class='form-control' name='status'>
+                                <option selected value='all'>All resources</option>
+                                <option value='public'>Open to public</option>
+                                <option value='privateToENACT'>Exclusive to ENACT members</option>
+                                <option value='privateToProfessor'>Exclusive to ENACT professors</option>
+                            </select>
+                        </div>
+                    <% } else { %>
+                        <div class='input-group-prepend'>
+                            <span class='input-group-text' style='width: 180px'>Resource Status</span>
+                            <select class='form-control' name='status'>
+                                <option selected value='all'>All resources</option>
+                                <option value='public'>Open to public</option>
+                                <option value='privateToENACT'>Exclusive to ENACT members</option>
+                            </select>
+                        </div>
+                    <% } %>
+                    <br>
                 </div>
             </div>
             <div class='row'>
-                <div class='col-md-3 col-sm-12'></div>
-                <div class='col-md-6 col-sm-12'>
-                    <h3>Tags of Areas</h3>
-                    <hr>
-                </div>
-                <div class='w-100'></div>
                 <%- include('../components/component-tagSelector') -%>
-                <br>
                 <div class='w-100'></div>
                 <div class='col-md-3 col-sm-12'></div>
-                <br>
                 <div class='col-md-6 col-sm-12'>
                     <input type='submit' name='submit' class='btn btn-dark' value='Search'>
                 </div>

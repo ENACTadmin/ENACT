@@ -96,8 +96,14 @@
                 </p>
             </div>
             <div class='grid__item partners__slide__grey' style='height: 500px' data-aos='fade-up'>
-                <a href="/profiles/view/all"><h3 class='grid__title'><span>Networking</span></h3></a>
-                <a href="/profiles/view/all"><img src="/images/networking.jpg" style="height: 65%" align="right"></a>
+                <% if (loggedIn) { %>
+                    <a href="/profiles/view/all"><h3 class='grid__title'><span>Networking</span></h3></a>
+                    <a href="/profiles/view/all"><img src="/images/networking.jpg" style="height: 65%"
+                                                      align="right"></a>
+                <% } else { %>
+                    <h3 class='grid__title'><span>Networking (Login to use)</span></h3>
+                    <img src="/images/networking.jpg" style="height: 65%" align="right">
+                <% } %>
                 <p class='grid__text' style="font-size: larger; line-height: 135%">
                     The ENACT Network is a national in-person and online
                     network of students, faculty, activists and legislators. It is a strategic and information hub for
@@ -217,7 +223,7 @@
             <% } %>
         <% } else { %>
             <div class='card-body text-center' style="border-radius: 30px">
-                <h4>No resource available yet</h4>
+                <h4>No events available yet</h4>
             </div>
         <% } %>
         <br><br><br>
