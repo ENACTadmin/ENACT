@@ -19,7 +19,9 @@
         <hr>
         <div class='row'>
             <div class='col-md-4 col-sm-12'>
+                <% let notiCheck = false %>
                 <% if (resourceNum !== 0) { %>
+                    <% notiCheck = true %>
                     <div class='card border-primary mb-3' style='max-width: 18rem;'>
                         <div class='card-header'><h3>Action Requested</h3></div>
                         <div class='card-body'>
@@ -33,6 +35,7 @@
                 <% } %>
                 <% if (status === 'admin' || status === 'faculty') { %>
                     <% if (publicInfo.length !== 0) { %>
+                        <% notiCheck = true %>
                         <div class='card border-success mb-3' style='max-width: 18rem;'>
                             <div class='card-header'><h3>Public Resources Info</h3></div>
                             <div class='card-body'>
@@ -48,6 +51,7 @@
                     <% } %>
                 <% } else { %>
                     <% if (approveInfo.length !== 0) { %>
+                        <% notiCheck = true %>
                         <div class='card border-success mb-3' style='max-width: 18rem;'>
                             <div class='card-header'><h3>Approved Info</h3></div>
                             <div class='card-body'>
@@ -61,6 +65,7 @@
                         </div>
                     <% } %>
                     <% if (denyInfo.length !== 0) { %>
+                        <% notiCheck = true %>
                         <div class='card border-dark mb-3' style='max-width: 18rem;'>
                             <div class='card-header'><h3>Required to Review Info</h3></div>
                             <div class='card-body'>
@@ -75,21 +80,27 @@
                         </div>
                     <% } %>
                 <% } %>
-                    <% if (tagsInfo.length !== 0) { %>
-                        <div class='card border-success mb-3' style='max-width: 18rem;'>
-                            <div class='card-header'><h3>Proposed new areas</h3></div>
-                            <div class='card-body'>
-                                <h5 style='display: inline'> You have proposed <%= tagsInfo.length %> new areas to admin. </h5>
-                                <br>
-                                <br>
-                                <a href='/newAreas'><input class='btn btn-sm btn-outline-success' type='submit'
-                                                                    value='Go to my proposed areas'></a>
-                            </div>
+                <% if (tagsInfo.length !== 0) { %>
+                    <% notiCheck = true %>
+                    <div class='card border-success mb-3' style='max-width: 18rem;'>
+                        <div class='card-header'><h3>Proposed new areas</h3></div>
+                        <div class='card-body'>
+                            <h5 style='display: inline'> You have proposed <%= tagsInfo.length %> new areas to
+                                admin. </h5>
+                            <br>
+                            <br>
+                            <a href='/newAreas'><input class='btn btn-sm btn-outline-success' type='submit'
+                                                       value='Go to my proposed areas'></a>
                         </div>
-                    <% } %>
+                    </div>
+                <% } %>
             </div>
-            <br><br><br>
         </div>
+        <% if (!notiCheck) { %>
+            <div class='card-body text-center'>
+                <b>No notification(s) available yet</b>
+            </div>
+        <% } %>
     </div>
 </section>
 
@@ -98,6 +109,7 @@
         <h3>Inbox (Someone is interested in my work!)</h3>
         <hr>
         <div class='row'>
+            <% let checkOne = false; %>
             <% loop1: for (let i = 0; i < messageInfo.length; i++) { %>
                 <% for (let j = 0; j < i; j++) { %>
                     <% if (messageInfo[i].senderId.equals(messageInfo[j].senderId) && messageInfo[i].receiverId.equals(messageInfo[j].receiverId)) { %>
@@ -105,6 +117,7 @@
                     <% } %>
                 <% } %>
                 <% if (messageInfo[i].receiverId.equals(user._id)) { %>
+                    <% checkOne = true %>
                     <div class='col-md-4 col-sm-12'>
                         <div class='card' style='border:0 solid transparent'>
                             <div class='card-body'>
@@ -129,12 +142,13 @@
                     <% } %>
                 <% } %>
                 <% if (messageInfo_general[i].receiverId.equals(user._id)) { %>
+                    <% checkOne = true %>
                     <div class='col-md-4 col-sm-12'>
                         <div class='card' style='border:0 solid transparent'>
                             <div class='card-body'>
                                 <h5 style='display: inline'>Subject: </h5><%= messageInfo_general[i].subject %>
                                 <br>
-                                <h5 style='display: inline'>Type: </h5>general conversation
+                                <h5 style='display: inline'>Type: </h5>General conversation
                                 <br>
                                 <br>
                                 <a href='/messages/view/<%= messageInfo_general[i].senderId %>/<%= messageInfo_general[i].receiverId %>/general'><input
@@ -146,6 +160,11 @@
                     <br><br><br>
                 <% } %>
             <% } %>
+            <% if (!checkOne) { %>
+                <div class='card-body text-center' style="width: 30%">
+                    <b>Nothing here yet</b>
+                </div>
+            <% } %>
         </div>
     </div>
 </section>
@@ -155,6 +174,7 @@
         <h3>Sent (I am interested others' work)</h3>
         <hr>
         <div class='row'>
+            <% let checkTwo = false %>
             <% loop1: for (let i = 0; i < messageInfo.length; i++) { %>
                 <% for (let j = 0; j < i; j++) { %>
                     <% if (messageInfo[i].senderId.equals(messageInfo[j].senderId) && messageInfo[i].receiverId.equals(messageInfo[j].receiverId)) { %>
@@ -162,6 +182,7 @@
                     <% } %>
                 <% } %>
                 <% if (messageInfo[i].senderId.equals(user._id)) { %>
+                    <% checkTwo = true %>
                     <div class='col-md-4 col-sm-12'>
                         <div class='card' style='border:0 solid transparent'>
                             <div class='card-body'>
@@ -186,6 +207,7 @@
                     <% } %>
                 <% } %>
                 <% if (messageInfo_general[i].senderId.equals(user._id)) { %>
+                    <% checkTwo = true %>
                     <div class='col-md-4 col-sm-12'>
                         <div class='card' style='border:0 solid transparent'>
                             <div class='card-body'>
@@ -202,6 +224,11 @@
                     </div>
                     <br><br><br>
                 <% } %>
+            <% } %>
+            <% if (!checkTwo) { %>
+                <div class='card-body text-center'>
+                    <b>Nothing here yet</b>
+                </div>
             <% } %>
         </div>
     </div>
