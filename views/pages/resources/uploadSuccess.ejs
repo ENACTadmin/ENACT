@@ -27,7 +27,6 @@
                            class="btn btn-lg btn-primary">Upload another resource
                         </a>
                     <% } %>
-
                     &nbsp&nbsp&nbsp&nbsp
                     <% if (status === 'student') { %>
                         <a href="/course/view/<%= req.params.courseId %>" class="btn btn-lg btn-info">
@@ -41,9 +40,9 @@
                         <% } %>
                         <a href="/resources/view/faculty" class="btn btn-lg btn-info">
                             View faculty guide
-                        </a>
+                        </a>&nbsp&nbsp&nbsp&nbsp
                     <% } %>
-                    <a href="/resources/search/private/general"
+                    <a href="/resources/search/private/advanced"
                        class="btn btn-lg btn-primary">Search
                     </a>
                 </div>

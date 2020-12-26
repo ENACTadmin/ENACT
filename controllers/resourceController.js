@@ -18,7 +18,6 @@ async function setWord2Id(newResource) {
 
     let regex = /[^\s\.,!?()\[\]]+/g;
     let match = fullContent.match(regex);
-    // console.log('match: ', match)
     for (let i = 0; i < match.length; i++) {
         let newRegex = new RegExp(["^", match[i], "$"].join(""), "i");
         let word2Id = await Word2Id.findOne({word: newRegex})
@@ -59,10 +58,7 @@ async function removeWord2Id(oldResource) {
             if (word2Id === null) {
                 console.log("Impossible!!!")
             } else {
-                console.log('before: ', word2Id.ids)
-                console.log('id to remove: ', oldResource._id)
                 await word2Id.ids.remove(oldResource._id)
-                console.log('after: ', word2Id.ids)
                 await word2Id.save()
             }
         }
@@ -86,7 +82,6 @@ exports.resetWord2Id = async (req, res, next) => {
 //*******************CRUD related*********************
 exports.uploadResource = async (req, res, next) => {
     const courseId = req.params.courseId
-    console.log("in upload Resource")
     try {
         let tagsString = req.body.tags
         let tags = tagsString.split(",")
@@ -185,7 +180,6 @@ exports.uploadResource = async (req, res, next) => {
             courseId: courseId
         })
     } catch (e) {
-        console.log("Upload resource unsuccessful")
         next(e)
     }
 }
@@ -195,7 +189,6 @@ exports.updateResource = async (req, res, next) => {
     try {
         let tagsString = req.body.selectedTags
         let tags = tagsString.split(",")
-        console.log("tags received: ", tags)
         let oldResource = await Resource.findOne({_id: resourceId})
         await removeWord2Id(oldResource)
         oldResource.name = req.body.resourceName
@@ -270,7 +263,6 @@ exports.removeResource = async (req, res, next) => {
         let resource = await Resource.findOne({_id: resourceId})
         await removeWord2Id(resource)
         await Resource.deleteOne({_id: resourceId})
-        console.log('url: ', req.url)
         res.redirect('back')
     } catch (e) {
         next(e)
@@ -278,7 +270,6 @@ exports.removeResource = async (req, res, next) => {
 }
 
 exports.studentUpdateResource = async (req, res, next) => {
-    console.log('student update resource')
     const resourceId = req.params.resourceId
     try {
         let tagsString = req.body.selectedTags
@@ -465,10 +456,8 @@ exports.loadSpecificContentType = async (req, res, next) => {
             status: 'privateToProfessor',
             contentType: contentType
         }).sort({yearOfCreation: 1})
-        console.log("here: ", resourceInfo)
         let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
         let resourceIds = null
-        console.log("starred ", starred)
         if (starred) {
             resourceIds = await starred.resources
         }
@@ -720,14 +709,12 @@ exports.removeFromCollection = async (req, res, next) => {
         let resourceId = req.params.resourceId
         let resourceSet = await ResourceSet.findOne({_id: collectionId})
         let resourceIds = resourceSet.resources
-        console.log("ids: ", resourceIds)
         let newResourceIds = []
         for (let i = 0; i < resourceIds.length; i++) {
             if (resourceIds[i].toString() !== resourceId) {
                 newResourceIds.push(resourceIds[i])
             }
         }
-        console.log("new id: ", newResourceIds)
         resourceSet.resources = newResourceIds
         await resourceSet.save()
         res.redirect('back')
@@ -789,7 +776,6 @@ exports.deleteCollection = async (req, res, next) => {
 exports.reloadSearch = async (req, res) => {
     res.locals.resourceIds = starredIds
     res.locals.resourceInfo = resourceInfoSet
-    console.log("starred Ids: ", starredIds)
     res.render('./pages/showResources', {
         secretType: 'Search Result'
     })
@@ -798,7 +784,7 @@ exports.reloadSearch = async (req, res) => {
 exports.primarySearch = async (req, res, next) => {
     try {
         let resourceInfo = await invertedSearch(req, res);
-        // console.log("resources: ", resourceInfo)
+
         let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
 
         let starredResourceIds = null
@@ -881,7 +867,8 @@ async function invertedSearch(req, res) {
     let regex = /[^\s\.,!?()\[\]]+/g;
     let match = req.body.search.match(regex)
     match = [...new Set(match)]
-    if (match) {
+    let idSet = new Set()
+    if (match && match.length > 0) {
         // admin search
         if (res.locals.status === 'admin' || res.locals.status === 'faculty') {
             for (let i = 0; i < match.length; i++) {
@@ -889,10 +876,16 @@ async function invertedSearch(req, res) {
                 let word2Id = await Word2Id.findOne({word: newRegex})
                 if (word2Id !== null) {
                     let resourceIds = word2Id.ids
+                    resourceIds.forEach(item => {
+                        if (!idSet.has(item.toString())) {
+                            idSet.add(item.toString())
+                        }
+                    })
                     if (resourceInfo === null) {
-                        resourceInfo = await Resource.find({_id: {$in: resourceIds}}).sort({yearOfCreation: 1})
+                        resourceInfo = await Resource.find({_id: {$in: resourceIds}})
                     } else {
-                        let newResourceInfo = await Resource.find({_id: {$in: resourceIds}}).sort({yearOfCreation: 1})
+                        let newResourceInfo = await Resource.find({_id: {$in: resourceIds}})
+                        newResourceInfo = newResourceInfo.filter(({_id}) => !idSet.has(_id.toString()))
                         resourceInfo = resourceInfo.concat(newResourceInfo)
                     }
                 }
@@ -905,18 +898,24 @@ async function invertedSearch(req, res) {
                 let word2Id = await Word2Id.findOne({word: newRegex})
                 if (word2Id !== null) {
                     let resourceIds = word2Id.ids
+                    resourceIds.forEach(item => {
+                        if (!idSet.has(item.toString())) {
+                            idSet.add(item.toString())
+                        }
+                    })
                     if (resourceInfo === null) {
                         resourceInfo = await Resource.find({
                             checkStatus: checkStatus,
                             _id: {$in: resourceIds},
                             status: {$in: ["privateToENACT", "public", "finalPublic"]}
-                        }).sort({yearOfCreation: 1})
+                        })
                     } else {
                         let newResourceInfo = await Resource.find({
                             checkStatus: checkStatus,
                             _id: {$in: resourceIds},
                             status: {$in: ["privateToENACT", "public", "finalPublic"]}
-                        }).sort({yearOfCreation: 1})
+                        })
+                        newResourceInfo = newResourceInfo.filter(({_id}) => !idSet.has(_id.toString()))
                         resourceInfo = resourceInfo.concat(newResourceInfo)
                     }
                 }
@@ -928,14 +927,15 @@ async function invertedSearch(req, res) {
         if (res.locals.status === 'admin' || res.locals.status === 'faculty') {
             resourceInfo = await Resource.find({
                 checkStatus: checkStatus
-            }).sort({yearOfCreation: 1})
+            })
         } else {
             resourceInfo = await Resource.find({
                 checkStatus: checkStatus,
                 status: {$in: ["privateToENACT", "public", "finalPublic"]}
-            }).sort({yearOfCreation: 1})
+            })
         }
     }
+    resourceInfo = await rankRes(match, resourceInfo)
     return resourceInfo
 }
 
@@ -944,6 +944,25 @@ async function invertedSearch(req, res) {
 // --------------- Advanced Search ---------------
 // -----------------------------------------------
 
+async function rankRes(match, resources) {
+    if (resources) {
+        let matchSet = new Set(match)
+        for (var resource in resources) {
+            let newResource = resources[resource]
+            let fullContent = newResource.name + ',' + newResource.description + ',' + newResource.tags + ','
+                + newResource.state + ',' + newResource.contentType + ',' + newResource.mediaType + ','
+                + newResource.institution + ',' + newResource.yearOfCreation
+
+            let regex = /[^\s\.,!?()\[\]]+/g;
+            let newMatch = fullContent.match(regex);
+            let filtered = newMatch.filter(value => matchSet.has(value));
+            resources[resource].count = filtered.length;
+        }
+        resources.sort((a, b) => a.count - b.count || a.yearOfCreation - b.yearOfCreation);
+    }
+    return resources
+}
+
 exports.advancedSearch = async (req, res) => {
 
     let resourceInfo = await invertedSearch(req, res);
@@ -951,8 +970,6 @@ exports.advancedSearch = async (req, res) => {
     let filtered = resourceInfo;
 
     let local_state = req.body.state !== 'empty' ? req.body.state : null
-
-    console.log('state: ', local_state)
 
     if (filtered && local_state) {
         filtered = filtered.filter(({state}) => state.toUpperCase() === local_state.toUpperCase());
@@ -990,7 +1007,6 @@ exports.advancedSearch = async (req, res) => {
 
     let filteredResource = []
     if (filtered && req.body.tags.length > 0) {
-        console.log("tag used")
         for (let m = 0; m < filtered.length; m++) {
             let tagged = await req.body.tags.split(',')
             let result = tagged.every(val => filtered[m].tags.includes(val));
@@ -999,7 +1015,6 @@ exports.advancedSearch = async (req, res) => {
             }
         }
     } else {
-        console.log("tag not used")
         filteredResource = filtered
     }
 
@@ -1013,6 +1028,7 @@ exports.advancedSearch = async (req, res) => {
     res.locals.resourceIds = starredResourceIds
 
     resourceInfoSet = filteredResource
+
     res.render('./pages/showResources', {
         resourceInfo: filteredResource,
         resourceIds: starredResourceIds,
@@ -1065,7 +1081,6 @@ exports.advancedSearchPublic = async (req, res, next) => {
 
     let filteredResource = []
     if (req.body.tags.length > 0) {
-        console.log("tag used")
         for (let m = 0; m < filtered.length; m++) {
             let tagged = await req.body.tags.split(',')
             let result = tagged.every(val => filtered[m].tags.includes(val));
@@ -1074,7 +1089,6 @@ exports.advancedSearchPublic = async (req, res, next) => {
             }
         }
     } else {
-        console.log("tag not used")
         filteredResource = filtered
     }
 
