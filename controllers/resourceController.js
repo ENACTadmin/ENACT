@@ -958,7 +958,7 @@ async function rankRes(match, resources) {
             let filtered = newMatch.filter(value => matchSet.has(value));
             resources[resource].count = filtered.length;
         }
-        resources.sort((a, b) => a.count - b.count || a.yearOfCreation - b.yearOfCreation);
+        resources.sort((a, b) => a.count - b.count || a.count * 1.0 / a.name.length - b.count * 1.0 / b.name.length || a.yearOfCreation - b.yearOfCreation);
     }
     return resources
 }
