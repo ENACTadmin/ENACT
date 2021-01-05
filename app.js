@@ -88,9 +88,13 @@ app.get('/',
     })
 
 app.get('/about',
-    resourceController.loadPublicResources,
+    resourceController.loadImages,
     (req, res) =>
         res.render('./pages/about'))
+
+app.get('/contact',
+    (req, res) =>
+        res.render('./pages/contact'))
 
 app.get('/help',
     (req, res) =>
@@ -375,7 +379,7 @@ app.post('/studentUpdateResource/:resourceId',
 )
 
 app.get('/managePublicResources',
-    resourceController.loadAllPublicResources,
+    resourceController.loadPublicResources,
     (req, res) =>
         res.render('./pages/managePublicResources')
 )
@@ -508,6 +512,7 @@ app.get('/profile/view/:id',
 )
 
 app.get('/profiles/view/faculty',
+    resourceController.loadImages,
     profileController.showFacultyProfiles
 )
 

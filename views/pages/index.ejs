@@ -58,11 +58,6 @@
                         </div>
                     <% } %>
                     <br>
-                <% } else { %>
-                    <br>
-                    <a href='/resources/view/public/all'>
-                        <input type='submit' name='submit' class='form-demo__large'
-                               value='PUBLIC RESOURCES'></a>
                 <% } %>
             </div>
         </div>
@@ -72,37 +67,59 @@
 <!-- ENACT Program intro -->
 <section class='section section__grey'>
     <br><br><br>
-    <h2 class='section__title section__title--centered'>What you can do</h2>
+    <h2 class='section__title section__title--centered'>Who we are & What you can do</h2>
     <br>
     <div class='section__content section__content--fluid-width section__content--padding--small'>
-        <div class='grid grid--2col'>
-            <div class='grid__item partners__slide__grey' style="height: 450px" data-aos='fade-up'>
+        <div class='grid grid--3col'>
+            <div class='grid__item partners__slide__grey' data-aos='fade-up' style="height: 550px">
+                <a href="/about"><h2 class='grid__title'><span>Who we are</span></h2></a>
+                <img style='height: 200px; width: 200px; padding: 20px' align="right"
+                     src='https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg' alt="ENACT logo">
+                <p class='grid__text' style="font-size: larger; line-height: 150%;">
+                    <b>ENACT is a national, non-partisan program</b> engaging undergraduates at colleges and
+                    universities in
+                    state-level legislative change.
+                    <a href="https://go.brandeis.edu/ENACT">More about ENACT</a>
+                    <br>
+                    <b>- ENACT Students & Alumni:</b> search ENACT student assignments and connect with students and
+                    alumni
+                    across the United States.
+                    <br>
+                    <b>- ENACT Faculty Fellows:</b> access ENACT syllabi, teaching resources, and student work.
+                    <br>
+                    <b>- Public:</b> access student work on bills from across teh country, including op-eds, issue
+                    research and more.
+                </p>
+
+            </div>
+            <div class='grid__item partners__slide__grey' data-aos='fade-up' style="height: 550px">
                 <% if (loggedIn) { %>
                     <a href="/resources/search/private/advanced"><h2 class='grid__title'><span>Find what you want</span>
                         </h2></a>
-                    <a href="/resources/search/private/advanced"><img src="/images/search.jpg" style="height: 250px"
+                    <a href="/resources/search/private/advanced"><img src="/images/search.jpg" style="height: 220px"
                                                                       align="right"></a>
                 <% } else { %>
                     <a href="/resources/search/public/advanced"><h2 class='grid__title'><span>Find what you want</span>
                         </h2></a>
-                    <a href='/resources/search/public/advanced'><img src="/images/search.jpg" style="height: 250px"
+                    <a href='/resources/search/public/advanced'><img src="/images/search.jpg" style="height: 220px"
                                                                      align="right"></a>
                 <% } %>
                 <p class='grid__text' style="font-size: larger; line-height: 175%">
                     Powered by our advanced searching algorithm, you can find any resources ranging from student
-                    research reports to fact sheets or elevator speeches, etc., with a few simple clicks. These resources
+                    research reports to fact sheets or elevator speeches, etc., with a few simple clicks. These
+                    resources
                     can be useful for your coursework, academic publications or professional work.
                     <br><br>
                 </p>
             </div>
-            <div class='grid__item partners__slide__grey' style="height: 450px" data-aos='fade-up'>
+            <div class='grid__item partners__slide__grey' style="height: 550px" data-aos='fade-up'>
                 <% if (loggedIn) { %>
                     <a href="/profiles/view/all"><h2 class='grid__title'><span>Networking</span></h2></a>
-                    <a href="/profiles/view/all"><img src="/images/networking.jpg" style="height: 250px"
+                    <a href="/profiles/view/all"><img src="/images/networking.jpg" style="height: 220px"
                                                       align="right"></a>
                 <% } else { %>
                     <h2 class='grid__title'><span>Networking (Login to use)</span></h2>
-                    <img src="/images/networking.jpg" style="height: 250px" align="right">
+                    <img src="/images/networking.jpg" style="height: 220px" align="right">
                 <% } %>
                 <p class='grid__text' style="font-size: larger; line-height: 175%">
                     The ENACT network connects over 50+ institutions in the U.S., which is still growing. With thousands
@@ -235,85 +252,43 @@
     </section>
 </section>
 
-
-<!-- Section -->
-<section class='section diagonal-gradient'>
-    <div class='section__content section__content--fluid-width section__content--padding'>
-        <h2 class='section__title section__title--centered' style='color: white'>ENACT Faculty</h2>
+<!-- Joining Us Section -->
+<% if (!loggedIn) { %>
+    <section class='section diagonal-gradient'>
+        <br><br><br>
+        <h2 class='section__title section__title--centered' style="color: white">Joining Us</h2>
         <br>
-        <div class='grid grid--3col'>
-            <div class='partners__slide grid__item' style='height: 750px' data-aos="fade-up">
-                <div class='card-body' style='border-radius: 30px'>
-                    <img class='d-flex'
-                         src='https://www.brandeis.edu/ethics/images/advocacy/mstimell01_cropped.jpg'
-                         alt='Melissa Stimell'
-                         style='width: 100%; height:400px; object-fit: cover; border-radius: 30px'>
-                    <br>
-                    <h3 style='text-align: center'>Melissa Stimell</h3>
-                    <h4 style='text-align: center'>Academic Program Director</h4>
-                    <hr>
-                    <p style="font-size: 18px">Melissa Stimell is a Professor of the Practice in the Legal Studies
-                        Program at Brandeis
-                        University, and Interim Director of the International Center for Ethics, Justice and Public
-                        Life.
+        <div class='section__content section__content--fluid-width section__content--padding--small'>
+            <div class='grid grid--2col'>
+                <div class='grid__item partners__slide__grey' style="height: 450px" data-aos='fade-up'>
+                    <h2 class='grid__title'><span>For Students</span></h2>
+                    <p class='grid__text' style="font-size: larger; line-height: 175%">
+                        • Are you a student in an ENACT course? Contact your professor for the PIN you need to login ,
+                        create a profile. You will then be able to access all resources, and upload your own work.
+                        Already have a profile? Login above to gain full access to the site.
+                        <br><br>
+                        • Are you an alum of an ENACT course? If you do not already have a profile, contact <a
+                                href="mailto:enact@brandeis.edu">ENACT@brandeis.edu</a> to request a pin. Include the
+                        year and school where you took the ENACT course.
                     </p>
-                    <br>
+                </div>
+                <div class='grid__item partners__slide__grey' style="height: 450px" data-aos='fade-up'>
+                    <h2 class='grid__title'><span>For Professors</span></h2>
+                    <p class='grid__text' style="font-size: larger; line-height: 175%">
+                        • Are you an ENACT Faculty Fellow? Login above to gain full access to the site.
+                        <br><br>
+                        • Are you interested in teaching an ENACT course? Contact <a href="mailto:enact@brandeis.edu">ENACT@brandeis.edu</a>.
+                        <br><br>
+                        • Are you an interested member of the public? Search publicly available resources created by
+                        ENACT students from across the United States. You can browse, enter a keyword in the search box,
+                        or search using any or all of the categories below. For example, search by content type, issue
+                        area, state, and more.
+                    </p>
                 </div>
             </div>
-            <div class='partners__slide grid__item' style='height: 750px' data-aos="fade-up" data-aos-delay="200">
-                <div class='card-body' style='border-radius: 30px'>
-                    <img class='d-flex mr-3' src='https://www.brandeis.edu/ethics/images/DJW%20photo.jpg'
-                         alt='David J. Weinstein'
-                         style='width: 100%; height:400px; object-fit: cover; border-radius: 30px'>
-                    <br>
-                    <h3 style='text-align: center'>David J. Weinstein</h3>
-                    <h4 style='text-align: center'>Assistant Director</h4>
-                    <hr>
-                    <p style="font-size: 18px">David Weinstein is Assistant Director of ENACT and Communications for the
-                        Ethics Center.</p>
-                    <br>
-                </div>
-            </div>
-            <div class='partners__slide grid__item' style='height: 750px' data-aos="fade-up" data-aos-delay="400">
-                <div id='carouselExampleSlidesOnly' class='carousel slide' data-ride='carousel'>
-                    <div class='carousel-inner'>
-                        <div class='carousel-item active'>
-                            <div class='card-body' style='border-radius: 30px'>
-                                <img class='d-flex mr-3'
-                                     src='<%= facultyPaths[0][0] %>'
-                                     alt='...'
-                                     style='width: 100%; height: 400px; object-fit: cover; border-radius: 30px;'>
-                                <br>
-                                <h3 style='text-align: center'><%= facultyPaths[0][1] %></h3>
-                                <h4 style='text-align: center'>Faculty Fellow</h4>
-                                <hr>
-                                <p style="font-size: 18px"><%= facultyPaths[0][2] %></p>
-                                <br>
-                            </div>
-                        </div>
-                        <% for (let i = 1; i < facultyPaths.length; i++) { %>
-                            <div class='carousel-item'>
-                                <div class='card-body' style='border-radius: 30px'>
-                                    <img class='d-flex mr-3'
-                                         src='<%= facultyPaths[i][0] %>'
-                                         alt='...'
-                                         style='width: 100%; height: 400px; object-fit: cover; border-radius: 30px;'>
-                                    <br>
-                                    <h3 style='text-align: center'><%= facultyPaths[i][1] %></h3>
-                                    <h4 style='text-align: center'>Faculty Fellow</h4>
-                                    <hr>
-                                    <p style="font-size: 18px"><%= facultyPaths[i][2] %></p>
-                                    <br>
-                                </div>
-                            </div>
-                        <% } %>
-                    </div>
-                </div>
-            </div>
+            <div class='clear'></div>
         </div>
-        <div class='partners__pagination'></div>
-        <div class='clear'></div>
-    </div>
-</section>
+    </section>
+<% } %>
 
 <%- include('../components/footer'); -%>

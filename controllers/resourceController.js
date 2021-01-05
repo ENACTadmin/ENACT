@@ -476,11 +476,8 @@ exports.loadSpecificContentType = async (req, res, next) => {
 }
 
 let fileData = require('../public/js/slideShow')
-exports.loadPublicResources = async (req, res, next) => {
+exports.loadImages = async (req, res, next) => {
     try {
-        res.locals.resourceInfo = await Resource.find({
-            status: "finalPublic"
-        }).sort({yearOfCreation: 1})
         let imagePaths = fileData.getPath('slideShow')
         let facultyPaths = fileData.getPath('faculty')
         let labelPaths = fileData.getPath('label')
@@ -494,7 +491,7 @@ exports.loadPublicResources = async (req, res, next) => {
     }
 }
 
-exports.loadAllPublicResources = async (req, res, next) => {
+exports.loadPublicResources = async (req, res, next) => {
     try {
         res.locals.resourceInfo = await Resource.find({
             status: {$in: ["finalPublic", "public"]}

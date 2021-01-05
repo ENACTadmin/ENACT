@@ -30,6 +30,7 @@
     , 'violence and sexual assault'
     , 'voting'
     , 'women and gender']
+
 let syllabus = ['online course', 'course with internship content', 'full-semester course', 'half-semester course']
 
 let id_set = [] %>
@@ -353,7 +354,7 @@ let id_set = [] %>
             let id_set_array = id_set.split(',')
             for (let i = 0; i < id_set_array.length; i++) {
                 let text = $('#contentTypeSelect' + id_set_array[i] + ' option:selected').text();
-                if (text === 'Choose...' || text === 'Assignment Guidelines' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
+                if (text === 'Assignment Guidelines' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
                     $(".toShow" + id_set_array[i]).hide()
                     $(".toShow2" + id_set_array[i]).hide()
                 } else if (text === 'Syllabus') {
@@ -365,7 +366,7 @@ let id_set = [] %>
                 }
                 $("#contentTypeSelect" + id_set_array[i]).on("change", function () {
                     text = $('#contentTypeSelect' + id_set_array[i] + ' option:selected').text();
-                    if (text === 'Choose...' || text === 'Assignment Guidelines' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
+                    if (text === 'Assignment Guidelines' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
                         $(".toShow" + id_set_array[i]).hide()
                         $(".toShow2" + id_set_array[i]).hide()
                     } else if (text === 'Syllabus') {

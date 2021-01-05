@@ -1,20 +1,20 @@
 let imagePaths = [
-    'images/Photos for ENACT platform slideshow/advocacysized.jpg',
-    'images/Photos for ENACT platform slideshow/DSC_0504_B.jpg',
-    'images/Photos for ENACT platform slideshow/DSC_5099.JPG',
-    'images/Photos for ENACT platform slideshow/ENACT_2018_Institute_State_House.jpg',
-    'images/Photos for ENACT platform slideshow/ENACT_Womens_Forum_2018.jpg',
-    'images/Photos for ENACT platform slideshow/Eno.png',
-    'images/Photos for ENACT platform slideshow/Gainous_Inderbitzin_with_Student_2018-2.jpg',
-    'images/Photos for ENACT platform slideshow/in front of MS Capitol 2.jpeg',
-    'images/Photos for ENACT platform slideshow/Kathleen Cole.JPG',
-    'images/Photos for ENACT platform slideshow/kaufmanandross.png',
-    'images/Photos for ENACT platform slideshow/Sgt Brown_edit.jpg',
-    'images/Photos for ENACT platform slideshow/Smith_Danley_Quinn.jpg'
+    '../../images/Photos for ENACT platform slideshow/advocacysized.jpg',
+    '../../images/Photos for ENACT platform slideshow/DSC_0504_B.jpg',
+    '../../images/Photos for ENACT platform slideshow/DSC_5099.JPG',
+    '../../images/Photos for ENACT platform slideshow/ENACT_2018_Institute_State_House.jpg',
+    '../../images/Photos for ENACT platform slideshow/ENACT_Womens_Forum_2018.jpg',
+    '../../images/Photos for ENACT platform slideshow/Eno.png',
+    '../../images/Photos for ENACT platform slideshow/Gainous_Inderbitzin_with_Student_2018-2.jpg',
+    '../../images/Photos for ENACT platform slideshow/in front of MS Capitol 2.jpeg',
+    '../../images/Photos for ENACT platform slideshow/Kathleen Cole.JPG',
+    '../../images/Photos for ENACT platform slideshow/kaufmanandross.png',
+    '../../images/Photos for ENACT platform slideshow/Sgt Brown_edit.jpg',
+    '../../images/Photos for ENACT platform slideshow/Smith_Danley_Quinn.jpg'
 ]
 
 let bioPaths = [
-    ['images/Photos for ENACT platform faculty show/anthony.jpg',
+    ['../../images/Photos for ENACT platform faculty show/anthony.jpg',
 
         'Joseph Anthony',
 
@@ -26,7 +26,7 @@ let bioPaths = [
 
     ],
 
-    ['images/Photos for ENACT platform faculty show/barth.jpg',
+    ['../../images/Photos for ENACT platform faculty show/barth.jpg',
 
         'Jay Barth',
 
@@ -40,7 +40,7 @@ let bioPaths = [
 
     ],
 
-    ['images/Photos for ENACT platform faculty show/baumann.jpg',
+    ['../../images/Photos for ENACT platform faculty show/baumann.jpg',
 
         'Zachary D. Baumann',
 
@@ -52,7 +52,7 @@ let bioPaths = [
 
     ],
 
-    ['images/Photos for ENACT platform faculty show/bland.jpg',
+    ['../../images/Photos for ENACT platform faculty show/bland.jpg',
 
         'Tamara Bland',
 
@@ -60,7 +60,7 @@ let bioPaths = [
 
     ],
 
-    ['images/Photos for ENACT platform faculty show/button.jpg',
+    ['../../images/Photos for ENACT platform faculty show/button.jpg',
 
         'Mark E. Button',
 
@@ -69,7 +69,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/celoza.jpg',
+    ['../../images/Photos for ENACT platform faculty show/celoza.jpg',
 
         'Albert Celoza',
 
@@ -78,7 +78,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/ChandlerGarcia.jpg',
+    ['../../images/Photos for ENACT platform faculty show/ChandlerGarcia.jpg',
 
         'Lynne Chandler-Garcia',
 
@@ -87,7 +87,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/clay.jpg',
+    ['../../images/Photos for ENACT platform faculty show/clay.jpg',
 
         'Charity Clay',
 
@@ -96,7 +96,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/cole.jpg',
+    ['../../images/Photos for ENACT platform faculty show/cole.jpg',
 
         'Kathleen Cole',
 
@@ -105,7 +105,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/Danley.jpg',
+    ['../../images/Photos for ENACT platform faculty show/Danley.jpg',
 
         'Stephen Danley',
 
@@ -115,7 +115,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/downey.jpg',
+    ['../../images/Photos for ENACT platform faculty show/downey.jpg',
 
         'Davia Downey',
 
@@ -124,7 +124,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/ellis.jpg',
+    ['../../images/Photos for ENACT platform faculty show/ellis.jpg',
 
         'Richard Ellis',
 
@@ -133,7 +133,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/eno.jpg',
+    ['../../images/Photos for ENACT platform faculty show/eno.jpg',
 
         'Victor Eno',
 
@@ -142,7 +142,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/gainous.jpg',
+    ['../../images/Photos for ENACT platform faculty show/gainous.jpg',
 
         'Jason Gainous',
 
@@ -152,7 +152,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/german.jpg',
+    ['../../images/Photos for ENACT platform faculty show/german.jpg',
 
         'Myna German',
 
@@ -161,7 +161,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/gess.jpg',
+    ['../../images/Photos for ENACT platform faculty show/gess.jpg',
 
         'Peter Gess',
 
@@ -170,7 +170,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/glover.jpeg',
+    ['../../images/Photos for ENACT platform faculty show/glover.jpeg',
 
         'Robert Glover',
 
@@ -179,7 +179,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/Gossett.jpg',
+    ['../../images/Photos for ENACT platform faculty show/Gossett.jpg',
 
         'Amy Gossett',
 
@@ -188,7 +188,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/Inderbitzin.jpg',
+    ['../../images/Photos for ENACT platform faculty show/Inderbitzin.jpg',
 
         'Michelle Inderbitzin',
 
@@ -197,7 +197,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/kennedy.jpg',
+    ['../../images/Photos for ENACT platform faculty show/kennedy.jpg',
 
         'Sheila Suess Kennedy',
 
@@ -206,7 +206,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/kettler.jpg',
+    ['../../images/Photos for ENACT platform faculty show/kettler.jpg',
 
         'Jaclyn Kettler',
 
@@ -215,7 +215,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/kreitzer.jpg',
+    ['../../images/Photos for ENACT platform faculty show/kreitzer.jpg',
 
         'Rebecca Kreitzer',
 
@@ -224,7 +224,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/Kujala.jpeg',
+    ['../../images/Photos for ENACT platform faculty show/Kujala.jpeg',
 
         'Jordan Kujala',
 
@@ -233,7 +233,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/ladam.jpg',
+    ['../../images/Photos for ENACT platform faculty show/ladam.jpg',
 
         'Christina Ladam',
 
@@ -242,7 +242,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/Lewis1.jpg',
+    ['../../images/Photos for ENACT platform faculty show/Lewis1.jpg',
 
         'Angela K. Lewis',
 
@@ -251,7 +251,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/lewis.jpg',
+    ['../../images/Photos for ENACT platform faculty show/lewis.jpg',
 
         'Daniel C. Lewis',
 
@@ -260,7 +260,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/linch.jpeg',
+    ['../../images/Photos for ENACT platform faculty show/linch.jpeg',
 
         'Amy Linch',
 
@@ -269,7 +269,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/ly-donovan.jpg',
+    ['../../images/Photos for ENACT platform faculty show/ly-donovan.jpg',
 
         'Carolyn Ly-Donovan',
 
@@ -278,7 +278,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/mastracci.jpg',
+    ['../../images/Photos for ENACT platform faculty show/mastracci.jpg',
 
         'Tony Mastracci',
 
@@ -287,7 +287,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/Mead.jpg',
+    ['../../images/Photos for ENACT platform faculty show/Mead.jpg',
 
         'Joseph Mead',
 
@@ -296,7 +296,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/meagher.jpg',
+    ['../../images/Photos for ENACT platform faculty show/meagher.jpg',
 
         'Richard Meagher',
 
@@ -305,7 +305,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/melo.jpg',
+    ['../../images/Photos for ENACT platform faculty show/melo.jpg',
 
         'Milena Andrea Melo',
 
@@ -314,7 +314,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/monteblanco.jpg',
+    ['../../images/Photos for ENACT platform faculty show/monteblanco.jpg',
 
         'Adele Dora Monteblanco',
 
@@ -323,7 +323,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/Moore.jpg',
+    ['../../images/Photos for ENACT platform faculty show/Moore.jpg',
 
         'Colin D. Moore',
 
@@ -332,7 +332,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/myers.jpg',
+    ['../../images/Photos for ENACT platform faculty show/myers.jpg',
 
         'Adam Myers',
 
@@ -341,7 +341,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/nold.jpg',
+    ['../../images/Photos for ENACT platform faculty show/nold.jpg',
 
         'Susan Turner Nold',
 
@@ -350,7 +350,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/owens1.jpg',
+    ['../../images/Photos for ENACT platform faculty show/owens1.jpg',
 
         'Katharine Owens',
 
@@ -359,7 +359,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/pimpare.jpg',
+    ['../../images/Photos for ENACT platform faculty show/pimpare.jpg',
 
         'Stephen Pimpare',
 
@@ -368,7 +368,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/Rich.jpg',
+    ['../../images/Photos for ENACT platform faculty show/Rich.jpg',
 
         'Michael J. Rich',
 
@@ -377,7 +377,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/Rouse.jpg',
+    ['../../images/Photos for ENACT platform faculty show/Rouse.jpg',
 
         'Stella M. Rouse',
 
@@ -386,7 +386,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/scattergood.jpg',
+    ['../../images/Photos for ENACT platform faculty show/scattergood.jpg',
 
         'Wendy Scattergood',
 
@@ -395,7 +395,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/scully.png',
+    ['../../images/Photos for ENACT platform faculty show/scully.png',
 
         'Eileen Scully',
 
@@ -404,7 +404,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/slack.jpg',
+    ['../../images/Photos for ENACT platform faculty show/slack.jpg',
 
         'James D. Slack',
 
@@ -413,7 +413,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/Smith.jpeg',
+    ['../../images/Photos for ENACT platform faculty show/Smith.jpeg',
 
         'Candis Watts Smith',
 
@@ -422,7 +422,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/Vandegrift1.jpg',
+    ['../../images/Photos for ENACT platform faculty show/Vandegrift1.jpg',
 
         'Darcie Vandegrift',
 
@@ -431,7 +431,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/venters.jpg',
+    ['../../images/Photos for ENACT platform faculty show/venters.jpg',
 
         'Louis Venters',
 
@@ -440,7 +440,7 @@ let bioPaths = [
     ],
 
 
-    ['images/Photos for ENACT platform faculty show/wood.jpg',
+    ['../../images/Photos for ENACT platform faculty show/wood.jpg',
 
         'Zachary D. Wood',
 
