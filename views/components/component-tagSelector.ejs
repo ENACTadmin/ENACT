@@ -101,7 +101,7 @@ let syllabus = ['online course', 'course with internship content', 'full-semeste
 <script>
     $(document).ready(function () {
         let text = $('#contentSelect option:selected').text();
-        if (text === 'Choose...' || text === 'Assignment Guidelines' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
+        if (text === 'Assignment Guidelines' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
             $(".toShow").hide()
             $(".toShow2").hide()
         } else if (text === 'Syllabus') {
@@ -113,7 +113,7 @@ let syllabus = ['online course', 'course with internship content', 'full-semeste
         }
         $("#contentSelect").on("change", function () {
             text = $('#contentSelect option:selected').text();
-            if (text === 'Choose...' || text === 'Assignment Guidelines' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
+            if (text === 'Assignment Guidelines' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
                 $(".toShow").hide()
                 $(".toShow2").hide()
             } else if (text === 'Syllabus') {

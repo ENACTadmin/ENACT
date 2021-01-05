@@ -13,6 +13,86 @@
     </div>
 </section>
 
+<% console.log(facultyPaths) %>
+<!-- Section -->
+<section class='section diagonal-gradient'>
+    <div class='section__content section__content--fluid-width section__content--padding'>
+        <div class='grid grid--3col'>
+            <div class='partners__slide grid__item' style='height: 750px' data-aos="fade-up">
+                <div class='card-body' style='border-radius: 30px'>
+                    <img class='d-flex'
+                         src='https://www.brandeis.edu/ethics/images/advocacy/mstimell01_cropped.jpg'
+                         alt='1'
+                         style='width: 100%; height:400px; object-fit: cover; border-radius: 30px'>
+                    <br>
+                    <h3 style='text-align: center'>Melissa Stimell</h3>
+                    <h4 style='text-align: center'>Academic Program Director</h4>
+                    <hr>
+                    <p style="font-size: 18px">Melissa Stimell is a Professor of the Practice in the Legal Studies
+                        Program at Brandeis
+                        University, and Interim Director of the International Center for Ethics, Justice and Public
+                        Life.
+                    </p>
+                    <br>
+                </div>
+            </div>
+            <div class='partners__slide grid__item' style='height: 750px' data-aos="fade-up" data-aos-delay="200">
+                <div class='card-body' style='border-radius: 30px'>
+                    <img class='d-flex mr-3' src='https://www.brandeis.edu/ethics/images/DJW%20photo.jpg'
+                         alt='David J. Weinstein'
+                         style='width: 100%; height:400px; object-fit: cover; border-radius: 30px'>
+                    <br>
+                    <h3 style='text-align: center'>David J. Weinstein</h3>
+                    <h4 style='text-align: center'>Assistant Director</h4>
+                    <hr>
+                    <p style="font-size: 18px">David Weinstein is Assistant Director of ENACT and Communications for the
+                        Ethics Center.</p>
+                    <br>
+                </div>
+            </div>
+
+            <div class='partners__slide grid__item' style='height: 750px' data-aos="fade-up" data-aos-delay="400">
+                <div id='carouselExampleSlidesOnly' class='carousel slide' data-ride='carousel'>
+                    <div class='carousel-inner'>
+                        <div class='carousel-item active'>
+                            <div class='card-body' style='border-radius: 30px'>
+                                <img class='d-flex mr-3'
+                                     src='<%= facultyPaths[0][0] %>'
+                                     alt='...'
+                                     style='width: 100%; height: 400px; object-fit: cover; border-radius: 30px;'>
+                                <br>
+                                <h3 style='text-align: center'><%= facultyPaths[0][1] %></h3>
+                                <h4 style='text-align: center'>Faculty Fellow</h4>
+                                <hr>
+                                <p style="font-size: 18px"><%= facultyPaths[0][2] %></p>
+                                <br>
+                            </div>
+                        </div>
+                        <% for (let i = 1; i < facultyPaths.length; i++) { %>
+                            <div class='carousel-item'>
+                                <div class='card-body' style='border-radius: 30px'>
+                                    <img class='d-flex mr-3'
+                                         src='<%= facultyPaths[i][0] %>'
+                                         alt='...'
+                                         style='width: 100%; height: 400px; object-fit: cover; border-radius: 30px;'>
+                                    <br>
+                                    <h3 style='text-align: center'><%= facultyPaths[i][1] %></h3>
+                                    <h4 style='text-align: center'>Faculty Fellow</h4>
+                                    <hr>
+                                    <p style="font-size: 18px"><%= facultyPaths[i][2] %></p>
+                                    <br>
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='partners__pagination'></div>
+        <div class='clear'></div>
+    </div>
+</section>
+
 <section class="section section__grey">
     <div class="container">
         <div class="row justify-content-md-center">
@@ -67,11 +147,11 @@
                                                     class="btn btn-sm btn-outline-primary" type="button"
                                                     value="CONTACT"></a>
                                     <% } %>
-                                        <% if (user._id.equals(profileInfo[i]._id)) { %>
-                                            <a href="/profile/update"><input
-                                                        class="btn btn-sm btn-outline-primary" type="button"
-                                                        value="EDIT"></a>
-                                        <% } %>
+                                    <% if (user._id.equals(profileInfo[i]._id)) { %>
+                                        <a href="/profile/update"><input
+                                                    class="btn btn-sm btn-outline-primary" type="button"
+                                                    value="EDIT"></a>
+                                    <% } %>
                                     <% if (user.status === 'admin') { %>
                                         <br><br>
                                         <a href="/profile/update/<%= profileInfo[i]._id %>"><input

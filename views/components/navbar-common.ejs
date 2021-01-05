@@ -13,13 +13,18 @@
                 </ul>
             </li>
             <li>
+                <a class='header-link' id='header-link' href='/events' data-aos='fade-left'>Events</a>
+            </li>
+            <li>
                 <a class='header-link' id='header-link' href='/profiles/view/faculty' data-aos="fade-left">Faculty
                     List</a>
             </li>
             <li>
-                <a class='header-link' id='header-link' href='mailto:enact@brandeis.edu' data-aos='fade-left'>Contact
-                    Us</a>
+                <a class='header-link' id='header-link' href='/contact' data-aos='fade-left'>Contact Us</a>
             </li>
+<!--            <li>-->
+<!--                <a class='header-link' id='header-link' href='/about' data-aos='fade-left'>About Us</a>-->
+<!--            </li>-->
         <% } %>
         <% if (loggedIn) { %>
             <li>
@@ -66,9 +71,12 @@
                 </ul>
             </li>
             <li>
-                <a class='header-link' id='header-link' href='/messages/view/all'
-                   data-aos='fade-left'>Messages</a>
+                <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Networking</a>
             </li>
+            <li>
+                <a class='header-link' id='header-link' href='/events' data-aos='fade-left'>Events</a>
+            </li>
+
 
             <li>
                 <% if (status === 'admin' || status === 'faculty' ) { %>
@@ -120,19 +128,23 @@
                 <% } %>
             </li>
             <li>
-                <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Settings & Help</a>
+                <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Profile & Others</a>
                 <ul class='sub-menu'>
                     <li>
                         <a class='header-link' href='/profile/update'>Update profile</a>
                     </li>
                     <li>
-                        <a class='header-link' id='header-link' href='/about' data-aos='fade-left'>About Us</a>
+                        <a class='header-link' id='header-link' href='/messages/view/all'
+                           data-aos='fade-left'>Messages</a>
                     </li>
                     <li>
                         <a class='header-link' id='header-link' href='/help' data-aos='fade-left'>Help</a>
                     </li>
                 </ul>
             </li>
+<!--            <li>-->
+<!--                <a class='header-link' id='header-link' href='/about' data-aos='fade-left'>About Us</a>-->
+<!--            </li>-->
         <% } %>
 
         <li class='header__btn header__btn--login'>
