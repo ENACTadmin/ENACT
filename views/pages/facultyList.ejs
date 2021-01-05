@@ -1,6 +1,8 @@
 <%- include('../components/header'); -%>
 <%- include('../components/navbar'); -%>
 
+<script src='/js/updateProfile.js'></script>
+
 <section class='section'>
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
@@ -65,6 +67,11 @@
                                                     class="btn btn-sm btn-outline-primary" type="button"
                                                     value="CONTACT"></a>
                                     <% } %>
+                                        <% if (user._id.equals(profileInfo[i]._id)) { %>
+                                            <a href="/profile/update"><input
+                                                        class="btn btn-sm btn-outline-primary" type="button"
+                                                        value="EDIT"></a>
+                                        <% } %>
                                     <% if (user.status === 'admin') { %>
                                         <br><br>
                                         <a href="/profile/update/<%= profileInfo[i]._id %>"><input
