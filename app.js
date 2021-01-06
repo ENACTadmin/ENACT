@@ -350,7 +350,6 @@ app.get('/resources/all',
                 checkStatus: 'approve',
                 status: {$in: ["finalPublic", "public"]}
             })
-            console.log("hello: ", resources)
         }
         return res.send(resources)
     }
