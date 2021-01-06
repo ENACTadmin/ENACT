@@ -390,109 +390,74 @@ app.get('/collection/view/:resourceSetId',
         res.render('./pages/showCollection')
 )
 
-app.post('/removeFromCollection/:collectionId/:resourceId',
+app.post('/collection/:collectionId/delete/:resourceId',
     resourceController.removeFromCollection
 )
 
-app.post('/addToCollection/:collectionId/:resourceId',
+app.post('/collection/:collectionId/add/:resourceId',
     resourceController.addToCollection
 )
 
-app.post('/createCollection',
+app.post('/collection/create',
     resourceController.createCollection
 )
 
-app.post('/deleteCollection/:collectionId',
+app.post('/collection/delete/:collectionId',
     resourceController.deleteCollection
 )
 //*******************************************
 //***********Notification related************
 
-app.get('/reviewResource',
+app.get('/resource/review',
     utils.checkUserName,
     notificationController.loadUnderReviewResources
 )
 
-app.post('/approve',
+app.post('/resource/approve',
     notificationController.approve
 )
 
-app.post('/toPublic',
+app.post('/resource/publish',
     notificationController.toPublic
 )
 
-app.post('/tempdeny',
+app.post('/resource/deny',
     notificationController.deny
 )
 
-app.post('/resumeResource/:resourceId',
+app.post('/resource/resume/:resourceId',
     notificationController.resume
 )
 
-app.post('/commentResource/:resourceId',
+app.post('/resource/comment/:resourceId',
     notificationController.comment
 )
 
-app.post('/sendDeny',
+app.post('/resource/deny',
     notificationController.sendDeny
 )
 
-app.get('/approvePublicResources',
+app.get('/resource/approve/public',
     notificationController.loadPartPublicResources
 )
-app.post('/partPublicToPublic',
+app.post('/resource/status/toPublic',
     notificationController.partPublicToPublic
 )
 
-app.post('/partPublicToENACT',
+app.post('/resource/status/toENACT',
     notificationController.partPublicToENACT
 )
 
-// reset word2id mappings
-app.get('/secretFunction',
-    resourceController.resetWord2Id
+app.get('/resources/view/denied',
+    notificationController.loadDeniedResources
 )
 
-// update author name for all resources
-app.get('/secretFunction2',
-    async (req, res) => {
-        let allRes = await Resource.find()
-        for (var resource in allRes) {
-            let author = await User.findOne(allRes[resource].ownerId)
-            if (author) {
-                allRes[resource].ownerName = author.userName
-                await allRes[resource].save()
-            }
-        }
-        res.send("Success!")
-    }
+app.get('/resources/view/approved',
+    notificationController.loadApprovedResources
 )
 
-// remove faulty faculties
-app.get('/secretFunction3',
-    async (req, res) => {
-        let allFaculty = await Faculty.find()
-        for (var i in allFaculty) {
-            let faculty = await User.findOne({
-                $or: [
-                    {workEmail: allFaculty[i].email}, {googleemail: allFaculty[i].email}
-                ]
-            })
-            if (faculty) {
-                allFaculty[i].userId = faculty._id
-                await allFaculty[i].save()
-            } else {
-                console.log("to be deleted: ", allFaculty[i])
-                await Faculty.deleteOne({email: allFaculty[i].email})
-            }
-        }
-        res.send("Success!")
-    }
-)
-
-//show all profiles from all users
-app.get('/profile/send/:id',
-    messageController.sendProfileEmail
+app.get('/resources/view/public',
+    notificationController.loadMyPublicResources
 )
 
 //*******************************************
@@ -553,15 +518,18 @@ app.post('/profile/create/faculty',
     profileController.createFaculty
 )
 
-app.post('/saveProfileImageURL',
+app.post('/profile/update/imageURL',
     profileController.updateProfileImageURL
 )
 
-//show all profiles from all users
-app.post('/saveProfileImageURL-admin/:userId',
+app.post('/profile/:userId/update/imageURL',
     profileController.updateProfileImageURLAdmin
 )
 
+// send profile email
+app.get('/profile/send/:id',
+    messageController.sendProfileEmail
+)
 
 //*******************************************
 //************Message related****************
@@ -577,18 +545,6 @@ app.post('/messages/save/:sender/:receiver/:resourceId',
 app.get('/messages/view/all',
     utils.checkUserName,
     messageController.loadMessageBoard
-)
-
-app.get('/showDenied',
-    notificationController.loadDeniedResources
-)
-
-app.get('/approvedResources',
-    notificationController.loadApprovedResources
-)
-
-app.get('/showPublic',
-    notificationController.loadMyPublicResources
 )
 
 //*******************************************
@@ -657,25 +613,71 @@ app.post('/event/save',
 
 //*******************************************
 //*************Tag related*****************
-app.post('/addTags',
+app.post('/tag/add',
     tagController.addTags
 )
 
-app.get('/approveTags',
+app.get('/tag/approve',
     tagController.loadUnderReviewTags
 )
 
-app.post('/agreeTags',
+app.post('/tag/agree',
     tagController.agreeTags
 )
 
-app.post('/denyTags',
+app.post('/tag/deny',
     tagController.denyTags
 )
 
-app.get('/newAreas',
+app.get('/tag/my',
     tagController.loadTags
 )
+
+
+//*******************************************
+//***********Database related****************
+
+// reset word2id mappings
+app.get('/secretFunction1',
+    resourceController.resetWord2Id
+)
+
+// update author name for all resources
+app.get('/secretFunction2',
+    async (req, res) => {
+        let allRes = await Resource.find()
+        for (var resource in allRes) {
+            let author = await User.findOne(allRes[resource].ownerId)
+            if (author) {
+                allRes[resource].ownerName = author.userName
+                await allRes[resource].save()
+            }
+        }
+        res.send("Success!")
+    }
+)
+
+// remove faulty faculties
+app.get('/secretFunction3',
+    async (req, res) => {
+        let allFaculty = await Faculty.find()
+        for (var i in allFaculty) {
+            let faculty = await User.findOne({
+                $or: [
+                    {workEmail: allFaculty[i].email}, {googleemail: allFaculty[i].email}
+                ]
+            })
+            if (faculty) {
+                allFaculty[i].userId = faculty._id
+                await allFaculty[i].save()
+            } else {
+                await Faculty.deleteOne({email: allFaculty[i].email})
+            }
+        }
+        res.send("Success!")
+    }
+)
+
 
 //*******************************************
 //*************Error related*****************

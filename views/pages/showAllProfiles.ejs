@@ -6,7 +6,7 @@
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
             <div class='section__title section__title--centered'>
-                All users are here
+                Networking
             </div>
         </div>
     </div>
@@ -19,10 +19,10 @@
                 <li class='list-group-item'>
                     <div class='row'>
                         <div class='col-sm'>
-                            UserName: <a href='/profile/view/<%= profiles[i]._id %>'><%= profiles[i].userName %></a>
+                            Name: <a href='/profile/view/<%= profiles[i]._id %>'><%= profiles[i].userName %></a>
                         </div>
                         <div class='col-sm'>
-                            User Email: <%= profiles[i].workEmail || profiles[i].googleemail %>
+                            Email: <%= profiles[i].workEmail || profiles[i].googleemail %>
                         </div>
                     </div>
                 </li>

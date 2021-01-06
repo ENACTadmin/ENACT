@@ -8,7 +8,7 @@
                 Confirm Resources You denied
             </div>
             <% if (resourceInfo && resourceInfo.length > 0) { %>
-                <form action='/sendDeny' method='post'>
+                <form action='/resource/deny' method='post'>
                     <input type='submit' name='submit' class='btn btn-large btn-warning' style='width: 500px'
                            value='Confirm all resources without sending comments'>
                 </form>
@@ -112,7 +112,7 @@
                         </div>
                     </div>
                     <div class='modal-footer'>
-                        <form method='post' action='/resumeResource/<%= resourceInfo[i]._id %>'>
+                        <form method='post' action='/resource/resume/<%= resourceInfo[i]._id %>'>
                             <input type='submit' name='submit' class='btn btn-outline-danger' value='Resume'>
                         </form>
                         <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>

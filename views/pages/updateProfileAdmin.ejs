@@ -79,7 +79,7 @@
                     <!-- line break -->
                     <div class='w-100'></div>
                     <div class='input-group-prepend'>
-                        <span class='input-group-text' style='width: 380px'>Affiliation</span>
+                        <span class='input-group-text' style='width: 380px'>School</span>
                         <input type='text' class='form-control' name='affiliation'
                                placeholder="e.g. Brandeis University"
                                value='<%= account.affiliation %>'>
@@ -174,7 +174,7 @@
             </div>
             <div class='modal-footer'>
                 <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
-                <form method='POST' action='/saveProfileImageURL-admin/<%= account._id %>'>
+                <form method='POST' action='/profile/<%= account._id %>/update/imageURL'>
                     <input type='hidden' id='imageURL' name='imageURL'>
                     <input type='submit' class='btn btn-outline-dark' value='Upload'>
                 </form>
