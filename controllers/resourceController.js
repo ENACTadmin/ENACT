@@ -526,7 +526,7 @@ exports.showPublic = async (req, res, next) => {
             status: {$in: ["finalPublic", "public"]},
             checkStatus: 'approve'
         })
-        res.render('./pages/publicPrimarySearch', {
+        res.render('./pages/search-primary-public', {
             resourceInfo: resourceInfo,
         })
     } catch (e) {
@@ -850,7 +850,7 @@ exports.primaryPublicSearch = async (req, res, next) => {
                 status: {$in: ["finalPublic", "public"]}
             }).sort({yearOfCreation: 1})
         }
-        res.render('./pages/publicPrimarySearch', {
+        res.render('./pages/search-primary-public', {
             resourceInfo: resourceInfo
         })
     } catch (e) {

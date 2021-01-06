@@ -204,7 +204,7 @@ app.post('/resource/upload/course/:courseId',
 app.get('/resources/search/private/general',
     utils.checkUserName,
     (req, res) =>
-        res.render('./pages/searchPrimary')
+        res.render('./pages/search-primary')
 )
 
 app.get('/resources/search/private/general/results',
@@ -232,7 +232,7 @@ app.post('/resource/upload/public',
 app.get('/resources/search/private/advanced',
     utils.checkUserName,
     (req, res) =>
-        res.render('./pages/search'))
+        res.render('./pages/search-advanced'))
 
 app.post('/resources/search/private/advanced',
     resourceController.advancedSearch
@@ -247,7 +247,7 @@ app.get('/resources/view/public/all',
 app.get('/resources/search/public/general',
     utils.checkUserName,
     (req, res) =>
-        res.render('./pages/publicPrimarySearch')
+        res.render('./pages/search-primary-public')
 )
 
 app.post('/resources/view/public/generalResult',
@@ -257,7 +257,7 @@ app.post('/resources/view/public/generalResult',
 app.get('/resources/search/public/advanced',
     utils.checkUserName,
     (req, res) =>
-        res.render('./pages/publicSearch'))
+        res.render('./pages/search-advanced-public'))
 
 app.post('/resources/view/public/advancedResult',
     resourceController.advancedSearchPublic
