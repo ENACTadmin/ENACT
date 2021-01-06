@@ -58,7 +58,7 @@ exports.deny = async (req, res, next) => {
         let resourceInfo = await Resource.find({_id: resourceId})
         for (let i = 0; i < resourceInfo.length; i++) {
             resourceInfo[i].checkStatus = 'denytemp'
-            resourceInfo[i].save()
+            await resourceInfo[i].save()
         }
         res.locals.resourceInfo = resourceInfo
         res.render('./pages/deny')

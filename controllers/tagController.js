@@ -66,7 +66,7 @@ exports.loadTags = async (req, res, next) => {
         res.locals.tagsInfo = await Tag.find({
             ownerId: req.user._id
         }).sort({'createdAt': -1})
-        res.render('./pages/newAreas')
+        res.render('./pages/tag/my')
     } catch (e) {
         console.log("error: " + e)
         next(e)

@@ -124,7 +124,7 @@
                                 <li class='list-group-item borderless box-padding' style='display: inline'>
                                     <b>Actions:</b>
                                     <form style='display: inline' method='post'
-                                          action='/addToCollection/<%= resourceSet._id %>/<%= allLikedResourceInfo[i]._id %>'>
+                                          action='/collection/<%= resourceSet._id %>/add/<%= allLikedResourceInfo[i]._id %>'>
                                         <input type='submit' style='border:0 solid transparent' name='submit'
                                                class='btn btn-outline-success' value='Add to this Collection'>
                                     </form>
@@ -164,7 +164,7 @@
                         </div>
                         <div class='modal-footer'>
                             <form method='post'
-                                  action='/removeFromCollection/<%= resourceSet._id %>/<%= resourceInfo[i]._id %>'>
+                                  action='/collection/<%= resourceSet._id %>/delete/<%= resourceInfo[i]._id %>'>
                                 <input type='submit' name='submit' class='btn btn-outline-danger' value='Remove'>
                             </form>
                             <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>
@@ -199,7 +199,7 @@
                 </div>
                 <div class='modal-footer'>
                     <form method='post'
-                          action='/deleteCollection/<%= resourceSet._id %>'>
+                          action='/collection/delete/<%= resourceSet._id %>'>
                         <input type='submit' name='submit' class='btn btn-outline-danger' value='Delete'>
                     </form>
                     <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>

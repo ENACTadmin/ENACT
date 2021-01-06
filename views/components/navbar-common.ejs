@@ -8,45 +8,24 @@
                 <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Resources</a>
                 <ul class='sub-menu'>
                     <li>
-                        <a class='header-link' href='/resources/view/public/all'>Find some resources</a>
+                        <a class='header-link' href='/resources/view/public/all'>Find Some Resources</a>
+                    </li>
+                    <li>
+                        <a class='header-link' href='/events' data-aos='fade-left'>Upcoming Events</a>
                     </li>
                 </ul>
             </li>
+
             <li>
-                <a class='header-link' id='header-link' href='/events' data-aos='fade-left'>Events</a>
+                <a class='header-link' id='header-link' href='/profiles/view/faculty' data-aos="fade-left">Faculty &
+                    School</a>
             </li>
+
             <li>
-                <a class='header-link' id='header-link' href='/profiles/view/faculty' data-aos="fade-left">Faculty
-                    List</a>
+                <a class='header-link' id='header-link' href='/about' data-aos='fade-left'>About Us</a>
             </li>
-            <li>
-                <a class='header-link' id='header-link' href='/contact' data-aos='fade-left'>Contact Us</a>
-            </li>
-<!--            <li>-->
-<!--                <a class='header-link' id='header-link' href='/about' data-aos='fade-left'>About Us</a>-->
-<!--            </li>-->
-        <% } %>
-        <% if (loggedIn) { %>
-            <li>
-                <% if (status === 'student') { %>
-                    <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Courses</a>
-                <% } else { %>
-                    <a class='header-link' id='header-link' href='/courses' data-aos='fade-left'>Courses</a>
-                <% } %>
-                <ul class='sub-menu'>
-                    <% for (let i = 0; i < courseInfoSet.length; i++) { %>
-                        <li>
-                            <% if (courseInfoSet[i].courseName.length <= 20) { %>
-                                <a class='header-link'
-                                   href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName %></a>
-                            <% } else { %>
-                                <a class='header-link'
-                                   href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName.substring(0, 20) + "..." %></a>
-                            <% } %>
-                        </li>
-                    <% } %>
-                </ul>
-            </li>
+
+        <% } else { %>
             <li>
                 <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Resources</a>
                 <ul class='sub-menu'>
@@ -80,7 +59,7 @@
 
             <li>
                 <% if (status === 'admin' || status === 'faculty' ) { %>
-                    <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Faculty</a>
+                    <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Faculty & School</a>
                     <ul class='sub-menu'>
                         <li>
                             <a class='header-link' href='/resources/view/faculty'>Faculty guide</a>
@@ -89,15 +68,37 @@
                             <a class='header-link' href='/profiles/view/faculty'>Faculty list</a>
                         </li>
                         <li>
-                            <a class='header-link' href='/reviewResource'>Approve stdnt. resources</a>
+                            <a class='header-link' href='/resource/review'>Approve stdnt. resources</a>
                         </li>
+                        <% for (let i = 0; i < courseInfoSet.length; i++) { %>
+                            <li>
+                                <% if (courseInfoSet[i].courseName.length <= 20) { %>
+                                    <a class='header-link'
+                                       href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName %></a>
+                                <% } else { %>
+                                    <a class='header-link'
+                                       href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName.substring(0, 20) + "..." %></a>
+                                <% } %>
+                            </li>
+                        <% } %>
                     </ul>
                 <% } else { %>
-                    <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Faculty</a>
+                    <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Faculty & School</a>
                     <ul class='sub-menu'>
                         <li>
                             <a class='header-link' href='/profiles/view/faculty'>Faculty list</a>
                         </li>
+                        <% for (let i = 0; i < courseInfoSet.length; i++) { %>
+                            <li>
+                                <% if (courseInfoSet[i].courseName.length <= 20) { %>
+                                    <a class='header-link'
+                                       href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName %></a>
+                                <% } else { %>
+                                    <a class='header-link'
+                                       href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName.substring(0, 20) + "..." %></a>
+                                <% } %>
+                            </li>
+                        <% } %>
                     </ul>
                 <% } %>
             </li>
@@ -107,10 +108,10 @@
                     <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Admin</a>
                     <ul class='sub-menu'>
                         <li>
-                            <a class='header-link' href='/approvePublicResources'>Approve public resources</a>
+                            <a class='header-link' href='/resource/approve/public'>Approve public resources</a>
                         </li>
                         <li>
-                            <a class='header-link' href='/approveTags'>Approve new tags</a>
+                            <a class='header-link' href='/tag/approve'>Approve new tags</a>
                         </li>
                         <li>
                             <a class='header-link' href='/managePublicResources'>Home page resources</a>
@@ -140,17 +141,20 @@
                     <li>
                         <a class='header-link' id='header-link' href='/help' data-aos='fade-left'>Help</a>
                     </li>
+                    <li>
+                        <a class='header-link' id='header-link' href='/about' data-aos='fade-left'>About Us</a>
+                    </li>
+                    <li>
+                        <a class='header-link' id='header-link' href='/contact' data-aos='fade-left'>Contact Us</a>
+                    </li>
                 </ul>
             </li>
-<!--            <li>-->
-<!--                <a class='header-link' id='header-link' href='/about' data-aos='fade-left'>About Us</a>-->
-<!--            </li>-->
         <% } %>
 
         <li class='header__btn header__btn--login'>
             <% if (!loggedIn) { %>
                 <a class='btn btn-primary' style="color: white; font-weight: bold" href='/login'
-                   data-aos='fade-left'>ENACT member login</a>
+                   data-aos='fade-left'>Login</a>
             <% } else { %>
                 <a class='btn btn-primary' style="color: white; font-weight: bold" href='/logout'
                    data-aos='fade-left'>Logout</a>
