@@ -94,7 +94,7 @@ exports.uploadResource = async (req, res, next) => {
                 status: req.body.status, // public/private to class/private to professors
                 createdAt: new Date(),
                 name: req.body.resourceName,
-                description: req.body.resourceDescription,
+                description: req.body.description,
                 tags: tags, // tags as array
                 uri: req.body.uri, // universal resource identifier specIdific to the resource
                 state: req.body.state,
@@ -193,7 +193,7 @@ exports.updateResource = async (req, res, next) => {
         await removeWord2Id(oldResource)
         oldResource.name = req.body.resourceName
         oldResource.status = req.body.status
-        oldResource.description = req.body.resourceDescription
+        oldResource.description = req.body.description
         oldResource.uri = req.body.uri
         oldResource.state = req.body.state
         oldResource.contentType = req.body.contentType
@@ -277,7 +277,7 @@ exports.studentUpdateResource = async (req, res, next) => {
         let oldResource = await Resource.findOne({_id: resourceId})
         oldResource.name = req.body.resourceName
         oldResource.status = req.body.status
-        oldResource.description = req.body.resourceDescription
+        oldResource.description = req.body.description
         oldResource.uri = req.body.uri
         oldResource.state = req.body.state
         oldResource.contentType = req.body.contentType
@@ -304,7 +304,7 @@ exports.uploadToPublicResr = async (req, res, next) => {
             status: req.body.status, // public/private to class/private to professors
             createdAt: new Date(),
             name: req.body.resourceName,
-            description: req.body.resourceDescription,
+            description: req.body.description,
             tags: tags, // tags as array
             uri: req.body.uri, // universal resource identifier specIdific to the resource
             state: req.body.state,
@@ -525,7 +525,7 @@ exports.showPublic = async (req, res, next) => {
         let resourceInfo = await Resource.find({
             status: {$in: ["finalPublic", "public"]},
             checkStatus: 'approve'
-        })
+        }).sort({yearOfCreation: -1}).limit(10)
         res.render('./pages/search-primary-public', {
             resourceInfo: resourceInfo,
         })
