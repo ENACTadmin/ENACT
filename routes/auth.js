@@ -177,7 +177,7 @@ function send_email(workEmail, userId) {
         subject: 'ENACT Digital Platform: Password Reset',
         text: 'Password Reset',
         // html: 'Password reset Link: http://localhost:3500/reset/' + userId
-        html: 'Password reset Link: https://enact-brandeis.herokuapp.com/reset/' + userId
+        html: 'Password reset Link: https://enactnetwork.herokuapp.com/reset/' + userId
     };
     sgMail.send(msg);
 }
