@@ -414,10 +414,6 @@ exports.loadAllFacultyResources = async (req, res, next) => {
                 status: 'privateToProfessor',
                 'contentType': 'Assignment Guidelines'
             }).sort({yearOfCreation: 1}).limit(3)
-            let rubrics = await Resource.find({
-                status: 'privateToProfessor',
-                'contentType': 'Rubrics'
-            }).sort({yearOfCreation: 1}).limit(3)
             let guides = await Resource.find({
                 status: 'privateToProfessor',
                 'contentType': 'Course Planning'
@@ -431,7 +427,6 @@ exports.loadAllFacultyResources = async (req, res, next) => {
             res.locals.resourceIds = resourceIds
             res.locals.syllabus = await addAuthor(syllabus);
             res.locals.assignments = await addAuthor(assignments);
-            res.locals.rubrics = await addAuthor(rubrics);
             res.locals.guides = await addAuthor(guides);
             next()
         }
@@ -447,8 +442,6 @@ exports.loadSpecificContentType = async (req, res, next) => {
             contentType = 'Syllabus'
         else if (req.params.contentType === 'assignments')
             contentType = 'Assignment Guidelines'
-        else if (req.params.contentType === 'rubrics')
-            contentType = 'Rubrics'
         else if (req.params.contentType === 'plan')
             contentType = 'Course Planning'
 
@@ -466,6 +459,8 @@ exports.loadSpecificContentType = async (req, res, next) => {
 
         res.locals.resourceInfo = await addAuthor(resourceInfo)
 
+        if (contentType === 'Assignment Guidelines')
+            contentType = 'Assignment Guidelines & Rubrics'
         res.render('./pages/showResources', {
             secretType: contentType
         })

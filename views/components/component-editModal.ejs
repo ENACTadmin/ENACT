@@ -78,8 +78,7 @@ let id_set = [] %>
                                                     class='form-control' name='contentType'>
                                                 <option selected value='empty'>Choose...</option>
                                                 <option value='Advocacy Video'>Advocacy Video</option>
-                                                <option value='Assignment Guidelines'>Assignment/Grading Rubric
-                                                    Guidelines
+                                                <option value='Assignment Guidelines'>Assignment Guidelines & Rubrics
                                                 </option>
                                                 <option value='Journal'>Campaign Journal/Personal Reflections</option>
                                                 <option value='Course Planning'>Course Planning</option>
@@ -100,7 +99,7 @@ let id_set = [] %>
                                                 </option>
                                                 <option value='State Legislative'>State Legislative Website Resources
                                                 </option>
-                                                <option value='Syllabus'>Syllabus</option>
+                                                <option value='Syllabus'>Syllabi</option>
                                                 <option value='Testimony'>Testimony</option>
                                             </select>
                                         </div>
@@ -354,10 +353,10 @@ let id_set = [] %>
             let id_set_array = id_set.split(',')
             for (let i = 0; i < id_set_array.length; i++) {
                 let text = $('#contentTypeSelect' + id_set_array[i] + ' option:selected').text();
-                if (text === 'Assignment Guidelines' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
+                if (text === 'Assignment Guidelines & Rubrics' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
                     $(".toShow" + id_set_array[i]).hide()
                     $(".toShow2" + id_set_array[i]).hide()
-                } else if (text === 'Syllabus') {
+                } else if (text === 'Syllabi') {
                     $(".toShow2" + id_set_array[i]).show()
                     $(".toShow" + id_set_array[i]).hide()
                 } else {
@@ -366,10 +365,10 @@ let id_set = [] %>
                 }
                 $("#contentTypeSelect" + id_set_array[i]).on("change", function () {
                     text = $('#contentTypeSelect' + id_set_array[i] + ' option:selected').text();
-                    if (text === 'Assignment Guidelines' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
+                    if (text === 'Assignment Guidelines & Rubrics' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
                         $(".toShow" + id_set_array[i]).hide()
                         $(".toShow2" + id_set_array[i]).hide()
-                    } else if (text === 'Syllabus') {
+                    } else if (text === 'Syllabi') {
                         $(".toShow2" + id_set_array[i]).show()
                         $(".toShow" + id_set_array[i]).hide()
                     } else {

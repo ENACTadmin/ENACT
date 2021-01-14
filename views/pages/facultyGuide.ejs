@@ -26,7 +26,7 @@
             <div class='row'>
                 <% if (loggedIn) { %>
                     <div class='col-md-12 col-sm-12'>
-                        <h3>Syllabus</h3> Link to all syllabus: <a href="/resources/view/faculty/syllabus"><b>click
+                        <h3>Syllabi</h3> Link to all Syllabi: <a href="/resources/view/faculty/syllabus"><b>click
                                 me</b></a>
                         <hr>
                         <% if (syllabus && syllabus.length > 0) { %>
@@ -112,8 +112,8 @@
             <div class='row'>
                 <% if (loggedIn) { %>
                     <div class='col-md-12 col-sm-12'>
-                        <h3>Assignment Guidelines</h3>
-                        Link to all Assignment Guidelines: <a href="/resources/view/faculty/assignments"><b>click me</b></a>
+                        <h3>Assignment Guidelines & Rubrics</h3>
+                        Link to all Assignment Guidelines & Rubrics: <a href="/resources/view/faculty/assignments"><b>click me</b></a>
                         <hr>
                         <% if (assignments && assignments.length > 0) { %>
                             <% for (let i = assignments.length - 1; i >= 0; i--) { %>
@@ -194,98 +194,10 @@
                 <% } %>
             </div>
             <br>
-
             <div class='row'>
                 <% if (loggedIn) { %>
                     <div class='col-md-12 col-sm-12'>
-                        <h3>Rubrics</h3>
-                        Link to all rubrics: <a href="/resources/view/faculty/rubrics"><b>click me</b></a>
-                        <hr>
-                        <% if (rubrics && rubrics.length > 0) { %>
-                            <% for (let i = rubrics.length - 1; i >= 0; i--) { %>
-                                <div class='card-body'>
-                                    <h4><%= rubrics[i].name %></h4>
-                                    <div class='card-text'>
-                                        <ul class='list-group'>
-                                            <li class='list-group-item borderless box-padding'>
-                                                <b>Description: </b> <%= rubrics[i].description %></li>
-                                            <li class='list-group-item borderless box-padding'>
-                                                <b>State:</b> <%= rubrics[i].state %></li>
-                                            <% if (rubrics[i].mediaType === 'video' && rubrics[i].uri.endsWith(".mp4")) { %>
-                                                <li class='list-group-item borderless box-padding'>
-                                                    <video width="400" controls>
-                                                        <source src="<%= rubrics[i].uri %>" type="video/mp4">
-                                                    </video>
-                                                </li>
-                                            <% } else { %>
-                                                <li class='list-group-item borderless box-padding'>
-                                                    <b>Link: </b> <a href='<%= rubrics[i].uri %>'>click
-                                                        me</a>
-                                                </li>
-                                            <% } %>
-                                            <li class='list-group-item borderless box-padding'>
-                                                <b>Institution: </b> <%= rubrics[i].institution %>
-                                            </li>
-                                            <li class='list-group-item borderless box-padding'>
-                                                <b>Author: </b> <%= rubrics[i].ownerName %>
-                                            </li>
-                                            <% if (rubrics[i].tags[0].length > 0) { %>
-                                                <li class='list-group-item borderless box-padding'>
-                                                    <b>Tags:</b> <%= rubrics[i].tags %>
-                                                </li>
-                                            <% } %>
-                                            <li class='list-group-item borderless box-padding'>
-                                                <% if (resourceIds && resourceIds.toString().includes(rubrics[i]._id.toString())) { %>
-                                                    <form style='display: inline' method='post'
-                                                          action='/resource/unstarAlt/<%= rubrics[i]._id %>'>
-                                                        <b>Actions:</b>
-                                                        <input type='submit'
-                                                               style='border:0px solid transparent'
-                                                               name='submit'
-                                                               class='btn btn-outline-danger'
-                                                               value='&#9829;'>
-                                                    </form>
-                                                <% } else { %>
-                                                    <form style='display: inline' method='post'
-                                                          action='/resource/starAlt/<%= rubrics[i]._id %>'>
-                                                        <b>Actions:</b>
-                                                        <input type='submit'
-                                                               style='border:0px solid transparent'
-                                                               name='submit'
-                                                               class='btn btn-outline-danger'
-                                                               value='&#9825;'>
-                                                    </form>
-                                                <% } %>
-                                                <% if (rubrics[i].ownerId.toString() !== user._id.toString()) { %>
-                                                    <a href='/messages/view/<%= user._id %>/<%= rubrics[i].ownerId %>/<%= rubrics[i]._id %>'><input
-                                                                class='btn btn-outline-primary'
-                                                                style='border:0px solid transparent'
-                                                                type='button' value='Contact the author'></a>
-                                                <% } %>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <% if (i !== 0) { %>
-                                    <br>
-                                <% } %>
-                            <% } %>
-                        <% } else { %>
-                            <div class='card-body text-center'>
-                                No resource available yet
-                            </div>
-                        <% } %>
-                    </div>
-                <% } else { %>
-                    <%- include('../components/component-loginToView'); -%>
-                <% } %>
-            </div>
-            <br>
-
-            <div class='row'>
-                <% if (loggedIn) { %>
-                    <div class='col-md-12 col-sm-12'>
-                        <h3>Course Plannings</h3>
+                        <h3>Course Planning</h3>
                         Link to all course planning materials: <a href="/resources/view/faculty/plan"><b>click
                                 me</b></a>
                         <hr>

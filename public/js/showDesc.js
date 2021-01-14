@@ -8,7 +8,7 @@ $(document).ready(function () {
     })
 
     function extracted(text) {
-        if (text === 'Assignment/Grading Rubric Guidelines') {
+        if (text === 'Assignment Guidelines & Rubrics') {
             $(".toShowAll").hide()
             $(".toShow-AG").show()
         } else if (text === 'Advocacy Video') {
@@ -47,7 +47,7 @@ $(document).ready(function () {
         } else if (text === 'Script for meeting with Ways and Means Staff') {
             $(".toShowAll").hide()
             $(".toShow-SS").show()
-        } else if (text === 'Syllabus') {
+        } else if (text === 'Syllabi') {
             $(".toShowAll").hide()
             $(".toShow-Sy").show()
         } else if (text === 'Testimony') {

@@ -8,7 +8,13 @@
                 <div class="card card-signin my-5">
                     <div class="card-body">
                         <h5 class="card-title text-center"><b>Sign In / Sign Up</b></h5>
-                        <form class="form-signin" action="/login" method="post">
+                        <form class="form-signin"
+                        <% if (secret === 'general') { %>
+                              action="/login"
+                        <% } else if (secret === 'redirect') { %>
+                              action="/login/messages/view/<%= req.params.sender %>/<%= req.params.receiver %>/<%= req.params.resourceId %>"
+                                <% } %>
+                              method="post">
                             <div class="form-label-group">
                                 <input type="text" name="email" id="Username" class="form-control"
                                        placeholder="Username"
@@ -31,11 +37,16 @@
                             <input name="submit" class="btn btn-lg btn-primary btn-block text-uppercase" value="sign in"
                                    type="submit">
                             <hr class="my-4">
-                            <a href="/auth/google" class="btn btn-lg btn-google btn-block text-uppercase"><i
-                                        class="fa fa-google mr-2"></i> Sign in with Google
-                            </a>
+                            <% if (secret === 'general') { %>
+                                <a href="/auth/google" class="btn btn-lg btn-google btn-block text-uppercase"><i
+                                            class="fa fa-google mr-2"></i> Sign in with Google
+                                </a>
+                            <% } else if (secret === 'redirect') { %>
+                                <a href="/auth/google/messages" class="btn btn-lg btn-google btn-block text-uppercase"><i
+                                            class="fa fa-google mr-2"></i> Sign in with Google
+                                </a>
+                            <% } %>
                         </form>
-
                     </div>
                 </div>
             </div>

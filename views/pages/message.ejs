@@ -95,8 +95,13 @@
                 <div class='card'>
                     <h5 class='card-header'>Leave a message here:</h5>
                     <div class='card-body'>
-                        <form action='/messages/save/<%= senderInfo._id %>/<%= receiverInfo._id %>/general'
-                              method='post'>
+                        <form
+                        <% if (resourceInfo) { %>
+                            action='/messages/save/<%= senderInfo._id %>/<%= receiverInfo._id %>/<%= resourceInfo._id %>'
+                        <% } else { %>
+                            action='/messages/save/<%= senderInfo._id %>/<%= receiverInfo._id %>/general'
+                                <% } %>
+                            method='post'>
                             <% if (messageInfo.length === 0) { %>
                                 <div class='input-group-prepend' style='display: inline'>
                                     Subject
@@ -106,13 +111,19 @@
                             <% } %>
                             <div class='form-group' style='display: inline'>
                                 Message
-                                <textarea style='resize: none' class='form-control' name='message' rows='3'></textarea>
+                                <textarea style='resize: none' class='form-control' name='message'
+                                          rows='3'></textarea>
                             </div>
                             <br>
                             <% if (loggedIn) { %>
                                 <button type='submit' class='btn btn-outline-primary'>Send</button>
                             <% } else { %>
-                                Please login to submit.
+                                Please login to reply.
+                                <% if (resourceInfo) { %>
+                                    <a href="/login/messages/view/<%= senderInfo._id %>/<%= receiverInfo._id %>/<%= resourceInfo._id %>"></a>
+                                <% } else { %>
+                                    <a href="/login/messages/view/<%= senderInfo._id %>/<%= receiverInfo._id %>/general"></a>
+                                <% } %>
                             <% } %>
                         </form>
                     </div>

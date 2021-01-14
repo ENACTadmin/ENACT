@@ -79,7 +79,7 @@ exports.saveMessage = async (req, res, next) => {
         }
         await newMessage.save()
         let receiver = await User.findOne({_id: req.params.receiver})
-        let workEmail = receiver.workEmail
+        let workEmail = receiver.workEmail || receiver.googleemail
         let userName = receiver.userName
         // send email to alternative users
         if (req.params.resourceId !== 'general') {
@@ -87,10 +87,10 @@ exports.saveMessage = async (req, res, next) => {
             for (let i = 0; i < otherAuthors.length; i++) {
                 let name = otherAuthors[i];
                 let email = otherAuthors[i];
-                send_email(email, name, newMessage, 'http://enactnetwork.herokuapp.com/' + 'message/' + req.params.sender + '/' + req.params.receiver + '/' + req.params.resourceId)
+                send_email(email, name, newMessage, 'http://enactnetwork.herokuapp.com/messages/view/' + req.params.sender + '/' + req.params.receiver + '/' + req.params.resourceId)
             }
         }
-        send_email(workEmail, userName, newMessage, 'http://enactnetwork.herokuapp.com/' + 'message/' + req.params.sender + '/' + req.params.receiver + '/' + req.params.resourceId)
+        send_email(workEmail, userName, newMessage, 'http://enactnetwork.herokuapp.com/messages/view/' + req.params.sender + '/' + req.params.receiver + '/' + req.params.resourceId)
         res.redirect('back')
     } catch (e) {
         next(e)
@@ -133,7 +133,7 @@ function send_email(workEmail, userName, message, url) {
             from: 'enact@brandeis.edu',
             subject: 'ENACT Digital Platform: you have one new message from ' + userName,
             text: 'ENACT Digital Platform: you have one new message from ' + userName,
-            html: 'Hi, <br><br>you received a message from  ' + userName +
+            html: 'Hi, <br><br>you received a message from ' + userName +
                 '<br>' + '<b>Subject</b>: ' + message.subject +
                 '<br>' + '<b>Content</b>: ' + message.message +
                 '<br>' + '<b>Time</b>: ' + message.createdAt +

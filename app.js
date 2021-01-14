@@ -534,7 +534,23 @@ app.get('/profile/send/:id',
 //************Message related****************
 app.get('/messages/view/:sender/:receiver/:resourceId',
     utils.checkUserName,
+    async (req, res, next) => {
+        if (res.locals.loggedIn)
+            next()
+        else
+            res.redirect('/login/messages/view/' + req.params.sender + '/' + req.params.receiver + '/' + req.params.resourceId)
+    },
     messageController.loadMessagingPage
+)
+
+app.get('/login/messages/view/:sender/:receiver/:resourceId',
+    (req, res, next) => {
+        req.session['redirectPath'] = req.params.sender + '/' + req.params.receiver + '/' + req.params.resourceId
+        res.render('./pages/login', {
+            secret: 'redirect',
+            req: req
+        })
+    }
 )
 
 app.post('/messages/save/:sender/:receiver/:resourceId',
