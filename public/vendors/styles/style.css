@@ -604,13 +604,6 @@ p {
     box-shadow: 0 0 28px rgba(0, 0, 0, .08)
 }
 
-.wave1 {
-    background-image: url(../images/wave.png);
-    background-size: cover;
-    background-position: center bottom;
-    background-repeat: no-repeat
-}
-
 .card-box, .da-card {
     background-color: #fff;
     border-radius: 10px;
@@ -828,14 +821,6 @@ textarea.form-control {
     color: #28a745
 }
 
-.form-control-success {
-    border-color: #28a745;
-    background-image: url(../images/check-mark-green.png);
-    background-repeat: no-repeat;
-    background-position: center right 10px;
-    background-size: 20px 20px
-}
-
 .form-control-success:focus {
     border-color: #28a745;
     -webkit-box-shadow: 0 0 0 1px #28a745;
@@ -846,14 +831,6 @@ textarea.form-control {
     color: #ffc107
 }
 
-.form-control-warning {
-    border-color: #ffc107;
-    background-image: url(../images/caution-sign.png);
-    background-repeat: no-repeat;
-    background-position: center right 10px;
-    background-size: 20px 20px
-}
-
 .form-control-warning:focus {
     border-color: #ffc107;
     -webkit-box-shadow: 0 0 0 1px #ffc107;
@@ -862,14 +839,6 @@ textarea.form-control {
 
 .has-danger {
     color: #dc3545
-}
-
-.form-control-danger {
-    border-color: #dc3545;
-    background-image: url(../images/cross.png);
-    background-repeat: no-repeat;
-    background-position: center right 10px;
-    background-size: 14px 14px
 }
 
 .form-control-danger:focus {
@@ -999,12 +968,6 @@ textarea.form-control {
 
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
     background-color: #0053a4
-}
-
-.custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
-    background-image: url(../images/check-mark.png);
-    background-repeat: no-repeat;
-    background-position: center center
 }
 
 .custom-radio .custom-control-input:checked ~ .custom-control-label::before {
@@ -1332,27 +1295,27 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td:first-child:before
     background: 0 0
 }
 
-.header {
-    position: fixed;
-    height: 70px;
-    width: calc(100% - 280px);
-    background: #fff;
-    right: 0;
-    top: 0;
-    z-index: 123;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    -webkit-transition: all .3s ease-in-out;
-    transition: all .3s ease-in-out;
-    -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, .1);
-    box-shadow: 0 0 25px rgba(0, 0, 0, .1)
-}
+/*.header {*/
+/*    position: fixed;*/
+/*    height: 70px;*/
+/*    width: calc(100% - 280px);*/
+/*    background: #fff;*/
+/*    right: 0;*/
+/*    top: 0;*/
+/*    z-index: 123;*/
+/*    display: -webkit-box;*/
+/*    display: -ms-flexbox;*/
+/*    display: flex;*/
+/*    -ms-flex-wrap: wrap;*/
+/*    flex-wrap: wrap;*/
+/*    -webkit-box-pack: justify;*/
+/*    -ms-flex-pack: justify;*/
+/*    justify-content: space-between;*/
+/*    -webkit-transition: all .3s ease-in-out;*/
+/*    transition: all .3s ease-in-out;*/
+/*    -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, .1);*/
+/*    box-shadow: 0 0 25px rgba(0, 0, 0, .1)*/
+/*}*/
 
 .header-left {
     display: -webkit-box;

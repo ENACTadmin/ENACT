@@ -1,5 +1,6 @@
 <%- include('../components/header'); -%>
 <%- include('../components/navbar'); -%>
+
 <% let id_set = []; %>
 <div class="pre-loader">
     <div class="pre-loader-box">
@@ -13,102 +14,93 @@
     </div>
 </div>
 
-<section class='section diagonal-gradient'>
+<section class='section'>
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
             <div class='section__title section__title--centered'>
-                Events
+                Latest Events
             </div>
         </div>
     </div>
 </section>
-
-<%- include('../components/component-event'); -%>
 
 <section class='section section__grey'>
     <section class='section__content section__content--fluid-width'>
         <div class='container'>
             <div class='row'>
                 <div class='col-md-12 col-sm-12'>
-                    <h3><b>Latest Events</b></h3>
-                    <hr>
-                    <div class='card border-0'>
-                        <div class='card-body'>
-                            <% if (eventsInfo.length !== 0) { %>
-                                <% for (let i = 0; i < eventsInfo.length; i++) { %>
-                                    <% if (loggedIn || eventsInfo[i].visibility === 'public') { %>
-                                        <div class='card border-0'>
-                                            <div class='card-body'>
-                                                <h4><%= eventsInfo[i].title %></h4>
-                                                <div class='card-text'>
-                                                    <ul class='list-group'>
-                                                        <li class='list-group-item borderless box-padding'>
-                                                            <b>Description: </b> <%= eventsInfo[i].description %>
-                                                        </li>
-                                                        <% if (eventsInfo[i].start !== null) { %>
-                                                            <li class='list-group-item borderless box-padding'>
-                                                                <b>Starts at:</b>
-                                                                <%= eventsInfo[i].start %>
-                                                            </li>
-                                                        <% } %>
-                                                        <% if (eventsInfo[i].end !== null) { %>
-                                                            <li class='list-group-item borderless box-padding'>
-                                                                <b>Ends at:</b>
-                                                                <%= eventsInfo[i].end %>
-                                                            </li>
-                                                        <% } %>
-                                                        <% if (eventsInfo[i].uri !== null) { %>
-                                                            <li class='list-group-item borderless box-padding'>
-                                                                <b>Link: </b> <a
-                                                                        href="<%= eventsInfo[i].uri %>"><%= eventsInfo[i].uri %></a>
-                                                            </li>
-                                                        <% } %>
-                                                        <% if (eventsInfo[i].visibility !== null) { %>
-                                                            <li class='list-group-item borderless box-padding'>
-                                                                <b>Visibility: </b><%= eventsInfo[i].visibility %>
-                                                            </li>
-                                                        <% } %>
+                    <% if (eventsInfo.length !== 0) { %>
+                        <% for (let i = 0; i < eventsInfo.length; i++) { %>
+                            <% if (loggedIn || eventsInfo[i].visibility === 'public') { %>
+                                <div class='card border-0' style="border-radius: 30px">
+                                    <div class='card-body'>
+                                        <h4><%= eventsInfo[i].title %></h4>
+                                        <div class='card-text'>
+                                            <ul class='list-group'>
+                                                <li class='list-group-item borderless box-padding'>
+                                                    <b>Description: </b> <%= eventsInfo[i].description %>
+                                                </li>
+                                                <% if (eventsInfo[i].start !== null) { %>
+                                                    <li class='list-group-item borderless box-padding'>
+                                                        <b>Starts at:</b>
+                                                        <%= eventsInfo[i].start %>
+                                                    </li>
+                                                <% } %>
+                                                <% if (eventsInfo[i].end !== null) { %>
+                                                    <li class='list-group-item borderless box-padding'>
+                                                        <b>Ends at:</b>
+                                                        <%= eventsInfo[i].end %>
+                                                    </li>
+                                                <% } %>
+                                                <% if (eventsInfo[i].uri !== null) { %>
+                                                    <li class='list-group-item borderless box-padding'>
+                                                        <b>Link: </b> <a
+                                                                href="<%= eventsInfo[i].uri %>"><%= eventsInfo[i].uri %></a>
+                                                    </li>
+                                                <% } %>
+                                                <% if (eventsInfo[i].visibility !== null) { %>
+                                                    <li class='list-group-item borderless box-padding'>
+                                                        <b>Visibility: </b><%= eventsInfo[i].visibility %>
+                                                    </li>
+                                                <% } %>
 
-                                                        <% if (loggedIn) { %>
-                                                            <li class='list-group-item borderless box-padding'
-                                                                style="display: inline">
-                                                                <b>Actions:</b>
-                                                                <button type='button'
-                                                                        class='btn btn-sm btn-outline-info'
-                                                                        style='border:0 solid transparent'
-                                                                        data-toggle='modal'
-                                                                        data-target='#editModal<%= eventsInfo[i]._id %>'>
-                                                                    Edit
-                                                                </button>
-                                                                <button type='button'
-                                                                        class='btn btn-sm btn-outline-warning'
-                                                                        style='border:0px solid transparent'
-                                                                        data-toggle='modal'
-                                                                        data-target='#deleteModal<%= eventsInfo[i]._id %>'>
-                                                                    Delete
-                                                                </button>
-                                                            </li>
-                                                        <% } %>
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                                <% if (loggedIn) { %>
+                                                    <li class='list-group-item borderless box-padding'
+                                                        style="display: inline">
+                                                        <b>Actions:</b>
+                                                        <button type='button'
+                                                                class='btn btn-sm btn-outline-info'
+                                                                style='border:0 solid transparent'
+                                                                data-toggle='modal'
+                                                                data-target='#editModal<%= eventsInfo[i]._id %>'>
+                                                            Edit
+                                                        </button>
+                                                        <button type='button'
+                                                                class='btn btn-sm btn-outline-warning'
+                                                                style='border:0px solid transparent'
+                                                                data-toggle='modal'
+                                                                data-target='#deleteModal<%= eventsInfo[i]._id %>'>
+                                                            Delete
+                                                        </button>
+                                                    </li>
+                                                <% } %>
+                                            </ul>
                                         </div>
-                                        <% if (i !== eventsInfo.length - 1) { %>
-                                            <hr>
-                                        <% } %>
-                                    <% } %>
+                                    </div>
+                                </div>
+                                <% if (i !== eventsInfo.length - 1) { %>
+                                    <br>
                                 <% } %>
-                            <% } else { %>
-                                No events available yet
                             <% } %>
-                        </div>
-                    </div>
+                        <% } %>
+                    <% } else { %>
+                        No events available yet
+                    <% } %>
                 </div>
             </div>
         </div>
     </section>
 </section>
-
 
 <!-- Delete Modal -->
 <% if (eventsInfo.length !== 0) { %>
@@ -145,6 +137,8 @@
         </div>
     <% } %>
 <% } %>
+
+<%- include('../components/component-event'); -%>
 
 <!--Edit Modal-->
 <% if (eventsInfo.length !== 0) { %>

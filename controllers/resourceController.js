@@ -490,7 +490,7 @@ exports.loadPublicResources = async (req, res, next) => {
     try {
         res.locals.resourceInfo = await Resource.find({
             status: {$in: ["finalPublic", "public"]}
-        }).sort({yearOfCreation: 1})
+        }).sort({yearOfCreation: 1}).limit(30)
         next()
     } catch (e) {
         console.log("error: " + e)

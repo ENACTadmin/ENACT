@@ -540,6 +540,14 @@ app.get('/profile/send/:id',
     messageController.sendProfileEmail
 )
 
+
+//*******************************************
+//***********Networking related**************
+app.get('/networking',
+    (req, res) => {
+        res.render('./pages/networking')
+    })
+
 //*******************************************
 //************Message related****************
 app.get('/messages/view/:sender/:receiver/:resourceId',
