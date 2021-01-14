@@ -11,6 +11,7 @@ const User = require('../models/User');
 const clientID = process.env.clientID || "960287962764-j4nvij4n7tlp1mng142c49kb0k9jmc1d.apps.googleusercontent.com";
 const clientSecret = process.env.clientSecret || "Qde03Ut985sCMXZpyYNsaN39";
 const callbackURL = process.env.callbackURL || "http://127.0.0.1:3500/login/authorized";
+const callbackURL2 = process.env.callbackURL2 || "http://127.0.0.1:3500/login/authorized/messages";
 
 
 module.exports = function (passport) {
@@ -61,43 +62,110 @@ module.exports = function (passport) {
                         ]
                     },
                     function (err, user) {
-                    if (err)
-                        return done(err);
+                        if (err)
+                            return done(err);
 
-                    if (user) {
-                        // console.log(`the user was found ${user}`);
-                        // if a user is found, log them in
-                        return done(null, user);
-                    } else {
-                        console.log(`we need to create a new user`);
-                        console.dir(profile);
-                        // if the user isnt in our database, create a new user
-                        var newUser
-                            = new User(
-                            {
-                                googleid: profile.id,
-                                googletoken: token,
-                                googlename: profile.displayName,
-                                googleemail: profile.emails[0].value,
+                        if (user) {
+                            // console.log(`the user was found ${user}`);
+                            // if a user is found, log them in
+                            return done(null, user);
+                        } else {
+                            console.log(`we need to create a new user`);
+                            console.dir(profile);
+                            // if the user isnt in our database, create a new user
+                            var newUser
+                                = new User(
+                                {
+                                    googleid: profile.id,
+                                    googletoken: token,
+                                    googlename: profile.displayName,
+                                    googleemail: profile.emails[0].value,
+                                });
+
+                            // set all of the relevant information
+                            /*
+                            newUser.google = {}
+                            newUser.google.id    = profile.id;
+                            newUser.google.token = token;
+                            newUser.google.name  = profile.displayName;
+                            newUser.google.email = profile.emails[0].value; // pull the first email
+                            */
+                            // save the user
+                            newUser.save(function (err) {
+                                console.log("saving the new user");
+                                if (err)
+                                    throw err;
+                                return done(null, newUser);
                             });
+                        }
+                    });
+            });
+        })
+    );
 
-                        // set all of the relevant information
-                        /*
-                        newUser.google = {}
-                        newUser.google.id    = profile.id;
-                        newUser.google.token = token;
-                        newUser.google.name  = profile.displayName;
-                        newUser.google.email = profile.emails[0].value; // pull the first email
-                        */
-                        // save the user
-                        newUser.save(function (err) {
-                            console.log("saving the new user");
-                            if (err)
-                                throw err;
-                            return done(null, newUser);
-                        });
-                    }
-                });
+
+    // =========================================================================
+    // GOOGLE-secret ===========================================================
+    // =========================================================================
+    passport.use('google-secret', new GoogleStrategy({
+            clientID: clientID,
+            clientSecret: clientSecret,
+            callbackURL: callbackURL2
+        },
+
+        function (token, refreshToken, profile, done) {
+
+            // make the code asynchronous
+            // User.findOne won't fire until we have all our data back from Google
+            process.nextTick(function () {
+                // console.log("profile is : ", profile)
+                // console.log("profile is : ", profile.emails[0].value)
+                console.log("in secret google auth")
+                // try to find the user based on their google id
+                User.findOne({
+                        $or: [
+                            {workEmail: profile.emails[0].value}, {googleemail: profile.emails[0].value}
+                        ]
+                    },
+                    function (err, user) {
+                        if (err)
+                            return done(err);
+
+                        if (user) {
+                            // console.log(`the user was found ${user}`);
+                            // if a user is found, log them in
+                            return done(null, user);
+                        } else {
+                            console.log(`we need to create a new user`);
+                            console.dir(profile);
+                            // if the user isnt in our database, create a new user
+                            var newUser
+                                = new User(
+                                {
+                                    googleid: profile.id,
+                                    googletoken: token,
+                                    googlename: profile.displayName,
+                                    googleemail: profile.emails[0].value,
+                                });
+
+                            // set all of the relevant information
+                            /*
+                            newUser.google = {}
+                            newUser.google.id    = profile.id;
+                            newUser.google.token = token;
+                            newUser.google.name  = profile.displayName;
+                            newUser.google.email = profile.emails[0].value; // pull the first email
+                            */
+                            // save the user
+                            newUser.save(function (err) {
+                                console.log("saving the new user");
+                                if (err)
+                                    throw err;
+                                console.log("google secret success!")
+                                return done(null, newUser);
+                            });
+                        }
+                    });
             });
         })
     );
@@ -112,6 +180,34 @@ module.exports = function (passport) {
         },
         function (username, password, done) {
             console.log('In local login strategy')
+            User.findOne({
+                $or: [
+                    {workEmail: username}, {googleemail: username}
+                ]
+            }, function (err, user) {
+                if (err) {
+                    return done(err);
+                }
+                if (!user) {
+                    return done(null, false, {message: 'Incorrect username.'});
+                }
+                if (user.password !== password) {
+                    return done(null, false, {message: 'Incorrect password.'});
+                }
+                return done(null, user);
+            });
+        }
+    ));
+
+    // =========================================================================
+    // LOCAL-secret ============================================================
+    // =========================================================================
+    passport.use('local-secret', new LocalStrategy({
+            usernameField: 'email',
+            passwordField: 'password'
+        },
+        function (username, password, done) {
+            console.log('In local login secret strategy')
             User.findOne({
                 $or: [
                     {workEmail: username}, {googleemail: username}

@@ -28,11 +28,11 @@
     });
 
     $(document).on('keypress', 'input,select', function (e) {
-        if (e.which == 13) {
+        if (e.which == 13 && document.getElementById('myBtn') === null) {
             e.preventDefault();
             // Get all focusable elements on the page
-            var $canfocus = $(':focusable');
-            var index = $canfocus.index(document.activeElement) + 1;
+            let $canfocus = $(':focusable');
+            let index = $canfocus.index(document.activeElement) + 1;
             if (index >= $canfocus.length) index = 0;
             $canfocus.eq(index).focus();
         }

@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 const flash = require('connect-flash');
 const bodyParser = require("body-parser");
+const session = require('session')
 
 
 const Course = require('../models/Course');
@@ -28,7 +29,6 @@ router.use(bodyParser.urlencoded({extended: false}));
 // this runs every time when a req is received
 let loggedIn = false;
 router.use(async (req, res, next) => {
-    console.log("In router!")
     res.locals.loggedIn = false;
     res.locals.status = "student"
     if (req.isAuthenticated()) {
@@ -81,6 +81,7 @@ router.get('/logout', function (req, res) {
 router.get('/auth/google', passport.authenticate('google',
     {scope: ['profile', 'email']}));
 
+
 // google returns authorized back to the URL below
 router.get('/login/authorized',
     passport.authenticate('google', {
@@ -91,7 +92,9 @@ router.get('/login/authorized',
 
 router.get('/login',
     (req, res) =>
-        res.render('./pages/login')
+        res.render('./pages/login', {
+            secret: 'general'
+        })
 )
 
 router.post('/login',
@@ -100,6 +103,33 @@ router.post('/login',
         failureRedirect: '/login-fail'
     })
 );
+
+// ask for authentication
+router.get('/auth/google/messages', passport.authenticate('google-secret',
+    {scope: ['profile', 'email']}));
+
+// google returns authorized back to the URL below
+router.get('/login/authorized/messages',
+    passport.authenticate('google-secret', {
+        successRedirect: '/messages/view/redirect',
+        failureRedirect: '/error'
+    })
+);
+
+router.post('/login/messages/view/:sender/:receiver/:resourceId',
+
+    passport.authenticate('local-secret', {
+        successRedirect: '/messages/view/redirect',
+        failureRedirect: '/login-fail'
+    })
+);
+
+router.get('/messages/view/redirect',
+    (req, res, next) => {
+        res.redirect('/messages/view/' + req.session['redirectPath'])
+    }
+);
+
 
 router.get('/login-fail',
     (req, res) =>
@@ -176,7 +206,6 @@ function send_email(workEmail, userId) {
         from: 'enact@brandeis.edu',
         subject: 'ENACT Digital Platform: Password Reset',
         text: 'Password Reset',
-        // html: 'Password reset Link: http://localhost:3500/reset/' + userId
         html: 'Password reset Link: https://enactnetwork.herokuapp.com/reset/' + userId
     };
     sgMail.send(msg);
@@ -185,10 +214,7 @@ function send_email(workEmail, userId) {
 
 router.get('/verification',
     async (req, res) => {
-        console.log("work email: ", req.user.workEmail)
         let temp = await Faculty.findOne({email: {$in: [req.user.googleemail, req.user.workEmail]}})
-        console.log("faculty test: ", temp)
-        console.log("admin test: ", adminList.includes(req.user.googleemail) || adminList.includes(req.user.workEmail))
         // if the user is an admin or faculty, skip verification step
         if (adminList.includes(req.user.googleemail) || adminList.includes(req.user.workEmail) || temp) {
             res.redirect("/profile/update")
