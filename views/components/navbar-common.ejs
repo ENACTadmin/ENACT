@@ -163,10 +163,10 @@
 
         <li class='header__btn header__btn--login'>
             <% if (!loggedIn) { %>
-                <a class='btn btn-primary' style="color: white; font-weight: bold" href='/login'
+                <a class='btn btn-primary' id="adjustedLoginBtn" style="background-color: #0053a4; color: white; font-weight: bold;" href='/login'
                    data-aos='fade-left'>Login</a>
             <% } else { %>
-                <a class='btn btn-primary' style="color: white; font-weight: bold" href='/logout'
+                <a class='btn btn-primary' id="adjustedLoginBtn" style="background-color: #0053a4; color: white; font-weight: bold;" href='/logout'
                    data-aos='fade-left'>Logout</a>
             <% } %>
         </li>
