@@ -149,12 +149,9 @@ exports.showAllProfiles = async (req, res, next) => {
 }
 
 exports.updateProfileImageURL = async (req, res, next) => {
-    console.log("Locals: ", res.locals)
     let userToUpdate = await User.findOne({_id: res.locals.user._id})
-    console.log("User found: ", userToUpdate)
     try {
         userToUpdate.profilePicURL = req.body.imageURL;
-        console.log("URL: ", req.body.imageURL)
         await userToUpdate.save()
         res.redirect('back')
     } catch (e) {
@@ -166,7 +163,6 @@ exports.updateProfileImageURLAdmin = async (req, res, next) => {
     let userToUpdate = await User.findOne({_id: req.params.userId})
     try {
         userToUpdate.profilePicURL = req.body.imageURL;
-        console.log("URL: ", req.body.imageURL)
         await userToUpdate.save()
         res.redirect('back')
     } catch (e) {
