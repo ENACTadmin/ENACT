@@ -2,16 +2,22 @@
 <%- include('../components/navbar'); -%>
 
 <script src="/js/autocompleteAlt.js"></script>
+<script src="/js/courseTime.js"></script>
 
 <section class='section diagonal-gradient'>
     <div class='section__content section__content--full-width diagonal-gradient'>
         <div class='jumbotron masthead text-center'>
             <div class='section__title section__title--centered'>
-                Update course information
+                Update Course Information
             </div>
         </div>
     </div>
 </section>
+
+<p hidden id="yearFromServer"><%= courseInfo.year %></p>
+<p hidden id="semesterFromServer"><%= courseInfo.semester %></p>
+<p hidden id="timezoneFromServer"><%= courseInfo.timezone %></p>
+<p hidden id="stateFromServer"><%= courseInfo.state %></p>
 
 <section class='section section__grey' data-aos='fade-up'>
     <div class='container'>
@@ -20,6 +26,8 @@
             <div class='col-md-6 col-sm-12'>
                 <% if (loggedIn) { %>
                     <form method='post' action='/course/update/<%= courseInfo._id %>'>
+                        <h3>Basic Information</h3>
+                        <hr>
                         <div class='input-group-prepend'>
                             <span class='input-group-text' style='width: 180px'>Course Name</span>
                             <input type='text' class='form-control' name='courseName'
@@ -27,9 +35,116 @@
                         </div>
                         <br>
                         <div class='input-group-prepend'>
+                            <span class='input-group-text' style='width: 180px'>Year</span>
+                            <select class='form-control' name="year" id="yearpicker"></select>
+                        </div>
+                        <br>
+                        <div class='input-group-prepend'>
                             <span class='input-group-text' style='width: 180px'>Semester</span>
-                            <input type='text' class='form-control' name='semester' placeholder='e.g. SPR2020'
-                                   value="<%= courseInfo.semester %>">
+                            <select class='form-control' name="semester" id="semester">
+                                <option value="spring">Spring</option>
+                                <option value="summer">Summer</option>
+                                <option value="fall">Fall</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class='input-group-prepend'>
+                            <span class='input-group-text' style='width: 180px'>Timezone</span>
+                            <select class="form-control" name="timezone" id="timezone">
+                                <option value="Etc/GMT+12">(GMT-12:00) International Date Line West</option>
+                                <option value="Pacific/Midway">(GMT-11:00) Midway Island, Samoa</option>
+                                <option value="Pacific/Honolulu">(GMT-10:00) Hawaii</option>
+                                <option value="US/Alaska">(GMT-09:00) Alaska</option>
+                                <option value="America/Los_Angeles">(GMT-08:00) Pacific Time (US & Canada)</option>
+                                <option value="America/Tijuana">(GMT-08:00) Tijuana, Baja California</option>
+                                <option value="US/Arizona">(GMT-07:00) Arizona</option>
+                                <option value="America/Chihuahua">(GMT-07:00) Chihuahua, La Paz, Mazatlan</option>
+                                <option value="US/Mountain">(GMT-07:00) Mountain Time (US & Canada)</option>
+                                <option value="America/Managua">(GMT-06:00) Central America</option>
+                                <option value="US/Central">(GMT-06:00) Central Time (US & Canada)</option>
+                                <option value="America/Mexico_City">(GMT-06:00) Guadalajara, Mexico City, Monterrey
+                                </option>
+                                <option value="Canada/Saskatchewan">(GMT-06:00) Saskatchewan</option>
+                                <option value="America/Bogota">(GMT-05:00) Bogota, Lima, Quito, Rio Branco</option>
+                                <option value="US/Eastern">(GMT-05:00) Eastern Time (US & Canada)</option>
+                                <option value="US/East-Indiana">(GMT-05:00) Indiana (East)</option>
+                                <option value="Canada/Atlantic">(GMT-04:00) Atlantic Time (Canada)</option>
+                                <option value="America/Caracas">(GMT-04:00) Caracas, La Paz</option>
+                                <option value="America/Manaus">(GMT-04:00) Manaus</option>
+                                <option value="America/Santiago">(GMT-04:00) Santiago</option>
+                                <option value="Canada/Newfoundland">(GMT-03:30) Newfoundland</option>
+                                <option value="America/Sao_Paulo">(GMT-03:00) Brasilia</option>
+                                <option value="America/Argentina/Buenos_Aires">(GMT-03:00) Buenos Aires, Georgetown
+                                </option>
+                                <option value="America/Godthab">(GMT-03:00) Greenland</option>
+                                <option value="America/Montevideo">(GMT-03:00) Montevideo</option>
+                                <option value="America/Noronha">(GMT-02:00) Mid-Atlantic</option>
+                                <option value="Atlantic/Cape_Verde">(GMT-01:00) Cape Verde Is.</option>
+                                <option value="Atlantic/Azores">(GMT-01:00) Azores</option>
+                                <option value="Africa/Casablanca">(GMT+00:00) Casablanca, Monrovia, Reykjavik</option>
+                                <option value="Etc/Greenwich">(GMT+00:00) Greenwich Mean Time : Dublin, Edinburgh,
+                                    Lisbon, London
+                                </option>
+                                <option value="Europe/Amsterdam">(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm,
+                                    Vienna
+                                </option>
+                                <option value="Europe/Belgrade">(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana,
+                                    Prague
+                                </option>
+                                <option value="Europe/Brussels">(GMT+01:00) Brussels, Copenhagen, Madrid, Paris</option>
+                                <option value="Europe/Sarajevo">(GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb</option>
+                                <option value="Africa/Lagos">(GMT+01:00) West Central Africa</option>
+                                <option value="Asia/Amman">(GMT+02:00) Amman</option>
+                                <option value="Europe/Athens">(GMT+02:00) Athens, Bucharest, Istanbul</option>
+                                <option value="Asia/Beirut">(GMT+02:00) Beirut</option>
+                                <option value="Africa/Cairo">(GMT+02:00) Cairo</option>
+                                <option value="Africa/Harare">(GMT+02:00) Harare, Pretoria</option>
+                                <option value="Europe/Helsinki">(GMT+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn,
+                                    Vilnius
+                                </option>
+                                <option value="Asia/Jerusalem">(GMT+02:00) Jerusalem</option>
+                                <option value="Europe/Minsk">(GMT+02:00) Minsk</option>
+                                <option value="Africa/Windhoek">(GMT+02:00) Windhoek</option>
+                                <option value="Asia/Kuwait">(GMT+03:00) Kuwait, Riyadh, Baghdad</option>
+                                <option value="Europe/Moscow">(GMT+03:00) Moscow, St. Petersburg, Volgograd</option>
+                                <option value="Africa/Nairobi">(GMT+03:00) Nairobi</option>
+                                <option value="Asia/Tbilisi">(GMT+03:00) Tbilisi</option>
+                                <option value="Asia/Tehran">(GMT+03:30) Tehran</option>
+                                <option value="Asia/Muscat">(GMT+04:00) Abu Dhabi, Muscat</option>
+                                <option value="Asia/Baku">(GMT+04:00) Baku</option>
+                                <option value="Asia/Yerevan">(GMT+04:00) Yerevan</option>
+                                <option value="Asia/Kabul">(GMT+04:30) Kabul</option>
+                                <option value="Asia/Yekaterinburg">(GMT+05:00) Yekaterinburg</option>
+                                <option value="Asia/Karachi">(GMT+05:00) Islamabad, Karachi, Tashkent</option>
+                                <option value="Asia/Calcutta">(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi</option>
+                                <option value="Asia/Calcutta">(GMT+05:30) Sri Jayawardenapura</option>
+                                <option value="Asia/Katmandu">(GMT+05:45) Kathmandu</option>
+                                <option value="Asia/Almaty">(GMT+06:00) Almaty, Novosibirsk</option>
+                                <option value="Asia/Dhaka">(GMT+06:00) Astana, Dhaka</option>
+                                <option value="Asia/Rangoon">(GMT+06:30) Yangon (Rangoon)</option>
+                                <option value="Asia/Bangkok">(GMT+07:00) Bangkok, Hanoi, Jakarta</option>
+                                <option value="Asia/Krasnoyarsk">(GMT+07:00) Krasnoyarsk</option>
+                                <option value="Asia/Hong_Kong">(GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi
+                                </option>
+                                <option value="Asia/Kuala_Lumpur">(GMT+08:00) Kuala Lumpur, Singapore</option>
+                                <option value="Asia/Irkutsk">(GMT+08:00) Irkutsk, Ulaan Bataar</option>
+                                <option value="Australia/Perth">(GMT+08:00) Perth</option>
+                                <option value="Asia/Taipei">(GMT+08:00) Taipei</option>
+                                <option value="Asia/Tokyo">(GMT+09:00) Osaka, Sapporo, Tokyo</option>
+                                <option value="Asia/Seoul">(GMT+09:00) Seoul</option>
+                                <option value="Asia/Yakutsk">(GMT+09:00) Yakutsk</option>
+                                <option value="Australia/Adelaide">(GMT+09:30) Adelaide</option>
+                                <option value="Australia/Darwin">(GMT+09:30) Darwin</option>
+                                <option value="Australia/Brisbane">(GMT+10:00) Brisbane</option>
+                                <option value="Australia/Canberra">(GMT+10:00) Canberra, Melbourne, Sydney</option>
+                                <option value="Australia/Hobart">(GMT+10:00) Hobart</option>
+                                <option value="Pacific/Guam">(GMT+10:00) Guam, Port Moresby</option>
+                                <option value="Asia/Vladivostok">(GMT+10:00) Vladivostok</option>
+                                <option value="Asia/Magadan">(GMT+11:00) Magadan, Solomon Is., New Caledonia</option>
+                                <option value="Pacific/Auckland">(GMT+12:00) Auckland, Wellington</option>
+                                <option value="Pacific/Fiji">(GMT+12:00) Fiji, Kamchatka, Marshall Is.</option>
+                                <option value="Pacific/Tongatapu">(GMT+13:00) Nuku'alofa</option>
+                            </select>
                         </div>
                         <br>
                         <div class='input-group-prepend'>
@@ -39,16 +154,61 @@
                         </div>
                         <br>
                         <div class='input-group-prepend'>
-                            <span class='input-group-text' style='width: 180px'>Office Hour</span>
-                            <input type='text' class='form-control' name='officeHour' placeholder='e.g. Mon 3pm - 5pm'
-                                   value="<%= courseInfo.officeHour %>">
-                        </div>
-                        <br>
-
-                        <div class='input-group-prepend'>
-                            <span class='input-group-text' style='width: 180px'>Office Location</span>
-                            <input type='text' class='form-control' name='officeHourLocation'
-                                   placeholder='e.g. Volen 110' value="<%= courseInfo.officeHourLocation %>">
+                            <span class='input-group-text' style='width: 180px'>State</span>
+                            <select class='form-control' name='state' id="state">
+                                <option value="Not state-specific">Not state-specific</option>
+                                <option value='AL'>Alabama</option>
+                                <option value='AK'>Alaska</option>
+                                <option value='AZ'>Arizona</option>
+                                <option value='AR'>Arkansas</option>
+                                <option value='CA'>California</option>
+                                <option value='CO'>Colorado</option>
+                                <option value='CT'>Connecticut</option>
+                                <option value='DE'>Delaware</option>
+                                <option value='DC'>District Of Columbia</option>
+                                <option value='FL'>Florida</option>
+                                <option value='GA'>Georgia</option>
+                                <option value='HI'>Hawaii</option>
+                                <option value='ID'>Idaho</option>
+                                <option value='IL'>Illinois</option>
+                                <option value='IN'>Indiana</option>
+                                <option value='IA'>Iowa</option>
+                                <option value='KS'>Kansas</option>
+                                <option value='KY'>Kentucky</option>
+                                <option value='LA'>Louisiana</option>
+                                <option value='ME'>Maine</option>
+                                <option value='MD'>Maryland</option>
+                                <option value='MA'>Massachusetts</option>
+                                <option value='MI'>Michigan</option>
+                                <option value='MN'>Minnesota</option>
+                                <option value='MS'>Mississippi</option>
+                                <option value='MO'>Missouri</option>
+                                <option value='MT'>Montana</option>
+                                <option value='NE'>Nebraska</option>
+                                <option value='NV'>Nevada</option>
+                                <option value='NH'>New Hampshire</option>
+                                <option value='NJ'>New Jersey</option>
+                                <option value='NM'>New Mexico</option>
+                                <option value='NY'>New York</option>
+                                <option value='NC'>North Carolina</option>
+                                <option value='ND'>North Dakota</option>
+                                <option value='OH'>Ohio</option>
+                                <option value='OK'>Oklahoma</option>
+                                <option value='OR'>Oregon</option>
+                                <option value='PA'>Pennsylvania</option>
+                                <option value='RI'>Rhode Island</option>
+                                <option value='SC'>South Carolina</option>
+                                <option value='SD'>South Dakota</option>
+                                <option value='TN'>Tennessee</option>
+                                <option value='TX'>Texas</option>
+                                <option value='UT'>Utah</option>
+                                <option value='VT'>Vermont</option>
+                                <option value='VA'>Virginia</option>
+                                <option value='WA'>Washington</option>
+                                <option value='WV'>West Virginia</option>
+                                <option value='WI'>Wisconsin</option>
+                                <option value='WY'>Wyoming</option>
+                            </select>
                         </div>
                         <br>
                         <div class='input-group-prepend'>
@@ -57,17 +217,69 @@
                                    placeholder="Current owner is: <%= courseInfo.instructor %>" type='text'
                                    class='form-control' name='ownerName'>
                             <input hidden autofill="off" autocomplete="off"
-                                   id="ownerId" type='text' style='margin-right: 20px' class='form-control' name='ownerId'>
+                                   id="ownerId" type='text' style='margin-right: 20px' class='form-control'
+                                   name='ownerId' value="<%= courseInfo.ownerId %>">
                         </div>
-                        <br>
-                        <input type='submit' name='submit' class='btn btn-outline-dark' value='Submit'>
+                        <br><br>
+                        <h3>Course Time</h3>
+                        <hr>
+                        <div class="form-horizontal" id="form-horizontal">
+                            <% if (courseTimes) { %>
+                                <% for (let q = 0; q < courseTimes.length; q++) { %>
+                                    <br class="removeMe">
+                                    <div class="input-group-prepend" id="input-group-prepend">
+                                        <span class="input-group-text" style="width: 180px">Start Time</span>
+                                        <input class="form-control" type="time" name="startTime" style="margin: 0 10px 0 0" value="<%= courseTimes[q].startTime %>">
+                                        <span class="input-group-text" style="width: 180px">End Time</span>
+                                        <input class="form-control" type="time" name="endTime" style="margin: 0 10px 0 0" value="<%= courseTimes[q].endTime %>">
+                                        <span class="input-group-text" style="width: 180px">Day</span>
+                                        <input class="form-control" type="text" name="day" style="margin: 0 10px 0 0" value="<%= courseTimes[q].day %>">
+                                    </div>
+                                <% } %>
+                            <% } %>
+                        </div><br>
+                        <input class="btn btn-outline-primary" type='button' value='Add a timeslot'
+                               id='addButton'/>
+                        <input class="btn btn-outline-info" type='button' value='Remove last entered timeslot'
+                               id='removeButton'/>
+                        <br><br>
+                        <h3>Submission</h3>
+                        <hr>
+                        <input type='submit' name='submit' class='btn btn-outline-dark' value='Save to ENACT database'>
                     </form>
-                <% } else { %>
-                    <%- include('../components/component-loginToView'); -%>
+                    <% } else { %>
+                        <%- include('../components/component-loginToView'); -%>
                 <% } %>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+    for (let i = new Date().getFullYear(); i > 2000; i--) {
+        $('#yearpicker').append($('<option class="form-control"/>').val(i).html(i));
+    }
+    $('#yearpicker option').each(function () {
+        if ($(this).val() === $('#yearFromServer').text()) {
+            $(this).prop('selected', true)
+        }
+    })
+    $('#semester option').each(function () {
+        if ($(this).val() === $('#semesterFromServer').text()) {
+            $(this).prop('selected', true)
+        }
+    })
+    $('#timezone option').each(function () {
+        if ($(this).val() === $('#timezoneFromServer').text()) {
+            $(this).prop('selected', true)
+        }
+    })
+    $('#state option').each(function () {
+        if ($(this).val() === $('#stateFromServer').text()) {
+            $(this).prop('selected', true)
+        }
+    })
+</script>
+
 
 <%- include('../components/footer'); -%>

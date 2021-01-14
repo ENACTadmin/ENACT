@@ -3,6 +3,7 @@ const Course = require('../models/Course');
 const Resource = require('../models/Resource');
 const User = require('../models/User');
 const CourseMember = require('../models/CourseMember');
+const CourseTime = require('../models/CourseTime');
 
 
 /**
@@ -29,17 +30,41 @@ exports.createNewClass = async (req, res, next) => {
                 ownerId: req.user._id,
                 instructor: req.user.userName,
                 coursePin: coursePin,
+                year: req.body.year,
                 semester: req.body.semester,
-                // city: req.body.city,
+                timezone: req.body.timezone,
                 state: req.body.state,
                 createdAt: new Date(),
                 institution: req.body.institution,
-                officeHour: req.body.officeHour,
-                officeHourLocation: req.body.officeHourLocation
             }
         )
         // await until the newCourse is saved properly
         await newCourse.save()
+        // add additional authors
+        let startTime = req.body.startTime
+        let endTime = req.body.endTime
+        let day = req.body.day
+        if (startTime) {
+            if (typeof startTime === 'string') {
+                let courseTime = new CourseTime({
+                    courseId: newCourse._id,
+                    day: day,
+                    startTime: startTime,
+                    endTime: endTime,
+                })
+                await courseTime.save()
+            } else {
+                for (let i = 0; i < startTime.length; i++) {
+                    let courseTime = new CourseTime({
+                        courseId: newCourse._id,
+                        day: day[i],
+                        startTime: startTime[i],
+                        endTime: endTime[i],
+                    })
+                    await courseTime.save()
+                }
+            }
+        }
         next()
     } catch (e) {
         next(e)
@@ -107,12 +132,40 @@ exports.updateCourse = async (req, res, next) => {
         courseToEdit.courseName = req.body.courseName
         courseToEdit.semester = req.body.semester
         courseToEdit.institution = req.body.institution
-        courseToEdit.officeHour = req.body.officeHour
-        courseToEdit.officeHourLocation = req.body.officeHourLocation
+        courseToEdit.year = req.body.year
+        courseToEdit.timezone = req.body.timezone
+        courseToEdit.state = req.body.state
         let tempId = req.body.ownerId
         let tempUser = await User.findOne({_id: tempId})
         courseToEdit.instructor = tempUser.userName
         courseToEdit.ownerId = tempUser._id
+
+        await CourseTime.deleteMany({courseId: req.params.courseId})
+        let startTime = req.body.startTime
+        let endTime = req.body.endTime
+        let day = req.body.day
+        if (startTime) {
+            if (typeof startTime === 'string') {
+                let courseTime = new CourseTime({
+                    courseId: courseToEdit._id,
+                    day: day,
+                    startTime: startTime,
+                    endTime: endTime,
+                })
+                await courseTime.save()
+            } else {
+                for (let i = 0; i < startTime.length; i++) {
+                    let courseTime = new CourseTime({
+                        courseId: courseToEdit._id,
+                        day: day[i],
+                        startTime: startTime[i],
+                        endTime: endTime[i],
+                    })
+                    await courseTime.save()
+                }
+            }
+        }
+
         // await until the courseToEdit is saved properly
         await courseToEdit.save()
         res.redirect('/courses')
@@ -149,14 +202,18 @@ exports.addToOwnedCourses = async (req, res, next) => {
 async function getCoursePin() {
     // this only works if there are many fewer than 10000000 courses
     // but that won't be an issue with this alpha version!
-    let coursePin = Math.floor(Math.random() * 10000000)
+    let coursePin = padDigits(Math.floor(Math.random() * 10000000), 7)
     let lookupPin = await Course.find({coursePin: coursePin}, 'coursePin')
 
-    while (lookupPin.length > 0) {
-        coursePin = Math.floor(Math.random() * 10000000)
+    while (lookupPin && lookupPin.length > 0) {
+        coursePin = padDigits(Math.floor(Math.random() * 10000000), 7)
         lookupPin = await Course.find({coursePin: coursePin}, 'coursePin')
     }
     return coursePin
+}
+
+function padDigits(number, digits) {
+    return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
 }
 
 exports.showOneCourse = async (req, res, next) => {
@@ -216,9 +273,22 @@ function containsString(list, elt) {
         if (JSON.stringify(e) === JSON.stringify(elt)) {
             found = true
         }
-        // else {
-        //     console.log(JSON.stringify(e) + "!=" + JSON.stringify(elt));
-        // }
     });
     return found
+}
+
+exports.showSchedule = async (req, res) => {
+    let courseTimes = await CourseTime.find({}, {'_id': 0, '__v': 0});
+    let courses = await Course.find({}, {
+        '_id': 1,
+        'state': 1,
+        'courseName': 1,
+        'timezone': 1,
+        'instructor': 1,
+        'institution': 1
+    })
+    res.render('./pages/course-schedule', {
+        courseTimes: courseTimes,
+        courses: courses
+    })
 }

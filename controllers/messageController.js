@@ -87,10 +87,10 @@ exports.saveMessage = async (req, res, next) => {
             for (let i = 0; i < otherAuthors.length; i++) {
                 let name = otherAuthors[i];
                 let email = otherAuthors[i];
-                send_email(email, name, newMessage, 'http://enactnetwork.herokuapp.com/messages/view/' + req.params.sender + '/' + req.params.receiver + '/' + req.params.resourceId)
+                send_email(email, name, newMessage, 'http://www.enactnetwork.org/messages/view/' + req.params.sender + '/' + req.params.receiver + '/' + req.params.resourceId)
             }
         }
-        send_email(workEmail, userName, newMessage, 'http://enactnetwork.herokuapp.com/messages/view/' + req.params.sender + '/' + req.params.receiver + '/' + req.params.resourceId)
+        send_email(workEmail, userName, newMessage, 'http://www.enactnetwork.org/messages/view/' + req.params.sender + '/' + req.params.receiver + '/' + req.params.resourceId)
         res.redirect('back')
     } catch (e) {
         next(e)
@@ -103,7 +103,7 @@ exports.sendProfileEmail = async (req, res, next) => {
     let currUser = await User.findOne({_id: userId})
     let userName = currUser.userName
     let email = currUser.workEmail || currUser.googleemail
-    let url = 'http://enactnetwork.herokuapp.com/'
+    let url = 'http://www.enactnetwork.org/'
     const sgMail = require('@sendgrid/mail');
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const msg = {

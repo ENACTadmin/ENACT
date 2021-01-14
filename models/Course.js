@@ -11,11 +11,11 @@ const courseSchema = Schema({
     tas: [objectID],
     zipcode: String,
     state: String,
+    year: Number,
     semester: String,
     createdAt: Date,
     institution: String,
-    officeHour: String,
-    officeHourLocation: String
+    timezone: String
 });
 
 module.exports = mongoose.model('Course', courseSchema);
