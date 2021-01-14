@@ -1,6 +1,22 @@
 /*===============================================*/
 /* Customized CSS--BOOTSTRAP
 /*===============================================*/
+#adjustedLoginBtn {
+    background-color: #0053a4 !important;
+    border: 1px solid #fff;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+#adjustedLoginBtn:hover {
+    background-color: darkblue !important;
+    border: 1px solid darkblue !important;
+    color: white !important;
+}
 
 #profiles {
     z-index: 21500000000 !important;
@@ -987,7 +1003,7 @@ h6 {
     padding: 30px;
     width: 60%;
     text-align: left;
-    background: black;
+    background: white;
     /*background: linear-gradient(to bottom right, black, #0053a4);*/
 }
 
@@ -1086,7 +1102,7 @@ h6 {
     margin: 5px;
     width: 300px;
     /*float: left;*/
-    background-color: #fff;
+    background-color: #0053a4;
     border: 1px solid #fff;
     height: 63px;
     line-height: 60px;
@@ -1094,7 +1110,7 @@ h6 {
     font-weight: 550;
     letter-spacing: 1px;
     cursor: pointer;
-    color: #000;
+    color: white;
     -webkit-border-radius: 25px;
     -moz-border-radius: 25px;
     border-radius: 25px;
@@ -1104,9 +1120,9 @@ h6 {
 }
 
 .form-demo__large:hover {
-    background-color: #CCCDC6;
-    border: 1px solid #CCCDC6;
-    color: #000;
+    background-color: darkblue;
+    border: 1px solid darkblue;
+    color: white;
 }
 
 .form-demo__login {
