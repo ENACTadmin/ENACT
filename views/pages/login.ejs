@@ -7,7 +7,11 @@
             <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
                 <div class="card card-signin my-5">
                     <div class="card-body">
-                        <h5 class="card-title text-center"><b>Sign In / Sign Up</b></h5>
+                        <% if (secret === 'general') { %>
+                            <h5 class="card-title text-center"><b>Sign In / Sign Up</b></h5>
+                        <% } else if (secret === 'redirect') { %>
+                            <h5 class="card-title text-center"><b>To View Messages, please Sign In / Sign up</b></h5>
+                        <% } %>
                         <form class="form-signin"
                         <% if (secret === 'general') { %>
                               action="/login"
@@ -42,7 +46,8 @@
                                             class="fa fa-google mr-2"></i> Sign in with Google
                                 </a>
                             <% } else if (secret === 'redirect') { %>
-                                <a href="/auth/google/messages" class="btn btn-lg btn-google btn-block text-uppercase"><i
+                                <a href="/auth/google/messages"
+                                   class="btn btn-lg btn-google btn-block text-uppercase"><i
                                             class="fa fa-google mr-2"></i> Sign in with Google
                                 </a>
                             <% } %>
