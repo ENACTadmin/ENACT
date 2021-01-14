@@ -195,7 +195,7 @@ exports.loadMyPublicResources = async (req, res, next) => {
         res.locals.resourceInfo = await Resource.find({
             status: 'public',
             ownerId: req.user._id
-        }).sort({'createdAt': -1})
+        }).sort({yearOfCreation: -1})
         res.render('./pages/showPublic')
     } catch (e) {
         console.log("error: " + e)

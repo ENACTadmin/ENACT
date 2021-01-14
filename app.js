@@ -239,7 +239,7 @@ app.post('/resources/search/private/advanced',
 )
 
 
-app.get('/resources/view/public/all',
+app.get('/resources/view/my/public/all',
     utils.checkUserName,
     resourceController.showPublic
 )
@@ -250,7 +250,7 @@ app.get('/resources/search/public/general',
         res.render('./pages/search-primary-public')
 )
 
-app.post('/resources/view/public/generalResult',
+app.post('/resources/view/my/public/generalResult',
     resourceController.primaryPublicSearch
 )
 
@@ -259,7 +259,7 @@ app.get('/resources/search/public/advanced',
     (req, res) =>
         res.render('./pages/search-advanced-public'))
 
-app.post('/resources/view/public/advancedResult',
+app.post('/resources/view/my/public/advancedResult',
     resourceController.advancedSearchPublic
 )
 
@@ -447,15 +447,15 @@ app.post('/resource/status/toENACT',
     notificationController.partPublicToENACT
 )
 
-app.get('/resources/view/denied',
+app.get('/resources/view/my/denied',
     notificationController.loadDeniedResources
 )
 
-app.get('/resources/view/approved',
+app.get('/resources/view/my/approved',
     notificationController.loadApprovedResources
 )
 
-app.get('/resources/view/public',
+app.get('/resources/view/my/public',
     notificationController.loadMyPublicResources
 )
 
