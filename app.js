@@ -482,8 +482,13 @@ app.get('/profiles/view/faculty',
 
 app.get('/profile/update',
     (req, res) => {
+        console.log("In profile update!")
         res.render('./pages/updateProfile')
     }
+)
+
+app.post('/profile/update',
+    profileController.updateProfile
 )
 
 app.get('/profile/update/:userId',
@@ -504,10 +509,6 @@ app.get('/profiles/view/all',
     profileController.showAllProfiles
 )
 
-app.post('/profile/update',
-    profileController.updateProfile
-)
-
 app.get('/profile/create/faculty',
     utils.checkUserName,
     profileController.loadFaculty
@@ -517,7 +518,7 @@ app.post('/profile/create/faculty',
     profileController.createFaculty
 )
 
-app.post('/profile/update/imageURL',
+app.post('/profile/self/update/imageURL',
     profileController.updateProfileImageURL
 )
 

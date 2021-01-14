@@ -149,7 +149,8 @@ exports.showAllProfiles = async (req, res, next) => {
 }
 
 exports.updateProfileImageURL = async (req, res, next) => {
-    let userToUpdate = res.locals.user
+    let userToUpdate = await User.findOne({_id: res.locals.userId})
+    console.log("User found: ", userToUpdate)
     try {
         userToUpdate.profilePicURL = req.body.imageURL;
         console.log("URL: ", req.body.imageURL)
