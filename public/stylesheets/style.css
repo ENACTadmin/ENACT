@@ -983,16 +983,12 @@ h6 {
 }
 
 .intro__content {
-    margin-top: 15.5%;
-    padding: 35px;
-    /*padding-top: 30px;*/
-    /*padding-bottom: 30px;*/
+    margin-top: 12%;
+    padding: 30px;
     width: 60%;
     text-align: left;
     background: black;
     /*background: linear-gradient(to bottom right, black, #0053a4);*/
-
-
 }
 
 .intro__title {
@@ -1092,9 +1088,9 @@ h6 {
     background-color: #fff;
     border: 1px solid #fff;
     height: 63px;
-    line-height: 61px;
-    font-size: 20px;
-    font-weight: 600;
+    line-height: 60px;
+    font-size: 23px;
+    font-weight: 550;
     letter-spacing: 1px;
     cursor: pointer;
     color: #000;

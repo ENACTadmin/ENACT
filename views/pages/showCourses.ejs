@@ -26,7 +26,6 @@
                             </a>
                             <br>
                             <br>
-
                         <% } else { %>
                             <div class='lead'><b>Enroll in a course</b></div>
                             <hr>
@@ -41,7 +40,7 @@
                             </form>
                             <br>
                         <% } %>
-                        <% if (courseInfoSet.length !== 0) { %>
+                        <% if (courseInfoSet && courseInfoSet.length !== 0) { %>
                             <% if (status === 'faculty' || status === 'admin') { %>
                                 <div class='lead'><b>Manage owned courses</b></div>
                             <% } else { %>
@@ -52,7 +51,8 @@
                             <table class='table table-striped'>
                                 <thead style='background-color: #0053a4'>
                                 <tr>
-                                    <th scope='col' style='color: white'>Course Name</th>
+                                    <th scope='col' style='color: white'>Name</th>
+                                    <th scope='col' style='color: white'>Year</th>
                                     <th scope='col' style='color: white'>Semester</th>
                                     <th scope='col' style='color: white'>
                                         <% if (status === 'faculty' || status === 'admin') { %>
@@ -73,6 +73,7 @@
                                             <td>
                                                 <a href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName %></a>
                                             </td>
+                                            <td><%= courseInfoSet[i].year %></td>
                                             <td><%= courseInfoSet[i].semester %></td>
                                             <td>
                                                 <%= courseInfoSet[i].coursePin %>
@@ -91,6 +92,7 @@
                                             <td>
                                                 <a href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName %></a>
                                             </td>
+                                            <td><%= courseInfoSet[i].year %></td>
                                             <td><%= courseInfoSet[i].semester %></td>
                                             <td><%= courseInfoSet[i].instructor %></td>
                                             <td>Unenroll</td>

@@ -27,7 +27,7 @@
 
 <!-- Front intro -->
 <section class='section section--intro section__grey' data-aos='fade-down' data-aos-duration='600'>
-    <div class='section__content section__content--full-width' style='font-weight: 800;'>
+    <div class='section__content section__content--full-width' style='font-weight: 750;'>
         <div class='intro'>
             <div class='intro__content'>
                 <div class='intro__description' style='color: white'>
@@ -37,13 +37,19 @@
                     engaging undergraduates at colleges and
                     universities in
                     state-level legislative change.
-                    <a href="https://go.brandeis.edu/ENACT">More about ENACT</a>
+                    <a href="https://go.brandeis.edu/ENACT">Click to See More About ENACT</a>
                     <br>
                     <b style="color: lightgreen">- ENACT Students & Alumni:</b> search student work. Network with
                     students and alumni.
+                    <% if (!loggedIn) { %>
+                        <a href="/login">Click to Login</a>
+                    <% } %>
                     <br>
                     <b style="color: lightgreen">- ENACT Faculty Fellows:</b> access ENACT teaching resources and
                     student work.
+                    <% if (!loggedIn) { %>
+                        <a href="/login">Click to Login</a>
+                    <% } %>
                     <br>
                     <b style="color: lightgreen">- Public:</b> access student work on bills from across the U.S.,
                     including op-eds, issue research
@@ -54,7 +60,7 @@
                     <% if (loggedIn) { %>
                         <% if (status === 'admin' || status === 'faculty') { %>
                             <a href='/courses'><input type='submit' name='submit' class='form-demo__large'
-                                                      value='MANAGE/CREATE COURSES'></a>
+                                                      value='COURSES &#x1f4d6;'></a>
                             <a href='/resources/search/private/advanced'><input type='submit' name='submit'
                                                                                 class='form-demo__large'
                                                                                 value='SEARCH &#128269;'></a>
@@ -73,8 +79,8 @@
                         <!--                    public user-->
                     <% } else { %>
                         <a href='/resources/view/my/public/all'><input type='submit' name='submit'
-                                                                           class='form-demo__large'
-                                                                           value='PUBLIC RESOURCES'></a>
+                                                                       class='form-demo__large'
+                                                                       value='PUBLIC RESOURCES &#128214;'></a>
                         <a href='/resources/search/public/advanced'><input type='submit' name='submit'
                                                                            class='form-demo__large'
                                                                            value='SEARCH &#128269;'></a>
@@ -93,7 +99,7 @@
     <div class='section__content section__content--fluid-width section__content--padding--small'>
         <div class='grid grid--3col'>
             <div class='grid__item partners__slide__grey' data-aos='fade-up' style="height: 550px">
-                <a href="/about"><h2 class='grid__title'><span>Who we are</span></h2></a>
+                <a href="/about"><h2 class='grid__title'><span>Who we are <span style="color: black">&#9756;</span> Click me</span></h2></a>
                 <img style='height: 200px; width: 200px; padding: 20px' align="right"
                      src='https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg' alt="ENACT logo">
                 <p class='grid__text' style="font-size: larger; line-height: 150%;">
@@ -103,8 +109,7 @@
                     <a href="https://go.brandeis.edu/ENACT">More about ENACT</a>
                     <br>
                     <b>- ENACT Students & Alumni:</b> search ENACT student assignments and connect with students and
-                    alumni
-                    across the United States.
+                    alumni across the United States.
                     <br>
                     <b>- ENACT Faculty Fellows:</b> access ENACT syllabi, teaching resources, and student work.
                     <br>
@@ -115,12 +120,12 @@
             </div>
             <div class='grid__item partners__slide__grey' data-aos='fade-up' style="height: 550px">
                 <% if (loggedIn) { %>
-                    <a href="/resources/search/private/advanced"><h2 class='grid__title'><span>Find what you want</span>
+                    <a href="/resources/search/private/advanced"><h2 class='grid__title'><span>Search <span style="color: black">&#9756;</span> Click me</span>
                         </h2></a>
                     <a href="/resources/search/private/advanced"><img src="/images/search.jpg" style="height: 220px"
                                                                       align="right"></a>
                 <% } else { %>
-                    <a href="/resources/search/public/advanced"><h2 class='grid__title'><span>Find what you want</span>
+                    <a href="/resources/search/public/advanced"><h2 class='grid__title'><span>Search <span style="color: black">&#9756;</span> Click me</span>
                         </h2></a>
                     <a href='/resources/search/public/advanced'><img src="/images/search.jpg" style="height: 220px"
                                                                      align="right"></a>
@@ -128,18 +133,17 @@
                 <p class='grid__text' style="font-size: larger; line-height: 175%">
                     Powered by our advanced searching algorithm, you can find any resources ranging from student
                     research reports to fact sheets or elevator speeches, etc., with a few simple clicks. These
-                    resources
-                    can be useful for your coursework, academic publications or professional work.
+                    resources can be useful for your coursework, academic publications or professional work.
                     <br><br>
                 </p>
             </div>
             <div class='grid__item partners__slide__grey' style="height: 550px" data-aos='fade-up'>
                 <% if (loggedIn) { %>
-                    <a href="/profiles/view/all"><h2 class='grid__title'><span>Networking</span></h2></a>
+                    <a href="/profiles/view/all"><h2 class='grid__title'><span>Networking <span style="color: black"><span style="color: black">&#9756;</span></span> Click me</span></h2></a>
                     <a href="/profiles/view/all"><img src="/images/networking.jpg" style="height: 220px"
                                                       align="right"></a>
                 <% } else { %>
-                    <h2 class='grid__title'><span>Networking (Login to use)</span></h2>
+                    <h2 class='grid__title'><span>Networking (<a href="/login">Click to Login to Use</a>) </span></h2>
                     <img src="/images/networking.jpg" style="height: 220px" align="right">
                 <% } %>
                 <p class='grid__text' style="font-size: larger; line-height: 175%">
@@ -208,8 +212,8 @@
         <br>
         <div class='text-center' data-aos='fade-up' data-aos-delay="100">
             <a href='/resources/view/my/public/all'><input type='button' name='submit'
-                                                        class='btn btn-lg btn-light'
-                                                        value='Find More Resources'></a>
+                                                           class='btn btn-lg btn-light'
+                                                           value='Find More Resources'></a>
         </div>
         <br>
         <div class='clear'></div>

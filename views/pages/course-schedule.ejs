@@ -1,0 +1,56 @@
+<%- include('../components/header'); -%>
+<%- include('../components/navbar'); -%>
+
+<% let days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'] %>
+<section class='section'>
+    <div class='section__content section__content--full-width'>
+        <div class='jumbotron masthead text-center'>
+            <div class='section__title section__title--centered'>
+                All ENACT Course Schedule
+            </div>
+            <h3>There are <b><i><%= courses.length %></i></b> courses in session!</h3>
+        </div>
+    </div>
+</section>
+
+<!-- ENACT Program intro -->
+<section class='section section__grey'>
+    <div class='section__content section__content--fluid-width section__content--padding--small'>
+        <div class="container">
+            <div class="row">
+                <% for (let p = 0; p < days.length; p++) { %>
+                    <div class="col">
+                        <h3><%= days[p] %></h3>
+                        <hr style="border-top: 5px solid black;">
+                        <% for (let i = 0; i < courseTimes.length; i++) { %>
+                            <% for (let j = 0; j < courses.length; j++) { %>
+                                <% if (courseTimes[i].courseId.equals(courses[j]._id) && days[p] === courseTimes[i].day) { %>
+                                    <div class='card'>
+                                        <div class='card-body'>
+                                            <h5 style='display: inline'><%= courses[j].courseName %></h5>
+                                            <br>
+                                            <h5 style='display: inline'><%= courses[j].institution %></h5>
+                                            <br>
+                                            <h5 style='display: inline'>Instructor: <%= courses[j].instructor %></h5>
+                                            <br>
+                                            <h5 style='display: inline'>Timezone: <%= courses[j].timezone %></h5>
+                                            <br>
+                                            <h5 style='display: inline'>Timezone: <%= courses[j].state %></h5>
+                                            <br>
+                                            <h5 style='display: inline'>Start time: <%= courseTimes[i].startTime %></h5>
+                                            <br>
+                                            <h5 style='display: inline'>End time: <%= courseTimes[i].endTime %></h5>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                <% } %>
+                            <% } %>
+                        <% } %>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('../components/footer'); -%>

@@ -36,27 +36,47 @@
                         <li>
                             <a class='header-link' href='/resource/upload/faculty'>Upload resources</a>
                         </li>
+                        <li>
+                            <a class='header-link' href='/resource/review'>Approve stdnt. resources</a>
+                        </li>
                     <% } %>
                     <li>
                         <a class='header-link' href='/resources/view/favorite'>My favorites</a>
                     </li>
                     <li>
-                        <% if (status === 'faculty' || status === 'admin') { %>
-                            <a class='header-link' href='/resources/view/private'>My resources</a>
-                        <% } else { %>
-                            <a class='header-link' href='/resources/view/private'>My resources</a>
-                        <% } %>
+                        <a class='header-link' href='/resources/view/private'>My resources</a>
                     </li>
                 </ul>
             </li>
             <li>
-                <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Networking</a>
+                <a class='header-link' id='header-link' href='#' data-aos='fade-left'>People & Networking</a>
+                <ul class='sub-menu'>
+                    <li>
+                        <a class='header-link' href='/networking'>Networking</a>
+                    </li>
+                    <li>
+                        <a class='header-link' href='/profiles/view/faculty'>Faculty list</a>
+                    </li>
+                    <li>
+                        <a class='header-link' href='/profile/update'>Update profile</a>
+                    </li>
+                    <li>
+                        <a class='header-link' id='header-link' href='/messages/view/all'
+                           data-aos='fade-left'>Messages</a>
+                    </li>
+                </ul>
             </li>
+
             <li>
-                <a class='header-link' id='header-link' href='/events' data-aos='fade-left'>Events</a>
-            </li>
-
-
+                <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Events</a>
+                <ul class='sub-menu'>
+                    <li>
+                        <a class='header-link' href='/events'>Events</a>
+                    </li>
+                    <li>
+                        <a class='header-link' href='/courses/schedule'>Course Schedule</a>
+                    </li>
+                </ul>
             <li>
                 <% if (status === 'admin' || status === 'faculty' ) { %>
                     <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Faculty & School</a>
@@ -65,10 +85,7 @@
                             <a class='header-link' href='/resources/view/faculty'>Faculty guide</a>
                         </li>
                         <li>
-                            <a class='header-link' href='/profiles/view/faculty'>Faculty list</a>
-                        </li>
-                        <li>
-                            <a class='header-link' href='/resource/review'>Approve stdnt. resources</a>
+                            <a class='header-link' href='/courses'>Courses</a>
                         </li>
                         <% for (let i = 0; i < courseInfoSet.length; i++) { %>
                             <li>
@@ -83,10 +100,10 @@
                         <% } %>
                     </ul>
                 <% } else { %>
-                    <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Faculty & School</a>
+                    <a class='header-link' id='header-link' href='#' data-aos='fade-left'>School</a>
                     <ul class='sub-menu'>
                         <li>
-                            <a class='header-link' href='/profiles/view/faculty'>Faculty list</a>
+                            <a class='header-link' href='/courses'>Courses</a>
                         </li>
                         <% for (let i = 0; i < courseInfoSet.length; i++) { %>
                             <li>
@@ -129,15 +146,8 @@
                 <% } %>
             </li>
             <li>
-                <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Profile & Others</a>
+                <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Help & About</a>
                 <ul class='sub-menu'>
-                    <li>
-                        <a class='header-link' href='/profile/update'>Update profile</a>
-                    </li>
-                    <li>
-                        <a class='header-link' id='header-link' href='/messages/view/all'
-                           data-aos='fade-left'>Messages</a>
-                    </li>
                     <li>
                         <a class='header-link' id='header-link' href='/help' data-aos='fade-left'>Help</a>
                     </li>

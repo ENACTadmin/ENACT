@@ -37,11 +37,7 @@
                                         <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
                                             <b>Instructor:</b> <%= courseInfo.instructor %></li>
                                         <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
-                                            <b>Office
-                                                Hour:</b> <%= courseInfo.officeHour %></li>
-                                        <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
-                                            <b>Office
-                                                Location:</b> <%= courseInfo.officeHourLocation %></li>
+                                            <b>State: </b> <%= courseInfo.state %></li>
                                         <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
                                             <b>Institution: </b> <%= courseInfo.institution %></li>
                                         <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
@@ -67,7 +63,8 @@
                                         <% } %>
                                         <li class='list-group-item borderless'
                                             style='padding: 0 0 3px 0'>
-                                            <a href='/resource/upload/course/<%= courseInfo._id %>'>Upload Resources</a></li>
+                                            <a href='/resource/upload/course/<%= courseInfo._id %>'>Upload Resources</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -81,10 +78,11 @@
                         <hr>
                         <form method='post' action='/resources/search/private/general/results'>
                             <div class='input-group-prepend'>
-                                <input autofill="off" autocomplete="off" id="resources" type='text' class='form-control' name='search'
+                                <input autofill="off" autocomplete="off" id="resources" type='text' class='form-control'
+                                       name='search'
                                        placeholder='Search for anything'>
                                 &nbsp&nbsp&nbsp
-                                <input type='submit' name='submit' class='btn btn-outline-dark'
+                                <input type='submit' id="myBtn" name='submit' class='btn btn-outline-dark'
                                        value='Search'>
                             </div>
                         </form>
@@ -136,6 +134,30 @@
         </div>
     <% } %>
 <% } %>
+
+<script>
+    // Get the input field
+    let input = document.getElementById("resources");
+
+    // Execute a function when the user releases a key on the keyboard
+    input.addEventListener("keyup", function (event) {
+        // Number 13 is the "Enter" key on the keyboard
+        let code
+        if (event.key !== undefined) {
+            code = event.key;
+        } else if (event.keyIdentifier !== undefined) {
+            code = event.keyIdentifier;
+        } else if (event.keyCode !== undefined) {
+            code = event.keyCode;
+        }
+        if (code === 13) {
+            // Cancel the default action, if needed
+            event.preventDefault();
+            // Trigger the button element with a click
+            document.getElementById("myBtn").click();
+        }
+    });
+</script>
 
 <%- include('../components/component-editModal'); -%>
 

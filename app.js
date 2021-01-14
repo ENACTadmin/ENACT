@@ -8,6 +8,7 @@ const session = require("express-session");
 // Models!
 const Event = require('./models/Event')
 const Course = require('./models/Course')
+const CourseTime = require('./models/CourseTime')
 const Resource = require('./models/Resource')
 const User = require('./models/User')
 const Faculty = require('./models/Faculty')
@@ -107,6 +108,12 @@ app.get('/course',
     (req, res) =>
         res.render('./pages/createCourse'))
 
+app.get('/courses/schedule',
+    utils.checkUserName,
+    courseController.showSchedule,
+    (req, res) =>
+        res.render('./pages/course-schedule'))
+
 // rename this to /createCourse and update the ejs form
 app.post('/course',
     courseController.createNewClass,
@@ -129,8 +136,10 @@ app.get('/course/update/:courseId',
     utils.checkUserName,
     async (req, res) => {
         let courseInfo = await Course.findOne({_id: req.params.courseId})
+        let courseTimes = await CourseTime.find({courseId: req.params.courseId})
         res.render('./pages/updateCourse', {
-            courseInfo: courseInfo
+            courseInfo: courseInfo,
+            courseTimes: courseTimes
         })
     }
 )
