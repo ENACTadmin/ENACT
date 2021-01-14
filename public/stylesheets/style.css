@@ -1012,8 +1012,9 @@ h6 {
 }
 
 .intro__description {
-    padding: 0 0 20px 0;
+    padding: 0 0 10px 0;
     font-size: 24px;
+    line-height: 40px;
     color: #0053a4;
     font-weight: normal;
 }

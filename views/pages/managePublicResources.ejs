@@ -31,11 +31,9 @@ for (let i = 0; i < resourceInfo.length; i++) {
         <h3>Select one to display</h3>
         <hr>
         <% if (!pred_not_disp) { %>
-            <!--            <div class='card border-0' style="border-radius: 30px">-->
             <div class='card-body text-center' style="border-radius: 30px">
                 <h4>No more resources can be displayed</h4>
             </div>
-            <!--            </div>-->
         <% } else{ %>
             <% let num = 0 %>
             <% for (let i = 0; i < resourceInfo.length; i++) { %>
@@ -62,12 +60,16 @@ for (let i = 0; i < resourceInfo.length; i++) {
                                         <%= resourceInfo[i].description %>
                                     </li>
                                     <li class='list-group-item borderless box-padding'>
-                                        <b>State:</b>
+                                        <b>State: </b>
                                         <%= resourceInfo[i].state %>
                                     </li>
                                     <li class='list-group-item borderless box-padding'>
+                                        <b>Year: </b>
+                                        <%= resourceInfo[i].yearOfCreation %>
+                                    </li>
+                                    <li class='list-group-item borderless box-padding'>
                                         <b>Link: </b>
-                                        <a href='<%= resourceInfo[i].uri %>'><%= resourceInfo[i].uri %></a>
+                                        <a href='<%= resourceInfo[i].uri %>'>Click me</a>
                                     </li>
                                     <li class='list-group-item borderless box-padding'>
                                         <b>Institution: </b>
@@ -107,11 +109,9 @@ for (let i = 0; i < resourceInfo.length; i++) {
         <h3>Displayed public resources</h3>
         <hr>
         <% if (!pred_disp) { %>
-            <!--            <div class='card border-0'>-->
             <div class='card-body text-center' style="border-radius: 30px">
                 <h4>No resource is displayed on the front page</h4>
             </div>
-            <!--            </div>-->
         <% } %>
         <% for (let i = 0; i < resourceInfo.length; i++) { %>
             <% if (resourceInfo[i].status === 'finalPublic') { %>
@@ -127,12 +127,16 @@ for (let i = 0; i < resourceInfo.length; i++) {
                                     <%= resourceInfo[i].description %>
                                 </li>
                                 <li class='list-group-item borderless box-padding'>
-                                    <b>State:</b>
+                                    <b>State: </b>
                                     <%= resourceInfo[i].state %>
                                 </li>
                                 <li class='list-group-item borderless box-padding'>
+                                    <b>Year: </b>
+                                    <%= resourceInfo[i].yearOfCreation %>
+                                </li>
+                                <li class='list-group-item borderless box-padding'>
                                     <b>Link: </b>
-                                    <a href='<%= resourceInfo[i].uri %>'><%= resourceInfo[i].uri %></a>
+                                    <a href='<%= resourceInfo[i].uri %>'>Click me</a>
                                 </li>
                                 <li class='list-group-item borderless box-padding'>
                                     <b>Institution: </b>

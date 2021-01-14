@@ -31,30 +31,27 @@
         <div class='intro'>
             <div class='intro__content'>
                 <div class='intro__description' style='color: white'>
-                    <b style='color: #007BFF'>E</b>ducational <b style='color: #007BFF'>N</b>etwork for <b
-                            style='color: #007BFF'>A</b>ctive <b style='color: #007BFF'>C</b>ivic <b
-                            style='color: #007BFF'>T</b>ransformation is a national, non-partisan program
-                    engaging undergraduates at colleges and
-                    universities in
+                    <b style='color: #007BFF'>ENACT: Educational Network for Active Civic Transformation</b> is a
+                    national, non-partisan program engaging undergraduates at colleges and universities in
                     state-level legislative change.
-                    <a href="https://go.brandeis.edu/ENACT">Click to See More About ENACT</a>
+                    <% if (!loggedIn) { %>
+                        <a href="https://go.brandeis.edu/ENACT" class="btn btn-sm btn-light">More About ENACT</a>
+                    <% } %>
                     <br>
                     <b style="color: lightgreen">- ENACT Students & Alumni:</b> search student work. Network with
                     students and alumni.
                     <% if (!loggedIn) { %>
-                        <a href="/login">Click to Login</a>
+                        <a href="/login" class="btn btn-sm btn-light">Click to Login</a>
                     <% } %>
                     <br>
                     <b style="color: lightgreen">- ENACT Faculty Fellows:</b> access ENACT teaching resources and
                     student work.
                     <% if (!loggedIn) { %>
-                        <a href="/login">Click to Login</a>
+                        <a href="/login" class="btn btn-sm btn-light">Click to Login</a>
                     <% } %>
                     <br>
                     <b style="color: lightgreen">- Public:</b> access student work on bills from across the U.S.,
-                    including op-eds, issue research
-                    and more. Learn more about ENACT here. <a href="https://go.brandeis.edu/ENACT">More
-                        about ENACT</a>
+                    including op-eds, issue research and more.
                 </div>
                 <div class='form-demo'>
                     <% if (loggedIn) { %>
@@ -80,10 +77,7 @@
                     <% } else { %>
                         <a href='/resources/view/my/public/all'><input type='submit' name='submit'
                                                                        class='form-demo__large'
-                                                                       value='PUBLIC RESOURCES &#128214;'></a>
-                        <a href='/resources/search/public/advanced'><input type='submit' name='submit'
-                                                                           class='form-demo__large'
-                                                                           value='SEARCH &#128269;'></a>
+                                                                       value='SEARCH RESOURCES &#128269;'></a>
                     <% } %>
                 </div>
             </div>
@@ -99,7 +93,8 @@
     <div class='section__content section__content--fluid-width section__content--padding--small'>
         <div class='grid grid--3col'>
             <div class='grid__item partners__slide__grey' data-aos='fade-up' style="height: 550px">
-                <a href="/about"><h2 class='grid__title'><span>Who we are <span style="color: black">&#9756;</span> Click me</span></h2></a>
+                <a href="/about"><h2 class='grid__title'><span>Who we are <span style="color: black">&#9756;</span> Click me</span>
+                    </h2></a>
                 <img style='height: 200px; width: 200px; padding: 20px' align="right"
                      src='https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg' alt="ENACT logo">
                 <p class='grid__text' style="font-size: larger; line-height: 150%;">
@@ -120,12 +115,14 @@
             </div>
             <div class='grid__item partners__slide__grey' data-aos='fade-up' style="height: 550px">
                 <% if (loggedIn) { %>
-                    <a href="/resources/search/private/advanced"><h2 class='grid__title'><span>Search <span style="color: black">&#9756;</span> Click me</span>
+                    <a href="/resources/search/private/advanced"><h2 class='grid__title'><span>Search <span
+                                        style="color: black">&#9756;</span> Click me</span>
                         </h2></a>
                     <a href="/resources/search/private/advanced"><img src="/images/search.jpg" style="height: 220px"
                                                                       align="right"></a>
                 <% } else { %>
-                    <a href="/resources/search/public/advanced"><h2 class='grid__title'><span>Search <span style="color: black">&#9756;</span> Click me</span>
+                    <a href="/resources/search/public/advanced"><h2 class='grid__title'><span>Search <span
+                                        style="color: black">&#9756;</span> Click me</span>
                         </h2></a>
                     <a href='/resources/search/public/advanced'><img src="/images/search.jpg" style="height: 220px"
                                                                      align="right"></a>
@@ -139,7 +136,9 @@
             </div>
             <div class='grid__item partners__slide__grey' style="height: 550px" data-aos='fade-up'>
                 <% if (loggedIn) { %>
-                    <a href="/profiles/view/all"><h2 class='grid__title'><span>Networking <span style="color: black"><span style="color: black">&#9756;</span></span> Click me</span></h2></a>
+                    <a href="/profiles/view/all"><h2 class='grid__title'><span>Networking <span
+                                        style="color: black"><span
+                                            style="color: black">&#9756;</span></span> Click me</span></h2></a>
                     <a href="/profiles/view/all"><img src="/images/networking.jpg" style="height: 220px"
                                                       align="right"></a>
                 <% } else { %>
