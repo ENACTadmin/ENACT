@@ -139,7 +139,7 @@ body {
     color: #1d1d1d;
     background-color: #fff;
     font-family: 'Source Sans Pro', sans-serif;
-    font-weight: 300;
+    font-weight: 320;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -999,12 +999,13 @@ h6 {
 }
 
 .intro__content {
-    border-radius: 30px;
+    border-radius: 10px 50px 50px 10px;
     margin-top: 12%;
     padding: 30px;
     width: 60%;
     text-align: left;
     background: white;
+    opacity: 0.92;
     /*background: linear-gradient(to bottom right, black, #0053a4);*/
 }
 

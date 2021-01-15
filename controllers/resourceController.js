@@ -113,7 +113,7 @@ exports.uploadResource = async (req, res, next) => {
                     ownerId: req.user._id,
                     ownerName: currUser.userName,
                     courseId: courseId,
-                    status: req.body.status, // public/private to class/private to professors
+                    status: req.body.status, // partPublic/private to ENACT
                     createdAt: new Date(),
                     name: req.body.resourceName,
                     description: req.body.description,
@@ -334,7 +334,7 @@ exports.uploadToPublicResr = async (req, res, next) => {
             }
         }
         await newResource.save()
-        res.redirect('/managePublicResources')
+        res.redirect('/resources/manage/public')
     } catch (e) {
         next(e)
     }
@@ -994,7 +994,12 @@ exports.advancedSearch = async (req, res) => {
     let local_status = req.body.status
 
     if (filtered && local_status !== '' && local_status !== 'all') {
-        filtered = filtered.filter(({status}) => status.toUpperCase() === local_status.toUpperCase());
+        if (local_status === 'public')
+            filtered = filtered.filter(({status}) =>
+                ['public', 'finalPublic'].includes(status)
+            );
+        else
+            filtered = filtered.filter(({status}) => status.toUpperCase() === local_status.toUpperCase());
     }
 
     let filteredResource = []
@@ -1033,6 +1038,10 @@ exports.advancedSearchPublic = async (req, res, next) => {
 
     let filtered = resourceInfo;
 
+    if (filtered) {
+        filtered = filtered.filter(({status}) => ['public', 'finalPublic'].includes(status));
+    }
+
     let local_state = req.body.state !== 'empty' ? req.body.state : null
 
     if (filtered && local_state) {
@@ -1061,10 +1070,6 @@ exports.advancedSearchPublic = async (req, res, next) => {
 
     if (filtered && local_mediaType) {
         filtered = filtered.filter(({mediaType}) => mediaType.toUpperCase() === local_mediaType.toUpperCase());
-    }
-
-    if (filtered) {
-        filtered = filtered.filter(({status}) => ['public', 'finalPublic'].includes(status));
     }
 
     // -----------------------------------------------------------------

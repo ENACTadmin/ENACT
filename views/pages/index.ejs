@@ -35,49 +35,56 @@
                     national, non-partisan program engaging undergraduates at colleges and universities in
                     state-level legislative change.
                     <% if (!loggedIn) { %>
-                        <a href="https://go.brandeis.edu/ENACT" class="btn btn-sm btn-info" id="adjustedLoginBtn">More About ENACT</a>
+                        <a href="https://go.brandeis.edu/ENACT" class="btn btn-sm btn-info" id="adjustedLoginBtn">More
+                            About ENACT</a>
                     <% } %>
                     <br>
-                    <b style="color: limegreen">- ENACT Students & Alumni:</b> search student work. Network with
+                    <b style="color: #FF9912">- ENACT Students & Alumni:</b> search student work. Network with
                     students and alumni.
                     <% if (!loggedIn) { %>
                         <a href="/login" class="btn btn-sm btn-info" id="adjustedLoginBtn">Click to Login</a>
                     <% } %>
                     <br>
-                    <b style="color: limegreen">- ENACT Faculty Fellows:</b> access ENACT teaching resources and
+                    <b style="color: #FF9912">- ENACT Faculty Fellows:</b> access ENACT teaching resources and
                     student work.
                     <% if (!loggedIn) { %>
                         <a href="/login" class="btn btn-sm btn-info" id="adjustedLoginBtn">Click to Login</a>
                     <% } %>
                     <br>
-                    <b style="color: limegreen">- Public:</b> access student work on bills from across the U.S.,
+                    <b style="color: #FF9912">- Public:</b> access student work on bills from across the U.S.,
                     including op-eds, issue research and more.
                 </div>
                 <div class='form-demo'>
                     <% if (loggedIn) { %>
                         <% if (status === 'admin' || status === 'faculty') { %>
-                            <a href='/courses'><input type='submit' name='submit' class='form-demo__large'
-                                                      value='COURSES &#x1f4d6;'></a>
+                            <a href='/courses'><input type='submit' name='submit' class='form-demo__large fa'
+                                                      style="font-size: 24px; font-weight: 680"
+                                                      value='COURSES &#xf02d'></a>
                             <a href='/resources/search/private/advanced'><input type='submit' name='submit'
-                                                                                class='form-demo__large'
-                                                                                value='SEARCH &#128269;'></a>
+                                                                                class='form-demo__large fa'
+                                                                                style="font-size: 24px; font-weight: 680"
+                                                                                value='SEARCH &#xf002'></a>
                             <a href='/resources/view/faculty'><input type='submit' name='submit'
-                                                                     class='form-demo__large'
-                                                                     value='FACULTY GUIDE'></a>
+                                                                     class='form-demo__large fa'
+                                                                     style="font-size: 24px; font-weight: 680"
+                                                                     value='FACULTY GUIDE &#xf14e'></a>
                         <% } else { %>
                             <a href='/resources/search/private/advanced'><input type='submit' name='submit'
-                                                                                class='form-demo__large'
-                                                                                value='SEARCH &#128269;'></a>
-                            <a href='/profiles/view/all'><input type='submit' name='submit'
-                                                                class='form-demo__large'
-                                                                value='NETWORKING'></a>
+                                                                                class='form-demo__large fa'
+                                                                                style="font-size: 24px; font-weight: 680"
+                                                                                value='SEARCH &#xf002;'></a>
+                            <a href='/networking'><input type='submit' name='submit'
+                                                         class='form-demo__large fa'
+                                                         style="font-size: 24px; font-weight: 680"
+                                                         value="NETWORKING &#xf08c;"></a>
 
                         <% } %>
                         <!--                    public user-->
                     <% } else { %>
                         <a href='/resources/view/my/public/all'><input type='submit' name='submit'
-                                                                       class='form-demo__large'
-                                                                       value='SEARCH RESOURCES &#128269;'></a>
+                                                                       class='form-demo__large fa'
+                                                                       style="font-size: 24px; font-weight: 680"
+                                                                       value='SEARCH RESOURCES &#128249;'></a>
                     <% } %>
                 </div>
             </div>
@@ -203,9 +210,9 @@
         <br>
         <% if (status === 'admin') { %>
             <div class='text-center' data-aos='fade-up' data-aos-delay="100">
-                <a href='/managePublicResources'><input type='button' name='submit'
-                                                        class='btn btn- btn-lg btn-light'
-                                                        value='Manage Displayed Resources'></a>
+                <a href='/resources/manage/public'><input type='button' name='submit'
+                                                          class='btn btn- btn-lg btn-light'
+                                                          value='Manage Displayed Resources'></a>
             </div>
         <% } %>
         <br>

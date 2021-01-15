@@ -240,14 +240,14 @@ let id_set = [] %>
                                                       style='width: 180px'>Resource Status</span>
                                             <select id='statusSelect<%= resourceInfo[i]._id %>' class='form-control'
                                                     name='status'>
-                                                <option value='privateToENACT'>Exclusive to all ENACT members
-                                                </option>
-                                                <option value='privateToProfessor'>Exclusive to ENACT professors
-                                                </option>
-                                                <option value='public'>Open to public
-                                                </option>
-                                                <option value='finalPublic'>Displayed on the front page
-                                                </option>
+                                                <option value='privateToENACT'>Exclusive to all ENACT members</option>
+                                                <option value='privateToProfessor'>Exclusive to ENACT professors</option>
+                                                <% if (status === 'admin') { %>
+                                                    <option value='public'>Open to public</option>
+                                                    <option value='finalPublic'>Displayed on the front page</option>
+                                                <% } else { %>
+                                                    <option value='partPublic'>Open to public (needs admin approval)</option>
+                                                <% } %>
                                             </select>
                                         </div>
                                         <br>
@@ -255,11 +255,9 @@ let id_set = [] %>
                                         <div class='input-group-prepend'>
                                                 <span class='input-group-text'
                                                       style='width: 180px'>Resource Status</span>
-                                            <select id='statusSelect<%= resourceInfo[i]._id %>' class='form-control'
-                                                    name='status'>
-                                                <option value='privateToENACT'>Exclusive to all ENACT members
-                                                </option>
-                                                <option value='public'>Open to public</option>
+                                            <select id='statusSelect<%= resourceInfo[i]._id %>' class='form-control' name='status'>
+                                                <option value='privateToENACT'>Exclusive to all ENACT members</option>
+                                                <option value='partPublic'>Open to public</option>
                                             </select>
                                         </div>
                                     <% } %>
