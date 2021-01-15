@@ -12,6 +12,7 @@ exports.saveEvent = async (req, res, next) => {
             description: req.body.description,
             // className: req.body.className,
             icon: req.body.icon,
+            visibility: req.body.visibility
         })
         await newEvent.save()
         res.redirect('back')

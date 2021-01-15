@@ -386,7 +386,7 @@ app.post('/studentUpdateResource/:resourceId',
     resourceController.studentUpdateResource
 )
 
-app.get('/managePublicResources',
+app.get('/resources/manage/public',
     resourceController.loadPublicResources,
     (req, res) =>
         res.render('./pages/public-resourceManagement')

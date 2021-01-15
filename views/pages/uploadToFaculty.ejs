@@ -49,7 +49,8 @@
                         </div>
                         <br>
                         <input class="btn btn-outline-primary" type='button' value='Add another author' id='addButton'/>
-                        <input class="btn btn-outline-info" type='button' value='Remove last entered author' id='removeButton'/>
+                        <input class="btn btn-outline-info" type='button' value='Remove last entered author'
+                               id='removeButton'/>
                         <br><br><br>
                         <h3>Basic information</h3>
                         <hr>
@@ -67,7 +68,12 @@
                                 <select class='form-control' name='status'>
                                     <option selected value='privateToProfessor'>Exclusive to ENACT professors</option>
                                     <option value='privateToENACT'>Exclusive to all ENACT members</option>
-                                    <option value='partPublic'>Open to public (need to be approved by admins)</option>
+                                    <% if (status === 'admin') { %>
+                                        <option value='public'>Open to public</option>
+                                        <option value='finalPublic'>Displayed on the front page</option>
+                                    <% } else { %>
+                                        <option value='partPublic'>Open to public (need to be approved by admins)</option>
+                                    <% } %>
                                 </select>
                             </div>
                             <br>

@@ -2,17 +2,19 @@
 <%- include('../components/navbar'); -%>
 
 <% let id_set = []; %>
-<div class="pre-loader">
-    <div class="pre-loader-box">
-        <div class='loader-progress' id="progress_div">
-            <div class='bar' id='bar1'></div>
-        </div>
-        <div class='percent' id='percent1'>0%</div>
-        <div class="loading-text">
-            Loading...
+<% if (status !== 'student') { %>
+    <div class="pre-loader">
+        <div class="pre-loader-box">
+            <div class='loader-progress' id="progress_div">
+                <div class='bar' id='bar1'></div>
+            </div>
+            <div class='percent' id='percent1'>0%</div>
+            <div class="loading-text">
+                Loading...
+            </div>
         </div>
     </div>
-</div>
+<% } %>
 
 <section class='section'>
     <div class='section__content section__content--full-width'>
@@ -29,7 +31,7 @@
         <div class='container'>
             <div class='row'>
                 <div class='col-md-12 col-sm-12'>
-                    <% if (eventsInfo.length !== 0) { %>
+                    <% if (eventsInfo && eventsInfo.length !== 0) { %>
                         <% for (let i = 0; i < eventsInfo.length; i++) { %>
                             <% if (loggedIn || eventsInfo[i].visibility === 'public') { %>
                                 <div class='card border-0' style="border-radius: 30px">
@@ -94,7 +96,9 @@
                             <% } %>
                         <% } %>
                     <% } else { %>
-                        No events available yet
+                        <div class='text-center partners__text'>
+                            <h3>No events available yet.</h3>
+                        </div>
                     <% } %>
                 </div>
             </div>
@@ -138,7 +142,9 @@
     <% } %>
 <% } %>
 
-<%- include('../components/component-event'); -%>
+<% if (status !== 'student') { %>
+    <%- include('../components/component-event'); -%>
+<% } %>
 
 <!--Edit Modal-->
 <% if (eventsInfo.length !== 0) { %>
@@ -191,7 +197,6 @@
                 </div>
             </div>
         </div>
-
         <p hidden id='visiFromServer<%= eventsInfo[i]._id %>'><%= eventsInfo[i].visibility %></p>
         <% id_set.push(eventsInfo[i]._id) %>
     <% } %>
@@ -199,7 +204,9 @@
 
 <p hidden id='idSet'><%= id_set %></p>
 
-<%- include('../components/component-eventImport'); -%>
+<% if (status !== 'student') { %>
+    <%- include('../components/component-eventImport'); -%>
+<% } %>
 
 <script>
     $(document).ready(function () {
