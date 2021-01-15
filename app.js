@@ -389,7 +389,7 @@ app.post('/studentUpdateResource/:resourceId',
 app.get('/managePublicResources',
     resourceController.loadPublicResources,
     (req, res) =>
-        res.render('./pages/managePublicResources')
+        res.render('./pages/public-resourceManagement')
 )
 
 app.get('/collection/view/:resourceSetId',
