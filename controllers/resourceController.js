@@ -374,7 +374,7 @@ exports.loadResources = async (req, res, next) => {
         let resources = await Resource.find({
             courseId: courseId,
             checkStatus: checkStatus
-        }).sort({yearOfCreation: 1})
+        }).sort({yearOfCreation: -1})
         let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
         let resourceIds = null
         if (starred) {
@@ -409,15 +409,15 @@ exports.loadAllFacultyResources = async (req, res, next) => {
             let syllabus = await Resource.find({
                 status: 'privateToProfessor',
                 'contentType': 'Syllabus'
-            }).sort({yearOfCreation: 1}).limit(3)
+            }).sort({yearOfCreation: -1}).limit(3)
             let assignments = await Resource.find({
                 status: 'privateToProfessor',
                 'contentType': 'Assignment Guidelines'
-            }).sort({yearOfCreation: 1}).limit(3)
+            }).sort({yearOfCreation: -1}).limit(3)
             let guides = await Resource.find({
                 status: 'privateToProfessor',
                 'contentType': 'Course Planning'
-            }).sort({yearOfCreation: 1}).limit(3)
+            }).sort({yearOfCreation: -1}).limit(3)
 
             let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
             let resourceIds = null
@@ -448,7 +448,7 @@ exports.loadSpecificContentType = async (req, res, next) => {
         let resourceInfo = await Resource.find({
             status: 'privateToProfessor',
             contentType: contentType
-        }).sort({yearOfCreation: 1})
+        }).sort({yearOfCreation: -1})
         let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
         let resourceIds = null
         if (starred) {
@@ -490,7 +490,7 @@ exports.loadPublicResources = async (req, res, next) => {
     try {
         res.locals.resourceInfo = await Resource.find({
             status: {$in: ["finalPublic", "public"]}
-        }).sort({yearOfCreation: 1}).limit(30)
+        }).sort({yearOfCreation: -1}).limit(30)
         next()
     } catch (e) {
         console.log("error: " + e)
@@ -828,13 +828,13 @@ exports.primaryPublicSearch = async (req, res, next) => {
                             checkStatus: checkStatus,
                             _id: {$in: resourceIds},
                             status: {$in: ["finalPublic", "public"]}
-                        }).sort({yearOfCreation: 1})
+                        }).sort({yearOfCreation: -1})
                     } else {
                         let newResourceInfo = await Resource.find({
                             checkStatus: checkStatus,
                             _id: {$in: resourceIds},
                             status: {$in: ["finalPublic", "public"]}
-                        }).sort({yearOfCreation: 1})
+                        }).sort({yearOfCreation: -1})
                         resourceInfo = resourceInfo.concat(newResourceInfo)
                     }
                 }
@@ -843,7 +843,7 @@ exports.primaryPublicSearch = async (req, res, next) => {
             resourceInfo = await Resource.find({
                 checkStatus: checkStatus,
                 status: {$in: ["finalPublic", "public"]}
-            }).sort({yearOfCreation: 1})
+            }).sort({yearOfCreation: -1})
         }
         res.render('./pages/search-primary-public', {
             resourceInfo: resourceInfo
