@@ -201,6 +201,9 @@ exports.updateResource = async (req, res, next) => {
         oldResource.institution = req.body.institution
         oldResource.yearOfCreation = req.body.yearOfCreation
         oldResource.tags = tags
+        if (res.locals.status === 'student') {
+            oldResource.checkStatus = 'underReview'
+        }
         await oldResource.save()
         // update word2Id
         await setWord2Id(oldResource);
@@ -269,31 +272,6 @@ exports.removeResource = async (req, res, next) => {
     }
 }
 
-exports.studentUpdateResource = async (req, res, next) => {
-    const resourceId = req.params.resourceId
-    try {
-        let tagsString = req.body.selectedTags
-        let tags = tagsString.split(",")
-        let oldResource = await Resource.findOne({_id: resourceId})
-        oldResource.name = req.body.resourceName
-        oldResource.status = req.body.status
-        oldResource.description = req.body.description
-        oldResource.uri = req.body.uri
-        oldResource.state = req.body.state
-        oldResource.contentType = req.body.contentType
-        oldResource.mediaType = req.body.mediaType
-        oldResource.institution = req.body.institution
-        oldResource.yearOfCreation = req.body.yearOfCreation
-        oldResource.tags = tags
-        oldResource.checkStatus = 'underReview'
-        await oldResource.save()
-        // save the new resource
-        res.redirect('back')
-    } catch (e) {
-        next(e)
-    }
-}
-
 exports.uploadToPublicResr = async (req, res, next) => {
     try {
         let tagsString = req.body.tags
@@ -356,10 +334,6 @@ exports.updateOwner = async (req, res, next) => {
             ownerName1: ownerName1,
             req: req
         })
-        // if (req.params.option === 'fav')
-        //     res.redirect('/resources/view/favorite')
-        // else
-        //     res.redirect('/resources/view/private')
     } catch (e) {
         next(e)
     }

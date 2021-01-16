@@ -256,7 +256,7 @@
 </section>
 
 <script>
-    for (let i = new Date().getFullYear(); i > 2000; i--) {
+    for (let i = new Date().getFullYear(); i >= 2000; i--) {
         $('#yearpicker').append($('<option class="form-control"/>').val(i).html(i));
     }
     $('#yearpicker option').each(function () {

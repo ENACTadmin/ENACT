@@ -1,6 +1,7 @@
 $(document).ready(function () {
+    $("#removeButton").hide()
     $("#addButton").click(function () {
-        // var id = ($('.form-horizontal .input-group-prepend').length + 1).toString();
+        $("#removeButton").show()
         $('.form-horizontal').append('<br class="removeMe">' +
             '<div class="input-group-prepend">' +
             '<span class="input-group-text" style="width: 180px">Name</span>' +
@@ -11,7 +12,10 @@ $(document).ready(function () {
     });
     $("#removeButton").click(function () {
         if ($('.form-horizontal .input-group-prepend').length == 1) {
-            alert("No more text-box to remove");
+            $("#removeButton").hide()
+        }
+        if ($('.form-horizontal .input-group-prepend').length == 0) {
+            alert("No more entries to remove");
             return false;
         }
         $(".form-horizontal .input-group-prepend:last").remove();
