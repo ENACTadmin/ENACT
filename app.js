@@ -11,6 +11,7 @@ const Course = require('./models/Course')
 const CourseTime = require('./models/CourseTime')
 const Resource = require('./models/Resource')
 const User = require('./models/User')
+const AuthorAlt = require('./models/AuthorAlternative')
 const Faculty = require('./models/Faculty')
 
 //*******************************************
@@ -295,7 +296,7 @@ app.post('/resource/upload/faculty',
     resourceController.uploadResource
 )
 
-app.post('/updateResource/:resourceId',
+app.post('/resource/update/:resourceId',
     resourceController.updateResource
 )
 
@@ -380,10 +381,6 @@ app.get('/resource/update/:resourceId/:option',
 
 app.post('/resource/update/:resourceId/:option',
     resourceController.updateOwner
-)
-
-app.post('/studentUpdateResource/:resourceId',
-    resourceController.studentUpdateResource
 )
 
 app.get('/resources/manage/public',
@@ -608,30 +605,6 @@ app.get('/events/all',
     }
 )
 
-app.get('/profiles/all',
-    async (req, res) => {
-        let userProfiles = await User.find()
-        return res.send(userProfiles)
-    }
-)
-
-app.get('/profiles/faculties',
-    async (req, res) => {
-        console.log("status: ", req.user.status)
-        // if (req.user.status === 'admin') res.send("You are not admin!")
-        // else {
-        let userProfiles = await User.find({
-            $or: [
-                {status: 'faculty'}, {status: 'admin'}
-            ]
-        })
-        console.log("faculties: ", userProfiles)
-        return res.send(userProfiles)
-        // }
-    }
-)
-
-
 app.post('/event/delete/:eventId',
     eventController.deleteEvent
 )
@@ -711,6 +684,43 @@ app.get('/secretFunction3',
     }
 )
 
+
+//*******************************************
+//**************AJAX related*****************
+app.get('/profiles/all',
+    async (req, res) => {
+        let userProfiles = await User.find()
+        return res.send(userProfiles)
+    }
+)
+
+app.get('/resource/:resourceId',
+    async (req, res) => {
+        let resource = await Resource.findOne({_id: req.params.resourceId})
+        resource = await addAuthorAlt((resource))
+        return res.send(resource)
+    }
+)
+
+async function addAuthorAlt(resource) {
+    let authors = await AuthorAlt.find({resourceId: resource._id})
+    if (authors) {
+        for (let j = 0; j < authors.length; j++)
+            resource.ownerName += (', ' + authors[j].userName)
+    }
+    return resource
+}
+
+app.get('/profiles/faculties',
+    async (req, res) => {
+        let userProfiles = await User.find({
+            $or: [
+                {status: 'faculty'}, {status: 'admin'}
+            ]
+        })
+        return res.send(userProfiles)
+    }
+)
 
 //*******************************************
 //*************Error related*****************
