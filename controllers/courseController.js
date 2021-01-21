@@ -287,6 +287,7 @@ exports.showSchedule = async (req, res) => {
         'instructor': 1,
         'institution': 1
     })
+    console.log("courses: ", courses)
     res.render('./pages/course-schedule', {
         courseTimes: courseTimes,
         courses: courses

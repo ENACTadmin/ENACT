@@ -171,6 +171,14 @@ app.post('/course/delete/:courseId',
     utils.checkUserName,
     async (req, res) => {
         await Course.deleteOne({_id: req.params.courseId})
+        await CourseTime.deleteMany({courseId: req.params.courseId})
+        let users = await User.find()
+        // clean user object fields
+        for (let i = 0; i < users.length; i++) {
+            users[i].ownedCourses.remove(req.params.courseId)
+            users[i].enrolledCourses.remove(req.params.courseId)
+            await users[i].save()
+        }
         res.redirect('back')
     }
 )

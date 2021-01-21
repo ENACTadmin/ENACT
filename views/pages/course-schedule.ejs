@@ -2,6 +2,65 @@
 <%- include('../components/navbar'); -%>
 
 <% let days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'] %>
+
+<script>
+    $(document).ready(function () {
+        let n = new Date().getTimezoneOffset() / 60;
+        let timezone = '';
+        switch (n) {
+            case 4:
+                timezone = 'US/Atlantic';
+                break;
+            case 5:
+                timezone = 'US/Eastern';
+                break;
+            case 6:
+                timezone = 'US/Central';
+                break;
+            case 7:
+                timezone = 'US/Mountain';
+                break;
+            case 8:
+                timezone = 'US/Pacific';
+                break;
+            case 9:
+                timezone = 'US/Alaska';
+                break;
+            case 10:
+                timezone = 'US/Hawaii‑Aleutian';
+                break;
+        }
+        let offset = '';
+        switch (timezone) {
+            case 'US/Atlantic':
+                offset = 4;
+                break;
+            case 'US/Eastern':
+                offset = 5;
+                break;
+            case 'US/Central':
+                offset = 6;
+                break;
+            case 'US/Mountain':
+                offset = 7;
+                break;
+            case 'US/Pacific':
+                offset = 8;
+                break;
+            case 'US/Alaska':
+                offset = 9;
+                break;
+            case 'US/Hawaii‑Aleutian':
+                offset = 10;
+                break;
+        }
+        $('#fillMe').text(timezone);
+    });
+
+</script>
+
+<% let n = new Date().getTimezoneOffset() / 60; %>
+
 <section class='section'>
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
@@ -9,49 +68,77 @@
                 All ENACT Course Schedule
             </div>
             <h3>There are <b><i><%= courses.length %></i></b> courses in session!</h3>
+            <h4>Current Timezone: <b><i id="fillMe"></i></b></h4>
         </div>
     </div>
 </section>
 
-Under construction :-)
-<!--&lt;!&ndash; ENACT Program intro &ndash;&gt;-->
-<!--<section class='section section__grey'>-->
-<!--    <div class='section__content section__content&#45;&#45;fluid-width section__content&#45;&#45;padding&#45;&#45;small'>-->
-<!--        <div class="container">-->
-<!--            <div class="row">-->
-<!--                <% for (let p = 0; p < days.length; p++) { %>-->
-<!--                    <div class="col">-->
-<!--                        <h3><%= days[p] %></h3>-->
-<!--                        <hr style="border-top: 5px solid black;">-->
-<!--                        <% for (let i = 0; i < courseTimes.length; i++) { %>-->
-<!--                            <% for (let j = 0; j < courses.length; j++) { %>-->
-<!--                                <% if (courseTimes[i].courseId.equals(courses[j]._id) && days[p] === courseTimes[i].day) { %>-->
-<!--                                    <div class='card'>-->
-<!--                                        <div class='card-body'>-->
-<!--                                            <h5 style='display: inline'><%= courses[j].courseName %></h5>-->
-<!--                                            <br>-->
-<!--                                            <h5 style='display: inline'><%= courses[j].institution %></h5>-->
-<!--                                            <br>-->
-<!--                                            <h5 style='display: inline'>Instructor: <%= courses[j].instructor %></h5>-->
-<!--                                            <br>-->
-<!--                                            <h5 style='display: inline'>Timezone: <%= courses[j].timezone %></h5>-->
-<!--                                            <br>-->
-<!--                                            <h5 style='display: inline'>Timezone: <%= courses[j].state %></h5>-->
-<!--                                            <br>-->
-<!--                                            <h5 style='display: inline'>Start time: <%= courseTimes[i].startTime %></h5>-->
-<!--                                            <br>-->
-<!--                                            <h5 style='display: inline'>End time: <%= courseTimes[i].endTime %></h5>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <hr>-->
-<!--                                <% } %>-->
-<!--                            <% } %>-->
-<!--                        <% } %>-->
-<!--                    </div>-->
-<!--                <% } %>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</section>-->
+<!-- ENACT Program intro -->
+<section class='section section__grey'>
+    <div class='section__content section__content--fluid-width section__content--padding--small'>
+        <div class="container">
+            <div class="row">
+                <% for (let p = 0; p < days.length; p++) { %>
+                    <div class="col">
+                        <h3><%= days[p] %></h3>
+                        <hr style="border-top: 5px solid black;">
+                        <% for (let i = 0; i < courseTimes.length; i++) { %>
+                            <% for (let j = 0; j < courses.length; j++) { %>
+                                <% if (courseTimes[i].courseId.equals(courses[j]._id) && days[p] === courseTimes[i].day) { %>
+                                    <div class='card'>
+                                        <div class='card-body'>
+                                            <h5 style='display: inline'><%= courses[j].courseName %></h5>
+                                            <br>
+                                            <h5 style='display: inline'><%= courses[j].institution %></h5>
+                                            <br>
+                                            <h5 style='display: inline'>Instructor: <%= courses[j].instructor %></h5>
+                                            <br>
+                                            <h5 style='display: inline'>State: <%= courses[j].state %></h5>
+                                            <br>
+                                            <h5 style='display: inline'>Start time:
+                                                <%
+                                                    let offset = 0;
+                                                    switch (courses[j].timezone) {
+                                                        case 'US/Atlantic':
+                                                            offset = 4;
+                                                            break;
+                                                        case 'US/Eastern':
+                                                            offset = 5;
+                                                            break;
+                                                        case 'US/Central':
+                                                            offset = 6;
+                                                            break;
+                                                        case 'US/Mountain':
+                                                            offset = 7;
+                                                            break;
+                                                        case 'US/Pacific':
+                                                            offset = 8;
+                                                            break;
+                                                        case 'US/Alaska':
+                                                            offset = 9;
+                                                            break;
+                                                        case 'US/Hawaii‑Aleutian':
+                                                            offset = 10;
+                                                            break;
+                                                    }
+                                                %>
+                                                <%= (parseInt(courseTimes[i].startTime.split(':')[0]) + (n - offset) + 24) % 24 + ':' + courseTimes[i].startTime.split(':')[1] %>
+                                            </h5>
+                                            <br>
+                                            <h5 style='display: inline'>End time:
+                                                <%= (parseInt(courseTimes[i].endTime.split(':')[0]) + (n - offset) + 24) % 24 + ':' + courseTimes[i].startTime.split(':')[1] %>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                <% } %>
+                            <% } %>
+                        <% } %>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</section>
 
 <%- include('../components/footer'); -%>
