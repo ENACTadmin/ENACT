@@ -67,7 +67,7 @@
                             <a href='/resources/view/faculty'><input type='submit' name='submit'
                                                                      class='form-demo__large fa'
                                                                      style="font-size: 24px; font-weight: 680"
-                                                                     value='FACULTY GUIDE &#xf14e'></a>
+                                                                     value='Guide For Faculty &#xf14e'></a>
                         <% } else { %>
                             <a href='/resources/search/private/advanced'><input type='submit' name='submit'
                                                                                 class='form-demo__large fa'
@@ -84,7 +84,7 @@
                         <a href='/resources/view/my/public/all'><input type='submit' name='submit'
                                                                        class='form-demo__large fa'
                                                                        style="font-size: 24px; font-weight: 680"
-                                                                       value='SEARCH &#128249;'></a>
+                                                                       value='SEARCH &#xf002'></a>
                     <% } %>
                 </div>
             </div>
@@ -99,65 +99,66 @@
     <br>
     <div class='section__content section__content--fluid-width section__content--padding--small'>
         <div class='grid grid--3col'>
-            <div class='grid__item partners__slide__grey' data-aos='fade-up' style="height: 550px">
-                <a href="/about"><h2 class='grid__title'><span>Who we are <span style="color: black">&#9756;</span> Click me</span>
-                    </h2></a>
-                <img style='height: 200px; width: 200px; padding: 20px' align="right"
-                     src='https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg' alt="ENACT logo">
-                <p class='grid__text' style="font-size: larger; line-height: 150%;">
-                    <b>ENACT is a national, non-partisan program</b> engaging undergraduates at colleges and
-                    universities in
-                    state-level legislative change.
-                    <a href="https://go.brandeis.edu/ENACT">More about ENACT</a>
-                    <br>
-                    <b>- ENACT Students & Alumni:</b> search ENACT student assignments and connect with students and
-                    alumni across the United States.
-                    <br>
-                    <b>- ENACT Faculty Fellows:</b> access ENACT syllabi, teaching resources, and student work.
-                    <br>
-                    <b>- Public:</b> access student work on bills from across teh country, including op-eds, issue
-                    research and more.
-                </p>
+            <div class='grid__item partners__slide__grey' style='min-height: 500px' data-aos='fade-up'>
+                <h3 class='grid__title'><span>What We Do</span></h3>
+                <p class='grid__text' style="font-size: large; line-height: 150%">
+                    The <b style='color: #0053a4'>ENACT: Educational Network for Active Civic Transformation</b> is a national program
+                    engaging undergraduates at colleges and universities in state-level legislative change by
+                    learning
+                    to work with legislators, staffers, and community organizations to advance policy. It is
+                    becoming a
+                    major voice in addressing challenges to American democracy by engaging young people around
+                    the
+                    country in civic activism built on knowledge, cooperation, justice and integrity.</p>
+                <br>
+                <br>
+            </div>
 
+            <div class='grid__item partners__slide__grey' style='min-height: 500px' data-aos='fade-up'>
+                <div id='carouselExampleSlidesOnly' class='carousel slide' data-ride='carousel'>
+                    <div class='carousel-inner'>
+                        <div class='carousel-item active'>
+                            <img src='<%= imagePaths[0] %>'
+                                 style='width: 100%; height: 480px; object-fit: contain; border-radius: 30px;'
+                                 class='d-block w-100' alt='...'>
+                            <div class='carousel-caption d-none d-md-block'
+                                 style='right: 1%; left: 1%; color: black; background-color: white; opacity: 0.95; border-radius: 15px; padding: 4%'>
+                                <p style="font-size: large; line-height: 120%"><%= labelPaths[0] %></p>
+                            </div>
+                        </div>
+                        <% for (let i = 1; i < imagePaths.length; i++) { %>
+                            <div class='carousel-item'>
+                                <img src='<%= imagePaths[i] %>'
+                                     style='width: 100%; height: 480px; object-fit: contain; border-radius: 30px;'
+                                     class='d-block w-100' alt='...'>
+                                <div class='carousel-caption d-none d-md-block'
+                                     style='right: 1%; left: 1%; color: black; background-color: white; opacity: 0.95; border-radius: 15px; padding: 4%'>
+                                    <p style="font-size: large; line-height: 120%"><%= labelPaths[i] %></p>
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
             </div>
-            <div class='grid__item partners__slide__grey' data-aos='fade-up' style="height: 550px">
-                <% if (loggedIn) { %>
-                    <a href="/resources/search/private/advanced"><h2 class='grid__title'><span>Search <span
-                                        style="color: black">&#9756;</span> Click me</span>
-                        </h2></a>
-                    <a href="/resources/search/private/advanced"><img src="/images/search.jpg" style="height: 220px"
-                                                                      align="right"></a>
-                <% } else { %>
-                    <a href="/resources/search/public/advanced"><h2 class='grid__title'><span>Search <span
-                                        style="color: black">&#9756;</span> Click me</span>
-                        </h2></a>
-                    <a href='/resources/search/public/advanced'><img src="/images/search.jpg" style="height: 220px"
-                                                                     align="right"></a>
-                <% } %>
-                <p class='grid__text' style="font-size: larger; line-height: 175%">
-                    Powered by our advanced searching algorithm, you can find any resources ranging from student
-                    research reports to fact sheets or elevator speeches, etc., with a few simple clicks. These
-                    resources can be useful for your coursework, academic publications or professional work.
-                    <br><br>
-                </p>
-            </div>
-            <div class='grid__item partners__slide__grey' style="height: 550px" data-aos='fade-up'>
-                <% if (loggedIn) { %>
-                    <a href="/profiles/view/all"><h2 class='grid__title'><span>Networking <span
-                                        style="color: black"><span
-                                            style="color: black">&#9756;</span></span> Click me</span></h2></a>
-                    <a href="/profiles/view/all"><img src="/images/networking.jpg" style="height: 220px"
-                                                      align="right"></a>
-                <% } else { %>
-                    <h2 class='grid__title'><span>Networking (<a href="/login">Click to Login to Use</a>) </span></h2>
-                    <img src="/images/networking.jpg" style="height: 220px" align="right">
-                <% } %>
-                <p class='grid__text' style="font-size: larger; line-height: 175%">
-                    The ENACT network connects over 50+ institutions in the U.S., which is still growing. With thousands
-                    of alumni who are now working professionals in the U.S. legal system/industry, you can seek career
-                    advice, reach out to experts, or even find career opportunities by connecting with them.
-                    <br><br>
-                </p>
+
+            <div class='grid__item partners__slide__grey' style='min-height: 500px' data-aos='fade-up'>
+                <h3 class='grid__title'><span>The ENACT Model</span></h3>
+                <p class='grid__text' style="font-size: large; line-height: 135%">
+                    <b style='color: #0053a4'>• Workshop</b>: ENACT launched with a workshop at Brandeis University in
+                    May 2016. Under the leadership of the program’s academic director, ENACT Fellows shared ideas and
+                    work on course development.
+                    <br>
+                    <b style='color: #0053a4'>• Courses</b>: In ENACT courses students learn about participating in the
+                    legislative and
+                    advocacy process at the state level, with a substantial hands-on component in which they engage
+                    directly in that process, as in the “Advocacy for Policy Change” course at Brandeis.
+                    <!--                    See the full list of ENACT schools.-->
+                    <br>
+                    <b style='color: #0053a4'>• Online Network</b>: The ENACT Network is a national in-person and online
+                    network of students, faculty, activists and legislators. It is a strategic and information hub for
+                    state-level players that enables them to connect with counterparts throughout the country.</p>
+                <br>
+                <br>
             </div>
         </div>
         <div class='clear'></div>

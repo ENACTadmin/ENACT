@@ -83,6 +83,7 @@ app.use(aws)
 app.get('/',
     utils.checkUserName,
     resourceController.loadPublicResources,
+    resourceController.loadImages,
     async (req, res) => {
         let eventsInfo = await Event.find({}).sort({start: -1})
         res.locals.eventsInfo = eventsInfo

@@ -10,15 +10,15 @@
                     <li>
                         <a class='header-link' href='/resources/view/my/public/all'>Search Resources</a>
                     </li>
-                    <li>
-                        <a class='header-link' href='/events' data-aos='fade-left'>Upcoming Events</a>
-                    </li>
                 </ul>
             </li>
 
             <li>
-                <a class='header-link' id='header-link' href='/profiles/view/faculty' data-aos="fade-left">Faculty &
-                    School</a>
+                <a class='header-link' id='header-link' href='/networking' data-aos="fade-left">Networking & People</a>
+            </li>
+
+            <li>
+                <a class='header-link' href='/events' data-aos='fade-left'>Upcoming Events</a>
             </li>
 
             <li>
@@ -48,6 +48,7 @@
                     </li>
                 </ul>
             </li>
+
             <li>
                 <a class='header-link' id='header-link' href='#' data-aos='fade-left'>People & Networking</a>
                 <ul class='sub-menu'>
@@ -68,57 +69,34 @@
             </li>
 
             <li>
-                <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Events & Schedule</a>
+                <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Courses & Events</a>
                 <ul class='sub-menu'>
-                    <li>
-                        <a class='header-link' href='/events'>Events</a>
-                    </li>
                     <li>
                         <a class='header-link' href='/courses/schedule'>Course schedule</a>
                     </li>
+                    <% if (status === 'admin' || status === 'faculty') { %>
+                        <li>
+                            <a class='header-link' href='/resources/view/faculty'>Guide for faculty</a>
+                        </li>
+                    <% } %>
+                    <li>
+                        <a class='header-link' href='/courses'>Courses</a>
+                    </li>
+                    <% for (let i = 0; i < courseInfoSet.length; i++) { %>
+                        <li>
+                            <% if (courseInfoSet[i].courseName.length <= 20) { %>
+                                <a class='header-link'
+                                   href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName %></a>
+                            <% } else { %>
+                                <a class='header-link'
+                                   href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName.substring(0, 20) + "..." %></a>
+                            <% } %>
+                        </li>
+                    <% } %>
+                    <li>
+                        <a class='header-link' href='/events'>Events</a>
+                    </li>
                 </ul>
-            <li>
-                <% if (status === 'admin' || status === 'faculty' ) { %>
-                    <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Faculty & School</a>
-                    <ul class='sub-menu'>
-                        <li>
-                            <a class='header-link' href='/resources/view/faculty'>Faculty guide</a>
-                        </li>
-                        <li>
-                            <a class='header-link' href='/courses'>Courses</a>
-                        </li>
-                        <% for (let i = 0; i < courseInfoSet.length; i++) { %>
-                            <li>
-                                <% if (courseInfoSet[i].courseName.length <= 20) { %>
-                                    <a class='header-link'
-                                       href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName %></a>
-                                <% } else { %>
-                                    <a class='header-link'
-                                       href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName.substring(0, 20) + "..." %></a>
-                                <% } %>
-                            </li>
-                        <% } %>
-                    </ul>
-                <% } else { %>
-                    <a class='header-link' id='header-link' href='#' data-aos='fade-left'>School</a>
-                    <ul class='sub-menu'>
-                        <li>
-                            <a class='header-link' href='/courses'>Courses</a>
-                        </li>
-                        <% for (let i = 0; i < courseInfoSet.length; i++) { %>
-                            <li>
-                                <% if (courseInfoSet[i].courseName.length <= 20) { %>
-                                    <a class='header-link'
-                                       href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName %></a>
-                                <% } else { %>
-                                    <a class='header-link'
-                                       href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName.substring(0, 20) + "..." %></a>
-                                <% } %>
-                            </li>
-                        <% } %>
-                    </ul>
-                <% } %>
-            </li>
 
             <li>
                 <% if (status === 'admin') { %>
@@ -163,10 +141,12 @@
 
         <li class='header__btn header__btn--login'>
             <% if (!loggedIn) { %>
-                <a class='btn btn-primary' id="adjustedLoginBtn" style="background-color: #0053a4; color: white; font-weight: bold;" href='/login'
+                <a class='btn btn-primary' id="adjustedLoginBtn"
+                   style="background-color: #0053a4; color: white; font-weight: bold;" href='/login'
                    data-aos='fade-left'>Login</a>
             <% } else { %>
-                <a class='btn btn-primary' id="adjustedLoginBtn" style="background-color: #0053a4; color: white; font-weight: bold;" href='/logout'
+                <a class='btn btn-primary' id="adjustedLoginBtn"
+                   style="background-color: #0053a4; color: white; font-weight: bold;" href='/logout'
                    data-aos='fade-left'>Logout</a>
             <% } %>
         </li>
