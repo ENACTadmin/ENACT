@@ -7,91 +7,90 @@
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
             <div class='section__title section__title--centered'>
-                Faculty list
+                ENACT Faculty & Staff
             </div>
         </div>
     </div>
 </section>
 
-<% console.log(facultyPaths) %>
-<!-- Section -->
-<section class='section diagonal-gradient'>
-    <div class='section__content section__content--fluid-width section__content--padding'>
-        <div class='grid grid--3col'>
-            <div class='partners__slide grid__item' style='height: 750px' data-aos="fade-up">
-                <div class='card-body' style='border-radius: 30px'>
-                    <img class='d-flex'
-                         src='https://www.brandeis.edu/ethics/images/advocacy/mstimell01_cropped.jpg'
-                         alt='1'
-                         style='width: 100%; height:400px; object-fit: cover; border-radius: 30px'>
-                    <br>
-                    <h3 style='text-align: center'>Melissa Stimell</h3>
-                    <h4 style='text-align: center'>Academic Program Director</h4>
-                    <hr>
-                    <p style="font-size: 18px">Melissa Stimell is a Professor of the Practice in the Legal Studies
-                        Program at Brandeis
-                        University, and Interim Director of the International Center for Ethics, Justice and Public
-                        Life.
-                    </p>
-                    <br>
-                </div>
-            </div>
-            <div class='partners__slide grid__item' style='height: 750px' data-aos="fade-up" data-aos-delay="200">
-                <div class='card-body' style='border-radius: 30px'>
-                    <img class='d-flex mr-3' src='https://www.brandeis.edu/ethics/images/DJW%20photo.jpg'
-                         alt='David J. Weinstein'
-                         style='width: 100%; height:400px; object-fit: cover; border-radius: 30px'>
-                    <br>
-                    <h3 style='text-align: center'>David J. Weinstein</h3>
-                    <h4 style='text-align: center'>Assistant Director</h4>
-                    <hr>
-                    <p style="font-size: 18px">David Weinstein is Assistant Director of ENACT and Communications for the
-                        Ethics Center.</p>
-                    <br>
-                </div>
-            </div>
+<!--&lt;!&ndash; Section &ndash;&gt;-->
+<!--<section class='section diagonal-gradient'>-->
+<!--    <div class='section__content section__content&#45;&#45;fluid-width section__content&#45;&#45;padding'>-->
+<!--        <div class='grid grid&#45;&#45;3col'>-->
+<!--            <div class='partners__slide grid__item' style='height: 750px' data-aos="fade-up">-->
+<!--                <div class='card-body' style='border-radius: 30px'>-->
+<!--                    <img class='d-flex'-->
+<!--                         src='https://www.brandeis.edu/ethics/images/advocacy/mstimell01_cropped.jpg'-->
+<!--                         alt='1'-->
+<!--                         style='width: 100%; height:400px; object-fit: cover; border-radius: 30px'>-->
+<!--                    <br>-->
+<!--                    <h3 style='text-align: center'>Melissa Stimell</h3>-->
+<!--                    <h4 style='text-align: center'>Academic Program Director</h4>-->
+<!--                    <hr>-->
+<!--                    <p style="font-size: 18px">Melissa Stimell is a Professor of the Practice in the Legal Studies-->
+<!--                        Program at Brandeis-->
+<!--                        University, and Interim Director of the International Center for Ethics, Justice and Public-->
+<!--                        Life.-->
+<!--                    </p>-->
+<!--                    <br>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class='partners__slide grid__item' style='height: 750px' data-aos="fade-up" data-aos-delay="200">-->
+<!--                <div class='card-body' style='border-radius: 30px'>-->
+<!--                    <img class='d-flex mr-3' src='https://www.brandeis.edu/ethics/images/DJW%20photo.jpg'-->
+<!--                         alt='David J. Weinstein'-->
+<!--                         style='width: 100%; height:400px; object-fit: cover; border-radius: 30px'>-->
+<!--                    <br>-->
+<!--                    <h3 style='text-align: center'>David J. Weinstein</h3>-->
+<!--                    <h4 style='text-align: center'>Assistant Director</h4>-->
+<!--                    <hr>-->
+<!--                    <p style="font-size: 18px">David Weinstein is Assistant Director of ENACT and Communications for the-->
+<!--                        Ethics Center.</p>-->
+<!--                    <br>-->
+<!--                </div>-->
+<!--            </div>-->
 
-            <div class='partners__slide grid__item' style='height: 750px' data-aos="fade-up" data-aos-delay="400">
-                <div id='carouselExampleSlidesOnly' class='carousel slide' data-ride='carousel'>
-                    <div class='carousel-inner'>
-                        <div class='carousel-item active'>
-                            <div class='card-body' style='border-radius: 30px'>
-                                <img class='d-flex mr-3'
-                                     src='<%= facultyPaths[0][0] %>'
-                                     alt='...'
-                                     style='width: 100%; height: 400px; object-fit: cover; border-radius: 30px;'>
-                                <br>
-                                <h3 style='text-align: center'><%= facultyPaths[0][1] %></h3>
-                                <h4 style='text-align: center'>Faculty Fellow</h4>
-                                <hr>
-                                <p style="font-size: 18px"><%= facultyPaths[0][2] %></p>
-                                <br>
-                            </div>
-                        </div>
-                        <% for (let i = 1; i < facultyPaths.length; i++) { %>
-                            <div class='carousel-item'>
-                                <div class='card-body' style='border-radius: 30px'>
-                                    <img class='d-flex mr-3'
-                                         src='<%= facultyPaths[i][0] %>'
-                                         alt='...'
-                                         style='width: 100%; height: 400px; object-fit: cover; border-radius: 30px;'>
-                                    <br>
-                                    <h3 style='text-align: center'><%= facultyPaths[i][1] %></h3>
-                                    <h4 style='text-align: center'>Faculty Fellow</h4>
-                                    <hr>
-                                    <p style="font-size: 18px"><%= facultyPaths[i][2] %></p>
-                                    <br>
-                                </div>
-                            </div>
-                        <% } %>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class='partners__pagination'></div>
-        <div class='clear'></div>
-    </div>
-</section>
+<!--            <div class='partners__slide grid__item' style='height: 750px' data-aos="fade-up" data-aos-delay="400">-->
+<!--                <div id='carouselExampleSlidesOnly' class='carousel slide' data-ride='carousel'>-->
+<!--                    <div class='carousel-inner'>-->
+<!--                        <div class='carousel-item active'>-->
+<!--                            <div class='card-body' style='border-radius: 30px'>-->
+<!--                                <img class='d-flex mr-3'-->
+<!--                                     src='<%= facultyPaths[0][0] %>'-->
+<!--                                     alt='...'-->
+<!--                                     style='width: 100%; height: 400px; object-fit: cover; border-radius: 30px;'>-->
+<!--                                <br>-->
+<!--                                <h3 style='text-align: center'><%= facultyPaths[0][1] %></h3>-->
+<!--                                <h4 style='text-align: center'>Faculty Fellow</h4>-->
+<!--                                <hr>-->
+<!--                                <p style="font-size: 18px"><%= facultyPaths[0][2] %></p>-->
+<!--                                <br>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <% for (let i = 1; i < facultyPaths.length; i++) { %>-->
+<!--                            <div class='carousel-item'>-->
+<!--                                <div class='card-body' style='border-radius: 30px'>-->
+<!--                                    <img class='d-flex mr-3'-->
+<!--                                         src='<%= facultyPaths[i][0] %>'-->
+<!--                                         alt='...'-->
+<!--                                         style='width: 100%; height: 400px; object-fit: cover; border-radius: 30px;'>-->
+<!--                                    <br>-->
+<!--                                    <h3 style='text-align: center'><%= facultyPaths[i][1] %></h3>-->
+<!--                                    <h4 style='text-align: center'>Faculty Fellow</h4>-->
+<!--                                    <hr>-->
+<!--                                    <p style="font-size: 18px"><%= facultyPaths[i][2] %></p>-->
+<!--                                    <br>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        <% } %>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class='partners__pagination'></div>-->
+<!--        <div class='clear'></div>-->
+<!--    </div>-->
+<!--</section>-->
 
 <section class="section section__grey">
     <div class="container">
@@ -100,11 +99,11 @@
                 <h3>Search</h3>
                 <hr>
                 <input class="form-control" id="myInput" type="text"
-                       placeholder="e.g. Technology">
+                       placeholder="e.g. name, state, school, keyword...">
             </div>
         </div>
         <br>
-        <h3>Full list</h3>
+        <h3>Faculty Fellows</h3>
         <hr>
         <ul class="list-group" id="myList">
             <% for (let i = 0; i < profileInfo.length; i++){ %>
@@ -129,8 +128,7 @@
                                 <a href="/profile/view/<%= profileInfo[i]._id %>"><%= profileInfo[i].userName %></a>
                             </div>
                             <div class="col-md-6 col-sm-6 align-self-center">
-                                <b>Bio: </b><br> <textarea disabled rows="6"
-                                                           style="width: 100%"><%= profileInfo[i].bio %></textarea>
+                                <br><%= profileInfo[i].bio %>
                             </div>
                             <div class="col-md-3 col-sm-3 align-self-center">
                                 <b>School: </b><br><%= profileInfo[i].affiliation %>
