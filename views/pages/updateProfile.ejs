@@ -187,6 +187,26 @@
                                value='<%= user.linkedInURL %>'>
                     </div>
                     <br>
+
+                    <div class='w-100'></div>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 380px'>Personal Website URL (Optional)</span>
+                        <input type='text' class='form-control' name='personalWebsiteURL'
+                               value='<%= user.personalWebsiteURL %>'>
+                    </div>
+                    <br>
+
+                    <div class="form-check">
+                        <input class="form-check-input" name="networkCheck" type="checkbox" id="flexCheckDefault"
+                        <% if (user.networkCheck === 'on') { %>
+                            checked
+                        <% } %>>
+                        <label class="form-check-label" for="flexCheckDefault">
+                            <h5>Opt in for networking section.</h5>
+                        </label>
+                    </div>
+                    <br>
+
                     <input type='submit' class='btn btn-dark' value='Save'>
                 </form>
                 <br>
