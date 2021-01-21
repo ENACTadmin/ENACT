@@ -87,11 +87,11 @@
                                 <% if (courseTimes[i].courseId.equals(courses[j]._id) && days[p] === courseTimes[i].day) { %>
                                     <div class='card'>
                                         <div class='card-body'>
-                                            <h5 style='display: inline'><%= courses[j].courseName %></h5>
+                                            <h5 style='display: inline'><b><%= courses[j].courseName %></b></h5>
                                             <br>
                                             <h5 style='display: inline'><%= courses[j].institution %></h5>
                                             <br>
-                                            <h5 style='display: inline'>Instructor: <%= courses[j].instructor %></h5>
+                                            <h5 style='display: inline'><b><%= courses[j].instructor %></b></h5>
                                             <br>
                                             <h5 style='display: inline'>State: <%= courses[j].state %></h5>
                                             <br>
