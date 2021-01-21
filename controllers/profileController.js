@@ -28,11 +28,18 @@ exports.updateProfile = async (req, res, next) => {
         userToUpdate.personalEmail = req.body.personalEmail;
         userToUpdate.state = req.body.state;
         userToUpdate.department = req.body.department;
+        userToUpdate.personalWebsiteURL = req.body.personalWebsiteURL;
         userToUpdate.linkedInURL = req.body.linkedInURL;
         userToUpdate.pronoun = req.body.pronoun;
         userToUpdate.phoneNumber = req.body.phoneNumber;
         userToUpdate.affiliation = req.body.affiliation;
         userToUpdate.bio = req.body.bio;
+        if (req.body.networkCheck === 'on')
+            userToUpdate.networkCheck = 'on';
+        else
+            userToUpdate.networkCheck = 'off';
+
+        console.log("on or off: ", userToUpdate.networkCheck)
         await userToUpdate.save()
         if (toIndex)
             res.redirect('/')
@@ -52,11 +59,13 @@ exports.updateProfileAdmin = async (req, res, next) => {
         userToUpdate.personalEmail = req.body.personalEmail;
         userToUpdate.state = req.body.state;
         userToUpdate.department = req.body.department;
+        userToUpdate.personalWebsiteURL = req.body.personalWebsiteURL;
         userToUpdate.linkedInURL = req.body.linkedInURL;
         userToUpdate.pronoun = req.body.pronoun;
         userToUpdate.phoneNumber = req.body.phoneNumber;
         userToUpdate.affiliation = req.body.affiliation;
         userToUpdate.bio = req.body.bio;
+        userToUpdate.networkCheck = req.body.networkCheck;
         await userToUpdate.save()
         console.log("update success!")
         res.redirect('/profile/view/' + req.params.userId)
