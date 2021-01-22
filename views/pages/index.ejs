@@ -59,11 +59,11 @@
                         <% if (status === 'admin' || status === 'faculty') { %>
                             <a href='/courses'><input type='submit' name='submit' class='form-demo__large fa'
                                                       style="font-size: 24px; font-weight: 680"
-                                                      value='COURSES &#xf02d'></a>
+                                                      value='Courses &#xf02d'></a>
                             <a href='/resources/search/private/advanced'><input type='submit' name='submit'
                                                                                 class='form-demo__large fa'
                                                                                 style="font-size: 24px; font-weight: 680"
-                                                                                value='SEARCH &#xf002'></a>
+                                                                                value='Search &#xf002'></a>
                             <a href='/resources/view/faculty'><input type='submit' name='submit'
                                                                      class='form-demo__large fa'
                                                                      style="font-size: 24px; font-weight: 680"
@@ -72,11 +72,11 @@
                             <a href='/resources/search/private/advanced'><input type='submit' name='submit'
                                                                                 class='form-demo__large fa'
                                                                                 style="font-size: 24px; font-weight: 680"
-                                                                                value='SEARCH &#xf002;'></a>
+                                                                                value='Search &#xf002;'></a>
                             <a href='/networking'><input type='submit' name='submit'
                                                          class='form-demo__large fa'
                                                          style="font-size: 24px; font-weight: 680"
-                                                         value="NETWORKING &#xf08c;"></a>
+                                                         value="Networking &#xf08c;"></a>
 
                         <% } %>
                         <!--                    public user-->
@@ -84,7 +84,7 @@
                         <a href='/resources/view/my/public/all'><input type='submit' name='submit'
                                                                        class='form-demo__large fa'
                                                                        style="font-size: 24px; font-weight: 680"
-                                                                       value='SEARCH &#xf002'></a>
+                                                                       value='Search &#xf002'></a>
                     <% } %>
                 </div>
             </div>
@@ -119,7 +119,7 @@
                     <div class='carousel-inner'>
                         <div class='carousel-item active'>
                             <img src='<%= imagePaths[0] %>'
-                                 style='width: 100%; height: 480px; object-fit: contain; border-radius: 30px;'
+                                 style='width: 100%; height: 480px; object-fit: contain;'
                                  class='d-block w-100' alt='...'>
                             <div class='carousel-caption d-none d-md-block'
                                  style='right: 1%; left: 1%; color: black; background-color: white; opacity: 0.95; border-radius: 15px; padding: 4%'>
@@ -129,7 +129,7 @@
                         <% for (let i = 1; i < imagePaths.length; i++) { %>
                             <div class='carousel-item'>
                                 <img src='<%= imagePaths[i] %>'
-                                     style='width: 100%; height: 480px; object-fit: contain; border-radius: 30px;'
+                                     style='width: 100%; height: 480px; object-fit: contain;'
                                      class='d-block w-100' alt='...'>
                                 <div class='carousel-caption d-none d-md-block'
                                      style='right: 1%; left: 1%; color: black; background-color: white; opacity: 0.95; border-radius: 15px; padding: 4%'>
