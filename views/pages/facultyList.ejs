@@ -48,7 +48,7 @@
                             <div class="col-md-1 col-sm-1 align-self-center">
                                 <a href="/profile/view/<%= staffInfo[i]._id %>"><%= staffInfo[i].userName %></a>
                             </div>
-                            <div class="col-md-4 col-sm-4 align-self-center">
+                            <div class="col-md-2 col-sm-2 align-self-center">
                                 <b>Personal links: </b><br>
                                 <% if (staffInfo[i].linkedInURL) { %>
                                     <a href="<%= staffInfo[i].linkedInURL %>"> LinkedIn <span
@@ -59,7 +59,7 @@
                                     <a href="<%= staffInfo[i].personalWebsiteURL %>"> Personal Website </a>
                                 <% } %>
                             </div>
-                            <div class="col-md-4 col-sm-4 align-self-center">
+                            <div class="col-md-6 col-sm-6 align-self-center">
                                 <b>School: </b><br><%= staffInfo[i].affiliation %>
                                 <br>
                                 <b>Department: </b><br><%= staffInfo[i].department %>
@@ -118,7 +118,7 @@
                             <div class="col-md-1 col-sm-1 align-self-center">
                                 <a href="/profile/view/<%= profileInfo[i]._id %>"><%= profileInfo[i].userName %></a>
                             </div>
-                            <div class="col-md-4 col-sm-4 align-self-center">
+                            <div class="col-md-2 col-sm-2 align-self-center">
                                 <b>Personal links: </b><br>
                                 <% if (profileInfo[i].linkedInURL) { %>
                                     <a href="<%= profileInfo[i].linkedInURL %>"> LinkedIn <span
@@ -129,7 +129,7 @@
                                     <a href="<%= profileInfo[i].personalWebsiteURL %>"> Personal Website </a>
                                 <% } %>
                             </div>
-                            <div class="col-md-4 col-sm-4 align-self-center">
+                            <div class="col-md-6 col-sm-6 align-self-center">
                                 <b>School: </b><br><%= profileInfo[i].affiliation %>
                                 <br>
                                 <b>Department: </b><br><%= profileInfo[i].department %>
