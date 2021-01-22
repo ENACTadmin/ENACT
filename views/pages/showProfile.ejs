@@ -22,7 +22,7 @@
             <% if (user.status === 'admin') { %>
                 <hr>
                 <a class="btn btn-outline-primary" href="/profile/create/faculty">Create another faculty profile</a>
-                <a class="btn btn-outline-info" href="/profiles/view/faculty">Go back to faculty list</a>
+                <a class="btn btn-outline-info" href="/profiles/view/faculty">Go back to faculty & staff</a>
                 <br><br>
                 <a class="btn btn-outline-secondary" href="/profile/send/<%= userInfo._id %>">Send notification
                     email</a>
@@ -106,16 +106,9 @@
                 <br>
 
                 <div class='input-group-prepend'>
-                    <span class='input-group-text' style='width: 180px'>Bio</span>
-                    <textarea disabled type='text' class='form-control' rows="6"><%= userInfo.bio %></textarea>
-                </div>
-
-                <br>
-
-                <div class='input-group-prepend'>
                     <span class='input-group-text' style='width: 220px'>LinkedIn URL</span>
                     <input disabled type='text' class='form-control' name='linkedInURL'
-                           value='<%= user.linkedInURL %>'>
+                           value='<%= userInfo.linkedInURL %>'>
                 </div>
 
                 <br>

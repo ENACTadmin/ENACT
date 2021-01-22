@@ -22,7 +22,6 @@ const userSchema = Schema({
     affiliation: String,
     department: String,
     pronoun: String,
-    bio: String, // required for faculty members
     personalWebsiteURL: String,
     networkCheck: String
 });

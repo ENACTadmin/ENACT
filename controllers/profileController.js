@@ -33,7 +33,6 @@ exports.updateProfile = async (req, res, next) => {
         userToUpdate.pronoun = req.body.pronoun;
         userToUpdate.phoneNumber = req.body.phoneNumber;
         userToUpdate.affiliation = req.body.affiliation;
-        userToUpdate.bio = req.body.bio;
         if (req.body.networkCheck === 'on')
             userToUpdate.networkCheck = 'on';
         else
@@ -64,7 +63,6 @@ exports.updateProfileAdmin = async (req, res, next) => {
         userToUpdate.pronoun = req.body.pronoun;
         userToUpdate.phoneNumber = req.body.phoneNumber;
         userToUpdate.affiliation = req.body.affiliation;
-        userToUpdate.bio = req.body.bio;
         userToUpdate.networkCheck = req.body.networkCheck;
         await userToUpdate.save()
         console.log("update success!")
@@ -181,9 +179,9 @@ exports.updateProfileImageURLAdmin = async (req, res, next) => {
 
 let special = ["stimell@brandeis.edu", "djw@brandeis.edu"]
 exports.showFacultyProfiles = async (req, res, next) => {
-    let profileInfo = await User.find({
+    let profileInfo = await User.find({status: "faculty"})
+    let staffInfo = await User.find({
         $or: [
-            {status: "faculty"},
             {
                 workEmail: {
                     $in: special
@@ -193,12 +191,12 @@ exports.showFacultyProfiles = async (req, res, next) => {
                 googleemail: {
                     $in: special
                 }
-            },
-        ]
+            }]
     })
     try {
         res.render('./pages/facultyList', {
-            profileInfo: profileInfo
+            profileInfo: profileInfo,
+            staffInfo: staffInfo
         })
     } catch (e) {
         next(e)
