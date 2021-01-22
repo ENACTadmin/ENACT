@@ -1001,7 +1001,7 @@ h6 {
 .intro__content {
     border-radius: 10px 50px 50px 10px;
     margin-top: 12%;
-    padding: 30px;
+    padding: 25px;
     width: 60%;
     text-align: left;
     background: white;
@@ -1031,8 +1031,8 @@ h6 {
 
 .intro__description {
     padding: 0 0 10px 0;
-    font-size: 24px;
-    line-height: 40px;
+    font-size: x-large;
+    line-height: 150%;
     color: #0053a4;
     font-weight: normal;
 }
@@ -1102,7 +1102,7 @@ h6 {
 
 .form-demo__large {
     margin: 5px;
-    width: 300px;
+    width: 30%;
     /*float: left;*/
     background-color: #0053a4;
     border: 1px solid #fff;
@@ -1629,6 +1629,14 @@ ul.grid__list--fmenu li a:hover {
         padding-right: 2%;
     }
 
+    .intro__description {
+        padding: 0 0 10px 0;
+        font-size: medium;
+        line-height: 135%;
+        color: #0053a4;
+        font-weight: normal;
+    }
+
     .menu-button {
         right: 2%;
     }
@@ -1649,6 +1657,14 @@ ul.grid__list--fmenu li a:hover {
 @media screen and (max-width: 1024px) {
     body {
         font-size: 14px;
+    }
+
+    .intro__description {
+        padding: 0 0 10px 0;
+        font-size: small;
+        line-height: 120%;
+        color: #0053a4;
+        font-weight: normal;
     }
 
     p {
@@ -2095,6 +2111,14 @@ ul.grid__list--fmenu li a:hover {
         padding: 12% 0 0 0;
     }
 
+    .intro__description {
+        padding: 0 0 10px 0;
+        font-size: small;
+        line-height: 120%;
+        color: #0053a4;
+        font-weight: normal;
+    }
+
     .intro__title {
         font-size: 50px;
         line-height: 58px;
@@ -2115,6 +2139,14 @@ ul.grid__list--fmenu li a:hover {
         width: 96%;
         padding-left: 2%;
         padding-right: 2%;
+    }
+
+    .intro__description {
+        padding: 0 0 10px 0;
+        font-size: small;
+        line-height: 120%;
+        color: #0053a4;
+        font-weight: normal;
     }
 
     .header {
@@ -2183,6 +2215,14 @@ ul.grid__list--fmenu li a:hover {
         padding: 10% 0 0 0;
     }
 
+    .intro__description {
+        padding: 0 0 10px 0;
+        font-size: small;
+        line-height: 120%;
+        color: #0053a4;
+        font-weight: normal;
+    }
+
     .intro__title {
         font-size: 32px;
         line-height: 38px;
@@ -2241,6 +2281,14 @@ ul.grid__list--fmenu li a:hover {
 @media screen and (max-width: 680px) and (orientation: landscape) {
     .intro {
         padding: 10% 0 0 0;
+    }
+
+    .intro__description {
+        padding: 0 0 10px 0;
+        font-size: small;
+        line-height: 120%;
+        color: #0053a4;
+        font-weight: normal;
     }
 
     .intro__title {
