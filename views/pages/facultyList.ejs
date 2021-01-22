@@ -124,7 +124,7 @@
                             </div>
                             <div class="col-md-2 col-sm-2 align-self-center">
                                 <b>Personal links: </b><br>
-                                <% if (profileInfo[i].linkedInURL || staffInfo[i].personalWebsiteURL) { %>
+                                <% if (profileInfo[i].linkedInURL || profileInfo[i].personalWebsiteURL) { %>
                                     <% if (profileInfo[i].linkedInURL) { %>
                                         <a href="<%= profileInfo[i].linkedInURL %>"> LinkedIn <span
                                                     class="fa"> &#xf08c;</span></a>
