@@ -33,10 +33,12 @@
                 jQuery('#modal-view-event-add').modal();
             },
             eventClick: function (event, jsEvent, view) {
-                let now = new Date();
+                // create Date object for current location
+                // return time as a string
+                let now = new Date()
                 jQuery('.event-icon').html("<i class='fa fa-" + event.icon + "'></i>");
                 jQuery('.event-title').html(event.title);
-                jQuery('.event-body').html(event.description + "<br>" + "Starts at: " + new Date(event.start + (now.getTimezoneOffset() * 60000)) + "<br>" + "Ends at: " + new Date(event.end + (now.getTimezoneOffset() * 60000)));
+                jQuery('.event-body').html(event.description + "<br>" + "Starts at: " + new Date(event.start + now.getTimezoneOffset() * 60000) + "<br>" + "Ends at: " + new Date(event.end  + now.getTimezoneOffset() * 60000));
                 jQuery('#eventUrl').attr('href', event.uri);
                 jQuery('#modal-view-event').modal();
             },
