@@ -10,7 +10,7 @@ const EventSchema = Schema({
     end: Date,
     uri: String,
     description: String,
-    // className: String,
+    timezone: Number,
     icon: String,
     visibility: String
 });

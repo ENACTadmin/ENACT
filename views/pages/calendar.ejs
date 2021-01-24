@@ -45,7 +45,7 @@
                                                 <% if (eventsInfo[i].start !== null) { %>
                                                     <li class='list-group-item borderless box-padding'>
                                                         <b>Starts at:</b>
-                                                        <%= eventsInfo[i].start %>
+                                                        <span id="startTime<%= eventsInfo[i]._id %>"><%= eventsInfo[i].start %></span>
                                                     </li>
                                                 <% } %>
                                                 <% if (eventsInfo[i].end !== null) { %>
@@ -162,20 +162,22 @@
                             </div>
                             <div class="form-group">
                                 <label>Start Time</label>
-                                <input autocomplete="off" type="text" class="datetimepicker form-control" name="start"
+                                <input readonly autocomplete="off" type="text" class="datetimepicker form-control"
+                                       name="start"
                                        value="<%= eventsInfo[i].start %>">
                             </div>
                             <div class="form-group">
                                 <label>End Date</label>
-                                <input autocomplete="off" type="text" class="datetimepicker form-control" name="end"
+                                <input readonly autocomplete="off" type="text" class="datetimepicker form-control"
+                                       name="end"
                                        value="<%= eventsInfo[i].end %>">
                             </div>
-
                             <div class="form-group">
                                 <label>Event Description</label>
                                 <textarea type="text" class="form-control"
                                           name="description"><%= eventsInfo[i].description %></textarea>
                             </div>
+
                             <div class="form-group">
                                 <label>Visibility</label>
                                 <select id="visibility<%= eventsInfo[i]._id %>" class="form-control" name="visibility">
@@ -183,6 +185,7 @@
                                     <option value="member">Open to ENACT members only</option>
                                 </select>
                             </div>
+
                             <div class="form-group">
                                 <label>Event Link</label>
                                 <input type="text" class="form-control" name="uri" value="<%= eventsInfo[i].uri %>">
@@ -210,19 +213,20 @@
 
 <script>
     $(document).ready(function () {
-        let id_set = $('#idSet').text()
-        if (id_set.length !== 0) {
-            let id_set_array = id_set.split(',')
-            for (let i = 0; i < id_set_array.length; i++) {
-                let realType = $('#visiFromServer' + id_set_array[i]).text()
-                $('#visibility' + id_set_array[i] + ' option').each(function () {
-                    if ($(this).val() === realType) {
-                        $(this).prop('selected', true)
-                    }
-                })
+            let id_set = $('#idSet').text()
+            if (id_set.length !== 0) {
+                let id_set_array = id_set.split(',')
+                for (let i = 0; i < id_set_array.length; i++) {
+                    let realType = $('#visiFromServer' + id_set_array[i]).text()
+                    $('#visibility' + id_set_array[i] + ' option').each(function () {
+                        if ($(this).val() === realType) {
+                            $(this).prop('selected', true)
+                        }
+                    })
+                }
             }
         }
-    })
+    )
 </script>
 
 <%- include('../components/footer'); -%>

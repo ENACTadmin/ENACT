@@ -592,8 +592,9 @@ app.get('/messages/view/all',
 app.get('/events',
     async (req, res) => {
         let eventsInfo = await Event.find({}).sort({start: -1})
-        res.locals.eventsInfo = eventsInfo
-        res.render('./pages/calendar')
+        res.render('./pages/calendar', {
+            eventsInfo: eventsInfo
+        })
     }
 )
 
