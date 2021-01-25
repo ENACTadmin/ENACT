@@ -592,8 +592,13 @@ app.get('/messages/view/all',
 app.get('/events',
     async (req, res) => {
         let eventsInfo = await Event.find({}).sort({start: -1})
+        futureEventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() >= new Date().getTime());
+        pastEventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() < new Date().getTime());
+        console.log("future: ", futureEventsInfo)
+        console.log("past: ", pastEventsInfo)
         res.render('./pages/calendar', {
-            eventsInfo: eventsInfo
+            futureEventsInfo: futureEventsInfo,
+            pastEventsInfo: pastEventsInfo
         })
     }
 )

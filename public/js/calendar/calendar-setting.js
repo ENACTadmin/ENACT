@@ -16,13 +16,13 @@
             }
         });
         jQuery('#calendar').fullCalendar({
-            timeZone: 'America/New_York',
             themeSystem: 'bootstrap4',
             // emphasizes business hours
             businessHours: false,
             defaultView: 'month',
             // event dragging & resizing
             editable: false,
+            selectable: true,
             // header
             header: {
                 left: 'title',
