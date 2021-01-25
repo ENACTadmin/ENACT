@@ -45,13 +45,13 @@
                                                 <% if (eventsInfo[i].start !== null) { %>
                                                     <li class='list-group-item borderless box-padding'>
                                                         <b>Starts at:</b>
-                                                        <span id="startTime<%= eventsInfo[i]._id %>"><%= eventsInfo[i].start %></span>
+                                                        <p class="TZChange"><%= eventsInfo[i].start %></p>
                                                     </li>
                                                 <% } %>
                                                 <% if (eventsInfo[i].end !== null) { %>
                                                     <li class='list-group-item borderless box-padding'>
                                                         <b>Ends at:</b>
-                                                        <%= eventsInfo[i].end %>
+                                                        <p class="TZChange"><%= eventsInfo[i].end %></p>
                                                     </li>
                                                 <% } %>
                                                 <% if (eventsInfo[i].uri !== null) { %>
@@ -225,6 +225,13 @@
                     })
                 }
             }
+            $(".TZChange").each(function () {
+                let oldDate = $(this).text()
+                console.log("old: ", oldDate)
+                let newDate = new Date(oldDate)
+                console.log("new: ", newDate)
+                $(this).text("modified: " + newDate)
+            })
         }
     )
 </script>
