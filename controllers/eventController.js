@@ -27,13 +27,17 @@ exports.saveEvent = async (req, res, next) => {
 
 exports.editEvent = async (req, res, next) => {
     try {
+        let timezoneOffset = req.body.TZ
+        timezoneOffset = parseInt(timezoneOffset) - new Date().getTimezoneOffset()
+        console.log("timezone offset is: ", timezoneOffset)
+        let startDate = new Date(req.body.start).getTime() + parseInt(timezoneOffset) * 60000
+        let endDate = new Date(req.body.end).getTime() + parseInt(timezoneOffset) * 60000
         let eventToEdit = await Event.findOne({_id: req.params.eventId})
         eventToEdit.title = req.body.title
-        eventToEdit.start = req.body.start
-        eventToEdit.end = req.body.end
+        eventToEdit.start = startDate
+        eventToEdit.end = endDate
         eventToEdit.uri = req.body.uri
         eventToEdit.description = req.body.description
-        // eventToEdit.className = req.body.className
         eventToEdit.icon = req.body.icon
         eventToEdit.visibility = req.body.visibility
         await eventToEdit.save()
