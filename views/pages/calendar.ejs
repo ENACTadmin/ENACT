@@ -44,14 +44,14 @@
                                                 </li>
                                                 <% if (eventsInfo[i].start !== null) { %>
                                                     <li class='list-group-item borderless box-padding'>
-                                                        <b>Starts at:</b>
-                                                        <p class="TZChange"><%= eventsInfo[i].start %></p>
+                                                        <b style="display: inline">Starts at:</b>
+                                                        <p style="display: inline" class="TZChange"><%= eventsInfo[i].start %></p>
                                                     </li>
                                                 <% } %>
                                                 <% if (eventsInfo[i].end !== null) { %>
                                                     <li class='list-group-item borderless box-padding'>
-                                                        <b>Ends at:</b>
-                                                        <p class="TZChange"><%= eventsInfo[i].end %></p>
+                                                        <b style="display: inline">Ends at:</b>
+                                                        <p style="display: inline" class="TZChange"><%= eventsInfo[i].end %></p>
                                                     </li>
                                                 <% } %>
                                                 <% if (eventsInfo[i].uri !== null) { %>
@@ -227,10 +227,8 @@
             }
             $(".TZChange").each(function () {
                 let oldDate = $(this).text()
-                console.log("old: ", oldDate)
                 let newDate = new Date(oldDate)
-                console.log("new: ", newDate)
-                $(this).text("modified: " + newDate)
+                $(this).text(newDate)
             })
         }
     )

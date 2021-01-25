@@ -37,8 +37,8 @@
                 // return time as a string
                 let now = new Date()
                 jQuery('.event-icon').html("<i class='fa fa-" + event.icon + "'></i>");
-                jQuery('.event-title').html(event.title + " Timezone offset: " + new Date().getTimezoneOffset());
-                jQuery('.event-body').html(event.description + "<br>" + "Starts at: " + new Date(event.start + now.getTimezoneOffset() * 60000) + "<br>" + "Ends at: " + new Date(event.end  + now.getTimezoneOffset() * 60000));
+                jQuery('.event-title').html(event.title);
+                jQuery('.event-body').html(event.description + "<br>" + "<b>Starts at: </b>" + new Date(new Date(event.start).getTime() + now.getTimezoneOffset() * 60000) + "<br>" + "<b>Ends at: </b>" + new Date(new Date(event.end).getTime() + now.getTimezoneOffset() * 60000));
                 jQuery('#eventUrl').attr('href', event.uri);
                 jQuery('#modal-view-event').modal();
             },
