@@ -13,83 +13,6 @@
 
 <% console.log(facultyPaths) %>
 <!-- Section -->
-<section class='section diagonal-gradient'>
-    <div class='section__content section__content--fluid-width section__content--padding'>
-        <div class='grid grid--3col'>
-            <div class='partners__slide grid__item' style='height: 750px' data-aos="fade-up">
-                <div class='card-body' style='border-radius: 30px'>
-                    <img class='d-flex'
-                         src='https://www.brandeis.edu/ethics/images/advocacy/mstimell01_cropped.jpg'
-                         alt='1'
-                         style='width: 100%; height:400px; object-fit: contain; border-radius: 30px'>
-                    <br>
-                    <h3 style='text-align: center'>Melissa Stimell</h3>
-                    <h4 style='text-align: center'>Academic Program Director</h4>
-                    <hr>
-                    <p style="font-size: 18px">Melissa Stimell is a Professor of the Practice in the Legal Studies
-                        Program at Brandeis
-                        University, and Interim Director of the International Center for Ethics, Justice and Public
-                        Life.
-                    </p>
-                    <br>
-                </div>
-            </div>
-            <div class='partners__slide grid__item' style='height: 750px' data-aos="fade-up" data-aos-delay="200">
-                <div class='card-body' style='border-radius: 30px'>
-                    <img class='d-flex mr-3' src='https://www.brandeis.edu/ethics/images/DJW%20photo.jpg'
-                         alt='David J. Weinstein'
-                         style='width: 100%; height:400px; object-fit: contain; border-radius: 30px'>
-                    <br>
-                    <h3 style='text-align: center'>David J. Weinstein</h3>
-                    <h4 style='text-align: center'>Assistant Director</h4>
-                    <hr>
-                    <p style="font-size: 18px">David Weinstein is Assistant Director of ENACT and Communications for the
-                        Ethics Center.</p>
-                    <br>
-                </div>
-            </div>
-
-            <div class='partners__slide grid__item' style='height: 750px' data-aos="fade-up" data-aos-delay="400">
-                <div id='carouselExampleSlidesOnly' class='carousel slide' data-ride='carousel'>
-                    <div class='carousel-inner'>
-                        <div class='carousel-item active'>
-                            <div class='card-body' style='border-radius: 30px'>
-                                <img class='d-flex mr-3'
-                                     src='<%= facultyPaths[0][0] %>'
-                                     alt='...'
-                                     style='width: 100%; height: 400px; object-fit: contain;'>
-                                <br>
-                                <h3 style='text-align: center'><%= facultyPaths[0][1] %></h3>
-                                <h4 style='text-align: center'>Faculty Fellow</h4>
-                                <hr>
-                                <p style="font-size: 18px"><%= facultyPaths[0][2] %></p>
-                                <br>
-                            </div>
-                        </div>
-                        <% for (let i = 1; i < facultyPaths.length; i++) { %>
-                            <div class='carousel-item'>
-                                <div class='card-body' style='border-radius: 30px'>
-                                    <img class='d-flex mr-3'
-                                         src='<%= facultyPaths[i][0] %>'
-                                         alt='...'
-                                         style='width: 100%; height: 400px; object-fit: contain;'>
-                                    <br>
-                                    <h3 style='text-align: center'><%= facultyPaths[i][1] %></h3>
-                                    <h4 style='text-align: center'>Faculty Fellow</h4>
-                                    <hr>
-                                    <p style="font-size: 18px"><%= facultyPaths[i][2] %></p>
-                                    <br>
-                                </div>
-                            </div>
-                        <% } %>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class='partners__pagination'></div>
-        <div class='clear'></div>
-    </div>
-</section>
 
 <!-- ENACT Program intro -->
 <section class='section section__grey'>
@@ -163,15 +86,193 @@
             <div class='grid__item partners__slide__grey' style='height: 500px' data-aos='fade-up'>
                 <h3 class='grid__title'><span>External Links</span></h3>
                 <p class='grid__text' style="font-size: large; line-height: 32px">
-                    • Learn more: <a href="https://www.brandeis.edu/ethics/ENACT/index.html">go.brandeis.edu/ENACT</a><br>
+                    • Learn more: <a
+                            href="https://www.brandeis.edu/ethics/ENACT/index.html">go.brandeis.edu/ENACT</a><br>
                     • Full list of faculty members: <a href="/profiles/view/faculty">here </a><br>
                     • Contact Us: <a href="/contact">here </a><br>
                     • ENACT is a program of <a href="https://www.brandeis.edu/ethics/">the International Center for
-                        Ethics, Justice and Public Life</a> at <a href="https://www.brandeis.edu/">Brandeis University.</a>
+                        Ethics, Justice and Public Life</a> at <a href="https://www.brandeis.edu/">Brandeis
+                        University.</a>
                     <br>
             </div>
         </div>
 
+        <div class='clear'></div>
+    </div>
+</section>
+
+<section class='section diagonal-gradient'>
+    <div class='section__content section__content--fluid-width section__content--padding'>
+        <h2 class='section__title section__title--centered' style="color: whitesmoke">Faculty & Fellows</h2><br>
+        <div class='grid grid--4col'>
+            <div class='partners__slide grid__item' style='height: 725px' data-aos="fade-up">
+                <div class='card-body' style='border-radius: 30px'>
+                    <img class='d-flex'
+                         src='https://www.brandeis.edu/ethics/images/advocacy/mstimell01_cropped.jpg'
+                         alt='1'
+                         style='width: 100%; height: 400px; object-fit: contain;'>
+                    <br>
+                    <h3 style='text-align: center'>Melissa Stimell</h3>
+                    <h4 style='text-align: center'>Academic Program Director</h4>
+                    <hr>
+                    <p style="font-size: 18px">Melissa Stimell is a Professor of the Practice in the Legal Studies
+                        Program at Brandeis University, and Director of the International Center for Ethics, Justice and
+                        Public
+                        Life.
+                    </p>
+                    <br>
+                </div>
+            </div>
+            <div class='partners__slide grid__item' style='height: 725px' data-aos="fade-up" data-aos-delay="200">
+                <div class='card-body' style='border-radius: 30px'>
+                    <img class='d-flex mr-3' src='https://www.brandeis.edu/ethics/images/DJW%20photo.jpg'
+                         alt='David J. Weinstein'
+                         style='width: 100%; height: 400px; object-fit: contain;'>
+                    <br>
+                    <h3 style='text-align: center'>David J. Weinstein</h3>
+                    <h4 style='text-align: center'>Assistant Director</h4>
+                    <hr>
+                    <p style="font-size: 18px">David Weinstein is Assistant Director of ENACT and Communications for the
+                        Ethics Center.</p>
+                    <br>
+                </div>
+            </div>
+            <div class='partners__slide grid__item' style='height: 725px' data-aos="fade-up" data-aos-delay="400">
+                <div class='card-body' style='border-radius: 30px'>
+                    <img class='d-flex mr-3'
+                         src='https://media-exp1.licdn.com/dms/image/C4E03AQHCnTrpmnKhvg/profile-displayphoto-shrink_800_800/0/1516307364126?e=1617235200&v=beta&t=exVX2jW9E2FILkiT7zVcYeCPkvGI27JIVV7hLszRMn4'
+                         alt='Timothy J. Hickey'
+                         style='width: 100%; height: 400px; object-fit: contain'>
+                    <br>
+                    <h3 style='text-align: center'>Timothy J. Hickey</h3>
+                    <h4 style='text-align: center'>Technology Advisor</h4>
+                    <hr>
+                    <p style="font-size: 18px">Timothy J. Hickey is a Professor of Computer Science and Chair of
+                        Computer Science at Brandeis University. </p>
+                    <br>
+                </div>
+            </div>
+            <div class='partners__slide grid__item' style='height: 725px' data-aos="fade-up" data-aos-delay="400">
+                <div id='carouselExampleSlidesOnly' class='carousel slide' data-ride='carousel'>
+                    <div class='carousel-inner'>
+                        <div class='carousel-item active'>
+                            <div class='card-body' style='border-radius: 30px'>
+                                <img class='d-flex mr-3'
+                                     src='<%= facultyPaths[0][0] %>'
+                                     alt='...'
+                                     style='width: 100%; height: 400px; object-fit: contain;'>
+                                <br>
+                                <h3 style='text-align: center'><%= facultyPaths[0][1] %></h3>
+                                <h4 style='text-align: center'>Faculty Fellow</h4>
+                                <hr>
+                                <p style="font-size: 18px"><%= facultyPaths[0][2] %></p>
+                                <br>
+                            </div>
+                        </div>
+                        <% for (let i = 1; i < facultyPaths.length; i++) { %>
+                            <div class='carousel-item'>
+                                <div class='card-body' style='border-radius: 30px'>
+                                    <img class='d-flex mr-3'
+                                         src='<%= facultyPaths[i][0] %>'
+                                         alt='...'
+                                         style='width: 100%; height: 400px; object-fit: contain;'>
+                                    <br>
+                                    <h3 style='text-align: center'><%= facultyPaths[i][1] %></h3>
+                                    <h4 style='text-align: center'>Faculty Fellow</h4>
+                                    <hr>
+                                    <p style="font-size: 18px"><%= facultyPaths[i][2] %></p>
+                                    <br>
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='partners__pagination'></div>
+        <div class='clear'></div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h2 class='section__title section__title--centered' style="color: whitesmoke">Engineering & Product</h2><br>
+        <div class='grid grid--6col'>
+            <div class='partners__slide grid__item' style='height: 725px' data-aos="fade-up">
+                <div class='card-body' style='border-radius: 30px'>
+                    <img class='d-flex'
+                         src='https://scontent.fnyc1-1.fna.fbcdn.net/v/t1.0-9/87289999_1017660645284246_2746347138697920512_n.jpg?_nc_cat=108&ccb=2&_nc_sid=09cbfe&_nc_ohc=OB5egYSFWXEAX-MEZDj&_nc_ht=scontent.fnyc1-1.fna&oh=ba53549096b4b600923ea89bf7e6e346&oe=6033A045'
+                         alt='Hangyu Du'
+                         style='width: 100%; height: 200px; object-fit: contain;'>
+                    <br>
+                    <h3 style='text-align: center'>Hangyu Du</h3>
+                    <h4 style='text-align: center'>Developer (2020.5 - Present)</h4>
+                    <hr>
+                    <p style="font-size: 18px">Hangyu Du is the core developer of this digital platform. He is a huge
+                        fan and practitioner of machine learning.
+                        He also enjoys coding and creating end-to-end user-interface programs from scratch.
+                    </p>
+                    <br>
+                </div>
+            </div>
+            <div class='partners__slide grid__item' style='height: 725px' data-aos="fade-up" data-aos-delay="200">
+                <div class='card-body' style='border-radius: 30px'>
+                    <img class='d-flex mr-3'
+                         src='https://media-exp1.licdn.com/dms/image/C4E03AQH0-q7zpPSi3g/profile-displayphoto-shrink_800_800/0/1532048229387?e=1617235200&v=beta&t=8MPLovxKFKdMVwOzTpo3VaYFnHoNfu5BVyjgk5WX0bw'
+                         alt='Huiyan Zhang'
+                         style='width: 100%; height: 200px; object-fit: contain;'>
+                    <br>
+                    <h3 style='text-align: center'>Huiyan Zhang</h3>
+                    <h4 style='text-align: center'>Developer (2020.5 - 2021.1)</h4>
+                    <hr>
+                    <p style="font-size: 18px">Huiyan Zhang is the core developer of this platform. </p>
+                    <br>
+                </div>
+            </div>
+            <div class='partners__slide grid__item' style='height: 725px' data-aos="fade-up" data-aos-delay="400">
+                <div class='card-body' style='border-radius: 30px'>
+                    <img class='d-flex mr-3'
+                         src='https://media-exp1.licdn.com/dms/image/C4D03AQFiV3a755vMLw/profile-displayphoto-shrink_800_800/0/1578274430361?e=1617235200&v=beta&t=hISCEC3x6duqR7MseJKDrG5ofYSYsKNj7X374SGidls'
+                         alt='Elaina Pevide'
+                         style='width: 100%; height: 200px; object-fit: contain'>
+                    <br>
+                    <h3 style='text-align: center'>Elaina Pevide</h3>
+                    <h4 style='text-align: center'>Product Advisor & Pilot Tester</h4>
+                    <hr>
+                    <p style="font-size: 18px">Some text needed.</p>
+                    <br>
+                </div>
+            </div>
+            <div class='partners__slide grid__item' style='height: 725px' data-aos="fade-up" data-aos-delay="600">
+                <div class='card-body' style='border-radius: 30px'>
+                    <img class='d-flex mr-3'
+                         src='https://media-exp1.licdn.com/dms/image/C5603AQFw_gNZoBEyEA/profile-displayphoto-shrink_800_800/0/1603678826183?e=1617235200&v=beta&t=Lfj_4K9ZkzgNnvjy4YPNGpVpITukYau0fSlJCDuVWXk'
+                         alt='Emily Fishman'
+                         style='width: 100%; height: 200px; object-fit: contain'>
+                    <br>
+                    <h3 style='text-align: center'>Emily Fishman</h3>
+                    <h4 style='text-align: center'>Product Advisor & Pilot Tester</h4>
+                    <hr>
+                    <p style="font-size: 18px">Some text needed.</p>
+                    <br>
+                </div>
+            </div>
+            <div class='partners__slide grid__item' style='height: 725px' data-aos="fade-up">
+                <div class='card-body' style='border-radius: 30px'>
+                    <img class='d-flex'
+                         src='https://media-exp1.licdn.com/dms/image/C4D03AQHyw_LSpTiNXw/profile-displayphoto-shrink_800_800/0/1603822981261?e=1617235200&v=beta&t=3DfzttnQIur9bkQa2a78bbgaDObIk55qT9hs4RffLfg'
+                         alt='Benée Hershon'
+                         style='width: 100%; height: 200px; object-fit: contain;'>
+                    <br>
+                    <h3 style='text-align: center'>Benée Hershon</h3>
+                    <h4 style='text-align: center'>Product Advisor & Pilot Tester</h4>
+                    <hr>
+                    <p style="font-size: 18px"> Some text needed.
+                    </p>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <div class='partners__pagination'></div>
         <div class='clear'></div>
     </div>
 </section>
