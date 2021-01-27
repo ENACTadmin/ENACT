@@ -993,7 +993,7 @@ h6 {
 .intro {
     width: 100%;
     /*float: ;*/
-    padding: 10% 0 0 0;
+    padding: 9.2% 0 0 0;
     position: relative;
     z-index: 777;
 }
@@ -1002,7 +1002,7 @@ h6 {
     border-radius: 10px 50px 50px 10px;
     margin-top: 12%;
     padding: 25px;
-    width: 60%;
+    width: 65%;
     text-align: left;
     background: white;
     opacity: 0.92;
@@ -1032,7 +1032,7 @@ h6 {
 .intro__description {
     padding: 0 0 10px 0;
     font-size: x-large;
-    line-height: 150%;
+    line-height: 135%;
     color: #0053a4;
     font-weight: normal;
 }
@@ -1659,6 +1659,10 @@ ul.grid__list--fmenu li a:hover {
         font-size: 14px;
     }
 
+    .intro__content {
+        width: 65%;
+    }
+
     .intro__description {
         padding: 0 0 10px 0;
         font-size: small;
@@ -2111,6 +2115,10 @@ ul.grid__list--fmenu li a:hover {
         padding: 12% 0 0 0;
     }
 
+    .intro__content {
+        width: 65%;
+    }
+
     .intro__description {
         padding: 0 0 10px 0;
         font-size: small;
@@ -2139,6 +2147,10 @@ ul.grid__list--fmenu li a:hover {
         width: 96%;
         padding-left: 2%;
         padding-right: 2%;
+    }
+
+    .intro__content {
+        width: 80%;
     }
 
     .intro__description {
@@ -2215,6 +2227,10 @@ ul.grid__list--fmenu li a:hover {
         padding: 10% 0 0 0;
     }
 
+    .intro__content {
+        width: 80%;
+    }
+
     .intro__description {
         padding: 0 0 10px 0;
         font-size: small;
@@ -2255,6 +2271,10 @@ ul.grid__list--fmenu li a:hover {
         padding: 0 0 20px 0;
     }
 
+    .intro__content {
+        width: 100%;
+    }
+
     .intro__subtitle {
         font-size: 24px;
         padding: 0 5% 10px 5%;
@@ -2281,6 +2301,10 @@ ul.grid__list--fmenu li a:hover {
 @media screen and (max-width: 680px) and (orientation: landscape) {
     .intro {
         padding: 10% 0 0 0;
+    }
+
+    .intro__content {
+        width: 100%;
     }
 
     .intro__description {
