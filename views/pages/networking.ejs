@@ -14,7 +14,11 @@
             <h4>ENACT faculty fellows, students and alumni have access to a national network of ENACT faculty, students
                 and alumni, <br>and an <a href="https://www.linkedin.com/groups/8601882/"><span
                             class="fa">&#xf08c;</span> ENACT-only LinkedIn group</a>,
-                for resource sharing and career advice. To access this network, <a href="/login">log in</a>.</h4>
+                for resource sharing and career advice.
+                <% if (!loggedIn) { %>
+                    To access this network, <a href="/login">log in</a>.
+                <% } %>
+            </h4>
         </div>
     </div>
 </section>
@@ -28,13 +32,14 @@
         <% if (!loggedIn) { %>
             <div class="card-body">
                 <div class='text-center partners__text'>
-                    <h3>Please login to view the details</h3>
+                    <h5>Are you an alum of an ENACT course? <a href="/login">Login</a> to use this platform and request membership in the
+                        <a href="https://www.linkedin.com/groups/8601882/"> <span class="fa">&#xf08c;</span>
+                            ENACT-only LinkedIn group</a>.</h5>
                 </div>
             </div>
         <% } else { %>
             <ul class="list-group" id="myList">
                 <% if (profileInfo && profileInfo.length > 0) { %>
-
                     <% for (let i = 0; i < profileInfo.length; i++) { %>
                         <% if (profileInfo[i].status === "faculty" || profileInfo[i].status === "admin") { %>
                             <li class="list-group-item" style="height: 200px; font-size: larger">
