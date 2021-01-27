@@ -549,10 +549,35 @@ app.get('/profile/send/:id',
 
 //*******************************************
 //***********Networking related**************
+
 app.get('/networking',
-    (req, res) => {
-        res.render('./pages/networking')
+    async (req, res) => {
+        let profileInfo = await User.find({networkCheck: 'on'})
+        res.render('./pages/networking', {
+            profileInfo: profileInfo,
+            state: 'U.S.'
+        })
     })
+
+app.get('/networking',
+    async (req, res) => {
+        let profileInfo = await User.find({networkCheck: 'on'})
+        res.render('./pages/networking', {
+            profileInfo: profileInfo,
+            state: 'U.S.'
+        })
+    })
+
+app.get('/networking/:state',
+    async (req, res) => {
+        let profileInfo = await User.find({state: req.params.state, networkCheck: 'on'})
+        res.render('./pages/networking', {
+            profileInfo: profileInfo,
+            state: req.params.state
+        })
+    }
+)
+
 
 //*******************************************
 //************Message related****************
@@ -696,6 +721,18 @@ app.get('/secretFunction3',
             }
         }
         res.send("Success!")
+    }
+)
+
+// reset word2id mappings
+app.get('/secretFunction4',
+    async (req, res) => {
+        let users = await User.find()
+        for (let i = 0; i < users.length; i++) {
+            users[i].networkCheck = 'on'
+            await users[i].save()
+        }
+        res.send("success!")
     }
 )
 
