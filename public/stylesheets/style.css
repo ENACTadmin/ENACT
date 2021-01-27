@@ -809,63 +809,63 @@ h6 {
 /* ELEMENT grid__item BASED ON BLOCK MODIFIER grid--6col  */
 .grid--6col .grid__item {
     float: left;
-    margin-right: 80px;
-    margin-bottom: 80px;
+    margin-right: 32px;
+    margin-bottom: 32px;
     /* full width - space between cols * nr of inner spaces / number of cols */
-    width: calc((100% - 80px * 5) / 6);
+    width: calc((100% - 32px * 5) / 6);
 }
 
 .grid--6col .grid__item.grid__item--padding {
     /* full width - space between cols * nr of inner spaces - padding * nr of paddings / number of cols */
-    width: calc((100% - 80px * 5 - 20px * 12) / 6);
+    width: calc((100% - 32px * 5 - 20px * 12) / 6);
     padding: 20px;
 }
 
 .grid--6col .grid__item--x2 {
     /*(      one grid item    ) * 2 + space between cols */
-    width: calc((((100% - 80px * 5) / 6) * 2) + 80px);
+    width: calc((((100% - 32px * 5) / 6) * 2) + 32px);
 }
 
 .grid--6col .grid__item--x2.grid__item--padding {
 
     /*   (    one grid item with padding  ) * 2 + space between cols + padding */
-    width: calc((((100% - 80px * 5 - 20px * 12) / 6) * 2) + 80px + 20px * 2);
+    width: calc((((100% - 32px * 5 - 20px * 12) / 6) * 2) + 40px + 20px * 2);
     padding: 20px;
 }
 
 .grid--6col .grid__item--x3 {
     /*(      one grid item    ) * 3 + space between cols */
-    width: calc((((100% - 80px * 5) / 6) * 3) + 80px * 2);
+    width: calc((((100% - 32px * 5) / 6) * 3) + 32px * 2);
 }
 
 .grid--6col .grid__item--x3.grid__item--padding {
 
     /*   (    one grid item with padding  ) * 3 + space between cols + padding */
-    width: calc((((100% - 80px * 5 - 20px * 12) / 6) * 3) + 80px * 2 + 20px * 4);
+    width: calc((((100% - 32px * 5 - 20px * 12) / 6) * 3) + 32px * 2 + 20px * 4);
     padding: 20px;
 }
 
 .grid--6col .grid__item--x4 {
     /*(      one grid item    ) * 4 + space between cols */
-    width: calc((((100% - 80px * 5) / 6) * 4) + 80px * 3);
+    width: calc((((100% - 32px * 5) / 6) * 4) + 32px * 3);
 }
 
 .grid--6col .grid__item--x4.grid__item--padding {
 
     /*   (    one grid item with padding  ) * 4 + space between cols + padding */
-    width: calc((((100% - 80px * 5 - 20px * 12) / 6) * 4) + 80px * 3 + 20px * 6);
+    width: calc((((100% - 32px * 5 - 20px * 12) / 6) * 4) + 32px * 3 + 20px * 6);
     padding: 20px;
 }
 
 .grid--6col .grid__item--x5 {
     /*(      one grid item    ) * 5 + space between cols */
-    width: calc((((100% - 80px * 5) / 6) * 5) + 80px * 4);
+    width: calc((((100% - 32px * 5) / 6) * 5) + 32px * 4);
 }
 
 .grid--6col .grid__item--x5.grid__item--padding {
 
     /*   (    one grid item with padding  ) * 5 + space between cols + padding */
-    width: calc((((100% - 80px * 5 - 20px * 12) / 6) * 5) + 80px * 4 + 20px * 8);
+    width: calc((((100% - 32px * 5 - 20px * 12) / 6) * 5) + 32px * 4 + 20px * 8);
     padding: 20px;
 }
 

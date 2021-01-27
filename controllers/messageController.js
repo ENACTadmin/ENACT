@@ -112,7 +112,7 @@ exports.sendProfileEmail = async (req, res, next) => {
         subject: 'ENACT Digital Platform: you have one new message from ' + userName,
         text: 'ENACT Digital Platform: you have one new message from ' + userName,
         html: 'Hi,' +
-            '<br>' + '  Your profile is set by ENACT admin, the default password is: ' + currUser.password + '<br>Please remember to change your password by navigating to Settings -> Update profile to change your password' +
+            '<br>' + '  Your profile is set by ENACT admin, the default password is: ' + currUser.password + '<br>Please remember to change your password by navigating to People & Networking -> Update profile to change your password' +
             '<br>' + '<b>  Click <a href=' + url + '>' + 'here' + '</a>' + ' to login</b>' +
             '<br><br>' + 'ENACT Support Team'
     };

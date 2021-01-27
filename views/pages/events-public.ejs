@@ -10,7 +10,7 @@
             <div class='section__title section__title--centered'>
                 Latest Events & On-going Courses
             </div>
-            <h3>There are <b><i><%= futureEventsInfo.length %></i></b> future events!</h3>
+            <h3>There are <b><i><%= futureEventsInfo.length %></i></b> upcoming events!</h3>
             <h3>There are <b><i><%= courses.length %></i></b> courses in session!</h3>
         </div>
     </div>
@@ -21,7 +21,7 @@
         <div class='container'>
             <div class='row'>
                 <div class='col-md-12 col-sm-12'>
-                    <h3><b>Future events</b></h3>
+                    <h3><b>Upcoming events</b></h3>
                     <hr style="border-top: 1px solid black;">
                     <% if (futureEventsInfo && futureEventsInfo.length !== 0) { %>
                         <% for (let i = 0; i < futureEventsInfo.length; i++) { %>
@@ -59,27 +59,6 @@
                                                     <b>Visibility: </b><%= futureEventsInfo[i].visibility %>
                                                 </li>
                                             <% } %>
-
-                                            <% if (loggedIn) { %>
-                                                <li class='list-group-item borderless box-padding'
-                                                    style="display: inline">
-                                                    <b>Actions:</b>
-                                                    <button type='button'
-                                                            class='btn btn-sm btn-outline-info'
-                                                            style='border:0 solid transparent'
-                                                            data-toggle='modal'
-                                                            data-target='#editModal<%= futureEventsInfo[i]._id %>'>
-                                                        Edit
-                                                    </button>
-                                                    <button type='button'
-                                                            class='btn btn-sm btn-outline-warning'
-                                                            style='border:0px solid transparent'
-                                                            data-toggle='modal'
-                                                            data-target='#deleteModal<%= futureEventsInfo[i]._id %>'>
-                                                        Delete
-                                                    </button>
-                                                </li>
-                                            <% } %>
                                         </ul>
                                     </div>
                                 </div>
@@ -90,7 +69,7 @@
                         <% } %>
                     <% } else { %>
                         <div class='text-center partners__text'>
-                            <h3>No future events</h3>
+                            <h3>No upcoming events</h3>
                         </div>
                     <% } %>
                 </div>
@@ -142,27 +121,6 @@
                                                     <b>Visibility: </b><%= pastEventsInfo[i].visibility %>
                                                 </li>
                                             <% } %>
-
-                                            <% if (loggedIn) { %>
-                                                <li class='list-group-item borderless box-padding'
-                                                    style="display: inline">
-                                                    <b>Actions:</b>
-                                                    <button type='button'
-                                                            class='btn btn-sm btn-outline-info'
-                                                            style='border:0 solid transparent'
-                                                            data-toggle='modal'
-                                                            data-target='#editModal<%= pastEventsInfo[i]._id %>'>
-                                                        Edit
-                                                    </button>
-                                                    <button type='button'
-                                                            class='btn btn-sm btn-outline-warning'
-                                                            style='border:0px solid transparent'
-                                                            data-toggle='modal'
-                                                            data-target='#deleteModal<%= pastEventsInfo[i]._id %>'>
-                                                        Delete
-                                                    </button>
-                                                </li>
-                                            <% } %>
                                         </ul>
                                     </div>
                                 </div>
@@ -181,275 +139,6 @@
         </div>
     </section>
 </section>
-
-<div id="modal-view-event-add" class="modal modal-top fade calendar-modal">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <form action='/event/save' method='post' id="add-event">
-                <div class="modal-body">
-                    <h4 class="text-blue h4 mb-10">Add Event Detail</h4>
-                    <div class="form-group">
-                        <label>Event name</label>
-                        <input type="text" class="form-control" name="title">
-                    </div>
-                    <div class="form-group">
-                        <label>Start Time</label>
-                        <input readonly autocomplete="off" type='text'
-                               class="datetimepicker form-control" name="start">
-                    </div>
-                    <div class="form-group">
-                        <label>End Time</label>
-                        <input readonly autocomplete="off" type='text'
-                               class="datetimepicker form-control" name="end">
-                    </div>
-                    <div class="form-group">
-                        <label>Event Description</label>
-                        <textarea class="form-control" name="description"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Visibility</label>
-                        <select class="form-control" name="visibility">
-                            <option value="public">Open to public</option>
-                            <option value="member">Open to ENACT members only</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Event Link</label>
-                        <input type="text" class="form-control" name="uri">
-                    </div>
-                    <div class="form-group">
-                        <label>Event Icon</label>
-                        <select class="form-control" name="icon">
-                            <option value="circle">circle</option>
-                            <option value="cog">cog</option>
-                            <option value="group">group</option>
-                            <option value="suitcase">suitcase</option>
-                            <option value="calendar">calendar</option>
-                        </select>
-                    </div>
-                </div>
-                <input hidden id="TZ" type="text" class="form-control" name="TZ">
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Save</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!--<div class="pre-loader">-->
-<!--    <div class="pre-loader-box">-->
-<!--        <div class='loader-progress' id="progress_div">-->
-<!--            <div class='bar' id='bar1'></div>-->
-<!--        </div>-->
-<!--        <div class='percent' id='percent1'>0%</div>-->
-<!--        <div class="loading-text">-->
-<!--            Loading...-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!-- Delete Modal -->
-<% if (futureEventsInfo.length !== 0) { %>
-    <% for (let i = 0; i < futureEventsInfo.length; i++) { %>
-        <div class='modal fade' id='deleteModal<%= futureEventsInfo[i]._id %>' tabindex='-1' role='dialog'
-             aria-labelledby='exampleModalLabel'
-             aria-hidden='true'>
-            <div class='modal-dialog modal-lg' role='document'>
-                <div class='modal-content'>
-                    <div class='modal-header'>
-                        <h5 class='modal-title' id='exampleModalLabel'>Delete?</h5>
-                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                            <span aria-hidden='true'>&times;</span>
-                        </button>
-                    </div>
-                    <div class='modal-body'>
-                        <div class='row'>
-                            <div class='col-md-12 col-sm-12'>
-                                <h4>Are you sure you want to delete this event permanently?</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class='modal-footer'>
-                        <form method='post' action='/event/delete/<%= futureEventsInfo[i]._id %>'>
-                            <input type='submit' name='submit' class='btn btn-outline-danger' value='Delete'>
-                        </form>
-                        <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>
-                            Close
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <% } %>
-<% } %>
-
-<!--Edit Modal-->
-<% if (futureEventsInfo.length !== 0) { %>
-    <% for (let i = 0; i < futureEventsInfo.length; i++) { %>
-        <!-- Modal -->
-        <div id="editModal<%= futureEventsInfo[i]._id %>" class="modal modal-top fade">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <form action='/event/edit/<%= futureEventsInfo[i]._id %>' method='post' id="add-event">
-                        <div class="modal-body">
-                            <h4 class="text-blue h4 mb-10">Edit Event Detail</h4>
-                            <div class="form-group">
-                                <label>Event name</label>
-                                <input type="text" class="form-control" name="title"
-                                       value="<%= futureEventsInfo[i].title %>">
-                            </div>
-                            <div class="form-group">
-                                <label>Start Time</label>
-                                <input readonly autocomplete="off" type="text" class="datetimepicker form-control"
-                                       name="start"
-                                       value="<%= futureEventsInfo[i].start %>">
-                            </div>
-                            <div class="form-group">
-                                <label>End Date</label>
-                                <input readonly autocomplete="off" type="text" class="datetimepicker form-control"
-                                       name="end"
-                                       value="<%= futureEventsInfo[i].end %>">
-                            </div>
-                            <div class="form-group">
-                                <label>Event Description</label>
-                                <textarea type="text" class="form-control"
-                                          name="description"><%= futureEventsInfo[i].description %></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Visibility</label>
-                                <select id="visibility<%= futureEventsInfo[i]._id %>" class="form-control"
-                                        name="visibility">
-                                    <option value="public">Open to public</option>
-                                    <option value="member">Open to ENACT members only</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Event Link</label>
-                                <input type="text" class="form-control" name="uri"
-                                       value="<%= futureEventsInfo[i].uri %>">
-                            </div>
-                        </div>
-                        <input hidden id="TZ" type="text" class="form-control" name="TZ">
-
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Save</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <p hidden id='visiFromServer<%= futureEventsInfo[i]._id %>'><%= futureEventsInfo[i].visibility %></p>
-        <% id_set.push(futureEventsInfo[i]._id) %>
-    <% } %>
-<% } %>
-
-<!-- Delete Modal -->
-<% if (pastEventsInfo.length !== 0) { %>
-    <% for (let i = 0; i < pastEventsInfo.length; i++) { %>
-        <div class='modal fade' id='deleteModal<%= pastEventsInfo[i]._id %>' tabindex='-1' role='dialog'
-             aria-labelledby='exampleModalLabel'
-             aria-hidden='true'>
-            <div class='modal-dialog modal-lg' role='document'>
-                <div class='modal-content'>
-                    <div class='modal-header'>
-                        <h5 class='modal-title' id='exampleModalLabel'>Delete?</h5>
-                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                            <span aria-hidden='true'>&times;</span>
-                        </button>
-                    </div>
-                    <div class='modal-body'>
-                        <div class='row'>
-                            <div class='col-md-12 col-sm-12'>
-                                <h4>Are you sure you want to delete this event permanently?</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class='modal-footer'>
-                        <form method='post' action='/event/delete/<%= pastEventsInfo[i]._id %>'>
-                            <input type='submit' name='submit' class='btn btn-outline-danger' value='Delete'>
-                        </form>
-                        <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>
-                            Close
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <% } %>
-<% } %>
-
-<!--Edit Modal-->
-<% if (pastEventsInfo.length !== 0) { %>
-    <% for (let i = 0; i < pastEventsInfo.length; i++) { %>
-        <!-- Modal -->
-        <div id="editModal<%= pastEventsInfo[i]._id %>" class="modal modal-top fade">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <form action='/event/edit/<%= pastEventsInfo[i]._id %>' method='post' id="add-event">
-                        <div class="modal-body">
-                            <h4 class="text-blue h4 mb-10">Edit Event Detail</h4>
-                            <div class="form-group">
-                                <label>Event name</label>
-                                <input type="text" class="form-control" name="title"
-                                       value="<%= pastEventsInfo[i].title %>">
-                            </div>
-                            <div class="form-group">
-                                <label>Start Time</label>
-                                <input readonly autocomplete="off" type="text" class="datetimepicker form-control"
-                                       name="start"
-                                       value="<%= pastEventsInfo[i].start %>">
-                            </div>
-                            <div class="form-group">
-                                <label>End Date</label>
-                                <input readonly autocomplete="off" type="text" class="datetimepicker form-control"
-                                       name="end"
-                                       value="<%= pastEventsInfo[i].end %>">
-                            </div>
-                            <div class="form-group">
-                                <label>Event Description</label>
-                                <textarea type="text" class="form-control"
-                                          name="description"><%= pastEventsInfo[i].description %></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Visibility</label>
-                                <select id="visibility<%= pastEventsInfo[i]._id %>" class="form-control"
-                                        name="visibility">
-                                    <option value="public">Open to public</option>
-                                    <option value="member">Open to ENACT members only</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Event Link</label>
-                                <input type="text" class="form-control" name="uri" value="<%= pastEventsInfo[i].uri %>">
-                            </div>
-                        </div>
-                        <input hidden id="TZ" type="text" class="form-control" name="TZ">
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Save</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <p hidden id='visiFromServer<%= pastEventsInfo[i]._id %>'><%= pastEventsInfo[i].visibility %></p>
-        <% id_set.push(pastEventsInfo[i]._id) %>
-    <% } %>
-<% } %>
-
-<input hidden id="TZ" type="text" class="form-control" name="TZ">
-<p hidden id='idSet'><%= id_set %></p>
 
 <% let days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'] %>
 <!-- ENACT Program intro -->
@@ -584,19 +273,6 @@
 
 <script>
     $(document).ready(function () {
-            $("#TZ").val(new Date().getTimezoneOffset())
-            let id_set = $('#idSet').text()
-            if (id_set.length !== 0) {
-                let id_set_array = id_set.split(',')
-                for (let i = 0; i < id_set_array.length; i++) {
-                    let realType = $('#visiFromServer' + id_set_array[i]).text()
-                    $('#visibility' + id_set_array[i] + ' option').each(function () {
-                        if ($(this).val() === realType) {
-                            $(this).prop('selected', true)
-                        }
-                    })
-                }
-            }
             $(".TZChange").each(function () {
                 let oldDate = $(this).text()
                 let newDate = new Date(oldDate)

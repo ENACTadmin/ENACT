@@ -22,7 +22,7 @@
         <div class='container'>
             <div class='row'>
                 <div class='col-md-12 col-sm-12'>
-                    <h3>Future events</h3>
+                    <h3>Upcoming events</h3>
                     <hr>
                     <% if (futureEventsInfo && futureEventsInfo.length !== 0) { %>
                         <% for (let i = 0; i < futureEventsInfo.length; i++) { %>
@@ -62,7 +62,7 @@
                                                     </li>
                                                 <% } %>
 
-                                                <% if (loggedIn) { %>
+                                                <% if (loggedIn && (status === 'admin' || status === 'faculty')) { %>
                                                     <li class='list-group-item borderless box-padding'
                                                         style="display: inline">
                                                         <b>Actions:</b>
@@ -93,7 +93,7 @@
                         <% } %>
                     <% } else { %>
                         <div class='text-center partners__text'>
-                            <h3>No future events</h3>
+                            <h3>No upcoming events</h3>
                         </div>
                     <% } %>
                 </div>
@@ -146,7 +146,7 @@
                                                     </li>
                                                 <% } %>
 
-                                                <% if (loggedIn) { %>
+                                                <% if (loggedIn && (status === 'admin' || status === 'faculty')) { %>
                                                     <li class='list-group-item borderless box-padding'
                                                         style="display: inline">
                                                         <b>Actions:</b>
@@ -232,7 +232,7 @@
                         </select>
                     </div>
                 </div>
-                <input hidden id="TZ" type="text" class="form-control" name="TZ">
+                <input hidden type="text" class="form-control TZTZ" name="TZ">
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Save</button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -241,18 +241,6 @@
         </div>
     </div>
 </div>
-
-<!--<div class="pre-loader">-->
-<!--    <div class="pre-loader-box">-->
-<!--        <div class='loader-progress' id="progress_div">-->
-<!--            <div class='bar' id='bar1'></div>-->
-<!--        </div>-->
-<!--        <div class='percent' id='percent1'>0%</div>-->
-<!--        <div class="loading-text">-->
-<!--            Loading...-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
 
 <!-- Delete Modal -->
 <% if (futureEventsInfo.length !== 0) { %>
@@ -338,12 +326,10 @@
                                        value="<%= futureEventsInfo[i].uri %>">
                             </div>
                         </div>
-                        <input hidden id="TZ" type="text" class="form-control" name="TZ">
-
+                        <input hidden type="text" class="form-control TZTZ" name="TZ">
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Save</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close
-                            </button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                         </div>
                     </form>
                 </div>
@@ -437,7 +423,7 @@
                                 <input type="text" class="form-control" name="uri" value="<%= pastEventsInfo[i].uri %>">
                             </div>
                         </div>
-                        <input hidden id="TZ" type="text" class="form-control" name="TZ">
+                        <input hidden type="text" class="form-control TZTZ" name="TZ">
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Save</button>
                             <button type="button" class="btn btn-primary" data-dismiss="modal">Close
@@ -452,12 +438,14 @@
     <% } %>
 <% } %>
 
-<input hidden id="TZ" type="text" class="form-control" name="TZ">
 <p hidden id='idSet'><%= id_set %></p>
 
 <script>
     $(document).ready(function () {
-            $("#TZ").val(new Date().getTimezoneOffset())
+            $(".TZTZ").each(function () {
+                console.log("here!")
+                $(this).val(new Date().getTimezoneOffset())
+            })
             let id_set = $('#idSet').text()
             if (id_set.length !== 0) {
                 let id_set_array = id_set.split(',')
