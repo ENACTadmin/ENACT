@@ -114,7 +114,7 @@ app.get('/courses/schedule',
     utils.checkUserName,
     courseController.showSchedule,
     (req, res) =>
-        res.render('./pages/course-schedule'))
+        res.render('./pages/courses-schedule'))
 
 // rename this to /createCourse and update the ejs form
 app.post('/course',
@@ -125,7 +125,7 @@ app.post('/course',
 app.get('/courses',
     utils.checkUserName,
     (req, res) =>
-        res.render('./pages/showCourses')
+        res.render('./pages/courses-show')
 )
 
 app.get('/course/view/:courseId',
@@ -616,15 +616,36 @@ app.get('/messages/view/all',
 
 app.get('/events',
     async (req, res) => {
-        let eventsInfo = await Event.find({}).sort({start: -1})
-        futureEventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() >= new Date().getTime());
-        pastEventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() < new Date().getTime());
-        console.log("future: ", futureEventsInfo)
-        console.log("past: ", pastEventsInfo)
-        res.render('./pages/calendar', {
-            futureEventsInfo: futureEventsInfo,
-            pastEventsInfo: pastEventsInfo
-        })
+        if (res.locals.loggedIn) {
+            let eventsInfo = await Event.find({}).sort({start: -1})
+            let futureEventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() >= new Date().getTime());
+            let pastEventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() < new Date().getTime());
+            // console.log("future: ", futureEventsInfo)
+            // console.log("past: ", pastEventsInfo)
+            res.render('./pages/events', {
+                futureEventsInfo: futureEventsInfo,
+                pastEventsInfo: pastEventsInfo
+            })
+        } else {
+            let eventsInfo = await Event.find({visibility: 'public'}).sort({start: -1})
+            let futureEventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() >= new Date().getTime());
+            let pastEventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() < new Date().getTime());
+            let courseTimes = await CourseTime.find({}, {'_id': 0, '__v': 0});
+            let courses = await Course.find({}, {
+                '_id': 1,
+                'state': 1,
+                'courseName': 1,
+                'timezone': 1,
+                'instructor': 1,
+                'institution': 1
+            })
+            res.render('./pages/events-public', {
+                courseTimes: courseTimes,
+                courses: courses,
+                futureEventsInfo: futureEventsInfo,
+                pastEventsInfo: pastEventsInfo
+            })
+        }
     }
 )
 
