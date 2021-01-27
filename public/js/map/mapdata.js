@@ -91,21 +91,21 @@ var simplemaps_usmap_mapdata = {
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/HI"
+            url: "https://www.enactnetwork.org/networking/HI"
         },
         AK: {
             name: "Alaska",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/AK"
+            url: "https://www.enactnetwork.org/networking/AK"
         },
         FL: {
             name: "Florida",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/FL",
+            url: "https://www.enactnetwork.org/networking/FL",
             // inactive: "no"
         },
         NH: {
@@ -113,168 +113,168 @@ var simplemaps_usmap_mapdata = {
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/NH"
+            url: "https://www.enactnetwork.org/networking/NH"
         },
         VT: {
             name: "Vermont",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/VT"
+            url: "https://www.enactnetwork.org/networking/VT"
         },
         ME: {
             name: "Maine",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/ME"
+            url: "https://www.enactnetwork.org/networking/ME"
         },
         RI: {
             name: "Rhode Island",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/RI"
+            url: "https://www.enactnetwork.org/networking/RI"
         },
         NY: {
             name: "New York",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/NY"
+            url: "https://www.enactnetwork.org/networking/NY"
         },
         PA: {
             name: "Pennsylvania",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/PA"
+            url: "https://www.enactnetwork.org/networking/PA"
         },
         NJ: {
             name: "New Jersey",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/NJ"
+            url: "https://www.enactnetwork.org/networking/NJ"
         },
         DE: {
             name: "Delaware",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/DE"
+            url: "https://www.enactnetwork.org/networking/DE"
         },
         MD: {
             name: "Maryland",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/MD"
+            url: "https://www.enactnetwork.org/networking/MD"
         },
         VA: {
             name: "Virginia",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/VA"
+            url: "https://www.enactnetwork.org/networking/VA"
         },
         WV: {
             name: "West Virginia",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/WV"
+            url: "https://www.enactnetwork.org/networking/WV"
         },
         OH: {
             name: "Ohio",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/OH"
+            url: "https://www.enactnetwork.org/networking/OH"
         },
         IN: {
             name: "Indiana",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/IN"
+            url: "https://www.enactnetwork.org/networking/IN"
         },
         IL: {
             name: "Illinois",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/IL"
+            url: "https://www.enactnetwork.org/networking/IL"
         },
         CT: {
             name: "Connecticut",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/CT"
+            url: "https://www.enactnetwork.org/networking/CT"
         },
         WI: {
             name: "Wisconsin",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/WI"
+            url: "https://www.enactnetwork.org/networking/WI"
         },
         NC: {
             name: "North Carolina",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/NC"
+            url: "https://www.enactnetwork.org/networking/NC"
         },
         DC: {
             name: "District of Columbia",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/DC"
+            url: "https://www.enactnetwork.org/networking/DC"
         },
         MA: {
             name: "Massachusetts",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/MA"
+            url: "https://www.enactnetwork.org/networking/MA"
         },
         TN: {
             name: "Tennessee",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/TN"
+            url: "https://www.enactnetwork.org/networking/TN"
         },
         AR: {
             name: "Arkansas",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/AR"
+            url: "https://www.enactnetwork.org/networking/AR"
         },
         MO: {
             name: "Missouri",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/MO"
+            url: "https://www.enactnetwork.org/networking/MO"
         },
         GA: {
             name: "Georgia",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/GA"
+            url: "https://www.enactnetwork.org/networking/GA"
         },
         SC: {
             name: "South Carolina",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/SC"
+            url: "https://www.enactnetwork.org/networking/SC"
         },
         KY: {
             name: "Kentucky",
@@ -282,175 +282,175 @@ var simplemaps_usmap_mapdata = {
             color: "default",
             zoomable: "no",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/KY"
+            url: "https://www.enactnetwork.org/networking/KY"
         },
         AL: {
             name: "Alabama",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/AL"
+            url: "https://www.enactnetwork.org/networking/AL"
         },
         LA: {
             name: "Louisiana",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/LA"
+            url: "https://www.enactnetwork.org/networking/LA"
         },
         MS: {
             name: "Mississippi",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/MS"
+            url: "https://www.enactnetwork.org/networking/MS"
         },
         IA: {
             name: "Iowa",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/IA"
+            url: "https://www.enactnetwork.org/networking/IA"
         },
         MN: {
             name: "Minnesota",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/MN"
+            url: "https://www.enactnetwork.org/networking/MN"
         },
         OK: {
             name: "Oklahoma",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/OK"
+            url: "https://www.enactnetwork.org/networking/OK"
         },
         TX: {
             name: "Texas",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/TX"
+            url: "https://www.enactnetwork.org/networking/TX"
         },
         NM: {
             name: "New Mexico",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/NM"
+            url: "https://www.enactnetwork.org/networking/NM"
         },
         KS: {
             name: "Kansas",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/KS"
+            url: "https://www.enactnetwork.org/networking/KS"
         },
         NE: {
             name: "Nebraska",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/NE"
+            url: "https://www.enactnetwork.org/networking/NE"
         },
         SD: {
             name: "South Dakota",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/SD"
+            url: "https://www.enactnetwork.org/networking/SD"
         },
         ND: {
             name: "North Dakota",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/ND"
+            url: "https://www.enactnetwork.org/networking/ND"
         },
         WY: {
             name: "Wyoming",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/WY"
+            url: "https://www.enactnetwork.org/networking/WY"
         },
         MT: {
             name: "Montana",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/MT"
+            url: "https://www.enactnetwork.org/networking/MT"
         },
         CO: {
             name: "Colorado",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/CO"
+            url: "https://www.enactnetwork.org/networking/CO"
         },
         UT: {
             name: "Utah",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/UT"
+            url: "https://www.enactnetwork.org/networking/UT"
         },
         AZ: {
             name: "Arizona",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/AZ"
+            url: "https://www.enactnetwork.org/networking/AZ"
         },
         NV: {
             name: "Nevada",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/NV"
+            url: "https://www.enactnetwork.org/networking/NV"
         },
         OR: {
             name: "Oregon",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/OR"
+            url: "https://www.enactnetwork.org/networking/OR"
         },
         WA: {
             name: "Washington",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/WA"
+            url: "https://www.enactnetwork.org/networking/WA"
         },
         CA: {
             name: "California",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/CA"
+            url: "https://www.enactnetwork.org/networking/CA"
         },
         MI: {
             name: "Michigan",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/MI"
+            url: "https://www.enactnetwork.org/networking/MI"
         },
         ID: {
             name: "Idaho",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/ID"
+            url: "https://www.enactnetwork.org/networking/ID"
         },
         GU: {
             name: "Guam",
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/GU",
+            url: "https://www.enactnetwork.org/networking/GU",
             hide: "yes"
         },
         VI: {
@@ -458,7 +458,7 @@ var simplemaps_usmap_mapdata = {
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/VI",
+            url: "https://www.enactnetwork.org/networking/VI",
             hide: "yes"
         },
         PR: {
@@ -466,7 +466,7 @@ var simplemaps_usmap_mapdata = {
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/PR",
+            url: "https://www.enactnetwork.org/networking/PR",
             hide: "yes"
         },
         AS: {
@@ -474,7 +474,7 @@ var simplemaps_usmap_mapdata = {
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/AS",
+            url: "https://www.enactnetwork.org/networking/AS",
             hide: "yes"
         },
         MP: {
@@ -482,7 +482,7 @@ var simplemaps_usmap_mapdata = {
             description: "default",
             color: "default",
             hover_color: "default",
-            url: "http://127.0.0.1:3500/networking/MP",
+            url: "https://www.enactnetwork.org/networking/MP",
             hide: "yes"
         }
     },
