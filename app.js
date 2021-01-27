@@ -631,7 +631,7 @@ app.get('/events',
             let futureEventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() >= new Date().getTime());
             let pastEventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() < new Date().getTime());
             let courseTimes = await CourseTime.find({}, {'_id': 0, '__v': 0});
-            let courses = await Course.find({}, {
+            let courses = await Course.find({year: 2021}, {
                 '_id': 1,
                 'state': 1,
                 'courseName': 1,

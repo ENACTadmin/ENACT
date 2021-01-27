@@ -37,7 +37,7 @@ exports.updateProfile = async (req, res, next) => {
             userToUpdate.networkCheck = 'on';
         else
             userToUpdate.networkCheck = 'off';
-
+        userToUpdate.graduationYear = req.body.graduationYear;
         console.log("on or off: ", userToUpdate.networkCheck)
         await userToUpdate.save()
         if (toIndex)
@@ -63,7 +63,12 @@ exports.updateProfileAdmin = async (req, res, next) => {
         userToUpdate.pronoun = req.body.pronoun;
         userToUpdate.phoneNumber = req.body.phoneNumber;
         userToUpdate.affiliation = req.body.affiliation;
-        userToUpdate.networkCheck = req.body.networkCheck;
+        if (req.body.networkCheck === 'on')
+            userToUpdate.networkCheck = 'on';
+        else
+            userToUpdate.networkCheck = 'off';
+        userToUpdate.graduationYear = req.body.graduationYear;
+        console.log("on or off: ", userToUpdate.networkCheck)
         await userToUpdate.save()
         console.log("update success!")
         res.redirect('/profile/view/' + req.params.userId)
@@ -145,7 +150,7 @@ exports.loadFaculty = async (req, res, next) => {
 }
 
 exports.showAllProfiles = async (req, res, next) => {
-    let profiles = await User.find()
+    let profiles = await User.find().collation({locale: 'en'}).sort({userName: 1})
     try {
         res.render('./pages/showAllProfiles', {
             profiles: profiles
@@ -179,7 +184,7 @@ exports.updateProfileImageURLAdmin = async (req, res, next) => {
 
 let special = ["stimell@brandeis.edu", "djw@brandeis.edu"]
 exports.showFacultyProfiles = async (req, res, next) => {
-    let profileInfo = await User.find({status: "faculty"})
+    let profileInfo = await User.find({status: "faculty"}).collation({locale: 'en'}).sort({userName: 1})
     let staffInfo = await User.find({
         $or: [
             {

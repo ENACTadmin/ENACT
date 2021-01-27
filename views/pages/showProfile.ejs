@@ -84,6 +84,13 @@
                 <br>
 
                 <div class='input-group-prepend'>
+                    <span class='input-group-text' style='width: 180px'>Graduation Year</span>
+                    <input disabled type='text' class='form-control' value='<%= userInfo.graduationYear %>'>
+                </div>
+
+                <br>
+
+                <div class='input-group-prepend'>
                     <span class='input-group-text' style='width: 180px'>Department</span>
                     <input disabled type='text' class='form-control' value='<%= userInfo.department %>'>
                 </div>
@@ -123,6 +130,8 @@
 
                 <% if (user._id.equals(userInfo._id)) { %>
                     <a class='btn btn-outline-dark' href='/profile/update'>Edit</a>
+                <% } else if (status === 'admin') { %>
+                    <a class='btn btn-outline-dark' href='/profile/update/<%= user._id %>'>Edit</a>
                 <% } %>
 
             </div>

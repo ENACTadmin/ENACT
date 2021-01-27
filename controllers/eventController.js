@@ -27,7 +27,10 @@ exports.saveEvent = async (req, res, next) => {
 
 exports.editEvent = async (req, res, next) => {
     try {
+        console.log("start: ", req.body.start)
+        console.log("end: ", req.body.end)
         let timezoneOffset = req.body.TZ
+        console.log("TZ is: ", timezoneOffset)
         timezoneOffset = parseInt(timezoneOffset) - new Date().getTimezoneOffset()
         console.log("timezone offset is: ", timezoneOffset)
         let startDate = new Date(req.body.start).getTime() + parseInt(timezoneOffset) * 60000
