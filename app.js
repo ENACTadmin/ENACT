@@ -745,7 +745,7 @@ app.get('/secretFunction3',
     }
 )
 
-// reset word2id mappings
+// add network check
 app.get('/secretFunction4',
     async (req, res) => {
         let users = await User.find()
@@ -756,6 +756,21 @@ app.get('/secretFunction4',
         res.send("success!")
     }
 )
+
+app.get('/secretFunction5/:userId',
+    async (req, res) => {
+        let curruser = await User.findOne({_id: req.params.userId})
+        let resources = await Resource.find()
+        for (let i = 0; i < resources.length; i++) {
+            if (resources[i].ownerName === 'ENACT admin') {
+                resources[i].ownerId = curruser._id
+                await resources[i].save()
+            }
+        }
+        res.send("success!")
+    }
+)
+
 
 
 //*******************************************
