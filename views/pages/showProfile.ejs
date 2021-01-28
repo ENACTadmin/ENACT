@@ -131,7 +131,7 @@
                 <% if (user._id.equals(userInfo._id)) { %>
                     <a class='btn btn-outline-dark' href='/profile/update'>Edit</a>
                 <% } else if (status === 'admin') { %>
-                    <a class='btn btn-outline-dark' href='/profile/update/<%= user._id %>'>Edit</a>
+                    <a class='btn btn-outline-dark' href='/profile/update/<%= userInfo._id %>'>Edit</a>
                 <% } %>
 
             </div>
