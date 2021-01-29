@@ -44,7 +44,7 @@
                 <!--                 form: update personal info -->
                 <h3>Basic information</h3>
                 <hr>
-                <form action='/profile/update' method='post'>
+                <form action='/profile/update/<%= account._id %>' method='post'>
                     <div class='input-group-prepend'>
                         <span class='input-group-text' style='width: 380px'>Full name</span>
                         <input type='text' class='form-control' name='userName' value='<%= account.userName %>'>
@@ -85,17 +85,18 @@
                                value='<%= account.affiliation %>'>
                     </div>
                     <br>
+                    <% if (account.status === 'student') { %>
 
-                    <!-- line break -->
-                    <div class='w-100'></div>
-                    <div class='input-group-prepend'>
-                        <span class='input-group-text' style='width: 380px'>Graduation Year (Expected)</span>
-                        <input type='text' class='form-control' name='graduationYear'
-                               placeholder="e.g. 2020"
-                               value='<%= account.graduationYear %>'>
-                    </div>
-                    <br>
-
+                        <!-- line break -->
+                        <div class='w-100'></div>
+                        <div class='input-group-prepend'>
+                            <span class='input-group-text' style='width: 380px'>Graduation Year</span>
+                            <input type='text' class='form-control' name='graduationYear'
+                                   placeholder="e.g. 2020"
+                                   value='<%= account.graduationYear %>'>
+                        </div>
+                        <br>
+                    <% } %>
                     <div class='w-100'></div>
                     <div class='input-group-prepend'>
                         <span class='input-group-text' style='width: 380px'>Department (Optional for students)</span>
@@ -106,7 +107,7 @@
 
                     <div class='w-100'></div>
                     <div class='input-group-prepend'>
-                        <span class='input-group-text' style='width: 380px'>State (Optional for students)</span>
+                        <span class='input-group-text' style='width: 380px'>State</span>
                         <select id='stateSelect' class='form-control' name='state'>
                             <option value="empty">Choose...</option>
                             <option value='AL'>Alabama</option>

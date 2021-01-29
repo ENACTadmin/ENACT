@@ -10,8 +10,8 @@
             <div class='section__title section__title--centered'>
                 Latest Events & On-going Courses
             </div>
-            <h3>There are <b><i><%= futureEventsInfo.length %></i></b> upcoming events!</h3>
-            <h3>There are <b><i><%= courses.length %></i></b> courses in session!</h3>
+            <h3>There are <b><i><%= futureEventsInfo.length %></i></b> upcoming events</h3>
+            <h3>There are <b><i><%= courses.length - 1 %></i></b> courses in session</h3>
         </div>
     </div>
 </section>
@@ -169,8 +169,9 @@
                                             <h5 hidden class="timezoneStart"
                                                 style='display: inline'><%= courses[j].timezone %>
                                                 ,<%= courseTimes[i].startTime %></h5>
-                                            <h5 style='display: inline'>to</h5> <h5 hidden class="timezoneStart"
-                                                                                    style='display: inline'><%= courses[j].timezone %>
+                                            <h5 style='display: inline'>to</h5>
+                                            <h5 hidden class="timezoneStart"
+                                                style='display: inline'><%= courses[j].timezone %>
                                                 ,<%= courseTimes[i].endTime %></h5>
                                         </div>
                                     </div>
