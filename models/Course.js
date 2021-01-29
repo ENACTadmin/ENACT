@@ -15,7 +15,8 @@ const courseSchema = Schema({
     semester: String,
     createdAt: Date,
     institution: String,
-    timezone: String
+    timezone: String,
+    institutionURL: String
 });
 
 module.exports = mongoose.model('Course', courseSchema);

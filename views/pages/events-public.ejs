@@ -145,46 +145,47 @@
 <section class='section section__grey'>
     <div class='section__content section__content--fluid-width section__content--padding--small'>
         <div class="container">
-            <h3><b>Courses in session</b></h3>
-            <hr style="border-top: 1px solid black;">
-
             <div class="row">
                 <% for (let p = 0; p < days.length; p++) { %>
                     <div class="col">
                         <h3><%= days[p] %></h3>
                         <hr style="border-top: 5px solid black;">
-                        <% for (let i = 0; i < courseTimes.length; i++) { %>
-                            <% for (let j = 0; j < courses.length; j++) { %>
+                    </div>
+                <% } %>
+            </div>
+            <% for (let j = 0; j < courses.length; j++) { %>
+                <div class="row">
+                    <% for (let p = 0; p < days.length; p++) { %>
+                        <div class="col">
+                            <% for (let i = 0; i < courseTimes.length; i++) { %>
                                 <% if (courseTimes[i].courseId.equals(courses[j]._id) && days[p] === courseTimes[i].day) { %>
                                     <div class='card'>
                                         <div class='card-body'>
                                             <h5 style='display: inline'><b><%= courses[j].courseName %></b></h5>
                                             <br>
-                                            <h5 style='display: inline'><%= courses[j].institution %></h5>
+                                            <h5 style='display: inline'><a style="color: blue" href="<%= courses[j].institutionURL %>"><%= courses[j].institution %></a>
+                                            </h5>
                                             <br>
-                                            <h5 style='display: inline'><b><%= courses[j].instructor %></b></h5>
+                                            <h5 style='display: inline'><b><%= courses[j].instructor %></b>
+                                            </h5>
                                             <br>
                                             <h5 style='display: inline'>State: <%= courses[j].state %></h5>
                                             <br>
-                                            <h5 hidden class="timezoneStart"
-                                                style='display: inline'><%= courses[j].timezone %>
-                                                ,<%= courseTimes[i].startTime %></h5>
-                                            <h5 style='display: inline'>to</h5>
-                                            <h5 hidden class="timezoneStart"
-                                                style='display: inline'><%= courses[j].timezone %>
-                                                ,<%= courseTimes[i].endTime %></h5>
+                                            <h5 hidden class="timezoneStart" style='display: inline'><%= courses[j].timezone %>,<%= courseTimes[i].startTime %></h5>
+                                            <h5 style='display: inline'>to</h5> <h5 hidden class="timezoneStart" style='display: inline'><%= courses[j].timezone %>,<%= courseTimes[i].endTime %></h5>
                                         </div>
                                     </div>
                                     <hr>
                                 <% } %>
                             <% } %>
-                        <% } %>
-                    </div>
-                <% } %>
-            </div>
+                        </div>
+                    <% } %>
+                </div>
+            <% } %>
         </div>
     </div>
 </section>
+
 
 <script>
     $(document).ready(function () {
