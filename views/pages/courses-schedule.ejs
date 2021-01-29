@@ -9,7 +9,7 @@
             <div class='section__title section__title--centered'>
                 All ENACT Course Schedule
             </div>
-            <h3>There are <b><i><%= courses.length %></i></b> courses in session!</h3>
+            <h3>There are <b><i><%= courses.length - 1 %></i></b> courses in session!</h3>
             <h4>Current Timezone: <b><i id="fillMe"></i></b> (Course times have been adjusted according to timezone)</h4>
         </div>
     </div>
@@ -37,8 +37,12 @@
                                             <br>
                                             <h5 style='display: inline'>State: <%= courses[j].state %></h5>
                                             <br>
-                                            <h5 hidden class="timezoneStart" style='display: inline'><%= courses[j].timezone %>,<%= courseTimes[i].startTime %></h5>
-                                            <h5 style='display: inline'>to</h5> <h5 hidden class="timezoneStart" style='display: inline'><%= courses[j].timezone %>,<%= courseTimes[i].endTime %></h5>
+                                            <h5 hidden class="timezoneStart"
+                                                style='display: inline'><%= courses[j].timezone %>
+                                                ,<%= courseTimes[i].startTime %></h5>
+                                            <h5 style='display: inline'>to</h5> <h5 hidden class="timezoneStart"
+                                                                                    style='display: inline'><%= courses[j].timezone %>
+                                                ,<%= courseTimes[i].endTime %></h5>
                                         </div>
                                     </div>
                                     <hr>
