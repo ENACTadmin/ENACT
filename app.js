@@ -481,7 +481,7 @@ app.get('/resources/view/my/public',
 app.get('/profile/view/:id',
     async (req, res, next) => {
         // update own profile first
-        if (res.locals.user.userName === undefined) {
+        if (res.locals.loggedIn && res.locals.user.userName === undefined) {
             res.render('./pages/updateProfile')
         } else {
             next()
@@ -632,6 +632,8 @@ app.get('/events',
             let pastEventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() < new Date().getTime());
             let courseTimes = await CourseTime.find({}, {'_id': 0, '__v': 0});
             let courses = await Course.find({year: 2021}, {
+                'institutionURL': 1,
+                'ownerId': 1,
                 '_id': 1,
                 'state': 1,
                 'courseName': 1,

@@ -10,7 +10,8 @@
                 All ENACT Course Schedule
             </div>
             <h3>There are <b><i><%= courses.length - 1 %></i></b> courses in session!</h3>
-            <h4>Current Timezone: <b><i id="fillMe"></i></b> (Course times have been adjusted according to timezone)</h4>
+            <h4>Current Timezone: <b><i id="fillMe"></i></b> (Course times have been adjusted according to timezone)
+            </h4>
         </div>
     </div>
 </section>
@@ -24,34 +25,38 @@
                     <div class="col">
                         <h3><%= days[p] %></h3>
                         <hr style="border-top: 5px solid black;">
-                        <% for (let i = 0; i < courseTimes.length; i++) { %>
-                            <% for (let j = 0; j < courses.length; j++) { %>
+                    </div>
+                <% } %>
+            </div>
+            <% for (let j = 0; j < courses.length; j++) { %>
+                <div class="row">
+                    <% for (let p = 0; p < days.length; p++) { %>
+                        <div class="col">
+                            <% for (let i = 0; i < courseTimes.length; i++) { %>
                                 <% if (courseTimes[i].courseId.equals(courses[j]._id) && days[p] === courseTimes[i].day) { %>
                                     <div class='card'>
                                         <div class='card-body'>
                                             <h5 style='display: inline'><b><%= courses[j].courseName %></b></h5>
                                             <br>
-                                            <h5 style='display: inline'><%= courses[j].institution %></h5>
+                                            <h5 style='display: inline'><a href="<%= courses[j].institutionURL %>"><%= courses[j].institution %></a>
+                                            </h5>
                                             <br>
-                                            <h5 style='display: inline'><b><%= courses[j].instructor %></b></h5>
+                                            <h5 style='display: inline'><b><a href="/profile/view/<%= courses[j].ownerId %>"><%= courses[j].instructor %></a></b>
+                                            </h5>
                                             <br>
                                             <h5 style='display: inline'>State: <%= courses[j].state %></h5>
                                             <br>
-                                            <h5 hidden class="timezoneStart"
-                                                style='display: inline'><%= courses[j].timezone %>
-                                                ,<%= courseTimes[i].startTime %></h5>
-                                            <h5 style='display: inline'>to</h5> <h5 hidden class="timezoneStart"
-                                                                                    style='display: inline'><%= courses[j].timezone %>
-                                                ,<%= courseTimes[i].endTime %></h5>
+                                            <h5 hidden class="timezoneStart" style='display: inline'><%= courses[j].timezone %>,<%= courseTimes[i].startTime %></h5>
+                                            <h5 style='display: inline'>to</h5> <h5 hidden class="timezoneStart" style='display: inline'><%= courses[j].timezone %>,<%= courseTimes[i].endTime %></h5>
                                         </div>
                                     </div>
                                     <hr>
                                 <% } %>
                             <% } %>
-                        <% } %>
-                    </div>
-                <% } %>
-            </div>
+                        </div>
+                    <% } %>
+                </div>
+            <% } %>
         </div>
     </div>
 </section>
@@ -83,60 +88,41 @@
                 timezone = 'US/Hawaii‑Aleutian';
                 break;
         }
-        let offset = 0;
-        switch (timezone) {
-            case 'US/Atlantic':
-                offset = 4;
-                break;
-            case 'US/Eastern':
-                offset = 5;
-                break;
-            case 'US/Central':
-                offset = 6;
-                break;
-            case 'US/Mountain':
-                offset = 7;
-                break;
-            case 'US/Pacific':
-                offset = 8;
-                break;
-            case 'US/Alaska':
-                offset = 9;
-                break;
-            case 'US/Hawaii‑Aleutian':
-                offset = 10;
-                break;
-        }
         $('#fillMe').text(timezone);
         $('.timezoneStart').each(function () {
             let tmzArray = $(this).text().split(',')
             let timezone = tmzArray[0]
             let time = tmzArray[1]
-            let offset = 0;
+            let offset1 = 0;
+            console.log(typeof timezone)
+            console.log(timezone.trim().length)
+            console.log(timezone.length)
+            console.log('US/Eastern')
             switch (timezone) {
                 case 'US/Atlantic':
-                    offset = 4;
+                    offset1 = 4;
                     break;
                 case 'US/Eastern':
-                    offset = 5;
+                    offset1 = 5;
                     break;
                 case 'US/Central':
-                    offset = 6;
+                    offset1 = 6;
                     break;
                 case 'US/Mountain':
-                    offset = 7;
+                    offset1 = 7;
                     break;
                 case 'US/Pacific':
-                    offset = 8;
+                    offset1 = 8;
                     break;
                 case 'US/Alaska':
-                    offset = 9;
+                    offset1 = 9;
                     break;
                 case 'US/Hawaii‑Aleutian':
-                    offset = 10;
+                    offset1 = 10;
                     break;
             }
-            $(this).text((parseInt(time.split(':')[0]) + (n - offset) + 24) % 24 + ':' + time.split(':')[1])
+            console.log("offset 1: ", offset1)
+            $(this).text((parseInt(time.split(':')[0]) + (n - offset1) + 24) % 24 + ':' + time.split(':')[1])
             $(this).removeAttr('hidden')
         })
     });
