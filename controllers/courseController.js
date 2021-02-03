@@ -36,6 +36,7 @@ exports.createNewClass = async (req, res, next) => {
                 state: req.body.state,
                 createdAt: new Date(),
                 institution: req.body.institution,
+                institutionURL: req.body.institutionURL
             }
         )
         // await until the newCourse is saved properly
@@ -86,6 +87,7 @@ exports.copyCourse = async (req, res, next) => {
                 state: oldCourse.state,
                 createdAt: new Date(),
                 institution: oldCourse.institution,
+                institutionURL: oldCourse.institutionURL,
                 officeHour: req.body.officeHour,
                 officeHourLocation: req.body.officeHourLocation
             }
@@ -132,6 +134,7 @@ exports.updateCourse = async (req, res, next) => {
         courseToEdit.courseName = req.body.courseName
         courseToEdit.semester = req.body.semester
         courseToEdit.institution = req.body.institution
+        courseToEdit.institutionURL = req.body.institutionURL
         courseToEdit.year = req.body.year
         courseToEdit.timezone = req.body.timezone
         courseToEdit.state = req.body.state
@@ -279,7 +282,9 @@ function containsString(list, elt) {
 
 exports.showSchedule = async (req, res) => {
     let courseTimes = await CourseTime.find({}, {'_id': 0, '__v': 0});
-    let courses = await Course.find({}, {
+    let courses = await Course.find({year: 2021}, {
+        'ownerId': 1,
+        'institutionURL': 1,
         '_id': 1,
         'state': 1,
         'courseName': 1,
