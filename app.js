@@ -481,7 +481,7 @@ app.get('/resources/view/my/public',
 app.get('/profile/view/:id',
     async (req, res, next) => {
         // update own profile first
-        if (res.locals.user.userName === undefined) {
+        if (res.locals.loggedIn && res.locals.user.userName === undefined) {
             res.render('./pages/updateProfile')
         } else {
             next()
@@ -632,6 +632,8 @@ app.get('/events',
             let pastEventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() < new Date().getTime());
             let courseTimes = await CourseTime.find({}, {'_id': 0, '__v': 0});
             let courses = await Course.find({year: 2021}, {
+                'institutionURL': 1,
+                'ownerId': 1,
                 '_id': 1,
                 'state': 1,
                 'courseName': 1,
@@ -745,7 +747,7 @@ app.get('/secretFunction3',
     }
 )
 
-// reset word2id mappings
+// add network check
 app.get('/secretFunction4',
     async (req, res) => {
         let users = await User.find()
@@ -756,6 +758,21 @@ app.get('/secretFunction4',
         res.send("success!")
     }
 )
+
+app.get('/secretFunction5/:userId',
+    async (req, res) => {
+        let curruser = await User.findOne({_id: req.params.userId})
+        let resources = await Resource.find()
+        for (let i = 0; i < resources.length; i++) {
+            if (resources[i].ownerName === 'ENACT admin') {
+                resources[i].ownerId = curruser._id
+                await resources[i].save()
+            }
+        }
+        res.send("success!")
+    }
+)
+
 
 
 //*******************************************
