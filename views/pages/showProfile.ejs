@@ -43,7 +43,7 @@
                 <% if (userInfo.profilePicURL) { %>
                     <img src='<%= userInfo.profilePicURL %>' width='100%' alt='profile picture'>
                 <% } else { %>
-                    No profile image
+                    <h5>No profile image</h5>
                 <% } %>
                 <br>
                 <br>
@@ -55,12 +55,13 @@
 
                 <br>
 
-                <div class='input-group-prepend'>
-                    <span class='input-group-text' style='width: 180px'>Pronouns</span>
-                    <input disabled type='text' class='form-control' value='<%= userInfo.pronoun %>'>
-                </div>
-
-                <br>
+                <% if (userInfo.pronoun) { %>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 180px'>Pronouns</span>
+                        <input disabled type='text' class='form-control' value='<%= userInfo.pronoun %>'>
+                    </div>
+                    <br>
+                <% } %>
 
                 <div class='input-group-prepend'>
                     <span class='input-group-text' style='width: 180px'>Work Email</span>
@@ -69,64 +70,68 @@
 
                 <br>
 
-                <div class='input-group-prepend'>
-                    <span class='input-group-text' style='width: 180px'>Personal Email</span>
-                    <input disabled type='text' class='form-control' value='<%= userInfo.personalEmail %>'>
-                </div>
+                <% if (userInfo.personalEmail) { %>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 180px'>Personal Email</span>
+                        <input disabled type='text' class='form-control' value='<%= userInfo.personalEmail %>'>
+                    </div>
+                    <br>
+                <% } %>
 
-                <br>
+                <% if (userInfo.affiliation) { %>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 180px'>School</span>
+                        <input disabled type='text' class='form-control' value='<%= userInfo.affiliation %>'>
+                    </div>
+                    <br>
+                <% } %>
 
-                <div class='input-group-prepend'>
-                    <span class='input-group-text' style='width: 180px'>School</span>
-                    <input disabled type='text' class='form-control' value='<%= userInfo.affiliation %>'>
-                </div>
+                <% if (userInfo.status === 'student' && userInfo.graduationYear) { %>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 180px'>Graduation Year</span>
+                        <input disabled type='text' class='form-control' value='<%= userInfo.graduationYear %>'>
+                    </div>
+                    <br>
+                <% } %>
 
-                <br>
-
-                <div class='input-group-prepend'>
-                    <span class='input-group-text' style='width: 180px'>Graduation Year</span>
-                    <input disabled type='text' class='form-control' value='<%= userInfo.graduationYear %>'>
-                </div>
-
-                <br>
-
-                <div class='input-group-prepend'>
-                    <span class='input-group-text' style='width: 180px'>Department</span>
-                    <input disabled type='text' class='form-control' value='<%= userInfo.department %>'>
-                </div>
-
-                <br>
+                <% if (userInfo.department) { %>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 180px'>Department</span>
+                        <input disabled type='text' class='form-control' value='<%= userInfo.department %>'>
+                    </div>
+                    <br>
+                <% } %>
 
                 <div class='input-group-prepend'>
                     <span class='input-group-text' style='width: 180px'>State</span>
                     <input disabled type='text' class='form-control' value='<%= userInfo.state %>'>
                 </div>
-
                 <br>
 
+                <% if (userInfo.phoneNumber) { %>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 180px'>Phone Number</span>
+                        <input disabled type='text' class='form-control' value='<%= userInfo.phoneNumber %>'>
+                    </div>
+                    <br>
+                <% } %>
 
-                <div class='input-group-prepend'>
-                    <span class='input-group-text' style='width: 180px'>Phone Number</span>
-                    <input disabled type='text' class='form-control' value='<%= userInfo.phoneNumber %>'>
-                </div>
+                <% if (userInfo.linkedInURL) { %>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 220px'>LinkedIn URL</span>
+                        <a class="form-control" href="<%= userInfo.linkedInURL %>"><%= userInfo.linkedInURL %></a>
+                    </div>
+                    <br>
+                <% } %>
 
-                <br>
-
-                <div class='input-group-prepend'>
-                    <span class='input-group-text' style='width: 220px'>LinkedIn URL</span>
-                    <input disabled type='text' class='form-control' name='linkedInURL'
-                           value='<%= userInfo.linkedInURL %>'>
-                </div>
-
-                <br>
-
-                <div class='input-group-prepend'>
-                    <span class='input-group-text' style='width: 220px'>Personal Website URL</span>
-                    <input disabled type='text' class='form-control' name='personalWebsiteURL'
-                           value='<%= user.personalWebsiteURL %>'>
-                </div>
-
-                <br>
+                <% if (userInfo.personalWebsiteURL) { %>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 220px'>Personal Website URL</span>
+                        <a class="form-control"
+                           href="<%= userInfo.personalWebsiteURL %>"><%= userInfo.personalWebsiteURL %></a>
+                    </div>
+                    <br>
+                <% } %>
 
                 <% if (user._id.equals(userInfo._id)) { %>
                     <a class='btn btn-outline-dark' href='/profile/update'>Edit</a>
