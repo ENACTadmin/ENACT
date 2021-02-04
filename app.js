@@ -774,7 +774,6 @@ app.get('/secretFunction5/:userId',
 )
 
 
-
 //*******************************************
 //**************AJAX related*****************
 app.get('/profiles/all',

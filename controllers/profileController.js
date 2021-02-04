@@ -1,6 +1,7 @@
 'use strict';
 const User = require('../models/User');
 const Faculty = require('../models/Faculty');
+const Resource = require('../models/Resource');
 
 
 exports.findOneUser = async (req, res, next) => {
@@ -197,7 +198,7 @@ exports.showFacultyProfiles = async (req, res, next) => {
                     $in: special
                 }
             }]
-    })
+    }).sort({userName: -1})
     try {
         res.render('./pages/facultyList', {
             profileInfo: profileInfo,
@@ -207,3 +208,22 @@ exports.showFacultyProfiles = async (req, res, next) => {
         next(e)
     }
 }
+//
+// exports.assignSpecialtyAreas = async (req, res, next) => {
+//     let userId = await User.findOne({_id: req.params.userId})
+//     try {
+//         let resources = Resource.find({ownerId: userId}, {
+//             'tags': 1
+//         })
+//         if (resources) {
+//             for (let i = 0; i < resources.length; i++) {
+//                 resources[i]
+//             }
+//         }
+//         userToUpdate.profilePicURL = req.body.imageURL;
+//         await userToUpdate.save()
+//         res.redirect('back')
+//     } catch (e) {
+//         next(e)
+//     }
+// }
