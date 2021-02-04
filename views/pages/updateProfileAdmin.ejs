@@ -255,4 +255,14 @@
     </div>
 </div>
 
+<p hidden id="stateFromServer"><%= user.state %></p>
+
+<script>
+    let state = $('#stateFromServer').text()
+    $('#stateSelect' + ' option').each(function () {
+        if ($(this).val() === state) {
+            $(this).prop('selected', true)
+        }
+    })
+</script>
 <%- include('../components/footer'); -%>
