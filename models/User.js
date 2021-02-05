@@ -24,8 +24,7 @@ const userSchema = Schema({
     pronoun: String,
     personalWebsiteURL: String,
     networkCheck: String,
-    graduationYear: Number,
-    specialty: [String]
+    graduationYear: Number
 });
 
 module.exports = mongoose.model('User', userSchema);
