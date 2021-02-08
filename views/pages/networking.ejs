@@ -27,6 +27,15 @@
     <div class='container'>
         <div id="map"></div>
         <br>
+        <div class="row justify-content-md-center">
+            <div class="col-md-4 col-sm-12">
+                <h3>Search</h3>
+                <hr>
+                <input class="form-control" id="myInput" type="text"
+                       placeholder="e.g. name, state, school, keyword...">
+            </div>
+        </div>
+        <br>
         <h3>ENACT Network in <%= state %> </h3>
         <hr>
         <% if (!loggedIn) { %>
@@ -42,7 +51,7 @@
                 <% if (profileInfo && profileInfo.length > 0) { %>
                     <% for (let i = 0; i < profileInfo.length; i++) { %>
                         <% if (profileInfo[i].status === "faculty" || profileInfo[i].status === "admin") { %>
-                            <li class="list-group-item" style="height: 200px; font-size: larger">
+                            <li class="list-group-item" style="height: 200px; font-size: larger; margin-bottom: 20px">
                                 <div class="row">
                                     <div class="col-md-1 col-sm-1 align-self-center">
                                         <% if (profileInfo[i].profilePicURL) { %>
@@ -110,7 +119,6 @@
                                     </div>
                                 </div>
                             </li>
-                            <br>
                         <% } %>
                     <% } %>
                 <% } else { %>
@@ -126,6 +134,13 @@
 </section>
 
 <script>
-
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $("#myInput").val().toLowerCase();
+            $("#myList li").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
 </script>
 <%- include('../components/footer'); -%>
