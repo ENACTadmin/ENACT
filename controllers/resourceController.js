@@ -73,8 +73,7 @@ exports.resetWord2Id = async (req, res, next) => {
         for (let i = 0; i < resources.length; i++) {
             await setWord2Id(resources[i]);
         }
-        console.log('Finished!')
-        res.send('reset word2id success!')
+        res.send('reset word2id success for ' + resources.length + ' resources')
     } catch (e) {
         next(e)
     }
