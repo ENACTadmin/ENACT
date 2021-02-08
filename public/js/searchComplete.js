@@ -2,7 +2,7 @@
 
 $(document).ready(function () {
     "use strict"
-    let resources = null
+    let resourcesJSON = null
     // page is ready
     $.ajax({
         type: 'GET',
@@ -10,29 +10,90 @@ $(document).ready(function () {
         async: false,
         dataType: 'json',
         success: function (data) {
-            resources = data
+            resourcesJSON = data
         }
     });
 
-    for (var resource in resources) {
-        // if (resources[resource].tags[0].length > 0)
-        //     resources[resource].label = resources[resource].name + " [" + resources[resource].tags + "] ";
-        // else
-        //     resources[resource].label = resources[resource].name;
-        if (resources[resource].contentType !== "empty")
-            resources[resource].label = resources[resource].name + " [" + resources[resource].contentType + "] ";
+
+    for (let resource in resourcesJSON) {
+        if (resourcesJSON[resource].contentType !== "empty")
+            resourcesJSON[resource].label = resourcesJSON[resource].name + " [" + resourcesJSON[resource].contentType + "] ";
         else
-            resources[resource].label = resources[resource].name;
+            resourcesJSON[resource].label = resourcesJSON[resource].name;
     }
 
-    var input = document.getElementById("resources");
+    let input = document.getElementById("resources");
 
     autocomplete({
         input: input,
         fetch: function (text, update) {
+
+            // build tags JSON
+            let tags = ['agriculture'
+                , 'arts and culture'
+                , 'cannabis'
+                , 'consumer protection'
+                , 'COVID-19'
+                , 'criminal justice'
+                , 'disability'
+                , 'education'
+                , 'elderly'
+                , 'energy'
+                , 'environment/climate change'
+                , 'gun control'
+                , 'healthcare'
+                , 'higher education'
+                , 'housing and homelessness'
+                , 'immigration'
+                , 'labor'
+                , 'LGBTQ+'
+                , 'mental health'
+                , 'opioids'
+                , 'public health'
+                , 'public safety'
+                , 'race'
+                , 'substance use and recovery'
+                , 'taxes'
+                , 'technology'
+                , 'tourism'
+                , 'transportation'
+                , 'veterans'
+                , 'violence and sexual assault'
+                , 'voting'
+                , 'women and gender']
+            let tagsJSON = []
+            for (let tag in tags) {
+                let newJSON = {
+                    "label": tags[tag]
+                }
+                tagsJSON.push(newJSON)
+            }
+            tagsJSON = JSON.parse(JSON.stringify(tagsJSON))
+
+            // build name JSON
+            let namesJSON = []
+            let seenNames = new Set()
+            for (let resource in resourcesJSON) {
+                let name = resourcesJSON[resource].ownerName
+                if (!seenNames.has(name)) {
+                    let newJSON = {
+                        "label": resourcesJSON[resource].ownerName
+                    }
+                    namesJSON.push(newJSON)
+                    seenNames.add(name)
+                }
+            }
+            namesJSON = JSON.parse(JSON.stringify(namesJSON))
+
+            console.log(namesJSON)
             text = text.toLowerCase();
             // you can also use AJAX requests instead of preloaded data
-            var suggestions = resources.filter(n => (n.label !== undefined && n.label.toLowerCase().includes(text)))
+            let suggestions = resourcesJSON.filter(n => (n.label !== undefined && n.label.toLowerCase().includes(text)))
+            let tagSuggestions = tagsJSON.filter(n => (n.label !== undefined && n.label.toLowerCase().includes(text)))
+            let nameSuggestions = namesJSON.filter(n => (n.label !== undefined && n.label.toLowerCase().includes(text)))
+            console.log("names: ", nameSuggestions)
+            nameSuggestions = [... new Set(nameSuggestions)]
+            suggestions = suggestions.concat(tagSuggestions).concat(nameSuggestions)
             // console.log("suggestions: ", suggestions)
             update(suggestions);
         },

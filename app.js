@@ -356,11 +356,19 @@ app.get('/resources/all',
             if (res.locals.status === 'admin' || res.locals.status === 'faculty')
                 resources = await Resource.find({
                     checkStatus: 'approve'
+                }, {
+                    name: 1,
+                    contentType: 1,
+                    ownerName: 1
                 })
             else
                 resources = await Resource.find({
                     checkStatus: 'approve',
                     status: {$in: ["privateToENACT", "public", "finalPublic"]}
+                }, {
+                    name: 1,
+                    contentType: 1,
+                    ownerName: 1
                 })
         }
         // public users
@@ -368,6 +376,10 @@ app.get('/resources/all',
             resources = await Resource.find({
                 checkStatus: 'approve',
                 status: {$in: ["finalPublic", "public"]}
+            }, {
+                name: 1,
+                contentType: 1,
+                ownerName: 1
             })
         }
         return res.send(resources)

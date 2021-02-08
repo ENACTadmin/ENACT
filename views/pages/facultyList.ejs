@@ -103,7 +103,7 @@
         <ul class="list-group" id="myList">
             <% for (let i = 0; i < profileInfo.length; i++){ %>
                 <% if (profileInfo[i].status === "faculty" || profileInfo[i].status === "admin") { %>
-                    <li class="list-group-item" style="height: 200px; font-size: larger">
+                    <li class="list-group-item" style="height: 200px; font-size: larger; margin-bottom: 20px">
                         <div class="row">
                             <div class="col-md-1 col-sm-1 align-self-center">
                                 <% if (profileInfo[i].profilePicURL) { %>
@@ -166,7 +166,6 @@
                             </div>
                         </div>
                     </li>
-                    <br>
                 <% } %>
             <% } %>
         </ul>
