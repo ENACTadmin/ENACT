@@ -14,7 +14,7 @@ $(document).ready(function () {
         }
     });
 
-    for(var profile in profiles){
+    for (var profile in profiles) {
         profiles[profile].label = profiles[profile].userName;
     }
 

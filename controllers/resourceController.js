@@ -14,7 +14,7 @@ let resourceInfoSet
 async function setWord2Id(newResource) {
     let fullContent = newResource.name + ',' + newResource.description + ',' + newResource.tags + ','
         + newResource.state + ',' + newResource.contentType + ',' + newResource.mediaType + ','
-        + newResource.institution + ',' + newResource.yearOfCreation
+        + newResource.institution + ',' + newResource.yearOfCreation + ',' + newResource.ownerName
 
     let regex = /[^\s\.,!?()\[\]]+/g;
     let match = fullContent.match(regex);
@@ -46,7 +46,7 @@ async function setWord2Id(newResource) {
 async function removeWord2Id(oldResource) {
     let fullContent = oldResource.name + ',' + oldResource.description + ',' + oldResource.tags + ','
         + oldResource.state + ',' + oldResource.contentType + ',' + oldResource.mediaType + ','
-        + oldResource.institution + ',' + oldResource.yearOfCreation
+        + oldResource.institution + ',' + oldResource.yearOfCreation + ',' + oldResource.ownerName
 
     let regex = /[^\s\.,!?()\[\]]+/g;
     let match = fullContent.match(regex);
@@ -56,7 +56,7 @@ async function removeWord2Id(oldResource) {
         // if not null
         if (match[i].toString() !== 'null') {
             if (word2Id === null) {
-                console.log("Impossible!!!")
+                console.log("Impossible!")
             } else {
                 await word2Id.ids.remove(oldResource._id)
                 await word2Id.save()
@@ -68,11 +68,13 @@ async function removeWord2Id(oldResource) {
 exports.resetWord2Id = async (req, res, next) => {
     try {
         let resources = await Resource.find();
+        // dump all word2ids
+        await Word2Id.deleteMany();
         for (let i = 0; i < resources.length; i++) {
             await setWord2Id(resources[i]);
         }
         console.log('Finished!')
-        res.redirect('/')
+        res.send('reset word2id success!')
     } catch (e) {
         next(e)
     }
@@ -917,7 +919,7 @@ async function rankRes(match, resources) {
             let newResource = resources[resource]
             let fullContent = newResource.name + ',' + newResource.description + ',' + newResource.tags + ','
                 + newResource.state + ',' + newResource.contentType + ',' + newResource.mediaType + ','
-                + newResource.institution + ',' + newResource.yearOfCreation
+                + newResource.institution + ',' + newResource.yearOfCreation + ',' + newResource.ownerName
 
             let regex = /[^\s\.,!?()\[\]]+/g;
             let newMatch = fullContent.match(regex);
