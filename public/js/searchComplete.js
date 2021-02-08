@@ -77,13 +77,27 @@ $(document).ready(function () {
                 let name = resourcesJSON[resource].ownerName
                 if (!seenNames.has(name)) {
                     let newJSON = {
-                        "label": resourcesJSON[resource].ownerName
+                        "label": name
                     }
                     namesJSON.push(newJSON)
                     seenNames.add(name)
                 }
             }
-            namesJSON = JSON.parse(JSON.stringify(namesJSON))
+
+            // build contentType JSON
+            let contentJSON = []
+            let seenContent = new Set()
+            for (let resource in resourcesJSON) {
+                let contentType = resourcesJSON[resource].contentType
+                if (!seenNames.has(name)) {
+                    let newJSON = {
+                        "label": contentType
+                    }
+                    contentJSON.push(newJSON)
+                    seenContent.add(name)
+                }
+            }
+            contentJSON = JSON.parse(JSON.stringify(contentJSON))
 
             console.log(namesJSON)
             text = text.toLowerCase();
@@ -91,9 +105,8 @@ $(document).ready(function () {
             let suggestions = resourcesJSON.filter(n => (n.label !== undefined && n.label.toLowerCase().includes(text)))
             let tagSuggestions = tagsJSON.filter(n => (n.label !== undefined && n.label.toLowerCase().includes(text)))
             let nameSuggestions = namesJSON.filter(n => (n.label !== undefined && n.label.toLowerCase().includes(text)))
-            console.log("names: ", nameSuggestions)
-            nameSuggestions = [... new Set(nameSuggestions)]
-            suggestions = suggestions.concat(tagSuggestions).concat(nameSuggestions)
+            let contentSuggestions = contentJSON.filter(n => (n.label !== undefined && n.label.toLowerCase().includes(text)))
+            suggestions = suggestions.concat(tagSuggestions).concat(nameSuggestions).concat(contentSuggestions)
             // console.log("suggestions: ", suggestions)
             update(suggestions);
         },
