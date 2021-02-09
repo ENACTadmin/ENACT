@@ -87,32 +87,32 @@ exports.saveMessage = async (req, res, next) => {
             for (let i = 0; i < otherAuthors.length; i++) {
                 let name = otherAuthors[i];
                 let email = otherAuthors[i];
-                send_email(email, name, newMessage, 'http://www.enactnetwork.org/messages/view/' + req.params.sender + '/' + req.params.receiver + '/' + req.params.resourceId)
+                send_email(email, name, newMessage, 'https://www.enactnetwork.org/messages/view/' + req.params.sender + '/' + req.params.receiver + '/' + req.params.resourceId)
             }
         }
-        send_email(workEmail, userName, newMessage, 'http://www.enactnetwork.org/messages/view/' + req.params.sender + '/' + req.params.receiver + '/' + req.params.resourceId)
+        send_email(workEmail, userName, newMessage, 'https://www.enactnetwork.org/messages/view/' + req.params.sender + '/' + req.params.receiver + '/' + req.params.resourceId)
         res.redirect('back')
     } catch (e) {
         next(e)
     }
 }
 
-exports.sendProfileEmail = async (req, res, next) => {
+exports.sendProfileEmail = async (req, res) => {
     let userId = req.params.id
     console.log("id: ", userId)
     let currUser = await User.findOne({_id: userId})
     let userName = currUser.userName
     let email = currUser.workEmail || currUser.googleemail
-    let url = 'http://www.enactnetwork.org/'
+    let url = 'https://www.enactnetwork.org/login'
     const sgMail = require('@sendgrid/mail');
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const msg = {
         to: email,
         from: 'enact@brandeis.edu',
-        subject: 'ENACT Digital Platform: you have one new message from ' + userName,
-        text: 'ENACT Digital Platform: you have one new message from ' + userName,
-        html: 'Hi,' +
-            '<br>' + '  Your profile is set by ENACT admin, the default password is: ' + currUser.password + '<br>Please remember to change your password by navigating to People & Networking -> Update profile to change your password' +
+        subject: 'ENACT Digital Platform: you have one new notification.',
+        text: 'ENACT Digital Platform: you have one new notification.',
+        html: 'Hi,' + userName + '<br>' +
+            '<br>' + 'Your profile is set by ENACT admin, the default password is: ' + '<b>' + currUser.password + '</b>' + '<br>Please remember to change your password by navigating to <b>People & Networking -> Update profile</b> to change your password' +
             '<br>' + '<b>  Click <a href=' + url + '>' + 'here' + '</a>' + ' to login</b>' +
             '<br><br>' + 'ENACT Support Team'
     };
@@ -131,7 +131,7 @@ function send_email(workEmail, userName, message, url) {
         const msg = {
             to: workEmail,
             from: 'enact@brandeis.edu',
-            subject: 'ENACT Digital Platform: you have one new message from ' + userName,
+            subject: 'ENACT Digital Platform: you have one new message',
             text: 'ENACT Digital Platform: you have one new message from ' + userName,
             html: 'Hi, <br><br>you received a message from ' + userName +
                 '<br>' + '<b>Subject</b>: ' + message.subject +
