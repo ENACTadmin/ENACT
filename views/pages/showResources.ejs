@@ -56,27 +56,17 @@
                                                 </li>
                                             <% } %>
                                             <li class='list-group-item borderless box-padding'>
-                                                <% if (resourceIds && resourceIds.toString().includes(resourceInfo[i]._id.toString())) { %>
-                                                    <form style='display: inline' method='post'
-                                                          action='/resource/unstarAlt/<%= resourceInfo[i]._id %>'>
-                                                        <b>Actions:</b>
-                                                        <input type='submit'
-                                                               style='border:0px solid transparent'
-                                                               name='submit'
-                                                               class='btn btn-outline-danger'
-                                                               value='&#9829;'>
-                                                    </form>
-                                                <% } else { %>
-                                                    <form style='display: inline' method='post'
-                                                          action='/resource/starAlt/<%= resourceInfo[i]._id %>'>
-                                                        <b>Actions:</b>
-                                                        <input type='submit'
-                                                               style='border:0px solid transparent'
-                                                               name='submit'
-                                                               class='btn btn-outline-danger'
-                                                               value='&#9825;'>
-                                                    </form>
-                                                <% } %>
+                                                <b>Actions:</b>
+                                                <button type="submit"
+                                                        style='border:0px solid transparent'
+                                                        class='focusMe btn btn-outline-danger'
+                                                        id="<%= resourceInfo[i]._id %>">
+                                                    <% if (resourceIds && resourceIds.toString().includes(resourceInfo[i]._id.toString())) { %>
+                                                        &#9829;
+                                                    <% } else { %>
+                                                        &#9825;
+                                                    <% } %>
+                                                </button>
                                                 <% if (resourceInfo[i].ownerId.toString() !== user._id.toString()) { %>
                                                     <a href='/messages/view/<%= user._id %>/<%= resourceInfo[i].ownerId %>/<%= resourceInfo[i]._id %>'>
                                                         <input class='btn btn-outline-primary'
@@ -105,38 +95,37 @@
     </section>
 </section>
 
-<% if (resourceInfo) { %>
-    <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
-        <div class='modal fade' id='deleteModal' tabindex='-1' role='dialog'
-             aria-labelledby='exampleModalLabel'
-             aria-hidden='true'>
-            <div class='modal-dialog modal-lg' role='document'>
-                <div class='modal-content'>
-                    <div class='modal-header'>
-                        <h5 class='modal-title' id='exampleModalLabel'>Delete?</h5>
-                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                            <span aria-hidden='true'>&times;</span>
-                        </button>
-                    </div>
-                    <div class='modal-body'>
-                        <div class='row'>
-                            <div class='col-md-12 col-sm-12'>
-                                <h4>Are you sure you want to delete this resource permanently?</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div class='modal-footer'>
-                        <form method='post' action='/resource/remove/<%= resourceInfo[i]._id %>'>
-                            <input type='submit' name='submit' class='btn btn-outline-danger' value='Delete'>
-                        </form>
-                        <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>
-                            Close
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <% } %>
-<% } %>
+<p id="findMe">MEMEME</p>
+
+<script>
+    $(document).ready(function () {
+        // Delete modal
+        $(".focusMe").click(function () {
+            let id = this.id
+            // alert($('#' + id).html().trim() === $('#findMe').html("&#9825;").text())
+            if ($('#' + id).html().trim() === $('#findMe').html("&#9825;").text()) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/resource/starAlt/' + this.id,
+                    async: true,
+                    dataType: 'text',
+                    success: function () {
+                        $('#' + id).html('&#9829;');
+                    }
+                })
+            } else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/resource/unstarAlt/' + this.id,
+                    async: true,
+                    dataType: 'text',
+                    success: function () {
+                        $('#' + id).html('&#9825;');
+                    }
+                })
+            }
+        })
+    })
+</script>
 
 <%- include('../components/footer'); -%>

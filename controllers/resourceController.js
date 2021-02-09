@@ -581,13 +581,11 @@ exports.starResourceAlt = async (req, res, next) => {
         // save to db
         resourceSet.resources = newResourceIds
         await resourceSet.save()
-        // res.locals.resourceIds = newResourceIds
-        // res.locals.resourceInfo = resourceInfoSet
-        res.redirect('/resources/search/private/general/results')
+        // res.redirect('/resources/search/private/general/results')
         starredIds = newResourceIds
-        // res.render('./pages/showResources', {
-        //     secretType: 'Search Result'
-        // })
+        res.locals.resourceIds = starredIds
+        console.log("star success!")
+        res.send()
     } catch (e) {
         next(e)
     }
@@ -607,13 +605,11 @@ exports.unstarResourceAlt = async (req, res, next) => {
         }
         resourceSet.resources = newResourceIds
         await resourceSet.save()
-        // res.locals.resourceIds = newResourceIds
-        // res.locals.resourceInfo = resourceInfoSet
-        res.redirect('/resources/search/private/general/results')
-        // res.render('./pages/showResources', {
-        //     secretType: 'Search Result'
-        // })
+        // res.redirect('/resources/search/private/general/results')
         starredIds = newResourceIds
+        res.locals.resourceIds = starredIds
+        console.log("unstar success!")
+        res.send()
     } catch (e) {
         next(e)
     }
@@ -627,7 +623,6 @@ exports.showStarredResources = async (req, res, next) => {
         if (!resourceSet) {
             console.log('resource set empty')
         } else {
-            console.log('resource set not empty')
             let resourceInfoIds = await resourceSet.resources
             resourceInfo = await Resource.find({_id: {$in: resourceInfoIds}})
         }
