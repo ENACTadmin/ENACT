@@ -83,18 +83,19 @@ $(document).ready(function () {
                     seenNames.add(name)
                 }
             }
+            namesJSON = JSON.parse(JSON.stringify(namesJSON))
 
             // build contentType JSON
             let contentJSON = []
             let seenContent = new Set()
             for (let resource in resourcesJSON) {
                 let contentType = resourcesJSON[resource].contentType
-                if (!seenNames.has(name)) {
+                if (!seenContent.has(contentType)) {
                     let newJSON = {
                         "label": contentType
                     }
                     contentJSON.push(newJSON)
-                    seenContent.add(name)
+                    seenContent.add(contentType)
                 }
             }
             contentJSON = JSON.parse(JSON.stringify(contentJSON))
