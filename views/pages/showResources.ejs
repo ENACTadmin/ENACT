@@ -1,6 +1,8 @@
 <%- include('../components/header'); -%>
 <%- include('../components/navbar'); -%>
 
+<script src="/js/likeAjax.js"></script>
+
 <section class='section'>
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
@@ -95,37 +97,6 @@
     </section>
 </section>
 
-<p id="findMe">MEMEME</p>
-
-<script>
-    $(document).ready(function () {
-        // Delete modal
-        $(".focusMe").click(function () {
-            let id = this.id
-            // alert($('#' + id).html().trim() === $('#findMe').html("&#9825;").text())
-            if ($('#' + id).html().trim() === $('#findMe').html("&#9825;").text()) {
-                $.ajax({
-                    type: 'POST',
-                    url: '/resource/starAlt/' + this.id,
-                    async: true,
-                    dataType: 'text',
-                    success: function () {
-                        $('#' + id).html('&#9829;');
-                    }
-                })
-            } else {
-                $.ajax({
-                    type: 'POST',
-                    url: '/resource/unstarAlt/' + this.id,
-                    async: true,
-                    dataType: 'text',
-                    success: function () {
-                        $('#' + id).html('&#9825;');
-                    }
-                })
-            }
-        })
-    })
-</script>
+<p hidden id="findMe"></p>
 
 <%- include('../components/footer'); -%>
