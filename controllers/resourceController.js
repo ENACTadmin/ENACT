@@ -531,7 +531,8 @@ exports.starResource = async (req, res, next) => {
         // save to db
         resourceSet.resources = newResourceIds
         await resourceSet.save()
-        res.redirect('back')
+        console.log("star success!")
+        res.send()
     } catch (e) {
         next(e)
     }
@@ -550,7 +551,8 @@ exports.unstarResource = async (req, res, next) => {
         }
         resourceSet.resources = newResourceIds
         await resourceSet.save()
-        res.redirect('back')
+        console.log("unstar success!")
+        res.send()
     } catch (e) {
         next(e)
     }

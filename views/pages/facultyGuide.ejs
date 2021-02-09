@@ -1,6 +1,8 @@
 <%- include('../components/header'); -%>
 <%- include('../components/navbar'); -%>
 
+<script src="/js/likeAjax.js"></script>
+
 <section class='section'>
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
@@ -14,7 +16,8 @@
             <br><br>
             <h3 style="display:inline;">Or, help the faculty community by </h3><a href='/resource/upload/faculty'
                                                                                   class='btn btn-large btn-primary'
-                                                                                  style='width: 260px'>Upload Faculty Resources</a>
+                                                                                  style='width: 260px'>Upload Faculty
+                Resources</a>
         </div>
     </div>
 </section>
@@ -64,27 +67,17 @@
                                                 </li>
                                             <% } %>
                                             <li class='list-group-item borderless box-padding'>
-                                                <% if (resourceIds && resourceIds.toString().includes(syllabus[i]._id.toString())) { %>
-                                                    <form style='display: inline' method='post'
-                                                          action='/resource/unstarAlt/<%= syllabus[i]._id %>'>
-                                                        <b>Actions:</b>
-                                                        <input type='submit'
-                                                               style='border:0px solid transparent'
-                                                               name='submit'
-                                                               class='btn btn-outline-danger'
-                                                               value='&#9829;'>
-                                                    </form>
-                                                <% } else { %>
-                                                    <form style='display: inline' method='post'
-                                                          action='/resource/starAlt/<%= syllabus[i]._id %>'>
-                                                        <b>Actions:</b>
-                                                        <input type='submit'
-                                                               style='border:0px solid transparent'
-                                                               name='submit'
-                                                               class='btn btn-outline-danger'
-                                                               value='&#9825;'>
-                                                    </form>
-                                                <% } %>
+                                                <b>Actions:</b>
+                                                <button type="submit"
+                                                        style='border:0px solid transparent'
+                                                        class='focusMe btn btn-outline-danger'
+                                                        id="<%= syllabus[i]._id %>">
+                                                    <% if (resourceIds && resourceIds.toString().includes(syllabus[i]._id.toString())) { %>
+                                                        &#9829;
+                                                    <% } else { %>
+                                                        &#9825;
+                                                    <% } %>
+                                                </button>
                                                 <% if (syllabus[i].ownerId.toString() !== user._id.toString()) { %>
                                                     <a href='/messages/view/<%= user._id %>/<%= syllabus[i].ownerId %>/<%= syllabus[i]._id %>'><input
                                                                 class='btn btn-outline-primary'
@@ -114,7 +107,8 @@
                 <% if (loggedIn) { %>
                     <div class='col-md-12 col-sm-12'>
                         <h3>Assignment Guidelines & Rubrics</h3>
-                        Link to all Assignment Guidelines & Rubrics: <a href="/resources/view/faculty/assignments"><b>click me</b></a>
+                        Link to all Assignment Guidelines & Rubrics: <a href="/resources/view/faculty/assignments"><b>click
+                                me</b></a>
                         <hr>
                         <% if (assignments && assignments.length > 0) { %>
                             <% for (let i = assignments.length - 1; i >= 0; i--) { %>
@@ -149,27 +143,17 @@
                                                 </li>
                                             <% } %>
                                             <li class='list-group-item borderless box-padding'>
-                                                <% if (resourceIds && resourceIds.toString().includes(assignments[i]._id.toString())) { %>
-                                                    <form style='display: inline' method='post'
-                                                          action='/resource/unstarAlt/<%= assignments[i]._id %>'>
-                                                        <b>Actions:</b>
-                                                        <input type='submit'
-                                                               style='border:0px solid transparent'
-                                                               name='submit'
-                                                               class='btn btn-outline-danger'
-                                                               value='&#9829;'>
-                                                    </form>
-                                                <% } else { %>
-                                                    <form style='display: inline' method='post'
-                                                          action='/resource/starAlt/<%= assignments[i]._id %>'>
-                                                        <b>Actions:</b>
-                                                        <input type='submit'
-                                                               style='border:0px solid transparent'
-                                                               name='submit'
-                                                               class='btn btn-outline-danger'
-                                                               value='&#9825;'>
-                                                    </form>
-                                                <% } %>
+                                                <b>Actions:</b>
+                                                <button type="submit"
+                                                        style='border:0px solid transparent'
+                                                        class='focusMe btn btn-outline-danger'
+                                                        id="<%= assignments[i]._id %>">
+                                                    <% if (resourceIds && resourceIds.toString().includes(assignments[i]._id.toString())) { %>
+                                                        &#9829;
+                                                    <% } else { %>
+                                                        &#9825;
+                                                    <% } %>
+                                                </button>
                                                 <% if (assignments[i].ownerId.toString() !== user._id.toString()) { %>
                                                     <a href='/messages/view/<%= user._id %>/<%= assignments[i].ownerId %>/<%= assignments[i]._id %>'><input
                                                                 class='btn btn-outline-primary'
@@ -235,27 +219,17 @@
                                                 </li>
                                             <% } %>
                                             <li class='list-group-item borderless box-padding'>
-                                                <% if (resourceIds && resourceIds.toString().includes(guides[i]._id.toString())) { %>
-                                                    <form style='display: inline' method='post'
-                                                          action='/resource/unstarAlt/<%= guides[i]._id %>'>
-                                                        <b>Actions:</b>
-                                                        <input type='submit'
-                                                               style='border:0px solid transparent'
-                                                               name='submit'
-                                                               class='btn btn-outline-danger'
-                                                               value='&#9829;'>
-                                                    </form>
-                                                <% } else { %>
-                                                    <form style='display: inline' method='post'
-                                                          action='/resource/starAlt/<%= guides[i]._id %>'>
-                                                        <b>Actions:</b>
-                                                        <input type='submit'
-                                                               style='border:0px solid transparent'
-                                                               name='submit'
-                                                               class='btn btn-outline-danger'
-                                                               value='&#9825;'>
-                                                    </form>
-                                                <% } %>
+                                                <b>Actions:</b>
+                                                <button type="submit"
+                                                        style='border:0px solid transparent'
+                                                        class='focusMe btn btn-outline-danger'
+                                                        id="<%= guides[i]._id %>">
+                                                    <% if (resourceIds && resourceIds.toString().includes(guides[i]._id.toString())) { %>
+                                                        &#9829;
+                                                    <% } else { %>
+                                                        &#9825;
+                                                    <% } %>
+                                                </button>
                                                 <% if (guides[i].ownerId.toString() !== user._id.toString()) { %>
                                                     <a href='/messages/view/<%= user._id %>/<%= guides[i].ownerId %>/<%= guides[i]._id %>'><input
                                                                 class='btn btn-outline-primary'
@@ -283,5 +257,7 @@
         </div>
     </section>
 </section>
+
+<p hidden id="findMe"></p>
 
 <%- include('../components/footer'); -%>

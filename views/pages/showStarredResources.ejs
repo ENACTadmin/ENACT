@@ -2,6 +2,7 @@
 <%- include('../components/navbar'); -%>
 
 <script src='/js/editModal.js'></script>
+<script src='/js/likeAjax1.js'></script>
 
 <section class='section'>
     <div class='section__content section__content--full-width'>
@@ -78,12 +79,15 @@
                                             </li>
                                         <% } %>
                                         <li class='list-group-item borderless box-padding'>
+                                            <b>Actions:</b>
+                                            <button type="submit"
+                                                    style='border:0px solid transparent'
+                                                    class='focusMe btn btn-outline-danger'
+                                                    id="<%= resourceInfo[i]._id %>">
+                                                &#9829;
+                                            </button>
                                             <form method='post'
                                                   action='/resource/unstar/<%= resourceInfo[i]._id %>'>
-                                                <b>Actions:</b>
-                                                <input type='submit' style='border:0 solid transparent'
-                                                       name='submit'
-                                                       class='btn btn-outline-danger' value='&#9829;'>
                                                 <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id) { %>
                                                     <button type='button' class='btn btn-outline-info'
                                                             style='border:0 solid transparent'
@@ -94,7 +98,8 @@
                                                 <% } %>
                                                 <% if (status === 'admin') { %>
                                                     <a href='/resource/update/<%= resourceInfo[i]._id %>/fav'>
-                                                        <input class='btn btn-outline-primary' style='border:0px solid transparent'
+                                                        <input class='btn btn-outline-primary'
+                                                               style='border:0px solid transparent'
                                                                type='button' value='Change author'></a>
                                                 <% } %>
                                             </form>
@@ -155,5 +160,7 @@
         </form>
     </div>
 </div>
+
+<p hidden id="findMe"></p>
 
 <%- include('../components/footer'); -%>

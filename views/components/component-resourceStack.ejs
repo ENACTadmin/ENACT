@@ -1,3 +1,5 @@
+<script src="/js/likeAjax1.js"></script>
+
 <!--<div class='card-body'>-->
 <% if (resourceInfo && resourceInfo.length > 0) { %>
     <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
@@ -39,21 +41,17 @@
                     <li class='list-group-item borderless box-padding'>
                         <!--force inline display-->
                         <!--if the user starred the resource-->
-                        <% if (resourceIds && resourceIds.includes(resourceInfo[i]._id)) { %>
-                            <form style='display: inline' method='post'
-                                  action='/resource/unstar/<%= resourceInfo[i]._id %>'>
-                                <b>Actions:</b>
-                                <input type='submit' style='border:0px solid transparent' name='submit'
-                                       class='btn btn-outline-danger' value='&#9829;'>
-                            </form>
-                        <% } else { %>
-                            <form style='display: inline' method='post'
-                                  action='/resource/star/<%= resourceInfo[i]._id %>'>
-                                <b>Actions:</b>
-                                <input type='submit' style='border:0px solid transparent' name='submit'
-                                       class='btn btn-outline-danger' value='&#9825;'>
-                            </form>
-                        <% } %>
+                        <b>Actions:</b>
+                        <button type="submit"
+                                style='border:0px solid transparent'
+                                class='focusMe btn btn-outline-danger'
+                                id="<%= resourceInfo[i]._id %>">
+                            <% if (resourceIds && resourceIds.toString().includes(resourceInfo[i]._id.toString())) { %>
+                                &#9829;
+                            <% } else { %>
+                                &#9825;
+                            <% } %>
+                        </button>
                         <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id.toString()) { %>
                             <button type='button' class='btn btn-outline-info'
                                     style='border:0 solid transparent' data-toggle='modal'
@@ -84,4 +82,7 @@
         No resource available yet
     </div>
 <% } %>
+
+<p hidden id="findMe"></p>
+
 <!--</div>-->
