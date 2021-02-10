@@ -134,6 +134,12 @@ app.get('/course/view/:courseId',
     resourceController.loadResources
 )
 
+app.get('/course/view/:courseId/:skip',
+    utils.checkUserName,
+    courseController.showOneCourse,
+    resourceController.loadMoreResources
+)
+
 app.get('/course/update/:courseId',
     utils.checkUserName,
     async (req, res) => {

@@ -222,14 +222,6 @@ function padDigits(number, digits) {
 exports.showOneCourse = async (req, res, next) => {
     let courseId = req.params.courseId;
     try {
-        //courseInfo contains these fields
-        // let courseSet = res.locals.courseInfoSet
-        // for (let i = 0; i < courseSet.length; i++) {
-        //     if (courseSet[i]._id.toString() === courseId.toString()) {
-        //         res.locals.courseInfo = courseSet[i];
-        //         break
-        //     }
-        // }
         res.locals.courseInfo = await Course.findOne({_id: courseId})
         await next()
     } catch (e) {

@@ -342,6 +342,8 @@ exports.updateOwner = async (req, res, next) => {
 
 //****************************************************
 //********************Load related********************
+
+let toLimit = 20
 exports.loadResources = async (req, res, next) => {
     const courseId = req.params.courseId
     const checkStatus = 'approve'
@@ -349,7 +351,7 @@ exports.loadResources = async (req, res, next) => {
         let resources = await Resource.find({
             courseId: courseId,
             checkStatus: checkStatus
-        }).sort({yearOfCreation: -1})
+        }).sort({yearOfCreation: -1}).limit(toLimit)
         let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
         let resourceIds = null
         if (starred) {
@@ -364,6 +366,31 @@ exports.loadResources = async (req, res, next) => {
         next(e)
     }
 }
+
+exports.loadMoreResources = async (req, res, next) => {
+    console.log("in load more ")
+    const courseId = req.params.courseId
+    const skip = parseInt(req.params.skip) * 20
+    toLimit += skip
+    const checkStatus = 'approve'
+    try {
+        let resources = await Resource.find({
+            courseId: courseId,
+            checkStatus: checkStatus
+        }).sort({yearOfCreation: -1}).skip(skip).limit(20)
+        let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
+        let resourceIds = null
+        if (starred) {
+            resourceIds = await starred.resources
+        }
+        res.locals.resourceIds = resourceIds
+        resources = await addAuthor(resources)
+        res.send(resources)
+    } catch (e) {
+        next(e)
+    }
+}
+
 
 async function addAuthor(resources) {
     for (let i = 0; i < resources.length; i++) {
