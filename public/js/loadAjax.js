@@ -4,7 +4,7 @@ $(document).ready(function () {
         let courseId = $('#courseId').text()
         $.ajax({
             type: 'GET',
-            url: '/course/view/' + courseId + '/' + $('#skip').text(),
+            url: '/course/' + ($('.card-body').length - 3) + '/' + courseId + '/' + $('#skip').text(),
             async: false,
             dataType: 'json',
             success: function (data) {

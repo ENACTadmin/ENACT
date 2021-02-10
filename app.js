@@ -128,13 +128,13 @@ app.get('/courses',
         res.render('./pages/courses-show')
 )
 
-app.get('/course/view/:courseId',
+app.get('/course/view/:courseId/:limit',
     utils.checkUserName,
     courseController.showOneCourse,
     resourceController.loadResources
 )
 
-app.get('/course/view/:courseId/:skip',
+app.get('/course/:limit/:courseId/:skip',
     utils.checkUserName,
     courseController.showOneCourse,
     resourceController.loadMoreResources
@@ -232,9 +232,9 @@ app.get('/resources/search/private/general',
         res.render('./pages/search-primary')
 )
 
-app.get('/resources/search/private/general/results',
-    resourceController.reloadSearch
-)
+// app.get('/resources/search/private/general/results',
+//     resourceController.reloadSearch
+// )
 
 app.post('/resources/search/private/general/results',
     resourceController.primarySearch
@@ -311,7 +311,7 @@ app.post('/resource/upload/faculty',
     resourceController.uploadResource
 )
 
-app.post('/resource/update/:resourceId',
+app.post('/resource/update/:resourceId/limit/:limit',
     resourceController.updateResource
 )
 

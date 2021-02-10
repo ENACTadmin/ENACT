@@ -192,7 +192,7 @@ exports.addToOwnedCourses = async (req, res, next) => {
         })
         await req.user.ownedCourses.push(courseInfo._id)
         await req.user.save()
-        res.redirect('/course/view/' + courseInfo._id)
+        res.redirect('/course/view/' + courseInfo._id + '/10')
     } catch (e) {
         next(e)
     }
@@ -255,7 +255,7 @@ exports.joinCourse = async (req, res, next) => {
         await req.user.enrolledCourses.push(courseInfo._id)
         await req.user.save()
         console.log("update finish")
-        res.redirect("/course/view/" + courseInfo._id)
+        res.redirect("/course/view/" + courseInfo._id + '/10')
 
     } catch (e) {
         next(e)
