@@ -29,12 +29,12 @@
                     <% } %>
                     &nbsp&nbsp&nbsp&nbsp
                     <% if (status === 'student') { %>
-                        <a href="/course/view/<%= req.params.courseId %>" class="btn btn-lg btn-info">
+                        <a href="/course/view/<%= req.params.courseId %>/10" class="btn btn-lg btn-info">
                             Back to course
                         </a>&nbsp&nbsp&nbsp&nbsp
                     <% } else { %>
                         <% if (req.params.courseId) { %>
-                            <a href="/course/view/<%= req.params.courseId %>" class="btn btn-lg btn-success">
+                            <a href="/course/view/<%= req.params.courseId %>/10" class="btn btn-lg btn-success">
                                 Back to course
                             </a>&nbsp&nbsp&nbsp&nbsp
                         <% } %>

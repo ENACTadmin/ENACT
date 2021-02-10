@@ -71,7 +71,7 @@
                                     <% for(let i = 0; i < courseInfoSet.length; i++) { %>
                                         <tr>
                                             <td>
-                                                <a href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName %></a>
+                                                <a href='/course/view/<%= courseInfoSet[i]._id %>/10'><%= courseInfoSet[i].courseName %></a>
                                             </td>
                                             <td><%= courseInfoSet[i].year %></td>
                                             <td><%= courseInfoSet[i].semester %></td>
@@ -90,7 +90,7 @@
                                     <% for (let i = 0; i < courseInfoSet.length; i++){ %>
                                         <tr>
                                             <td>
-                                                <a href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName %></a>
+                                                <a href='/course/view/<%= courseInfoSet[i]._id %>/10'><%= courseInfoSet[i].courseName %></a>
                                             </td>
                                             <td><%= courseInfoSet[i].year %></td>
                                             <td><%= courseInfoSet[i].semester %></td>

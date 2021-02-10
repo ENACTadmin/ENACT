@@ -86,10 +86,10 @@
                         <li>
                             <% if (courseInfoSet[i].courseName.length <= 20) { %>
                                 <a class='header-link'
-                                   href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName %></a>
+                                   href='/course/view/<%= courseInfoSet[i]._id %>/10'><%= courseInfoSet[i].courseName %></a>
                             <% } else { %>
                                 <a class='header-link'
-                                   href='/course/view/<%= courseInfoSet[i]._id %>'><%= courseInfoSet[i].courseName.substring(0, 20) + "..." %></a>
+                                   href='/course/view/<%= courseInfoSet[i]._id %>/10'><%= courseInfoSet[i].courseName.substring(0, 20) + "..." %></a>
                             <% } %>
                         </li>
                     <% } %>

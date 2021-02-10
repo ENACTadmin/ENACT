@@ -67,6 +67,8 @@ $(document).ready(function () {
                 $(':checkbox').each(function () {
                     if (tagsArray.includes($(this).val())) {
                         $(this).prop('checked', true)
+                    } else {
+                        $(this).prop('checked', false)
                     }
                 })
                 let checkboxes = $(':checkbox')
@@ -81,7 +83,7 @@ $(document).ready(function () {
                     $('#tagsToReturn').val(string);
                 })
                 // change form action attribute
-                $('#editForm').attr('action', '/resource/update/' + resource._id)
+                $('#editForm').attr('action', '/resource/update/' + resource._id + '/limit/' + ($('.card-body').length - 3))
                 $('#editModal').show()
             }
         });

@@ -6,7 +6,7 @@ const ResourceSet = require('../models/ResourceSet');
 const Word2Id = require('../models/Word2Id');
 const AuthorAlt = require('../models/AuthorAlternative')
 
-let resourceInfoSet
+// let resourceInfoSet
 
 //****************************************************
 //***********Database storage related*****************
@@ -187,6 +187,7 @@ exports.uploadResource = async (req, res, next) => {
 
 exports.updateResource = async (req, res, next) => {
     const resourceId = req.params.resourceId
+    const limit = req.params.limit
     try {
         let tagsString = req.body.selectedTags
         let tags = tagsString.split(",")
@@ -231,7 +232,14 @@ exports.updateResource = async (req, res, next) => {
                 }
             }
         }
-        await res.redirect('back')
+        let redirect = req.headers.referer
+        if (redirect.includes('course')) {
+            let courseId = redirect.split('/limit')[0]
+            courseId = courseId.split('view/')[1].split('/')[0]
+            res.redirect('/course/view/' + courseId + '/' + limit)
+        } else {
+            res.redirect('back')
+        }
     } catch (e) {
         next(e)
     }
@@ -343,10 +351,10 @@ exports.updateOwner = async (req, res, next) => {
 //****************************************************
 //********************Load related********************
 
-let toLimit = 10
 exports.loadResources = async (req, res, next) => {
     const courseId = req.params.courseId
     const checkStatus = 'approve'
+    let toLimit = parseInt(req.params.limit)
     try {
         let resources = await Resource.find({
             courseId: courseId,
@@ -370,14 +378,13 @@ exports.loadResources = async (req, res, next) => {
 exports.loadMoreResources = async (req, res, next) => {
     console.log("in load more")
     const courseId = req.params.courseId
-    const skip = parseInt(req.params.skip) * 1
+    const skip = parseInt(req.params.limit) + (parseInt(req.params.skip) - 1) * 5
     const checkStatus = 'approve'
     try {
-        console.log("tolimit: ", toLimit)
         let resources = await Resource.find({
             courseId: courseId,
             checkStatus: checkStatus
-        }).sort({yearOfCreation: -1}).skip(toLimit).limit(5)
+        }).sort({yearOfCreation: -1}).skip(skip).limit(5)
         let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
         let resourceIds = null
         if (starred) {
@@ -385,7 +392,6 @@ exports.loadMoreResources = async (req, res, next) => {
         }
         res.locals.resourceIds = resourceIds
         resources = await addAuthor(resources)
-        toLimit += 5
         res.send(resources)
     } catch (e) {
         next(e)
@@ -765,13 +771,13 @@ exports.deleteCollection = async (req, res, next) => {
 // --------------- General Search ----------------
 // -----------------------------------------------
 
-exports.reloadSearch = async (req, res) => {
-    res.locals.resourceIds = starredIds
-    res.locals.resourceInfo = resourceInfoSet
-    res.render('./pages/showResources', {
-        secretType: 'Search Result'
-    })
-}
+// exports.reloadSearch = async (req, res) => {
+//     res.locals.resourceIds = starredIds
+//     res.locals.resourceInfo = resourceInfoSet
+//     res.render('./pages/showResources', {
+//         secretType: 'Search Result'
+//     })
+// }
 
 exports.primarySearch = async (req, res, next) => {
     try {
@@ -802,7 +808,7 @@ exports.primarySearch = async (req, res, next) => {
         }
         res.locals.resourceIds = starredResourceIds
         res.locals.resourceInfo = uniqueResourceInfo
-        resourceInfoSet = uniqueResourceInfo
+        // resourceInfoSet = uniqueResourceInfo
         res.render('./pages/showResources', {
             secretType: 'Search Result'
         })
@@ -1024,7 +1030,7 @@ exports.advancedSearch = async (req, res) => {
 
     res.locals.resourceIds = starredResourceIds
 
-    resourceInfoSet = filteredResource
+    // resourceInfoSet = filteredResource
 
     res.render('./pages/showResources', {
         resourceInfo: filteredResource,
