@@ -368,16 +368,16 @@ exports.loadResources = async (req, res, next) => {
 }
 
 exports.loadMoreResources = async (req, res, next) => {
-    console.log("in load more ")
+    console.log("in load more")
     const courseId = req.params.courseId
-    const skip = parseInt(req.params.skip) * 10
-    toLimit = skip + 10
+    const skip = parseInt(req.params.skip) * 1
     const checkStatus = 'approve'
     try {
+        console.log("tolimit: ", toLimit)
         let resources = await Resource.find({
             courseId: courseId,
             checkStatus: checkStatus
-        }).sort({yearOfCreation: -1}).skip(skip).limit(10)
+        }).sort({yearOfCreation: -1}).skip(toLimit).limit(5)
         let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
         let resourceIds = null
         if (starred) {
@@ -385,6 +385,7 @@ exports.loadMoreResources = async (req, res, next) => {
         }
         res.locals.resourceIds = resourceIds
         resources = await addAuthor(resources)
+        toLimit += 5
         res.send(resources)
     } catch (e) {
         next(e)
