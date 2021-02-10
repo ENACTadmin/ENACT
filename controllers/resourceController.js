@@ -343,7 +343,7 @@ exports.updateOwner = async (req, res, next) => {
 //****************************************************
 //********************Load related********************
 
-let toLimit = 20
+let toLimit = 10
 exports.loadResources = async (req, res, next) => {
     const courseId = req.params.courseId
     const checkStatus = 'approve'
@@ -370,14 +370,14 @@ exports.loadResources = async (req, res, next) => {
 exports.loadMoreResources = async (req, res, next) => {
     console.log("in load more ")
     const courseId = req.params.courseId
-    const skip = parseInt(req.params.skip) * 20
-    toLimit += skip
+    const skip = parseInt(req.params.skip) * 10
+    toLimit = skip + 10
     const checkStatus = 'approve'
     try {
         let resources = await Resource.find({
             courseId: courseId,
             checkStatus: checkStatus
-        }).sort({yearOfCreation: -1}).skip(skip).limit(20)
+        }).sort({yearOfCreation: -1}).skip(skip).limit(10)
         let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
         let resourceIds = null
         if (starred) {
