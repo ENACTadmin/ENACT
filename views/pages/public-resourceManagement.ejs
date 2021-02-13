@@ -2,6 +2,8 @@
 <%- include('../components/navbar'); -%>
 
 <script src='/js/editModal.js'></script>
+<script src='/js/editModalAjax.js'></script>
+
 
 <section class='section'>
     <div class='section__content section__content--full-width'>
@@ -32,7 +34,7 @@ for (let i = 0; i < resourceInfo.length; i++) {
         <hr>
         <% if (!pred_not_disp) { %>
             <div class='card-body text-center' style="border-radius: 30px">
-                <h4>No more resources can be displayed</h4>
+                <h4>No more resources can be displayed on the front page</h4>
             </div>
         <% } else{ %>
             <% let num = 0 %>
@@ -115,55 +117,55 @@ for (let i = 0; i < resourceInfo.length; i++) {
         <% } %>
         <% for (let i = 0; i < resourceInfo.length; i++) { %>
             <% if (resourceInfo[i].status === 'finalPublic') { %>
-                <div class='card border-0'>
-                    <div class='card-body'>
-                        <h4>
-                            <%= resourceInfo[i].name %>
-                        </h4>
-                        <div class='card-text'>
-                            <ul class='list-group'>
-                                <li class='list-group-item borderless box-padding'>
-                                    <b>Description: </b>
-                                    <%= resourceInfo[i].description %>
-                                </li>
-                                <li class='list-group-item borderless box-padding'>
-                                    <b>State: </b>
-                                    <%= resourceInfo[i].state %>
-                                </li>
-                                <li class='list-group-item borderless box-padding'>
-                                    <b>Year: </b>
-                                    <%= resourceInfo[i].yearOfCreation %>
-                                </li>
-                                <li class='list-group-item borderless box-padding'>
-                                    <b>Link: </b>
-                                    <a href='<%= resourceInfo[i].uri %>'>Click me</a>
-                                </li>
-                                <li class='list-group-item borderless box-padding'>
-                                    <b>Institution: </b>
-                                    <%= resourceInfo[i].institution %>
-                                </li>
-                                <li class='list-group-item borderless box-padding'>
-                                    <b>Categories:</b>
-                                    <%= resourceInfo[i].tags %>
-                                </li>
-                                <li class='list-group-item borderless box-padding'>
-                                    <b>Actions:</b>
-                                    <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id.toString()) { %>
-                                        <button type='button' class='btn btn-outline-info'
-                                                style='border:0 solid transparent' data-toggle='modal'
-                                                data-target='#editModal<%= resourceInfo[i]._id %>'>
-                                            Edit
-                                        </button>
-                                        <button type='button' class='btn btn-outline-danger'
-                                                style='border:0px solid transparent'
-                                                data-toggle='modal'
-                                                data-target='#removeModal<%= resourceInfo[i]._id %>'>
-                                            Remove
-                                        </button>
-                                    <% } %>
-                                </li>
-                            </ul>
-                        </div>
+                <div class='card-body' style="border-radius: 30px">
+                    <h4>
+                        <%= resourceInfo[i].name %>
+                    </h4>
+                    <div class='card-text'>
+                        <ul class='list-group'>
+                            <li class='list-group-item borderless box-padding'>
+                                <b>Description: </b>
+                                <%= resourceInfo[i].description %>
+                            </li>
+                            <li class='list-group-item borderless box-padding'>
+                                <b>State: </b>
+                                <%= resourceInfo[i].state %>
+                            </li>
+                            <li class='list-group-item borderless box-padding'>
+                                <b>Year: </b>
+                                <%= resourceInfo[i].yearOfCreation %>
+                            </li>
+                            <li class='list-group-item borderless box-padding'>
+                                <b>Link: </b>
+                                <a href='<%= resourceInfo[i].uri %>'>Click me</a>
+                            </li>
+                            <li class='list-group-item borderless box-padding'>
+                                <b>Institution: </b>
+                                <%= resourceInfo[i].institution %>
+                            </li>
+                            <li class='list-group-item borderless box-padding'>
+                                <b>Categories:</b>
+                                <%= resourceInfo[i].tags %>
+                            </li>
+                            <li class='list-group-item borderless box-padding'>
+                                <b>Actions:</b>
+                                <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id.toString()) { %>
+                                    <button id="<%= resourceInfo[i]._id %>" type='button'
+                                            class='editBtn btn btn-outline-info'
+                                            style='border:0 solid transparent'
+                                            data-toggle='modal'
+                                            data-target='#editModal'>
+                                        Edit
+                                    </button>
+                                    <button type='button' class='btn btn-outline-danger'
+                                            style='border:0px solid transparent'
+                                            data-toggle='modal'
+                                            data-target='#removeModal<%= resourceInfo[i]._id %>'>
+                                        Remove
+                                    </button>
+                                <% } %>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <br>
@@ -171,7 +173,6 @@ for (let i = 0; i < resourceInfo.length; i++) {
         <% } %>
     </div>
 </section>
-
 
 <% if (resourceInfo) { %>
     <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>

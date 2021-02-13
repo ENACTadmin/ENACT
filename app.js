@@ -82,7 +82,7 @@ app.use(aws)
 //we can use this or the index router to handle req
 app.get('/',
     utils.checkUserName,
-    resourceController.loadPublicResources,
+    resourceController.loadDisplayedResources,
     resourceController.loadImages,
     async (req, res) => {
         let eventsInfo = await Event.find({}).sort({start: -1})

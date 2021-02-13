@@ -34,7 +34,7 @@
                 jQuery('#modal-view-event-add').modal();
             },
             eventClick: function (event, jsEvent, view) {
-                jQuery('.event-icon').html("<i class='fa fa-" + event.icon + "'></i>");
+                // jQuery('.event-icon').html("<i class='fa fa-" + event.icon + "'></i>");
                 jQuery('.event-title').html(event.title);
                 jQuery('.event-body').html(event.description + "<br>" + "<b>Starts at: </b>" + new Date(event.start) + "<br>" + "<b>Ends at: </b>" + new Date(event.end));
                 jQuery('#eventUrl').attr('href', event.uri);

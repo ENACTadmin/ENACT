@@ -3,7 +3,7 @@
 /*===============================================*/
 #adjustedLoginBtn {
     background-color: #0053a4 !important;
-    border: 1px solid #fff;
+    /*border: 1px solid #FF9912;*/
     -webkit-border-radius: 25px;
     -moz-border-radius: 25px;
     border-radius: 25px;
@@ -132,19 +132,16 @@ html, body {
 }
 
 body {
-    /* font-family: 'Source Sans Pro', sans-serif; */
     padding: 0;
-    font-size: 16px;
+    font-size: 18px;
     margin: 0 auto;
     color: #1d1d1d;
     background-color: #fff;
-    font-family: 'Source Sans Pro', sans-serif;
-    font-weight: 320;
+    font-family: 'Gill Sans', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Source Sans Pro', sans-serif;
-    font-weight: 400;
+    font-family: 'Gill Sans', sans-serif;
 }
 
 .clear {
@@ -1000,7 +997,7 @@ h6 {
 
 .intro__content {
     border-radius: 10px 50px 50px 10px;
-    margin-top: 12%;
+    margin-top: 14%;
     padding: 25px;
     width: 65%;
     text-align: left;
@@ -1101,11 +1098,11 @@ h6 {
 }
 
 .form-demo__large {
-    margin: 5px;
-    width: 30%;
+    margin: 10px;
+    padding: 15px;
     /*float: left;*/
     background-color: #0053a4;
-    border: 1px solid #fff;
+    border: 3px solid #0053a4;
     height: 63px;
     line-height: 60px;
     font-size: 23px;
@@ -1660,7 +1657,7 @@ ul.grid__list--fmenu li a:hover {
     }
 
     .intro__content {
-        width: 65%;
+        width: 80%;
     }
 
     .intro__description {
@@ -2116,7 +2113,7 @@ ul.grid__list--fmenu li a:hover {
     }
 
     .intro__content {
-        width: 65%;
+        width: 80%;
     }
 
     .intro__description {
@@ -2150,7 +2147,7 @@ ul.grid__list--fmenu li a:hover {
     }
 
     .intro__content {
-        width: 80%;
+        width: 100%;
     }
 
     .intro__description {
@@ -2228,7 +2225,7 @@ ul.grid__list--fmenu li a:hover {
     }
 
     .intro__content {
-        width: 80%;
+        width: 100%;
     }
 
     .intro__description {

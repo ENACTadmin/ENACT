@@ -17,7 +17,7 @@ exports.saveEvent = async (req, res, next) => {
             end: endDate,
             uri: req.body.uri,
             description: req.body.description,
-            icon: req.body.icon,
+            // icon: req.body.icon,
             visibility: req.body.visibility
         })
         let faculties = await Faculty.find()
@@ -64,7 +64,7 @@ exports.editEvent = async (req, res, next) => {
         eventToEdit.end = endDate
         eventToEdit.uri = req.body.uri
         eventToEdit.description = req.body.description
-        eventToEdit.icon = req.body.icon
+        // eventToEdit.icon = req.body.icon
         eventToEdit.visibility = req.body.visibility
         await eventToEdit.save()
         res.redirect('back')

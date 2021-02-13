@@ -25,23 +25,24 @@
 
 <section class='section section__grey'>
     <div class='container'>
-        <div id="map"></div>
-        <br>
         <div class="row justify-content-md-center">
             <div class="col-md-4 col-sm-12">
-                <h3>Search</h3>
+                <h3>Search profiles</h3>
                 <hr>
                 <input class="form-control" id="myInput" type="text"
                        placeholder="e.g. name, state, school, keyword...">
             </div>
         </div>
         <br>
+        <div id="map"></div>
+        <br>
         <h3>ENACT Network in <%= state %> </h3>
         <hr>
         <% if (!loggedIn) { %>
             <div class="card-body">
                 <div class='text-center partners__text'>
-                    <h5>Are you an alum of an ENACT course? <a href="/login">Login</a> to use this platform and request membership in the
+                    <h5>Are you an alum of an ENACT course? <a href="/login">Login</a> to use this platform and request
+                        membership in the
                         <a href="https://www.linkedin.com/groups/8601882/"> <span class="fa">&#xf08c;</span>
                             ENACT-only LinkedIn group</a>.</h5>
                 </div>
@@ -51,7 +52,7 @@
                 <% if (profileInfo && profileInfo.length > 0) { %>
                     <% for (let i = 0; i < profileInfo.length; i++) { %>
                         <% if (profileInfo[i].status === "faculty" || profileInfo[i].status === "admin") { %>
-                            <li class="list-group-item" style="height: 200px; font-size: larger; margin-bottom: 20px">
+                            <li class="list-group-item" style="height: 220px; font-size: larger; margin-bottom: 20px">
                                 <div class="row">
                                     <div class="col-md-1 col-sm-1 align-self-center">
                                         <% if (profileInfo[i].profilePicURL) { %>
@@ -75,7 +76,6 @@
                                         <a href="/profile/view/<%= profileInfo[i]._id %>"><%= profileInfo[i].userName %></a>
                                     </div>
                                     <div class="col-md-2 col-sm-2 align-self-center">
-                                        <b>Personal links: </b><br>
                                         <% if (profileInfo[i].linkedInURL || profileInfo[i].personalWebsiteURL) { %>
                                             <% if (profileInfo[i].linkedInURL) { %>
                                                 <a href="<%= profileInfo[i].linkedInURL %>"> LinkedIn <span
@@ -86,8 +86,6 @@
                                                 <a href="<%= profileInfo[i].personalWebsiteURL %>"> Personal
                                                     Website </a>
                                             <% } %>
-                                        <% } else { %>
-                                            N.A.
                                         <% } %>
                                     </div>
                                     <div class="col-md-5 col-sm-5 align-self-center">
@@ -108,12 +106,11 @@
                                                 <a href="/profile/update"><input
                                                             class="btn btn-sm btn-outline-primary" type="button"
                                                             value="EDIT"></a>
-                                            <% } %>
-                                            <% if (user.status === 'admin') { %>
+                                            <% } else if (user.status === 'admin') { %>
                                                 <br><br>
                                                 <a href="/profile/update/<%= profileInfo[i]._id %>"><input
                                                             class="btn btn-sm btn-outline-primary" type="button"
-                                                            value="Edit"></a>
+                                                            value="EDIT"></a>
                                             <% } %>
                                         <% } %>
                                     </div>
@@ -136,9 +133,17 @@
 <script>
     $(document).ready(function () {
         $("#myInput").on("keyup", function () {
-            var value = $("#myInput").val().toLowerCase();
+            let value = $("#myInput").val().toLowerCase();
             $("#myList li").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                let regex = /[^\s.:,!?()\[\]]+/g;
+                let filteredInfo = $(this).text().toLowerCase().trim().match(regex)
+                let realText = ""
+                for (let key in filteredInfo) {
+                    if (filteredInfo[key] !== 'school' && filteredInfo[key] !== 'department' && filteredInfo[key] !== 'state')
+                        realText += filteredInfo[key] + ','
+                }
+                console.log('real: ', realText)
+                $(this).toggle(realText.indexOf(value) > -1)
             });
         });
     });

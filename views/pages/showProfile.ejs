@@ -17,7 +17,7 @@
                 <a class="btn btn-outline-primary" href="<%= userInfo.linkedInURL %>">LinkedIn</a>
             <% } %>
             <% if (userInfo.personalWebsiteURL) { %>
-                <a class="btn btn-outline-info" href="<%= userInfo.personalWebsiteURL %>">Personal Website</a>
+                <a class="btn btn-outline-info" href="<%= userInfo.personalWebsiteURL %>">University Bio URL (optional)</a>
             <% } %>
             <% if (user.status === 'admin') { %>
                 <hr>
@@ -126,7 +126,7 @@
 
                 <% if (userInfo.personalWebsiteURL) { %>
                     <div class='input-group-prepend'>
-                        <span class='input-group-text' style='width: 220px'>Personal Website URL</span>
+                        <span class='input-group-text' style='width: 220px'>University Bio URL</span>
                         <a class="form-control"
                            href="<%= userInfo.personalWebsiteURL %>"><%= userInfo.personalWebsiteURL %></a>
                     </div>
