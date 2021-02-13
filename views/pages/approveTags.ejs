@@ -5,12 +5,11 @@
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
             <div class='section__title section__title--centered'>
-                Proposed Areas Under Review
+                Proposed Resource Topic(s)/Issue(s) Under Review
             </div>
         </div>
     </div>
 </section>
-
 
 <section class='section section__grey' data-aos='fade-up'>
     <section class='section__content section__content--fluid-width'>
@@ -23,11 +22,11 @@
                             <div class='col-sm-11'>
                                 <input type='submit' class='btn btn-success'
                                        formaction='/tag/agree'
-                                       value='Add the new Area to Resource Uploading'>
+                                       value='Approve the new resource topic/issue proposal'>
                                 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                 <input type='submit' formaction='/tag/deny'
                                        class='btn btn-secondary'
-                                       value='Cancel the New Area Request'>
+                                       value='Reject the new resource topic/issue proposal'>
                             </div>
                         </div>
                         <% for (let i = 0; i < tagsInfo.length; i++) { %>
@@ -68,7 +67,7 @@
                     </form>
                 <% } else { %>
                     <div class="card-body text-center">
-                        There is proposed new area under review.
+                        There is no proposed new resource topic/issue under review.
                     </div>
                 <% } %>
             <% } else { %>

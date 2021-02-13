@@ -1,17 +1,3 @@
-// var stateHere
-//
-// $(document).ready(function () {
-//     stateHere = $('#state1').text()
-//     console.log("state here: ", stateHere)
-// })
-
-function getState() {
-    console.log(document)
-    let elem = document.getElementById('state1')
-    console.log(elem)
-    return document.getElementById('state1')
-}
-
 var simplemaps_usmap_mapdata = {
     main_settings: {
         //General settings

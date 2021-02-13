@@ -109,7 +109,11 @@
 
                     <div class='w-100'></div>
                     <div class='input-group-prepend'>
-                        <span class='input-group-text' style='width: 380px'>Department (Optional for students)</span>
+                        <% if (status === 'student') { %>
+                            <span class='input-group-text' style='width: 380px'>Department (Optional)</span>
+                        <% } else { %>
+                            <span class='input-group-text' style='width: 380px'>Department</span>
+                        <% } %>
                         <input type='text' class='form-control' name='department'
                                value='<%= user.department %>'>
                     </div>
@@ -194,7 +198,11 @@
 
                     <div class='w-100'></div>
                     <div class='input-group-prepend'>
-                        <span class='input-group-text' style='width: 380px'>Personal Website URL (Optional)</span>
+                        <% if (status === 'student') { %>
+                            <span class='input-group-text' style='width: 380px'>Bio URL (optional)</span>
+                        <% } else { %>
+                            <span class='input-group-text' style='width: 380px'>University Bio URL</span>
+                        <% } %>
                         <input type='text' class='form-control' name='personalWebsiteURL'
                                value='<%= user.personalWebsiteURL %>'>
                     </div>

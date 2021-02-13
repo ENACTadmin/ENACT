@@ -29,7 +29,7 @@
                             <% if (loggedIn || futureEventsInfo[i].visibility === 'public') { %>
                                 <div class='card border-0' style="border-radius: 30px">
                                     <div class='card-body'>
-                                        <h4><%= futureEventsInfo[i].title %></h4>
+                                        <h3 style="margin-bottom: 12px"><%= futureEventsInfo[i].title %></h3>
                                         <div class='card-text'>
                                             <ul class='list-group'>
                                                 <li class='list-group-item borderless box-padding'>
@@ -114,7 +114,7 @@
                             <% if (loggedIn || pastEventsInfo[i].visibility === 'public') { %>
                                 <div class='card border-0' style="border-radius: 30px">
                                     <div class='card-body'>
-                                        <h4><%= pastEventsInfo[i].title %></h4>
+                                        <h3 style="margin-bottom: 12px"><%= pastEventsInfo[i].title %></h3>
                                         <div class='card-text'>
                                             <ul class='list-group'>
                                                 <li class='list-group-item borderless box-padding'>
@@ -221,16 +221,16 @@
                         <label>Event Link</label>
                         <input type="text" class="form-control" name="uri">
                     </div>
-                    <div class="form-group">
-                        <label>Event Icon</label>
-                        <select class="form-control" name="icon">
-                            <option value="circle">circle</option>
-                            <option value="cog">cog</option>
-                            <option value="group">group</option>
-                            <option value="suitcase">suitcase</option>
-                            <option value="calendar">calendar</option>
-                        </select>
-                    </div>
+<!--                    <div class="form-group">-->
+<!--                        <label>Event Icon</label>-->
+<!--                        <select class="form-control" name="icon">-->
+<!--                            <option value="circle">circle</option>-->
+<!--                            <option value="cog">cog</option>-->
+<!--                            <option value="group">group</option>-->
+<!--                            <option value="suitcase">suitcase</option>-->
+<!--                            <option value="calendar">calendar</option>-->
+<!--                        </select>-->
+<!--                    </div>-->
                 </div>
                 <input hidden type="text" class="form-control TZTZ" name="TZ">
                 <div class="modal-footer">

@@ -57,34 +57,36 @@
                 <div class='form-demo'>
                     <% if (loggedIn) { %>
                         <% if (status === 'admin' || status === 'faculty') { %>
-                            <a href='/courses'><input type='submit' name='submit' class='form-demo__large fa'
-                                                      style="font-size: 24px; font-weight: 680"
-                                                      value='Courses &#xf02d'></a>
-                            <a href='/resources/search/private/advanced'><input type='submit' name='submit'
-                                                                                class='form-demo__large fa'
-                                                                                style="font-size: 24px; font-weight: 680"
-                                                                                value='Search &#xf002'></a>
+                            <a href='/courses'>
+                                <button class='form-demo__large fa' style="font-size: x-large; font-weight: 680">
+                                    Courses &#xf02d
+                                </button>
+                            </a>
+                            <a href='/resources/search/private/advanced'>
+                                <button class='form-demo__large fa' style="font-size: x-large; font-weight: 680">
+                                    Search Resources &#xf002
+                                </button>
+                            </a>
                             <a href='/resources/view/faculty'><input type='submit' name='submit'
                                                                      class='form-demo__large fa'
-                                                                     style="font-size: 24px; font-weight: 680"
+                                                                     style="font-size: x-large; font-weight: 680"
                                                                      value='Guide For Faculty &#xf14e'></a>
                         <% } else { %>
                             <a href='/resources/search/private/advanced'><input type='submit' name='submit'
                                                                                 class='form-demo__large fa'
-                                                                                style="font-size: 24px; font-weight: 680"
-                                                                                value='Search &#xf002;'></a>
+                                                                                style="font-size: x-large; font-weight: 680"
+                                                                                value='Search Resources &#xf002;'></a>
                             <a href='/networking'><input type='submit' name='submit'
                                                          class='form-demo__large fa'
-                                                         style="font-size: 24px; font-weight: 680"
+                                                         style="font-size: x-large; font-weight: 680"
                                                          value="Networking &#xf08c;"></a>
 
                         <% } %>
-                        <!--                    public user-->
                     <% } else { %>
                         <a href='/resources/view/my/public/all'><input type='submit' name='submit'
                                                                        class='form-demo__large fa'
-                                                                       style="font-size: 24px; font-weight: 680"
-                                                                       value='Search &#xf002'></a>
+                                                                       style="font-size: x-large; font-weight: 680"
+                                                                       value='Search Resources &#xf002'></a>
                     <% } %>
                 </div>
             </div>
@@ -101,7 +103,7 @@
         <div class='grid grid--3col'>
             <div class='grid__item partners__slide__grey' style='min-height: 500px' data-aos='fade-up'>
                 <h3 class='grid__title'><span>What We Do</span></h3>
-                <p class='grid__text' style="font-size: large; line-height: 150%">
+                <p class='grid__text' style="font-size: larger; line-height: 150%">
                     The <b style='color: #0053a4'>ENACT: Educational Network for Active Civic Transformation</b> is a
                     national program
                     engaging undergraduates at colleges and universities in state-level legislative change by
@@ -144,7 +146,7 @@
 
             <div class='grid__item partners__slide__grey' style='min-height: 500px' data-aos='fade-up'>
                 <h3 class='grid__title'><span>The ENACT Model</span></h3>
-                <p class='grid__text' style="font-size: large; line-height: 135%">
+                <p class='grid__text' style="font-size: large; line-height: 140%">
                     <b style='color: #0053a4'>• Workshop</b>: ENACT launched with a workshop at Brandeis University in
                     May 2016. Under the leadership of the program’s academic director, ENACT Fellows shared ideas and
                     work on course development.
@@ -179,7 +181,7 @@
         <% for (let i = 0; i < resourceInfo.length && i < 3; i++) { %>
             <div class='card-body border-0' style='border-radius: 30px' data-aos='fade-up'>
                 <h4>
-                    <%= resourceInfo[i].name %>
+                    <b><%= resourceInfo[i].name %></b>
                 </h4>
                 <div class='card-text'>
                     <ul class='list-group'>
@@ -193,14 +195,18 @@
                         </li>
                         <li class='list-group-item borderless box-padding'>
                             <b>Link: </b>
-                            <a href='<%= resourceInfo[i].uri %>'>Click me</a>
+                            <a href='<%= resourceInfo[i].uri %>'>click me</a>
                         </li>
                         <li class='list-group-item borderless box-padding'>
                             <b>Institution: </b>
                             <%= resourceInfo[i].institution %>
                         </li>
                         <li class='list-group-item borderless box-padding'>
-                            <b>Categories:</b>
+                            <b>Author:</b>
+                            <%= resourceInfo[i].ownerName %>
+                        </li>
+                        <li class='list-group-item borderless box-padding'>
+                            <b>Topic(s)/Issue(s):</b>
                             <%= resourceInfo[i].tags %>
                         </li>
                     </ul>
@@ -238,7 +244,7 @@
                 <% if (loggedIn || eventsInfo[i].visibility === 'public') { %>
                     <div class='card border-0' style='border-radius: 30px'>
                         <div class='card-body'>
-                            <h3><%= eventsInfo[i].title %></h3>
+                            <h3><b><%= eventsInfo[i].title %></b></h3>
                             <div class='card-text' style="font-size: 17px">
                                 <ul class='list-group'>
                                     <li class='list-group-item borderless box-padding'>

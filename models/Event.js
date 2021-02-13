@@ -11,7 +11,7 @@ const EventSchema = Schema({
     uri: String,
     description: String,
     timezone: Number,
-    icon: String,
+    // icon: String,
     visibility: String
 });
 

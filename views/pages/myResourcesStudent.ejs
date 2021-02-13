@@ -23,7 +23,7 @@
                         <% if (resourceInfo && resourceInfo.length > 0) { %>
                             <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
                                 <div class='card-body' style="margin-bottom: 20px">
-                                    <h4><%= resourceInfo[i].name %></h4>
+                                    <h3><b><%= resourceInfo[i].name %></b></h3>
                                     <div class='card-text'>
                                         <ul class='list-group'>
                                             <li class='list-group-item borderless box-padding'>
@@ -52,7 +52,7 @@
                                             </li>
                                             <% if (resourceInfo[i].tags.length >= 1 && resourceInfo[i].tags[0].length !== 0) { %>
                                                 <li class='list-group-item borderless box-padding'>
-                                                    <b>Tags:</b> <%= resourceInfo[i].tags %>
+                                                    <b>Topic(s)/Issue(s)</b>: <%= resourceInfo[i].tags %>
                                                 </li>
                                             <% } %>
                                             <li class='list-group-item borderless box-padding'

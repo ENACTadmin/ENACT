@@ -16,7 +16,7 @@ async function setWord2Id(newResource) {
         + newResource.state + ',' + newResource.contentType + ',' + newResource.mediaType + ','
         + newResource.institution + ',' + newResource.yearOfCreation + ',' + newResource.ownerName
 
-    let regex = /[^\s\.,!?()\[\]]+/g;
+    let regex = /[^\s.:,!?()\[\]]+/g;
     let match = fullContent.match(regex);
     for (let i = 0; i < match.length; i++) {
         let newRegex = new RegExp(["^", match[i], "$"].join(""), "i");
@@ -48,7 +48,7 @@ async function removeWord2Id(oldResource) {
         + oldResource.state + ',' + oldResource.contentType + ',' + oldResource.mediaType + ','
         + oldResource.institution + ',' + oldResource.yearOfCreation + ',' + oldResource.ownerName
 
-    let regex = /[^\s\.,!?()\[\]]+/g;
+    let regex = /[^\s.:,!?()\[\]]+/g;
     let match = fullContent.match(regex);
     for (let i = 0; i < match.length; i++) {
         let newRegex = new RegExp(["^", match[i], "$"].join(""), "i");
@@ -499,7 +499,19 @@ exports.loadPublicResources = async (req, res, next) => {
     try {
         res.locals.resourceInfo = await Resource.find({
             status: {$in: ["finalPublic", "public"]}
-        }).sort({yearOfCreation: -1}).limit(30)
+        }).sort({yearOfCreation: -1})
+        next()
+    } catch (e) {
+        console.log("error: " + e)
+        next(e)
+    }
+}
+
+exports.loadDisplayedResources = async (req, res, next) => {
+    try {
+        res.locals.resourceInfo = await Resource.find({
+            status: "finalPublic"
+        }).sort({yearOfCreation: -1})
         next()
     } catch (e) {
         console.log("error: " + e)
@@ -618,8 +630,7 @@ exports.starResourceAlt = async (req, res, next) => {
         resourceSet.resources = newResourceIds
         await resourceSet.save()
         // res.redirect('/resources/search/private/general/results')
-        starredIds = newResourceIds
-        res.locals.resourceIds = starredIds
+        res.locals.resourceIds = newResourceIds
         console.log("star success!")
         res.send()
     } catch (e) {
@@ -642,8 +653,7 @@ exports.unstarResourceAlt = async (req, res, next) => {
         resourceSet.resources = newResourceIds
         await resourceSet.save()
         // res.redirect('/resources/search/private/general/results')
-        starredIds = newResourceIds
-        res.locals.resourceIds = starredIds
+        res.locals.resourceIds = newResourceIds
         console.log("unstar success!")
         res.send()
     } catch (e) {
@@ -679,8 +689,6 @@ exports.showStarredResources = async (req, res, next) => {
         next(e)
     }
 }
-
-let starredIds
 
 exports.loadCollection = async (req, res, next) => {
     try {
@@ -771,14 +779,6 @@ exports.deleteCollection = async (req, res, next) => {
 // --------------- General Search ----------------
 // -----------------------------------------------
 
-// exports.reloadSearch = async (req, res) => {
-//     res.locals.resourceIds = starredIds
-//     res.locals.resourceInfo = resourceInfoSet
-//     res.render('./pages/showResources', {
-//         secretType: 'Search Result'
-//     })
-// }
-
 exports.primarySearch = async (req, res, next) => {
     try {
         let resourceInfo = await invertedSearch(req, res);
@@ -821,7 +821,7 @@ exports.primaryPublicSearch = async (req, res, next) => {
     let resourceInfo = null
     const checkStatus = 'approve'
     try {
-        let regex = /[^\s\.,!?()\[\]]+/g;
+        let regex = /[^\s.:,!?()\[\]]+/g;
         let match = req.body.search.match(regex)
         if (match) {
             for (let i = 0; i < match.length; i++) {
@@ -862,7 +862,7 @@ exports.primaryPublicSearch = async (req, res, next) => {
 async function invertedSearch(req, res) {
     const checkStatus = 'approve'
     let resourceInfo = null
-    let regex = /[^\s\.,!?()\[\]]+/g;
+    let regex = /[^\s.:,!?()\[\]]+/g;
     let match = req.body.search.match(regex)
     match = [...new Set(match)]
     let idSet = new Set()
@@ -947,12 +947,12 @@ async function rankRes(match, resources) {
         let matchSet = new Set(match)
         for (var resource in resources) {
             let newResource = resources[resource]
-            let fullContent = newResource.name + ',' + newResource.description + ',' + newResource.tags + ','
-                + newResource.state + ',' + newResource.contentType + ',' + newResource.mediaType + ','
-                + newResource.institution + ',' + newResource.yearOfCreation + ',' + newResource.ownerName
-
-            let regex = /[^\s\.,!?()\[\]]+/g;
+            let fullContent = newResource.name + ' ' + newResource.description + ' ' + newResource.tags + ' '
+                + newResource.state + ' ' + newResource.contentType + ' ' + newResource.mediaType + ' '
+                + newResource.institution + ' ' + newResource.yearOfCreation + ' ' + newResource.ownerName
+            let regex = /[^\s.:,!?()\[\]]+/g;
             let newMatch = fullContent.match(regex);
+            newMatch = [...new Set(newMatch)]; // keep unique elements
             let filtered = newMatch.filter(value => matchSet.has(value));
             resources[resource].count = filtered.length;
         }

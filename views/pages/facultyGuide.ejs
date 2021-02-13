@@ -14,10 +14,8 @@
                     class='btn btn-large btn-warning'
                     style='width: 200px'>Search for Resources</a>
             <br><br>
-            <h3 style="display:inline;">Or, help the faculty community by </h3><a href='/resource/upload/faculty'
-                                                                                  class='btn btn-large btn-primary'
-                                                                                  style='width: 260px'>Upload Faculty
-                Resources</a>
+            <h3 style="display:inline;">Or, help the faculty community by </h3>
+            <a href='/resource/upload/faculty' class='btn btn-large btn-primary'>Upload Faculty Resources</a>
         </div>
     </div>
 </section>
@@ -63,7 +61,7 @@
                                             </li>
                                             <% if (syllabus[i].tags[0].length > 0) { %>
                                                 <li class='list-group-item borderless box-padding'>
-                                                    <b>Tags:</b> <%= syllabus[i].tags %>
+                                                    <b>Topic(s)/Issue(s)</b>: <%= syllabus[i].tags %>
                                                 </li>
                                             <% } %>
                                             <li class='list-group-item borderless box-padding'>
@@ -139,7 +137,7 @@
                                             </li>
                                             <% if (assignments[i].tags[0].length > 0) { %>
                                                 <li class='list-group-item borderless box-padding'>
-                                                    <b>Tags:</b> <%= assignments[i].tags %>
+                                                    <b>Topic(s)/Issue(s)</b>: <%= assignments[i].tags %>
                                                 </li>
                                             <% } %>
                                             <li class='list-group-item borderless box-padding'>
@@ -215,7 +213,7 @@
                                             </li>
                                             <% if (guides[i].tags[0].length > 0) { %>
                                                 <li class='list-group-item borderless box-padding'>
-                                                    <b>Tags:</b> <%= guides[i].tags %>
+                                                    <b>Topic(s)/Issue(s)</b>: <%= guides[i].tags %>
                                                 </li>
                                             <% } %>
                                             <li class='list-group-item borderless box-padding'>

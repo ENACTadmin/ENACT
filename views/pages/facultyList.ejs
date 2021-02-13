@@ -49,7 +49,6 @@
                                 <a href="/profile/view/<%= staffInfo[i]._id %>"><%= staffInfo[i].userName %></a>
                             </div>
                             <div class="col-md-2 col-sm-2 align-self-center">
-                                <b>Personal links: </b><br>
                                 <% if (staffInfo[i].linkedInURL || staffInfo[i].personalWebsiteURL) { %>
                                     <% if (staffInfo[i].linkedInURL) { %>
                                         <a href="<%= staffInfo[i].linkedInURL %>"> LinkedIn <span
@@ -57,10 +56,8 @@
                                         <br>
                                     <% } %>
                                     <% if (staffInfo[i].personalWebsiteURL) { %>
-                                        <a href="<%= staffInfo[i].personalWebsiteURL %>"> Personal Website </a>
+                                        <a href="<%= staffInfo[i].personalWebsiteURL %>"> University Bio URL (optional) </a>
                                     <% } %>
-                                <% } else { %>
-                                    N.A.
                                 <% } %>
                             </div>
                             <div class="col-md-5 col-sm-5 align-self-center">
@@ -103,7 +100,7 @@
         <ul class="list-group" id="myList">
             <% for (let i = 0; i < profileInfo.length; i++){ %>
                 <% if (profileInfo[i].status === "faculty" || profileInfo[i].status === "admin") { %>
-                    <li class="list-group-item" style="height: 200px; font-size: larger; margin-bottom: 20px">
+                    <li class="list-group-item" style="height: 220px; font-size: larger; margin-bottom: 20px">
                         <div class="row">
                             <div class="col-md-1 col-sm-1 align-self-center">
                                 <% if (profileInfo[i].profilePicURL) { %>
@@ -123,7 +120,6 @@
                                 <a href="/profile/view/<%= profileInfo[i]._id %>"><%= profileInfo[i].userName %></a>
                             </div>
                             <div class="col-md-2 col-sm-2 align-self-center">
-                                <b>Personal links: </b><br>
                                 <% if (profileInfo[i].linkedInURL || profileInfo[i].personalWebsiteURL) { %>
                                     <% if (profileInfo[i].linkedInURL) { %>
                                         <a href="<%= profileInfo[i].linkedInURL %>"> LinkedIn <span
@@ -131,10 +127,8 @@
                                         <br>
                                     <% } %>
                                     <% if (profileInfo[i].personalWebsiteURL) { %>
-                                        <a href="<%= profileInfo[i].personalWebsiteURL %>"> Personal Website </a>
+                                        <a href="<%= profileInfo[i].personalWebsiteURL %>"> University Bio URL (optional) </a>
                                     <% } %>
-                                <% } else { %>
-                                    N.A.
                                 <% } %>
                             </div>
                             <div class="col-md-5 col-sm-5 align-self-center">
@@ -160,7 +154,7 @@
                                         <br><br>
                                         <a href="/profile/update/<%= profileInfo[i]._id %>"><input
                                                     class="btn btn-sm btn-outline-primary" type="button"
-                                                    value="Edit"></a>
+                                                    value="EDIT"></a>
                                     <% } %>
                                 <% } %>
                             </div>
@@ -175,9 +169,17 @@
 <script>
     $(document).ready(function () {
         $("#myInput").on("keyup", function () {
-            var value = $("#myInput").val().toLowerCase();
+            let value = $("#myInput").val().toLowerCase();
             $("#myList li").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                let regex = /[^\s.:,!?()\[\]]+/g;
+                let filteredInfo = $(this).text().toLowerCase().trim().match(regex)
+                let realText = ""
+                for (let key in filteredInfo) {
+                    if (filteredInfo[key] !== 'school' && filteredInfo[key] !== 'department' && filteredInfo[key] !== 'state')
+                        realText += filteredInfo[key] + ','
+                }
+                console.log('real: ', realText)
+                $(this).toggle(realText.indexOf(value) > -1)
             });
         });
     });
