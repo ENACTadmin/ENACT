@@ -42,27 +42,27 @@
                 <div class='card-text'>
                     <ul class='list-group'>
                         <li class='list-group-item borderless box-padding'>
-                            <b>Description: </b>
+                            <h5 style="display: inline">Description:</h5>
                             <%= resourceInfo[i].description %>
                         </li>
                         <li class='list-group-item borderless box-padding'>
-                            <b>State:</b>
+                            <h5 style="display: inline">State:</h5>
                             <%= resourceInfo[i].state %>
                         </li>
                         <li class='list-group-item borderless box-padding'>
-                            <b>Link: </b>
+                            <h5 style="display: inline">Link:</h5>
                             <a href='<%= resourceInfo[i].uri %>'><%= resourceInfo[i].uri %></a>
                         </li>
                         <li class='list-group-item borderless box-padding'>
-                            <b>Institution: </b>
+                            <h5 style="display: inline">Institution:</h5>
                             <%= resourceInfo[i].institution %>
                         </li>
                         <li class='list-group-item borderless box-padding'>
-                            <b>Categories:</b>
+                            <h5 style="display: inline">Resource Topic(s)/Issue(s):</h5>
                             <%= resourceInfo[i].tags %>
                         </li>
                         <li class='list-group-item borderless box-padding'>
-                            <b>Actions:</b>
+                            <h5 style="display: inline">Actions:</h5>
                             <% if (loggedIn) { %>
                                 <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id.toString()) { %>
                                     <button type='button' class='btn btn-outline-info'
@@ -102,27 +102,27 @@
                         <div class='card-text'>
                             <ul class='list-group'>
                                 <li class='list-group-item borderless box-padding'>
-                                    <b>Description: </b>
+                                    <h5 style="display: inline">Description:</h5>
                                     <%= allLikedResourceInfo[i].description %>
                                 </li>
                                 <li class='list-group-item borderless box-padding'>
-                                    <b>State:</b>
+                                    <h5 style="display: inline">State:</h5>
                                     <%= allLikedResourceInfo[i].state %>
                                 </li>
                                 <li class='list-group-item borderless box-padding'>
-                                    <b>Link: </b>
+                                    <h5 style="display: inline">Link:</h5>
                                     <a href='<%= allLikedResourceInfo[i].uri %>'><%= allLikedResourceInfo[i].uri %></a>
                                 </li>
                                 <li class='list-group-item borderless box-padding'>
-                                    <b>Institution: </b>
+                                    <h5 style="display: inline">Institution:</h5>
                                     <%= allLikedResourceInfo[i].institution %>
                                 </li>
                                 <li class='list-group-item borderless box-padding'>
-                                    <b>Categories:</b>
+                                    <h5 style="display: inline">Resource Topic(s)/Issue(s):</h5>
                                     <%= allLikedResourceInfo[i].tags %>
                                 </li>
                                 <li class='list-group-item borderless box-padding' style='display: inline'>
-                                    <b>Actions:</b>
+                                    <h5 style="display: inline">Actions:</h5>
                                     <form style='display: inline' method='post'
                                           action='/collection/<%= resourceSet._id %>/add/<%= allLikedResourceInfo[i]._id %>'>
                                         <input type='submit' style='border:0 solid transparent' name='submit'

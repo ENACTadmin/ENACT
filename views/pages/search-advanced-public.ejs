@@ -219,27 +219,6 @@
                         </select>
                     </div>
                     <br>
-                    <% if (status === 'admin' || status === 'faculty') { %>
-                        <div class='input-group-prepend'>
-                            <span class='input-group-text' style='width: 180px'>Resource Status</span>
-                            <select class='form-control' name='status'>
-                                <option selected value='all'>All resources</option>
-                                <option value='public'>Open to public</option>
-                                <option value='privateToENACT'>Exclusive to ENACT members</option>
-                                <option value='privateToProfessor'>Exclusive to ENACT professors</option>
-                            </select>
-                        </div>
-                    <% } else { %>
-                        <div class='input-group-prepend'>
-                            <span class='input-group-text' style='width: 180px'>Resource Status</span>
-                            <select class='form-control' name='status'>
-                                <option selected value='all'>All resources</option>
-                                <option value='public'>Open to public</option>
-                                <option value='privateToENACT'>Exclusive to ENACT members</option>
-                            </select>
-                        </div>
-                    <% } %>
-                    <br>
                 </div>
             </div>
             <div class='row'>

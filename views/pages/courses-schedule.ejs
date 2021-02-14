@@ -24,7 +24,6 @@
                 <% for (let p = 0; p < days.length; p++) { %>
                     <div class="col">
                         <h3><%= days[p] %></h3>
-                        <hr style="border-top: 5px solid black;">
                     </div>
                 <% } %>
             </div>
@@ -36,18 +35,24 @@
                                 <% if (courseTimes[i].courseId.equals(courses[j]._id) && days[p] === courseTimes[i].day) { %>
                                     <div class='card'>
                                         <div class='card-body'>
-                                            <h5 style='display: inline'><b><%= courses[j].courseName %></b></h5>
+                                            <h5 style='display: inline'><%= courses[j].courseName %></h5>
                                             <br>
-                                            <h5 style='display: inline'><a href="<%= courses[j].institutionURL %>"><%= courses[j].institution %></a>
+                                            <h5 style='display: inline'><a
+                                                        href="<%= courses[j].institutionURL %>"><%= courses[j].institution %></a>
                                             </h5>
                                             <br>
-                                            <h5 style='display: inline'><b><a href="/profile/view/<%= courses[j].ownerId %>"><%= courses[j].instructor %></a></b>
+                                            <h5 style='display: inline'><a
+                                                        href="/profile/view/<%= courses[j].ownerId %>"><%= courses[j].instructor %></a>
                                             </h5>
                                             <br>
-                                            <h5 style='display: inline'>State: <%= courses[j].state %></h5>
+                                            <h5 style='display: inline'>State:</h5> <%= courses[j].state %>
                                             <br>
-                                            <h5 hidden class="timezoneStart" style='display: inline'><%= courses[j].timezone %>,<%= courseTimes[i].startTime %></h5>
-                                            <h5 style='display: inline'>to</h5> <h5 hidden class="timezoneStart" style='display: inline'><%= courses[j].timezone %>,<%= courseTimes[i].endTime %></h5>
+                                            <h5 hidden class="timezoneStart"
+                                                style='display: inline'><%= courses[j].timezone %>
+                                                ,<%= courseTimes[i].startTime %></h5>
+                                            <h5 style='display: inline'>to</h5> <h5 hidden class="timezoneStart"
+                                                                                    style='display: inline'><%= courses[j].timezone %>
+                                                ,<%= courseTimes[i].endTime %></h5>
                                         </div>
                                     </div>
                                     <hr>
@@ -121,7 +126,6 @@
                     offset1 = 10;
                     break;
             }
-            console.log("offset 1: ", offset1)
             $(this).text((parseInt(time.split(':')[0]) + (n - offset1) + 24) % 24 + ':' + time.split(':')[1])
             $(this).removeAttr('hidden')
         })

@@ -138,10 +138,23 @@ body {
     color: #1d1d1d;
     background-color: #fff;
     font-family: 'Gill Sans', sans-serif;
+    font-weight: normal;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2 {
     font-family: 'Gill Sans', sans-serif;
+    font-weight: bolder;
+}
+
+h3, h4, h5, h6 {
+    font-family: 'Gill Sans', sans-serif;
+    font-weight: 600;
+}
+
+hr {
+    height: 10px;
+    border: 0;
+    box-shadow: 0 10px 10px -10px #8c8b8b inset;
 }
 
 .clear {
@@ -614,6 +627,26 @@ h6 {
     height: 1px;
     background: #454545;
 }
+
+/* ELEMENT MODIFIER section__title  */
+.section__title--centered1 {
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+
+.section__title--centered1:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 80%;
+    margin: auto;
+    width: 50px;
+    height: 1px;
+    background: antiquewhite;
+}
+
 
 /* ELEMENT - section__description */
 .section__description {
@@ -2422,25 +2455,32 @@ Calendar Styling */
 /*==============================================================
 	Calendar Start
 ==============================================================*/
-.calendar-wrap{}
-.calendar-wrap .fc-event.ui-draggable-handle{
+.calendar-wrap {
+}
+
+.calendar-wrap .fc-event.ui-draggable-handle {
     padding: 5px;
     margin-bottom: 5px;
 }
-.fc th{
+
+.fc th {
     font-weight: 500;
     padding: 10px !important;
     background: #e1e1f5;
 }
-.fc-day-grid-event .fc-time{
+
+.fc-day-grid-event .fc-time {
     font-weight: 500 !important;
 }
-.fc-day-grid-event .fc-content{
+
+.fc-day-grid-event .fc-content {
     padding: 3px 9px;
 }
-.fc-header-toolbar h2{
+
+.fc-header-toolbar h2 {
     font-size: 24px;
 }
+
 /*==============================================================
 	Calendar End
 ==============================================================*/
@@ -2493,12 +2533,12 @@ Calendar Styling */
     border-radius: 2rem;
 }
 
-.form-label-group>input,
-.form-label-group>label {
+.form-label-group > input,
+.form-label-group > label {
     padding: var(--input-padding-y) var(--input-padding-x);
 }
 
-.form-label-group>label {
+.form-label-group > label {
     position: absolute;
     top: 0;
     left: 0;
@@ -2538,7 +2578,7 @@ Calendar Styling */
     padding-bottom: calc(var(--input-padding-y) / 3);
 }
 
-.form-label-group input:not(:placeholder-shown)~label {
+.form-label-group input:not(:placeholder-shown) ~ label {
     padding-top: calc(var(--input-padding-y) / 3);
     padding-bottom: calc(var(--input-padding-y) / 3);
     font-size: 12px;
@@ -2559,9 +2599,10 @@ Calendar Styling */
 -------------------------------------------------- */
 
 @supports (-ms-ime-align: auto) {
-    .form-label-group>label {
+    .form-label-group > label {
         display: none;
     }
+
     .form-label-group input::-ms-input-placeholder {
         color: #777;
     }
@@ -2572,9 +2613,10 @@ Calendar Styling */
 
 @media all and (-ms-high-contrast: none),
 (-ms-high-contrast: active) {
-    .form-label-group>label {
+    .form-label-group > label {
         display: none;
     }
+
     .form-label-group input:-ms-input-placeholder {
         color: #777;
     }

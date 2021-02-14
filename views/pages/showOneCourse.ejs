@@ -44,15 +44,17 @@
                                 <div class='card-text'>
                                     <ul class='list-group'>
                                         <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
-                                            <b>Instructor:</b> <%= courseInfo.instructor %></li>
-                                        <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
-                                            <b>State: </b> <%= courseInfo.state %></li>
-                                        <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
-                                            <b>Institution: </b> <%= courseInfo.institution %></li>
-                                        <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
-                                            <b>Syllabi:</b>
-                                            <a href='#'>Click me</a>
+                                            <h5 style="display: inline">Instructor:</h5> <%= courseInfo.instructor %>
                                         </li>
+                                        <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
+                                            <h5 style="display: inline">State:</h5> <%= courseInfo.state %></li>
+                                        <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
+                                            <h5 style="display: inline">Institution:</h5> <%= courseInfo.institution %>
+                                        </li>
+                                        <!--                                        <li class='list-group-item borderless' style='padding: 0 0 3px 0'>-->
+                                        <!--                                            <b>Syllabi:</h5>-->
+                                        <!--                                            <a href='#'>Click me</a>-->
+                                        <!--                                        </li>-->
                                     </ul>
                                 </div>
                             </div>
@@ -68,7 +70,8 @@
                                         <% if (status === 'faculty' || status === 'admin') { %>
                                             <li class='list-group-item borderless'
                                                 style='padding: 0 0 3px 0'>
-                                                <b>Pin Code to Join:</b> <%= courseInfo.coursePin %></li>
+                                                <h5 style="display: inline">Pin Code to
+                                                    Join:</h5> <%= courseInfo.coursePin %></li>
                                         <% } %>
                                         <li class='list-group-item borderless'
                                             style='padding: 0 0 3px 0'>

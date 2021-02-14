@@ -7,12 +7,39 @@
             <div class='section__title section__title--centered'>
                 Search Result
             </div>
-            <h3>Not finding what you want? Please try</h3><a href='/resources/search/public/advanced'
-                                                             class='btn btn-large btn-warning'
-                                                             style='width: 200px'>Search for Resources</a>
+            <% if (search_tags || search_text || search_state || search_contentType || search_institution || search_mediaType || search_yearOfCreation) { %>
+                <h3>Search inputs</h3>
+                <% if (search_text) { %>
+                    <h5 style="display: inline">Keyword: </h5><u><%= search_text %></u> <br>
+                <% } %>
+                <% if (search_state) { %>
+                    <h5 style="display: inline">State: </h5><u><%= search_state %></u> <br>
+                <% } %>
+                <% if (search_contentType) { %>
+                    <h5 style="display: inline">Content Type: </h5><u><%= search_contentType %></u><br>
+                <% } %>
+                <% if (search_institution) { %>
+                    <h5 style="display: inline">Institution: </h5><u><%= search_institution %></u><br>
+                <% } %>
+                <% if (search_mediaType) { %>
+                    <h5 style="display: inline">Media Type: </h5><u><%= search_mediaType %></u><br>
+                <% } %>
+                <% if (search_yearOfCreation) { %>
+                    <h5 style="display: inline">Year of Creation: </h5><u><%= search_yearOfCreation %></u><br>
+                <% } %>
+                <% if (search_tags) { %>
+                    <h5 style="display: inline">Topic(s)/Issue(s): </h5><u><%= search_tags %></u> <br>
+                <% } %>
+                <br>
+            <% } %>
+            <h3>Not finding what you want? Please try</h3>
+            <a href='/resources/search/public/advanced'
+               class='btn btn-large btn-warning'
+               style='width: 200px'><b>Search again</b></a>
         </div>
     </div>
 </section>
+
 
 <section class='section section__grey' data-aos='fade-up'>
     <section class='section__content section__content--fluid-width'>
@@ -22,15 +49,16 @@
                     <% if (resourceInfo && resourceInfo.length > 0) { %>
                         <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
                             <div class='card-body'>
-                                <h3><b><%= resourceInfo[i].name %></b></h3>
+                                <h3><%= resourceInfo[i].name %></h3>
                                 <div class='card-text'>
                                     <ul class='list-group'>
-                                        <li class='list-group-item borderless box-padding'><b>Description: </b> <%= resourceInfo[i].description %></li>
-                    <li class='list-group-item borderless box-padding'>
-                        <b>Year: </b> <%= resourceInfo[i].yearOfCreation %>
-                    </li>
+                                        <li class='list-group-item borderless box-padding'><h5 style="display: inline">
+                                                Description:</h5> <%= resourceInfo[i].description %></li>
                                         <li class='list-group-item borderless box-padding'>
-                                            <b>State:</b> <%= resourceInfo[i].state %></li>
+                                            <h5 style="display: inline">Year:</h5> <%= resourceInfo[i].yearOfCreation %>
+                                        </li>
+                                        <li class='list-group-item borderless box-padding'>
+                                            <h5 style="display: inline">State:</h5> <%= resourceInfo[i].state %></li>
                                         <% if (resourceInfo[i].mediaType === 'video') { %>
                                             <li class='list-group-item borderless box-padding'>
                                                 <video width="400" controls>
@@ -39,18 +67,21 @@
                                             </li>
                                         <% } else { %>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click me</a>
+                                                <h5 style="display: inline">Link:</h5> <a
+                                                        href='<%= resourceInfo[i].uri %>'>click me</a>
                                             </li>
                                         <% } %>
                                         <li class='list-group-item borderless box-padding'>
-                                            <b>Institution: </b> <%= resourceInfo[i].institution %>
+                                            <h5 style="display: inline">
+                                                Institution:</h5> <%= resourceInfo[i].institution %>
                                         </li>
                                         <li class='list-group-item borderless box-padding'>
-                                            <b>Author: </b> <%= resourceInfo[i].ownerName %>
+                                            <h5 style="display: inline">Author:</h5> <%= resourceInfo[i].ownerName %>
                                         </li>
                                         <% if (resourceInfo[i].tags.length >= 1 && resourceInfo[i].tags[0].length !== 0) { %>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>Topic(s)/Issue(s)</b>: <%= resourceInfo[i].tags %>
+                                                <h5 style="display: inline">
+                                                    Topic(s)/Issue(s):</h5> <%= resourceInfo[i].tags %>
                                             </li>
                                         <% } %>
                                     </ul>

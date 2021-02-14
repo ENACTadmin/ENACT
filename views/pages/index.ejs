@@ -39,19 +39,19 @@
                             About ENACT</a>
                     <% } %>
                     <br>
-                    <b style="color: #FF9912">- ENACT Students & Alumni:</b> search student work. Network with
+                    <b style="color: #FF9912">- ENACT Students & Alumni: </b> search student work. Network with
                     students and alumni.
                     <% if (!loggedIn) { %>
                         <a href="/login" class="btn btn-sm btn-info" id="adjustedLoginBtn">Click to Login</a>
                     <% } %>
                     <br>
-                    <b style="color: #FF9912">- ENACT Faculty Fellows:</b> access ENACT teaching resources and
+                    <b style="color: #FF9912">- ENACT Faculty Fellows: </b> access ENACT teaching resources and
                     student work.
                     <% if (!loggedIn) { %>
                         <a href="/login" class="btn btn-sm btn-info" id="adjustedLoginBtn">Click to Login</a>
                     <% } %>
                     <br>
-                    <b style="color: #FF9912">- Public:</b> access student work on bills from across the U.S.,
+                    <b style="color: #FF9912">- Public: </b> access student work on bills from across the U.S.,
                     including op-eds, issue research and more.
                 </div>
                 <div class='form-demo'>
@@ -103,7 +103,7 @@
         <div class='grid grid--3col'>
             <div class='grid__item partners__slide__grey' style='min-height: 500px' data-aos='fade-up'>
                 <h3 class='grid__title'><span>What We Do</span></h3>
-                <p class='grid__text' style="font-size: larger; line-height: 150%">
+                <p class='grid__text' style="font-size: larger; line-height: 145%">
                     The <b style='color: #0053a4'>ENACT: Educational Network for Active Civic Transformation</b> is a
                     national program
                     engaging undergraduates at colleges and universities in state-level legislative change by
@@ -117,8 +117,9 @@
                 <br>
             </div>
 
-            <div class='grid__item partners__slide__grey' style='min-height: 500px' data-aos='fade-up'>
-                <div id='carouselExampleSlidesOnly' class='carousel slide' data-ride='carousel'>
+            <div class='grid__item partners__slide__grey' style='min-height: 500px; background-color: black'
+                 data-aos='fade-up'>
+                <div id='carouselExampleControls' class='carousel slide' data-ride='carousel'>
                     <div class='carousel-inner'>
                         <div class='carousel-item active'>
                             <img src='<%= imagePaths[0] %>'
@@ -126,7 +127,7 @@
                                  class='d-block w-100' alt='...'>
                             <div class='carousel-caption d-none d-md-block'
                                  style='right: 1%; left: 1%; color: black; background-color: white; opacity: 0.95; border-radius: 15px; padding: 4%'>
-                                <p style="font-size: large; line-height: 120%"><%= labelPaths[0] %></p>
+                                <p style="font-size: large; line-height: 110%"><%= labelPaths[0] %></p>
                             </div>
                         </div>
                         <% for (let i = 1; i < imagePaths.length; i++) { %>
@@ -141,6 +142,14 @@
                             </div>
                         <% } %>
                     </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
             </div>
 
@@ -171,7 +180,7 @@
 <!-- Public Resources Section -->
 <section class='section diagonal-gradient'>
     <div class='section__content section__content--fluid-width section__content--padding' data-aos='fade-up'>
-        <h2 class='section__title section__title--centered' style="color: white">Public resources</h2>
+        <h2 class='section__title section__title--centered1' style="color: white">Public resources</h2>
         <br><br><br>
         <% if (resourceInfo.length === 0) { %>
             <div class='card-body text-center' style="border-radius: 30px">
@@ -180,33 +189,31 @@
         <% } %>
         <% for (let i = 0; i < resourceInfo.length && i < 3; i++) { %>
             <div class='card-body border-0' style='border-radius: 30px' data-aos='fade-up'>
-                <h4>
-                    <b><%= resourceInfo[i].name %></b>
-                </h4>
+                <h3><%= resourceInfo[i].name %></h3>
                 <div class='card-text'>
                     <ul class='list-group'>
                         <li class='list-group-item borderless box-padding'>
-                            <b>Description: </b>
+                            <h5 style="display: inline">Description:</h5>
                             <%= resourceInfo[i].description %>
                         </li>
                         <li class='list-group-item borderless box-padding'>
-                            <b>State:</b>
+                            <h5 style="display: inline">State:</h5>
                             <%= resourceInfo[i].state %>
                         </li>
                         <li class='list-group-item borderless box-padding'>
-                            <b>Link: </b>
+                            <h5 style="display: inline">Link:</h5>
                             <a href='<%= resourceInfo[i].uri %>'>click me</a>
                         </li>
                         <li class='list-group-item borderless box-padding'>
-                            <b>Institution: </b>
+                            <h5 style="display: inline">Institution:</h5>
                             <%= resourceInfo[i].institution %>
                         </li>
                         <li class='list-group-item borderless box-padding'>
-                            <b>Author:</b>
+                            <h5 style="display: inline">Author:</h5>
                             <%= resourceInfo[i].ownerName %>
                         </li>
                         <li class='list-group-item borderless box-padding'>
-                            <b>Topic(s)/Issue(s):</b>
+                            <h5 style="display: inline">Topic(s)/Issue(s):</h5>
                             <%= resourceInfo[i].tags %>
                         </li>
                     </ul>
@@ -237,34 +244,35 @@
 
 <!-- Calendar -->
 <section class='section section__grey'>
-    <h2 class='section__title section__title--centered' style="padding-top: 80px">Events</h2>
+    <br><br><br>
     <section class='section__content section__content--fluid-width'>
+        <h2 class='section__title section__title--centered'>Events</h2>
         <% if (eventsInfo.length !== 0) { %>
             <% for (let i = 0; i < eventsInfo.length; i++) { %>
                 <% if (loggedIn || eventsInfo[i].visibility === 'public') { %>
                     <div class='card border-0' style='border-radius: 30px'>
                         <div class='card-body'>
-                            <h3><b><%= eventsInfo[i].title %></b></h3>
-                            <div class='card-text' style="font-size: 17px">
+                            <h3><%= eventsInfo[i].title %></h3>
+                            <div class='card-text'>
                                 <ul class='list-group'>
                                     <li class='list-group-item borderless box-padding'>
-                                        <b>Description: </b> <%= eventsInfo[i].description %>
+                                        <h5 style="display: inline">Description:</h5> <%= eventsInfo[i].description %>
                                     </li>
                                     <% if (eventsInfo[i].start !== null) { %>
                                         <li class='list-group-item borderless box-padding'>
-                                            <b>Starts at:</b>
+                                            <h5 style="display: inline">Starts at:</h5>
                                             <%= eventsInfo[i].start %>
                                         </li>
                                     <% } %>
                                     <% if (eventsInfo[i].end !== null) { %>
                                         <li class='list-group-item borderless box-padding'>
-                                            <b>Ends at:</b>
+                                            <h5 style="display: inline">Ends at:</h5>
                                             <%= eventsInfo[i].end %>
                                         </li>
                                     <% } %>
                                     <% if (eventsInfo[i].uri !== null) { %>
                                         <li class='list-group-item borderless box-padding'>
-                                            <b>Link: </b> <a
+                                            <h5 style="display: inline">Link:</h5> <a
                                                     href="<%= eventsInfo[i].uri %>"><%= eventsInfo[i].uri %></a>
                                         </li>
                                     <% } %>
@@ -301,11 +309,11 @@
             <div class='grid grid--2col'>
                 <div class='grid__item partners__slide__grey' style="height: 450px" data-aos='fade-up'>
                     <h2 class='grid__title'><span>For Students</span></h2>
-                    <p class='grid__text' style="font-size: larger; line-height: 175%">
+                    <p class='grid__text' style="font-size: larger; line-height: 150%">
                         • Are you a student in an ENACT course? Contact your professor for the PIN you need to login ,
                         create a profile. You will then be able to access all resources, and upload your own work.
                         Already have a profile? Login above to gain full access to the site.
-                        <br><br>
+                        <br>
                         • Are you an alum of an ENACT course? If you do not already have a profile, contact <a
                                 href="mailto:enact@brandeis.edu">ENACT@brandeis.edu</a> to request a pin. Include the
                         year and school where you took the ENACT course.
@@ -313,11 +321,11 @@
                 </div>
                 <div class='grid__item partners__slide__grey' style="height: 450px" data-aos='fade-up'>
                     <h2 class='grid__title'><span>For Professors</span></h2>
-                    <p class='grid__text' style="font-size: larger; line-height: 175%">
+                    <p class='grid__text' style="font-size: larger; line-height: 150%">
                         • Are you an ENACT Faculty Fellow? Login above to gain full access to the site.
-                        <br><br>
+                        <br>
                         • Are you interested in teaching an ENACT course? Contact <a href="mailto:enact@brandeis.edu">ENACT@brandeis.edu</a>.
-                        <br><br>
+                        <br>
                         • Are you an interested member of the public? Search publicly available resources created by
                         ENACT students from across the United States. You can browse, enter a keyword in the search box,
                         or search using any or all of the categories below. For example, search by content type, issue

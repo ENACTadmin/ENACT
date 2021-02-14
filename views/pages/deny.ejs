@@ -29,28 +29,36 @@
                                     <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
                                         <div class='card border-0'>
                                             <div class='card-body'>
-                                                <h3><b><%= resourceInfo[i].name %></b></h3>
+                                                <h3><%= resourceInfo[i].name %></h3>
                                                 <div class='card-text'>
                                                     <ul class='list-group'>
                                                         <li class='list-group-item borderless box-padding'>
-                                                            <b>Description: </b> <%= resourceInfo[i].description %></li>
-                                                        <li class='list-group-item borderless box-padding'>
-                                                            <b>Year: </b> <%= resourceInfo[i].yearOfCreation %>
+                                                            <h5 style="display: inline">
+                                                                Description:</h5> <%= resourceInfo[i].description %>
                                                         </li>
                                                         <li class='list-group-item borderless box-padding'>
-                                                            <b>State:</b> <%= resourceInfo[i].state %></li>
-                                                        <li class='list-group-item borderless box-padding'>
-                                                            <b>Link: </b> <a href='<%= resourceInfo[i].uri %>'>click me</a>
+                                                            <h5 style="display: inline">
+                                                                Year:</h5> <%= resourceInfo[i].yearOfCreation %>
                                                         </li>
                                                         <li class='list-group-item borderless box-padding'>
-                                                            <b>Institution: </b> <%= resourceInfo[i].institution %>
+                                                            <h5 style="display: inline">
+                                                                State:</h5> <%= resourceInfo[i].state %></li>
+                                                        <li class='list-group-item borderless box-padding'>
+                                                            <h5 style="display: inline">Link:</h5> <a
+                                                                    href='<%= resourceInfo[i].uri %>'>click me</a>
                                                         </li>
                                                         <li class='list-group-item borderless box-padding'>
-                                                            <b>Author: </b> <%= resourceInfo[i].ownerName %>
+                                                            <h5 style="display: inline">
+                                                                Institution:</h5> <%= resourceInfo[i].institution %>
+                                                        </li>
+                                                        <li class='list-group-item borderless box-padding'>
+                                                            <h5 style="display: inline">
+                                                                Author:</h5> <%= resourceInfo[i].ownerName %>
                                                         </li>
                                                         <% if (resourceInfo[i].tags.length >= 1 && resourceInfo[i].tags[0].length !== 0) { %>
                                                             <li class='list-group-item borderless box-padding'>
-                                                                <b>Topic(s)/Issue(s)</b>: <%= resourceInfo[i].tags %>
+                                                                <h5 style="display: inline">
+                                                                    Topic(s)/Issue(s):</h5> <%= resourceInfo[i].tags %>
                                                             </li>
                                                         <% } %>
                                                         <li class='list-group-item borderless box-padding'>
