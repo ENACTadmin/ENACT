@@ -87,18 +87,23 @@
                                                                        class='form-demo__large fa'
                                                                        style="font-size: x-large; font-weight: 680"
                                                                        value='Search Resources &#xf002'></a>
+                        <a href='#place1'><input type='submit' name='submit'
+                                                 class='form-demo__large fa'
+                                                 style="font-size: x-large; font-weight: 680"
+                                                 value='Get Started &#8595;'></a>
                     <% } %>
                 </div>
             </div>
         </div>
     </div>
+    <!--    get started target-->
+    <div style="margin-top: 100px" id="place1"></div>
 </section>
-
 <!-- ENACT Program intro -->
 <section class='section section__grey'>
     <br><br><br>
     <h2 class='section__title section__title--centered'>Who we are & What you can do</h2>
-    <br>
+    <br><br><br>
     <div class='section__content section__content--fluid-width section__content--padding--small'>
         <div class='grid grid--3col'>
             <div class='grid__item partners__slide__grey' style='min-height: 500px' data-aos='fade-up'>
@@ -244,9 +249,10 @@
 
 <!-- Calendar -->
 <section class='section section__grey'>
-    <br><br><br>
     <section class='section__content section__content--fluid-width'>
+        <br><br><br>
         <h2 class='section__title section__title--centered'>Events</h2>
+        <br><br><br>
         <% if (eventsInfo.length !== 0) { %>
             <% for (let i = 0; i < eventsInfo.length; i++) { %>
                 <% if (loggedIn || eventsInfo[i].visibility === 'public') { %>
@@ -261,19 +267,19 @@
                                     <% if (eventsInfo[i].start !== null) { %>
                                         <li class='list-group-item borderless box-padding'>
                                             <h5 style="display: inline">Starts at:</h5>
-                                            <%= eventsInfo[i].start %>
+                                            <p style="display: inline" class="TZChange"><%= eventsInfo[i].start %></p>
                                         </li>
                                     <% } %>
                                     <% if (eventsInfo[i].end !== null) { %>
                                         <li class='list-group-item borderless box-padding'>
                                             <h5 style="display: inline">Ends at:</h5>
-                                            <%= eventsInfo[i].end %>
+                                            <p style="display: inline" class="TZChange"><%= eventsInfo[i].end %></p>
                                         </li>
                                     <% } %>
                                     <% if (eventsInfo[i].uri !== null) { %>
                                         <li class='list-group-item borderless box-padding'>
                                             <h5 style="display: inline">Link:</h5> <a
-                                                    href="<%= eventsInfo[i].uri %>"><%= eventsInfo[i].uri %></a>
+                                                    href="<%= eventsInfo[i].uri %>">click me</a>
                                         </li>
                                     <% } %>
                                 </ul>
@@ -303,8 +309,8 @@
 <% if (!loggedIn) { %>
     <section class='section diagonal-gradient'>
         <br><br><br>
-        <h2 class='section__title section__title--centered' style="color: white">Join Us</h2>
-        <br>
+        <h2 class='section__title section__title--centered1' style="color: white">Join Us</h2>
+        <br><br><br>
         <div class='section__content section__content--fluid-width section__content--padding--small'>
             <div class='grid grid--2col'>
                 <div class='grid__item partners__slide__grey' style="height: 450px" data-aos='fade-up'>
@@ -337,5 +343,16 @@
         </div>
     </section>
 <% } %>
+
+<script>
+    $(document).ready(function () {
+            $(".TZChange").each(function () {
+                let oldDate = $(this).text()
+                let newDate = new Date(oldDate)
+                $(this).text(newDate)
+            })
+        }
+    )
+</script>
 
 <%- include('../components/footer'); -%>
