@@ -8969,7 +8969,7 @@ rangy.createModule("DomUtil", function(api, module) {
 
             if (/[\r\n]/.test(boundaryNode.data)) {
                 /*
-                For the particular case of a boundary within a text node containing line breaks (within a <pre> element,
+                For the particular case of a boundary within a text node containing line breaks (within a  element,
                 for example), we need a slightly complicated approach to get the boundary's offset in IE. The facts:
 
                 - Each line break is represented as \r in the text node's data/nodeValue properties

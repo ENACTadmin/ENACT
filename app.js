@@ -86,6 +86,7 @@ app.get('/',
     resourceController.loadImages,
     async (req, res) => {
         let eventsInfo = await Event.find({}).sort({start: -1})
+        eventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() >= new Date().getTime());
         res.locals.eventsInfo = eventsInfo
         res.render('./pages/index')
     })
