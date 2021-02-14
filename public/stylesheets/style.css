@@ -713,6 +713,26 @@ h6 {
 }
 
 /* -----------------------------------------------------  */
+/* ELEMENT grid__item BASED ON BLOCK MODIFIER grid--2col  */
+.grid--2col1 .grid__item {
+    float: left;
+    /* full width - space between cols / number of cols */
+    width: 50%;
+}
+
+.grid--2col1 .grid__item--padding {
+    /* full width - space between cols - padding * nr of paddings / number of cols */
+    width: calc((100% - 80px - 20px * 4) / 2);
+    padding: 20px;
+}
+
+.grid .grid__item:last-child,
+.grid--2col1 .grid__item:nth-child(2n+2) {
+    float: right;
+    margin-right: 0;
+}
+
+/* -----------------------------------------------------  */
 /* ELEMENT grid__item BASED ON BLOCK MODIFIER grid--3col  */
 .grid--3col .grid__item {
     float: left;

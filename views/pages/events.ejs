@@ -125,9 +125,16 @@
                                                 </li>
                                                 <% if (pastEventsInfo[i].start !== null) { %>
                                                     <li class='list-group-item borderless box-padding'>
-                                                        <h5 style="display: inline">Starts at:</h5>
+                                                        <h5 style="display: inline">Start date: </h5>
                                                         <p style="display: inline"
                                                            class="TZChange"><%= pastEventsInfo[i].start %></p>
+                                                    </li>
+                                                <% } %>
+                                                <% if (pastEventsInfo[i].start !== null) { %>
+                                                    <li class='list-group-item borderless box-padding'>
+                                                        <h5 style="display: inline">Start time: </h5>
+                                                        <p style="display: inline; font-size: larger"
+                                                           class="TZChange1"><%= pastEventsInfo[i].start %></p>
                                                     </li>
                                                 <% } %>
                                                 <% if (pastEventsInfo[i].end !== null) { %>
@@ -312,7 +319,7 @@
                             <div class="form-group">
                                 <label>Event Description</label>
                                 <textarea type="text" class="form-control"
-                                               name="description"><%= futureEventsInfo[i].description %></textarea>
+                                          name="description"><%= futureEventsInfo[i].description %></textarea>
                             </div>
 
                             <div class="form-group">
@@ -410,7 +417,7 @@
                             <div class="form-group">
                                 <label>Event Description</label>
                                 <textarea type="text" class="form-control"
-                                               name="description"><%= pastEventsInfo[i].description %></textarea>
+                                          name="description"><%= pastEventsInfo[i].description %></textarea>
                             </div>
 
                             <div class="form-group">
@@ -465,7 +472,12 @@
             $(".TZChange").each(function () {
                 let oldDate = $(this).text()
                 let newDate = new Date(oldDate)
-                $(this).text(newDate)
+                $(this).text(newDate.toLocaleDateString())
+            })
+            $(".TZChange1").each(function () {
+                let oldDate = $(this).text()
+                let newDate = new Date(oldDate)
+                $(this).text(newDate.getHours() + ':' + newDate.getMinutes())
             })
         }
     )

@@ -111,7 +111,7 @@ exports.sendProfileEmail = async (req, res) => {
         from: 'enact@brandeis.edu',
         subject: 'ENACT Digital Platform: you have one new notification.',
         text: 'ENACT Digital Platform: you have one new notification.',
-        html: 'Hi,' + userName + '<br>' +
+        html: 'Hi, ' + userName + '<br>' +
             '<br>' + 'Your profile is set by ENACT admin, the default password is: ' + '<b>' + currUser.password + '</b>' + '<br>Please remember to change your password by navigating to <b>People & Networking -> Update profile</b> to change your password' +
             '<br>' + '<b>  Click <a href=' + url + '>' + 'here' + '</a>' + ' to login</b>' +
             '<br><br>' + 'ENACT Support Team'
