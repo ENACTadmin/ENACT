@@ -1,7 +1,7 @@
 'use strict';
 const Event = require('../models/Event');
 const Faculty = require('../models/Faculty');
-
+const User = require('../models/User');
 
 exports.saveEvent = async (req, res, next) => {
     try {
@@ -21,6 +21,7 @@ exports.saveEvent = async (req, res, next) => {
             visibility: req.body.visibility
         })
         let faculties = await Faculty.find()
+        // let faculties = await User.find({status: 'faculty'})
         for (let faculty in faculties) {
             let email = faculties[faculty].email
             if (email) {

@@ -158,7 +158,6 @@ app.post('/course/update/:courseId',
     courseController.updateCourse
 )
 
-
 app.get('/course/copy/:courseId',
     utils.checkUserName,
     async (req, res) => {
@@ -438,6 +437,7 @@ app.post('/collection/create',
 app.post('/collection/delete/:collectionId',
     resourceController.deleteCollection
 )
+
 //*******************************************
 //***********Notification related************
 

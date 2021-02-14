@@ -1,8 +1,8 @@
 'use strict';
-const Course = require('../models/Course');
+// const Course = require('../models/Course');
 const Resource = require('../models/Resource');
-const User = require('../models/User');
-const Message = require('../models/Message');
+// const User = require('../models/User');
+// const Message = require('../models/Message');
 
 
 exports.loadUnderReviewResources = async (req, res, next) => {
