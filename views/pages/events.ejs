@@ -34,7 +34,7 @@
                                             <ul class='list-group'>
                                                 <li class='list-group-item borderless box-padding'>
                                                     <h5 style="display: inline">Description:</h5>
-                                                    <pre><%= futureEventsInfo[i].description %></pre>
+                                                    <%= futureEventsInfo[i].description %>
                                                 </li>
                                                 <% if (futureEventsInfo[i].start !== null) { %>
                                                     <li class='list-group-item borderless box-padding'>
@@ -53,7 +53,7 @@
                                                 <% if (futureEventsInfo[i].uri !== null) { %>
                                                     <li class='list-group-item borderless box-padding'>
                                                         <h5 style="display: inline">Link:</h5> <a
-                                                                href="<%= futureEventsInfo[i].uri %>"><%= futureEventsInfo[i].uri %></a>
+                                                                href="<%= futureEventsInfo[i].uri %>">click me</a>
                                                     </li>
                                                 <% } %>
 
@@ -121,7 +121,7 @@
                                             <ul class='list-group'>
                                                 <li class='list-group-item borderless box-padding'>
                                                     <h5 style="display: inline">Description:</h5>
-                                                    <pre><%= pastEventsInfo[i].description %></pre>
+                                                    <%= pastEventsInfo[i].description %>
                                                 </li>
                                                 <% if (pastEventsInfo[i].start !== null) { %>
                                                     <li class='list-group-item borderless box-padding'>
@@ -140,7 +140,7 @@
                                                 <% if (pastEventsInfo[i].uri !== null) { %>
                                                     <li class='list-group-item borderless box-padding'>
                                                         <h5 style="display: inline">Link:</h5> <a
-                                                                href="<%= pastEventsInfo[i].uri %>"><%= pastEventsInfo[i].uri %></a>
+                                                                href="<%= pastEventsInfo[i].uri %>">click me</a>
                                                     </li>
                                                 <% } %>
                                                 <% if ((status === 'admin' || status === 'faculty') && pastEventsInfo[i].visibility !== null) { %>
@@ -212,7 +212,7 @@
                     </div>
                     <div class="form-group">
                         <label>Event Description</label>
-                        <pre><textarea class="form-control" name="description"></textarea></pre>
+                        <textarea class="form-control" name="description"></textarea>
                     </div>
                     <div class="form-group">
                         <label>Visibility</label>
@@ -311,8 +311,8 @@
                             </div>
                             <div class="form-group">
                                 <label>Event Description</label>
-                                <pre><textarea type="text" class="form-control"
-                                               name="description"><%= futureEventsInfo[i].description %></textarea></pre>
+                                <textarea type="text" class="form-control"
+                                               name="description"><%= futureEventsInfo[i].description %></textarea>
                             </div>
 
                             <div class="form-group">
@@ -409,8 +409,8 @@
                             </div>
                             <div class="form-group">
                                 <label>Event Description</label>
-                                <pre><textarea type="text" class="form-control"
-                                               name="description"><%= pastEventsInfo[i].description %></textarea></pre>
+                                <textarea type="text" class="form-control"
+                                               name="description"><%= pastEventsInfo[i].description %></textarea>
                             </div>
 
                             <div class="form-group">
