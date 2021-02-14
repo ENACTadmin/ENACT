@@ -15,13 +15,13 @@ $(document).ready(function () {
                             '            <div class=\'card-text\'>' +
                             '                <ul class=\'list-group\'>' +
                             '                    <li class=\'list-group-item borderless box-padding\'>' +
-                            '                        <b>Description: </b> ' + data[i].description +
+                            '                        <h5 style="display: inline">Description:</h5> ' + data[i].description +
                             '                    </li>' +
                             '                    <li class=\'list-group-item borderless box-padding\'>' +
-                            '                        <b>Year: </b> ' + data[i].yearOfCreation +
+                            '                        <h5 style="display: inline">Year:</h5> ' + data[i].yearOfCreation +
                             '                    </li>' +
                             '                    <li class=\'list-group-item borderless box-padding\'>' +
-                            '                        <b>State:</b> ' + data[i].state +
+                            '                        <h5 style="display: inline">State:</h5> ' + data[i].state +
                             '                    </li>' +
                             '                </ul>' +
                             '            </div>'
@@ -33,23 +33,23 @@ $(document).ready(function () {
                                 '                        </li>'
                         } else {
                             htmlToAppend += '            <li class=\'list-group-item borderless box-padding\'>\n' +
-                                '                            <b>Link: </b> <a href=' + data[i].uri + '>click me</a>\n' +
+                                '                            <h5 style="display: inline">Link:</h5> <a href=' + data[i].uri + '>click me</a>\n' +
                                 '                        </li>'
                         }
                         htmlToAppend += '        <li class=\'list-group-item borderless box-padding\'>\n' +
-                            '                        <b>Institution: </b>' + data[i].institution + '\n' +
+                            '                        <h5 style="display: inline">Institution:</h5>' + data[i].institution + '\n' +
                             '                    </li>\n' +
                             '                    <li class=\'list-group-item borderless box-padding\'>\n' +
-                            '                        <b>Author: </b>' + data[i].ownerName + '\n' +
+                            '                        <h5 style="display: inline">Author:</h5>' + data[i].ownerName + '\n' +
                             '                    </li>'
                         if (data[i].tags.length >= 1 && data[i].tags[0].length !== 0) {
                             htmlToAppend += '            <li class=\'list-group-item borderless box-padding\'>\n' +
-                                '                            <b>Tags:</b>' + data[i].tags + '\n' +
+                                '                            <h5 style="display: inline">Tags:</h5>' + data[i].tags + '\n' +
                                 '                        </li>'
                         }
 
                         htmlToAppend += '<li class=\'list-group-item borderless box-padding\'>\n' +
-                            '                        <b>Actions:</b>\n' +
+                            '                        <h5 style="display: inline">Actions:</h5>\n' +
                             '                        <button type="submit"\n' +
                             '                                style=\'border:0px solid transparent\'\n' +
                             '                                class=\'focusMe btn btn-outline-danger\'\n' +

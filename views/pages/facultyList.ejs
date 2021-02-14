@@ -56,16 +56,17 @@
                                         <br>
                                     <% } %>
                                     <% if (staffInfo[i].personalWebsiteURL) { %>
-                                        <a href="<%= staffInfo[i].personalWebsiteURL %>"> University Bio URL (optional) </a>
+                                        <a href="<%= staffInfo[i].personalWebsiteURL %>"> University Bio URL
+                                            (optional) </a>
                                     <% } %>
                                 <% } %>
                             </div>
                             <div class="col-md-5 col-sm-5 align-self-center">
-                                <b>School: </b><br><%= staffInfo[i].affiliation %>
+                                <h5 style="display: inline">School:</h5> <br><%= staffInfo[i].affiliation %>
                                 <br>
-                                <b>Department: </b><br><%= staffInfo[i].department %>
+                                <h5 style="display: inline">Department:</h5> <br><%= staffInfo[i].department %>
                                 <br>
-                                <b>State: </b><br><%= staffInfo[i].state %>
+                                <h5 style="display: inline">State:</h5> <br><%= staffInfo[i].state %>
 
                             </div>
                             <div class="col-md-2 col-sm-2 align-self-center">
@@ -127,16 +128,17 @@
                                         <br>
                                     <% } %>
                                     <% if (profileInfo[i].personalWebsiteURL) { %>
-                                        <a href="<%= profileInfo[i].personalWebsiteURL %>"> University Bio URL (optional) </a>
+                                        <a href="<%= profileInfo[i].personalWebsiteURL %>"> University Bio URL
+                                            (optional) </a>
                                     <% } %>
                                 <% } %>
                             </div>
                             <div class="col-md-5 col-sm-5 align-self-center">
-                                <b>School: </b><br><%= profileInfo[i].affiliation %>
+                                <h5 style="display: inline">School:</h5> <br><%= profileInfo[i].affiliation %>
                                 <br>
-                                <b>Department: </b><br><%= profileInfo[i].department %>
+                                <h5 style="display: inline">Department:</h5> <br><%= profileInfo[i].department %>
                                 <br>
-                                <b>State: </b><br><%= profileInfo[i].state %>
+                                <h5 style="display: inline">State:</h5> <br><%= profileInfo[i].state %>
                             </div>
                             <div class="col-md-2 col-sm-2 align-self-center">
                                 <% if (loggedIn) { %>

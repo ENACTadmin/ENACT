@@ -38,9 +38,10 @@
                                     <div class='card-text'>
                                         <ul class='list-group'>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>Description: </b> <%= syllabus[i].description %></li>
+                                                <h5 style="display: inline">
+                                                    Description:</h5> <%= syllabus[i].description %></li>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>State:</b> <%= syllabus[i].state %></li>
+                                                <h5 style="display: inline">State:</h5> <%= syllabus[i].state %></li>
                                             <% if (syllabus[i].mediaType === 'video' && syllabus[i].uri.endsWith(".mp4")) { %>
                                                 <li class='list-group-item borderless box-padding'>
                                                     <video width="400" controls>
@@ -49,23 +50,26 @@
                                                 </li>
                                             <% } else { %>
                                                 <li class='list-group-item borderless box-padding'>
-                                                    <b>Link: </b> <a href='<%= syllabus[i].uri %>'>click
+                                                    <h5 style="display: inline">Link:</h5> <a
+                                                            href='<%= syllabus[i].uri %>'>click
                                                         me</a>
                                                 </li>
                                             <% } %>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>Institution: </b> <%= syllabus[i].institution %>
+                                                <h5 style="display: inline">
+                                                    Institution:</h5> <%= syllabus[i].institution %>
                                             </li>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>Author: </b> <%= syllabus[i].ownerName %>
+                                                <h5 style="display: inline">Author:</h5> <%= syllabus[i].ownerName %>
                                             </li>
                                             <% if (syllabus[i].tags[0].length > 0) { %>
                                                 <li class='list-group-item borderless box-padding'>
-                                                    <b>Topic(s)/Issue(s)</b>: <%= syllabus[i].tags %>
+                                                    <h5 style="display: inline">
+                                                        Topic(s)/Issue(s):</h5> <%= syllabus[i].tags %>
                                                 </li>
                                             <% } %>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>Actions:</b>
+                                                <h5 style="display: inline">Actions:</h5>
                                                 <button type="submit"
                                                         style='border:0px solid transparent'
                                                         class='focusMe btn btn-outline-danger'
@@ -115,9 +119,10 @@
                                     <div class='card-text'>
                                         <ul class='list-group'>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>Description: </b> <%= assignments[i].description %></li>
+                                                <h5 style="display: inline">
+                                                    Description:</h5> <%= assignments[i].description %></li>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>State:</b> <%= assignments[i].state %></li>
+                                                <h5 style="display: inline">State:</h5> <%= assignments[i].state %></li>
                                             <% if (assignments[i].mediaType === 'video' && assignments[i].uri.endsWith(".mp4")) { %>
                                                 <li class='list-group-item borderless box-padding'>
                                                     <video width="400" controls>
@@ -126,22 +131,25 @@
                                                 </li>
                                             <% } else { %>
                                                 <li class='list-group-item borderless box-padding'>
-                                                    <b>Link: </b> <a href='<%= assignments[i].uri %>'>click me</a>
+                                                    <h5 style="display: inline">Link:</h5> <a
+                                                            href='<%= assignments[i].uri %>'>click me</a>
                                                 </li>
                                             <% } %>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>Institution: </b> <%= assignments[i].institution %>
+                                                <h5 style="display: inline">
+                                                    Institution:</h5> <%= assignments[i].institution %>
                                             </li>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>Author: </b> <%= assignments[i].ownerName %>
+                                                <h5 style="display: inline">Author:</h5> <%= assignments[i].ownerName %>
                                             </li>
                                             <% if (assignments[i].tags[0].length > 0) { %>
                                                 <li class='list-group-item borderless box-padding'>
-                                                    <b>Topic(s)/Issue(s)</b>: <%= assignments[i].tags %>
+                                                    <h5 style="display: inline">
+                                                        Topic(s)/Issue(s):</h5> <%= assignments[i].tags %>
                                                 </li>
                                             <% } %>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>Actions:</b>
+                                                <h5 style="display: inline">Actions:</h5>
                                                 <button type="submit"
                                                         style='border:0px solid transparent'
                                                         class='focusMe btn btn-outline-danger'
@@ -191,9 +199,10 @@
                                     <div class='card-text'>
                                         <ul class='list-group'>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>Description: </b> <%= guides[i].description %></li>
+                                                <h5 style="display: inline">
+                                                    Description:</h5> <%= guides[i].description %></li>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>State:</b> <%= guides[i].state %></li>
+                                                <h5 style="display: inline">State:</h5> <%= guides[i].state %></li>
                                             <% if (guides[i].mediaType === 'video' && guides[i].uri.endsWith(".mp4")) { %>
                                                 <li class='list-group-item borderless box-padding'>
                                                     <video width="400" controls>
@@ -202,22 +211,25 @@
                                                 </li>
                                             <% } else { %>
                                                 <li class='list-group-item borderless box-padding'>
-                                                    <b>Link: </b> <a href='<%= guides[i].uri %>'>click me</a>
+                                                    <h5 style="display: inline">Link:</h5> <a
+                                                            href='<%= guides[i].uri %>'>click me</a>
                                                 </li>
                                             <% } %>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>Institution: </b> <%= guides[i].institution %>
+                                                <h5 style="display: inline">
+                                                    Institution:</h5> <%= guides[i].institution %>
                                             </li>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>Author: </b> <%= guides[i].ownerName %>
+                                                <h5 style="display: inline">Author:</h5> <%= guides[i].ownerName %>
                                             </li>
                                             <% if (guides[i].tags[0].length > 0) { %>
                                                 <li class='list-group-item borderless box-padding'>
-                                                    <b>Topic(s)/Issue(s)</b>: <%= guides[i].tags %>
+                                                    <h5 style="display: inline">
+                                                        Topic(s)/Issue(s):</h5> <%= guides[i].tags %>
                                                 </li>
                                             <% } %>
                                             <li class='list-group-item borderless box-padding'>
-                                                <b>Actions:</b>
+                                                <h5 style="display: inline">Actions:</h5>
                                                 <button type="submit"
                                                         style='border:0px solid transparent'
                                                         class='focusMe btn btn-outline-danger'

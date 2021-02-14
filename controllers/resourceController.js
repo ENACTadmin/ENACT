@@ -376,7 +376,6 @@ exports.loadResources = async (req, res, next) => {
 }
 
 exports.loadMoreResources = async (req, res, next) => {
-    console.log("in load more")
     const courseId = req.params.courseId
     const skip = parseInt(req.params.limit) + (parseInt(req.params.skip) - 1) * 5
     const checkStatus = 'approve'
@@ -963,9 +962,7 @@ async function rankRes(match, resources) {
 
 exports.advancedSearch = async (req, res) => {
 
-    let resourceInfo = await invertedSearch(req, res);
-
-    let filtered = resourceInfo;
+    let filtered = await invertedSearch(req, res);
 
     let local_state = req.body.state !== 'empty' ? req.body.state : null
 
@@ -1030,19 +1027,23 @@ exports.advancedSearch = async (req, res) => {
 
     res.locals.resourceIds = starredResourceIds
 
-    // resourceInfoSet = filteredResource
-
     res.render('./pages/showResources', {
         resourceInfo: filteredResource,
         resourceIds: starredResourceIds,
-        secretType: 'Search Result'
+        secretType: 'Search Result',
+        search_text: req.body.search,
+        search_tags: req.body.tags,
+        search_state: local_state,
+        search_contentType: local_contentType,
+        search_institution: local_institution,
+        search_mediaType: local_mediaType,
+        search_yearOfCreation: local_yearOfCreation,
+        search_status: local_status
     })
 }
 
 exports.advancedSearchPublic = async (req, res, next) => {
-    let resourceInfo = await invertedSearch(req, res);
-
-    let filtered = resourceInfo;
+    let filtered = await invertedSearch(req, res);
 
     if (filtered) {
         filtered = filtered.filter(({status}) => ['public', 'finalPublic'].includes(status));
@@ -1096,5 +1097,14 @@ exports.advancedSearchPublic = async (req, res, next) => {
     }
 
     res.locals.resourceInfo = filteredResource
-    res.render('./pages/showPublicResources')
+
+    res.render('./pages/showPublicResources', {
+        search_text: req.body.search,
+        search_tags: req.body.tags,
+        search_state: local_state,
+        search_contentType: local_contentType,
+        search_institution: local_institution,
+        search_mediaType: local_mediaType,
+        search_yearOfCreation: local_yearOfCreation
+    })
 }

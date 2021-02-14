@@ -23,9 +23,7 @@ exports.saveEvent = async (req, res, next) => {
         let faculties = await Faculty.find()
         for (let faculty in faculties) {
             let email = faculties[faculty].email
-            console.log('email: ', email)
             if (email) {
-                console.log('email: ', email)
                 let url = 'https://www.enactnetwork.org/events'
                 const sgMail = require('@sendgrid/mail');
                 sgMail.setApiKey(process.env.SENDGRID_API_KEY);

@@ -134,7 +134,7 @@ jQuery(document).ready(function () {
             $('.menu-icon').removeClass('open');
             $('.mobile-menu-overlay').removeClass('show');
         }
-        ;
+
     });
     $(window).on('resize', function () {
         var w = $(window).width();

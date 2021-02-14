@@ -125,7 +125,7 @@ app.post('/course',
 app.get('/courses',
     utils.checkUserName,
     (req, res) =>
-        res.render('./pages/courses-show')
+        res.render('./pages/courses-management')
 )
 
 app.get('/course/view/:courseId/:limit',
