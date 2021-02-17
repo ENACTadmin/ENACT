@@ -14,8 +14,56 @@ $(document).ready(function () {
         }
     });
 
+    let tagsJSON = null
+    // page is ready
+    $.ajax({
+        type: 'GET',
+        url: '/tags/all',
+        async: false,
+        dataType: 'json',
+        success: function (data) {
+            tagsJSON = data
+        }
+    });
 
-    for (let resource in resourcesJSON) {
+    let tags = ['agriculture'
+        , 'arts and culture'
+        , 'cannabis'
+        , 'consumer protection'
+        , 'COVID-19'
+        , 'criminal justice'
+        , 'disability'
+        , 'education'
+        , 'elderly'
+        , 'energy'
+        , 'environment/climate change'
+        , 'gun control'
+        , 'healthcare'
+        , 'higher education'
+        , 'housing and homelessness'
+        , 'immigration'
+        , 'labor'
+        , 'LGBTQ+'
+        , 'mental health'
+        , 'opioids'
+        , 'public health'
+        , 'public safety'
+        , 'race'
+        , 'substance use and recovery'
+        , 'taxes'
+        , 'technology'
+        , 'tourism'
+        , 'transportation'
+        , 'veterans'
+        , 'violence and sexual assault'
+        , 'voting'
+        , 'women and gender']
+
+    for (let tag = 0; tag < tagsJSON.length; tag++) {
+        tags.push(tagsJSON[tag].info)
+    }
+
+    for (let resource = 0; resource < resourcesJSON.length; resource++) {
         if (resourcesJSON[resource].contentType !== "empty")
             resourcesJSON[resource].label = resourcesJSON[resource].name + " [" + resourcesJSON[resource].contentType + "] ";
         else
@@ -27,40 +75,8 @@ $(document).ready(function () {
     autocomplete({
         input: input,
         fetch: function (text, update) {
-
             // build tags JSON
-            let tags = ['agriculture'
-                , 'arts and culture'
-                , 'cannabis'
-                , 'consumer protection'
-                , 'COVID-19'
-                , 'criminal justice'
-                , 'disability'
-                , 'education'
-                , 'elderly'
-                , 'energy'
-                , 'environment/climate change'
-                , 'gun control'
-                , 'healthcare'
-                , 'higher education'
-                , 'housing and homelessness'
-                , 'immigration'
-                , 'labor'
-                , 'LGBTQ+'
-                , 'mental health'
-                , 'opioids'
-                , 'public health'
-                , 'public safety'
-                , 'race'
-                , 'substance use and recovery'
-                , 'taxes'
-                , 'technology'
-                , 'tourism'
-                , 'transportation'
-                , 'veterans'
-                , 'violence and sexual assault'
-                , 'voting'
-                , 'women and gender']
+
             let tagsJSON = []
             for (let tag in tags) {
                 let newJSON = {
@@ -99,8 +115,6 @@ $(document).ready(function () {
                 }
             }
             contentJSON = JSON.parse(JSON.stringify(contentJSON))
-
-            console.log(namesJSON)
             text = text.toLowerCase();
             // you can also use AJAX requests instead of preloaded data
             let suggestions = resourcesJSON.filter(n => (n.label !== undefined && n.label.toLowerCase().includes(text)))
