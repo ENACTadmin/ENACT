@@ -10,7 +10,7 @@ const tagSchema = Schema({
     status: String,
     info: String,
     reason: String,
-    contentType: String
+    // contentType: String
 });
 
 module.exports = mongoose.model('Tag', tagSchema);

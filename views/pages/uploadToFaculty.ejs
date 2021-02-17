@@ -72,7 +72,8 @@
                                         <option value='public'>Open to public</option>
                                         <option value='finalPublic'>Displayed on the front page</option>
                                     <% } else { %>
-                                        <option value='partPublic'>Open to public (need to be approved by admins)</option>
+                                        <option value='partPublic'>Open to public (need to be approved by admins)
+                                        </option>
                                     <% } %>
                                 </select>
                             </div>
@@ -82,6 +83,7 @@
                     <div class='w-100'></div>
 
                     <%- include('../components/component-tagSelector') -%>
+                    <br>
 
                     <div class='w-100'></div>
                     <div class='col-md-3 col-sm-12'></div>
@@ -157,35 +159,6 @@
                                 <span class='input-group-text' style='width: 180px'>Name</span>
                                 <input type='text' id='addingTag' class='form-control' name='addingTag'
                                        placeholder='e.g. COVID-19'>
-                            </div>
-                            <br>
-                            <div class='input-group-prepend'>
-                                <span class='input-group-text' style='width: 180px'>Content type</span>
-                                <select id='contentTypeSelect' class='form-control' name='contentType'>
-                                    <option selected value='empty'>Choose...</option>
-                                    <option value='Student Advice'>Advice & Tips for Students by Students</option>
-                                    <option value='Advocacy Video'>Advocacy Video</option>
-                                    <option value='Assignment Guidelines'>Assignment Guidelines & Rubrics</option>
-                                    <option value='Journal'>Campaign Journal</option>
-                                    <option value='Course Planning'>Course Planning</option>
-                                    <option value='Course Reading'>Course Reading</option>
-                                    <option value='Elevator Speech'>Elevator Speech</option>
-                                    <option value='ENACT Research'>ENACT Faculty Research</option>
-                                    <option value='Flyer'>Fact Sheet/Storybook</option>
-                                    <option value='Letter to Legislator'>Letter to the Legislator</option>
-                                    <option value='Next Steps'>Next Steps</option>
-                                    <option value='Online'>Online Teaching Resources</option>
-                                    <option value='Outlets'>Outlets for Publication</option>
-                                    <option value='Op-Ed'>Op-Ed</option>
-                                    <option value='Personal Reflection'>Personal reflection</option>
-                                    <option value='Portfolio'>Portfolio</option>
-                                    <option value='Presentations'>Presentations</option>
-                                    <option value='Research Report'>Student Research Report</option>
-                                    <option value='Script'>Script for meeting with Ways and Means Staff</option>
-                                    <option value='State Legislative'>State Legislative Website Resources</option>
-                                    <option value='Syllabus'>Syllabi</option>
-                                    <option value='Testimony'>Testimony</option>
-                                </select>
                             </div>
                             <br>
                             <div class='input-group-prepend'>

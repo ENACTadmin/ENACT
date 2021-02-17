@@ -1,6 +1,7 @@
 'use strict';
 const Course = require('../models/Course');
 const User = require('../models/User');
+const Tag = require('../models/Tag');
 const Resource = require('../models/Resource');
 const ResourceSet = require('../models/ResourceSet');
 const Word2Id = require('../models/Word2Id');
@@ -521,18 +522,61 @@ exports.loadDisplayedResources = async (req, res, next) => {
 exports.showMyResources = async (req, res, next) => {
     try {
         let resourceInfo = await Resource.find({ownerId: req.user._id})
+        let tags = await getTags(req, res)
         if (req.user.status === 'student') {
             res.render('./pages/myResourcesStudent', {
-                resourceInfo: resourceInfo
+                resourceInfo: resourceInfo,
+                tags: tags
             })
         } else {
             res.render('./pages/myResourcesFaculty', {
-                resourceInfo: resourceInfo
+                resourceInfo: resourceInfo,
+                tags: tags
             })
         }
     } catch (e) {
         next(e)
     }
+}
+
+async function getTags(req, res) {
+    let predefined = ['agriculture'
+        , 'arts and culture'
+        , 'cannabis'
+        , 'consumer protection'
+        , 'COVID-19'
+        , 'criminal justice'
+        , 'disability'
+        , 'education'
+        , 'elderly'
+        , 'energy'
+        , 'environment/climate change'
+        , 'gun control'
+        , 'healthcare'
+        , 'higher education'
+        , 'housing and homelessness'
+        , 'immigration'
+        , 'labor'
+        , 'LGBTQ+'
+        , 'mental health'
+        , 'opioids'
+        , 'public health'
+        , 'public safety'
+        , 'race'
+        , 'substance use and recovery'
+        , 'taxes'
+        , 'technology'
+        , 'tourism'
+        , 'transportation'
+        , 'veterans'
+        , 'violence and sexual assault'
+        , 'voting'
+        , 'women and gender']
+    let tags = await Tag.find({status: "approve"}).sort({'createdAt': -1})
+    for (let tag = 0; tag < tags.length; tag++) {
+        predefined.push(tags[tag].info)
+    }
+    return predefined
 }
 
 exports.showPublic = async (req, res, next) => {
@@ -628,7 +672,6 @@ exports.starResourceAlt = async (req, res, next) => {
         // save to db
         resourceSet.resources = newResourceIds
         await resourceSet.save()
-        // res.redirect('/resources/search/private/general/results')
         res.locals.resourceIds = newResourceIds
         console.log("star success!")
         res.send()
@@ -651,7 +694,6 @@ exports.unstarResourceAlt = async (req, res, next) => {
         }
         resourceSet.resources = newResourceIds
         await resourceSet.save()
-        // res.redirect('/resources/search/private/general/results')
         res.locals.resourceIds = newResourceIds
         console.log("unstar success!")
         res.send()
@@ -781,9 +823,7 @@ exports.deleteCollection = async (req, res, next) => {
 exports.primarySearch = async (req, res, next) => {
     try {
         let resourceInfo = await invertedSearch(req, res);
-
         let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
-
         let starredResourceIds = null
         if (starred) {
             starredResourceIds = await starred.resources
@@ -809,49 +849,15 @@ exports.primarySearch = async (req, res, next) => {
         res.locals.resourceInfo = uniqueResourceInfo
         // resourceInfoSet = uniqueResourceInfo
         res.render('./pages/showResources', {
-            secretType: 'Search Result'
-        })
-    } catch (e) {
-        next(e)
-    }
-}
-
-exports.primaryPublicSearch = async (req, res, next) => {
-    let resourceInfo = null
-    const checkStatus = 'approve'
-    try {
-        let regex = /[^\s.:,!?()\[\]]+/g;
-        let match = req.body.search.match(regex)
-        if (match) {
-            for (let i = 0; i < match.length; i++) {
-                let newRegex = new RegExp(["^", match[i], "$"].join(""), "i");
-                let word2Id = await Word2Id.findOne({word: newRegex})
-                if (word2Id !== null) {
-                    let resourceIds = word2Id.ids
-                    if (resourceInfo === null) {
-                        resourceInfo = await Resource.find({
-                            checkStatus: checkStatus,
-                            _id: {$in: resourceIds},
-                            status: {$in: ["finalPublic", "public"]}
-                        }).sort({yearOfCreation: -1})
-                    } else {
-                        let newResourceInfo = await Resource.find({
-                            checkStatus: checkStatus,
-                            _id: {$in: resourceIds},
-                            status: {$in: ["finalPublic", "public"]}
-                        }).sort({yearOfCreation: -1})
-                        resourceInfo = resourceInfo.concat(newResourceInfo)
-                    }
-                }
-            }
-        } else {
-            resourceInfo = await Resource.find({
-                checkStatus: checkStatus,
-                status: {$in: ["finalPublic", "public"]}
-            }).sort({yearOfCreation: -1})
-        }
-        res.render('./pages/search-primary-public', {
-            resourceInfo: resourceInfo
+            secretType: 'Search Result',
+            search_text: req.body.search,
+            search_tags: null,
+            search_state: null,
+            search_contentType: null,
+            search_institution: null,
+            search_mediaType: null,
+            search_yearOfCreation: null,
+            search_status: null
         })
     } catch (e) {
         next(e)

@@ -25,15 +25,17 @@
 
 <section class='section section__grey'>
     <div class='container'>
-        <div class="row justify-content-md-center">
-            <div class="col-md-4 col-sm-12">
-                <h3>Search profiles</h3>
-                <hr>
-                <input class="form-control" id="myInput" type="text"
-                       placeholder="e.g. name, state, school, keyword...">
+        <% if (loggedIn) { %>
+            <div class="row justify-content-md-center">
+                <div class="col-md-4 col-sm-12">
+                    <h3>Search profiles</h3>
+                    <hr>
+                    <input class="form-control" id="myInput" type="text"
+                           placeholder="e.g. name, state, school, keyword...">
+                </div>
             </div>
-        </div>
-        <br>
+            <br>
+        <% } %>
         <div id="map"></div>
         <br>
         <h3>ENACT Network in <%= state %> </h3>
@@ -89,12 +91,14 @@
                                         <% } %>
                                     </div>
                                     <div class="col-md-5 col-sm-5 align-self-center">
-                                        <h5 style="display: inline">School:</h5> <br><%= profileInfo[i].affiliation %>
+                                        <h5 style="display: inline">School:</h5><br>
+                                        <i><%= profileInfo[i].affiliation %></i>
                                         <br>
-                                        <h5 style="display: inline">Department:</h5>
-                                        <br><%= profileInfo[i].department %>
+                                        <h5 style="display: inline">Department:</h5><br>
+                                        <i><%= profileInfo[i].department %></i>
                                         <br>
-                                        <h5 style="display: inline">State:</h5> <br><%= profileInfo[i].state %>
+                                        <h5 style="display: inline">State:</h5><br>
+                                        <i><%= profileInfo[i].state %></i>
                                     </div>
                                     <div class="col-md-2 col-sm-2 align-self-center">
                                         <% if (loggedIn) { %>

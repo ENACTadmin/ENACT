@@ -7,7 +7,7 @@ $(document).ready(function () {
             $.ajax({
                 type: 'POST',
                 url: '/resource/starAlt/' + this.id,
-                async: true,
+                async: false,
                 dataType: 'text',
                 success: function () {
                     $('#' + id).html('&#9829;');
@@ -17,7 +17,7 @@ $(document).ready(function () {
             $.ajax({
                 type: 'POST',
                 url: '/resource/unstarAlt/' + this.id,
-                async: true,
+                async: false,
                 dataType: 'text',
                 success: function () {
                     $('#' + id).html('&#9825;');

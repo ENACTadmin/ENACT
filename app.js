@@ -13,6 +13,7 @@ const Resource = require('./models/Resource')
 const User = require('./models/User')
 const AuthorAlt = require('./models/AuthorAlternative')
 const Faculty = require('./models/Faculty')
+const Tag = require('./models/Tag')
 
 //*******************************************
 //***********Controllers*********************
@@ -131,6 +132,7 @@ app.get('/courses',
 
 app.get('/course/view/:courseId/:limit',
     utils.checkUserName,
+    tagController.getAllTagsAlt,
     courseController.showOneCourse,
     resourceController.loadResources
 )
@@ -216,6 +218,7 @@ app.post('/course/join',
 
 app.get('/resource/upload/course/:courseId',
     utils.checkUserName,
+    tagController.getAllTagsAlt,
     (req, res) => {
         res.render('./pages/uploadToCourse', {
             req: req
@@ -228,13 +231,10 @@ app.post('/resource/upload/course/:courseId',
 
 app.get('/resources/search/private/general',
     utils.checkUserName,
+    tagController.getAllTagsAlt,
     (req, res) =>
         res.render('./pages/search-primary')
 )
-
-// app.get('/resources/search/private/general/results',
-//     resourceController.reloadSearch
-// )
 
 app.post('/resources/search/private/general/results',
     resourceController.primarySearch
@@ -242,6 +242,7 @@ app.post('/resources/search/private/general/results',
 
 app.get('/resource/upload/public',
     utils.checkUserName,
+    tagController.getAllTagsAlt,
     (req, res) => {
         if (req.user.status !== 'admin')
             res.send("You are not admin!")
@@ -256,6 +257,7 @@ app.post('/resource/upload/public',
 
 app.get('/resources/search/private/advanced',
     utils.checkUserName,
+    tagController.getAllTagsAlt,
     (req, res) =>
         res.render('./pages/search-advanced'))
 
@@ -271,12 +273,9 @@ app.get('/resources/view/my/public/all',
 
 app.get('/resources/search/public/general',
     utils.checkUserName,
+    tagController.getAllTagsAlt,
     (req, res) =>
         res.render('./pages/search-primary-public')
-)
-
-app.post('/resources/view/my/public/generalResult',
-    resourceController.primaryPublicSearch
 )
 
 app.get('/resources/search/public/advanced',
@@ -303,6 +302,7 @@ app.get('/resources/view/faculty/:contentType',
 
 app.get('/resource/upload/faculty',
     utils.checkUserName,
+    tagController.getAllTagsAlt,
     (req, res) =>
         res.render('./pages/uploadToFaculty')
 )
@@ -329,6 +329,7 @@ app.post('/resource/show/:resourceId',
 
 app.get('/resources/view/favorite',
     utils.checkUserName,
+    tagController.getAllTagsAlt,
     resourceController.showStarredResources
 )
 
@@ -412,12 +413,14 @@ app.post('/resource/update/:resourceId/:option',
 
 app.get('/resources/manage/public',
     resourceController.loadPublicResources,
+    tagController.getAllTagsAlt,
     (req, res) =>
         res.render('./pages/public-resourceManagement')
 )
 
 app.get('/collection/view/:resourceSetId',
     resourceController.loadCollection,
+    tagController.getAllTagsAlt,
     (req, res) =>
         res.render('./pages/showCollection')
 )
@@ -482,6 +485,7 @@ app.post('/resource/status/toENACT',
 )
 
 app.get('/resources/view/my/denied',
+    tagController.getAllTagsAlt,
     notificationController.loadDeniedResources
 )
 
@@ -719,6 +723,10 @@ app.post('/tag/deny',
 
 app.get('/tag/my',
     tagController.loadTags
+)
+
+app.get('/tags/all',
+    tagController.getAllTags
 )
 
 

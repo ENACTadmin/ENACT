@@ -6,7 +6,7 @@ $(document).ready(function () {
             $.ajax({
                 type: 'POST',
                 url: '/resource/star/' + this.id,
-                async: true,
+                async: false,
                 dataType: 'text',
                 success: function () {
                     $('#' + id).html('&#9829;');
@@ -16,7 +16,7 @@ $(document).ready(function () {
             $.ajax({
                 type: 'POST',
                 url: '/resource/unstar/' + this.id,
-                async: true,
+                async: false,
                 dataType: 'text',
                 success: function () {
                     $('#' + id).html('&#9825;');

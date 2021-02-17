@@ -66,7 +66,63 @@ exports.loadTags = async (req, res, next) => {
         res.locals.tagsInfo = await Tag.find({
             ownerId: req.user._id
         }).sort({'createdAt': -1})
-        res.render('./pages/tag/my')
+        res.render('./pages/newAreas')
+    } catch (e) {
+        console.log("error: " + e)
+        next(e)
+    }
+}
+
+exports.getAllTags = async (req, res, next) => {
+    try {
+        let tags = await Tag.find({status: "approve"}).sort({'createdAt': -1})
+        res.send(tags)
+    } catch (e) {
+        console.log("error: " + e)
+        next(e)
+    }
+}
+
+exports.getAllTagsAlt = async (req, res, next) => {
+    try {
+        let predefined = ['agriculture'
+            , 'arts and culture'
+            , 'cannabis'
+            , 'consumer protection'
+            , 'COVID-19'
+            , 'criminal justice'
+            , 'disability'
+            , 'education'
+            , 'elderly'
+            , 'energy'
+            , 'environment/climate change'
+            , 'gun control'
+            , 'healthcare'
+            , 'higher education'
+            , 'housing and homelessness'
+            , 'immigration'
+            , 'labor'
+            , 'LGBTQ+'
+            , 'mental health'
+            , 'opioids'
+            , 'public health'
+            , 'public safety'
+            , 'race'
+            , 'substance use and recovery'
+            , 'taxes'
+            , 'technology'
+            , 'tourism'
+            , 'transportation'
+            , 'veterans'
+            , 'violence and sexual assault'
+            , 'voting'
+            , 'women and gender']
+        let tags = await Tag.find({status: "approve"}).sort({'createdAt': -1})
+        for (let tag = 0; tag < tags.length; tag++) {
+            predefined.push(tags[tag].info)
+        }
+        res.locals.tags = predefined
+        next()
     } catch (e) {
         console.log("error: " + e)
         next(e)

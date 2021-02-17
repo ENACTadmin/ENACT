@@ -84,12 +84,15 @@ for (let i = 0; i < resourceInfo.length; i++) {
                                     <li class='list-group-item borderless box-padding'>
                                         <h5 style="display: inline">Actions:</h5>
                                         <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id.toString()) { %>
-                                            <button type='button' class='btn btn-outline-info'
-                                                    style='border:0 solid transparent' data-toggle='modal'
-                                                    data-target='#editModal<%= resourceInfo[i]._id %>'>
+                                            <button id="<%= resourceInfo[i]._id %>" type='button'
+                                                    class='editBtn btn btn-outline-info'
+                                                    style='border:0 solid transparent'
+                                                    data-toggle='modal'
+                                                    data-target='#editModal'>
                                                 Edit
                                             </button>
-                                            <button type='button' class='btn btn-outline-danger'
+                                            <button type='button'
+                                                    class='btn btn-outline-danger'
                                                     style='border:0px solid transparent'
                                                     data-toggle='modal'
                                                     data-target='#selectModal<%= resourceInfo[i]._id %>'>

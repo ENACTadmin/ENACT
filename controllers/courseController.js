@@ -223,7 +223,7 @@ exports.showOneCourse = async (req, res, next) => {
     let courseId = req.params.courseId;
     try {
         res.locals.courseInfo = await Course.findOne({_id: courseId})
-        await next()
+        next()
     } catch (e) {
         next(e)
     }

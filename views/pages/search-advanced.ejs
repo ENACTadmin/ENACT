@@ -121,6 +121,7 @@
                             </div>
                             <div class='toShowAll toShow-NS'>
                                 <h5 style="display: inline">
+                                    <br>
                                     student recommendations/analysis of next steps for a bill/issue
                                 </h5>
                                 <br>
@@ -226,6 +227,7 @@
                             </div>
                             <div class='toShowAll toShow-NS'>
                                 <h5 style="display: inline">
+                                    <br>
                                     student recommendations/analysis of next steps for a bill/issue
                                 </h5>
                                 <br>
@@ -392,5 +394,47 @@
         <% } %>
     </div>
 </section>
+
+<div class='modal fade' id='addTags' tabindex='-1' role='dialog'
+     aria-labelledby='exampleModalLabel'
+     aria-hidden='true'>
+    <div class='modal-dialog modal-lg' role='document'>
+        <form method='post' action='/tag/add'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h5 class='modal-title' id='exampleModalLabel'>Suggesting a new resource topic/issue?</h5>
+                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                        <span aria-hidden='true'>&times;</span>
+                    </button>
+                </div>
+                <div class='modal-body'>
+                    <div class='row'>
+                        <div class='col-md-12 col-sm-12'>
+                            <div class='input-group-prepend'>
+                                <span class='input-group-text' style='width: 180px'>Name</span>
+                                <input type='text' id='addingTag' class='form-control' name='addingTag'
+                                       placeholder='e.g. COVID-19'>
+                            </div>
+                            <br>
+                            <div class='input-group-prepend'>
+                                <span class='input-group-text' style='width: 180px'>Reason</span>
+                                <textarea type='text' class='form-control' name='reason'
+                                          rows='4'></textarea>
+                            </div>
+                            <br>
+                            <h6>Note: your request will be processed by ENACT admin. </h6>
+                        </div>
+                    </div>
+                </div>
+                <div class='modal-footer'>
+                    <input type='submit' name='submit' class='btn btn-outline-primary' value='Submit'>
+                    <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>
+                        Close
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 <%- include('../components/footer'); -%>
