@@ -1,6 +1,24 @@
 /*===============================================*/
 /* Customized CSS--BOOTSTRAP
 /*===============================================*/
+
+.btn-primary {
+    background-color: #0053a4 !important;
+    /*border: 1px solid #FF9912;*/
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: darkblue !important;
+    border: 1px solid darkblue !important;
+    color: white !important;
+}
+
 #adjustedLoginBtn {
     background-color: #0053a4 !important;
     /*border: 1px solid #FF9912;*/

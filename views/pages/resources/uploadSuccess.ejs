@@ -29,7 +29,7 @@
                     <% } %>
                     &nbsp&nbsp&nbsp&nbsp
                     <% if (status === 'student') { %>
-                        <a href="/course/view/<%= req.params.courseId %>/10" class="btn btn-lg btn-info">
+                        <a href="/course/view/<%= req.params.courseId %>/10" class="btn btn-lg btn-warning">
                             Back to course
                         </a>&nbsp&nbsp&nbsp&nbsp
                     <% } else { %>
@@ -38,13 +38,11 @@
                                 Back to course
                             </a>&nbsp&nbsp&nbsp&nbsp
                         <% } %>
-                        <a href="/resources/view/faculty" class="btn btn-lg btn-info">
+                        <a href="/resources/view/faculty" class="btn btn-lg btn-warning">
                             View Guide For Faculty
                         </a>&nbsp&nbsp&nbsp&nbsp
                     <% } %>
-                    <a href="/resources/search/private/advanced"
-                       class="btn btn-lg btn-primary">Search
-                    </a>
+                    <a href="/resources/search/private/advanced" class="btn btn-lg btn-primary">Search</a>
                 </div>
             </div>
         </div>

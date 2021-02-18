@@ -416,7 +416,7 @@ app.get('/resources/manage/public',
     resourceController.loadPublicResources,
     tagController.getAllTagsAlt,
     (req, res) =>
-        res.render('./pages/public-resourceManagement')
+        res.render('./pages/resource-management-public')
 )
 
 app.get('/collection/view/:resourceSetId',
