@@ -213,10 +213,12 @@
                             <h5 style="display: inline">Institution:</h5>
                             <%= resourceInfo[i].institution %>
                         </li>
-                        <li class='list-group-item borderless box-padding'>
-                            <h5 style="display: inline">Author:</h5>
-                            <%= resourceInfo[i].ownerName %>
-                        </li>
+                        <% if (resourceInfo[i].ownerName) { %>
+                            <li class='list-group-item borderless box-padding'>
+                                <h5 style="display: inline">Author:</h5>
+                                <%= resourceInfo[i].ownerName %>
+                            </li>
+                        <% } %>
                         <li class='list-group-item borderless box-padding'>
                             <h5 style="display: inline">Topic(s)/Issue(s):</h5>
                             <%= resourceInfo[i].tags %>
@@ -264,16 +266,30 @@
                                     <li class='list-group-item borderless box-padding'>
                                         <h5 style="display: inline">Description:</h5> <%= eventsInfo[i].description %>
                                     </li>
-                                    <% if (eventsInfo[i].start !== null) { %>
-                                        <li class='list-group-item borderless box-padding'>
-                                            <h5 style="display: inline">Starts at:</h5>
-                                            <p style="display: inline" class="TZChange"><%= eventsInfo[i].start %></p>
+                                    <% if (eventsInfo[i].start !== null && eventsInfo[i].end !== null) { %>
+                                        <li class='list-group-item borderless box-padding'
+                                            style="font-size: large">
+                                            <h5 style="display: inline; font-weight: 650">Start date: </h5>
+                                            <p style="display: inline"
+                                               class="TZChange"><%= eventsInfo[i].start %></p>
                                         </li>
-                                    <% } %>
-                                    <% if (eventsInfo[i].end !== null) { %>
-                                        <li class='list-group-item borderless box-padding'>
-                                            <h5 style="display: inline">Ends at:</h5>
-                                            <p style="display: inline" class="TZChange"><%= eventsInfo[i].end %></p>
+                                        <li class='list-group-item borderless box-padding'
+                                            style="font-size: large">
+                                            <h5 style="display: inline; font-weight: 650">Ends date:</h5>
+                                            <p style="display: inline"
+                                               class="TZChange"><%= eventsInfo[i].end %></p>
+                                        </li>
+                                        <li class='list-group-item borderless box-padding'
+                                            style="font-size: large">
+                                            <h5 style="display: inline; font-weight: 650">Start time: </h5>
+                                            <p style="display: inline;"
+                                               class="TZChange1"><%= eventsInfo[i].start %></p>
+                                        </li>
+                                        <li class='list-group-item borderless box-padding'
+                                            style="font-size: large">
+                                            <h5 style="display: inline; font-weight: 650">End time: </h5>
+                                            <p style="display: inline;"
+                                               class="TZChange1"><%= eventsInfo[i].end %></p>
                                         </li>
                                     <% } %>
                                     <% if (eventsInfo[i].uri !== null) { %>
@@ -349,7 +365,19 @@
             $(".TZChange").each(function () {
                 let oldDate = $(this).text()
                 let newDate = new Date(oldDate)
-                $(this).text(newDate)
+                $(this).text(newDate.toLocaleDateString())
+            })
+            $(".TZChange1").each(function () {
+                let today = new Date()
+                let oldDate = $(this).text()
+                let newDate = new Date(oldDate + today.getTimezoneOffset())
+                let minutes = newDate.getMinutes()
+                let hours = newDate.getHours()
+                if (minutes.toString().length === 1)
+                    minutes = '0' + minutes.toString()
+                if (hours.toString().length === 1)
+                    hours = '0' + hours.toString()
+                $(this).text(hours + ':' + minutes)
             })
         }
     )
