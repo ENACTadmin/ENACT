@@ -32,34 +32,42 @@
                                         <h3 style="margin-bottom: 12px"><%= futureEventsInfo[i].title %></h3>
                                         <div class='card-text'>
                                             <ul class='list-group'>
-                                                <li class='list-group-item borderless box-padding'>
-                                                    <h5 style="display: inline">Description:</h5>
+                                                <li class='list-group-item borderless box-padding' style="font-size: large">
+                                                    <h5 style="display: inline; font-weight: 650">Description:</h5>
                                                     <%= futureEventsInfo[i].description %>
                                                 </li>
-                                                <% if (futureEventsInfo[i].start !== null) { %>
-                                                    <li class='list-group-item borderless box-padding'>
-                                                        <h5 style="display: inline">Starts at:</h5>
+                                                <% if (futureEventsInfo[i].start !== null && futureEventsInfo[i].end !== null) { %>
+                                                    <li class='list-group-item borderless box-padding' style="font-size: large">
+                                                        <h5 style="display: inline; font-weight: 650">Start date:</h5>
                                                         <p style="display: inline"
                                                            class="TZChange"><%= futureEventsInfo[i].start %></p>
                                                     </li>
-                                                <% } %>
-                                                <% if (futureEventsInfo[i].end !== null) { %>
-                                                    <li class='list-group-item borderless box-padding'>
-                                                        <h5 style="display: inline">Ends at:</h5>
+                                                    <li class='list-group-item borderless box-padding' style="font-size: large">
+                                                        <h5 style="display: inline; font-weight: 650">End date:</h5>
                                                         <p style="display: inline"
                                                            class="TZChange"><%= futureEventsInfo[i].end %></p>
                                                     </li>
+                                                    <li class='list-group-item borderless box-padding' style="font-size: large">
+                                                        <h5 style="display: inline; font-weight: 650">Start time:</h5>
+                                                        <p style="display: inline"
+                                                           class="TZChange1"><%= futureEventsInfo[i].start %></p>
+                                                    </li>
+                                                    <li class='list-group-item borderless box-padding' style="font-size: large">
+                                                        <h5 style="display: inline; font-weight: 650">End time:</h5>
+                                                        <p style="display: inline"
+                                                           class="TZChange1"><%= futureEventsInfo[i].end %></p>
+                                                    </li>
                                                 <% } %>
                                                 <% if (futureEventsInfo[i].uri !== null) { %>
-                                                    <li class='list-group-item borderless box-padding'>
-                                                        <h5 style="display: inline">Link:</h5> <a
+                                                    <li class='list-group-item borderless box-padding' style="font-size: large">
+                                                        <h5 style="display: inline; font-weight: 650">Link:</h5> <a
                                                                 href="<%= futureEventsInfo[i].uri %>">click me</a>
                                                     </li>
                                                 <% } %>
 
                                                 <% if ((status === 'admin' || status === 'faculty') && futureEventsInfo[i].visibility !== null) { %>
-                                                    <li class='list-group-item borderless box-padding'>
-                                                        <h5 style="display: inline">
+                                                    <li class='list-group-item borderless box-padding' style="font-size: large">
+                                                        <h5 style="display: inline; font-weight: 650">
                                                             Visibility:</h5> <%= futureEventsInfo[i].visibility %>
                                                     </li>
                                                 <% } %>
@@ -67,7 +75,7 @@
                                                 <% if (loggedIn && (status === 'admin' || status === 'faculty')) { %>
                                                     <li class='list-group-item borderless box-padding'
                                                         style="display: inline">
-                                                        <h5 style="display: inline">Actions:</h5>
+                                                        <h5 style="display: inline; font-weight: 650">Actions:</h5>
                                                         <button type='button'
                                                                 class='btn btn-sm btn-outline-info'
                                                                 style='border:0 solid transparent'
@@ -119,40 +127,41 @@
                                         <h3 style="margin-bottom: 12px"><%= pastEventsInfo[i].title %></h3>
                                         <div class='card-text'>
                                             <ul class='list-group'>
-                                                <li class='list-group-item borderless box-padding'>
-                                                    <h5 style="display: inline">Description:</h5>
+                                                <li class='list-group-item borderless box-padding' style="font-size: large">
+                                                    <h5 style="display: inline; font-weight: 650">Description:</h5>
                                                     <%= pastEventsInfo[i].description %>
                                                 </li>
-                                                <% if (pastEventsInfo[i].start !== null) { %>
-                                                    <li class='list-group-item borderless box-padding'>
-                                                        <h5 style="display: inline">Start date: </h5>
+                                                <% if (pastEventsInfo[i].start !== null && pastEventsInfo[i].end !== null) { %>
+                                                    <li class='list-group-item borderless box-padding' style="font-size: large">
+                                                        <h5 style="display: inline; font-weight: 650">Start date: </h5>
                                                         <p style="display: inline"
                                                            class="TZChange"><%= pastEventsInfo[i].start %></p>
                                                     </li>
-                                                <% } %>
-                                                <% if (pastEventsInfo[i].start !== null) { %>
-                                                    <li class='list-group-item borderless box-padding'>
-                                                        <h5 style="display: inline">Start time: </h5>
-                                                        <p style="display: inline; font-size: larger"
-                                                           class="TZChange1"><%= pastEventsInfo[i].start %></p>
-                                                    </li>
-                                                <% } %>
-                                                <% if (pastEventsInfo[i].end !== null) { %>
-                                                    <li class='list-group-item borderless box-padding'>
-                                                        <h5 style="display: inline">Ends at:</h5>
+                                                    <li class='list-group-item borderless box-padding' style="font-size: large">
+                                                        <h5 style="display: inline; font-weight: 650">Ends date:</h5>
                                                         <p style="display: inline"
                                                            class="TZChange"><%= pastEventsInfo[i].end %></p>
                                                     </li>
+                                                    <li class='list-group-item borderless box-padding' style="font-size: large">
+                                                        <h5 style="display: inline; font-weight: 650">Start time: </h5>
+                                                        <p style="display: inline;"
+                                                           class="TZChange1"><%= pastEventsInfo[i].start %></p>
+                                                    </li>
+                                                    <li class='list-group-item borderless box-padding' style="font-size: large">
+                                                        <h5 style="display: inline; font-weight: 650">End time: </h5>
+                                                        <p style="display: inline;"
+                                                           class="TZChange1"><%= pastEventsInfo[i].end %></p>
+                                                    </li>
                                                 <% } %>
                                                 <% if (pastEventsInfo[i].uri !== null) { %>
-                                                    <li class='list-group-item borderless box-padding'>
-                                                        <h5 style="display: inline">Link:</h5> <a
+                                                    <li class='list-group-item borderless box-padding' style="font-size: large">
+                                                        <h5 style="display: inline; font-weight: 650">Link:</h5> <a
                                                                 href="<%= pastEventsInfo[i].uri %>">click me</a>
                                                     </li>
                                                 <% } %>
                                                 <% if ((status === 'admin' || status === 'faculty') && pastEventsInfo[i].visibility !== null) { %>
-                                                    <li class='list-group-item borderless box-padding'>
-                                                        <h5 style="display: inline">
+                                                    <li class='list-group-item borderless box-padding' style="font-size: large">
+                                                        <h5 style="display: inline; font-weight: 650">
                                                             Visibility:</h5> <%= pastEventsInfo[i].visibility %>
                                                     </li>
                                                 <% } %>
@@ -160,7 +169,7 @@
                                                 <% if (loggedIn && (status === 'admin' || status === 'faculty')) { %>
                                                     <li class='list-group-item borderless box-padding'
                                                         style="display: inline">
-                                                        <h5 style="display: inline">Actions:</h5>
+                                                        <h5 style="display: inline; font-weight: 650">Actions:</h5>
                                                         <button type='button'
                                                                 class='btn btn-sm btn-outline-info'
                                                                 style='border:0 solid transparent'
@@ -232,16 +241,6 @@
                         <label>Event Link</label>
                         <input type="text" class="form-control" name="uri">
                     </div>
-                    <!--                    <div class="form-group">-->
-                    <!--                        <label>Event Icon</label>-->
-                    <!--                        <select class="form-control" name="icon">-->
-                    <!--                            <option value="circle">circle</option>-->
-                    <!--                            <option value="cog">cog</option>-->
-                    <!--                            <option value="group">group</option>-->
-                    <!--                            <option value="suitcase">suitcase</option>-->
-                    <!--                            <option value="calendar">calendar</option>-->
-                    <!--                        </select>-->
-                    <!--                    </div>-->
                 </div>
                 <input hidden type="text" class="form-control TZTZ" name="TZ">
                 <div class="modal-footer">
@@ -454,7 +453,6 @@
 <script>
     $(document).ready(function () {
             $(".TZTZ").each(function () {
-                console.log("here!")
                 $(this).val(new Date().getTimezoneOffset())
             })
             let id_set = $('#idSet').text()
@@ -469,15 +467,22 @@
                     })
                 }
             }
+            var offset = new Date().getTimezoneOffset();
+            console.log(offset);
+            console.log(new Date())
             $(".TZChange").each(function () {
                 let oldDate = $(this).text()
                 let newDate = new Date(oldDate)
                 $(this).text(newDate.toLocaleDateString())
             })
             $(".TZChange1").each(function () {
+                let today = new Date()
                 let oldDate = $(this).text()
-                let newDate = new Date(oldDate)
-                $(this).text(newDate.getHours() + ':' + newDate.getMinutes())
+                let newDate = new Date(oldDate + today.getTimezoneOffset())
+                let minutes = newDate.getMinutes()
+                if (minutes === 0)
+                    minutes = '00'
+                $(this).text(newDate.getHours() + ':' + minutes)
             })
         }
     )

@@ -139,6 +139,10 @@
     $(document).ready(function () {
         $("#myInput").on("keyup", function () {
             let value = $("#myInput").val().toLowerCase();
+            if (value)
+                $("#map").hide()
+            else
+                $("#map").show()
             $("#myList li").filter(function () {
                 let regex = /[^\s.:,!?()\[\]]+/g;
                 let filteredInfo = $(this).text().toLowerCase().trim().match(regex)
