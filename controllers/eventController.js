@@ -10,6 +10,7 @@ exports.saveEvent = async (req, res, next) => {
         console.log("timezone offset is: ", timezoneOffset)
         let startDate = new Date(req.body.start).getTime() + parseInt(timezoneOffset) * 60000
         let endDate = new Date(req.body.end).getTime() + parseInt(timezoneOffset) * 60000
+        console.log(startDate)
         let newEvent = new Event({
             ownerId: req.user._id,
             title: req.body.title,
@@ -20,26 +21,25 @@ exports.saveEvent = async (req, res, next) => {
             // icon: req.body.icon,
             visibility: req.body.visibility
         })
-        let faculties = await Faculty.find()
-        // let faculties = await User.find({status: 'faculty'})
-        for (let faculty in faculties) {
-            let email = faculties[faculty].email
-            if (email) {
-                let url = 'https://www.enactnetwork.org/events'
-                const sgMail = require('@sendgrid/mail');
-                sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-                const msg = {
-                    to: email,
-                    from: 'enact@brandeis.edu',
-                    subject: 'ENACT Digital Platform: you have one new notification.',
-                    text: 'ENACT Digital Platform: you have one new notification.',
-                    html: 'Dear ENACT Faculty Fellow,' + '<br>' +
-                        '<br>' + 'A new ENACT event has been created. <br>The event title is: ' + newEvent.title + '<br>' + '<b> Click <a href=' + url + '>' + 'here' + '</a>' + ' to view the details.</b>' +
-                        '<br><br>' + 'ENACT Support Team'
-                };
-                await sgMail.send(msg);
-            }
-        }
+        // let faculties = await Faculty.find()
+        // for (let faculty in faculties) {
+        //     let email = faculties[faculty].email
+        //     if (email) {
+        //         let url = 'https://www.enactnetwork.org/events'
+        //         const sgMail = require('@sendgrid/mail');
+        //         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+        //         const msg = {
+        //             to: email,
+        //             from: 'enact@brandeis.edu',
+        //             subject: 'ENACT Digital Platform: you have one new notification.',
+        //             text: 'ENACT Digital Platform: you have one new notification.',
+        //             html: 'Dear ENACT Faculty Fellow,' + '<br>' +
+        //                 '<br>' + 'A new ENACT event has been created. <br>The event title is: ' + newEvent.title + '<br>' + '<b> Click <a href=' + url + '>' + 'here' + '</a>' + ' to view the details.</b>' +
+        //                 '<br><br>' + 'ENACT Support Team'
+        //         };
+        //         await sgMail.send(msg);
+        //     }
+        // }
         await newEvent.save()
         res.redirect('back')
     } catch (e) {
