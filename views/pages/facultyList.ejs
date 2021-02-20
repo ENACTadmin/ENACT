@@ -50,13 +50,13 @@
                             </div>
                             <div class="col-md-2 col-sm-2 align-self-center">
                                 <% if (staffInfo[i].linkedInURL || staffInfo[i].personalWebsiteURL) { %>
+                                    <% if (staffInfo[i].personalWebsiteURL) { %>
+                                        <a href="<%= staffInfo[i].personalWebsiteURL %>"> Bio </a>
+                                    <% } %>
                                     <% if (staffInfo[i].linkedInURL) { %>
                                         <a href="<%= staffInfo[i].linkedInURL %>"> LinkedIn <span
                                                     class="fa"> &#xf08c;</span></a>
                                         <br>
-                                    <% } %>
-                                    <% if (staffInfo[i].personalWebsiteURL) { %>
-                                        <a href="<%= staffInfo[i].personalWebsiteURL %>"> Bio </a>
                                     <% } %>
                                 <% } %>
                             </div>
@@ -121,13 +121,13 @@
                             </div>
                             <div class="col-md-2 col-sm-2 align-self-center">
                                 <% if (profileInfo[i].linkedInURL || profileInfo[i].personalWebsiteURL) { %>
+                                    <% if (profileInfo[i].personalWebsiteURL) { %>
+                                        <a href="<%= profileInfo[i].personalWebsiteURL %>"> Bio </a>
+                                    <% } %>
                                     <% if (profileInfo[i].linkedInURL) { %>
                                         <a href="<%= profileInfo[i].linkedInURL %>"> LinkedIn <span
                                                     class="fa"> &#xf08c;</span></a>
                                         <br>
-                                    <% } %>
-                                    <% if (profileInfo[i].personalWebsiteURL) { %>
-                                        <a href="<%= profileInfo[i].personalWebsiteURL %>"> Bio </a>
                                     <% } %>
                                 <% } %>
                             </div>
