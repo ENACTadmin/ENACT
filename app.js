@@ -27,12 +27,12 @@ const eventController = require('./controllers/eventController');
 const tagController = require('./controllers/tagController');
 const utils = require('./controllers/utils');
 
-
 //*******************************************
 //***********Database connection*************
 
 // const MONGODB_URI = 'mongodb://localhost/ENACT';
-const MONGODB_URI = process.env.MONGODB_URI_IND || 'mongodb://localhost/ENACT';
+// const MONGODB_URI = process.env.MONGODB_URI_IND || 'mongodb://localhost/ENACT';
+const MONGODB_URI = 'mongodb+srv://heroku_s59qt61k:suo0sir3rh8b104b38574ju3dm@cluster-s59qt61k.xy6rv.mongodb.net/heroku_s59qt61k?retryWrites=true&w=majority'|| 'mongodb://localhost/ENACT';
 const mongoose = require('mongoose');
 
 // Makes connection asynchronously.  Mongoose will queue up database
@@ -640,19 +640,17 @@ app.get('/messages/view/all',
 app.get('/events',
     async (req, res) => {
         if (res.locals.loggedIn) {
-            let eventsInfo = await Event.find({}).sort({start: -1})
+            let eventsInfo = await Event.find({}).sort({start: 1})
             let futureEventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() >= new Date().getTime());
-            let pastEventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() < new Date().getTime());
-            // console.log("future: ", futureEventsInfo)
-            // console.log("past: ", pastEventsInfo)
+            let pastEventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() < new Date().getTime()).reverse();
             res.render('./pages/events', {
                 futureEventsInfo: futureEventsInfo,
                 pastEventsInfo: pastEventsInfo
             })
         } else {
-            let eventsInfo = await Event.find({visibility: 'public'}).sort({start: -1})
+            let eventsInfo = await Event.find({visibility: 'public'}).sort({start: 1})
             let futureEventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() >= new Date().getTime());
-            let pastEventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() < new Date().getTime());
+            let pastEventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() < new Date().getTime()).reverse();
             let courseTimes = await CourseTime.find({}, {'_id': 0, '__v': 0});
             let courses = await Course.find({year: 2021}, {
                 'institutionURL': 1,
@@ -701,6 +699,19 @@ app.post('/event/edit/:eventId',
 
 app.post('/event/save',
     eventController.saveEvent
+)
+
+app.get('/event/image/update/:eventId',
+    (async (req, res) => {
+        let eventInfo = await Event.findOne({_id: req.params.eventId})
+        res.render('./pages/event-updateImage', {
+            eventInfo: eventInfo
+        })
+    })
+)
+
+app.post('/event/image/update/:eventId',
+    eventController.updateImageURL
 )
 
 //*******************************************

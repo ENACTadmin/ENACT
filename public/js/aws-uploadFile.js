@@ -11,7 +11,7 @@ $(document).ready(function () {
     });
 });
 
-function uploadFile(file, signedRequest, url) {
+function awsUploadFile(file, signedRequest, url) {
     const xhr = new XMLHttpRequest();
     xhr.open('PUT', signedRequest);
     xhr.onreadystatechange = () => {

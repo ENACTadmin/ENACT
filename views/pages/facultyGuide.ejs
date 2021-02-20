@@ -71,7 +71,7 @@
                                             <li class='list-group-item borderless box-padding'>
                                                 <h5 style="display: inline">Actions:</h5>
                                                 <button type="submit"
-                                                        style='border:0px solid transparent'
+
                                                         class='focusMe btn btn-outline-danger'
                                                         id="<%= syllabus[i]._id %>">
                                                     <% if (resourceIds && resourceIds.toString().includes(syllabus[i]._id.toString())) { %>
@@ -83,7 +83,7 @@
                                                 <% if (syllabus[i].ownerId.toString() !== user._id.toString()) { %>
                                                     <a href='/messages/view/<%= user._id %>/<%= syllabus[i].ownerId %>/<%= syllabus[i]._id %>'><input
                                                                 class='btn btn-outline-primary'
-                                                                style='border:0px solid transparent'
+
                                                                 type='button' value='Contact the author'></a>
                                                 <% } %>
                                             </li>
@@ -151,7 +151,7 @@
                                             <li class='list-group-item borderless box-padding'>
                                                 <h5 style="display: inline">Actions:</h5>
                                                 <button type="submit"
-                                                        style='border:0px solid transparent'
+
                                                         class='focusMe btn btn-outline-danger'
                                                         id="<%= assignments[i]._id %>">
                                                     <% if (resourceIds && resourceIds.toString().includes(assignments[i]._id.toString())) { %>
@@ -163,7 +163,7 @@
                                                 <% if (assignments[i].ownerId.toString() !== user._id.toString()) { %>
                                                     <a href='/messages/view/<%= user._id %>/<%= assignments[i].ownerId %>/<%= assignments[i]._id %>'><input
                                                                 class='btn btn-outline-primary'
-                                                                style='border:0px solid transparent'
+
                                                                 type='button' value='Contact the author'></a>
                                                 <% } %>
                                             </li>
@@ -231,7 +231,7 @@
                                             <li class='list-group-item borderless box-padding'>
                                                 <h5 style="display: inline">Actions:</h5>
                                                 <button type="submit"
-                                                        style='border:0px solid transparent'
+
                                                         class='focusMe btn btn-outline-danger'
                                                         id="<%= guides[i]._id %>">
                                                     <% if (resourceIds && resourceIds.toString().includes(guides[i]._id.toString())) { %>
@@ -243,7 +243,7 @@
                                                 <% if (guides[i].ownerId.toString() !== user._id.toString()) { %>
                                                     <a href='/messages/view/<%= user._id %>/<%= guides[i].ownerId %>/<%= guides[i]._id %>'><input
                                                                 class='btn btn-outline-primary'
-                                                                style='border:0px solid transparent'
+
                                                                 type='button' value='Contact the author'></a>
                                                 <% } %>
                                             </li>

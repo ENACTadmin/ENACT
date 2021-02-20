@@ -15,6 +15,7 @@
                     <br><br>
                     <button class="btn btn-primary" onclick="showAddModal()">Add a New Event</button>
                 <% } %>
+            </h4>
         </div>
     </div>
 </section>
@@ -36,22 +37,33 @@
                                             <ul class='list-group'>
                                                 <li class='list-group-item borderless box-padding'
                                                     style="font-size: large">
-                                                    <h5 style="display: inline; font-weight: 650">Description:</h5>
-                                                    <%= futureEventsInfo[i].description %>
+                                                    <div class="row">
+                                                        <div class="col-10" style="display: inline">
+                                                            <h5 style="display: inline; font-weight: 650">Description:</h5>
+                                                            <%= futureEventsInfo[i].description %>
+                                                        </div>
+                                                        <div class="col-2"><img
+                                                            <% if (!futureEventsInfo[i].imageURL) { %>
+                                                                src="https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg"
+                                                            <% } else { %>
+                                                                src="<%= futureEventsInfo[i].imageURL %>"
+                                                                    <% } %>
+                                                                style="height: auto; max-width: 100%"></div>
+                                                    </div>
                                                 </li>
                                                 <% if (futureEventsInfo[i].start !== null && futureEventsInfo[i].end !== null) { %>
                                                     <li class='list-group-item borderless box-padding'
                                                         style="font-size: large">
-                                                        <h5 style="display: inline; font-weight: 650">Start date:</h5>
+                                                        <h5 style="display: inline; font-weight: 650">Date:</h5>
                                                         <p style="display: inline"
                                                            class="TZChange"><%= futureEventsInfo[i].start %></p>
                                                     </li>
-                                                    <li class='list-group-item borderless box-padding'
-                                                        style="font-size: large">
-                                                        <h5 style="display: inline; font-weight: 650">End date:</h5>
-                                                        <p style="display: inline"
-                                                           class="TZChange"><%= futureEventsInfo[i].end %></p>
-                                                    </li>
+                                                    <!--                                                    <li class='list-group-item borderless box-padding'-->
+                                                    <!--                                                        style="font-size: large">-->
+                                                    <!--                                                        <h5 style="display: inline; font-weight: 650">End date:</h5>-->
+                                                    <!--                                                        <p style="display: inline"-->
+                                                    <!--                                                           class="TZChange"><%= futureEventsInfo[i].end %></p>-->
+                                                    <!--                                                    </li>-->
                                                     <li class='list-group-item borderless box-padding'
                                                         style="font-size: large">
                                                         <h5 style="display: inline; font-weight: 650">Start time:</h5>
@@ -72,7 +84,6 @@
                                                         <a href="<%= futureEventsInfo[i].uri %>">click me</a>
                                                     </li>
                                                 <% } %>
-
                                                 <% if ((status === 'admin' || status === 'faculty') && futureEventsInfo[i].visibility !== null) { %>
                                                     <li class='list-group-item borderless box-padding'
                                                         style="font-size: large">
@@ -80,21 +91,22 @@
                                                             Visibility:</h5> <%= futureEventsInfo[i].visibility %>
                                                     </li>
                                                 <% } %>
-
                                                 <% if (loggedIn && (status === 'admin' || status === 'faculty')) { %>
                                                     <li class='list-group-item borderless box-padding'
                                                         style="display: inline">
                                                         <h5 style="display: inline; font-weight: 650">Actions:</h5>
                                                         <button type='button'
                                                                 class='btn btn-sm btn-outline-info'
-                                                                style='border:0 solid transparent'
+
                                                                 data-toggle='modal'
                                                                 data-target='#editModal<%= futureEventsInfo[i]._id %>'>
                                                             Edit
                                                         </button>
+                                                        <a class="btn btn-outline-info"
+                                                           href="/event/image/update/<%= futureEventsInfo[i]._id %>">Update event image</a>
                                                         <button type='button'
                                                                 class='btn btn-sm btn-outline-warning'
-                                                                style='border:0px solid transparent'
+
                                                                 data-toggle='modal'
                                                                 data-target='#deleteModal<%= futureEventsInfo[i]._id %>'>
                                                             Delete
@@ -138,21 +150,26 @@
                                             <ul class='list-group'>
                                                 <li class='list-group-item borderless box-padding'
                                                     style="font-size: large">
-                                                    <h5 style="display: inline; font-weight: 650">Description:</h5>
-                                                    <%= pastEventsInfo[i].description %>
+                                                    <div class="row">
+                                                        <div class="col-10" style="display: inline">
+                                                            <h5 style="display: inline; font-weight: 650">Description:</h5>
+                                                            <%= pastEventsInfo[i].description %>
+                                                        </div>
+                                                        <div class="col-2"><img
+                                                            <% if (!pastEventsInfo[i].imageURL) { %>
+                                                                src="https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg"
+                                                            <% } else { %>
+                                                                src="<%= pastEventsInfo[i].imageURL %>"
+                                                                    <% } %>
+                                                                style="height: auto; max-width: 100%"></div>
+                                                    </div>
                                                 </li>
                                                 <% if (pastEventsInfo[i].start !== null && pastEventsInfo[i].end !== null) { %>
                                                     <li class='list-group-item borderless box-padding'
                                                         style="font-size: large">
-                                                        <h5 style="display: inline; font-weight: 650">Start date: </h5>
+                                                        <h5 style="display: inline; font-weight: 650">Date: </h5>
                                                         <p style="display: inline"
                                                            class="TZChange"><%= pastEventsInfo[i].start %></p>
-                                                    </li>
-                                                    <li class='list-group-item borderless box-padding'
-                                                        style="font-size: large">
-                                                        <h5 style="display: inline; font-weight: 650">Ends date:</h5>
-                                                        <p style="display: inline"
-                                                           class="TZChange"><%= pastEventsInfo[i].end %></p>
                                                     </li>
                                                     <li class='list-group-item borderless box-padding'
                                                         style="font-size: large">
@@ -188,14 +205,14 @@
                                                         <h5 style="display: inline; font-weight: 650">Actions:</h5>
                                                         <button type='button'
                                                                 class='btn btn-sm btn-outline-info'
-                                                                style='border:0 solid transparent'
                                                                 data-toggle='modal'
                                                                 data-target='#editModal<%= pastEventsInfo[i]._id %>'>
                                                             Edit
                                                         </button>
+                                                        <a class="btn btn-outline-info"
+                                                           href="/event/image/update/<%= pastEventsInfo[i]._id %>">Update event image</a>
                                                         <button type='button'
                                                                 class='btn btn-sm btn-outline-warning'
-                                                                style='border:0px solid transparent'
                                                                 data-toggle='modal'
                                                                 data-target='#deleteModal<%= pastEventsInfo[i]._id %>'>
                                                             Delete
@@ -528,6 +545,7 @@
             })
         }
     )
+
     function showAddModal() {
         $("#modal-view-event-add").modal()
     }

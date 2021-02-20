@@ -13,7 +13,7 @@ $(document).ready(function () {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     const response = JSON.parse(xhr.responseText);
-                    uploadFile(file, response.signedRequest, response.url);
+                    awsUploadFile(file, response.signedRequest, response.url);
                 } else {
                     alert('Could not get signed URL.');
                 }
