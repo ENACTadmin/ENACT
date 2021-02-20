@@ -34,7 +34,7 @@
                 <br><br>
 
                 <% if (account.profilePicURL) { %>
-                    <img src='<%= account.profilePicURL %>' style='width:300px;'>
+                    <img src='<%= account.profilePicURL %>' style='height: auto; max-width: 100%'>
                 <% } else { %>
                     <h5>No profile image uploaded</h5>
                 <% } %>
