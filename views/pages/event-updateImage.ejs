@@ -8,8 +8,11 @@
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
             <div class='section__title section__title--centered'>
-                Update Event Image for <%= eventInfo.name %>
+                Update Event Image
             </div>
+            <h3>Title: <%= eventInfo.title %></h3>
+            <br>
+            <a class="btn btn-primary" href="/events">Back to Events page</a>
         </div>
     </div>
 </section>
@@ -25,10 +28,11 @@
                     Upload new event image
                 </button>
                 <br><br>
-
                 <% if (eventInfo.imageURL) { %>
-                    <img src='<%= eventInfo.imageURL %>' style='width:300px;'>
+                    <img src='<%= eventInfo.imageURL %>' style='height: auto; max-width: 100%'>
                 <% } else { %>
+                    <h3>Image preview</h3>
+                    <hr>
                     <h5>No image uploaded for this event</h5>
                 <% } %>
             </div>
@@ -75,7 +79,7 @@
                 <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
                 <form method='POST' action='/event/image/update/<%= eventInfo._id %>'>
                     <input type='hidden' id='imageURL' name='imageURL'>
-                    <input type='submit' class='btn btn-outline-dark' value='Upload'>
+                    <input type='submit' class='btn btn-outline-dark' value='Save'>
                 </form>
             </div>
         </div>
