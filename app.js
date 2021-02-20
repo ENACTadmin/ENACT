@@ -280,6 +280,7 @@ app.get('/resources/search/public/general',
 
 app.get('/resources/search/public/advanced',
     utils.checkUserName,
+    tagController.getAllTagsAlt,
     (req, res) =>
         res.render('./pages/search-advanced-public'))
 
