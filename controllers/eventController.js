@@ -75,3 +75,14 @@ exports.deleteEvent = async (req, res, next) => {
         next(e)
     }
 }
+
+exports.updateImageURL = async (req, res, next) => {
+    let eventToUpdate = await Event.findOne({_id: req.params.eventId})
+    try {
+        eventToUpdate.imageURL = req.body.imageURL;
+        await eventToUpdate.save()
+        res.redirect('back')
+    } catch (e) {
+        next(e)
+    }
+}
