@@ -24,7 +24,6 @@
             <li>
                 <a class='header-link' id='header-link' href='/about' data-aos='fade-left'>About</a>
             </li>
-
         <% } else { %>
             <li>
                 <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Resources</a>
@@ -97,9 +96,9 @@
                         <a class='header-link' href='/events'>Events</a>
                     </li>
                 </ul>
-
-            <li>
-                <% if (status === 'admin') { %>
+            </li>
+            <% if (status === 'admin') { %>
+                <li>
                     <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Admin</a>
                     <ul class='sub-menu'>
                         <li>
@@ -121,8 +120,8 @@
                             <a class='header-link' href='/profiles/view/all'>View all profiles</a>
                         </li>
                     </ul>
-                <% } %>
-            </li>
+                </li>
+            <% } %>
             <li>
                 <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Help & About</a>
                 <ul class='sub-menu'>

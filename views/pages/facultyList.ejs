@@ -29,7 +29,7 @@
         <ul class="list-group" id="myList">
             <% if (staffInfo) { %>
                 <% for (let i = 0; i < staffInfo.length; i++){ %>
-                    <li class="list-group-item" style="height: 200px; font-size: larger">
+                    <li class="list-group-item" style="height: auto; max-height: 100%; font-size: larger">
                         <div class="row">
                             <div class="col-md-1 col-sm-1 align-self-center">
                                 <% if (staffInfo[i].profilePicURL) { %>
@@ -66,7 +66,6 @@
                                 <h5 style="display: inline">Department:</h5> <br><%= staffInfo[i].department %>
                                 <br>
                                 <h5 style="display: inline">State:</h5> <br><%= staffInfo[i].state %>
-
                             </div>
                             <div class="col-md-2 col-sm-2 align-self-center">
                                 <% if (loggedIn) { %>
@@ -100,7 +99,7 @@
         <ul class="list-group" id="myList">
             <% for (let i = 0; i < profileInfo.length; i++){ %>
                 <% if (profileInfo[i].status === "faculty" || profileInfo[i].status === "admin") { %>
-                    <li class="list-group-item" style="height: 220px; font-size: larger; margin-bottom: 20px">
+                    <li class="list-group-item" style="height: auto; max-height: 100%; font-size: larger; margin-bottom: 20px">
                         <div class="row">
                             <div class="col-md-1 col-sm-1 align-self-center">
                                 <% if (profileInfo[i].profilePicURL) { %>
