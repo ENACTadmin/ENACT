@@ -1,54 +1,293 @@
 <%- include('../components/header'); -%>
 <%- include('../components/navbar'); -%>
 
+<script src='/js/search.js'></script>
+<script src='/js/showDesc.js'></script>
+<script src='/js/searchComplete.js'></script>
+<script src="/js/disableautofill.js"></script>
+<script>
+    $('input[autofill="off"]').disableAutoFill;
+</script>
+
 <section class='section'>
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
             <div class='section__title section__title--centered'>
                 Search Result
             </div>
-            <% if (search_tags || search_text || search_state || search_contentType || search_institution || search_mediaType || search_yearOfCreation) { %>
-                <h3>Search inputs</h3>
-                <% if (search_text) { %>
-                    <h5 style="display: inline">Keyword: </h5><u><%= search_text %></u> <br>
+            <div hidden>
+                <% if (search_tags || search_text || search_state || search_contentType || search_institution || search_mediaType || search_yearOfCreation) { %>
+                    <h3>Search inputs</h3>
+                    <% if (search_text) { %>
+                        <h5 style="display: inline">Keyword: </h5><u id="search_text"><%= search_text %></u> <br>
+                    <% } %>
+                    <% if (search_state) { %>
+                        <h5 style="display: inline">State: </h5><u id="search_state"><%= search_state %></u> <br>
+                    <% } %>
+                    <% if (search_contentType) { %>
+                        <h5 style="display: inline">Content Type: </h5><u id="search_contentType"><%= search_contentType %></u><br>
+                    <% } %>
+                    <% if (search_institution) { %>
+                        <h5 style="display: inline">Institution: </h5><u id="search_institution"><%= search_institution %></u><br>
+                    <% } %>
+                    <% if (search_mediaType) { %>
+                        <h5 style="display: inline">Media Type: </h5><u id="search_mediaType"><%= search_mediaType %></u><br>
+                    <% } %>
+                    <% if (search_yearOfCreation) { %>
+                        <h5 style="display: inline">Year of Creation: </h5><u id="search_yearOfCreation"><%= search_yearOfCreation %></u><br>
+                    <% } %>
+                    <% if (search_tags) { %>
+                        <h5 style="display: inline">Topic(s)/Issue(s): </h5><u id="search_tags"><%= search_tags %></u> <br>
+                    <% } %>
+                    <br>
                 <% } %>
-                <% if (search_state) { %>
-                    <h5 style="display: inline">State: </h5><u><%= search_state %></u> <br>
-                <% } %>
-                <% if (search_contentType) { %>
-                    <h5 style="display: inline">Content Type: </h5><u><%= search_contentType %></u><br>
-                <% } %>
-                <% if (search_institution) { %>
-                    <h5 style="display: inline">Institution: </h5><u><%= search_institution %></u><br>
-                <% } %>
-                <% if (search_mediaType) { %>
-                    <h5 style="display: inline">Media Type: </h5><u><%= search_mediaType %></u><br>
-                <% } %>
-                <% if (search_yearOfCreation) { %>
-                    <h5 style="display: inline">Year of Creation: </h5><u><%= search_yearOfCreation %></u><br>
-                <% } %>
-                <% if (search_tags) { %>
-                    <h5 style="display: inline">Topic(s)/Issue(s): </h5><u><%= search_tags %></u> <br>
-                <% } %>
-                <br>
-            <% } %>
+            </div>
             <h3>Not finding what you want? Please try</h3>
-            <a href='/resources/search/public/advanced'
-               class='btn btn-large btn-warning'
-               style='width: 200px'><b>Search again</b></a>
+            <button class='btn btn-large btn-warning' id="flip"><b>Search again</b></button>
         </div>
     </div>
 </section>
 
-
-<section class='section section__grey' data-aos='fade-up'>
+<section class='section section__grey'>
+    <div class='container' id="panel" style="display: none">
+        <form method='post' action='/resources/view/my/public/advancedResult'>
+            <div class='row'>
+                <div class='col-md-3 col-sm-12'></div>
+                <div class='col-md-6 col-sm-12'>
+                    <h3>Keywords</h3>
+                    <hr>
+                    <div class='input-group-prepend'>
+                        <% if (search_text) { %>
+                            <input style="margin-right: 20px" autofill="off" autocomplete="off" id="resources" type='text' class='form-control' name='search'
+                                   value="<%= search_text %>">
+                        <% } else { %>
+                            <input style="margin-right: 20px" autofill="off" autocomplete="off" id="resources" type='text' class='form-control' name='search'
+                                   placeholder="search for anything">
+                        <% } %>
+                        <input id="myBtn" type='submit' name='submit' class='btn btn-dark' value='Search'>
+                    </div>
+                    <br>
+                    <h3>Filters</h3>
+                    <hr>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 180px'>Content Type</span>
+                        <select id="contentTypeSelect" class='form-control' name='contentType'>
+                            <option value='empty'>Choose...</option>
+                            <option value='Student Advice'>Advice & Tips for Students by Students</option>
+                            <option value='Advocacy Video'>Advocacy Video</option>
+                            <option value='Journal'>Campaign Journal/Personal Reflections</option>
+                            <option value='Elevator Speech'>Elevator Speech</option>
+                            <option value='Flyer'>Fact Sheet/Storybook</option>
+                            <option value='Letter to Legislator'>Letter to the Legislator</option>
+                            <option value='Next Steps'>Next Steps</option>
+                            <option value='Outlets'>Outlets for Publication</option>
+                            <option value='Op-Ed'>Op-Ed</option>
+                            <option value='Personal Reflection'>Essays about ENACT</option>
+                            <option value='Portfolio'>Portfolio</option>
+                            <option value='Presentations'>Presentations</option>
+                            <option value='Research Report'>Student Research Report</option>
+                            <option value='Script'>Script for meeting with Ways and Means Staff</option>
+                            <option value='State Legislative'>State Legislative Website Resources</option>
+                            <option value='Testimony'>Testimony</option>
+                        </select>
+                    </div>
+                    <div class='toShowAll toShow-AV'>
+                        <h5 style="display: inline">
+                            <br>
+                            student-created short videos about issues/bills</h5>
+                        <br>
+                    </div>
+                    <div class='toShowAll toShow-CJ'>
+                        <h5 style="display: inline">
+                            <br>
+                            student reflections on legislative work
+                        </h5>
+                        <br>
+                    </div>
+                    <div class='toShowAll toShow-ES'>
+                        <h5 style="display: inline">
+                            <br>
+                            student-created 30-second pitch for bill
+                        </h5>
+                        <br>
+                    </div>
+                    <div class='toShowAll toShow-CP'>
+                        <h5 style="display: inline">
+                            <br>
+                            resources by and for faculty
+                        </h5>
+                        <br>
+                    </div>
+                    <div class='toShowAll toShow-NS'>
+                        <h5 style="display: inline">
+                            <br>
+                            student recommendations/analysis of next steps for a bill/issue
+                        </h5>
+                        <br>
+                    </div>
+                    <div class='toShowAll toShow-OE'>
+                        <h5 style="display: inline">
+                            <br>
+                            published and unpublished op-eds
+                        </h5>
+                        <br>
+                    </div>
+                    <div class='toShowAll toShow-PR'>
+                        <h5 style="display: inline">
+                            <br>
+                            writing about the ENACT experience by participants
+                        </h5>
+                        <br>
+                    </div>
+                    <div class='toShowAll toShow-Po'>
+                        <h5 style="display: inline">
+                            <br>
+                            student-created legislative portfolios
+                        </h5>
+                        <br>
+                    </div>
+                    <div class='toShowAll toShow-Pr'>
+                        <h5 style="display: inline">
+                            <br>
+                            final “Present and Defend” presentations
+                        </h5>
+                        <br>
+                    </div>
+                    <div class='toShowAll toShow-FS'>
+                        <h5 style="display: inline">
+                            <br>
+                            student-created issue-based handouts/ interviews
+                        </h5>
+                        <br>
+                    </div>
+                    <div class='toShowAll toShow-SS'>
+                        <h5 style="display: inline">
+                            <br>
+                            student-created script on finances of bill/legislation
+                        </h5>
+                        <br>
+                    </div>
+                    <div class='toShowAll toShow-Te'>
+                        <h5 style="display: inline">
+                            <br>
+                            testimony delivered at a legislative hearing
+                        </h5>
+                        <br>
+                    </div>
+                    <br>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 180px'>State</span>
+                        <select id="stateSelect" class='form-control' name='state'>
+                            <option value='empty'>Choose ...</option>
+                            <option value="Not state-specific">Not state-specific</option>
+                            <option value='AL'>Alabama</option>
+                            <option value='AK'>Alaska</option>
+                            <option value='AZ'>Arizona</option>
+                            <option value='AR'>Arkansas</option>
+                            <option value='CA'>California</option>
+                            <option value='CO'>Colorado</option>
+                            <option value='CT'>Connecticut</option>
+                            <option value='DE'>Delaware</option>
+                            <option value='DC'>District Of Columbia</option>
+                            <option value='FL'>Florida</option>
+                            <option value='GA'>Georgia</option>
+                            <option value='HI'>Hawaii</option>
+                            <option value='ID'>Idaho</option>
+                            <option value='IL'>Illinois</option>
+                            <option value='IN'>Indiana</option>
+                            <option value='IA'>Iowa</option>
+                            <option value='KS'>Kansas</option>
+                            <option value='KY'>Kentucky</option>
+                            <option value='LA'>Louisiana</option>
+                            <option value='ME'>Maine</option>
+                            <option value='MD'>Maryland</option>
+                            <option value='MA'>Massachusetts</option>
+                            <option value='MI'>Michigan</option>
+                            <option value='MN'>Minnesota</option>
+                            <option value='MS'>Mississippi</option>
+                            <option value='MO'>Missouri</option>
+                            <option value='MT'>Montana</option>
+                            <option value='NE'>Nebraska</option>
+                            <option value='NV'>Nevada</option>
+                            <option value='NH'>New Hampshire</option>
+                            <option value='NJ'>New Jersey</option>
+                            <option value='NM'>New Mexico</option>
+                            <option value='NY'>New York</option>
+                            <option value='NC'>North Carolina</option>
+                            <option value='ND'>North Dakota</option>
+                            <option value='OH'>Ohio</option>
+                            <option value='OK'>Oklahoma</option>
+                            <option value='OR'>Oregon</option>
+                            <option value='PA'>Pennsylvania</option>
+                            <option value='RI'>Rhode Island</option>
+                            <option value='SC'>South Carolina</option>
+                            <option value='SD'>South Dakota</option>
+                            <option value='TN'>Tennessee</option>
+                            <option value='TX'>Texas</option>
+                            <option value='UT'>Utah</option>
+                            <option value='VT'>Vermont</option>
+                            <option value='VA'>Virginia</option>
+                            <option value='WA'>Washington</option>
+                            <option value='WV'>West Virginia</option>
+                            <option value='WI'>Wisconsin</option>
+                            <option value='WY'>Wyoming</option>
+                        </select>
+                    </div>
+                    <br>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 180px'>Institution</span>
+                        <% if (search_institution) { %>
+                            <input type='text' class='form-control' name='institution'
+                                   value="<%= search_institution %>">
+                        <% } else { %>
+                            <input type='text' class='form-control' name='institution'
+                                   placeholder='e.g. Brandeis University'>
+                        <% } %>
+                    </div>
+                    <br>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 180px'>Creation Year</span>
+                        <% if (search_yearOfCreation) { %>
+                            <input type='text' class='form-control' name='yearOfCreation'
+                                   value="<%= search_yearOfCreation %>">
+                        <% } else { %>
+                            <input type='text' class='form-control' name='yearOfCreation'
+                                   placeholder='e.g. 2020'>
+                        <% } %>
+                    </div>
+                    <br>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 180px'>Media Type</span>
+                        <select id="mediaTypeSelect" class='form-control' name='mediaType'>
+                            <option value='empty'>Choose...</option>
+                            <option value='document'>Document</option>
+                            <option value='photo'>Photo</option>
+                            <option value='PowerPoint'>PowerPoint</option>
+                            <option value='video'>Video</option>
+                        </select>
+                    </div>
+                    <br>
+                </div>
+            </div>
+            <div class='row'>
+                <%- include('../components/component-tagSelector') -%>
+                <div class='w-100'></div>
+                <div class='col-md-3 col-sm-12'></div>
+                <div class='col-md-6 col-sm-12'>
+                    <input type='submit' name='submit' class='btn btn-dark' value='Search'>
+                </div>
+            </div>
+        </form>
+    </div>
     <section class='section__content section__content--fluid-width'>
         <div class='container'>
+            <h3>Resources</h3>
+            <hr>
             <div class='row'>
                 <div class='col-md-12 col-sm-12'>
                     <% if (resourceInfo && resourceInfo.length > 0) { %>
                         <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
-                            <div class='card-body'>
+                            <div class='card-body' data-aos="fade-up">
                                 <h3><%= resourceInfo[i].name %></h3>
                                 <div class='card-text'>
                                     <ul class='list-group'>
@@ -93,7 +332,7 @@
                         <% } %>
                     <% } else { %>
                         <div class='card-body text-center'>
-                            No resource available yet
+                            No resource found
                         </div>
                     <% } %>
                 </div>
@@ -102,5 +341,54 @@
     </section>
 </section>
 
+<script>
+    $(document).ready(function () {
+        $("#flip").click(function () {
+            $("#panel").slideToggle("slow");
+        });
+
+        let contentType = $("#search_contentType").text()
+        let mediaType = $("#search_mediaType").text()
+        let state = $("#search_state").text()
+        let tags = $("#search_tags").text()
+
+        // console.log("Content type: ", resource.contentType)
+        $('#contentTypeSelect' + ' option').each(function () {
+            if ($(this).val() === contentType) {
+                $(this).prop('selected', true)
+            }
+        })
+        $('#mediaTypeSelect' + ' option').each(function () {
+            if ($(this).val() === mediaType) {
+                $(this).prop('selected', true)
+            }
+        })
+        $('#stateSelect' + ' option').each(function () {
+            if ($(this).val() === state) {
+                $(this).prop('selected', true)
+            }
+        })
+        let tagsArray = tags.split(',')
+        let checkboxes = $(':checkbox')
+        checkboxes.each(function () {
+            if (tagsArray.includes($(this).val())) {
+                $(this).prop('checked', true)
+            } else {
+                $(this).prop('checked', false)
+            }
+        })
+        let string = checkboxes.filter(':checked').map(function () {
+            return this.value;
+        }).get().join(',');
+        $('#tagsToReturn').val(string);
+
+        checkboxes.on('change', function () {
+            let string = checkboxes.filter(':checked').map(function () {
+                return this.value;
+            }).get().join(',');
+            $('#tagsToReturn').val(string);
+        })
+    });
+</script>
 
 <%- include('../components/footer'); -%>

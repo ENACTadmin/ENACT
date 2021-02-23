@@ -262,6 +262,7 @@ app.get('/resources/search/private/advanced',
         res.render('./pages/search-advanced'))
 
 app.post('/resources/search/private/advanced',
+    tagController.getAllTagsAlt,
     resourceController.advancedSearch
 )
 
@@ -285,6 +286,7 @@ app.get('/resources/search/public/advanced',
         res.render('./pages/search-advanced-public'))
 
 app.post('/resources/view/my/public/advancedResult',
+    tagController.getAllTagsAlt,
     resourceController.advancedSearchPublic
 )
 
