@@ -24,21 +24,21 @@
                 <% if (resourceInfo) { %>
                     <h3>Relevant resource</h3>
                     <hr>
-                    <div class='card-body'>
+                    <div class='shadow-sm card-body'>
                         <h4><%= resourceInfo.name %></h4>
                         <div class='card-text'>
                             <ul class='list-group'>
-                                <li class='list-group-item borderless box-padding'>
+                                <li class='list-group-item borderless box-padding' style='font-size: large'>
                                     <h5 style="display: inline">Description:</h5> <%= resourceInfo.description %></li>
-                                <li class='list-group-item borderless box-padding'>
+                                <li class='list-group-item borderless box-padding' style='font-size: large'>
                                     <h5 style="display: inline">State:</h5> <%= resourceInfo.state %></li>
-                                <li class='list-group-item borderless box-padding'>
+                                <li class='list-group-item borderless box-padding' style='font-size: large'>
                                     <h5 style="display: inline">Link:</h5> <a href='<%= resourceInfo.uri %>'>click
                                         me</a>
                                 </li>
-                                <li class='list-group-item borderless box-padding'>
+                                <li class='list-group-item borderless box-padding' style='font-size: large'>
                                     <h5 style="display: inline">Institution:</h5> <%= resourceInfo.institution %></li>
-                                <li class='list-group-item borderless box-padding'>
+                                <li class='list-group-item borderless box-padding' style='font-size: large'>
                                     <h5 style="display: inline">Topic(s)/Issue(s):</h5> <%= resourceInfo.tags %>
                                 </li>
                             </ul>
@@ -48,6 +48,11 @@
                 <% } %>
                 <h3>Messages</h3>
                 <hr>
+                <% if (messageInfo && messageInfo.length === 0) { %>
+                    <div class="card-body shadow-sm text-center">
+                        No previous messages found.
+                    </div>
+                <% } %>
                 <% for (let i = 0; i < messageInfo.length; i++) { %>
                     <div class='media mb-3' id='description'>
                         <a href='/profile/view/<%= messageInfo[i].sentBy %>'>
@@ -93,41 +98,38 @@
         <div class='row'>
             <div class='col'>
                 <!-- Comments Form -->
-                <div class='card'>
-                    <h5 class='card-header'>Leave a message here:</h5>
-                    <div class='card-body'>
-                        <form
-                        <% if (resourceInfo) { %>
-                            action='/messages/save/<%= senderInfo._id %>/<%= receiverInfo._id %>/<%= resourceInfo._id %>'
-                        <% } else { %>
-                            action='/messages/save/<%= senderInfo._id %>/<%= receiverInfo._id %>/general'
-                                <% } %>
-                            method='post'>
-                            <% if (messageInfo.length === 0) { %>
-                                <div class='input-group-prepend' style='display: inline'>
-                                    Subject
-                                    <input type='text' class='form-control' name='subject'>
-                                </div>
-                                <br>
+                <div class='shadow-sm card-body'>
+                    <form
+                    <% if (resourceInfo) { %>
+                        action='/messages/save/<%= senderInfo._id %>/<%= receiverInfo._id %>/<%= resourceInfo._id %>'
+                    <% } else { %>
+                        action='/messages/save/<%= senderInfo._id %>/<%= receiverInfo._id %>/general'
                             <% } %>
-                            <div class='form-group' style='display: inline'>
-                                Message
-                                <textarea style='resize: none' class='form-control' name='message'
-                                          rows='3'></textarea>
+                        method='post'>
+                        <% if (messageInfo.length === 0) { %>
+                            <div class='input-group-prepend' style='display: inline'>
+                                Subject
+                                <input type='text' class='form-control' name='subject'>
                             </div>
                             <br>
-                            <% if (loggedIn) { %>
-                                <button type='submit' class='btn btn-outline-primary'>Send</button>
+                        <% } %>
+                        <div class='form-group' style='display: inline'>
+                            Message
+                            <textarea style='resize: none' class='form-control' name='message'
+                                      rows='3'></textarea>
+                        </div>
+                        <br>
+                        <% if (loggedIn) { %>
+                            <button type='submit' class='btn btn-outline-primary'>Send</button>
+                        <% } else { %>
+                            Please login to reply.
+                            <% if (resourceInfo) { %>
+                                <a href="/login/messages/view/<%= senderInfo._id %>/<%= receiverInfo._id %>/<%= resourceInfo._id %>"></a>
                             <% } else { %>
-                                Please login to reply.
-                                <% if (resourceInfo) { %>
-                                    <a href="/login/messages/view/<%= senderInfo._id %>/<%= receiverInfo._id %>/<%= resourceInfo._id %>"></a>
-                                <% } else { %>
-                                    <a href="/login/messages/view/<%= senderInfo._id %>/<%= receiverInfo._id %>/general"></a>
-                                <% } %>
+                                <a href="/login/messages/view/<%= senderInfo._id %>/<%= receiverInfo._id %>/general"></a>
                             <% } %>
-                        </form>
-                    </div>
+                        <% } %>
+                    </form>
                 </div>
             </div>
         </div>

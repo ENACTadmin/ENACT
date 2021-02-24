@@ -2,6 +2,39 @@
 /* Customized CSS--BOOTSTRAP
 /*===============================================*/
 
+.list-group-item {
+    border-radius: 30px !important;
+}
+
+.autocomplete {
+    font-size: large;
+    border: 1px solid #ffffff;
+    -webkit-text-fill-color: #000000;
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.form-control {
+    /*-webkit-border-radius: 0 0 0 50px;*/
+    -webkit-border-bottom-right-radius: 50px;
+    -webkit-border-top-right-radius: 50px;
+    -moz-border-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
+.complete-items {
+    font-size: large !important;
+    position: relative;
+    padding: 3px !important;
+    z-index: 99;
+}
+
+.complete-items::before {
+    content: '\1F50D';
+    padding-right: 10px;
+}
+
 .btn-primary {
     background-color: #0053a4 !important;
     /*border: 1px solid #FF9912;*/
@@ -66,9 +99,21 @@
     color: #0053a4;
 }
 
+.shadow-sm {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .1) !important
+}
+
+.card-body {
+    border: none !important;
+}
+
+.card {
+    border: none !important;
+}
+
 .container {
     max-width: 1300px;
-    margin-top: -32px;
+    margin-top: -30px;
     padding-top: 30px;
     padding-bottom: 40px;
 }
@@ -292,7 +337,7 @@ h6 {
 }
 
 .header__content--fluid-width {
-    width: 80%;
+    width: 96%;
     margin: auto;
     clear: both;
 }
@@ -1693,8 +1738,8 @@ ul.grid__list--fmenu li a:hover {
 @media screen and (max-width: 1400px) {
     .header__content--fix-width, .section__content--fix-width, .footer__content--fix-width, .header__content--fluid-width, .section__content--fluid-width, .footer__content--fluid-width {
         width: 96%;
-        padding-left: 2%;
-        padding-right: 2%;
+        /*padding-left: 2%;*/
+        /*padding-right: 2%;*/
     }
 
     .intro__description {
@@ -2213,8 +2258,8 @@ ul.grid__list--fmenu li a:hover {
 @media screen and (max-width: 800px) {
     .header__content--fix-width, .section__content--fix-width, .footer__content--fix-width, .header__content--fluid-width, .section__content--fluid-width, .footer__content--fluid-width {
         width: 96%;
-        padding-left: 2%;
-        padding-right: 2%;
+        /*padding-left: 2%;*/
+        /*padding-right: 2%;*/
     }
 
     .intro__content {

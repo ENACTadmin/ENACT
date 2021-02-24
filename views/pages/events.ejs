@@ -31,7 +31,7 @@
                         <% for (let i = 0; i < futureEventsInfo.length; i++) { %>
                             <% if (loggedIn || futureEventsInfo[i].visibility === 'public') { %>
                                 <div class='card border-0' style="border-radius: 30px">
-                                    <div class='card-body'>
+                                    <div class='shadow-sm card-body'>
                                         <h3 style="margin-bottom: 12px"><%= futureEventsInfo[i].title %></h3>
                                         <div class='card-text'>
                                             <ul class='list-group'>
@@ -144,7 +144,7 @@
                         <% for (let i = 0; i < pastEventsInfo.length; i++) { %>
                             <% if (loggedIn || pastEventsInfo[i].visibility === 'public') { %>
                                 <div class='card border-0' style="border-radius: 30px">
-                                    <div class='card-body'>
+                                    <div class='shadow-sm card-body'>
                                         <h3 style="margin-bottom: 12px"><%= pastEventsInfo[i].title %></h3>
                                         <div class='card-text'>
                                             <ul class='list-group'>

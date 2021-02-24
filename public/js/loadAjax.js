@@ -10,7 +10,7 @@ $(document).ready(function () {
             success: function (data) {
                 if (data && data.length > 0) {
                     for (let i = 0; i < data.length; i++) {
-                        let htmlToAppend = '<div class=\'card-body\' style="margin-bottom: 20px">\n' +
+                        let htmlToAppend = '<div class=\'shadow card-body\' style="margin-bottom: 20px">\n' +
                             '            <h4>' + data[i].name + '</h4>' +
                             '            <div class=\'card-text\'>' +
                             '                <ul class=\'list-group\'>' +

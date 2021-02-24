@@ -21,13 +21,13 @@
                     <div class='col-md-12 col-sm-12'>
                         <% if (tagsInfo && tagsInfo.length > 0) { %>
                             <% for (let i = tagsInfo.length - 1; i >= 0; i--) { %>
-                                <div class='card-body'>
+                                <div class='shadow-sm card-body'>
                                     <h4><%= tagsInfo[i].info %></h4>
                                     <div class='card-text'>
                                         <ul class='list-group'>
-                                            <li class='list-group-item borderless box-padding'>
+                                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                 <h5 style="display: inline">Reason:</h5> <%= tagsInfo[i].reason %></li>
-                                            <li class='list-group-item borderless box-padding'>
+                                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                 <h5 style="display: inline">Status:</h5> <%= tagsInfo[i].status %></li>
                                         </ul>
                                     </div>
@@ -37,7 +37,7 @@
                                 <% } %>
                             <% } %>
                         <% } else { %>
-                            <div class='card-body text-center'>
+                            <div class='shadow-sm card-body text-center'>
                                 You haven't propose any new resource topic/issue for us.
                             </div>
                         <% } %>

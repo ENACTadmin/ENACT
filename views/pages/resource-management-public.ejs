@@ -33,7 +33,7 @@ for (let i = 0; i < resourceInfo.length; i++) {
         <h3>Select one to display</h3>
         <hr>
         <% if (!pred_not_disp) { %>
-            <div class='card-body text-center' style="border-radius: 30px">
+            <div class='shadow-sm card-body text-center' style="border-radius: 30px">
                 <h4>No more resources can be displayed on the front page</h4>
             </div>
         <% } else{ %>
@@ -44,44 +44,44 @@ for (let i = 0; i < resourceInfo.length; i++) {
                 <% } %>
             <% } %>
             <% if (num >= 3) { %>
-                <div class='card-body text-center' style="border-radius: 30px">
+                <div class='shadow-sm card-body text-center' style="border-radius: 30px">
                     <h4>There are only three spots for public resources on the home page. Please remove one
                         resources below if you want to add in a new one.</h4>
                 </div>
             <% } else { %>
                 <% for (let i = 0; i < resourceInfo.length; i++) { %>
                     <% if (resourceInfo[i].status === 'public') { %>
-                        <div class='card-body'>
+                        <div class='shadow-sm card-body'>
                             <h4>
                                 <%= resourceInfo[i].name %>
                             </h4>
                             <div class='card-text'>
                                 <ul class='list-group'>
-                                    <li class='list-group-item borderless box-padding'>
+                                    <li class='list-group-item borderless box-padding' style='font-size: large'>
                                         <h5 style="display: inline">Description:</h5>
                                         <%= resourceInfo[i].description %>
                                     </li>
-                                    <li class='list-group-item borderless box-padding'>
+                                    <li class='list-group-item borderless box-padding' style='font-size: large'>
                                         <h5 style="display: inline">State:</h5>
                                         <%= resourceInfo[i].state %>
                                     </li>
-                                    <li class='list-group-item borderless box-padding'>
+                                    <li class='list-group-item borderless box-padding' style='font-size: large'>
                                         <h5 style="display: inline">Year:</h5>
                                         <%= resourceInfo[i].yearOfCreation %>
                                     </li>
-                                    <li class='list-group-item borderless box-padding'>
+                                    <li class='list-group-item borderless box-padding' style='font-size: large'>
                                         <h5 style="display: inline">Link:</h5>
                                         <a href='<%= resourceInfo[i].uri %>'>click me</a>
                                     </li>
-                                    <li class='list-group-item borderless box-padding'>
+                                    <li class='list-group-item borderless box-padding' style='font-size: large'>
                                         <h5 style="display: inline">Institution:</h5>
                                         <%= resourceInfo[i].institution %>
                                     </li>
-                                    <li class='list-group-item borderless box-padding'>
+                                    <li class='list-group-item borderless box-padding' style='font-size: large'>
                                         <h5 style="display: inline">Resource Topic(s)/Issue(s):</h5>
                                         <%= resourceInfo[i].tags %>
                                     </li>
-                                    <li class='list-group-item borderless box-padding'>
+                                    <li class='list-group-item borderless box-padding' style='font-size: large'>
                                         <h5 style="display: inline">Actions:</h5>
                                         <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id.toString()) { %>
                                             <button id="<%= resourceInfo[i]._id %>" type='button'
@@ -114,43 +114,43 @@ for (let i = 0; i < resourceInfo.length; i++) {
         <h3>Displayed public resources</h3>
         <hr>
         <% if (!pred_disp) { %>
-            <div class='card-body text-center' style="border-radius: 30px">
+            <div class='shadow-sm card-body text-center' style="border-radius: 30px">
                 <h4>No resource is displayed on the front page</h4>
             </div>
         <% } %>
         <% for (let i = 0; i < resourceInfo.length; i++) { %>
             <% if (resourceInfo[i].status === 'finalPublic') { %>
-                <div class='card-body' style="border-radius: 30px">
+                <div class='shadow-sm card-body' style="border-radius: 30px">
                     <h4>
                         <%= resourceInfo[i].name %>
                     </h4>
                     <div class='card-text'>
                         <ul class='list-group'>
-                            <li class='list-group-item borderless box-padding'>
+                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                 <h5 style="display: inline">Description:</h5>
                                 <%= resourceInfo[i].description %>
                             </li>
-                            <li class='list-group-item borderless box-padding'>
+                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                 <h5 style="display: inline">State:</h5>
                                 <%= resourceInfo[i].state %>
                             </li>
-                            <li class='list-group-item borderless box-padding'>
+                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                 <h5 style="display: inline">Year:</h5>
                                 <%= resourceInfo[i].yearOfCreation %>
                             </li>
-                            <li class='list-group-item borderless box-padding'>
+                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                 <h5 style="display: inline">Link:</h5>
                                 <a href='<%= resourceInfo[i].uri %>'>click me</a>
                             </li>
-                            <li class='list-group-item borderless box-padding'>
+                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                 <h5 style="display: inline">Institution:</h5>
                                 <%= resourceInfo[i].institution %>
                             </li>
-                            <li class='list-group-item borderless box-padding'>
+                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                 <h5 style="display: inline">Resource Topic(s)/Issue(s):</h5>
                                 <%= resourceInfo[i].tags %>
                             </li>
-                            <li class='list-group-item borderless box-padding'>
+                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                 <h5 style="display: inline">Actions:</h5>
                                 <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id.toString()) { %>
                                     <button id="<%= resourceInfo[i]._id %>" type='button'

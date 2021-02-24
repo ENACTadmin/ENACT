@@ -871,58 +871,77 @@ async function invertedSearch(req, res) {
     let match = req.body.search.match(regex)
     match = [...new Set(match)]
     let idSet = new Set()
+    console.log("1", req.body.search)
+    console.log("2", req.body.search.length)
     if (match && match.length > 0) {
         // admin search
         if (res.locals.status === 'admin' || res.locals.status === 'faculty') {
-            for (let i = 0; i < match.length; i++) {
-                let newRegex = new RegExp(["^", match[i], "$"].join(""), "i");
-                let word2Id = await Word2Id.findOne({word: newRegex})
-                if (word2Id !== null) {
-                    let resourceIds = word2Id.ids
-                    resourceIds.forEach(item => {
-                        if (!idSet.has(item.toString())) {
-                            idSet.add(item.toString())
-                        }
-                    })
-                    if (resourceInfo === null) {
-                        resourceInfo = await Resource.find({_id: {$in: resourceIds}})
-                    } else {
-                        let newResourceInfo = await Resource.find({_id: {$in: resourceIds}})
-                        newResourceInfo = newResourceInfo.filter(({_id}) => !idSet.has(_id.toString()))
-                        resourceInfo = resourceInfo.concat(newResourceInfo)
-                    }
+            resourceInfo = await Resource.find(
+                {
+                    $text: {$search: req.body.search},
+                    checkStatus: 'approve'
+                },
+                {
+                    score: {$meta: "textScore"},
+                    ownerId: 1,
+                    ownerName: 1,
+                    name: 1,
+                    description: 1,
+                    tags: 1,
+                    uri: 1,
+                    state: 1,
+                    mediaType: 1, // video/text document ...
+                    contentType: 1, // pitch/research...
+                    institution: 1,
+                    yearOfCreation: 1
                 }
-            }
+            ).sort({score: {$meta: "textScore"}})
         }
         // student search
-        else {
-            for (let i = 0; i < match.length; i++) {
-                let newRegex = new RegExp(["^", match[i], "$"].join(""), "i");
-                let word2Id = await Word2Id.findOne({word: newRegex})
-                if (word2Id !== null) {
-                    let resourceIds = word2Id.ids
-                    resourceIds.forEach(item => {
-                        if (!idSet.has(item.toString())) {
-                            idSet.add(item.toString())
-                        }
-                    })
-                    if (resourceInfo === null) {
-                        resourceInfo = await Resource.find({
-                            checkStatus: checkStatus,
-                            _id: {$in: resourceIds},
-                            status: {$in: ["privateToENACT", "public", "finalPublic"]}
-                        })
-                    } else {
-                        let newResourceInfo = await Resource.find({
-                            checkStatus: checkStatus,
-                            _id: {$in: resourceIds},
-                            status: {$in: ["privateToENACT", "public", "finalPublic"]}
-                        })
-                        newResourceInfo = newResourceInfo.filter(({_id}) => !idSet.has(_id.toString()))
-                        resourceInfo = resourceInfo.concat(newResourceInfo)
-                    }
+        else if (res.locals.status === 'student') {
+            resourceInfo = await Resource.find(
+                {
+                    $text: {$search: req.body.search},
+                    checkStatus: 'approve',
+                    status: {$in: ["privateToENACT", "public", "finalPublic"]}
+                },
+                {
+                    score: {$meta: "textScore"},
+                    ownerId: 1,
+                    ownerName: 1,
+                    name: 1,
+                    description: 1,
+                    tags: 1,
+                    uri: 1,
+                    state: 1,
+                    mediaType: 1, // video/text document ...
+                    contentType: 1, // pitch/research...
+                    institution: 1,
+                    yearOfCreation: 1
                 }
-            }
+            ).sort({score: {$meta: "textScore"}})
+        } else {
+            resourceInfo = await Resource.find(
+                {
+                    $text: {$search: req.body.search},
+                    checkStatus: 'approve',
+                    status: {$in: ["public", "finalPublic"]}
+                },
+                {
+                    score: {$meta: "textScore"},
+                    ownerId: 1,
+                    ownerName: 1,
+                    name: 1,
+                    description: 1,
+                    tags: 1,
+                    uri: 1,
+                    state: 1,
+                    mediaType: 1, // video/text document ...
+                    contentType: 1, // pitch/research...
+                    institution: 1,
+                    yearOfCreation: 1
+                } // content's actual creation time}
+            ).sort({score: {$meta: "textScore"}})
         }
     }
     // empty param search
@@ -930,15 +949,55 @@ async function invertedSearch(req, res) {
         if (res.locals.status === 'admin' || res.locals.status === 'faculty') {
             resourceInfo = await Resource.find({
                 checkStatus: checkStatus
+            }, {
+                ownerId: 1,
+                ownerName: 1,
+                name: 1,
+                description: 1,
+                tags: 1,
+                uri: 1,
+                state: 1,
+                mediaType: 1, // video/text document ...
+                contentType: 1, // pitch/research...
+                institution: 1,
+                yearOfCreation: 1 // content's actual creation time
+            })
+        } else if (res.locals.status === 'student') {
+            resourceInfo = await Resource.find({
+                checkStatus: checkStatus,
+                status: {$in: ["privateToENACT", "public", "finalPublic"]}
+            }, {
+                ownerId: 1,
+                ownerName: 1,
+                name: 1,
+                description: 1,
+                tags: 1,
+                uri: 1,
+                state: 1,
+                mediaType: 1, // video/text document ...
+                contentType: 1, // pitch/research...
+                institution: 1,
+                yearOfCreation: 1 // content's actual creation time
             })
         } else {
             resourceInfo = await Resource.find({
                 checkStatus: checkStatus,
-                status: {$in: ["privateToENACT", "public", "finalPublic"]}
+                status: {$in: ["public", "finalPublic"]}
+            }, {
+                ownerId: 1,
+                ownerName: 1,
+                name: 1,
+                description: 1,
+                tags: 1,
+                uri: 1,
+                state: 1,
+                mediaType: 1, // video/text document ...
+                contentType: 1, // pitch/research...
+                institution: 1,
+                yearOfCreation: 1 // content's actual creation time
             })
         }
     }
-    resourceInfo = await rankRes(match, resourceInfo)
     return resourceInfo
 }
 
@@ -946,25 +1005,6 @@ async function invertedSearch(req, res) {
 // -----------------------------------------------
 // --------------- Advanced Search ---------------
 // -----------------------------------------------
-
-async function rankRes(match, resources) {
-    if (resources) {
-        let matchSet = new Set(match)
-        for (var resource in resources) {
-            let newResource = resources[resource]
-            let fullContent = newResource.name + ' ' + newResource.description + ' ' + newResource.tags + ' '
-                + newResource.state + ' ' + newResource.contentType + ' ' + newResource.mediaType + ' '
-                + newResource.institution + ' ' + newResource.yearOfCreation + ' ' + newResource.ownerName
-            let regex = /[^\s.:,!?()\[\]]+/g;
-            let newMatch = fullContent.match(regex);
-            newMatch = [...new Set(newMatch)]; // keep unique elements
-            let filtered = newMatch.filter(value => matchSet.has(value));
-            resources[resource].count = filtered.length;
-        }
-        resources.sort((a, b) => a.count - b.count || a.count * 1.0 / a.name.length - b.count * 1.0 / b.name.length || a.yearOfCreation - b.yearOfCreation);
-    }
-    return resources
-}
 
 exports.advancedSearch = async (req, res) => {
 
@@ -1050,10 +1090,6 @@ exports.advancedSearch = async (req, res) => {
 
 exports.advancedSearchPublic = async (req, res, next) => {
     let filtered = await invertedSearch(req, res);
-
-    if (filtered) {
-        filtered = filtered.filter(({status}) => ['public', 'finalPublic'].includes(status));
-    }
 
     let local_state = req.body.state !== 'empty' ? req.body.state : null
 

@@ -17,7 +17,7 @@
             </div>
         </a>
         <% if (!loggedIn) { %>
-            <a class='header__logo-title-1' style='margin-left: -10px' href='/'>
+            <a class='header__logo-title' href='/'>
                 <b>THE EDUCATIONAL NETWORK<br>FOR ACTIVE CIVIC TRANSFORMATION</b>
             </a>
         <% } %>
@@ -102,7 +102,7 @@
     <br><br><br>
     <div class='section__content section__content--fluid-width section__content--padding--small'>
         <div class='grid grid--3col'>
-            <div class='grid__item partners__slide__grey' style='min-height: 500px' data-aos='fade-up'>
+            <div class='grid__item shadow-sm partners__slide__grey' style='min-height: 500px' data-aos='fade-up'>
                 <h3 class='grid__title'><span>What We Do</span></h3>
                 <p class='grid__text' style="font-size: larger; line-height: 145%">
                     The <b style='color: #0053a4'>ENACT: Educational Network for Active Civic Transformation</b> is a
@@ -118,7 +118,7 @@
                 <br>
             </div>
 
-            <div class='grid__item partners__slide__grey' style='min-height: 500px; background-color: black'
+            <div class='grid__item shadow-sm partners__slide__grey' style='min-height: 500px; background-color: black'
                  data-aos='fade-up'>
                 <div id='carouselExampleControls' class='carousel slide' data-ride='carousel'>
                     <div class='carousel-inner'>
@@ -154,7 +154,7 @@
                 </div>
             </div>
 
-            <div class='grid__item partners__slide__grey' style='min-height: 500px' data-aos='fade-up'>
+            <div class='grid__item shadow-sm partners__slide__grey' style='min-height: 500px' data-aos='fade-up'>
                 <h3 class='grid__title'><span>The ENACT Model</span></h3>
                 <p class='grid__text' style="font-size: large; line-height: 140%">
                     <b style='color: #0053a4'>• Workshop</b>: ENACT launched with a workshop at Brandeis University in
@@ -184,38 +184,38 @@
         <h2 class='section__title section__title--centered1' style="color: white" data-aos='fade-up'>Public resources</h2>
         <br><br><br>
         <% if (resourceInfo.length === 0) { %>
-            <div class='card-body text-center' style="border-radius: 30px">
+            <div class='shadow-sm card-body text-center' style="border-radius: 30px">
                 <h4>No resource available yet</h4>
             </div>
         <% } %>
         <% for (let i = 0; i < resourceInfo.length && i < 3; i++) { %>
-            <div class='card-body border-0' style='border-radius: 30px' data-aos='fade-up'>
+            <div class='shadow-sm card-body border-0' style='border-radius: 30px' data-aos='fade-up'>
                 <h3><%= resourceInfo[i].name %></h3>
                 <div class='card-text'>
                     <ul class='list-group'>
-                        <li class='list-group-item borderless box-padding'>
+                        <li class='list-group-item borderless box-padding' style='font-size: large'>
                             <h5 style="display: inline">Description:</h5>
                             <%= resourceInfo[i].description %>
                         </li>
-                        <li class='list-group-item borderless box-padding'>
+                        <li class='list-group-item borderless box-padding' style='font-size: large'>
                             <h5 style="display: inline">State:</h5>
                             <%= resourceInfo[i].state %>
                         </li>
-                        <li class='list-group-item borderless box-padding'>
+                        <li class='list-group-item borderless box-padding' style='font-size: large'>
                             <h5 style="display: inline">Link:</h5>
                             <a href='<%= resourceInfo[i].uri %>'>click me</a>
                         </li>
-                        <li class='list-group-item borderless box-padding'>
+                        <li class='list-group-item borderless box-padding' style='font-size: large'>
                             <h5 style="display: inline">Institution:</h5>
                             <%= resourceInfo[i].institution %>
                         </li>
                         <% if (resourceInfo[i].ownerName) { %>
-                            <li class='list-group-item borderless box-padding'>
+                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                 <h5 style="display: inline">Author:</h5>
                                 <%= resourceInfo[i].ownerName %>
                             </li>
                         <% } %>
-                        <li class='list-group-item borderless box-padding'>
+                        <li class='list-group-item borderless box-padding' style='font-size: large'>
                             <h5 style="display: inline">Topic(s)/Issue(s):</h5>
                             <%= resourceInfo[i].tags %>
                         </li>
@@ -255,17 +255,17 @@
             <% for (let i = 0; i < eventsInfo.length; i++) { %>
                 <% if (loggedIn || eventsInfo[i].visibility === 'public') { %>
                     <div class='card border-0' style='border-radius: 30px' data-aos='fade-up'>
-                        <div class='card-body'>
+                        <div class='shadow-sm card-body'>
                             <h3><%= eventsInfo[i].title %></h3>
                             <div class='card-text'>
                                 <ul class='list-group'>
                                     <li class='list-group-item borderless box-padding' style="font-size: large">
                                         <div class="row">
-                                            <div class="col-10" style="display: inline">
+                                            <div class="col-md-10 col-sm-12" style="display: inline">
                                                 <h5 style="display: inline; font-weight: 650">Description:</h5>
                                                 <%= eventsInfo[i].description %>
                                             </div>
-                                            <div class="col-2"><img
+                                            <div class="col-md-2 col-sm-12"><img
                                                 <% if (!eventsInfo[i].imageURL) { %>
                                                     src="https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg"
                                                 <% } else { %>
@@ -275,20 +275,17 @@
                                         </div>
                                     </li>
                                     <% if (eventsInfo[i].start !== null && eventsInfo[i].end !== null) { %>
-                                        <li class='list-group-item borderless box-padding'
-                                            style="font-size: large">
+                                        <li class='list-group-item borderless box-padding' style="font-size: large">
                                             <h5 style="display: inline; font-weight: 650">Date: </h5>
                                             <p style="display: inline"
                                                class="TZChange"><%= eventsInfo[i].start %></p>
                                         </li>
-                                        <li class='list-group-item borderless box-padding'
-                                            style="font-size: large">
+                                        <li class='list-group-item borderless box-padding' style="font-size: large">
                                             <h5 style="display: inline; font-weight: 650">Start time: </h5>
                                             <p style="display: inline;"
                                                class="TZChange1"><%= eventsInfo[i].start %></p>
                                         </li>
-                                        <li class='list-group-item borderless box-padding'
-                                            style="font-size: large">
+                                        <li class='list-group-item borderless box-padding' style="font-size: large">
                                             <h5 style="display: inline; font-weight: 650">End time: </h5>
                                             <p style="display: inline;"
                                                class="TZChange1"><%= eventsInfo[i].end %></p>
@@ -310,7 +307,7 @@
                 <% } %>
             <% } %>
         <% } else { %>
-            <div class='card-body text-center' style="border-radius: 30px">
+            <div class='shadow-sm card-body text-center' style="border-radius: 30px">
                 <h4>No events available yet</h4>
             </div>
         <% } %>

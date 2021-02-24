@@ -29,7 +29,7 @@
         <ul class="list-group" id="myList">
             <% if (staffInfo) { %>
                 <% for (let i = 0; i < staffInfo.length; i++){ %>
-                    <li class="list-group-item" style="height: auto; max-height: 100%; font-size: larger">
+                    <li class="list-group-item shadow-sm" style="height: auto; max-height: 100%; font-size: larger">
                         <div class="row">
                             <div class="col-md-1 col-sm-1 align-self-center">
                                 <% if (staffInfo[i].profilePicURL) { %>
@@ -53,7 +53,7 @@
                                     <% if (staffInfo[i].personalWebsiteURL) { %>
                                         <a href="<%= staffInfo[i].personalWebsiteURL %>"> Bio </a>
                                     <% } %>
-                                        <br>
+                                    <br>
                                     <% if (staffInfo[i].linkedInURL) { %>
                                         <a href="<%= staffInfo[i].linkedInURL %>"> LinkedIn <span
                                                     class="fa"> &#xf08c;</span></a>
@@ -100,7 +100,7 @@
         <ul class="list-group" id="myList">
             <% for (let i = 0; i < profileInfo.length; i++){ %>
                 <% if (profileInfo[i].status === "faculty" || profileInfo[i].status === "admin") { %>
-                    <li class="list-group-item" style="height: auto; max-height: 100%; font-size: larger; margin-bottom: 20px">
+                    <li class="list-group-item shadow-sm" style="height: auto; max-height: 100%; font-size: larger; margin-bottom: 20px">
                         <div class="row">
                             <div class="col-md-1 col-sm-1 align-self-center">
                                 <% if (profileInfo[i].profilePicURL) { %>
@@ -124,7 +124,7 @@
                                     <% if (profileInfo[i].personalWebsiteURL) { %>
                                         <a href="<%= profileInfo[i].personalWebsiteURL %>"> Bio </a>
                                     <% } %>
-                                        <br>
+                                    <br>
                                     <% if (profileInfo[i].linkedInURL) { %>
                                         <a href="<%= profileInfo[i].linkedInURL %>"> LinkedIn <span
                                                     class="fa"> &#xf08c;</span></a>

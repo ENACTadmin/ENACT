@@ -5,45 +5,45 @@
 
 <p hidden id="resourceIdsMe"><%= resourceIds %></p>
 
-<!--<div class='card-body'>-->
+<!--<div class='shadow-sm card-body'>-->
 <% if (resourceInfo && resourceInfo.length > 0) { %>
     <% for (let i = 0; i < resourceInfo.length; i++) { %>
-        <div class='card-body' style="margin-bottom: 20px">
+        <div class='shadow-sm card-body' style="margin-bottom: 20px">
             <h3><%= resourceInfo[i].name %></h3>
             <div class='card-text'>
                 <ul class='list-group'>
-                    <li class='list-group-item borderless box-padding'>
+                    <li class='list-group-item borderless box-padding' style='font-size: large'>
                         <h5 style="display: inline">Description:</h5> <%= resourceInfo[i].description %>
                     </li>
-                    <li class='list-group-item borderless box-padding'>
+                    <li class='list-group-item borderless box-padding' style='font-size: large'>
                         <h5 style="display: inline">Year:</h5> <%= resourceInfo[i].yearOfCreation %>
                     </li>
-                    <li class='list-group-item borderless box-padding'>
+                    <li class='list-group-item borderless box-padding' style='font-size: large'>
                         <h5 style="display: inline">State:</h5> <%= resourceInfo[i].state %>
                     </li>
                     <% if (resourceInfo[i].mediaType === 'video') { %>
-                        <li class='list-group-item borderless box-padding'>
+                        <li class='list-group-item borderless box-padding' style='font-size: large'>
                             <video width="400" controls>
                                 <source src="<%= resourceInfo[i].uri %>" type="video/mp4">
                             </video>
                         </li>
                     <% } else { %>
-                        <li class='list-group-item borderless box-padding'>
+                        <li class='list-group-item borderless box-padding' style='font-size: large'>
                             <h5 style="display: inline">Link:</h5> <a href='<%= resourceInfo[i].uri %>'>click me</a>
                         </li>
                     <% } %>
-                    <li class='list-group-item borderless box-padding'>
+                    <li class='list-group-item borderless box-padding' style='font-size: large'>
                         <h5 style="display: inline">Institution:</h5> <%= resourceInfo[i].institution %>
                     </li>
-                    <li class='list-group-item borderless box-padding'>
+                    <li class='list-group-item borderless box-padding' style='font-size: large'>
                         <h5 style="display: inline">Author:</h5> <%= resourceInfo[i].ownerName %>
                     </li>
                     <% if (resourceInfo[i].tags.length >= 1 && resourceInfo[i].tags[0].length !== 0) { %>
-                        <li class='list-group-item borderless box-padding'>
+                        <li class='list-group-item borderless box-padding' style='font-size: large'>
                             <h5 style="display: inline">Tags:</h5> <%= resourceInfo[i].tags %>
                         </li>
                     <% } %>
-                    <li class='list-group-item borderless box-padding'>
+                    <li class='list-group-item borderless box-padding' style='font-size: large'>
                         <h5 style="display: inline">Actions:</h5>
                         <button type="submit"
 
@@ -82,7 +82,7 @@
         </div>
     <% } %>
 <% } else { %>
-    <div class='card-body text-center'>
+    <div class='shadow-sm card-body text-center'>
         No resource available yet
     </div>
 <% } %>
