@@ -112,7 +112,7 @@
 }
 
 .container {
-    max-width: 1300px;
+    /*max-width: 1300px;*/
     margin-top: -30px;
     padding-top: 30px;
     padding-bottom: 40px;
@@ -1737,9 +1737,9 @@ ul.grid__list--fmenu li a:hover {
 /*===============================================*/
 @media screen and (max-width: 1400px) {
     .header__content--fix-width, .section__content--fix-width, .footer__content--fix-width, .header__content--fluid-width, .section__content--fluid-width, .footer__content--fluid-width {
-        width: 96%;
-        /*padding-left: 2%;*/
-        /*padding-right: 2%;*/
+        width: 98%;
+        padding-left: 1%;
+        padding-right: 1%;
     }
 
     .intro__description {
@@ -2257,9 +2257,9 @@ ul.grid__list--fmenu li a:hover {
 /*===============================================*/
 @media screen and (max-width: 800px) {
     .header__content--fix-width, .section__content--fix-width, .footer__content--fix-width, .header__content--fluid-width, .section__content--fluid-width, .footer__content--fluid-width {
-        width: 96%;
-        /*padding-left: 2%;*/
-        /*padding-right: 2%;*/
+        width: 98%;
+        padding-left: 1%;
+        padding-right: 1%;
     }
 
     .intro__content {

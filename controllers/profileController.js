@@ -185,7 +185,13 @@ exports.updateProfileImageURLAdmin = async (req, res, next) => {
 
 let special = ["stimell@brandeis.edu", "djw@brandeis.edu"]
 exports.showFacultyProfiles = async (req, res, next) => {
-    let profileInfo = await User.find({status: "faculty"}).collation({locale: 'en'}).sort({userName: 1})
+    // sort by lastname
+    let profileInfo = await User.find({status: "faculty"}).collation({locale: 'en'})
+    let duplicate = JSON.parse(JSON.stringify(profileInfo))
+    for (let i = 0; i < duplicate.length; i++) {
+        duplicate[i].score = duplicate[i].userName.split(" ")[duplicate[i].userName.split(" ").length - 1]
+    }
+    duplicate = duplicate.sort((a, b) => a.score.localeCompare(b.score))
     let staffInfo = await User.find({
         $or: [
             {
@@ -201,7 +207,7 @@ exports.showFacultyProfiles = async (req, res, next) => {
     }).sort({userName: -1})
     try {
         res.render('./pages/facultyList', {
-            profileInfo: profileInfo,
+            profileInfo: duplicate,
             staffInfo: staffInfo
         })
     } catch (e) {
