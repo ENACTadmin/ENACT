@@ -23,5 +23,5 @@ const resourceSchema = Schema({
     review: String  // given by faculty to student resources
 });
 
-resourceSchema.index({name: "text", ownerName: "text", description: "text", tags: "text", state: "text", mediaType: "text", contentType: "text", institution: "text", yearOfCreation: "text"})
+// resourceSchema.ensureIndex({name: "text", ownerName: "text", description: "text", tags: "text", state: "text", mediaType: "text", contentType: "text", institution: "text", yearOfCreation: "text"})
 module.exports = mongoose.model('Resource', resourceSchema);

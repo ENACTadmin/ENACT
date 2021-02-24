@@ -54,8 +54,7 @@
 
 <section class='section section__grey'>
     <section class='section__content section__content--fluid-width'>
-
-        <div class='container' id="panel" style="display: none">
+        <div id="panel" style="display: none">
             <% if (loggedIn) { %>
                 <form method='post' action='/resources/search/private/advanced'>
                     <div class='row'>
@@ -449,7 +448,7 @@
         </div>
     </section>
     <section class='section__content section__content--fluid-width'>
-        <div class='container'>
+        <div>
             <h3>Resources</h3>
             <hr>
             <div class='row'>
@@ -500,7 +499,6 @@
                                             <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                 <h5 style="display: inline">Actions:</h5>
                                                 <button type="submit"
-
                                                         class='focusMe btn btn-outline-danger'
                                                         id="<%= resourceInfo[i]._id %>">
                                                     <% if (resourceIds && resourceIds.toString().includes(resourceInfo[i]._id.toString())) { %>
@@ -512,7 +510,6 @@
                                                 <% if (resourceInfo[i].ownerId.toString() !== user._id.toString()) { %>
                                                     <a href='/messages/view/<%= user._id %>/<%= resourceInfo[i].ownerId %>/<%= resourceInfo[i]._id %>'>
                                                         <input class='btn btn-outline-primary'
-
                                                                type='button' value='Contact the author'></a>
                                                 <% } %>
                                             </li>

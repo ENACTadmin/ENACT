@@ -4,81 +4,7 @@ const User = require('../models/User');
 const Tag = require('../models/Tag');
 const Resource = require('../models/Resource');
 const ResourceSet = require('../models/ResourceSet');
-const Word2Id = require('../models/Word2Id');
 const AuthorAlt = require('../models/AuthorAlternative')
-
-// let resourceInfoSet
-
-//****************************************************
-//***********Database storage related*****************
-
-async function setWord2Id(newResource) {
-    let fullContent = newResource.name + ',' + newResource.description + ',' + newResource.tags + ','
-        + newResource.state + ',' + newResource.contentType + ',' + newResource.mediaType + ','
-        + newResource.institution + ',' + newResource.yearOfCreation + ',' + newResource.ownerName
-
-    let regex = /[^\s.:,!?()\[\]]+/g;
-    let match = fullContent.match(regex);
-    for (let i = 0; i < match.length; i++) {
-        let newRegex = new RegExp(["^", match[i], "$"].join(""), "i");
-        let word2Id = await Word2Id.findOne({word: newRegex})
-        // if not null
-        if (match[i].toString() !== 'null') {
-            // new word
-            if (word2Id === null) {
-                let newWord2Id = new Word2Id({
-                    word: match[i],
-                    ids: [newResource._id]
-                })
-                await newWord2Id.save()
-            }
-            // existing word
-            else {
-                // remove duplicates
-                if (!word2Id.ids.includes(newResource._id)) {
-                    word2Id.ids = await [newResource._id].concat(word2Id.ids)
-                    await word2Id.save()
-                }
-            }
-        }
-    }
-}
-
-async function removeWord2Id(oldResource) {
-    let fullContent = oldResource.name + ',' + oldResource.description + ',' + oldResource.tags + ','
-        + oldResource.state + ',' + oldResource.contentType + ',' + oldResource.mediaType + ','
-        + oldResource.institution + ',' + oldResource.yearOfCreation + ',' + oldResource.ownerName
-
-    let regex = /[^\s.:,!?()\[\]]+/g;
-    let match = fullContent.match(regex);
-    for (let i = 0; i < match.length; i++) {
-        let newRegex = new RegExp(["^", match[i], "$"].join(""), "i");
-        let word2Id = await Word2Id.findOne({word: newRegex})
-        // if not null
-        if (match[i].toString() !== 'null') {
-            if (word2Id === null) {
-                console.log("Impossible!")
-            } else {
-                await word2Id.ids.remove(oldResource._id)
-                await word2Id.save()
-            }
-        }
-    }
-}
-
-exports.resetWord2Id = async (req, res, next) => {
-    try {
-        let resources = await Resource.find();
-        // dump all word2ids
-        await Word2Id.deleteMany();
-        for (let i = 0; i < resources.length; i++) {
-            await setWord2Id(resources[i]);
-        }
-        res.send('reset word2id success for ' + resources.length + ' resources')
-    } catch (e) {
-        next(e)
-    }
-}
 
 //****************************************************
 //*******************CRUD related*********************
@@ -153,8 +79,6 @@ exports.uploadResource = async (req, res, next) => {
         }
         // save the new resource
         await newResource.save()
-        await setWord2Id(newResource);
-
         // add additional authors
         let authorNames = req.body.authorName
         let authorEmails = req.body.authorEmail
@@ -193,7 +117,6 @@ exports.updateResource = async (req, res, next) => {
         let tagsString = req.body.selectedTags
         let tags = tagsString.split(",")
         let oldResource = await Resource.findOne({_id: resourceId})
-        await removeWord2Id(oldResource)
         oldResource.name = req.body.resourceName
         oldResource.status = req.body.status
         oldResource.description = req.body.description
@@ -208,8 +131,6 @@ exports.updateResource = async (req, res, next) => {
             oldResource.checkStatus = 'underReview'
         }
         await oldResource.save()
-        // update word2Id
-        await setWord2Id(oldResource);
         // save the new resource
         // add additional authors
         let authorNames = req.body.authorName
@@ -274,7 +195,6 @@ exports.removeResource = async (req, res, next) => {
     try {
         let resourceId = await req.params.resourceId
         let resource = await Resource.findOne({_id: resourceId})
-        await removeWord2Id(resource)
         await Resource.deleteOne({_id: resourceId})
         res.redirect('back')
     } catch (e) {
