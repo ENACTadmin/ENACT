@@ -32,16 +32,18 @@
                 <div class='col-md-6 col-sm-12'>
                     <h3>Keywords</h3>
                     <hr>
-                    <div class='input-group-prepend'>
-                        <input style="margin-right: 20px" autofill="off" autocomplete="off" id="resources" type='text' class='form-control' name='search'
+                    <div class='input-group'>
+                        <input autofill="off" autocomplete="off" id="resources" type='text' class='form-control' name='search'
                                placeholder='Search for anything'>
-                        <input id="myBtn" type='submit' name='submit' class='btn btn-dark' value='Search'>
+                        <div class='input-group-append'>
+                            <input class="btn btn-light" style="border: 1px solid lightgray" id="myBtn" type='submit' name='submit' value='&#128269;'>
+                        </div>
                     </div>
                     <br>
                     <h3>Filters</h3>
                     <hr>
                     <div class='input-group-prepend'>
-                        <span class='input-group-text' style='width: 180px'>Content Type</span>
+                        <span class='input-group-text rounded-left' style='width: 180px'>Content Type</span>
                         <select id="contentSelect" class='form-control' name='contentType'>
                             <option selected value='empty'>Choose...</option>
                             <option value='Student Advice'>Advice & Tips for Students by Students</option>
@@ -227,7 +229,7 @@
                 <div class='w-100'></div>
                 <div class='col-md-3 col-sm-12'></div>
                 <div class='col-md-6 col-sm-12'>
-                    <input type='submit' name='submit' class='btn btn-dark' value='Search'>
+                    <input type='submit' name='submit' class='btn btn-primary' value='&#128269; Search'>
                 </div>
             </div>
         </form>

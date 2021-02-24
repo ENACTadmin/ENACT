@@ -33,26 +33,24 @@
                         <div class="col">
                             <% for (let i = 0; i < courseTimes.length; i++) { %>
                                 <% if (courseTimes[i].courseId.equals(courses[j]._id) && days[p] === courseTimes[i].day) { %>
-                                    <div class='card'>
-                                        <div class='card-body'>
-                                            <h5 style='display: inline'><%= courses[j].courseName %></h5>
-                                            <br>
-                                            <h5 style='display: inline'><a
-                                                        href="<%= courses[j].institutionURL %>"><%= courses[j].institution %></a>
-                                            </h5>
-                                            <br>
-                                            <h5 style='display: inline'><a
-                                                        href="/profile/view/<%= courses[j].ownerId %>"><%= courses[j].instructor %></a>
-                                            </h5>
-                                            <br>
-                                            <h5 style='display: inline'>State:</h5> <%= courses[j].state %>
-                                            <br>
-<!--                                            do not change this!-->
-                                            <h5 hidden class="timezoneStart" style='display: inline'><%= courses[j].timezone %>,<%= courseTimes[i].startTime %></h5>
-                                            <h5 style='display: inline'>to</h5> <h5 hidden class="timezoneStart" style='display: inline'><%= courses[j].timezone %>,<%= courseTimes[i].endTime %></h5>
-                                        </div>
+                                    <div class='shadow-sm card-body'>
+                                        <h5 style='display: inline'><%= courses[j].courseName %></h5>
+                                        <br>
+                                        <h5 style='display: inline'><a
+                                                    href="<%= courses[j].institutionURL %>"><%= courses[j].institution %></a>
+                                        </h5>
+                                        <br>
+                                        <h5 style='display: inline'><a
+                                                    href="/profile/view/<%= courses[j].ownerId %>"><%= courses[j].instructor %></a>
+                                        </h5>
+                                        <br>
+                                        <h5 style='display: inline'>State:</h5> <%= courses[j].state %>
+                                        <br>
+                                        <!--                                            do not change this!-->
+                                        <h5 hidden class="timezoneStart" style='display: inline'><%= courses[j].timezone %>,<%= courseTimes[i].startTime %></h5>
+                                        <h5 style='display: inline'>to</h5> <h5 hidden class="timezoneStart" style='display: inline'><%= courses[j].timezone %>,<%= courseTimes[i].endTime %></h5>
                                     </div>
-                                    <hr>
+                                    <br>
                                 <% } %>
                             <% } %>
                         </div>

@@ -33,42 +33,42 @@
                         <hr>
                         <% if (syllabus && syllabus.length > 0) { %>
                             <% for (let i = 0; i < syllabus.length; i++) { %>
-                                <div class='card-body'>
+                                <div class='shadow-sm card-body'>
                                     <h4><%= syllabus[i].name %></h4>
                                     <div class='card-text'>
                                         <ul class='list-group'>
-                                            <li class='list-group-item borderless box-padding'>
+                                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                 <h5 style="display: inline">
                                                     Description:</h5> <%= syllabus[i].description %></li>
-                                            <li class='list-group-item borderless box-padding'>
+                                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                 <h5 style="display: inline">State:</h5> <%= syllabus[i].state %></li>
                                             <% if (syllabus[i].mediaType === 'video' && syllabus[i].uri.endsWith(".mp4")) { %>
-                                                <li class='list-group-item borderless box-padding'>
+                                                <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                     <video width="400" controls>
                                                         <source src="<%= resourceInfo[i].uri %>" type="video/mp4">
                                                     </video>
                                                 </li>
                                             <% } else { %>
-                                                <li class='list-group-item borderless box-padding'>
+                                                <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                     <h5 style="display: inline">Link:</h5> <a
                                                             href='<%= syllabus[i].uri %>'>click
                                                         me</a>
                                                 </li>
                                             <% } %>
-                                            <li class='list-group-item borderless box-padding'>
+                                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                 <h5 style="display: inline">
                                                     Institution:</h5> <%= syllabus[i].institution %>
                                             </li>
-                                            <li class='list-group-item borderless box-padding'>
+                                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                 <h5 style="display: inline">Author:</h5> <%= syllabus[i].ownerName %>
                                             </li>
                                             <% if (syllabus[i].tags[0].length > 0) { %>
-                                                <li class='list-group-item borderless box-padding'>
+                                                <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                     <h5 style="display: inline">
                                                         Topic(s)/Issue(s):</h5> <%= syllabus[i].tags %>
                                                 </li>
                                             <% } %>
-                                            <li class='list-group-item borderless box-padding'>
+                                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                 <h5 style="display: inline">Actions:</h5>
                                                 <button type="submit"
 
@@ -95,7 +95,7 @@
                                 <% } %>
                             <% } %>
                         <% } else { %>
-                            <div class='card-body text-center'>
+                            <div class='shadow-sm card-body text-center'>
                                 No resource available yet
                             </div>
                         <% } %>
@@ -114,41 +114,41 @@
                         <hr>
                         <% if (assignments && assignments.length > 0) { %>
                             <% for (let i = assignments.length - 1; i >= 0; i--) { %>
-                                <div class='card-body'>
+                                <div class='shadow-sm card-body'>
                                     <h4><%= assignments[i].name %></h4>
                                     <div class='card-text'>
                                         <ul class='list-group'>
-                                            <li class='list-group-item borderless box-padding'>
+                                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                 <h5 style="display: inline">
                                                     Description:</h5> <%= assignments[i].description %></li>
-                                            <li class='list-group-item borderless box-padding'>
+                                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                 <h5 style="display: inline">State:</h5> <%= assignments[i].state %></li>
                                             <% if (assignments[i].mediaType === 'video' && assignments[i].uri.endsWith(".mp4")) { %>
-                                                <li class='list-group-item borderless box-padding'>
+                                                <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                     <video width="400" controls>
                                                         <source src="<%= assignments[i].uri %>" type="video/mp4">
                                                     </video>
                                                 </li>
                                             <% } else { %>
-                                                <li class='list-group-item borderless box-padding'>
+                                                <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                     <h5 style="display: inline">Link:</h5> <a
                                                             href='<%= assignments[i].uri %>'>click me</a>
                                                 </li>
                                             <% } %>
-                                            <li class='list-group-item borderless box-padding'>
+                                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                 <h5 style="display: inline">
                                                     Institution:</h5> <%= assignments[i].institution %>
                                             </li>
-                                            <li class='list-group-item borderless box-padding'>
+                                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                 <h5 style="display: inline">Author:</h5> <%= assignments[i].ownerName %>
                                             </li>
                                             <% if (assignments[i].tags[0].length > 0) { %>
-                                                <li class='list-group-item borderless box-padding'>
+                                                <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                     <h5 style="display: inline">
                                                         Topic(s)/Issue(s):</h5> <%= assignments[i].tags %>
                                                 </li>
                                             <% } %>
-                                            <li class='list-group-item borderless box-padding'>
+                                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                 <h5 style="display: inline">Actions:</h5>
                                                 <button type="submit"
 
@@ -175,7 +175,7 @@
                                 <% } %>
                             <% } %>
                         <% } else { %>
-                            <div class='card-body text-center'>
+                            <div class='shadow-sm card-body text-center'>
                                 No resource available yet
                             </div>
                         <% } %>
@@ -194,41 +194,41 @@
                         <hr>
                         <% if (guides && guides.length > 0) { %>
                             <% for (let i = guides.length - 1; i >= 0; i--) { %>
-                                <div class='card-body'>
+                                <div class='shadow-sm card-body'>
                                     <h4><%= guides[i].name %></h4>
                                     <div class='card-text'>
                                         <ul class='list-group'>
-                                            <li class='list-group-item borderless box-padding'>
+                                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                 <h5 style="display: inline">
                                                     Description:</h5> <%= guides[i].description %></li>
-                                            <li class='list-group-item borderless box-padding'>
+                                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                 <h5 style="display: inline">State:</h5> <%= guides[i].state %></li>
                                             <% if (guides[i].mediaType === 'video' && guides[i].uri.endsWith(".mp4")) { %>
-                                                <li class='list-group-item borderless box-padding'>
+                                                <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                     <video width="400" controls>
                                                         <source src="<%= guides[i].uri %>" type="video/mp4">
                                                     </video>
                                                 </li>
                                             <% } else { %>
-                                                <li class='list-group-item borderless box-padding'>
+                                                <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                     <h5 style="display: inline">Link:</h5> <a
                                                             href='<%= guides[i].uri %>'>click me</a>
                                                 </li>
                                             <% } %>
-                                            <li class='list-group-item borderless box-padding'>
+                                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                 <h5 style="display: inline">
                                                     Institution:</h5> <%= guides[i].institution %>
                                             </li>
-                                            <li class='list-group-item borderless box-padding'>
+                                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                 <h5 style="display: inline">Author:</h5> <%= guides[i].ownerName %>
                                             </li>
                                             <% if (guides[i].tags[0].length > 0) { %>
-                                                <li class='list-group-item borderless box-padding'>
+                                                <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                     <h5 style="display: inline">
                                                         Topic(s)/Issue(s):</h5> <%= guides[i].tags %>
                                                 </li>
                                             <% } %>
-                                            <li class='list-group-item borderless box-padding'>
+                                            <li class='list-group-item borderless box-padding' style='font-size: large'>
                                                 <h5 style="display: inline">Actions:</h5>
                                                 <button type="submit"
 
@@ -255,7 +255,7 @@
                                 <% } %>
                             <% } %>
                         <% } else { %>
-                            <div class='card-body text-center'>
+                            <div class='shadow-sm card-body text-center'>
                                 No resource available yet
                             </div>
                         <% } %>

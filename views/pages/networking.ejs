@@ -54,7 +54,7 @@
                 <% if (profileInfo && profileInfo.length > 0) { %>
                     <% for (let i = 0; i < profileInfo.length; i++) { %>
                         <% if (profileInfo[i].status === "faculty" || profileInfo[i].status === "admin") { %>
-                            <li class="list-group-item" style="height: auto; max-height: 100%; font-size: larger; margin-bottom: 20px">
+                            <li class="list-group-item shadow-sm" style="height: auto; max-height: 100%; font-size: larger; margin-bottom: 20px">
                                 <div class="row">
                                     <div class="col-md-1 col-sm-1 align-self-center">
                                         <% if (profileInfo[i].profilePicURL) { %>
@@ -82,7 +82,7 @@
                                             <% if (profileInfo[i].personalWebsiteURL) { %>
                                                 <a href="<%= profileInfo[i].personalWebsiteURL %>"> Bio </a>
                                             <% } %>
-                                                <br>
+                                            <br>
                                             <% if (profileInfo[i].linkedInURL) { %>
                                                 <a href="<%= profileInfo[i].linkedInURL %>"> LinkedIn <span
                                                             class="fa"> &#xf08c;</span></a>

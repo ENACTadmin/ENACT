@@ -117,16 +117,25 @@ $(document).ready(function () {
             contentJSON = JSON.parse(JSON.stringify(contentJSON))
             text = text.toLowerCase();
             // you can also use AJAX requests instead of preloaded data
-            let suggestions = resourcesJSON.filter(n => (n.label !== undefined && n.label.toLowerCase().includes(text)))
+            let suggestions = resourcesJSON.filter(n => (n.label !== undefined && n.label.toLowerCase().includes(text))).slice(0, 10);
             let tagSuggestions = tagsJSON.filter(n => (n.label !== undefined && n.label.toLowerCase().includes(text)))
             let nameSuggestions = namesJSON.filter(n => (n.label !== undefined && n.label.toLowerCase().includes(text)))
             let contentSuggestions = contentJSON.filter(n => (n.label !== undefined && n.label.toLowerCase().includes(text)))
-            suggestions = suggestions.concat(tagSuggestions).concat(nameSuggestions).concat(contentSuggestions)
+            suggestions = tagSuggestions.concat(nameSuggestions).concat(contentSuggestions).concat(suggestions)
             // console.log("suggestions: ", suggestions)
             update(suggestions);
         },
         onSelect: function (item) {
             input.value = item.label;
-        }
+        },
+        render: function (item, currentValue) {
+            let div = document.createElement("div");
+            div.append("<span class=''>")
+            div.textContent = item.label;
+            div.setAttribute('class', "complete-items");
+            return div;
+        },
+        // className: "className",
+        disableAutoSelect: true
     });
 })
