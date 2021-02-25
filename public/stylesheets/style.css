@@ -2,6 +2,13 @@
 /* Customized CSS--BOOTSTRAP
 /*===============================================*/
 
+#future {
+    background: linear-gradient(to right, #d2f8d2, #ffffff);
+}
+
+#past {
+    background: linear-gradient(to right, lightyellow, #ffffff);
+}
 .list-group-item {
     border-radius: 30px !important;
 }
@@ -112,7 +119,7 @@
 }
 
 .container {
-    /*max-width: 1300px;*/
+    max-width: 1300px;
     margin-top: -30px;
     padding-top: 30px;
     padding-bottom: 40px;

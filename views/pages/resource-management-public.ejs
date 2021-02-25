@@ -57,31 +57,31 @@ for (let i = 0; i < resourceInfo.length; i++) {
                             </h4>
                             <div class='card-text'>
                                 <ul class='list-group'>
-                                    <li class='list-group-item borderless box-padding' style='font-size: large'>
+                                    <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                         <h5 style="display: inline">Description:</h5>
                                         <%= resourceInfo[i].description %>
                                     </li>
-                                    <li class='list-group-item borderless box-padding' style='font-size: large'>
+                                    <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                         <h5 style="display: inline">State:</h5>
                                         <%= resourceInfo[i].state %>
                                     </li>
-                                    <li class='list-group-item borderless box-padding' style='font-size: large'>
+                                    <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                         <h5 style="display: inline">Year:</h5>
                                         <%= resourceInfo[i].yearOfCreation %>
                                     </li>
-                                    <li class='list-group-item borderless box-padding' style='font-size: large'>
+                                    <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                         <h5 style="display: inline">Link:</h5>
                                         <a href='<%= resourceInfo[i].uri %>'>click me</a>
                                     </li>
-                                    <li class='list-group-item borderless box-padding' style='font-size: large'>
+                                    <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                         <h5 style="display: inline">Institution:</h5>
                                         <%= resourceInfo[i].institution %>
                                     </li>
-                                    <li class='list-group-item borderless box-padding' style='font-size: large'>
+                                    <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                         <h5 style="display: inline">Resource Topic(s)/Issue(s):</h5>
                                         <%= resourceInfo[i].tags %>
                                     </li>
-                                    <li class='list-group-item borderless box-padding' style='font-size: large'>
+                                    <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                         <h5 style="display: inline">Actions:</h5>
                                         <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id.toString()) { %>
                                             <button id="<%= resourceInfo[i]._id %>" type='button'
@@ -126,31 +126,31 @@ for (let i = 0; i < resourceInfo.length; i++) {
                     </h4>
                     <div class='card-text'>
                         <ul class='list-group'>
-                            <li class='list-group-item borderless box-padding' style='font-size: large'>
+                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                 <h5 style="display: inline">Description:</h5>
                                 <%= resourceInfo[i].description %>
                             </li>
-                            <li class='list-group-item borderless box-padding' style='font-size: large'>
+                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                 <h5 style="display: inline">State:</h5>
                                 <%= resourceInfo[i].state %>
                             </li>
-                            <li class='list-group-item borderless box-padding' style='font-size: large'>
+                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                 <h5 style="display: inline">Year:</h5>
                                 <%= resourceInfo[i].yearOfCreation %>
                             </li>
-                            <li class='list-group-item borderless box-padding' style='font-size: large'>
+                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                 <h5 style="display: inline">Link:</h5>
                                 <a href='<%= resourceInfo[i].uri %>'>click me</a>
                             </li>
-                            <li class='list-group-item borderless box-padding' style='font-size: large'>
+                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                 <h5 style="display: inline">Institution:</h5>
                                 <%= resourceInfo[i].institution %>
                             </li>
-                            <li class='list-group-item borderless box-padding' style='font-size: large'>
+                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                 <h5 style="display: inline">Resource Topic(s)/Issue(s):</h5>
                                 <%= resourceInfo[i].tags %>
                             </li>
-                            <li class='list-group-item borderless box-padding' style='font-size: large'>
+                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                 <h5 style="display: inline">Actions:</h5>
                                 <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id.toString()) { %>
                                     <button id="<%= resourceInfo[i]._id %>" type='button'
