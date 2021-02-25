@@ -1,7 +1,7 @@
 <%- include('../components/header'); -%>
 <%- include('../components/navbar'); -%>
 
-<section class='section section--grey'>
+<section class='section section__grey'>
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
             <div class='section__title section__title--centered'>
@@ -28,17 +28,17 @@
                         <h4><%= resourceInfo.name %></h4>
                         <div class='card-text'>
                             <ul class='list-group'>
-                                <li class='list-group-item borderless box-padding' style='font-size: large'>
+                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                     <h5 style="display: inline">Description:</h5> <%= resourceInfo.description %></li>
-                                <li class='list-group-item borderless box-padding' style='font-size: large'>
+                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                     <h5 style="display: inline">State:</h5> <%= resourceInfo.state %></li>
-                                <li class='list-group-item borderless box-padding' style='font-size: large'>
+                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                     <h5 style="display: inline">Link:</h5> <a href='<%= resourceInfo.uri %>'>click
                                         me</a>
                                 </li>
-                                <li class='list-group-item borderless box-padding' style='font-size: large'>
+                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                     <h5 style="display: inline">Institution:</h5> <%= resourceInfo.institution %></li>
-                                <li class='list-group-item borderless box-padding' style='font-size: large'>
+                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                     <h5 style="display: inline">Topic(s)/Issue(s):</h5> <%= resourceInfo.tags %>
                                 </li>
                             </ul>

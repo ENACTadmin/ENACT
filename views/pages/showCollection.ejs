@@ -40,27 +40,27 @@
                 </h4>
                 <div class='card-text'>
                     <ul class='list-group'>
-                        <li class='list-group-item borderless box-padding' style='font-size: large'>
+                        <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                             <h5 style="display: inline">Description:</h5>
                             <%= resourceInfo[i].description %>
                         </li>
-                        <li class='list-group-item borderless box-padding' style='font-size: large'>
+                        <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                             <h5 style="display: inline">State:</h5>
                             <%= resourceInfo[i].state %>
                         </li>
-                        <li class='list-group-item borderless box-padding' style='font-size: large'>
+                        <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                             <h5 style="display: inline">Link:</h5>
                             <a href='<%= resourceInfo[i].uri %>'>click me</a>
                         </li>
-                        <li class='list-group-item borderless box-padding' style='font-size: large'>
+                        <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                             <h5 style="display: inline">Institution:</h5>
                             <%= resourceInfo[i].institution %>
                         </li>
-                        <li class='list-group-item borderless box-padding' style='font-size: large'>
+                        <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                             <h5 style="display: inline">Resource Topic(s)/Issue(s):</h5>
                             <%= resourceInfo[i].tags %>
                         </li>
-                        <li class='list-group-item borderless box-padding' style='font-size: large'>
+                        <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                             <h5 style="display: inline">Actions:</h5>
                             <% if (loggedIn) { %>
                                 <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id.toString()) { %>
@@ -100,27 +100,27 @@
                         </h4>
                         <div class='card-text'>
                             <ul class='list-group'>
-                                <li class='list-group-item borderless box-padding' style='font-size: large'>
+                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                     <h5 style="display: inline">Description:</h5>
                                     <%= allLikedResourceInfo[i].description %>
                                 </li>
-                                <li class='list-group-item borderless box-padding' style='font-size: large'>
+                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                     <h5 style="display: inline">State:</h5>
                                     <%= allLikedResourceInfo[i].state %>
                                 </li>
-                                <li class='list-group-item borderless box-padding' style='font-size: large'>
+                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                     <h5 style="display: inline">Link:</h5>
                                     <a href='<%= allLikedResourceInfo[i].uri %>'>click me</a>
                                 </li>
-                                <li class='list-group-item borderless box-padding' style='font-size: large'>
+                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                     <h5 style="display: inline">Institution:</h5>
                                     <%= allLikedResourceInfo[i].institution %>
                                 </li>
-                                <li class='list-group-item borderless box-padding' style='font-size: large'>
+                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                     <h5 style="display: inline">Resource Topic(s)/Issue(s):</h5>
                                     <%= allLikedResourceInfo[i].tags %>
                                 </li>
-                                <li class='list-group-item borderless box-padding' style='display: inline'>
+                                <li class='list-group-item borderless box-padding bg-transparent' style='display: inline'>
                                     <h5 style="display: inline">Actions:</h5>
                                     <form style='display: inline' method='post'
                                           action='/collection/<%= resourceSet._id %>/add/<%= allLikedResourceInfo[i]._id %>'>

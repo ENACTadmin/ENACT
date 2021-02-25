@@ -32,13 +32,14 @@
                                     <h3 style="margin-bottom: 10px"><%= futureEventsInfo[i].title %></h3>
                                     <div class='card-text'>
                                         <ul class='list-group'>
-                                            <li class='list-group-item borderless box-padding' style="font-size: large">
+                                            <li class='list-group-item borderless box-padding bg-transparent' style="font-size: large">
                                                 <div class="row">
-                                                    <div class="col-10" style="display: inline">
+                                                    <div class="col-md-9 col-sm-12" style="display: inline">
                                                         <h5 style="display: inline; font-weight: 650">Description:</h5>
                                                         <%= futureEventsInfo[i].description %>
                                                     </div>
-                                                    <div class="col-2"><img
+                                                    <div class="col-md-3 col-sm-12 align-self-center"><img
+                                                                class="rounded-lg"
                                                         <% if (!futureEventsInfo[i].imageURL) { %>
                                                             src="https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg"
                                                         <% } else { %>
@@ -48,19 +49,19 @@
                                                 </div>
                                             </li>
                                             <% if (futureEventsInfo[i].start !== null && futureEventsInfo[i].end !== null) { %>
-                                                <li class='list-group-item borderless box-padding'
+                                                <li class='list-group-item borderless box-padding bg-transparent'
                                                     style="font-size: large">
                                                     <h5 style="display: inline; font-weight: 650">Date: </h5>
                                                     <p style="display: inline"
                                                        class="TZChange"><%= futureEventsInfo[i].start %></p>
                                                 </li>
-                                                <li class='list-group-item borderless box-padding'
+                                                <li class='list-group-item borderless box-padding bg-transparent'
                                                     style="font-size: large">
                                                     <h5 style="display: inline; font-weight: 650">Start time: </h5>
                                                     <p style="display: inline;"
                                                        class="TZChange1"><%= futureEventsInfo[i].start %></p>
                                                 </li>
-                                                <li class='list-group-item borderless box-padding'
+                                                <li class='list-group-item borderless box-padding bg-transparent'
                                                     style="font-size: large">
                                                     <h5 style="display: inline; font-weight: 650">End time: </h5>
                                                     <p style="display: inline;"
@@ -68,7 +69,7 @@
                                                 </li>
                                             <% } %>
                                             <% if (futureEventsInfo[i].uri !== null) { %>
-                                                <li class='list-group-item borderless box-padding'
+                                                <li class='list-group-item borderless box-padding bg-transparent'
                                                     style="font-size: large">
                                                     <h5 style="display: inline; font-weight: 650">Link:</h5>
                                                     <a href="<%= futureEventsInfo[i].uri %>">click me</a>
@@ -107,13 +108,14 @@
                                     <h3 style="margin-bottom: 10px"><%= pastEventsInfo[i].title %></h3>
                                     <div class='card-text'>
                                         <ul class='list-group'>
-                                            <li class='list-group-item borderless box-padding' style="font-size: large">
+                                            <li class='list-group-item borderless box-padding bg-transparent' style="font-size: large">
                                                 <div class="row">
-                                                    <div class="col-10" style="display: inline">
+                                                    <div class="col-md-9 col-sm-12" style="display: inline">
                                                         <h5 style="display: inline; font-weight: 650">Description:</h5>
                                                         <%= pastEventsInfo[i].description %>
                                                     </div>
-                                                    <div class="col-2"><img
+                                                    <div class="col-md-3 col-sm-12 align-self-center"><img
+                                                                class="rounded-lg"
                                                         <% if (!pastEventsInfo[i].imageURL) { %>
                                                             src="https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg"
                                                         <% } else { %>
@@ -123,19 +125,19 @@
                                                 </div>
                                             </li>
                                             <% if (pastEventsInfo[i].start !== null && pastEventsInfo[i].end !== null) { %>
-                                                <li class='list-group-item borderless box-padding'
+                                                <li class='list-group-item borderless box-padding bg-transparent'
                                                     style="font-size: large">
                                                     <h5 style="display: inline; font-weight: 650">Date: </h5>
                                                     <p style="display: inline"
                                                        class="TZChange"><%= pastEventsInfo[i].start %></p>
                                                 </li>
-                                                <li class='list-group-item borderless box-padding'
+                                                <li class='list-group-item borderless box-padding bg-transparent'
                                                     style="font-size: large">
                                                     <h5 style="display: inline; font-weight: 650">Start time: </h5>
                                                     <p style="display: inline;"
                                                        class="TZChange1"><%= pastEventsInfo[i].start %></p>
                                                 </li>
-                                                <li class='list-group-item borderless box-padding'
+                                                <li class='list-group-item borderless box-padding bg-transparent'
                                                     style="font-size: large">
                                                     <h5 style="display: inline; font-weight: 650">End time: </h5>
                                                     <p style="display: inline;"
@@ -143,7 +145,7 @@
                                                 </li>
                                             <% } %>
                                             <% if (pastEventsInfo[i].uri !== null) { %>
-                                                <li class='list-group-item borderless box-padding'
+                                                <li class='list-group-item borderless box-padding bg-transparent'
                                                     style="font-size: large">
                                                     <h5 style="display: inline; font-weight: 650">Link:</h5>
                                                     <a href="<%= pastEventsInfo[i].uri %>">click me</a>

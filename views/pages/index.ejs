@@ -193,29 +193,29 @@
                 <h3><%= resourceInfo[i].name %></h3>
                 <div class='card-text'>
                     <ul class='list-group'>
-                        <li class='list-group-item borderless box-padding' style='font-size: large'>
+                        <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                             <h5 style="display: inline">Description:</h5>
                             <%= resourceInfo[i].description %>
                         </li>
-                        <li class='list-group-item borderless box-padding' style='font-size: large'>
+                        <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                             <h5 style="display: inline">State:</h5>
                             <%= resourceInfo[i].state %>
                         </li>
-                        <li class='list-group-item borderless box-padding' style='font-size: large'>
+                        <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                             <h5 style="display: inline">Link:</h5>
                             <a href='<%= resourceInfo[i].uri %>'>click me</a>
                         </li>
-                        <li class='list-group-item borderless box-padding' style='font-size: large'>
+                        <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                             <h5 style="display: inline">Institution:</h5>
                             <%= resourceInfo[i].institution %>
                         </li>
                         <% if (resourceInfo[i].ownerName) { %>
-                            <li class='list-group-item borderless box-padding' style='font-size: large'>
+                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                 <h5 style="display: inline">Author:</h5>
                                 <%= resourceInfo[i].ownerName %>
                             </li>
                         <% } %>
-                        <li class='list-group-item borderless box-padding' style='font-size: large'>
+                        <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                             <h5 style="display: inline">Topic(s)/Issue(s):</h5>
                             <%= resourceInfo[i].tags %>
                         </li>
@@ -259,13 +259,13 @@
                             <h3><%= eventsInfo[i].title %></h3>
                             <div class='card-text'>
                                 <ul class='list-group'>
-                                    <li class='list-group-item borderless box-padding' style="font-size: large">
+                                    <li class='list-group-item borderless box-padding bg-transparent' style="font-size: large">
                                         <div class="row">
-                                            <div class="col-md-10 col-sm-12" style="display: inline">
+                                            <div class="col-md-9 col-sm-12" style="display: inline">
                                                 <h5 style="display: inline; font-weight: 650">Description:</h5>
                                                 <%= eventsInfo[i].description %>
                                             </div>
-                                            <div class="col-md-2 col-sm-12"><img
+                                            <div class="col-md-3 col-sm-12 align-self-center"><img
                                                 <% if (!eventsInfo[i].imageURL) { %>
                                                     src="https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg"
                                                 <% } else { %>
@@ -275,24 +275,24 @@
                                         </div>
                                     </li>
                                     <% if (eventsInfo[i].start !== null && eventsInfo[i].end !== null) { %>
-                                        <li class='list-group-item borderless box-padding' style="font-size: large">
+                                        <li class='list-group-item borderless box-padding bg-transparent' style="font-size: large">
                                             <h5 style="display: inline; font-weight: 650">Date: </h5>
                                             <p style="display: inline"
                                                class="TZChange"><%= eventsInfo[i].start %></p>
                                         </li>
-                                        <li class='list-group-item borderless box-padding' style="font-size: large">
+                                        <li class='list-group-item borderless box-padding bg-transparent' style="font-size: large">
                                             <h5 style="display: inline; font-weight: 650">Start time: </h5>
                                             <p style="display: inline;"
                                                class="TZChange1"><%= eventsInfo[i].start %></p>
                                         </li>
-                                        <li class='list-group-item borderless box-padding' style="font-size: large">
+                                        <li class='list-group-item borderless box-padding bg-transparent' style="font-size: large">
                                             <h5 style="display: inline; font-weight: 650">End time: </h5>
                                             <p style="display: inline;"
                                                class="TZChange1"><%= eventsInfo[i].end %></p>
                                         </li>
                                     <% } %>
                                     <% if (eventsInfo[i].uri !== null) { %>
-                                        <li class='list-group-item borderless box-padding' style="font-size: large">
+                                        <li class='list-group-item borderless box-padding bg-transparent' style="font-size: large">
                                             <h5 style="display: inline; font-weight: 650">Link:</h5> <a
                                                     href="<%= eventsInfo[i].uri %>">click me</a>
                                         </li>
