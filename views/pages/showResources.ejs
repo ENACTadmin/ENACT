@@ -54,7 +54,7 @@
 
 <section class='section section__grey'>
     <section class='section__content section__content--fluid-width'>
-        <div id="panel" style="display: none">
+        <div class="container" id="panel" style="display: none">
             <% if (loggedIn) { %>
                 <form method='post' action='/resources/search/private/advanced'>
                     <div class='row'>
@@ -448,7 +448,7 @@
         </div>
     </section>
     <section class='section__content section__content--fluid-width'>
-        <div>
+        <div class="container">
             <h3>Resources</h3>
             <hr>
             <div class='row'>
@@ -472,7 +472,7 @@
                                             </li>
                                             <% if (resourceInfo[i].mediaType === 'video') { %>
                                                 <li class='list-group-item borderless box-padding' style='font-size: large'>
-                                                    <video width="400" controls>
+                                                    <video style="width: 100%; max-width: 400px" controls>
                                                         <source src="<%= resourceInfo[i].uri %>" type="video/mp4">
                                                     </video>
                                                 </li>

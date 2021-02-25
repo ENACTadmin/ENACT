@@ -27,7 +27,7 @@ $(document).ready(function () {
                             '            </div>'
                         if (data[i].mediaType === 'video') {
                             htmlToAppend += '            <li class=\'list-group-item borderless box-padding\'>\n' +
-                                '                            <video width="400" controls>\n' +
+                                '                            <video style="width: 100%; max-width: 400px" controls>\n' +
                                 '                                <source src=' + data[i].uri + 'type="video/mp4">\n' +
                                 '                            </video>\n' +
                                 '                        </li>'

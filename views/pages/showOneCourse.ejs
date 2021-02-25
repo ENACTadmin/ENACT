@@ -35,12 +35,12 @@
                 <% if (loggedIn) { %>
                     <!--left information bar-->
                     <div class='col-md-3' data-aos='fade-right'>
-                        <div class='card border-0'>
+                        <div class='card border-0 rounded-circle'>
                             <div class='card-header'>
                                 <b>General Information</b>
                             </div>
                             <!--content-->
-                            <div class='shadow-sm card-body'>
+                            <div class='shadow-sm card-body' style="border-top-left-radius: 0 !important; border-top-right-radius: 0 !important;">
                                 <div class='card-text'>
                                     <ul class='list-group'>
                                         <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
@@ -56,11 +56,11 @@
                             </div>
                         </div>
                         <br>
-                        <div class='card border-0' data-aos='fade-right' data-aos-delay='100'>
+                        <div class='card border-0 rounded-circle' data-aos='fade-right' data-aos-delay='100'>
                             <div class='card-header'>
                                 <b>Tools</b>
                             </div>
-                            <div class='shadow-sm card-body'>
+                            <div class='shadow-sm card-body' style="border-top-left-radius: 0 !important; border-top-right-radius: 0 !important;">
                                 <div class='card-text'>
                                     <ul class='list-group'>
                                         <% if (status === 'faculty' || status === 'admin') { %>
