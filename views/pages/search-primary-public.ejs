@@ -56,7 +56,7 @@
                                             <h5 style="display: inline">State:</h5> <%= resourceInfo[i].state %></li>
                                         <% if (resourceInfo[i].mediaType === 'video') { %>
                                             <li class='list-group-item borderless box-padding' style='font-size: large'>
-                                                <video width="400" controls>
+                                                <video style="width: 100%; max-width: 400px" controls>
                                                     <source src="<%= resourceInfo[i].uri %>" type="video/mp4">
                                                 </video>
                                             </li>

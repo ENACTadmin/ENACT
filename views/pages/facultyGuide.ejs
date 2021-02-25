@@ -44,7 +44,7 @@
                                                 <h5 style="display: inline">State:</h5> <%= syllabus[i].state %></li>
                                             <% if (syllabus[i].mediaType === 'video' && syllabus[i].uri.endsWith(".mp4")) { %>
                                                 <li class='list-group-item borderless box-padding' style='font-size: large'>
-                                                    <video width="400" controls>
+                                                    <video style="width: 100%; max-width: 400px" controls>
                                                         <source src="<%= resourceInfo[i].uri %>" type="video/mp4">
                                                     </video>
                                                 </li>
@@ -125,7 +125,7 @@
                                                 <h5 style="display: inline">State:</h5> <%= assignments[i].state %></li>
                                             <% if (assignments[i].mediaType === 'video' && assignments[i].uri.endsWith(".mp4")) { %>
                                                 <li class='list-group-item borderless box-padding' style='font-size: large'>
-                                                    <video width="400" controls>
+                                                    <video style="width: 100%; max-width: 400px" controls>
                                                         <source src="<%= assignments[i].uri %>" type="video/mp4">
                                                     </video>
                                                 </li>
@@ -205,7 +205,7 @@
                                                 <h5 style="display: inline">State:</h5> <%= guides[i].state %></li>
                                             <% if (guides[i].mediaType === 'video' && guides[i].uri.endsWith(".mp4")) { %>
                                                 <li class='list-group-item borderless box-padding' style='font-size: large'>
-                                                    <video width="400" controls>
+                                                    <video style="width: 100%; max-width: 400px" controls>
                                                         <source src="<%= guides[i].uri %>" type="video/mp4">
                                                     </video>
                                                 </li>
