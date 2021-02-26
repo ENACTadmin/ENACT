@@ -83,10 +83,10 @@
                                                                        class='form-demo__large fa'
                                                                        style="font-size: x-large; font-weight: 680"
                                                                        value='Search Resources &#xf002'></a>
-                        <a href='#place1'><input type='submit' name='submit'
-                                                 class='form-demo__large fa'
-                                                 style="font-size: x-large; font-weight: 680"
-                                                 value='Get Started &#8595;'></a>
+                        <a id="scrollToPlace1"><input type='submit' name='submit'
+                                                      class='form-demo__large fa'
+                                                      style="font-size: x-large; font-weight: 680"
+                                                      value='Get Started &#8595;'></a>
                     <% } %>
                 </div>
             </div>
@@ -378,6 +378,9 @@
                     hours = '0' + hours.toString()
                 $(this).text(hours + ':' + minutes)
             })
+            $("#scrollToPlace1").click(function () {
+                $('html,body').animate({scrollTop: ($("#place1").offset().top - 38)}, 'slow');
+            });
         }
     )
 </script>
