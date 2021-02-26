@@ -390,8 +390,16 @@ exports.loadSpecificContentType = async (req, res, next) => {
 
         if (contentType === 'Assignment Guidelines')
             contentType = 'Assignment Guidelines & Rubrics'
-        res.render('./pages/showResources', {
-            secretType: contentType
+        res.render('./pages/resources-searchResult-private', {
+            secretType: contentType,
+            search_text: null,
+            search_tags: null,
+            search_state: null,
+            search_contentType: contentType,
+            search_institution: null,
+            search_mediaType: null,
+            search_yearOfCreation: null,
+            search_status: null
         })
 
     } catch (e) {
@@ -768,7 +776,7 @@ exports.primarySearch = async (req, res, next) => {
         res.locals.resourceIds = starredResourceIds
         res.locals.resourceInfo = uniqueResourceInfo
         // resourceInfoSet = uniqueResourceInfo
-        res.render('./pages/showResources', {
+        res.render('./pages/resources-searchResult-private', {
             secretType: 'Search Result',
             search_text: req.body.search,
             search_tags: null,
@@ -993,7 +1001,7 @@ exports.advancedSearch = async (req, res) => {
 
     res.locals.resourceIds = starredResourceIds
 
-    res.render('./pages/showResources', {
+    res.render('./pages/resources-searchResult-private', {
         resourceInfo: filteredResource,
         resourceIds: starredResourceIds,
         secretType: 'Search Result',
@@ -1060,7 +1068,7 @@ exports.advancedSearchPublic = async (req, res, next) => {
 
     res.locals.resourceInfo = filteredResource
 
-    res.render('./pages/showPublicResources', {
+    res.render('./pages/resources-searchResult-public', {
         search_text: req.body.search,
         search_tags: req.body.tags,
         search_state: local_state,

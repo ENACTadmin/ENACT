@@ -14,6 +14,7 @@
             <h3>There are <b><i><%= courses.length - 1 %></i></b> courses in session</h3>
             <h4>Current Timezone: <b><i id="fillMe"></i></b> (times have been adjusted according to timezone)
             </h4>
+            <button class="btn btn-primary" id="scrollMe">See ongoing courses</button>
         </div>
     </div>
 </section>
@@ -23,12 +24,12 @@
         <div class='container'>
             <div class='row'>
                 <div class='col-md-12 col-sm-12'>
-                    <h3>Upcoming events</h3>
-                    <hr>
+                    <h3 style="color: forestgreen">Upcoming events</h3>
+                    <hr style="box-shadow: 0 10px 10px -10px forestgreen inset; !important;">
                     <% if (futureEventsInfo && futureEventsInfo.length !== 0) { %>
                         <% for (let i = 0; i < futureEventsInfo.length; i++) { %>
                             <div class='card border-0' style="border-radius: 30px">
-                                <div class='shadow-sm card-body'>
+                                <div class='shadow-sm card-body' id="future">
                                     <h3 style="margin-bottom: 10px"><%= futureEventsInfo[i].title %></h3>
                                     <div class='card-text'>
                                         <ul class='list-group'>
@@ -41,11 +42,11 @@
                                                     <div class="col-md-3 col-sm-12 align-self-center"><img
                                                                 class="rounded-lg"
                                                         <% if (!futureEventsInfo[i].imageURL) { %>
-                                                            src="https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg"
+                                                                src="https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg"
                                                         <% } else { %>
-                                                            src="<%= futureEventsInfo[i].imageURL %>"
+                                                                src="<%= futureEventsInfo[i].imageURL %>"
                                                                 <% } %>
-                                                            style="height: auto; max-width: 100%"></div>
+                                                                style="height: auto; max-width: 100%"></div>
                                                 </div>
                                             </li>
                                             <% if (futureEventsInfo[i].start !== null && futureEventsInfo[i].end !== null) { %>
@@ -99,12 +100,12 @@
         <div class='container'>
             <div class='row'>
                 <div class='col-md-12 col-sm-12'>
-                    <h3>Past events</h3>
-                    <hr>
+                    <h3 style="color: orangered">Past events</h3>
+                    <hr style="box-shadow: 0 10px 10px -10px orangered inset; !important;">
                     <% if (pastEventsInfo && pastEventsInfo.length !== 0) { %>
                         <% for (let i = 0; i < pastEventsInfo.length; i++) { %>
                             <div class='card border-0' style="border-radius: 30px">
-                                <div class='shadow-sm card-body'>
+                                <div class='shadow-sm card-body' id="past">
                                     <h3 style="margin-bottom: 10px"><%= pastEventsInfo[i].title %></h3>
                                     <div class='card-text'>
                                         <ul class='list-group'>
@@ -117,11 +118,11 @@
                                                     <div class="col-md-3 col-sm-12 align-self-center"><img
                                                                 class="rounded-lg"
                                                         <% if (!pastEventsInfo[i].imageURL) { %>
-                                                            src="https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg"
+                                                                src="https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg"
                                                         <% } else { %>
-                                                            src="<%= pastEventsInfo[i].imageURL %>"
+                                                                src="<%= pastEventsInfo[i].imageURL %>"
                                                                 <% } %>
-                                                            style="height: auto; max-width: 100%"></div>
+                                                                style="height: auto; max-width: 100%"></div>
                                                 </div>
                                             </li>
                                             <% if (pastEventsInfo[i].start !== null && pastEventsInfo[i].end !== null) { %>
@@ -172,7 +173,7 @@
     </section>
 </section>
 
-<section class='section'>
+<section class='section' id="ongoing_courses">
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
             <div class='section__title section__title--centered'>
@@ -309,34 +310,28 @@
             $(this).text((parseInt(time.split(':')[0]) + (n - offset) + 24) % 24 + ':' + time.split(':')[1])
             $(this).removeAttr('hidden')
         })
+        $(".TZChange").each(function () {
+            let oldDate = $(this).text()
+            let newDate = new Date(oldDate)
+            $(this).text(newDate.toLocaleDateString())
+        })
+        $(".TZChange1").each(function () {
+            let today = new Date()
+            let oldDate = $(this).text()
+            let newDate = new Date(oldDate + today.getTimezoneOffset())
+            let minutes = newDate.getMinutes()
+            let hours = newDate.getHours()
+            if (minutes.toString().length === 1)
+                minutes = '0' + minutes.toString()
+            if (hours.toString().length === 1)
+                hours = '0' + hours.toString()
+            $(this).text(hours + ':' + minutes)
+        })
+        $("#scrollMe").click(function () {
+            $('html,body').animate({scrollTop: $("#ongoing_courses").offset().top}, 'slow');
+        });
     });
 </script>
 
-<script>
-    $(document).ready(function () {
-            $(".TZChange").each(function () {
-                let oldDate = $(this).text()
-                let newDate = new Date(oldDate)
-                $(this).text(newDate.toLocaleDateString())
-            })
-            $(".TZChange1").each(function () {
-                let today = new Date()
-                let oldDate = $(this).text()
-                let newDate = new Date(oldDate + today.getTimezoneOffset())
-                let minutes = newDate.getMinutes()
-                let hours = newDate.getHours()
-                if (minutes.toString().length === 1)
-                    minutes = '0' + minutes.toString()
-                if (hours.toString().length === 1)
-                    hours = '0' + hours.toString()
-                $(this).text(hours + ':' + minutes)
-            })
-        }
-    )
-
-    function showAddModal() {
-        $("#modal-view-event-add").modal()
-    }
-</script>
 
 <%- include('../components/footer'); -%>
