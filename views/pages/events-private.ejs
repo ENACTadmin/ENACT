@@ -91,22 +91,31 @@
                                                         style="display: inline">
                                                         <h5 style="display: inline; font-weight: 650">Actions:</h5>
                                                         <button type='button'
-                                                                class='btn btn-sm btn-outline-info'
+                                                                class='btn btn-sm btn-outline-primary'
 
                                                                 data-toggle='modal'
                                                                 data-target='#editModal<%= futureEventsInfo[i]._id %>'>
                                                             Edit
                                                         </button>
-                                                        <a class="btn btn-outline-info"
+
+                                                        <a class="btn btn-outline-primary"
                                                            href="/event/image/update/<%= futureEventsInfo[i]._id %>">Update event image</a>
+
+                                                        <a type="button"
+                                                           href="/event/send/<%= futureEventsInfo[i]._id %>"
+                                                           class="btn btn-primary">
+                                                            Send Reminders
+                                                        </a>
+
                                                         <button type='button'
-                                                                class='btn btn-sm btn-outline-warning'
+                                                                class="btn btn-danger"
 
                                                                 data-toggle='modal'
                                                                 data-target='#deleteModal<%= futureEventsInfo[i]._id %>'>
                                                             Delete
                                                         </button>
                                                     </li>
+
                                                 <% } %>
                                             </ul>
                                         </div>
@@ -199,15 +208,15 @@
                                                         style="display: inline">
                                                         <h5 style="display: inline; font-weight: 650">Actions:</h5>
                                                         <button type='button'
-                                                                class='btn btn-sm btn-outline-info'
+                                                                class="btn btn-outline-primary"
                                                                 data-toggle='modal'
                                                                 data-target='#editModal<%= pastEventsInfo[i]._id %>'>
                                                             Edit
                                                         </button>
-                                                        <a class="btn btn-outline-info"
+                                                        <a class="btn btn-outline-primary"
                                                            href="/event/image/update/<%= pastEventsInfo[i]._id %>">Update event image</a>
                                                         <button type='button'
-                                                                class='btn btn-sm btn-outline-warning'
+                                                                class="btn btn-danger"
                                                                 data-toggle='modal'
                                                                 data-target='#deleteModal<%= pastEventsInfo[i]._id %>'>
                                                             Delete
