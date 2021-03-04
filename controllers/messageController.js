@@ -4,7 +4,7 @@ const User = require('../models/User');
 const Message = require('../models/Message');
 const Tag = require('../models/Tag');
 const AuthorAlt = require('../models/AuthorAlternative');
-
+const Event = require('../models/Event')
 
 exports.loadMessagingPage = async (req, res, next) => {
     try {
@@ -214,4 +214,40 @@ exports.loadMessageBoard = async (req, res, next) => {
     } catch (e) {
         next(e)
     }
+}
+
+exports.sendEventEmail = async (req, res) => {
+    let eventId = req.params.id
+    console.log("id: ", eventId)
+    let currEvent = await Event.findOne({_id: eventId})
+    let eventName = currEvent.title
+    let eventTime = currEvent.start
+    let eventDescription = currEvent.description
+    let email = "luyaopei@brandeis.edu"&&"lulululupei@gmail.com"
+    let url = 'https://www.enactnetwork.org/events'
+    let faculties = await User.find({status: {$in: ["faculty", "admin"]}})
+    for (let faculty in faculties) {
+        let email = faculties[faculty].workEmail || faculties[faculty].googleemail
+        if (email) {
+            let url = 'https://www.enactnetwork.org/events'
+            const sgMail = require('@sendgrid/mail');
+            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+            const msg = {
+                to: email,
+                from: 'enact@brandeis.edu',
+                subject: 'ENACT Digital Platform: Event Reminder.',
+                text: 'ENACT Digital Platform: Event Reminder',
+                html: 'Hi ENACTers,'+ '<br>' +
+                    '<br>'+'You may want to know about a new event: '+'<br>'+
+                    '<b>'+eventName+'</b>'+
+                    '<br><br>' +'Here is the event Description:'+
+                    '<br><br>' +eventDescription+
+                    '<br><br>'+'Event will start at ' + '<b>' + eventTime.toLocaleString() + '</b>'+
+                    '<br><br>' + ' Click <a href=' + url + '>' + 'here' + '</a>' + ' to check out details.' +
+                    '<br><br>' + 'ENACT Support Team'
+            };
+            await sgMail.send(msg);
+        }
+    }
+    res.send()
 }

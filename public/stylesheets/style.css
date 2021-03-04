@@ -3,11 +3,11 @@
 /*===============================================*/
 
 #future {
-    background: linear-gradient(to right, #d2f8d2, #ffffff);
+    background: linear-gradient(to left, #BADAF1, #ffffff);
 }
 
 #past {
-    background: linear-gradient(to right, lightyellow, #ffffff);
+    background: linear-gradient(to left, #DFDFDF, #ffffff);
 }
 .list-group-item {
     border-radius: 30px !important;
