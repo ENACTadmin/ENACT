@@ -582,9 +582,14 @@ app.get('/networking',
         let profileInfo = await User.find({networkCheck: 'on'}).collation({locale: 'en'})
         let duplicate = JSON.parse(JSON.stringify(profileInfo))
         for (let i = 0; i < duplicate.length; i++) {
-            duplicate[i].score = duplicate[i].userName.split(" ")[duplicate[i].userName.split(" ").length - 1]
+            if (duplicate[i].userName) {
+                duplicate[i].score = duplicate[i].userName.split(" ")[duplicate[i].userName.split(" ").length - 1]
+            } else {
+                duplicate[i].score = 'zzzzzzz'
+            }
         }
         duplicate = duplicate.sort((a, b) => a.score.localeCompare(b.score))
+        console.log(duplicate)
         res.render('./pages/networking', {
             profileInfo: duplicate,
             state: 'U.S.'
@@ -596,7 +601,11 @@ app.get('/networking/:state',
         let profileInfo = await User.find({state: req.params.state, networkCheck: 'on'}).collation({locale: 'en'})
         let duplicate = JSON.parse(JSON.stringify(profileInfo))
         for (let i = 0; i < duplicate.length; i++) {
-            duplicate[i].score = duplicate[i].userName.split(" ")[duplicate[i].userName.split(" ").length - 1]
+            if (duplicate[i].userName) {
+                duplicate[i].score = duplicate[i].userName.split(" ")[duplicate[i].userName.split(" ").length - 1]
+            } else {
+                duplicate[i].score = 'zzzzzzz'
+            }
         }
         duplicate = duplicate.sort((a, b) => a.score.localeCompare(b.score))
         res.render('./pages/networking', {
