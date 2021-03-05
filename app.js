@@ -579,27 +579,28 @@ app.get('/profile/send/:id',
 
 app.get('/networking',
     async (req, res) => {
-        let profileInfo = await User.find({networkCheck: 'on'})
+        let profileInfo = await User.find({networkCheck: 'on'}).collation({locale: 'en'})
+        let duplicate = JSON.parse(JSON.stringify(profileInfo))
+        for (let i = 0; i < duplicate.length; i++) {
+            duplicate[i].score = duplicate[i].userName.split(" ")[duplicate[i].userName.split(" ").length - 1]
+        }
+        duplicate = duplicate.sort((a, b) => a.score.localeCompare(b.score))
         res.render('./pages/networking', {
-            profileInfo: profileInfo,
-            state: 'U.S.'
-        })
-    })
-
-app.get('/networking',
-    async (req, res) => {
-        let profileInfo = await User.find({networkCheck: 'on'})
-        res.render('./pages/networking', {
-            profileInfo: profileInfo,
+            profileInfo: duplicate,
             state: 'U.S.'
         })
     })
 
 app.get('/networking/:state',
     async (req, res) => {
-        let profileInfo = await User.find({state: req.params.state, networkCheck: 'on'})
+        let profileInfo = await User.find({state: req.params.state, networkCheck: 'on'}).collation({locale: 'en'})
+        let duplicate = JSON.parse(JSON.stringify(profileInfo))
+        for (let i = 0; i < duplicate.length; i++) {
+            duplicate[i].score = duplicate[i].userName.split(" ")[duplicate[i].userName.split(" ").length - 1]
+        }
+        duplicate = duplicate.sort((a, b) => a.score.localeCompare(b.score))
         res.render('./pages/networking', {
-            profileInfo: profileInfo,
+            profileInfo: duplicate,
             state: req.params.state
         })
     }
