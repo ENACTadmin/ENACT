@@ -1,6 +1,5 @@
 <%- include('../components/header'); -%>
 <%- include('../components/navbar'); -%>
-<%- include('../components/component-eventImport') -%>
 
 <% let id_set = []; %>
 
@@ -10,8 +9,8 @@
             <div class='section__title section__title--centered'>
                 Latest Events
             </div>
-            <h3>There are <b><i><%= futureEventsInfo.length %></i></b> upcoming events</h3>
-            <h3>There are <b><i><%= courses.length - 1 %></i></b> courses in session</h3>
+            <h3># upcoming event(s): <b><i><%= futureEventsInfo.length %></i></b></h3>
+            <h3># course(s) in session: <b><i><%= courses.length - 1 %></i></b></h3>
             <h4>Current Timezone: <b><i id="fillMe"></i></b> (times have been adjusted according to timezone)
             </h4>
             <button class="btn btn-primary" id="scrollMe">See current courses</button>
