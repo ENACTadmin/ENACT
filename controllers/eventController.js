@@ -2,6 +2,7 @@
 const Event = require('../models/Event');
 const Faculty = require('../models/Faculty');
 const User = require('../models/User');
+const sgMail = require('@sendgrid/mail');
 
 exports.saveEvent = async (req, res, next) => {
     try {
@@ -18,23 +19,27 @@ exports.saveEvent = async (req, res, next) => {
             description: req.body.description,
             visibility: req.body.visibility
         })
-        let faculties = await User.find({status: {$in: ["faculty", "admin"]}})
-        for (let faculty in faculties) {
-            let email = faculties[faculty].workEmail || faculties[faculty].googleemail
+        let faculties = await User.find({status: {$in: ["admin", "faculty"]}})
+        for (let idx in faculties) {
+            let email = await faculties[idx].workEmail || faculties[idx].googleemail
             if (email) {
                 let url = 'https://www.enactnetwork.org/events'
-                const sgMail = require('@sendgrid/mail');
-                sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+                await sgMail.setApiKey(process.env.SENDGRID_API_KEY);
                 const msg = {
                     to: email,
                     from: 'enact@brandeis.edu',
                     subject: 'ENACT Digital Platform: a new ENACT event has been created',
                     text: 'ENACT Digital Platform: a new ENACT event has been created',
                     html: 'Dear ENACT Faculty Fellow,' + '<br>' +
-                        '<br>' + 'A new ENACT event has been created. <br>The event title is: ' + newEvent.title + '<br>' + '<b> Click <a href=' + url + '>' + 'here' + '</a>' + ' to view the details.</b>' +
+                        '<br>' + 'A new ENACT event has been created. <br>The event title is: ' + newEvent.title + '<br>' +
+                        '<b> Click <a href=' + url + '>' + 'here' + '</a>' + ' to view the details.</b>' +
                         '<br><br>' + 'ENACT Support Team'
                 };
-                await sgMail.send(msg);
+                try {
+                    await sgMail.send(msg);
+                } catch (e) {
+                    console.log("SENDGRID EXCEPTION: ", e)
+                }
             }
         }
         await newEvent.save()
