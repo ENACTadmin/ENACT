@@ -31,7 +31,7 @@ const utils = require('./controllers/utils');
 //***********Database connection*************
 
 // const MONGODB_URI = 'mongodb://localhost/ENACT';
-//const MONGODB_URI = process.env.MONGODB_URI_IND || 'mongodb://localhost/ENACT';
+// const MONGODB_URI = process.env.MONGODB_URI_IND || 'mongodb://localhost/ENACT';
 const MONGODB_URI = 'mongodb+srv://heroku_s59qt61k:suo0sir3rh8b104b38574ju3dm@cluster-s59qt61k.xy6rv.mongodb.net/heroku_s59qt61k?retryWrites=true&w=majority' || 'mongodb://localhost/ENACT';
 const mongoose = require('mongoose');
 
@@ -728,7 +728,7 @@ app.post('/event/image/update/:eventId',
     eventController.updateImageURL
 )
 
-// send profile email
+// send event email
 app.get('/event/send/:id',
     messageController.sendEventEmail
 )

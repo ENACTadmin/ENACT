@@ -246,7 +246,11 @@ exports.sendEventEmail = async (req, res) => {
                     '<br><br>' + ' Click <a href=' + url + '>' + 'here' + '</a>' + ' to check out details.' +
                     '<br><br>' + 'ENACT Support Team'
             };
-            await sgMail.send(msg);
+            try {
+                await sgMail.send(msg);
+            } catch (e) {
+                console.log("SENDGRID EXCEPTION: ", e)
+            }
         }
     }
     res.send()
