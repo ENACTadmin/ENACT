@@ -223,13 +223,11 @@ exports.sendEventEmail = async (req, res) => {
     let eventName = currEvent.title
     let eventTime = currEvent.start
     let eventDescription = currEvent.description
-    let email = "luyaopei@brandeis.edu"&&"lulululupei@gmail.com"
-    let url = 'https://www.enactnetwork.org/events'
     let faculties = await User.find({status: {$in: ["faculty", "admin"]}})
     for (let faculty in faculties) {
         let email = faculties[faculty].workEmail || faculties[faculty].googleemail
         if (email) {
-            let url = 'https://www.enactnetwork.org/events'
+            let url = 'https://www.enactnetwork.org/login'
             const sgMail = require('@sendgrid/mail');
             sgMail.setApiKey(process.env.SENDGRID_API_KEY);
             const msg = {
@@ -237,13 +235,14 @@ exports.sendEventEmail = async (req, res) => {
                 from: 'enact@brandeis.edu',
                 subject: 'ENACT Digital Platform: Event Reminder.',
                 text: 'ENACT Digital Platform: Event Reminder',
-                html: 'Hi ENACTers,'+ '<br>' +
+                html: 'Dear ENACT Faculty Fellow,'+ '<br>' +
                     '<br>'+'You may want to know about a new event: '+'<br>'+
                     '<b>'+eventName+'</b>'+
                     '<br><br>' +'Here is the event Description:'+
-                    '<br><br>' +eventDescription+
-                    '<br><br>'+'Event will start at ' + '<b>' + eventTime.toLocaleString() + '</b>'+
-                    '<br><br>' + ' Click <a href=' + url + '>' + 'here' + '</a>' + ' to check out details.' +
+                    '<br>' +eventDescription+
+                    '<br>'+'Event will start at ' + '<b>' + eventTime.toLocaleString() + '</b>'+
+                    '<br><br>' + 'This event is' + '<b>'+ ' ENACT members only. ' + '</b>' +
+                    ' Please click <a href=' + url + '>' + 'here' + '</a>' + ' to login, and more details can be viewed in ' +  '<b>' +'Events and Courses. '+ '</b>'+
                     '<br><br>' + 'ENACT Support Team'
             };
             try {
