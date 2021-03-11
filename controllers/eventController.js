@@ -23,16 +23,20 @@ exports.saveEvent = async (req, res, next) => {
         for (let idx in faculties) {
             let email = await faculties[idx].workEmail || faculties[idx].googleemail
             if (email) {
-                let url = 'https://www.enactnetwork.org/events'
+                let url = 'https://www.enactnetwork.org/login'
                 await sgMail.setApiKey(process.env.SENDGRID_API_KEY);
                 const msg = {
                     to: email,
                     from: 'enact@brandeis.edu',
                     subject: 'ENACT Digital Platform: a new ENACT event has been created',
                     text: 'ENACT Digital Platform: a new ENACT event has been created',
-                    html: 'Dear ENACT Faculty Fellow,' + '<br>' +
-                        '<br>' + 'A new ENACT event has been created. <br>The event title is: ' + newEvent.title + '<br>' +
-                        '<b> Click <a href=' + url + '>' + 'here' + '</a>' + ' to view the details.</b>' +
+                    html: 'Dear ENACT Faculty Fellow,' +
+                        '<br><br>' + 'A new ENACT event has been created. <br>The event title is: ' +'<b>'+ newEvent.title +'</b>'+ '<br>' +
+                        '<br><br>' +'Here is the event Description:'+
+                        '<br>' + newEvent.description +
+                        '<br>'+'Event will start at ' + '<b>' + newEvent.start.toLocaleString() + '</b>'+
+                        '<br><br>' + 'This event is' + '<b>'+ ' ENACT members only. ' + '</b>' +
+                        ' Please click <a href=' + url + '>' + 'here' + '</a>' + ' to login, and more details can be viewed in ' +  '<b>' +'Events and Courses. '+ '</b>'+
                         '<br><br>' + 'ENACT Support Team'
                 };
                 try {
