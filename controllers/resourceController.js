@@ -798,7 +798,6 @@ async function invertedSearch(req, res) {
     let regex = /[^\s.:,!?()\[\]]+/g;
     let match = req.body.search.match(regex)
     match = [...new Set(match)]
-    let idSet = new Set()
     console.log("1", req.body.search)
     console.log("2", req.body.search.length)
     if (match && match.length > 0) {
@@ -823,7 +822,7 @@ async function invertedSearch(req, res) {
                     institution: 1,
                     yearOfCreation: 1
                 }
-            ).sort({score: {$meta: "textScore"}})
+            ).sort({score: {$meta: "textScore"}, yearOfCreation: -1})
         }
         // student search
         else if (res.locals.status === 'student') {
