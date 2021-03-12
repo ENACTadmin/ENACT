@@ -73,7 +73,7 @@ exports.loadTags = async (req, res, next) => {
     }
 }
 
-exports.getAllTags = async (req, res, next) => {
+exports.getAllTagsAjax = async (req, res, next) => {
     try {
         let tags = await Tag.find({status: "approve"}).sort({'createdAt': -1})
         res.send(tags)
@@ -83,7 +83,7 @@ exports.getAllTags = async (req, res, next) => {
     }
 }
 
-exports.getAllTagsAlt = async (req, res, next) => {
+exports.getAllTags = async (req, res, next) => {
     try {
         let predefined = ['agriculture'
             , 'arts and culture'
