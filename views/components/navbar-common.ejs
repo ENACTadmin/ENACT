@@ -38,6 +38,9 @@
                         <li>
                             <a class='header-link' href='/resource/review'>Approve stdnt. rsrc(s)</a>
                         </li>
+                        <li>
+                            <a class='header-link' href='/resources/view/faculty'>Guide for faculty</a>
+                        </li>
                     <% } %>
                     <li>
                         <a class='header-link' href='/resources/view/favorite'>My favorites</a>
@@ -73,11 +76,6 @@
                     <li>
                         <a class='header-link' href='/courses/schedule'>Course schedule</a>
                     </li>
-                    <% if (status === 'admin' || status === 'faculty') { %>
-                        <li>
-                            <a class='header-link' href='/resources/view/faculty'>Guide for faculty</a>
-                        </li>
-                    <% } %>
                     <li>
                         <a class='header-link' href='/courses'>Courses</a>
                     </li>
@@ -125,6 +123,11 @@
             <li>
                 <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Help & About</a>
                 <ul class='sub-menu'>
+                    <% if (status === 'faculty' || status === 'admin') { %>
+                        <li>
+                            <a class='header-link' href='/resources/view/faculty'>Guide for faculty</a>
+                        </li>
+                    <% } %>
                     <li>
                         <a class='header-link' id='header-link' href='/help' data-aos='fade-left'>How-to videos</a>
                     </li>
