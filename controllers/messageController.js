@@ -223,6 +223,7 @@ exports.sendEventEmail = async (req, res) => {
     let eventName = currEvent.title
     let eventTime = currEvent.start
     let eventDescription = currEvent.description
+    let visibility =currEvent.visibility
     let faculties = await User.find({status: {$in: ["faculty", "admin"]}})
     for (let faculty in faculties) {
         let email = faculties[faculty].workEmail || faculties[faculty].googleemail
@@ -241,7 +242,7 @@ exports.sendEventEmail = async (req, res) => {
                     '<br><br>' +'Here is the event Description:'+
                     '<br>' +eventDescription+
                     '<br>'+'Event will start at ' + '<b>' + eventTime.toLocaleString() + '</b>'+
-                    '<br><br>' + 'This event is' + '<b>'+ ' ENACT members only. ' + '</b>' +
+                    '<br><br>' + 'Event visibility is' + '<b>'+ visibility + '</b>' +
                     ' Please click <a href=' + url + '>' + 'here' + '</a>' + ' to login, and more details can be viewed in ' +  '<b>' +'Events and Courses. '+ '</b>'+
                     '<br><br>' + 'ENACT Support Team'
             };
