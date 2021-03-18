@@ -1,12 +1,16 @@
 'use strict';
 // const Course = require('../models/Course');
 const Resource = require('../models/Resource');
-// const User = require('../models/User');
+const User = require('../models/User');
+const TA = require('../models/TA');
+
 // const Message = require('../models/Message');
 
 
 exports.loadUnderReviewResources = async (req, res, next) => {
     try {
+        // let currentUser = await User.findOne({_id: res.locals.user._id})
+        // let taProfile = await
         res.locals.resourceInfo = await Resource.find({
             checkStatus: 'underReview',
             facultyId: req.user._id

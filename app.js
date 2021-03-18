@@ -760,6 +760,25 @@ app.get('/tags/all',
     tagController.getAllTagsAjax
 )
 
+//*******************************************
+//***********TA related****************
+
+
+app.get('/TA/assign/:courseId',
+    async (req, res) => {
+        // res.render(...)
+    }
+)
+
+app.post('/TA/assign/:courseId',
+    async (req, res) => {
+        // let course = await Course.findOne({_id: req.params.courseId})
+        // 1) get facultyId
+        // 2) new TA() req.body....
+        // 3) res.redirect('back')
+    }
+    // tagController.getAllTagsAjax
+)
 
 //*******************************************
 //***********Database related****************
