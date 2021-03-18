@@ -66,25 +66,25 @@
         let n = new Date().getTimezoneOffset() / 60;
         let timezone = '';
         switch (n) {
-            case 4:
+            case 3:
                 timezone = 'US/Atlantic';
                 break;
-            case 5:
+            case 4:
                 timezone = 'US/Eastern';
                 break;
-            case 6:
+            case 5:
                 timezone = 'US/Central';
                 break;
-            case 7:
+            case 6:
                 timezone = 'US/Mountain';
                 break;
-            case 8:
+            case 7:
                 timezone = 'US/Pacific';
                 break;
-            case 9:
+            case 8:
                 timezone = 'US/Alaska';
                 break;
-            case 10:
+            case 9:
                 timezone = 'US/Hawaii‑Aleutian';
                 break;
         }
@@ -100,25 +100,25 @@
             console.log('US/Eastern')
             switch (timezone) {
                 case 'US/Atlantic':
-                    offset1 = 4;
+                    offset1 = 3;
                     break;
                 case 'US/Eastern':
-                    offset1 = 5;
+                    offset1 = 4;
                     break;
                 case 'US/Central':
-                    offset1 = 6;
+                    offset1 = 5;
                     break;
                 case 'US/Mountain':
-                    offset1 = 7;
+                    offset1 = 6;
                     break;
                 case 'US/Pacific':
-                    offset1 = 8;
+                    offset1 = 7;
                     break;
                 case 'US/Alaska':
-                    offset1 = 9;
+                    offset1 = 8;
                     break;
                 case 'US/Hawaii‑Aleutian':
-                    offset1 = 10;
+                    offset1 = 9;
                     break;
             }
             $(this).text((parseInt(time.split(':')[0]) + (n - offset1) + 24) % 24 + ':' + time.split(':')[1])

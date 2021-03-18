@@ -45,11 +45,11 @@
                                                         <div class="col-md-3 col-sm-12 align-self-center"><img
                                                                     class="rounded-lg"
                                                             <% if (!futureEventsInfo[i].imageURL) { %>
-                                                                src="https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg"
+                                                                    src="https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg"
                                                             <% } else { %>
-                                                                src="<%= futureEventsInfo[i].imageURL %>"
+                                                                    src="<%= futureEventsInfo[i].imageURL %>"
                                                                     <% } %>
-                                                                style="height: auto; max-width: 100%"></div>
+                                                                    style="height: auto; max-width: 100%"></div>
                                                     </div>
                                                 </li>
                                                 <% if (futureEventsInfo[i].start !== null && futureEventsInfo[i].end !== null) { %>
@@ -492,25 +492,25 @@
             let n = new Date().getTimezoneOffset() / 60;
             let timezone = '';
             switch (n) {
-                case 4:
+                case 3:
                     timezone = 'US/Atlantic';
                     break;
-                case 5:
+                case 4:
                     timezone = 'US/Eastern';
                     break;
-                case 6:
+                case 5:
                     timezone = 'US/Central';
                     break;
-                case 7:
+                case 6:
                     timezone = 'US/Mountain';
                     break;
-                case 8:
+                case 7:
                     timezone = 'US/Pacific';
                     break;
-                case 9:
+                case 8:
                     timezone = 'US/Alaska';
                     break;
-                case 10:
+                case 9:
                     timezone = 'US/Hawaii‑Aleutian';
                     break;
             }
