@@ -652,6 +652,13 @@ h6 {
     clear: both;
 }
 
+.section__content--small-width {
+    width: 60%;
+    margin: auto;
+    clear: both;
+}
+
+
 .section__content--full-width {
     margin: auto;
     clear: both;
