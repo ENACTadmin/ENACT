@@ -364,24 +364,46 @@
 <% } %>
 
 <!-- Intro Video -->
-<section class='section section__grey'>
-    <section class='section__content section__content--small-width'>
-        <br><br><br>
-        <h2 class='section__title section__title--centered' data-aos='fade-up'>Intro Video</h2>
-        <div id="place2"></div>
-        <br><br><br>
-        <video style="width: 100%" controls>
-            <source src="https://enact-resources.s3.us-east-2.amazonaws.com/Getting+to+Know+ENACT+March+16+2021.MOV" type="video/mp4">
-        </video>
-        <br><br><br>
-        <div class='text-center' id="scrollToPlace3">
-            <input type='button' name='submit'
-                   class='btn btn-lg btn-primary'
-                   value='Back to Top'>
-        </div>
-        <br><br><br>
+<% if (!loggedIn) { %>
+    <section class='section section__grey'>
+        <section class='section__content section__content--small-width'>
+            <br><br><br>
+            <h2 class='section__title section__title--centered' data-aos='fade-up'>Intro Video</h2>
+            <div id="place2"></div>
+            <br><br><br>
+            <video style="width: 100%" controls>
+                <source src="https://enact-resources.s3.us-east-2.amazonaws.com/Getting+to+Know+ENACT+March+16+2021.MOV" type="video/mp4">
+            </video>
+            <br><br><br>
+            <div class='text-center' id="scrollToPlace3">
+                <input type='button' name='submit'
+                       class='btn btn-lg btn-primary'
+                       value='Back to Top'>
+            </div>
+            <br><br><br>
+        </section>
     </section>
-</section>
+<% } else { %>
+    <section class='section diagonal-gradient'>
+        <section class='section__content section__content--small-width'>
+            <br><br><br>
+            <h2 class='section__title section__title--centered1' style="color: white" data-aos='fade-up'>Intro Video</h2>
+            <div id="place2"></div>
+            <br><br><br>
+            <video style="width: 100%" controls>
+                <source src="https://enact-resources.s3.us-east-2.amazonaws.com/Getting+to+Know+ENACT+March+16+2021.MOV" type="video/mp4">
+            </video>
+            <br><br><br>
+            <div class='text-center' id="scrollToPlace3">
+                <input type='button' name='submit'
+                       class='btn btn-lg btn-light'
+                       value='Back to Top'>
+            </div>
+            <br><br><br>
+        </section>
+    </section>
+<% } %>
+
 
 <script>
     $(document).ready(function () {
