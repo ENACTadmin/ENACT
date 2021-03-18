@@ -231,50 +231,50 @@
         let n = new Date().getTimezoneOffset() / 60;
         let timezone = '';
         switch (n) {
-            case 4:
+            case 3:
                 timezone = 'US/Atlantic';
                 break;
-            case 5:
+            case 4:
                 timezone = 'US/Eastern';
                 break;
-            case 6:
+            case 5:
                 timezone = 'US/Central';
                 break;
-            case 7:
+            case 6:
                 timezone = 'US/Mountain';
                 break;
-            case 8:
+            case 7:
                 timezone = 'US/Pacific';
                 break;
-            case 9:
+            case 8:
                 timezone = 'US/Alaska';
                 break;
-            case 10:
+            case 9:
                 timezone = 'US/Hawaii‑Aleutian';
                 break;
         }
         let offset = 0;
         switch (timezone) {
             case 'US/Atlantic':
-                offset = 4;
+                offset = 3;
                 break;
             case 'US/Eastern':
-                offset = 5;
+                offset = 4;
                 break;
             case 'US/Central':
-                offset = 6;
+                offset = 5;
                 break;
             case 'US/Mountain':
-                offset = 7;
+                offset = 6;
                 break;
             case 'US/Pacific':
-                offset = 8;
+                offset1 = 7;
                 break;
             case 'US/Alaska':
-                offset = 9;
+                offset = 8;
                 break;
             case 'US/Hawaii‑Aleutian':
-                offset = 10;
+                offset = 9;
                 break;
         }
         $('#fillMe').text(timezone);
@@ -285,25 +285,25 @@
             let offset = 0;
             switch (timezone) {
                 case 'US/Atlantic':
-                    offset = 4;
+                    offset = 3;
                     break;
                 case 'US/Eastern':
-                    offset = 5;
+                    offset = 4;
                     break;
                 case 'US/Central':
-                    offset = 6;
+                    offset = 5;
                     break;
                 case 'US/Mountain':
-                    offset = 7;
+                    offset = 6;
                     break;
                 case 'US/Pacific':
-                    offset = 8;
+                    offset = 7;
                     break;
                 case 'US/Alaska':
-                    offset = 9;
+                    offset = 8;
                     break;
                 case 'US/Hawaii‑Aleutian':
-                    offset = 10;
+                    offset = 9;
                     break;
             }
             $(this).text((parseInt(time.split(':')[0]) + (n - offset) + 24) % 24 + ':' + time.split(':')[1])
