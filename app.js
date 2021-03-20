@@ -731,7 +731,7 @@ app.post('/event/image/update/:eventId',
 
 // send event email
 app.get('/event/send/:id',
-    messageController.sendEventEmail
+    eventController.sendEventEmail
 )
 
 //*******************************************
