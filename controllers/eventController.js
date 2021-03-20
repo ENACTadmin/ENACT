@@ -20,32 +20,38 @@ exports.saveEvent = async (req, res, next) => {
             visibility: req.body.visibility
         })
         let faculties = await User.find({status: {$in: ["admin", "faculty"]}})
-        for (let idx in faculties) {
-            let email = await faculties[idx].workEmail || faculties[idx].googleemail
-            if (email) {
-                let url = 'https://www.enactnetwork.org/login'
-                await sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-                const msg = {
-                    to: email,
-                    from: 'enact@brandeis.edu',
-                    subject: 'ENACT Digital Platform: a new ENACT event has been created',
-                    text: 'ENACT Digital Platform: a new ENACT event has been created',
-                    html: 'Dear ENACT Faculty Fellow,' +
-                        '<br><br>' + 'A new ENACT event has been created. <br>The event title is: ' +'<b>'+ newEvent.title +'</b>'+ '<br>' +
-                        '<br><br>' +'Here is the event Description:'+
-                        '<br>' + newEvent.description +
-                        '<br>'+'Event will start at ' + '<b>' + newEvent.start.toLocaleString() + '</b>'+
-                        '<br><br>' + 'This event is' + '<b>'+ ' ENACT members only. ' + '</b>' +
-                        ' Please click <a href=' + url + '>' + 'here' + '</a>' + ' to login, and more details can be viewed in ' +  '<b>' +'Events and Courses. '+ '</b>'+
-                        '<br><br>' + 'ENACT Support Team'
-                };
-                try {
-                    await sgMail.send(msg);
-                } catch (e) {
-                    console.log("SENDGRID EXCEPTION: ", e)
-                }
+        // for (let idx in faculties) {
+        //     let email = await faculties[idx].workEmail || faculties[idx].googleemail
+        let email = 'bbdhy96@gmail.com'
+        if (email) {
+            let eventName = newEvent.title
+            let eventTime = newEvent.start
+            let eventDescription = newEvent.description
+            let visibility = newEvent.visibility
+            let url = 'https://www.enactnetwork.org/login'
+            await sgMail.setApiKey(process.env.SENDGRID_API_KEY || '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');
+            const msg = {
+                to: email,
+                from: 'enact@brandeis.edu',
+                subject: 'ENACT Digital Platform: a new ENACT event has been created',
+                text: 'ENACT Digital Platform: a new ENACT event has been created',
+                html: 'Dear ENACT Faculty Fellow,' +
+                    '<br><br>' + 'You may want to know about a new event: ' + '<br>' +
+                    '<b>' + eventName + '</b>' +
+                    '<br><br>' + 'Here is the event Description:' +
+                    '<br><br>' + eventDescription +
+                    '<br><br>' + 'Event will start at ' + '<b>' + eventTime.toLocaleString('en-US', {timezone: 'EST'}) + ' (in US/Canada Eastern timezone)</b>' +
+                    '<br><br>' + 'Event visibility is: ' + '<b>' + visibility + '</b>' +
+                    ' Please click <a href=' + url + '>' + 'here' + '</a>' + ' to login, and more details can be viewed in ' + '<b>' + 'Events and Courses. ' + '</b>' +
+                    '<br><br>' + 'ENACT Support Team'
+            };
+            try {
+                await sgMail.send(msg);
+            } catch (e) {
+                console.log("SENDGRID EXCEPTION: ", e)
             }
         }
+        // }
         await newEvent.save()
         res.redirect('back')
     } catch (e) {
@@ -94,4 +100,44 @@ exports.updateImageURL = async (req, res, next) => {
     } catch (e) {
         next(e)
     }
+}
+
+exports.sendEventEmail = async (req, res) => {
+    let eventId = req.params.id
+    console.log("id: ", eventId)
+    let currEvent = await Event.findOne({_id: eventId})
+    let eventName = currEvent.title
+    let eventTime = currEvent.start
+    let eventDescription = currEvent.description
+    let visibility = currEvent.visibility
+    // let faculties = await User.find({status: {$in: ["faculty", "admin"]}})
+    // for (let faculty in faculties) {
+    // let email = faculties[faculty].workEmail || faculties[faculty].googleemail
+    let email = 'bbdhy96@gmail.com'
+    if (email) {
+        let url = 'https://www.enactnetwork.org/login'
+        const sgMail = require('@sendgrid/mail');
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY || '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');
+        const msg = {
+            to: email,
+            from: 'enact@brandeis.edu',
+            subject: 'ENACT Digital Platform: Event Reminder.',
+            text: 'ENACT Digital Platform: Event Reminder',
+            html: 'Dear ENACT Faculty Fellow,' + '<br>' +
+                '<br>' + 'You may want to know about a new event: ' + '<br>' +
+                '<b>' + eventName + '</b>' +
+                '<br><br>' + 'Here is the event Description:' +
+                '<br><br>' + eventDescription +
+                '<br><br>' + 'Event will start at ' + '<b>' + eventTime.toLocaleString('en-US', {timezone: 'EST'}) + ' (in US/Canada Eastern timezone)</b>' +
+                '<br><br>' + 'Event visibility is: ' + '<b>' + visibility + '</b>' +
+                ' Please click <a href=' + url + '>' + 'here' + '</a>' + ' to login, and more details can be viewed in ' + '<b>' + 'Events and Courses. ' + '</b>' +
+                '<br><br>' + 'ENACT Support Team'
+        };
+        try {
+            await sgMail.send(msg);
+        } catch (e) {
+            console.log("SENDGRID EXCEPTION: ", e)
+        }
+    }
+    res.send()
 }
