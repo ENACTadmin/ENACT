@@ -118,13 +118,16 @@ exports.sendEventEmail = async (req, res) => {
         let url = 'https://www.enactnetwork.org/login'
         const sgMail = require('@sendgrid/mail');
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+        console.log("1: ", eventTime.toLocaleString())
+        console.log("2: ", eventTime.toLocaleString('en-US', {timezone: 'EST'}))
+
         const msg = {
             to: email,
             from: 'enact@brandeis.edu',
             subject: 'ENACT Digital Platform: Event Reminder.',
             text: 'ENACT Digital Platform: Event Reminder',
             html: 'Dear ENACT Faculty Fellow,' + '<br>' +
-                '<br>' + 'You may want to know about a new event: ' + '<br>' +
+                '<br><br>' + 'You may want to know about a new event: ' + '<br>' +
                 '<b>' + eventName + '</b>' +
                 '<br><br>' + 'Here is the event Description:' +
                 '<br><br>' + eventDescription +
