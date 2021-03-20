@@ -29,7 +29,7 @@ exports.saveEvent = async (req, res, next) => {
             let eventDescription = newEvent.description
             let visibility = newEvent.visibility
             let url = 'https://www.enactnetwork.org/login'
-            await sgMail.setApiKey(process.env.SENDGRID_API_KEY || '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');
+            await sgMail.setApiKey(process.env.SENDGRID_API_KEY);
             const msg = {
                 to: email,
                 from: 'enact@brandeis.edu',
@@ -117,7 +117,7 @@ exports.sendEventEmail = async (req, res) => {
     if (email) {
         let url = 'https://www.enactnetwork.org/login'
         const sgMail = require('@sendgrid/mail');
-        sgMail.setApiKey(process.env.SENDGRID_API_KEY || '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');
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
         const msg = {
             to: email,
             from: 'enact@brandeis.edu',
