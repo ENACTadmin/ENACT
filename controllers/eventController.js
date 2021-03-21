@@ -7,7 +7,7 @@ const sgMail = require('@sendgrid/mail');
 exports.saveEvent = async (req, res, next) => {
     try {
         let timezoneOffset = req.body.TZ
-        timezoneOffset = parseInt(timezoneOffset) - new Date().getTimezoneOffset() + parseInt(req.body.DST) * 60
+        timezoneOffset = parseInt(timezoneOffset) - new Date().getTimezoneOffset()
         let startDate = new Date(req.body.start).getTime() + parseInt(timezoneOffset) * 60000
         let endDate = new Date(req.body.end).getTime() + parseInt(timezoneOffset) * 60000
         let newEvent = new Event({
@@ -105,7 +105,7 @@ exports.updateImageURL = async (req, res, next) => {
 exports.sendEventEmail = async (req, res) => {
     let eventId = req.params.id
     console.log("id: ", eventId)
-    let timezoneoffset = parseInt(req.body.TZ) - new Date().getTimezoneOffset() + parseInt(req.body.DST) * 60
+    let timezoneoffset = parseInt(req.body.TZ) - new Date().getTimezoneOffset()
     let currEvent = await Event.findOne({_id: eventId})
     let eventName = currEvent.title
     let eventTime = currEvent.start
