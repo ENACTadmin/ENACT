@@ -105,10 +105,9 @@ exports.updateImageURL = async (req, res, next) => {
 exports.sendEventEmail = async (req, res) => {
     let eventId = req.params.id
     console.log("id: ", eventId)
-    let timezoneoffset = parseInt(req.body.TZ) - new Date().getTimezoneOffset()
     let currEvent = await Event.findOne({_id: eventId})
     let eventName = currEvent.title
-    let eventTime = currEvent.start
+    let eventTime = parseInt(req.body.DST) === 0 ? new Date(newEvent.start - 300 * 60000) : new Date(newEvent.start - 240 * 60000)
     let eventDescription = currEvent.description
     let visibility = currEvent.visibility
     // let faculties = await User.find({status: {$in: ["faculty", "admin"]}})
@@ -124,18 +123,23 @@ exports.sendEventEmail = async (req, res) => {
         const msg = {
             to: email,
             from: 'enact@brandeis.edu',
-            subject: 'ENACT Digital Platform: Event Reminder.',
-            text: 'ENACT Digital Platform: Event Reminder',
-            html: 'Dear ENACT Faculty Fellow,' + '<br>' +
+            subject: 'ENACT Digital Platform: a new ENACT event has been created',
+            text: 'ENACT Digital Platform: a new ENACT event has been created',
+            html: 'Dear ENACT Faculty Fellow,' +
                 '<br><br>' + 'You may want to know about a new event: ' + '<br>' +
                 '<b>' + eventName + '</b>' +
                 '<br><br>' + 'Here is the event Description:' +
                 '<br><br>' + eventDescription +
-                '<br><br>' + 'Event will start at ' + '<b>' + new Date(eventTime - 300 * 60000).toLocaleString() + ' (in EST)</b>' +
+                '<br><br>' + 'Event will start at ' + '<b>' + eventTime.toLocaleString() + ' (in US/Canada Eastern Time)</b>' +
                 '<br><br>' + 'Event visibility is: ' + '<b>' + visibility + '</b>' +
                 ' Please click <a href=' + url + '>' + 'here' + '</a>' + ' to login, and more details can be viewed in ' + '<b>' + 'Events and Courses. ' + '</b>' +
                 '<br><br><br>' + 'ENACT Support Team'
         };
+        try {
+            await sgMail.send(msg);
+        } catch (e) {
+            console.log("SENDGRID EXCEPTION: ", e)
+        }
         try {
             await sgMail.send(msg);
         } catch (e) {
