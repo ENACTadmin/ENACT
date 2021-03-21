@@ -7,7 +7,7 @@ const sgMail = require('@sendgrid/mail');
 exports.saveEvent = async (req, res, next) => {
     try {
         let timezoneOffset = req.body.TZ
-        timezoneOffset = parseInt(timezoneOffset) - new Date().getTimezoneOffset()
+        timezoneOffset = parseInt(timezoneOffset) - new Date().getTimezoneOffset() + parseInt(req.body.DST) * 60
         let startDate = new Date(req.body.start).getTime() + parseInt(timezoneOffset) * 60000
         let endDate = new Date(req.body.end).getTime() + parseInt(timezoneOffset) * 60000
         let newEvent = new Event({
@@ -25,7 +25,7 @@ exports.saveEvent = async (req, res, next) => {
         let email = 'bbdhy96@gmail.com'
         if (email) {
             let eventName = newEvent.title
-            let eventTime = newEvent.start
+            let eventTime = parseInt(req.body.DST) === 0 ? new Date(newEvent.start - 300 * 60000) : new Date(newEvent.start - 240 * 60000)
             let eventDescription = newEvent.description
             let visibility = newEvent.visibility
             let url = 'https://www.enactnetwork.org/login'
@@ -40,7 +40,7 @@ exports.saveEvent = async (req, res, next) => {
                     '<b>' + eventName + '</b>' +
                     '<br><br>' + 'Here is the event Description:' +
                     '<br><br>' + eventDescription +
-                    '<br><br>' + 'Event will start at ' + '<b>' + new Date(eventTime - 300 * 60000).toLocaleString() + ' (in EST)</b>' +
+                    '<br><br>' + 'Event will start at ' + '<b>' + eventTime.toLocaleString() + ' (in US/Canada Eastern Time)</b>' +
                     '<br><br>' + 'Event visibility is: ' + '<b>' + visibility + '</b>' +
                     ' Please click <a href=' + url + '>' + 'here' + '</a>' + ' to login, and more details can be viewed in ' + '<b>' + 'Events and Courses. ' + '</b>' +
                     '<br><br><br>' + 'ENACT Support Team'
@@ -105,6 +105,7 @@ exports.updateImageURL = async (req, res, next) => {
 exports.sendEventEmail = async (req, res) => {
     let eventId = req.params.id
     console.log("id: ", eventId)
+    let timezoneoffset = parseInt(req.body.TZ) - new Date().getTimezoneOffset() + parseInt(req.body.DST) * 60
     let currEvent = await Event.findOne({_id: eventId})
     let eventName = currEvent.title
     let eventTime = currEvent.start
