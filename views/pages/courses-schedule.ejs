@@ -63,30 +63,79 @@
 
 <script>
     $(document).ready(function () {
+
+        Date.prototype.stdTimezoneOffset = function () {
+            var jan = new Date(this.getFullYear(), 0, 1);
+            var jul = new Date(this.getFullYear(), 6, 1);
+            return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+        }
+
+        Date.prototype.isDstObserved = function () {
+            return this.getTimezoneOffset() < this.stdTimezoneOffset();
+        }
+
+        var today = new Date();
+        if (today.isDstObserved()) {
+            $(".DST").each(function () {
+                console.log("DST")
+                $(this).val(1)
+            })
+        } else {
+            $(".DST").each(function () {
+                console.log("not DST")
+                $(this).val(0)
+            })
+        }
         let n = new Date().getTimezoneOffset() / 60;
         let timezone = '';
-        switch (n) {
-            case 3:
-                timezone = 'US/Atlantic';
-                break;
-            case 4:
-                timezone = 'US/Eastern';
-                break;
-            case 5:
-                timezone = 'US/Central';
-                break;
-            case 6:
-                timezone = 'US/Mountain';
-                break;
-            case 7:
-                timezone = 'US/Pacific';
-                break;
-            case 8:
-                timezone = 'US/Alaska';
-                break;
-            case 9:
-                timezone = 'US/Hawaii‑Aleutian';
-                break;
+        if (new Date().isDstObserved()) {
+            switch (n) {
+                case 3:
+                    timezone = 'US/Atlantic';
+                    break;
+                case 4:
+                    timezone = 'US/Eastern';
+                    break;
+                case 5:
+                    timezone = 'US/Central';
+                    break;
+                case 6:
+                    timezone = 'US/Mountain';
+                    break;
+                case 7:
+                    timezone = 'US/Pacific';
+                    break;
+                case 8:
+                    timezone = 'US/Alaska';
+                    break;
+                case 9:
+                    timezone = 'US/Hawaii‑Aleutian';
+                    break;
+            }
+        } else {
+            switch (n) {
+                case 4:
+                    timezone = 'US/Atlantic';
+                    break;
+                case 5:
+                    timezone = 'US/Eastern';
+                    break;
+                case 6:
+                    timezone = 'US/Central';
+                    break;
+                case 7:
+                    timezone = 'US/Mountain';
+                    break;
+                case 8:
+                    timezone = 'US/Pacific';
+                    break;
+                case 9:
+                    timezone = 'US/Alaska';
+                    break;
+                case 10:
+                    timezone = 'US/Hawaii‑Aleutian';
+                    break;
+            }
         }
         $('#fillMe').text(timezone);
         $('.timezoneStart').each(function () {
