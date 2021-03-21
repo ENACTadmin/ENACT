@@ -107,7 +107,7 @@ exports.sendEventEmail = async (req, res) => {
     console.log("id: ", eventId)
     let currEvent = await Event.findOne({_id: eventId})
     let eventName = currEvent.title
-    let eventTime = parseInt(req.body.DST) === 0 ? new Date(newEvent.start - 300 * 60000) : new Date(newEvent.start - 240 * 60000)
+    let eventTime = parseInt(req.body.DST) === 0 ? new Date(currEvent.start - 300 * 60000) : new Date(currEvent.start - 240 * 60000)
     let eventDescription = currEvent.description
     let visibility = currEvent.visibility
     // let faculties = await User.find({status: {$in: ["faculty", "admin"]}})
