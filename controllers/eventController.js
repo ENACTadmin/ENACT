@@ -40,10 +40,10 @@ exports.saveEvent = async (req, res, next) => {
                     '<b>' + eventName + '</b>' +
                     '<br><br>' + 'Here is the event Description:' +
                     '<br><br>' + eventDescription +
-                    '<br><br>' + 'Event will start at ' + '<b>' + eventTime.toLocaleString('en-US', {timezone: 'EST'}) + ' (in US/Canada Eastern timezone)</b>' +
+                    '<br><br>' + 'Event will start at ' + '<b>' + new Date(eventTime - 300 * 60000).toLocaleString() + ' (in EST)</b>' +
                     '<br><br>' + 'Event visibility is: ' + '<b>' + visibility + '</b>' +
                     ' Please click <a href=' + url + '>' + 'here' + '</a>' + ' to login, and more details can be viewed in ' + '<b>' + 'Events and Courses. ' + '</b>' +
-                    '<br><br>' + 'ENACT Support Team'
+                    '<br><br><br>' + 'ENACT Support Team'
             };
             try {
                 await sgMail.send(msg);
@@ -119,8 +119,7 @@ exports.sendEventEmail = async (req, res) => {
         const sgMail = require('@sendgrid/mail');
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
         console.log("1: ", eventTime.toLocaleString())
-        console.log("2: ", eventTime.toLocaleString('en-US', {timezone: 'EST'}))
-
+        console.log("2: ", new Date(eventTime - 300 * 60000).toLocaleString())
         const msg = {
             to: email,
             from: 'enact@brandeis.edu',
@@ -131,10 +130,10 @@ exports.sendEventEmail = async (req, res) => {
                 '<b>' + eventName + '</b>' +
                 '<br><br>' + 'Here is the event Description:' +
                 '<br><br>' + eventDescription +
-                '<br><br>' + 'Event will start at ' + '<b>' + eventTime.toLocaleString('en-US', {timezone: 'EST'}) + ' (in US/Canada Eastern timezone)</b>' +
+                '<br><br>' + 'Event will start at ' + '<b>' + new Date(eventTime - 300 * 60000).toLocaleString() + ' (in EST)</b>' +
                 '<br><br>' + 'Event visibility is: ' + '<b>' + visibility + '</b>' +
                 ' Please click <a href=' + url + '>' + 'here' + '</a>' + ' to login, and more details can be viewed in ' + '<b>' + 'Events and Courses. ' + '</b>' +
-                '<br><br>' + 'ENACT Support Team'
+                '<br><br><br>' + 'ENACT Support Team'
         };
         try {
             await sgMail.send(msg);
