@@ -1228,14 +1228,13 @@ h6 {
 }
 
 .form-demo__large {
-    margin: 10px;
-    padding: 15px;
+    margin: 8px;
+    padding: 10px;
     /*float: left;*/
     background-color: #0053a4;
-    border: 3px solid #0053a4;
-    height: 63px;
+    border: 2px solid #0053a4;
     line-height: 60px;
-    font-size: 23px;
+    font-size: x-large !important;
     font-weight: 550;
     letter-spacing: 1px;
     cursor: pointer;
@@ -1758,7 +1757,7 @@ ul.grid__list--fmenu li a:hover {
 
     .intro__description {
         padding: 0 0 10px 0;
-        font-size: medium;
+        /*font-size: medium;*/
         line-height: 135%;
         color: #0053a4;
         font-weight: normal;
