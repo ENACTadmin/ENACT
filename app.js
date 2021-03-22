@@ -295,7 +295,7 @@ app.get('/resources/view/faculty',
     utils.checkUserName,
     resourceController.loadAllFacultyResources,
     (req, res) =>
-        res.render('./pages/facultyGuide')
+        res.render('./pages/faculty-guide')
 )
 
 app.get('/resources/view/faculty/:contentType',
