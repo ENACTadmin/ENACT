@@ -41,16 +41,18 @@
                     <% if (loggedIn && status === 'student') { %>
                         <b style="color: #FF9912">- ENACT Students & Alumni: </b> search student work. Network with students and alumni.
                         <br>
-                    <% } %>
-                    <% if (!loggedIn) { %>
+                    <% } else if (!loggedIn) { %>
+                        <b style="color: #FF9912">- ENACT Students & Alumni: </b> search student work. Network with students and alumni.
                         <a href="/login" class="btn btn-sm btn-warning">Click to Login</a>
+                        <br>
                     <% } %>
                     <% if (loggedIn && status === 'faculty' || loggedIn && status === 'admin') { %>
                         <b style="color: #FF9912">- ENACT Faculty Fellows: </b> access ENACT teaching resources and student work.
                         <br>
-                    <% } %>
-                    <% if (!loggedIn) { %>
+                    <% } else if (!loggedIn) { %>
+                        <b style="color: #FF9912">- ENACT Faculty Fellows: </b> access ENACT teaching resources and student work.
                         <a href="/login" class="btn btn-sm btn-warning">Click to Login</a>
+                        <br>
                     <% } %>
                     <% if (!loggedIn) { %>
                         <b style="color: #FF9912">- Public: </b> access student work on bills from across the U.S., including op-eds, issue research and more.
