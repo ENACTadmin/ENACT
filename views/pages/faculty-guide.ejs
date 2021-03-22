@@ -25,6 +25,52 @@
 <section class='section section__grey' data-aos='fade-up'>
     <section class='section__content section__content--fluid-width'>
         <div class='container'>
+            <div class="row">
+                <% if (loggedIn) { %>
+                    <div class='col-md-12 col-sm-12'>
+                        <h3>Course Planning Modules</h3>
+                        <hr>
+                    </div>
+                    <div class='col-md-4 col-sm-12'>
+                        <a href='https://www.enactnetwork.org/collection/view/6025482e5cece7001580ed9c'
+                           class='btn btn-primary'
+                           style='margin-bottom: 10px'>Module 1: ENACT Course Module Overviews</a>
+                    </div>
+                    <div class='col-md-4 col-sm-12'>
+                        <a href='https://www.enactnetwork.org/collection/view/60259bca5cece7001580eda8'
+                           class='btn btn-primary'
+                           style='margin-bottom: 10px'>Module 2: Civic Education</a>
+                    </div>
+                    <div class='col-md-4 col-sm-12'>
+                        <a href='https://www.enactnetwork.org/collection/view/60259cf55cece7001580eda9'
+                           class='btn btn-primary'
+                           style='margin-bottom: 10px'>Module 3: Building Teams</a>
+                    </div>
+                    <div class='col-md-4 col-sm-12'>
+                        <a href='https://www.enactnetwork.org/collection/view/60259fa95cece7001580edb1'
+                           class='btn btn-primary'
+                           style='margin-bottom: 10px'>Module 4: Research and Data</a>
+                    </div>
+                    <div class='col-md-4 col-sm-12'>
+                        <a href='https://www.enactnetwork.org/collection/view/602707c44bdb8600153e62d0'
+                           class='btn btn-primary'
+                           style='margin-bottom: 10px'>Module 5: Media Advocacy</a>
+                    </div>
+                    <div class='col-md-4 col-sm-12'>
+                        <a href='https://www.enactnetwork.org/collection/view/602fe463411a5c0015ac98c0'
+                           class='btn btn-primary'
+                           style='margin-bottom: 10px'>Module 6: Legislative Advocacy</a>
+                    </div>
+                    <div class='col-md-4 col-sm-12'>
+                        <a href='https://www.enactnetwork.org/collection/view/602fe47e411a5c0015ac98c1'
+                           class='btn btn-primary'
+                           style='margin-bottom: 10px'>Module 7: Final Projects</a>
+                    </div>
+                <% } else { %>
+                    <%- include('../components/component-loginToView'); -%>
+                <% } %>
+            </div>
+            <br>
             <div class='row'>
                 <% if (loggedIn) { %>
                     <div class='col-md-12 col-sm-12'>
