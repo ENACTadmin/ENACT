@@ -295,7 +295,7 @@ app.get('/resources/view/faculty',
     utils.checkUserName,
     resourceController.loadAllFacultyResources,
     (req, res) =>
-        res.render('./pages/facultyGuide')
+        res.render('./pages/faculty-guide')
 )
 
 app.get('/resources/view/faculty/:contentType',
@@ -731,7 +731,7 @@ app.post('/event/image/update/:eventId',
 
 // send event email
 app.get('/event/send/:id',
-    messageController.sendEventEmail
+    eventController.sendEventEmail
 )
 
 //*******************************************
@@ -760,6 +760,25 @@ app.get('/tags/all',
     tagController.getAllTagsAjax
 )
 
+//*******************************************
+//***********TA related****************
+
+
+app.get('/TA/assign/:courseId',
+    async (req, res) => {
+        // res.render(...)
+    }
+)
+
+app.post('/TA/assign/:courseId',
+    async (req, res) => {
+        // let course = await Course.findOne({_id: req.params.courseId})
+        // 1) get facultyId
+        // 2) new TA() req.body....
+        // 3) res.redirect('back')
+    }
+    // tagController.getAllTagsAjax
+)
 
 //*******************************************
 //***********Database related****************
