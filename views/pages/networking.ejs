@@ -40,19 +40,10 @@
         <br>
         <h3>ENACT Network in <%= state %> </h3>
         <hr>
-        <% if (!loggedIn) { %>
-            <div class="card-body">
-                <div class='text-center partners__text'>
-                    <h5>Are you an alum of an ENACT course? <a href="/login">Login</a> to use this platform and request
-                        membership in the
-                        <a href="https://www.linkedin.com/groups/8601882/"> <span class="fa">&#xf08c;</span>
-                            ENACT-only LinkedIn group</a>.</h5>
-                </div>
-            </div>
-        <% }  %>
-            <ul class="list-group" id="myList">
-                <% if (profileInfo && profileInfo.length > 0) { %>
-                    <% for (let i = 0; i < profileInfo.length; i++) { %>
+        <ul class="list-group" id="myList">
+            <% if (profileInfo && profileInfo.length > 0) { %>
+                <% for (let i = 0; i < profileInfo.length; i++) { %>
+                    <% if (loggedIn || profileInfo[i].status === 'faculty' || profileInfo[i].workEmail === 'djw@brandeis.edu' || profileInfo[i].workEmail === 'stimell@brandeis.edu') { %>
                         <li class="list-group-item shadow-sm" style="height: auto; max-height: 100%; font-size: larger; margin-bottom: 20px">
                             <div class="row">
                                 <div class="col-md-1 col-sm-1 align-self-center">
@@ -121,14 +112,15 @@
                             </div>
                         </li>
                     <% } %>
-                <% } else { %>
-                    <div class="card-body">
-                        <div class='text-center partners__text'>
-                            <h3>Unfortunately, no connection found in this state :(</h3>
-                        </div>
-                    </div>
                 <% } %>
-            </ul>
+            <% } else { %>
+                <div class="card-body">
+                    <div class='text-center partners__text'>
+                        <h3>Unfortunately, no connection found in this state :(</h3>
+                    </div>
+                </div>
+            <% } %>
+        </ul>
 
     </div>
 </section>
