@@ -17,9 +17,9 @@
                 <a class="btn btn-outline-primary" href="<%= userInfo.linkedInURL %>">LinkedIn</a>
             <% } %>
             <% if (userInfo.personalWebsiteURL) { %>
-                <a class="btn btn-outline-info" href="<%= userInfo.personalWebsiteURL %>">University Bio URL</a>
+                <a class="btn btn-outline-info" href="<%= userInfo.personalWebsiteURL %>">University Bio</a>
             <% } %>
-            <% if (user.status === 'admin') { %>
+            <% if (loggedIn && user.status === 'admin') { %>
                 <hr>
                 <a class="btn btn-outline-primary" href="/profile/create/faculty">Create another faculty profile</a>
                 <a class="btn btn-outline-info" href="/profiles/view/faculty">Go back to faculty & staff</a>
@@ -132,7 +132,7 @@
                     <br>
                 <% } %>
 
-                <% if (user._id.equals(userInfo._id)) { %>
+                <% if (loggedIn && user._id.equals(userInfo._id)) { %>
                     <a class='btn btn-outline-dark' href='/profile/update'>Edit</a>
                 <% } else if (status === 'admin') { %>
                     <a class='btn btn-outline-dark' href='/profile/update/<%= userInfo._id %>'>Edit</a>
