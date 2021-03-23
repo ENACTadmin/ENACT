@@ -590,7 +590,6 @@ app.get('/networking',
             }
         }
         duplicate = duplicate.sort((a, b) => a.score.localeCompare(b.score))
-        console.log(duplicate)
         res.render('./pages/networking', {
             profileInfo: duplicate,
             state: 'U.S.'
