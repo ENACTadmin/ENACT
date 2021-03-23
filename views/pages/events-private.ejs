@@ -103,6 +103,7 @@
 
                                                         <a type="button"
                                                            href="/event/send/<%= futureEventsInfo[i]._id %>"
+                                                           onclick="reminderSent()"
                                                            class="btn btn-primary">
                                                             Send Reminders
                                                         </a>
@@ -221,6 +222,7 @@
                                                                 data-target='#deleteModal<%= pastEventsInfo[i]._id %>'>
                                                             Delete
                                                         </button>
+
                                                     </li>
                                                 <% } %>
                                             </ul>
@@ -555,6 +557,9 @@
 
     function showAddModal() {
         $("#modal-view-event-add").modal()
+    }
+    function reminderSent() {
+        alert("Emails has been sent successfully.");
     }
 </script>
 
