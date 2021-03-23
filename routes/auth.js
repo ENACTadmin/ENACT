@@ -11,7 +11,7 @@ const User = require('../models/User');
 const Faculty = require('../models/Faculty');
 const CourseMember = require('../models/CourseMember');
 const Verification = require('../models/Verification');
-
+const TA = require('../models/TA');
 
 const configPassport = require('../config/passport');
 configPassport(passport);
@@ -48,11 +48,18 @@ router.use(async (req, res, next) => {
             res.locals.courseInfoSet = courseInfoSet
         } else {
             let user = await Faculty.findOne({email: email})
+            let userAlt = await TA.findOne({email: email})
             if (user) {
                 res.locals.status = user.status
                 userInfo.status = 'faculty'
                 await userInfo.save()
                 res.locals.courseInfoSet = await Course.find({ownerId: req.user._id})
+            } else if (userAlt) {
+                res.locals.status = 'TA'
+                userInfo.status = 'TA'
+                await userInfo.save()
+                let courseId = userAlt.courseId
+                res.locals.courseInfoSet = await Course.find({_id: {_id: {$in: courseId}}})
             } else {
                 let enrolledCourses = req.user.enrolledCourses
                 let courseInfoSet = await Course.find({_id: {$in: enrolledCourses}})

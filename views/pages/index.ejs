@@ -38,60 +38,72 @@
                         <a href="https://go.brandeis.edu/ENACT" class="btn btn-sm btn-warning">More About ENACT</a>
                     <% } %>
                     <br>
-                    <b style="color: #FF9912">- ENACT Students & Alumni: </b> search student work. Network with students and alumni.
-                    <% if (!loggedIn) { %>
+                    <% if (loggedIn && status === 'student') { %>
+                        <b style="color: #FF9912">- ENACT Students & Alumni: </b> search student work. Network with students and alumni.
+                        <br>
+                    <% } else if (!loggedIn) { %>
+                        <b style="color: #FF9912">- ENACT Students & Alumni: </b> search student work. Network with students and alumni.
                         <a href="/login" class="btn btn-sm btn-warning">Click to Login</a>
+                        <br>
                     <% } %>
-                    <br>
-                    <b style="color: #FF9912">- ENACT Faculty Fellows: </b> access ENACT teaching resources and student work.
-                    <% if (!loggedIn) { %>
+                    <% if (loggedIn && status === 'faculty' || loggedIn && status === 'admin') { %>
+                        <b style="color: #FF9912">- ENACT Faculty Fellows: </b> access ENACT teaching resources and student work.
+                        <br>
+                    <% } else if (!loggedIn) { %>
+                        <b style="color: #FF9912">- ENACT Faculty Fellows: </b> access ENACT teaching resources and student work.
                         <a href="/login" class="btn btn-sm btn-warning">Click to Login</a>
+                        <br>
                     <% } %>
-                    <br>
-                    <b style="color: #FF9912">- Public: </b> access student work on bills from across the U.S., including op-eds, issue research and more.
+                    <% if (!loggedIn) { %>
+                        <b style="color: #FF9912">- Public: </b> access student work on bills from across the U.S., including op-eds, issue research and more.
+                    <% } %>
                 </div>
                 <div class='form-demo'>
                     <% if (loggedIn) { %>
                         <% if (status === 'admin' || status === 'faculty') { %>
                             <a href='/courses'>
-                                <button class='form-demo__large fa' style="font-size: x-large; font-weight: 680">
+                                <button class='form-demo__large fa' style="font-size: large; font-weight: 680">
                                     Courses &#xf02d
                                 </button>
                             </a>
                             <a href='/resources/search/private/advanced'>
-                                <button class='form-demo__large fa' style="font-size: x-large; font-weight: 680">
+                                <button class='form-demo__large fa' style="font-size: large; font-weight: 680">
                                     Search Resources &#xf002
                                 </button>
                             </a>
                             <a href='/resources/view/faculty'><input type='submit' name='submit'
                                                                      class='form-demo__large fa'
-                                                                     style="font-size: x-large; font-weight: 680"
+                                                                     style="font-size: large; font-weight: 680"
                                                                      value='Guide For Faculty &#xf14e'></a>
                         <% } else { %>
                             <a href='/resources/search/private/advanced'><input type='submit' name='submit'
                                                                                 class='form-demo__large fa'
-                                                                                style="font-size: x-large; font-weight: 680"
+                                                                                style="font-size: large; font-weight: 680"
                                                                                 value='Search Resources &#xf002;'></a>
                             <a href='/networking'><input type='submit' name='submit'
                                                          class='form-demo__large fa'
-                                                         style="font-size: x-large; font-weight: 680"
+                                                         style="font-size: large; font-weight: 680"
                                                          value="Networking &#xf08c;"></a>
 
                         <% } %>
                     <% } else { %>
                         <a href='/resources/view/my/public/all'><input type='submit' name='submit'
                                                                        class='form-demo__large fa'
-                                                                       style="font-size: x-large; font-weight: 680"
+                                                                       style="font-size: large; font-weight: 680"
                                                                        value='Search Resources &#xf002'></a>
                         <a id="scrollToPlace1"><input type='submit' name='submit'
                                                       class='form-demo__large fa'
-                                                      style="font-size: x-large; font-weight: 680"
+                                                      style="font-size: large; font-weight: 680"
                                                       value='Get Started &#8595;'></a>
                     <% } %>
                     <a id="scrollToPlace2"><input type='submit' name='submit'
                                                   class='form-demo__large fa'
-                                                  style="font-size: x-large; font-weight: 680"
+                                                  style="font-size: large; font-weight: 680"
                                                   value='Intro Video &#8595;'></a>
+                    <a id="scrollToPlace4"><input type='submit' name='submit'
+                                                  class='form-demo__large fa'
+                                                  style="font-size: large; font-weight: 680"
+                                                  value='Upcoming Events &#8595;'></a>
                 </div>
             </div>
         </div>
@@ -251,6 +263,7 @@
 
 <!-- Calendar -->
 <section class='section section__grey'>
+    <div style="margin-top: 100px" id="place4"></div>
     <section class='section__content section__content--fluid-width'>
         <br><br><br>
         <h2 class='section__title section__title--centered' data-aos='fade-up'>Events</h2>
@@ -390,6 +403,7 @@
             <h2 class='section__title section__title--centered1' style="color: white" data-aos='fade-up'>Intro Video</h2>
             <div id="place2"></div>
             <br><br><br>
+            <!--            <video style="width: 100%" controls poster="https://www.brandeis.edu/ethics/images/enact/enactlogo.jpg">-->
             <video style="width: 100%" controls>
                 <source src="https://enact-resources.s3.us-east-2.amazonaws.com/Getting+to+Know+ENACT+March+16+2021.MOV" type="video/mp4">
             </video>
@@ -432,6 +446,9 @@
             });
             $("#scrollToPlace3").click(function () {
                 $('html,body').animate({scrollTop: (0)}, 'slow');
+            });
+            $("#scrollToPlace4").click(function () {
+                $('html,body').animate({scrollTop: ($("#place4").offset().top - 40)}, 'slow');
             });
         }
     )
