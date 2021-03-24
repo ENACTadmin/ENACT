@@ -1,7 +1,7 @@
 $(document).ready(function () {
     // Delete modal
     $('#deleteModal').hide()
-    $(".deleteBtn").click(function () {
+    $(document).on('click', ".deleteBtn", function () {
         let resource = null
         $.ajax({
             type: 'GET',
@@ -19,7 +19,7 @@ $(document).ready(function () {
 
     // Edit modal
     $('#editModal').hide()
-    $(".editBtn").click(function () {
+    $(document).on('click', ".editBtn", function () {
         let resource = null
         $.ajax({
             type: 'GET',
