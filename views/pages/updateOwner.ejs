@@ -1,7 +1,7 @@
 <%- include('../components/header'); -%>
 <%- include('../components/navbar'); -%>
 
-<script src="/js/autocomplete.js"></script>
+<script src="/js/autocompleteResourceOwner.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/disableautofill/src/jquery.disableAutoFill.min.js"></script>
 <script>
@@ -12,7 +12,7 @@
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
             <div class='section__title section__title--centered'>
-                Update Owner for <%= resource.name %>
+                Update owner for resource: <%= resource.name %>
             </div>
             <h4>If you do not see any pop-up suggestions after entering the new owner's name, that means the user is <b>not</b> in our system. </h4>
             <a class="btn btn-outline-primary" href="/resources/view/favorite">Go back to my favorites</a>

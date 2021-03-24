@@ -98,7 +98,7 @@ router.get('/login/authorized',
 
 router.get('/login',
     (req, res) =>
-        res.render('./pages/login', {
+        res.render('./pages/login/login', {
             secret: 'general'
         })
 )
@@ -139,7 +139,7 @@ router.get('/messages/view/redirect',
 
 router.get('/login-fail',
     (req, res) =>
-        res.render('./pages/login-fail')
+        res.render('./pages/login/login-fail')
 )
 
 
@@ -148,7 +148,7 @@ const adminList = ["tjhickey@brandeis.edu", "bbdhy96@gmail.com", "enact@brandeis
 
 router.get('/signup',
     (req, res) =>
-        res.render('./pages/signup')
+        res.render('./pages/login/signup')
 )
 
 router.post('/signup',
@@ -160,7 +160,7 @@ router.post('/signup',
 
 router.get('/reset',
     (req, res) =>
-        res.render('./pages/login-reset')
+        res.render('./pages/login/login-reset')
 )
 
 router.post('/reset',
@@ -183,7 +183,7 @@ router.post('/reset',
 router.get('/reset/:id',
     async (req, res) => {
         let user = await User.findOne({_id: req.params.id})
-        res.render('./pages/login-resetPwd', {
+        res.render('./pages/login/login-resetPwd', {
             userIdParam: req.params.id,
             emailFromServer: user.googleemail || user.workEmail
         })
@@ -225,7 +225,7 @@ router.get('/verification',
         if (adminList.includes(req.user.googleemail) || adminList.includes(req.user.workEmail) || temp) {
             res.redirect("/profile/update")
         } else {
-            res.render('./pages/verification')
+            res.render('./pages/login/verification')
         }
     }
 )

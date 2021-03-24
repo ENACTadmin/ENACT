@@ -146,7 +146,7 @@ exports.loadApprovedResources = async (req, res, next) => {
             checkStatus: 'approve',
             ownerId: req.user._id
         }).sort({'createdAt': -1})
-        res.render('./pages/approvedResources')
+        res.render('./pages/showApprovedResources')
     } catch (e) {
         console.log("error: " + e)
         next(e)
@@ -158,7 +158,7 @@ exports.loadPartPublicResources = async (req, res, next) => {
         res.locals.resourceInfo = await Resource.find({
             status: 'partPublic'
         }).sort({'createdAt': -1})
-        res.render('./pages/approvePublicResources')
+        res.render('./pages/showResourcesUnderReview-public')
     } catch (e) {
         console.log("error: " + e)
         next(e)

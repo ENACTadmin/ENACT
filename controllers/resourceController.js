@@ -101,7 +101,7 @@ exports.uploadResource = async (req, res, next) => {
                 }
             }
         }
-        res.render('./pages/resources/uploadSuccess', {
+        res.render('./pages/status/uploadSuccess', {
             req: req,
             courseId: courseId
         })
@@ -280,7 +280,7 @@ exports.loadResources = async (req, res, next) => {
         let resources = await Resource.find({
             courseId: courseId,
             checkStatus: checkStatus
-        }).sort({yearOfCreation: -1}).limit(toLimit)
+        }).sort({yearOfCreation: -1, createdAt: -1}).limit(toLimit)
         let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
         let resourceIds = null
         if (starred) {
@@ -298,13 +298,13 @@ exports.loadResources = async (req, res, next) => {
 
 exports.loadMoreResources = async (req, res, next) => {
     const courseId = req.params.courseId
-    const skip = parseInt(req.params.limit) + (parseInt(req.params.skip) - 1) * 5
+    const skip = parseInt(req.params.limit)
     const checkStatus = 'approve'
     try {
         let resources = await Resource.find({
             courseId: courseId,
             checkStatus: checkStatus
-        }).sort({yearOfCreation: -1}).skip(skip).limit(5)
+        }).sort({yearOfCreation: -1, createdAt: -1}).skip(skip)
         let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
         let resourceIds = null
         if (starred) {
@@ -548,7 +548,6 @@ exports.starResource = async (req, res, next) => {
         // save to db
         resourceSet.resources = newResourceIds
         await resourceSet.save()
-        console.log("star success!")
         res.send()
     } catch (e) {
         next(e)
@@ -569,62 +568,7 @@ exports.unstarResource = async (req, res, next) => {
         resourceSet.resources = newResourceIds
         await resourceSet.save()
         console.log("unstar success!")
-        res.send()
-    } catch (e) {
-        next(e)
-    }
-}
-
-exports.starResourceAlt = async (req, res, next) => {
-    try {
-        let resourceId = await req.params.resourceId
-        let resourceSet = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
-        // if resourceSet collection is empty, then create a new instance
-        if (!resourceSet) {
-            let newResourceSet = new ResourceSet({
-                ownerId: req.user._id,
-                name: 'favorite',
-                createdAt: new Date()
-            })
-            await newResourceSet.save()
-            resourceSet = newResourceSet
-        }
-        // use the newly created instance or the one in the database
-        let resourceIds = resourceSet.resources
-        let newResourceIds
-        if (!resourceIds) {
-            newResourceIds = [resourceId]
-        } else {
-            newResourceIds = [resourceId].concat(resourceIds)
-        }
-        // save to db
-        resourceSet.resources = newResourceIds
-        await resourceSet.save()
-        res.locals.resourceIds = newResourceIds
-        console.log("star success!")
-        res.send()
-    } catch (e) {
-        next(e)
-    }
-}
-
-exports.unstarResourceAlt = async (req, res, next) => {
-    try {
-        let resourceId = req.params.resourceId
-        let resourceSet = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
-        let resourceIds = resourceSet.resources
-        // console.log("ids: ", resourceIds)
-        let newResourceIds = []
-        for (let i = 0; i < resourceIds.length; i++) {
-            if (resourceIds[i].toString() !== resourceId) {
-                newResourceIds.push(resourceIds[i])
-            }
-        }
-        resourceSet.resources = newResourceIds
-        await resourceSet.save()
-        res.locals.resourceIds = newResourceIds
-        console.log("unstar success!")
-        res.send()
+        return res.send()
     } catch (e) {
         next(e)
     }
