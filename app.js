@@ -86,7 +86,12 @@ app.get('/',
     resourceController.loadDisplayedResources,
     resourceController.loadImages,
     async (req, res) => {
-        let eventsInfo = await Event.find({}).sort({start: -1})
+        let eventsInfo;
+        if (res.locals.loggedIn) {
+            eventsInfo = await Event.find({}).sort({start: -1})
+        } else {
+            eventsInfo = await Event.find({visibility: 'public'}).sort({start: -1})
+        }
         eventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() >= new Date().getTime());
         res.locals.eventsInfo = eventsInfo
         res.render('./pages/index')
@@ -95,22 +100,22 @@ app.get('/',
 app.get('/about',
     resourceController.loadImages,
     (req, res) =>
-        res.render('./pages/about'))
+        res.render('./pages/staticPages/about'))
 
 app.get('/contact',
     (req, res) =>
-        res.render('./pages/contact'))
+        res.render('./pages/staticPages/contact'))
 
 app.get('/help',
     (req, res) =>
-        res.render('./pages/help'))
+        res.render('./pages/staticPages/help'))
 
 //*******************************************
 //***********Course related******************
 app.get('/course',
     utils.checkUserName,
     (req, res) =>
-        res.render('./pages/createCourse'))
+        res.render('./pages/course-create'))
 
 app.get('/courses/schedule',
     utils.checkUserName,
@@ -118,7 +123,7 @@ app.get('/courses/schedule',
     (req, res) =>
         res.render('./pages/courses-schedule'))
 
-// rename this to /createCourse and update the ejs form
+// rename this to /course-create and update the ejs form
 app.post('/course',
     courseController.createNewClass,
     courseController.addToOwnedCourses
@@ -137,7 +142,7 @@ app.get('/course/view/:courseId/:limit',
     resourceController.loadResources
 )
 
-app.get('/course/:limit/:courseId/:skip',
+app.get('/course/:courseId/:limit',
     utils.checkUserName,
     courseController.showOneCourse,
     resourceController.loadMoreResources
@@ -164,7 +169,7 @@ app.get('/course/copy/:courseId',
     utils.checkUserName,
     async (req, res) => {
         let courseInfo = await Course.findOne({_id: req.params.courseId})
-        res.render('./pages/copyCourse', {
+        res.render('./pages/course-copy', {
             courseInfo: courseInfo
         })
     }
@@ -197,10 +202,10 @@ app.get('/course/join',
     utils.checkUserName,
     async (req, res) => {
         if (req.user.status !== 'admin')
-            res.render('./pages/joinACourse')
+            res.render('./pages/course-join')
         else {
             let courseInfo = await Course.find()
-            res.render('./pages/joinACourseAlt', {
+            res.render('./pages/admin-course-join', {
                 enrolledCourses: req.user.enrolledCourses,
                 courseInfo: courseInfo
             })
@@ -295,7 +300,7 @@ app.get('/resources/view/faculty',
     utils.checkUserName,
     resourceController.loadAllFacultyResources,
     (req, res) =>
-        res.render('./pages/faculty-guide')
+        res.render('./pages/showFacultyGuide')
 )
 
 app.get('/resources/view/faculty/:contentType',
@@ -344,14 +349,6 @@ app.post('/resource/star/:resourceId',
 
 app.post('/resource/unstar/:resourceId',
     resourceController.unstarResource
-)
-
-app.post('/resource/starAlt/:resourceId',
-    resourceController.starResourceAlt
-)
-
-app.post('/resource/unstarAlt/:resourceId',
-    resourceController.unstarResourceAlt
 )
 
 app.get('/resources/view/private',
@@ -632,7 +629,7 @@ app.get('/messages/view/:sender/:receiver/:resourceId',
 app.get('/login/messages/view/:sender/:receiver/:resourceId',
     (req, res, next) => {
         req.session['redirectPath'] = req.params.sender + '/' + req.params.receiver + '/' + req.params.resourceId
-        res.render('./pages/login', {
+        res.render('./pages/login/login', {
             secret: 'redirect',
             req: req
         })

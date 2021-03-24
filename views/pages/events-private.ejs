@@ -4,6 +4,8 @@
 
 <% let id_set = []; %>
 
+<script src="/js/daylightTime.js"></script>
+
 <section class='section'>
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
@@ -489,30 +491,8 @@
 <% } %>
 
 <p hidden id='idSet'><%= id_set %></p>
-
 <script>
     $(document).ready(function () {
-
-            Date.prototype.stdTimezoneOffset = function () {
-                var jan = new Date(this.getFullYear(), 0, 1);
-                var jul = new Date(this.getFullYear(), 6, 1);
-                return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
-            }
-
-            Date.prototype.isDstObserved = function () {
-                return this.getTimezoneOffset() < this.stdTimezoneOffset();
-            }
-
-            var today = new Date();
-            if (today.isDstObserved()) {
-                $(".DST").each(function () {
-                    $(this).val(1)
-                })
-            } else {
-                $(".DST").each(function () {
-                    $(this).val(0)
-                })
-            }
             let n = new Date().getTimezoneOffset() / 60;
             let timezone = '';
             if (new Date().isDstObserved()) {
@@ -606,6 +586,7 @@
     function showAddModal() {
         $("#modal-view-event-add").modal()
     }
+
     function reminderSent() {
         alert("Emails has been sent successfully.");
     }

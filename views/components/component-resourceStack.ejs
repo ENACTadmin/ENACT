@@ -1,4 +1,4 @@
-<script src="/js/likeAjax1.js"></script>
+<script src="/js/likeAjax.js"></script>
 <script src="/js/loadAjax.js"></script>
 
 <p hidden id="findMe"></p>
@@ -46,7 +46,6 @@
                     <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                         <h5 style="display: inline">Actions:</h5>
                         <button type="submit"
-
                                 class='focusMe btn btn-outline-danger'
                                 id="<%= resourceInfo[i]._id %>">
                             <% if (resourceIds && resourceIds.toString().includes(resourceInfo[i]._id.toString())) { %>
@@ -58,14 +57,12 @@
                         <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id.toString()) { %>
                             <button id="<%= resourceInfo[i]._id %>" type='button'
                                     class='editBtn btn btn-outline-info'
-
                                     data-toggle='modal'
                                     data-target='#editModal'>
                                 Edit
                             </button>
                             <button id="<%= resourceInfo[i]._id %>" type='button'
                                     class='deleteBtn btn btn-outline-danger'
-
                                     data-toggle='modal'
                                     data-target='#deleteModal'>
                                 Delete

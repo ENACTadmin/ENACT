@@ -4,14 +4,14 @@ $(document).ready(function () {
         let courseId = $('#courseId').text()
         $.ajax({
             type: 'GET',
-            url: '/course/' + ($('.card-body').length - 3) + '/' + courseId + '/' + $('#skip').text(),
+            url: '/course/' + courseId + '/' + ($('.card-body').length - 3),
             async: false,
             dataType: 'json',
             success: function (data) {
                 if (data && data.length > 0) {
                     for (let i = 0; i < data.length; i++) {
                         let htmlToAppend = '<div class=\'shadow card-body\' style="margin-bottom: 20px">\n' +
-                            '            <h4>' + data[i].name + '</h4>' +
+                            '            <h3>' + data[i].name + '</h3>' +
                             '            <div class=\'card-text\'>' +
                             '                <ul class=\'list-group\'>' +
                             '                    <li class=\'list-group-item borderless box-padding bg-transparent\'>' +
@@ -51,7 +51,6 @@ $(document).ready(function () {
                         htmlToAppend += '<li class=\'list-group-item borderless box-padding bg-transparent\'>\n' +
                             '                        <h5 style="display: inline">Actions:</h5>\n' +
                             '                        <button type="submit"\n' +
-                            '                                style=\'border:0px solid transparent\'\n' +
                             '                                class=\'focusMe btn btn-outline-danger\'\n' +
                             '                                id="' + data[i]._id + '">' + '\n'
 
@@ -64,14 +63,12 @@ $(document).ready(function () {
                             htmlToAppend +=
                                 '                            <button id="' + data[i]._id + '" type=\'button\'\n' +
                                 '                                    class=\'editBtn btn btn-outline-info\'\n' +
-                                '                                    style=\'border:0 solid transparent\'\n' +
                                 '                                    data-toggle=\'modal\'\n' +
                                 '                                    data-target=\'#editModal\'>\n' +
                                 '                                Edit\n' +
                                 '                            </button>\n' +
                                 '                            <button id="' + data[i]._id + '" type=\'button\'\n' +
                                 '                                    class=\'deleteBtn btn btn-outline-danger\'\n' +
-                                '                                    style=\'border:0px solid transparent\'\n' +
                                 '                                    data-toggle=\'modal\'\n' +
                                 '                                    data-target=\'#deleteModal\'>\n' +
                                 '                                Delete\n' +
@@ -84,9 +81,6 @@ $(document).ready(function () {
                         }
                         htmlToAppend += '                    </li></div>'
                         htmlToAppend += '<div id="appendAfterMe' + (parseInt($('#skip').text()) + 1) + '"' + '></div>'
-                        htmlToAppend += '<script src="/js/likeAjax1.js"></script>\n'
-                        htmlToAppend += '<script src="/js/editModalAjax.js"></script>\n'
-
                         $('#appendAfterMe' + $('#skip').text()).hide().append(htmlToAppend).slideDown()
                         $('#skip').text(parseInt($('#skip').text()) + 1)
                     }

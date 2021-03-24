@@ -26,7 +26,7 @@ exports.loadUnderReviewTags = async (req, res, next) => {
         res.locals.tagsInfo = await Tag.find({
             status: 'underReview'
         }).sort({'createdAt': -1})
-        res.render('./pages/approveTags')
+        res.render('./pages/showTagsUnderReview')
     } catch (e) {
         console.log("error: " + e)
         next(e)
@@ -66,7 +66,7 @@ exports.loadTags = async (req, res, next) => {
         res.locals.tagsInfo = await Tag.find({
             ownerId: req.user._id
         }).sort({'createdAt': -1})
-        res.render('./pages/newAreas')
+        res.render('./pages/showProposedTags')
     } catch (e) {
         console.log("error: " + e)
         next(e)

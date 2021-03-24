@@ -138,7 +138,7 @@ exports.loadFaculty = async (req, res, next) => {
                 else
                     approvedByList.push("unknown")
             }
-            res.render('./pages/createFaculty', {
+            res.render('./pages/admin-createFaculty', {
                 approvedList: approvedList,
                 approvedByList: approvedByList
             })
@@ -206,7 +206,7 @@ exports.showFacultyProfiles = async (req, res, next) => {
             }]
     }).sort({userName: -1})
     try {
-        res.render('./pages/facultyList', {
+        res.render('./pages/showFacultyList', {
             profileInfo: duplicate,
             staffInfo: staffInfo
         })

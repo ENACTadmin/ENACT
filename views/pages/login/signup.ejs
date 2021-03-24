@@ -1,5 +1,5 @@
-<%- include('../components/header'); -%>
-<%- include('../components/navbar'); -%>
+<%- include('../../components/header'); -%>
+<%- include('../../components/navbar'); -%>
 
 <section class='section section__grey' data-aos='fade-up' style="height: 100%; padding-top: 8%">
     <div class="container">
@@ -7,22 +7,24 @@
             <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
                 <div class="card card-signin my-5">
                     <div class="card-body">
-                        <h5 class="card-title text-center">Reset Password</h5>
-                        <form class="form-signin" action="/reset/<%= userIdParam %>" method="post">
-                            <div hidden class="form-label-group">
-                                <input type="text" name="email" id="Username" class="form-control" value="<%= emailFromServer %>"
+                        <h5 class="card-title text-center">Sign Up</h5>
+                        <form class="form-signin" action="/signup" method="post">
+                            <div class="form-label-group">
+                                <input type="text" name="email" id="Username" class="form-control"
                                        placeholder="Username"
                                        required autofocus>
                                 <label for="Username">Email</label>
                             </div>
+
                             <div class="form-label-group">
                                 <input type="password" name="password" id="inputPassword" class="form-control"
-                                       placeholder="New Password"
+                                       placeholder="Password"
                                        required>
-                                <label for="inputPassword">New Password</label>
+                                <label for="inputPassword">Password</label>
                             </div>
                             <br>
-                            <input name="submit" class="btn btn-lg btn-primary btn-block text-uppercase" value="save"
+
+                            <input name="submit" class="btn btn-lg btn-primary btn-block text-uppercase" value="sign up"
                                    type="submit">
                         </form>
                     </div>
@@ -32,4 +34,4 @@
     </div>
 </section>
 
-<%- include('../components/footer'); -%>
+<%- include('../../components/footer'); -%>
