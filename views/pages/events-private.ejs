@@ -493,95 +493,94 @@
 <p hidden id='idSet'><%= id_set %></p>
 <script>
     $(document).ready(function () {
-            let n = new Date().getTimezoneOffset() / 60;
-            let timezone = '';
-            if (new Date().isDstObserved()) {
-                switch (n) {
-                    case 3:
-                        timezone = 'US/Atlantic';
-                        break;
-                    case 4:
-                        timezone = 'US/Eastern';
-                        break;
-                    case 5:
-                        timezone = 'US/Central';
-                        break;
-                    case 6:
-                        timezone = 'US/Mountain';
-                        break;
-                    case 7:
-                        timezone = 'US/Pacific';
-                        break;
-                    case 8:
-                        timezone = 'US/Alaska';
-                        break;
-                    case 9:
-                        timezone = 'US/Hawaii‑Aleutian';
-                        break;
-                }
-            } else {
-                switch (n) {
-                    case 4:
-                        timezone = 'US/Atlantic';
-                        break;
-                    case 5:
-                        timezone = 'US/Eastern';
-                        break;
-                    case 6:
-                        timezone = 'US/Central';
-                        break;
-                    case 7:
-                        timezone = 'US/Mountain';
-                        break;
-                    case 8:
-                        timezone = 'US/Pacific';
-                        break;
-                    case 9:
-                        timezone = 'US/Alaska';
-                        break;
-                    case 10:
-                        timezone = 'US/Hawaii‑Aleutian';
-                        break;
-                }
+        let n = new Date().getTimezoneOffset() / 60;
+        let timezone = '';
+        if (new Date().isDstObserved()) {
+            switch (n) {
+                case 3:
+                    timezone = 'US/Atlantic';
+                    break;
+                case 4:
+                    timezone = 'US/Eastern';
+                    break;
+                case 5:
+                    timezone = 'US/Central';
+                    break;
+                case 6:
+                    timezone = 'US/Mountain';
+                    break;
+                case 7:
+                    timezone = 'US/Pacific';
+                    break;
+                case 8:
+                    timezone = 'US/Alaska';
+                    break;
+                case 9:
+                    timezone = 'US/Hawaii‑Aleutian';
+                    break;
             }
-            $('#fillMe').text(timezone);
-            $(".TZTZ").each(function () {
-                $(this).val(new Date().getTimezoneOffset())
-            })
-            let id_set = $('#idSet').text()
-            if (id_set.length !== 0) {
-                let id_set_array = id_set.split(',')
-                for (let i = 0; i < id_set_array.length; i++) {
-                    let realType = $('#visiFromServer' + id_set_array[i]).text()
-                    $('#visibility' + id_set_array[i] + ' option').each(function () {
-                        if ($(this).val() === realType) {
-                            $(this).prop('selected', true)
-                        }
-                    })
-                }
+        } else {
+            switch (n) {
+                case 4:
+                    timezone = 'US/Atlantic';
+                    break;
+                case 5:
+                    timezone = 'US/Eastern';
+                    break;
+                case 6:
+                    timezone = 'US/Central';
+                    break;
+                case 7:
+                    timezone = 'US/Mountain';
+                    break;
+                case 8:
+                    timezone = 'US/Pacific';
+                    break;
+                case 9:
+                    timezone = 'US/Alaska';
+                    break;
+                case 10:
+                    timezone = 'US/Hawaii‑Aleutian';
+                    break;
             }
-            $(".TZChange").each(function () {
-                let oldDate = $(this).text()
-                let newDate = new Date(oldDate)
-                $(this).text(newDate.toLocaleDateString())
-            })
-            $(".TZChange1").each(function () {
-                let today = new Date()
-                let oldDate = $(this).text()
-                let newDate = new Date(oldDate + today.getTimezoneOffset())
-                let minutes = newDate.getMinutes()
-                let hours = newDate.getHours()
-                let APM = hours >= 12 ? 'PM' : 'AM';
-                hours = hours % 12
-                hours = hours ? hours : 12;
-                if (minutes.toString().length === 1)
-                    minutes = '0' + minutes.toString()
-                if (hours.toString().length === 1)
-                    hours = '0' + hours.toString()
-                $(this).text(hours + ':' + minutes + ' ' + APM)
-            })
         }
-    )
+        $('#fillMe').text(timezone);
+        $(".TZTZ").each(function () {
+            $(this).val(new Date().getTimezoneOffset())
+        })
+        let id_set = $('#idSet').text()
+        if (id_set.length !== 0) {
+            let id_set_array = id_set.split(',')
+            for (let i = 0; i < id_set_array.length; i++) {
+                let realType = $('#visiFromServer' + id_set_array[i]).text()
+                $('#visibility' + id_set_array[i] + ' option').each(function () {
+                    if ($(this).val() === realType) {
+                        $(this).prop('selected', true)
+                    }
+                })
+            }
+        }
+        $(".TZChange").each(function () {
+            let oldDate = $(this).text()
+            let newDate = new Date(oldDate)
+            $(this).text(newDate.toLocaleDateString())
+        })
+        $(".TZChange1").each(function () {
+            let today = new Date()
+            let oldDate = $(this).text()
+            let newDate = new Date(oldDate + today.getTimezoneOffset())
+            let minutes = newDate.getMinutes()
+            let hours = newDate.getHours()
+            let APM = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12
+            hours = hours ? hours : 12;
+            if (minutes.toString().length === 1)
+                minutes = '0' + minutes.toString()
+            if (hours.toString().length === 1)
+                hours = '0' + hours.toString()
+            $(this).text(hours + ':' + minutes + ' ' + APM + ' (' + timezone + ')')
+        })
+    });
 
     function showAddModal() {
         $("#modal-view-event-add").modal()

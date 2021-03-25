@@ -2,7 +2,7 @@
 <%- include('../components/navbar'); -%>
 
 <% let id_set = []; %>
-<script src="/js/daylightTime.js"></script>`
+<script src="/js/daylightTime.js"></script>
 
 <section class='section'>
     <div class='section__content section__content--full-width'>
@@ -347,11 +347,14 @@
             let newDate = new Date(oldDate + today.getTimezoneOffset())
             let minutes = newDate.getMinutes()
             let hours = newDate.getHours()
+            let APM = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12
+            hours = hours ? hours : 12;
             if (minutes.toString().length === 1)
                 minutes = '0' + minutes.toString()
             if (hours.toString().length === 1)
                 hours = '0' + hours.toString()
-            $(this).text(hours + ':' + minutes)
+            $(this).text(hours + ':' + minutes + ' ' + APM + ' (' + timezone + ')')
         })
         $("#scrollMe").click(function () {
             $('html,body').animate({scrollTop: $("#ongoing_courses").offset().top}, 'slow');
