@@ -6,6 +6,8 @@
     AOS.init();
 </script>
 
+<script src="/js/daylightTime.js"></script>
+
 <header class='header header--sticky'>
     <div class='header__content header__content--fluid-width'>
         <a class='header__logo-title' href='/'>
@@ -32,10 +34,10 @@
             <div class='intro__content' data-aos="fade-right" data-aos-duration="600">
                 <div class='intro__description' style='color: black; line-height: 165%'>
                     <b style='color: #0053a4'>ENACT: Educational Network for Active Civic Transformation</b> is a
-                    national, non-partisan program engaging undergraduates at colleges and universities in
+                    national, non-partisan program based at <a href="https://www.brandeis.edu">Brandeis University</a>, engaging undergraduates at colleges and universities in
                     state-level legislative change.
                     <% if (!loggedIn) { %>
-                        <a href="https://www.enactnetwork.org/about" class="btn btn-sm btn-warning">More About ENACT</a>
+                        <a href="https://www.enactnetwork.org/about" class="btn btn-sm btn-warning">Learn More</a>
                     <% } %>
                     <br>
                     <% if (loggedIn && status === 'student') { %>
@@ -96,14 +98,14 @@
                                                       style="font-size: large; font-weight: 680"
                                                       value='Get Started &#8595;'></a>
                     <% } %>
-                    <a id="scrollToPlace2"><input type='submit' name='submit'
-                                                  class='form-demo__large fa'
-                                                  style="font-size: large; font-weight: 680"
-                                                  value='Intro Video &#8595;'></a>
                     <a id="scrollToPlace4"><input type='submit' name='submit'
                                                   class='form-demo__large fa'
                                                   style="font-size: large; font-weight: 680"
                                                   value='Upcoming Events &#8595;'></a>
+                    <a id="scrollToPlace2"><input type='submit' name='submit'
+                                                  class='form-demo__large fa'
+                                                  style="font-size: large; font-weight: 680"
+                                                  value='Intro Video &#8595;'></a>
                 </div>
             </div>
         </div>
@@ -332,7 +334,7 @@
         <div class='text-center' data-aos='fade-up' style="padding-bottom: 80px" data-aos-delay="100">
             <a href='/events'><input type='button' name='submit'
                                      class='btn btn-lg btn-primary'
-                                     value='View more events'></a>
+                                     value='View Upcoming & Past Events'></a>
         </div>
     </section>
 </section>
@@ -420,37 +422,90 @@
 
 <script>
     $(document).ready(function () {
-            $(".TZChange").each(function () {
-                let oldDate = $(this).text()
-                let newDate = new Date(oldDate)
-                $(this).text(newDate.toLocaleDateString())
-            })
-            $(".TZChange1").each(function () {
-                let today = new Date()
-                let oldDate = $(this).text()
-                let newDate = new Date(oldDate + today.getTimezoneOffset())
-                let minutes = newDate.getMinutes()
-                let hours = newDate.getHours()
-                if (minutes.toString().length === 1)
-                    minutes = '0' + minutes.toString()
-                if (hours.toString().length === 1)
-                    hours = '0' + hours.toString()
-                $(this).text(hours + ':' + minutes)
-            })
-            $("#scrollToPlace1").click(function () {
-                $('html,body').animate({scrollTop: ($("#place1").offset().top - 40)}, 'slow');
-            });
-            $("#scrollToPlace2").click(function () {
-                $('html,body').animate({scrollTop: ($("#place2").offset().top - 40)}, 'slow');
-            });
-            $("#scrollToPlace3").click(function () {
-                $('html,body').animate({scrollTop: (0)}, 'slow');
-            });
-            $("#scrollToPlace4").click(function () {
-                $('html,body').animate({scrollTop: ($("#place4").offset().top - 40)}, 'slow');
-            });
+        let n = new Date().getTimezoneOffset() / 60;
+        let timezone = '';
+        if (new Date().isDstObserved()) {
+            switch (n) {
+                case 3:
+                    timezone = 'US/Atlantic';
+                    break;
+                case 4:
+                    timezone = 'US/Eastern';
+                    break;
+                case 5:
+                    timezone = 'US/Central';
+                    break;
+                case 6:
+                    timezone = 'US/Mountain';
+                    break;
+                case 7:
+                    timezone = 'US/Pacific';
+                    break;
+                case 8:
+                    timezone = 'US/Alaska';
+                    break;
+                case 9:
+                    timezone = 'US/Hawaii‑Aleutian';
+                    break;
+            }
+        } else {
+            switch (n) {
+                case 4:
+                    timezone = 'US/Atlantic';
+                    break;
+                case 5:
+                    timezone = 'US/Eastern';
+                    break;
+                case 6:
+                    timezone = 'US/Central';
+                    break;
+                case 7:
+                    timezone = 'US/Mountain';
+                    break;
+                case 8:
+                    timezone = 'US/Pacific';
+                    break;
+                case 9:
+                    timezone = 'US/Alaska';
+                    break;
+                case 10:
+                    timezone = 'US/Hawaii‑Aleutian';
+                    break;
+            }
         }
-    )
+        $(".TZChange").each(function () {
+            let oldDate = $(this).text()
+            let newDate = new Date(oldDate)
+            $(this).text(newDate.toLocaleDateString())
+        })
+        $(".TZChange1").each(function () {
+            let today = new Date()
+            let oldDate = $(this).text()
+            let newDate = new Date(oldDate + today.getTimezoneOffset())
+            let minutes = newDate.getMinutes()
+            let hours = newDate.getHours()
+            let APM = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12
+            hours = hours ? hours : 12;
+            if (minutes.toString().length === 1)
+                minutes = '0' + minutes.toString()
+            if (hours.toString().length === 1)
+                hours = '0' + hours.toString()
+            $(this).text(hours + ':' + minutes + ' ' + APM + ' (' + timezone + ')')
+        })
+        $("#scrollToPlace1").click(function () {
+            $('html,body').animate({scrollTop: ($("#place1").offset().top - 40)}, 'slow');
+        });
+        $("#scrollToPlace2").click(function () {
+            $('html,body').animate({scrollTop: ($("#place2").offset().top - 40)}, 'slow');
+        });
+        $("#scrollToPlace3").click(function () {
+            $('html,body').animate({scrollTop: (0)}, 'slow');
+        });
+        $("#scrollToPlace4").click(function () {
+            $('html,body').animate({scrollTop: ($("#place4").offset().top - 40)}, 'slow');
+        });
+    });
 </script>
 
 <%- include('../components/footer'); -%>

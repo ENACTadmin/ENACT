@@ -304,7 +304,7 @@ exports.loadMoreResources = async (req, res, next) => {
         let resources = await Resource.find({
             courseId: courseId,
             checkStatus: checkStatus
-        }).sort({yearOfCreation: -1, createdAt: -1}).skip(skip)
+        }).sort({yearOfCreation: -1, createdAt: -1}).skip(skip).limit(5)
         let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
         let resourceIds = null
         if (starred) {
