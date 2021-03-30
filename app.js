@@ -5,7 +5,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require("express-session");
 
-// Models!
+//*******************************************
+//***********Database Schemas****************
 const Event = require('./models/Event')
 const Course = require('./models/Course')
 const CourseTime = require('./models/CourseTime')
@@ -13,11 +14,10 @@ const Resource = require('./models/Resource')
 const User = require('./models/User')
 const AuthorAlt = require('./models/AuthorAlternative')
 const Faculty = require('./models/Faculty')
-const Tag = require('./models/Tag')
+
 
 //*******************************************
 //***********Controllers*********************
-
 const courseController = require('./controllers/courseController');
 const resourceController = require('./controllers/resourceController');
 const profileController = require('./controllers/profileController');
@@ -29,7 +29,6 @@ const utils = require('./controllers/utils');
 
 //*******************************************
 //***********Database connection*************
-
 // const MONGODB_URI = 'mongodb://localhost/ENACT';
 // const MONGODB_URI = process.env.MONGODB_URI_IND || 'mongodb://localhost/ENACT';
 const MONGODB_URI = 'mongodb+srv://heroku_s59qt61k:suo0sir3rh8b104b38574ju3dm@cluster-s59qt61k.xy6rv.mongodb.net/heroku_s59qt61k?retryWrites=true&w=majority' || 'mongodb://localhost/ENACT';
@@ -48,9 +47,11 @@ db.once('open', function () {
     console.log("mongo connected")
 });
 
-const app = express();
+
 //*******************************************
 //***********Middleware setup****************
+
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -80,38 +81,19 @@ app.use(aws)
 //*******************************************
 //***********Index page router***************
 
-//we can use this or the index router to handle req
 app.get('/',
     utils.checkUserName,
     resourceController.loadDisplayedResources,
     resourceController.loadImages,
-    async (req, res) => {
-        let eventsInfo;
-        if (res.locals.loggedIn) {
-            eventsInfo = await Event.find({}).sort({start: -1}).limit(3)
-        } else {
-            eventsInfo = await Event.find({visibility: 'public'}).sort({start: -1}).limit(3)
-        }
-        // eventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() >= new Date().getTime());
-        res.locals.eventsInfo = eventsInfo
+    eventController.loadEvents,
+    (req, res) => {
         res.render('./pages/index')
     })
 
-app.get('/about',
-    resourceController.loadImages,
-    (req, res) =>
-        res.render('./pages/staticPages/about'))
-
-app.get('/contact',
-    (req, res) =>
-        res.render('./pages/staticPages/contact'))
-
-app.get('/help',
-    (req, res) =>
-        res.render('./pages/staticPages/help'))
 
 //*******************************************
 //***********Course related******************
+
 app.get('/course',
     utils.checkUserName,
     (req, res) =>
@@ -139,14 +121,10 @@ app.get('/course/view/:courseId/:limit',
     utils.checkUserName,
     tagController.getAllTags,
     courseController.showOneCourse,
-    resourceController.loadResources
-)
-
-app.get('/course/:courseId/:limit',
-    utils.checkUserName,
-    courseController.showOneCourse,
-    resourceController.loadMoreResources
-)
+    resourceController.loadResources,
+    (req, res) => {
+        res.render('./pages/showOneCourse')
+    })
 
 app.get('/course/update/:courseId',
     utils.checkUserName,
@@ -175,7 +153,6 @@ app.get('/course/copy/:courseId',
     }
 )
 
-
 app.post('/course/copy/:courseId',
     utils.checkUserName,
     courseController.copyCourse
@@ -183,18 +160,7 @@ app.post('/course/copy/:courseId',
 
 app.post('/course/delete/:courseId',
     utils.checkUserName,
-    async (req, res) => {
-        await Course.deleteOne({_id: req.params.courseId})
-        await CourseTime.deleteMany({courseId: req.params.courseId})
-        let users = await User.find()
-        // clean user object fields
-        for (let i = 0; i < users.length; i++) {
-            users[i].ownedCourses.remove(req.params.courseId)
-            users[i].enrolledCourses.remove(req.params.courseId)
-            await users[i].save()
-        }
-        res.redirect('back')
-    }
+    courseController.deleteCourse
 )
 
 // render join course view
@@ -356,57 +322,8 @@ app.get('/resources/view/private',
     resourceController.showMyResources
 )
 
-app.get('/resources/all',
-    async (req, res) => {
-        let resources
-        // ENACT users
-        if (res.locals.loggedIn) {
-            // admin/student requesting
-            if (res.locals.status === 'admin' || res.locals.status === 'faculty')
-                resources = await Resource.find({
-                    checkStatus: 'approve'
-                }, {
-                    name: 1,
-                    contentType: 1,
-                    ownerName: 1
-                })
-            else
-                resources = await Resource.find({
-                    checkStatus: 'approve',
-                    status: {$in: ["privateToENACT", "public", "finalPublic"]}
-                }, {
-                    name: 1,
-                    contentType: 1,
-                    ownerName: 1
-                })
-        }
-        // public users
-        else {
-            resources = await Resource.find({
-                checkStatus: 'approve',
-                status: {$in: ["finalPublic", "public"]}
-            }, {
-                name: 1,
-                contentType: 1,
-                ownerName: 1
-            })
-        }
-        return res.send(resources)
-    }
-)
-
 app.get('/resource/update/:resourceId/:option',
-    async (req, res) => {
-        let resource = await Resource.findOne({_id: req.params.resourceId})
-        let ownerId = resource.ownerId
-        let tempUser = await User.findOne({_id: ownerId})
-        let ownerName1 = tempUser.userName
-        res.render('./pages/updateOwner', {
-            resource: resource,
-            ownerName1: ownerName1,
-            req: req
-        })
-    }
+    resourceController.getCurrentOwner
 )
 
 app.post('/resource/update/:resourceId/:option',
@@ -683,23 +600,6 @@ app.get('/events',
     }
 )
 
-app.get('/events/all',
-    async (req, res) => {
-        let now = new Date();
-        let eventsInfo;
-        if (res.locals.loggedIn) {
-            eventsInfo = await Event.find({}).sort({start: -1})
-        } else {
-            eventsInfo = await Event.find({visibility: 'public'}).sort({start: -1})
-        }
-        for (let i = 0; i < eventsInfo.length; i++) {
-            eventsInfo[i].start = new Date(eventsInfo[i].start - (now.getTimezoneOffset() * 60000))
-            eventsInfo[i].end = new Date(eventsInfo[i].end - (now.getTimezoneOffset() * 60000))
-        }
-        return res.send(eventsInfo)
-    }
-)
-
 app.post('/event/delete/:eventId',
     eventController.deleteEvent
 )
@@ -752,13 +652,8 @@ app.get('/tag/my',
     tagController.loadTags
 )
 
-app.get('/tags/all',
-    tagController.getAllTagsAjax
-)
-
 //*******************************************
 //***********TA related****************
-
 
 app.get('/TA/assign/:courseId',
     async (req, res) => {
@@ -844,10 +739,42 @@ app.get('/secretFunction5/:userId',
 
 //*******************************************
 //**************AJAX related*****************
+
+app.get('/course/:courseId/:limit',
+    utils.checkUserName,
+    courseController.showOneCourse,
+    resourceController.loadMoreResourcesAjax
+)
+
+app.get('/resources/all',
+    resourceController.getAllResourcesAjax
+)
+
 app.get('/profiles/all',
     async (req, res) => {
         let userProfiles = await User.find()
         return res.send(userProfiles)
+    }
+)
+
+app.get('/tags/all',
+    tagController.getAllTagsAjax
+)
+
+app.get('/events/all',
+    async (req, res) => {
+        let now = new Date();
+        let eventsInfo;
+        if (res.locals.loggedIn) {
+            eventsInfo = await Event.find({}).sort({start: -1})
+        } else {
+            eventsInfo = await Event.find({visibility: 'public'}).sort({start: -1})
+        }
+        for (let i = 0; i < eventsInfo.length; i++) {
+            eventsInfo[i].start = new Date(eventsInfo[i].start - (now.getTimezoneOffset() * 60000))
+            eventsInfo[i].end = new Date(eventsInfo[i].end - (now.getTimezoneOffset() * 60000))
+        }
+        return res.send(eventsInfo)
     }
 )
 
@@ -878,6 +805,22 @@ app.get('/profiles/faculties',
         return res.send(userProfiles)
     }
 )
+
+//*******************************************
+//************Static pages*******************
+
+app.get('/about',
+    resourceController.loadImages,
+    (req, res) =>
+        res.render('./pages/staticPages/about'))
+
+app.get('/contact',
+    (req, res) =>
+        res.render('./pages/staticPages/contact'))
+
+app.get('/help',
+    (req, res) =>
+        res.render('./pages/staticPages/help'))
 
 //*******************************************
 //*************Error related*****************
