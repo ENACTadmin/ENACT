@@ -5,7 +5,6 @@ const User = require('../models/User');
 const CourseMember = require('../models/CourseMember');
 const CourseTime = require('../models/CourseTime');
 
-
 /**
  * create a new course
  * @param req
@@ -288,4 +287,17 @@ exports.showSchedule = async (req, res) => {
         courseTimes: courseTimes,
         courses: courses
     })
+}
+
+exports.deleteCourse = async (req, res) => {
+    await Course.deleteOne({_id: req.params.courseId})
+    await CourseTime.deleteMany({courseId: req.params.courseId})
+    let users = await User.find()
+    // clean user object fields
+    for (let i = 0; i < users.length; i++) {
+        users[i].ownedCourses.remove(req.params.courseId)
+        users[i].enrolledCourses.remove(req.params.courseId)
+        await users[i].save()
+    }
+    res.redirect('back')
 }

@@ -269,6 +269,18 @@ exports.updateOwner = async (req, res, next) => {
     }
 }
 
+exports.getCurrentOwner = async (req, res) => {
+    let resource = await Resource.findOne({_id: req.params.resourceId})
+    let ownerId = resource.ownerId
+    let tempUser = await User.findOne({_id: ownerId})
+    let ownerName1 = tempUser.userName
+    res.render('./pages/updateOwner', {
+        resource: resource,
+        ownerName1: ownerName1,
+        req: req
+    })
+}
+
 //****************************************************
 //********************Load related********************
 
@@ -288,15 +300,14 @@ exports.loadResources = async (req, res, next) => {
         }
         res.locals.resourceIds = resourceIds
         resources = await addAuthor(resources)
-        res.render('./pages/showOneCourse', {
-            resourceInfo: resources
-        })
+        res.locals.resourceInfo = resources
+        next()
     } catch (e) {
         next(e)
     }
 }
 
-exports.loadMoreResources = async (req, res, next) => {
+exports.loadMoreResourcesAjax = async (req, res, next) => {
     const courseId = req.params.courseId
     const skip = parseInt(req.params.limit)
     const checkStatus = 'approve'
@@ -738,13 +749,8 @@ exports.primarySearch = async (req, res, next) => {
 
 async function invertedSearch(req, res) {
     const checkStatus = 'approve'
-    let resourceInfo = null
-    let regex = /[^\s.:,!?()\[\]]+/g;
-    let match = req.body.search.match(regex)
-    match = [...new Set(match)]
-    console.log("1", req.body.search)
-    console.log("2", req.body.search.length)
-    if (match && match.length > 0) {
+    let resourceInfo
+    if (req.body.search && req.body.search.length > 0) {
         // admin search
         if (res.locals.status === 'admin' || res.locals.status === 'faculty') {
             resourceInfo = await Resource.find(
@@ -935,6 +941,7 @@ exports.advancedSearch = async (req, res) => {
         filteredResource = filtered
     }
 
+    // find all starred resources
     let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
 
     let starredResourceIds = null
@@ -959,7 +966,7 @@ exports.advancedSearch = async (req, res) => {
     })
 }
 
-exports.advancedSearchPublic = async (req, res, next) => {
+exports.advancedSearchPublic = async (req, res) => {
     let filtered = await invertedSearch(req, res);
 
     let local_state = req.body.state !== 'empty' ? req.body.state : null
@@ -1020,4 +1027,41 @@ exports.advancedSearchPublic = async (req, res, next) => {
         search_mediaType: local_mediaType,
         search_yearOfCreation: local_yearOfCreation
     })
+}
+
+exports.getAllResourcesAjax = async (req, res) => {
+    let resources
+    // ENACT users
+    if (res.locals.loggedIn) {
+        // admin/student requesting
+        if (res.locals.status === 'admin' || res.locals.status === 'faculty')
+            resources = await Resource.find({
+                checkStatus: 'approve'
+            }, {
+                name: 1,
+                contentType: 1,
+                ownerName: 1
+            })
+        else
+            resources = await Resource.find({
+                checkStatus: 'approve',
+                status: {$in: ["privateToENACT", "public", "finalPublic"]}
+            }, {
+                name: 1,
+                contentType: 1,
+                ownerName: 1
+            })
+    }
+    // public users
+    else {
+        resources = await Resource.find({
+            checkStatus: 'approve',
+            status: {$in: ["finalPublic", "public"]}
+        }, {
+            name: 1,
+            contentType: 1,
+            ownerName: 1
+        })
+    }
+    return res.send(resources)
 }

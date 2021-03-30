@@ -141,3 +141,15 @@ exports.sendEventEmail = async (req, res) => {
     }
     res.send()
 }
+
+exports.loadEvents = async (req, res, next) => {
+    let eventsInfo;
+    if (res.locals.loggedIn) {
+        eventsInfo = await Event.find({}).sort({start: -1}).limit(3)
+    } else {
+        eventsInfo = await Event.find({visibility: 'public'}).sort({start: -1}).limit(3)
+    }
+    // eventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() >= new Date().getTime());
+    res.locals.eventsInfo = eventsInfo
+    next()
+}
