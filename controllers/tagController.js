@@ -35,7 +35,7 @@ exports.loadUnderReviewTags = async (req, res, next) => {
 
 exports.agreeTags = async (req, res, next) => {
     try {
-        let tagsId = await req.body.checked
+        let tagsId = req.body.checked
         let tagsInfo = await Tag.find({_id: tagsId})
         for (let i = 0; i < tagsInfo.length; i++) {
             tagsInfo[i].status = 'approve'
@@ -49,7 +49,7 @@ exports.agreeTags = async (req, res, next) => {
 
 exports.denyTags = async (req, res, next) => {
     try {
-        let tagsId = await req.body.checked
+        let tagsId = req.body.checked
         let tagsInfo = await Tag.find({_id: tagsId})
         for (let i = 0; i < tagsInfo.length; i++) {
             tagsInfo[i].status = 'deny'

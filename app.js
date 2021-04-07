@@ -82,6 +82,7 @@ app.use(aws)
 //*******************************************
 //***********Index page router***************
 
+// load required resources and render index page
 app.get('/',
     utils.checkUserName,
     resourceController.loadDisplayedResources,
@@ -95,28 +96,32 @@ app.get('/',
 //*******************************************
 //***********Course related******************
 
-app.get('/course',
+// course creation
+app.get('/course/create',
     utils.checkUserName,
     (req, res) =>
         res.render('./pages/course-create'))
 
+app.post('/course/create',
+    courseController.createNewClass
+)
+
+// get course schedule
 app.get('/courses/schedule',
     utils.checkUserName,
     courseController.showSchedule,
     (req, res) =>
         res.render('./pages/courses-schedule'))
 
-// rename this to /course-create and update the ejs form
-app.post('/course',
-    courseController.createNewClass
-)
-
+// show all courses
 app.get('/courses',
     utils.checkUserName,
     (req, res) =>
         res.render('./pages/courses-management')
 )
 
+
+// show one course
 app.get('/course/view/:courseId/:limit',
     utils.checkUserName,
     tagController.getAllTags,
@@ -126,6 +131,7 @@ app.get('/course/view/:courseId/:limit',
         res.render('./pages/showOneCourse')
     })
 
+// update one course
 app.get('/course/update/:courseId',
     utils.checkUserName,
     async (req, res) => {
@@ -143,6 +149,7 @@ app.post('/course/update/:courseId',
     courseController.updateCourse
 )
 
+// copy a course
 app.get('/course/copy/:courseId',
     utils.checkUserName,
     async (req, res) => {
@@ -158,6 +165,7 @@ app.post('/course/copy/:courseId',
     courseController.copyCourse
 )
 
+// delete a course
 app.post('/course/delete/:courseId',
     utils.checkUserName,
     courseController.deleteCourse
@@ -187,6 +195,7 @@ app.post('/course/join',
 //*******************************************
 //***********Resource related****************
 
+// upload resource to a course
 app.get('/resource/upload/course/:courseId',
     utils.checkUserName,
     tagController.getAllTags,
@@ -200,18 +209,7 @@ app.post('/resource/upload/course/:courseId',
     resourceController.uploadResource
 )
 
-app.get('/resources/search/private/general',
-    utils.checkUserName,
-    tagController.getAllTags,
-    (req, res) =>
-        res.render('./pages/search-primary')
-)
-
-app.post('/resources/search/private/general/results',
-    tagController.getAllTags,
-    resourceController.primarySearch
-)
-
+// upload resources for public access
 app.get('/resource/upload/public',
     utils.checkUserName,
     tagController.getAllTags,
@@ -227,23 +225,52 @@ app.post('/resource/upload/public',
     resourceController.uploadToPublicResr
 )
 
+// upload faculty-only resources
+app.get('/resource/upload/faculty',
+    utils.checkUserName,
+    tagController.getAllTags,
+    (req, res) =>
+        res.render('./pages/uploadToFaculty')
+)
+
+app.post('/resource/upload/faculty',
+    resourceController.uploadResource
+)
+
+// ENACT-only full-text search
+app.get('/resources/search/private/general',
+    utils.checkUserName,
+    tagController.getAllTags,
+    (req, res) =>
+        res.render('./pages/search-primary')
+)
+
+// render full-text search result
+app.post('/resources/search/private/general/results',
+    tagController.getAllTags,
+    resourceController.primarySearch
+)
+
+// ENACT-only advanced search
 app.get('/resources/search/private/advanced',
     utils.checkUserName,
     tagController.getAllTags,
     (req, res) =>
         res.render('./pages/search-advanced'))
 
+// ENACT-only advanced search
 app.post('/resources/search/private/advanced',
     tagController.getAllTags,
     resourceController.advancedSearch
 )
 
-
-app.get('/resources/view/my/public/all',
+// load public resource page
+app.get('/resources/view/public',
     utils.checkUserName,
     resourceController.showPublic
 )
 
+// public search related
 app.get('/resources/search/public/general',
     utils.checkUserName,
     tagController.getAllTags,
@@ -257,11 +284,12 @@ app.get('/resources/search/public/advanced',
     (req, res) =>
         res.render('./pages/search-advanced-public'))
 
-app.post('/resources/view/my/public/advancedResult',
+app.post('/resources/search/public/advanced',
     tagController.getAllTags,
     resourceController.advancedSearchPublic
 )
 
+// get faculty-only resources
 app.get('/resources/view/faculty',
     utils.checkUserName,
     resourceController.loadAllFacultyResources,
@@ -269,59 +297,66 @@ app.get('/resources/view/faculty',
         res.render('./pages/showFacultyGuide')
 )
 
+// get faculty-only resources for a certain contentType
 app.get('/resources/view/faculty/:contentType',
     utils.checkUserName,
     tagController.getAllTags,
     resourceController.loadSpecificContentType,
 )
 
-
-app.get('/resource/upload/faculty',
-    utils.checkUserName,
-    tagController.getAllTags,
-    (req, res) =>
-        res.render('./pages/uploadToFaculty')
-)
-
-app.post('/resource/upload/faculty',
-    resourceController.uploadResource
-)
-
+// update content of resource
+// 1) in course page --> redirect back to course page (preserve loaded resources)
+// 2) in other pages
 app.post('/resource/update/:resourceId/limit/:limit',
     resourceController.updateResource
 )
 
+// delete a resource
 app.post('/resource/remove/:resourceId',
     resourceController.removeResource
+)
+
+// select resources to show to the public on the index page
+app.post('/resource/show/:resourceId',
+    resourceController.postPublicResource
 )
 
 app.post('/resource/hide/:resourceId',
     resourceController.removePublicResource
 )
 
-app.post('/resource/show/:resourceId',
-    resourceController.postPublicResource
+// render public resource management page
+app.get('/resources/manage/public',
+    resourceController.loadPublicResources,
+    tagController.getAllTags,
+    (req, res) =>
+        res.render('./pages/resource-management-public')
 )
 
+// get 'my favorites' resources
 app.get('/resources/view/favorite',
     utils.checkUserName,
     tagController.getAllTags,
     resourceController.showStarredResources
 )
 
+// 'like' a resource
 app.post('/resource/star/:resourceId',
     resourceController.starResource
 )
 
+// 'unlike' a resource
 app.post('/resource/unstar/:resourceId',
     resourceController.unstarResource
 )
 
+// get all my resources
 app.get('/resources/view/private',
     utils.checkUserName,
     resourceController.showMyResources
 )
 
+// update the owner of a resource
 app.get('/resource/update/:resourceId/:option',
     resourceController.getCurrentOwner
 )
@@ -330,13 +365,11 @@ app.post('/resource/update/:resourceId/:option',
     resourceController.updateOwner
 )
 
-app.get('/resources/manage/public',
-    resourceController.loadPublicResources,
-    tagController.getAllTags,
-    (req, res) =>
-        res.render('./pages/resource-management-public')
-)
 
+//*******************************************
+//********Collection/Folder related**********
+
+// view collection
 app.get('/collection/view/:resourceSetId',
     resourceController.loadCollection,
     tagController.getAllTags,
@@ -360,14 +393,13 @@ app.post('/collection/delete/:collectionId',
     resourceController.deleteCollection
 )
 
-//*******************************************
-//***********Notification related************
-
+// load all under review resources (faculty/admin)
 app.get('/resource/review',
     utils.checkUserName,
     notificationController.loadUnderReviewResources
 )
 
+// load all under review resources (TA)
 app.get('/resource/review/:courseId',
     utils.checkUserName,
     notificationController.loadUnderReviewResourcesTA
@@ -377,6 +409,7 @@ app.post('/resource/approve',
     notificationController.approve
 )
 
+// publish to public
 app.post('/resource/publish',
     notificationController.toPublic
 )
@@ -400,6 +433,7 @@ app.post('/resource/deny',
 app.get('/resource/approve/public',
     notificationController.loadPartPublicResources
 )
+
 app.post('/resource/status/toPublic',
     notificationController.partPublicToPublic
 )
@@ -537,6 +571,7 @@ app.get('/networking/:state',
 
 //*******************************************
 //************Message related****************
+
 app.get('/messages/view/:sender/:receiver/:resourceId',
     utils.checkUserName,
     async (req, res, next) => {

@@ -6,6 +6,7 @@ const CourseMember = require('../models/CourseMember');
 const CourseTime = require('../models/CourseTime');
 const TA = require('../models/TA')
 
+
 /**
  * create a new course
  * @param req
@@ -287,37 +288,78 @@ exports.assignTA = async (req, res) => {
             {workEmail: req.body.email}, {googleemail: req.body.email}
         ]
     })
-    if (taInfo) {
-        let enrolledCourses = taInfo.enrolledCourses || []
-        if (containsString(enrolledCourses, req.params.courseId)) {
-            console.log("Enrolled already!")
-        } else {
-            // update user's enrolledCourses field
-            await taInfo.enrolledCourses.push(req.params.courseId)
-            await taInfo.save()
-        }
-        let currCourse = await Course.findOne({_id: req.params.courseId})
-        console.log("email is: ", req.body.email)
-
-        let existOrNot = await TA.findOne({email: req.body.email})
-        // if this ta's email is already stored in DB, no need to create a new entry
-        if (!existOrNot) {
-            let ta = new TA({
-                email: req.body.email
-            })
-            await ta.save()
-        }
-        if (currCourse.tas) {
-            currCourse.tas.push(taInfo._id)
-            await currCourse.save()
-        } else {
-            currCourse.tas = [taInfo._id]
-            await currCourse.save()
-        }
-        // send an email to the assignee to notify that he/she has been set as TA
-        // include 1) course name 2) instructor 3) semester
-        res.redirect('back')
-    } else {
-        res.send("This email is not in our system! Please ask the user to sign up in our system first.")
+    // if TA profile is not in our system, set up a new one
+    if (!taInfo) {
+        let email = req.body.email
+        let name = 'changeMe'
+        let status = 'TA'
+        let password = await getRandomPassword()
+        let newUser = new User({
+            workEmail: email,
+            userName: name,
+            password: password,
+            status: status
+        })
+        await newUser.save()
+        let newTA = new TA(
+            {
+                email: email
+            }
+        )
+        console.log("new TA set")
+        // await until the newCourse is saved properly
+        await newTA.save()
+        let userId = newUser._id
+        console.log("id: ", userId)
+        let url = 'https://www.enactnetwork.org/login'
+        const sgMail = require('@sendgrid/mail');
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+        const msg = {
+            to: email,
+            from: 'enact@brandeis.edu',
+            subject: 'ENACT Digital Platform: you have one new notification.',
+            text: 'ENACT Digital Platform: you have one new notification.',
+            html: 'Hi,<br>' +
+                '<br>' + 'Your TA profile is set by an ENACT faculty fellow: ' + req.user.userName + '. <br>The default password is: ' + '<b>' + newUser.password + '</b>' + '<br>Please remember to change your password by navigating to <b>People & Networking -> Update profile</b> to change your password' +
+                '<br>' + '<b>Click <a href=' + url + '>' + 'here' + '</a>' + ' to login</b>' +
+                '<br><br>' + 'ENACT Support Team'
+        };
+        await sgMail.send(msg);
+        // points to newUser
+        taInfo = newUser
     }
+
+    // update enrollment
+    let enrolledCourses = taInfo.enrolledCourses || []
+    if (containsString(enrolledCourses, req.params.courseId)) {
+        console.log("Enrolled already!")
+    } else {
+        // update user's enrolledCourses field
+        await taInfo.enrolledCourses.push(req.params.courseId)
+        await taInfo.save()
+    }
+    let currCourse = await Course.findOne({_id: req.params.courseId})
+
+    let existOrNot = await TA.findOne({email: req.body.email})
+    // if this ta's email is already stored in DB, no need to create a new entry
+    if (!existOrNot) {
+        let ta = new TA({
+            email: req.body.email
+        })
+        await ta.save()
+    }
+    if (currCourse.tas) {
+        currCourse.tas.push(taInfo._id)
+        await currCourse.save()
+    } else {
+        currCourse.tas = [taInfo._id]
+        await currCourse.save()
+    }
+    res.redirect('back')
+}
+
+async function getRandomPassword() {
+    // this only works if there are many fewer than 10000000 courses
+    // but that won't be an issue with this alpha version!
+    return Math.floor(Math.random() * 10000000)
 }

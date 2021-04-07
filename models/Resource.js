@@ -7,7 +7,7 @@ const resourceSchema = Schema({
     ownerId: ObjectID,
     ownerName: String,
     courseId: ObjectID,
-    status: String, // finalPublic/public/partPublic/private to .../private to professors
+    status: String, // finalPublic (open to the public and displayed on the index page)/public (open to public but NOT displayed on the index page)/partPublic (requested public access but not approved by admin yet)/private to ENACT/private to professors
     createdAt: Date,
     name: String,
     description: String,

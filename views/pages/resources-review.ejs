@@ -23,10 +23,8 @@
                             <div class='col-sm-11'>
                                 <input type='submit' class='btn btn-success' formaction='/resource/approve'
                                        value='Post Checked Resources to ENACT'>
-                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                 <input type='submit' formaction='/resource/publish' class='btn btn-warning'
-                                       value='Submit Checked Resources to Admins to be posted to public'>
-                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                       value='Submit Checked Resources to Admins to Request Open-to-public Access'>
                                 <input type='submit' formaction='/resource/deny' class='btn btn-secondary'
                                        value='Deny Checked Resources'>
                             </div>
@@ -44,14 +42,13 @@
                                             <ul class='list-group'>
                                                 <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                                     <h5 style="display: inline">
-                                                        Author:</h5> <%= resourceInfo[i].ownerName %>
-                                                </li>
-                                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                    <h5 style="display: inline">
                                                         Description:</h5> <%= resourceInfo[i].description %>
                                                 </li>
                                                 <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                                     <h5 style="display: inline">State:</h5> <%= resourceInfo[i].state %>
+                                                </li>
+                                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
+                                                    <h5 style="display: inline">Year:</h5> <%= resourceInfo[i].yearOfCreation %>
                                                 </li>
                                                 <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                                     <h5 style="display: inline">Link:</h5> <a
