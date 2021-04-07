@@ -41,31 +41,36 @@ router.use(async (req, res, next) => {
         if (adminList.includes(email)) {
             res.locals.status = 'admin'
             let enrolledCourses = req.user.enrolledCourses
-            let courseInfoSet = await Course.find({$or: [{_id: {$in: enrolledCourses}}, {ownerId: req.user._id}]})
-            // let courseInfoSet = await Course.find({ownerId: req.user._id})
-            userInfo.status = 'admin'
-            await userInfo.save()
-            res.locals.courseInfoSet = courseInfoSet
+            if (userInfo.status !== 'admin') {
+                userInfo.status = 'admin'
+                await userInfo.save()
+            }
+            res.locals.courseInfoSet = await Course.find({$or: [{_id: {$in: enrolledCourses}}, {ownerId: req.user._id}]})
         } else {
-            let user = await Faculty.findOne({email: email})
-            let userAlt = await TA.findOne({email: email})
-            if (user) {
-                res.locals.status = user.status
-                userInfo.status = 'faculty'
-                await userInfo.save()
+            let faculty = await Faculty.findOne({email: email})
+            let ta = await TA.findOne({email: email})
+            if (faculty) {
+                res.locals.status = faculty.status
+                if (userInfo.status !== 'faculty') {
+                    userInfo.status = 'faculty'
+                    await userInfo.save()
+                }
                 res.locals.courseInfoSet = await Course.find({ownerId: req.user._id})
-            } else if (userAlt) {
+            } else if (ta) {
                 res.locals.status = 'TA'
-                userInfo.status = 'TA'
-                await userInfo.save()
-                let courseId = userAlt.courseId
-                res.locals.courseInfoSet = await Course.find({_id: {_id: {$in: courseId}}})
+                let enrolledCourses = req.user.enrolledCourses
+                if (userInfo.status !== 'TA') {
+                    userInfo.status = 'TA'
+                    await userInfo.save()
+                }
+                res.locals.courseInfoSet = await Course.find({_id: {$in: enrolledCourses}})
             } else {
                 let enrolledCourses = req.user.enrolledCourses
-                let courseInfoSet = await Course.find({_id: {$in: enrolledCourses}})
-                userInfo.status = 'student'
-                await userInfo.save()
-                res.locals.courseInfoSet = courseInfoSet
+                if (userInfo.status !== 'student') {
+                    userInfo.status = 'student'
+                    await userInfo.save()
+                }
+                res.locals.courseInfoSet = await Course.find({_id: {$in: enrolledCourses}})
             }
         }
     }

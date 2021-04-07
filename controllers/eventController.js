@@ -22,7 +22,7 @@ exports.saveEvent = async (req, res, next) => {
         let faculties = await User.find({status: {$in: ["admin", "faculty"]}})
         for (let idx in faculties) {
             let email = await faculties[idx].workEmail || faculties[idx].googleemail
-            if (email) {
+            if (email && email !== 'shekenne@iupui.edu') {
                 let eventName = newEvent.title
                 let eventTime = parseInt(req.body.DST) === 0 ? new Date(newEvent.start - 300 * 60000) : new Date(newEvent.start - 240 * 60000)
                 let eventDescription = newEvent.description
@@ -41,7 +41,7 @@ exports.saveEvent = async (req, res, next) => {
                         '<br><br>' + eventDescription +
                         '<br><br>' + 'Event will start at ' + '<b>' + eventTime.toLocaleString() + ' (in US/Canada Eastern Time)</b>' +
                         '<br><br>' + 'Event visibility is: ' + '<b>' + visibility + '</b>' +
-                        ' Please click <a href=' + url + '>' + 'here' + '</a>' + ' to login, and more details can be viewed in ' + '<b>' + 'Events and Courses. ' + '</b>' +
+                        '<br>Please click <a href=' + url + '>' + 'here' + '</a>' + ' to login, and more details can be viewed in ' + '<b>' + 'Events and Courses. ' + '</b>' +
                         '<br><br><br>' + 'ENACT Support Team'
                 };
                 try {
@@ -113,7 +113,7 @@ exports.sendEventEmail = async (req, res) => {
     let faculties = await User.find({status: {$in: ["faculty", "admin"]}})
     for (let faculty in faculties) {
         let email = faculties[faculty].workEmail || faculties[faculty].googleemail
-        if (email) {
+        if (email && email !== 'shekenne@iupui.edu') {
             let url = 'https://www.enactnetwork.org/login'
             const sgMail = require('@sendgrid/mail');
             sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -129,7 +129,7 @@ exports.sendEventEmail = async (req, res) => {
                     '<br><br>' + eventDescription +
                     '<br><br>' + 'Event will start at ' + '<b>' + eventTime.toLocaleString() + ' (in US/Canada Eastern Time)</b>' +
                     '<br><br>' + 'Event visibility is: ' + '<b>' + visibility + '</b>' +
-                    ' Please click <a href=' + url + '>' + 'here' + '</a>' + ' to login, and more details can be viewed in ' + '<b>' + 'Events and Courses. ' + '</b>' +
+                    '<br>Please click <a href=' + url + '>' + 'here' + '</a>' + ' to login, and more details can be viewed in ' + '<b>' + 'Events and Courses. ' + '</b>' +
                     '<br><br><br>' + 'ENACT Support Team'
             };
             try {

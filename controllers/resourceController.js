@@ -56,7 +56,7 @@ exports.uploadResource = async (req, res, next) => {
                     checkStatus: checkStatus,
                 })
             }
-            // faculty/admin uploaded resource
+            // faculty/admin/TA uploaded resource
             else {
                 newResource = new Resource({
                     ownerId: req.user._id,
@@ -752,7 +752,7 @@ async function invertedSearch(req, res) {
     let resourceInfo
     if (req.body.search && req.body.search.length > 0) {
         // admin search
-        if (res.locals.status === 'admin' || res.locals.status === 'faculty') {
+        if (res.locals.status === 'admin' || res.locals.status === 'faculty' || res.locals.status === 'TA') {
             resourceInfo = await Resource.find(
                 {
                     $text: {$search: req.body.search},
@@ -823,7 +823,7 @@ async function invertedSearch(req, res) {
     }
     // empty param search
     else {
-        if (res.locals.status === 'admin' || res.locals.status === 'faculty') {
+        if (res.locals.status === 'admin' || res.locals.status === 'faculty' || res.locals.status === 'TA') {
             resourceInfo = await Resource.find({
                 checkStatus: checkStatus
             }, {

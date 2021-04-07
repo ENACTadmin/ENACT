@@ -4,6 +4,7 @@ const Resource = require('../models/Resource');
 const User = require('../models/User');
 const CourseMember = require('../models/CourseMember');
 const CourseTime = require('../models/CourseTime');
+const TA = require('../models/TA')
 
 /**
  * create a new course
@@ -65,7 +66,7 @@ exports.createNewClass = async (req, res, next) => {
                 }
             }
         }
-        next()
+        res.redirect('/course/view/' + newCourse._id + '/10')
     } catch (e) {
         next(e)
     }
@@ -177,27 +178,6 @@ exports.updateCourse = async (req, res, next) => {
 }
 
 /**
- * add created course to the list of owned courses
- * @param req
- * @param res
- * @param next
- * @returns {Promise<void>}
- */
-exports.addToOwnedCourses = async (req, res, next) => {
-    try {
-        console.log("in add to owned")
-        let courseInfo = await Course.findOne({
-            coursePin: coursePin
-        })
-        await req.user.ownedCourses.push(courseInfo._id)
-        await req.user.save()
-        res.redirect('/course/view/' + courseInfo._id + '/10')
-    } catch (e) {
-        next(e)
-    }
-}
-
-/**
  * get course pin, a 7-digit randomly generated number
  * @returns {Promise<number>}
  */
@@ -295,9 +275,49 @@ exports.deleteCourse = async (req, res) => {
     let users = await User.find()
     // clean user object fields
     for (let i = 0; i < users.length; i++) {
-        users[i].ownedCourses.remove(req.params.courseId)
         users[i].enrolledCourses.remove(req.params.courseId)
         await users[i].save()
     }
     res.redirect('back')
+}
+
+exports.assignTA = async (req, res) => {
+    let taInfo = await User.findOne({
+        $or: [
+            {workEmail: req.body.email}, {googleemail: req.body.email}
+        ]
+    })
+    if (taInfo) {
+        let enrolledCourses = taInfo.enrolledCourses || []
+        if (containsString(enrolledCourses, req.params.courseId)) {
+            console.log("Enrolled already!")
+        } else {
+            // update user's enrolledCourses field
+            await taInfo.enrolledCourses.push(req.params.courseId)
+            await taInfo.save()
+        }
+        let currCourse = await Course.findOne({_id: req.params.courseId})
+        console.log("email is: ", req.body.email)
+
+        let existOrNot = await TA.findOne({email: req.body.email})
+        // if this ta's email is already stored in DB, no need to create a new entry
+        if (!existOrNot) {
+            let ta = new TA({
+                email: req.body.email
+            })
+            await ta.save()
+        }
+        if (currCourse.tas) {
+            currCourse.tas.push(taInfo._id)
+            await currCourse.save()
+        } else {
+            currCourse.tas = [taInfo._id]
+            await currCourse.save()
+        }
+        // send an email to the assignee to notify that he/she has been set as TA
+        // include 1) course name 2) instructor 3) semester
+        res.redirect('back')
+    } else {
+        res.send("This email is not in our system! Please ask the user to sign up in our system first.")
+    }
 }
