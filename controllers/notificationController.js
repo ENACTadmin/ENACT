@@ -6,7 +6,6 @@ const TA = require('../models/TA');
 
 // const Message = require('../models/Message');
 
-
 exports.loadUnderReviewResources = async (req, res, next) => {
     try {
         // let currentUser = await User.findOne({_id: res.locals.user._id})
@@ -22,6 +21,20 @@ exports.loadUnderReviewResources = async (req, res, next) => {
     }
 }
 
+exports.loadUnderReviewResourcesTA = async (req, res, next) => {
+    try {
+        // let currentUser = await User.findOne({_id: res.locals.user._id})
+        // let taProfile = await
+        res.locals.resourceInfo = await Resource.find({
+            checkStatus: 'underReview',
+            courseId: req.params.courseId
+        }).sort({'createdAt': -1})
+        res.render('./pages/reviewResource')
+    } catch (e) {
+        console.log("error: " + e)
+        next(e)
+    }
+}
 
 exports.approve = async (req, res, next) => {
     try {

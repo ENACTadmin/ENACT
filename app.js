@@ -14,6 +14,7 @@ const Resource = require('./models/Resource')
 const User = require('./models/User')
 const AuthorAlt = require('./models/AuthorAlternative')
 const Faculty = require('./models/Faculty')
+const TA = require('./models/TA')
 
 
 //*******************************************
@@ -107,8 +108,7 @@ app.get('/courses/schedule',
 
 // rename this to /course-create and update the ejs form
 app.post('/course',
-    courseController.createNewClass,
-    courseController.addToOwnedCourses
+    courseController.createNewClass
 )
 
 app.get('/courses',
@@ -366,6 +366,11 @@ app.post('/collection/delete/:collectionId',
 app.get('/resource/review',
     utils.checkUserName,
     notificationController.loadUnderReviewResources
+)
+
+app.get('/resource/review/:courseId',
+    utils.checkUserName,
+    notificationController.loadUnderReviewResourcesTA
 )
 
 app.post('/resource/approve',
@@ -657,18 +662,27 @@ app.get('/tag/my',
 
 app.get('/TA/assign/:courseId',
     async (req, res) => {
-        // res.render(...)
+        let currCourse = await Course.findOne({_id: req.params.courseId})
+        let tasInfo
+        if (currCourse.tas) {
+            tasInfo = await User.find({
+                _id: {
+                    $in: currCourse.tas
+                }
+            })
+        } else {
+            tasInfo = null
+        }
+        res.render('./pages/ta-assign', {
+            courseId: req.params.courseId,
+            courseInfo: currCourse,
+            tas: tasInfo
+        })
     }
 )
 
 app.post('/TA/assign/:courseId',
-    async (req, res) => {
-        // let course = await Course.findOne({_id: req.params.courseId})
-        // 1) get facultyId
-        // 2) new TA() req.body....
-        // 3) res.redirect('back')
-    }
-    // tagController.getAllTagsAjax
+    courseController.assignTA
 )
 
 //*******************************************

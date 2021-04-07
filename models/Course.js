@@ -8,7 +8,7 @@ const courseSchema = Schema({
     instructor: String,
     courseName: String,
     coursePin: String, // pin number to join the class
-    tas: [objectID],
+    tas: [objectID], // store TA ids
     zipcode: String,
     state: String,
     year: Number,
