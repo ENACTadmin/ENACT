@@ -14,7 +14,7 @@ exports.loadUnderReviewResources = async (req, res, next) => {
             checkStatus: 'underReview',
             facultyId: req.user._id
         }).sort({'createdAt': -1})
-        res.render('./pages/reviewResource')
+        res.render('./pages/resources-review')
     } catch (e) {
         console.log("error: " + e)
         next(e)
@@ -29,7 +29,7 @@ exports.loadUnderReviewResourcesTA = async (req, res, next) => {
             checkStatus: 'underReview',
             courseId: req.params.courseId
         }).sort({'createdAt': -1})
-        res.render('./pages/reviewResource')
+        res.render('./pages/resources-review')
     } catch (e) {
         console.log("error: " + e)
         next(e)
@@ -38,7 +38,7 @@ exports.loadUnderReviewResourcesTA = async (req, res, next) => {
 
 exports.approve = async (req, res, next) => {
     try {
-        let resourceId = await req.body.checked
+        let resourceId = req.body.checked
         console.log(req.body.checked)
         let resourceInfo = await Resource.find({_id: resourceId})
         for (let i = 0; i < resourceInfo.length; i++) {
@@ -53,7 +53,7 @@ exports.approve = async (req, res, next) => {
 
 exports.toPublic = async (req, res, next) => {
     try {
-        let resourceId = await req.body.checked
+        let resourceId = req.body.checked
         console.log(req.body.checked)
         let resourceInfo = await Resource.find({_id: resourceId})
 
@@ -70,7 +70,7 @@ exports.toPublic = async (req, res, next) => {
 
 exports.deny = async (req, res, next) => {
     try {
-        let resourceId = await req.body.checked
+        let resourceId = req.body.checked
         console.log(req.body.checked)
         let resourceInfo = await Resource.find({_id: resourceId})
         for (let i = 0; i < resourceInfo.length; i++) {
@@ -180,7 +180,7 @@ exports.loadPartPublicResources = async (req, res, next) => {
 
 exports.partPublicToPublic = async (req, res, next) => {
     try {
-        let resourceId = await req.body.checked
+        let resourceId = req.body.checked
         let resourceInfo = await Resource.find({_id: resourceId})
         for (let i = 0; i < resourceInfo.length; i++) {
             resourceInfo[i].status = 'public'
@@ -194,7 +194,7 @@ exports.partPublicToPublic = async (req, res, next) => {
 
 exports.partPublicToENACT = async (req, res, next) => {
     try {
-        let resourceId = await req.body.checked
+        let resourceId = req.body.checked
         let resourceInfo = await Resource.find({_id: resourceId})
 
         for (let i = 0; i < resourceInfo.length; i++) {

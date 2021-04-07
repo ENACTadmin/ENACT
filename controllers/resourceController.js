@@ -154,6 +154,7 @@ exports.updateResource = async (req, res, next) => {
                 }
             }
         }
+        // user referer in header to determine where to redirect
         let redirect = req.headers.referer
         if (redirect.includes('course')) {
             let courseId = redirect.split('/limit')[0]
@@ -931,7 +932,7 @@ exports.advancedSearch = async (req, res) => {
     let filteredResource = []
     if (filtered && req.body.tags.length > 0) {
         for (let m = 0; m < filtered.length; m++) {
-            let tagged = await req.body.tags.split(',')
+            let tagged = req.body.tags.split(',')
             let result = tagged.every(val => filtered[m].tags.includes(val));
             if (result) {
                 filteredResource.push(filtered[m])
@@ -1006,7 +1007,7 @@ exports.advancedSearchPublic = async (req, res) => {
     let filteredResource = []
     if (req.body.tags.length > 0) {
         for (let m = 0; m < filtered.length; m++) {
-            let tagged = await req.body.tags.split(',')
+            let tagged = req.body.tags.split(',')
             let result = tagged.every(val => filtered[m].tags.includes(val));
             if (result) {
                 filteredResource.push(filtered[m])

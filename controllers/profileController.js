@@ -81,8 +81,8 @@ exports.updateProfileAdmin = async (req, res, next) => {
 exports.createFaculty = async (req, res, next) => {
     if (res.locals.status === 'admin') {
         try {
-            let email = await req.body.email
-            let name = await req.body.userName
+            let email = req.body.email
+            let name = req.body.userName
             let status = 'faculty'
             let existUserCheck = await User.findOne({
                 $or: [
