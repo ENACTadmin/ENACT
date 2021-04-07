@@ -72,9 +72,9 @@
                                             </li>
                                         <% } %>
 
-                                        <% if (status === 'TA' && courseInfo.tas.includes(user._id)) { %>
+                                        <% if (status === 'admin' || courseInfo.ownerId === user._id || (status === 'TA' && courseInfo.tas.includes(user._id))) { %>
                                             <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
-                                                <a href="/resource/review/<%= courseInfo._id %>"> Review Resources </a>
+                                                <a href="/resource/review/<%= courseInfo._id %>">Review Resources</a>
                                             </li>
                                         <% } %>
                                         <li class='list-group-item borderless'
