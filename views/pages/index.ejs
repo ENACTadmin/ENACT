@@ -48,7 +48,7 @@
                         <a href="/login" class="btn btn-sm btn-warning">Click to Login</a>
                         <br>
                     <% } %>
-                    <% if (loggedIn && status === 'faculty' || loggedIn && status === 'admin') { %>
+                    <% if (loggedIn && (status === 'faculty' || status === 'admin')) { %>
                         <b style="color: #FF9912">- ENACT Faculty Fellows: </b> access ENACT teaching resources and student work.
                         <br>
                     <% } else if (!loggedIn) { %>
@@ -59,10 +59,14 @@
                     <% if (!loggedIn) { %>
                         <b style="color: #FF9912">- Public: </b> access student work on bills from across the U.S., including op-eds, issue research and more.
                     <% } %>
+                    <% if (loggedIn && status === 'TA') { %>
+                        <b style="color: #FF9912">- TA: </b> help instructor review/upload resources
+                        <br>
+                    <% } %>
                 </div>
                 <div class='form-demo'>
                     <% if (loggedIn) { %>
-                        <% if (status === 'admin' || status === 'faculty') { %>
+                        <% if (status === 'admin' || status === 'faculty' || status === 'TA') { %>
                             <a href='/courses'>
                                 <button class='form-demo__large fa' style="font-size: large; font-weight: 680">
                                     Courses &#xf02d

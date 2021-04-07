@@ -1,0 +1,55 @@
+<%- include('../components/header'); -%>
+<%- include('../components/navbar'); -%>
+
+<section class='section'>
+    <div class='section__content section__content--full-width'>
+        <div class='jumbotron masthead text-center'>
+            <div class='section__title section__title--centered'>
+                Assign TA for course: <%= courseInfo.courseName %>
+            </div>
+            <h3>TAs can help review and approve student uploaded resources</h3><br>
+            <a class="btn btn-primary" href="/course/view/<%= courseId %>/10">Back to course page</a>
+        </div>
+    </div>
+</section>
+
+<section class='section section__grey' data-aos='fade-up'>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-md-3 col-sm-12'></div>
+            <div class='col-md-6 col-sm-12'>
+                <h4>Set Up a New TA</h4>
+                <hr>
+                <form action='/ta/assign/<%= courseId %>' method='post'>
+                    <div class='input-group-prepend'>
+                        <span class='input-group-text' style='width: 180px'>Email</span>
+                        <input autofill="off" autocomplete="off" id="profiles" type='text' style='margin-right: 20px'
+                               class='form-control' name='email'>
+                        <input type="submit" class="btn btn-outline-dark" value="SAVE">
+                    </div>
+                    <br>
+                </form>
+                <br>
+                <h4>TA List</h4>
+                <hr>
+                <% if (tas.length > 0) { %>
+                    <% for (let i = 0; i < tas.length; i++) { %>
+                        <div class='input-group-prepend'>
+                            <span class='input-group-text' style='width: 180px'>Email</span>
+                            <a disabled type='text' style='margin-right: 20px' class='form-control' href="/profile/view/<%= tas[i]._id %>"><%= tas[i].workEmail || tas[i].googleemail %></a>
+                            <span class='input-group-text' style='width: 180px'>Name</span>
+                            <input disabled type='text' class='form-control' value='<%= tas[i].userName %>'>
+                        </div>
+                        <% console.log(tas[i]) %>
+                        <br>
+                    <% } %>
+                <% } else { %>
+                    No TA found...
+                <% } %>
+                <br>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('../components/footer'); -%>

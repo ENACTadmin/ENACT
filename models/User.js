@@ -15,7 +15,6 @@ const userSchema = Schema({
     linkedInURL: String,
     state: String,
     enrolledCourses: [ObjectID],
-    ownedCourses: [ObjectID],
     workEmail: String,
     personalEmail: String,
     phoneNumber: String,
