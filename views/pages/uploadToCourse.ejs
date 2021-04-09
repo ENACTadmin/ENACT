@@ -4,6 +4,13 @@
 <script src='/js/aws.js'></script>
 <script src='/js/aws-uploadFile.js'></script>
 <script src='/js/authorship.js'></script>
+<script src="/js/autocompleteResourceOwner.js"></script>
+
+<!-- disable autofill-->
+<script src="https://cdn.jsdelivr.net/npm/disableautofill/src/jquery.disableAutoFill.min.js"></script>
+<script>
+    $('input[autofill="off"]').disableAutoFill;
+</script>
 
 <section class='section'>
     <div class='section__content section__content--full-width'>
@@ -37,25 +44,19 @@
                     <div class='col-md-6 col-sm-12'>
                         <h3>Author(s)</h3>
                         <hr>
-                        <h5 style="color: grey">Please make sure to spell the name and email correctly. <br>
-                            If you wish to remove one or more authors from the list, please contact us. </h5>
-                        <br>
+                        <h5 style="color: grey">Notice: If you wish to change the owner, fill in the name of the actual user and click one of the suggestion</h5><br>
                         <div class="form-horizontal">
                             <div class="input-group-prepend">
                                 <span class='input-group-text' style='width: 180px'>Name</span>
-                                <input disabled type='text' style="margin: 0 20px 0 0" class='form-control'
-                                       name='authorName' value=<%= user.userName %>>
-                                <span class='input-group-text' style='width: 180px'>Email</span>
-                                <input disabled type='text' style="margin: 0 20px 0 0" class='form-control'
-                                       name='authorEmail' value=<%= user.workEmail || user.googleemail %>>
+                                <input autofill="off" autocomplete="off" id="profiles" type='text' style='margin-right: 20px' class='form-control' value="<%= user.userName %>" name='ownerName'>
+                                <input autofill="off" autocomplete="off" id="ownerId" value="<%= user._id %>" type='text' style='margin-right: 20px' class='form-control' name='ownerId'>
                             </div>
                         </div>
                         <br>
                         <input class="btn btn-outline-primary" type='button' value='Add another author' id='addButton'/>
-                        <input class="btn btn-outline-info" type='button' value='Remove last entered author'
-                               id='removeButton'/>
+                        <input class="btn btn-outline-info" type='button' value='Remove last entered author' id='removeButton'/>
                         <p id="authorNames"></p>
-                        <br><br><br>
+                        <br>
                         <h3>Basic information</h3>
                         <hr>
                         <% if (status === 'admin' || status === 'faculty') { %>

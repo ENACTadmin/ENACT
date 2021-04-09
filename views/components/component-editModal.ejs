@@ -3,8 +3,6 @@ let syllabus = ['online course', 'course with internship content', 'full-semeste
 
 let id_set = [] %>
 
-<script src="/js/authorshipModal.js"></script>
-
 <div class='modal fade' id='editModal' tabindex='-1' role='dialog'
      aria-labelledby='exampleModalLabel'
      aria-hidden='true'>
@@ -24,8 +22,11 @@ let id_set = [] %>
                             <hr>
                             <h5 style="color: grey">Please make sure to spell the name and email correctly. <br>
                                 If you wish to remove one or more authors from the list, please contact us. </h5>
-                            Existing authors: <h6 id="ownerNames"></h6>
+                            Existing authors:
                             <div class="form-horizontal" id="form-horizontal">
+                                <div class="input-group-prepend">
+                                    <h6 id="ownerNames"></h6>
+                                </div>
                             </div>
                             <br>
                             <input class="btn btn-outline-primary" type='button' value='Add another author'
