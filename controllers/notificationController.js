@@ -171,7 +171,7 @@ exports.loadPartPublicResources = async (req, res, next) => {
         res.locals.resourceInfo = await Resource.find({
             status: 'partPublic'
         }).sort({'createdAt': -1})
-        res.render('./pages/showResourcesUnderReview-public')
+        res.render('./pages/resource-review-admin')
     } catch (e) {
         console.log("error: " + e)
         next(e)
