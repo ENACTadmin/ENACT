@@ -14,7 +14,7 @@ $(document).ready(function () {
         if ($('.form-horizontal .input-group-prepend').length == 1) {
             $("#removeButton").hide()
         }
-        if ($('.form-horizontal .input-group-prepend').length == 0) {
+        if ($('.form-horizontal .input-group-prepend').length == 1) {
             alert("No more entries to remove");
             return false;
         }

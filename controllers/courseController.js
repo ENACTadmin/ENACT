@@ -236,7 +236,6 @@ exports.joinCourse = async (req, res, next) => {
         await req.user.save()
         console.log("update finish")
         res.redirect("/course/view/" + courseInfo._id + '/10')
-
     } catch (e) {
         next(e)
     }
@@ -313,7 +312,7 @@ exports.assignTA = async (req, res) => {
         console.log("id: ", userId)
         let url = 'https://www.enactnetwork.org/login'
         const sgMail = require('@sendgrid/mail');
-        sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
         const msg = {
             to: email,
             from: 'enact@brandeis.edu',
@@ -324,7 +323,11 @@ exports.assignTA = async (req, res) => {
                 '<br>' + '<b>Click <a href=' + url + '>' + 'here' + '</a>' + ' to login</b>' +
                 '<br><br>' + 'ENACT Support Team'
         };
-        await sgMail.send(msg);
+        try {
+            await sgMail.send(msg);
+        } catch (e) {
+            console.log("SENDGRID EXCEPTION: ", e)
+        }
         // points to newUser
         taInfo = newUser
     }

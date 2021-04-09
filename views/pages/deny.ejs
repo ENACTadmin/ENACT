@@ -23,71 +23,72 @@
             <div class='row'>
                 <% if (loggedIn) { %>
                     <div class='col-md-12 col-sm-12'>
-                        <div class='card border-0'>
-                            <div class='shadow-sm card-body'>
-                                <% if (resourceInfo && resourceInfo.length > 0) { %>
-                                    <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
-                                        <div class='card border-0'>
-                                            <div class='shadow-sm card-body'>
-                                                <h3><%= resourceInfo[i].name %></h3>
-                                                <div class='card-text'>
-                                                    <ul class='list-group'>
-                                                        <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                            <h5 style="display: inline">
-                                                                Description:</h5> <%= resourceInfo[i].description %>
-                                                        </li>
-                                                        <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                            <h5 style="display: inline">
-                                                                Year:</h5> <%= resourceInfo[i].yearOfCreation %>
-                                                        </li>
-                                                        <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                            <h5 style="display: inline">
-                                                                State:</h5> <%= resourceInfo[i].state %></li>
-                                                        <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                            <h5 style="display: inline">Link:</h5> <a
-                                                                    href='<%= resourceInfo[i].uri %>'>click me</a>
-                                                        </li>
-                                                        <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                            <h5 style="display: inline">
-                                                                Institution:</h5> <%= resourceInfo[i].institution %>
-                                                        </li>
-                                                        <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                            <h5 style="display: inline">
-                                                                Author:</h5> <%= resourceInfo[i].ownerName %>
-                                                        </li>
-                                                        <% if (resourceInfo[i].tags.length >= 1 && resourceInfo[i].tags[0].length !== 0) { %>
-                                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                                <h5 style="display: inline">
-                                                                    Topic(s)/Issue(s):</h5> <%= resourceInfo[i].tags %>
-                                                            </li>
-                                                        <% } %>
-                                                        <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                            <!--force inline display-->
-                                                            <button type='button' class='btn btn-outline-info'
 
-                                                                    data-toggle='modal'
-                                                                    data-target='#commentModal<%= resourceInfo[i]._id %>'>
-                                                                Leave a comment to the resource owner
-                                                            </button>
-                                                            <button type='button' class='btn btn-outline-danger'
+                        <% if (resourceInfo && resourceInfo.length > 0) { %>
+                            <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
+                                <div class='card border-0'>
+                                    <div class='shadow-sm card-body'>
+                                        <h3><%= resourceInfo[i].name %></h3>
+                                        <div class='card-text'>
+                                            <ul class='list-group'>
+                                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
+                                                    <h5 style="display: inline">
+                                                        Description:</h5> <%= resourceInfo[i].description %>
+                                                </li>
+                                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
+                                                    <h5 style="display: inline">
+                                                        Year:</h5> <%= resourceInfo[i].yearOfCreation %>
+                                                </li>
+                                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
+                                                    <h5 style="display: inline">
+                                                        State:</h5> <%= resourceInfo[i].state %></li>
+                                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
+                                                    <h5 style="display: inline">Link:</h5> <a
+                                                            href='<%= resourceInfo[i].uri %>'>click me</a>
+                                                </li>
+                                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
+                                                    <h5 style="display: inline">
+                                                        Institution:</h5> <%= resourceInfo[i].institution %>
+                                                </li>
+                                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
+                                                    <h5 style="display: inline">
+                                                        Author:</h5> <%= resourceInfo[i].ownerName %>
+                                                </li>
+                                                <% if (resourceInfo[i].tags.length >= 1 && resourceInfo[i].tags[0].length !== 0) { %>
+                                                    <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
+                                                        <h5 style="display: inline">
+                                                            Topic(s)/Issue(s):</h5> <%= resourceInfo[i].tags %>
+                                                    </li>
+                                                <% } %>
+                                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
+                                                    <!--force inline display-->
+                                                    <button type='button' class='btn btn-outline-info'
 
-                                                                    data-toggle='modal'
-                                                                    data-target='#resumeModal<%= resourceInfo[i]._id %>'>
-                                                                Leave the resource to under review status
-                                                            </button>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                                            data-toggle='modal'
+                                                            data-target='#commentModal<%= resourceInfo[i]._id %>'>
+                                                        Leave a comment to the resource owner
+                                                    </button>
+                                                    <button type='button' class='btn btn-outline-danger'
+
+                                                            data-toggle='modal'
+                                                            data-target='#resumeModal<%= resourceInfo[i]._id %>'>
+                                                        Leave the resource to under review status
+                                                    </button>
+                                                </li>
+                                            </ul>
                                         </div>
-                                        <br>
-                                    <% } %>
-                                    <br>
-                                <% } else { %>
-                                    You don't need to confirm any denied resources now.
-                                <% } %>
+                                    </div>
+                                </div>
+                                <br>
+                            <% } %>
+                            <br>
+                        <% } else { %>
+                            <div class='card border-0'>
+                                <div class='shadow-sm card-body'>
+                                    You don't need to confirm any denial now.
+                                </div>
                             </div>
-                        </div>
+                        <% } %>
                     </div>
                 <% } else { %>
                     <%- include('../components/component-loginToView'); -%>

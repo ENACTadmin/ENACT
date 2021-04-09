@@ -13,7 +13,7 @@
                 Latest Events
             </div>
             <h4>Current Timezone: <b><i id="fillMe"></i></b> (Event times have been adjusted according to your current timezone)
-                <% if (loggedIn && (status === 'admin' || status === 'faculty')) { %>
+                <% if (loggedIn && (status === 'admin' || status === 'faculty' || status === 'TA')) { %>
                     <br><br>
                     <button class="btn btn-primary" onclick="showAddModal()">Add a New Event</button>
                 <% } %>

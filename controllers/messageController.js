@@ -116,7 +116,11 @@ exports.sendProfileEmail = async (req, res) => {
             '<br>' + '<b>  Click <a href=' + url + '>' + 'here' + '</a>' + ' to login</b>' +
             '<br><br>' + 'ENACT Support Team'
     };
-    await sgMail.send(msg);
+    try {
+        await sgMail.send(msg);
+    } catch (e) {
+        console.log("SENDGRID EXCEPTION: ", e)
+    }
     res.render('./pages/showProfile', {
         userInfo: currUser,
         sentStatus: 'Email Sent'
@@ -140,7 +144,11 @@ function send_email(workEmail, userName, message, url) {
                 '<br>' + '<b>Click <a href=' + url + '>' + 'here' + '</a>' + ' to reply</b>' +
                 '<br><br>' + 'ENACT Support Team'
         };
-        sgMail.send(msg);
+        try {
+            sgMail.send(msg);
+        } catch (e) {
+            console.log("SENDGRID EXCEPTION: ", e)
+        }
     } else {
         const msg = {
             to: workEmail,
@@ -153,7 +161,11 @@ function send_email(workEmail, userName, message, url) {
                 '<br>' + '<b>Click <a href=' + url + '>' + 'here' + '</a>' + ' to reply</b>' +
                 '<br><br>' + 'ENACT Support Team'
         };
-        sgMail.send(msg);
+        try {
+            sgMail.send(msg);
+        } catch (e) {
+            console.log("SENDGRID EXCEPTION: ", e)
+        }
     }
 }
 

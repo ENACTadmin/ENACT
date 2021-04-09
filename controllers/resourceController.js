@@ -14,10 +14,11 @@ exports.uploadResource = async (req, res, next) => {
         let tagsString = req.body.tags
         let tags = tagsString.split(",")
         let newResource
-        let currUser = await User.findOne({_id: req.user._id})
+        let currUser = await User.findOne({_id: req.body.ownerId})
+        // not uploaded from course page
         if (courseId === undefined) {
             newResource = new Resource({
-                ownerId: req.user._id,
+                ownerId: currUser._id,
                 ownerName: currUser.userName,
                 status: req.body.status, // public/private to class/private to professors
                 createdAt: new Date(),
@@ -32,13 +33,14 @@ exports.uploadResource = async (req, res, next) => {
                 yearOfCreation: req.body.yearOfCreation, // content's actual creation time
                 checkStatus: 'approve'
             })
-        } else {
-            const checkStatus = 'underReview'
+        }
+        // uploaded directly from course page
+        else {
             // student uploaded resource
             if (res.locals.status === "student") {
                 let facultyInfo = await Course.findOne({_id: courseId})
                 newResource = new Resource({
-                    ownerId: req.user._id,
+                    ownerId: currUser._id,
                     ownerName: currUser.userName,
                     courseId: courseId,
                     status: req.body.status, // partPublic/private to ENACT
@@ -53,13 +55,13 @@ exports.uploadResource = async (req, res, next) => {
                     institution: req.body.institution,
                     yearOfCreation: req.body.yearOfCreation,// content's actual creation time
                     facultyId: facultyInfo.ownerId, //belong to which faculty to approve
-                    checkStatus: checkStatus,
+                    checkStatus: 'underReview',
                 })
             }
             // faculty/admin/TA uploaded resource
             else {
                 newResource = new Resource({
-                    ownerId: req.user._id,
+                    ownerId: currUser._id,
                     ownerName: currUser.userName,
                     courseId: courseId,
                     status: req.body.status, // public/private to class/private to professors
@@ -437,9 +439,10 @@ exports.loadImages = async (req, res, next) => {
 
 exports.loadPublicResources = async (req, res, next) => {
     try {
-        res.locals.resourceInfo = await Resource.find({
+        let resourceInfo = await Resource.find({
             status: {$in: ["finalPublic", "public"]}
         }).sort({yearOfCreation: -1})
+        res.locals.resourceInfo = await addAuthor(resourceInfo)
         next()
     } catch (e) {
         console.log("error: " + e)
@@ -449,9 +452,10 @@ exports.loadPublicResources = async (req, res, next) => {
 
 exports.loadDisplayedResources = async (req, res, next) => {
     try {
-        res.locals.resourceInfo = await Resource.find({
+        let resourceInfo = await Resource.find({
             status: "finalPublic"
         }).sort({yearOfCreation: -1})
+        res.locals.resourceInfo = await addAuthor(resourceInfo)
         next()
     } catch (e) {
         console.log("error: " + e)
@@ -463,6 +467,7 @@ exports.showMyResources = async (req, res, next) => {
     try {
         let resourceInfo = await Resource.find({ownerId: req.user._id})
         let tags = await getTags(req, res)
+        resourceInfo = await addAuthor(resourceInfo)
         if (req.user.status === 'student') {
             res.render('./pages/myResourcesStudent', {
                 resourceInfo: resourceInfo,
@@ -525,6 +530,7 @@ exports.showPublic = async (req, res, next) => {
             status: {$in: ["finalPublic", "public"]},
             checkStatus: 'approve'
         }).sort({yearOfCreation: -1}).limit(10)
+        resourceInfo = await addAuthor(resourceInfo)
         res.render('./pages/search-primary-public', {
             resourceInfo: resourceInfo,
         })
@@ -600,13 +606,7 @@ exports.showStarredResources = async (req, res, next) => {
         let allResourceSets = await ResourceSet.find({ownerId: req.user._id})
         res.locals.allResourceSets = allResourceSets
         if (resourceInfo) {
-            for (let i = 0; i < resourceInfo.length; i++) {
-                let authors = await AuthorAlt.find({resourceId: resourceInfo[i]._id})
-                if (authors) {
-                    for (let j = 0; j < authors.length; j++)
-                        resourceInfo[i].ownerName += (', ' + authors[j].userName)
-                }
-            }
+            resourceInfo = await addAuthor(resourceInfo)
         }
         res.locals.resourceInfo = resourceInfo
         res.render('./pages/showStarredResources')
@@ -622,6 +622,7 @@ exports.loadCollection = async (req, res, next) => {
         let resourceInfoIds = resourceSet.resources
         let resourceInfo = await Resource.find({_id: {$in: resourceInfoIds}})
         res.locals.resourceSet = resourceSet
+        resourceInfo = await addAuthor(resourceInfo)
         res.locals.resourceInfo = resourceInfo
         if (req.user) {
             let allLikedResourceSet = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
@@ -876,6 +877,7 @@ async function invertedSearch(req, res) {
             })
         }
     }
+    resourceInfo = await addAuthor(resourceInfo)
     return resourceInfo
 }
 

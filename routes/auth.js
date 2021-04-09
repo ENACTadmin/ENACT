@@ -219,7 +219,11 @@ function send_email(workEmail, userId) {
         text: 'Password Reset',
         html: 'Password reset Link: https://www.enactnetwork.org/reset/' + userId
     };
-    sgMail.send(msg);
+    try {
+        sgMail.send(msg);
+    } catch (e) {
+        console.log("SENDGRID EXCEPTION: ", e)
+    }
 }
 
 
