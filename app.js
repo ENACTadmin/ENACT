@@ -209,22 +209,6 @@ app.post('/resource/upload/course/:courseId',
     resourceController.uploadResource
 )
 
-// upload resources for public access
-app.get('/resource/upload/public',
-    utils.checkUserName,
-    tagController.getAllTags,
-    (req, res) => {
-        if (req.user.status !== 'admin')
-            res.send("You are not admin!")
-        else
-            res.render('./pages/uploadToPublic')
-    }
-)
-
-app.post('/resource/upload/public',
-    resourceController.uploadToPublicResr
-)
-
 // upload faculty-only resources
 app.get('/resource/upload/faculty',
     utils.checkUserName,
