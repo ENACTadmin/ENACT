@@ -5,7 +5,7 @@
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
             <div class='section__title section__title--centered'>
-                Resources Under Review
+                Review Resources Uploaded by Your Students
             </div>
         </div>
     </div>
@@ -22,11 +22,11 @@
                             <div class='col-sm-1'></div>
                             <div class='col-sm-11'>
                                 <input type='submit' class='btn btn-success' formaction='/resource/approve'
-                                       value='Post Checked Resources to ENACT'>
+                                       value='Post to ENACT (Only logged in members can access)'>
                                 <input type='submit' formaction='/resource/publish' class='btn btn-warning'
-                                       value='Submit Checked Resources to Admins to Request Open-to-public Access'>
+                                       value='Post to ENACT & Submit to Admins to Request Open-to-public Access (Anyone can access w/o login'>
                                 <input type='submit' formaction='/resource/deny' class='btn btn-secondary'
-                                       value='Deny Checked Resources'>
+                                       value='Return with Comment to Edit'>
                             </div>
                         </div>
                         <% for (let i = 0; i < resourceInfo.length; i++) { %>
@@ -41,8 +41,7 @@
                                         <div class='card-text'>
                                             <ul class='list-group'>
                                                 <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                    <h5 style="display: inline">
-                                                        Description:</h5> <%= resourceInfo[i].description %>
+                                                    <h5 style="display: inline">Description:</h5> <%= resourceInfo[i].description %>
                                                 </li>
                                                 <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                                     <h5 style="display: inline">State:</h5> <%= resourceInfo[i].state %>
