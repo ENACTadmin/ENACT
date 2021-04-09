@@ -5,7 +5,7 @@
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
             <div class='section__title section__title--centered'>
-                Public Resources Under Review
+                Review Resources which Requested Open-to-public Access
             </div>
         </div>
     </div>
@@ -23,11 +23,10 @@
                             <div class='col-sm-11'>
                                 <input type='submit' class='btn btn-success'
                                        formaction='/resource/status/toPublic'
-                                       value='Post Checked Resources to Public'>
-                                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                       value='Post to the General Public (Anyone can access w/o login)'>
                                 <input type='submit' formaction='/resource/status/toENACT'
                                        class='btn btn-secondary'
-                                       value='Leave Checked Resources in ENACT'>
+                                       value='Leave it/them in ENACT (Only logged in members can access)'>
                             </div>
                         </div>
                         <% for (let i = 0; i < resourceInfo.length; i++) { %>
@@ -37,8 +36,7 @@
                                     <br>
                                     <br>
                                     <br>
-                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                    <input type='checkbox' name='checked'
+                                    <input type='checkbox' class="form-control check-mark" name='checked'
                                            value='<%= resourceInfo[i]._id %>'>
                                 </div>
                                 <div class='col-sm-11'>
@@ -48,14 +46,14 @@
                                             <ul class='list-group'>
                                                 <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                                     <h5 style="display: inline">
-                                                        Author:</h5> <%= resourceInfo[i].ownerName %>
-                                                </li>
-                                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                    <h5 style="display: inline">
                                                         Description:</h5> <%= resourceInfo[i].description %>
                                                 </li>
                                                 <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                                     <h5 style="display: inline">State:</h5> <%= resourceInfo[i].state %>
+                                                </li>
+                                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
+                                                    <h5 style="display: inline">
+                                                        Year:</h5> <%= resourceInfo[i].yearOfCreation %>
                                                 </li>
                                                 <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                                     <h5 style="display: inline">Link:</h5> <a
