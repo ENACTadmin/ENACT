@@ -1,6 +1,5 @@
 'use strict';
 const Event = require('../models/Event');
-const Faculty = require('../models/Faculty');
 const User = require('../models/User');
 const sgMail = require('@sendgrid/mail');
 
@@ -19,6 +18,7 @@ exports.saveEvent = async (req, res, next) => {
             description: req.body.description,
             visibility: req.body.visibility
         })
+        // send event emails
         let faculties = await User.find({status: {$in: ["admin", "faculty"]}})
         for (let idx in faculties) {
             let email = await faculties[idx].workEmail || faculties[idx].googleemail
@@ -51,7 +51,6 @@ exports.saveEvent = async (req, res, next) => {
                 }
             }
         }
-        // }
         await newEvent.save()
         res.redirect('back')
     } catch (e) {
@@ -71,7 +70,6 @@ exports.editEvent = async (req, res, next) => {
         eventToEdit.end = endDate
         eventToEdit.uri = req.body.uri
         eventToEdit.description = req.body.description
-        // eventToEdit.icon = req.body.icon
         eventToEdit.visibility = req.body.visibility
         await eventToEdit.save()
         res.redirect('back')
@@ -107,6 +105,7 @@ exports.sendEventEmail = async (req, res) => {
     console.log("id: ", eventId)
     let currEvent = await Event.findOne({_id: eventId})
     let eventName = currEvent.title
+    // for email sending, keep converting to US Eastern Time
     let eventTime = parseInt(req.body.DST) === 0 ? new Date(currEvent.start - 300 * 60000) : new Date(currEvent.start - 240 * 60000)
     let eventDescription = currEvent.description
     let visibility = currEvent.visibility
@@ -144,12 +143,11 @@ exports.sendEventEmail = async (req, res) => {
 
 exports.loadEvents = async (req, res, next) => {
     let eventsInfo;
-    if (res.locals.loggedIn) {
-        eventsInfo = await Event.find({}).sort({start: -1}).limit(3)
-    } else {
-        eventsInfo = await Event.find({visibility: 'public'}).sort({start: -1}).limit(3)
-    }
-    // eventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() >= new Date().getTime());
+    // if (res.locals.loggedIn) {
+    eventsInfo = await Event.find({}).sort({start: -1}).limit(3)
+    // } else {
+    //     eventsInfo = await Event.find({visibility: 'public'}).sort({start: -1}).limit(3)
+    // }
     res.locals.eventsInfo = eventsInfo
     next()
 }
