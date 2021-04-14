@@ -66,7 +66,10 @@
                         <br>
                         <%- include('../components/component-yearOfCreationSelector') -%>
                         <br>
-                        <% if (status === 'admin' || status === 'faculty') { %>
+                        <h5 style="color: grey">Notice: To publish this resource to the public site, select the "Open to public" option here. Public resources are accessible to anyone, without log in.
+                            Please be sure there is no confidential information in materials you publish for public access. Resources not published to the public site will only be accessible to ENACT
+                            students, alumni, faculty and staff.</h5><br>
+                        <% if (status === 'admin' || status === 'faculty' || status === 'TA') { %>
                             <div class='input-group-prepend'>
                                 <span class='input-group-text' style='width: 180px'>Resource Status</span>
                                 <select class='form-control' name='status'>

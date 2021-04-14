@@ -54,7 +54,7 @@
                                 &#9825;
                             <% } %>
                         </button>
-                        <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id.toString()) { %>
+                        <% if (status === 'admin' || status === 'faculty' || resourceInfo[i].ownerId.toString() === user._id.toString() ||  (status === 'TA' && courseInfo.tas.includes(user._id))) { %>
                             <button id="<%= resourceInfo[i]._id %>" type='button'
                                     class='editBtn btn btn-outline-info'
                                     data-toggle='modal'
