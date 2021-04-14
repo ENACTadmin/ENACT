@@ -207,11 +207,9 @@ let id_set = [] %>
                                         <option value='privateToENACT'>Exclusive to all ENACT members</option>
                                         <option value='privateToProfessor'>Exclusive to ENACT professors</option>
                                         <% if (status === 'admin') { %>
-                                            <option value='public'>Open to public</option>
                                             <option value='finalPublic'>Displayed on the front page</option>
-                                        <% } else { %>
-                                            <option value='partPublic'>Open to public (needs admin approval)</option>
                                         <% } %>
+                                        <option value='public'>Open to public</option>
                                     </select>
                                 </div>
                                 <br>

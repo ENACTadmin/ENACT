@@ -252,32 +252,33 @@
                 <div class="modal-body">
                     <h4 class="text-blue h4 mb-10">Add Event Detail</h4>
                     <div class="form-group">
-                        <label>Event name</label>
+                        <label style="font-size: large">Event name</label>
                         <input type="text" class="form-control" name="title">
                     </div>
                     <div class="form-group">
-                        <label>Start Time</label>
+                        <label style="font-size: large">Start Time</label>
                         <input readonly autocomplete="off" type='text'
                                class="datetimepicker form-control" name="start">
                     </div>
                     <div class="form-group">
-                        <label>End Time</label>
+                        <label style="font-size: large">End Time</label>
                         <input readonly autocomplete="off" type='text'
                                class="datetimepicker form-control" name="end">
                     </div>
                     <div class="form-group">
-                        <label>Event Description</label>
+                        <label style="font-size: large">Event Description</label>
                         <textarea class="form-control" name="description"></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Visibility</label>
+                        <label style="font-size: large">Visibility</label>
+                        <h5 style="color: grey">Notice: To post this event to the public site, select the "Open to public" option here. Public events are accessible to anyone, without log in. Please be sure there is no confidential information in events you post for public access. Events not posted to the public site will only be accessible to ENACT students, alumni, faculty and staff.</h5><br>
                         <select class="form-control" name="visibility">
                             <option value="public">Open to public</option>
                             <option value="member">Open to ENACT members only</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Event Link</label>
+                        <label style="font-size: large">Event Link</label>
                         <input type="text" class="form-control" name="uri">
                     </div>
                 </div>
@@ -339,39 +340,40 @@
                         <div class="modal-body">
                             <h4 class="text-blue h4 mb-10">Edit Event</h4>
                             <div class="form-group">
-                                <label>Event name</label>
+                                <label style="font-size: large">Event name</label>
                                 <input type="text" class="form-control" name="title"
                                        value="<%= futureEventsInfo[i].title %>">
                             </div>
                             <div class="form-group">
-                                <label>Start Time</label>
+                                <label style="font-size: large">Start Time</label>
                                 <input readonly autocomplete="off" type="text" class="datetimepicker form-control"
                                        name="start"
                                        value="<%= futureEventsInfo[i].start %>">
                             </div>
                             <div class="form-group">
-                                <label>End Date</label>
+                                <label style="font-size: large">End Date</label>
                                 <input readonly autocomplete="off" type="text" class="datetimepicker form-control"
                                        name="end"
                                        value="<%= futureEventsInfo[i].end %>">
                             </div>
                             <div class="form-group">
-                                <label>Event Description</label>
+                                <label style="font-size: large">Event Description</label>
                                 <textarea type="text" class="form-control"
                                           name="description"><%= futureEventsInfo[i].description %></textarea>
                             </div>
 
+                            <h5 style="color: grey">Notice: To post this event to the public site, select the "Open to public" option here. Public events are accessible to anyone, without log in. Please be sure there is no confidential information in events you post for public access. Events not posted to the public site will only be accessible to ENACT students, alumni, faculty and staff.</h5><br>
+
                             <div class="form-group">
-                                <label>Visibility</label>
-                                <select id="visibility<%= futureEventsInfo[i]._id %>" class="form-control"
-                                        name="visibility">
+                                <label style="font-size: large">Visibility</label>
+                                <select id="visibility<%= futureEventsInfo[i]._id %>" class="form-control" name="visibility">
                                     <option value="public">Open to public</option>
                                     <option value="member">Open to ENACT members only</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label>Event Link</label>
+                                <label style="font-size: large">Event Link</label>
                                 <input type="text" class="form-control" name="uri"
                                        value="<%= futureEventsInfo[i].uri %>">
                             </div>
@@ -438,30 +440,32 @@
                         <div class="modal-body">
                             <h4 class="text-blue h4 mb-10">Edit Event</h4>
                             <div class="form-group">
-                                <label>Event name</label>
+                                <label st>Event name</label>
                                 <input type="text" class="form-control" name="title"
                                        value="<%= pastEventsInfo[i].title %>">
                             </div>
                             <div class="form-group">
-                                <label>Start Time</label>
+                                <label style="font-size: large">Start Time</label>
                                 <input readonly autocomplete="off" type="text" class="datetimepicker form-control"
                                        name="start"
                                        value="<%= pastEventsInfo[i].start %>">
                             </div>
                             <div class="form-group">
-                                <label>End Date</label>
+                                <label style="font-size: large">End Date</label>
                                 <input readonly autocomplete="off" type="text" class="datetimepicker form-control"
                                        name="end"
                                        value="<%= pastEventsInfo[i].end %>">
                             </div>
                             <div class="form-group">
-                                <label>Event Description</label>
+                                <label style="font-size: large">Event Description</label>
                                 <textarea type="text" class="form-control"
                                           name="description"><%= pastEventsInfo[i].description %></textarea>
                             </div>
 
+                            <h5 style="color: grey">Notice: To post this event to the public site, select the "Open to public" option here. Public events are accessible to anyone, without log in. Please be sure there is no confidential information in events you post for public access. Events not posted to the public site will only be accessible to ENACT students, alumni, faculty and staff.</h5><br>
+
                             <div class="form-group">
-                                <label>Visibility</label>
+                                <label style="font-size: large">Visibility</label>
                                 <select id="visibility<%= pastEventsInfo[i]._id %>" class="form-control"
                                         name="visibility">
                                     <option value="public">Open to public</option>
@@ -470,7 +474,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Event Link</label>
+                                <label style="font-size: large">Event Link</label>
                                 <input type="text" class="form-control" name="uri" value="<%= pastEventsInfo[i].uri %>">
                             </div>
                         </div>
