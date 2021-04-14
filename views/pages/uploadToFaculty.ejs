@@ -44,7 +44,7 @@
                     <div class='col-md-6 col-sm-12'>
                         <h3>Author(s)</h3>
                         <hr>
-                        <h5 style="color: grey">Notice: If you wish to change the owner, fill in the name of the actual user and click one of the suggestion</h5><br>
+                        <h5 style="color: grey">Notice: If you wish to change the author, fill in the name of the actual author and click one of the suggestions</h5><br>
                         <div class="form-horizontal">
                             <div class="input-group-prepend">
                                 <span class='input-group-text' style='width: 180px'>Name</span>
@@ -76,11 +76,9 @@
                                     <option selected value='privateToProfessor'>Exclusive to ENACT professors</option>
                                     <option value='privateToENACT'>Exclusive to all ENACT members</option>
                                     <% if (status === 'admin') { %>
-                                        <option value='public'>Open to public</option>
                                         <option value='finalPublic'>Displayed on the front page</option>
                                     <% } else { %>
-                                        <option value='partPublic'>Open to public (need to be approved by admins)
-                                        </option>
+                                        <option value='public'>Open to public (need to be approved by admins)</option>
                                     <% } %>
                                 </select>
                             </div>
