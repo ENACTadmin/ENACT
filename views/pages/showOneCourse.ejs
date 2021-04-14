@@ -64,10 +64,12 @@
                             <div class='shadow-sm card-body' style="border-top-left-radius: 0 !important; border-top-right-radius: 0 !important;">
                                 <div class='card-text'>
                                     <ul class='list-group'>
-                                        <% if (status === 'faculty' || status === 'admin') { %>
+                                        <% if (status === 'faculty' || status === 'admin' || status === 'TA' && courseInfo.tas.includes(user._id)) { %>
                                             <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
                                                 <h5 style="display: inline">Pin Code to Join:</h5> <%= courseInfo.coursePin %>
                                             </li>
+                                        <% } %>
+                                        <% if (status === 'faculty' || status === 'admin') { %>
                                             <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
                                                 <a href="/ta/assign/<%= courseInfo._id %>"> Assign TA </a>
                                             </li>
@@ -78,8 +80,7 @@
                                                 <a href="/resource/review/<%= courseInfo._id %>">Review Resources</a>
                                             </li>
                                         <% } %>
-                                        <li class='list-group-item borderless'
-                                            style='padding: 0 0 3px 0'>
+                                        <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
                                             <a href='/resource/upload/course/<%= courseInfo._id %>'>Upload Resources</a>
                                         </li>
                                     </ul>
