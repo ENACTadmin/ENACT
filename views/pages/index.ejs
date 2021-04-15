@@ -287,7 +287,11 @@
                                     <div class="row">
                                         <div class="col-md-9 col-sm-12" style="display: inline">
                                             <h5 style="display: inline; font-weight: 650">Description:</h5>
-                                            <%= eventsInfo[i].description %>
+                                            <% if (loggedIn || eventsInfo[i].visibility === 'public') { %>
+                                                <%= eventsInfo[i].description %>
+                                            <% } else { %>
+                                                <%= eventsInfo[i].description.split('.')[0] + '...' %>
+                                            <% } %>
                                         </div>
                                         <div class="col-md-3 col-sm-12 align-self-center">
                                             <img
@@ -324,6 +328,11 @@
                                         </li>
                                     <% } %>
                                 <% } else { %>
+                                    <li class='list-group-item borderless box-padding bg-transparent' style="font-size: large">
+                                        <h5 style="display: inline; font-weight: 650">Date: </h5>
+                                        <p style="display: inline"
+                                           class="TZChange"><%= eventsInfo[i].start %></p>
+                                    </li>
                                     <li class='list-group-item borderless box-padding bg-transparent' style="font-size: large">
                                         <h5 style="display: inline">To view details, <a href="/login" class="btn btn-sm btn-warning">Click to Login</a></h5>
                                     </li>
