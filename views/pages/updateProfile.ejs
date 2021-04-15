@@ -18,6 +18,14 @@
                     Welcome to ENACT, please complete your profile first.
                 <% } %>
             </div>
+            <h3>Need assistance? Check out the tutorial video.</h3>
+            <button class='btn btn-large btn-primary' id="flip">Account Creation Tutorial</button>
+            <div class="container" id="panel" style="display: none">
+                <br><br>
+                <video style="width: 60%" poster="/images/accountCreation.png" controls>
+                    <source src="https://enact-resources.s3.us-east-2.amazonaws.com/Create+an+Account+and+Profile+(with+captions).mp4" type="video/mp4">
+                </video>
+            </div>
         </div>
     </div>
 </section>
@@ -215,7 +223,8 @@
                                 <% } %>
                         >
                         <label class="form-check-label" for="flexCheckDefault">
-                            <h5>Allow my profile to be visible to ENACT students and alumni who are logged in to this platform. Your email address will not be displayed. Your profile will not be visible to the public.</h5>
+                            <h5>Allow my profile to be visible to ENACT students and alumni who are logged in to this platform. Your email address will not be displayed. Your profile will not be
+                                visible to the public.</h5>
                         </label>
                     </div>
                     <br>
@@ -282,6 +291,9 @@
             $(this).prop('selected', true)
         }
     })
+    $("#flip").click(function () {
+        $("#panel").slideToggle("slow");
+    });
 </script>
 
 <%- include('../components/footer'); -%>
