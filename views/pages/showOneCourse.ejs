@@ -71,17 +71,17 @@
                                         <% } %>
                                         <% if (status === 'faculty' || status === 'admin') { %>
                                             <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
-                                                <a href="/ta/assign/<%= courseInfo._id %>"> Assign TA </a>
+                                                <a href="/ta/assign/<%= courseInfo._id %>"> <button type="button" class="btn btn-outline-primary">Assign TA </button></a>
                                             </li>
                                         <% } %>
 
                                         <% if (status === 'admin' || status === 'faculty'  || (status === 'TA' && courseInfo.tas.includes(user._id))) { %>
                                             <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
-                                                <a href="/resource/review/<%= courseInfo._id %>">Review Resources</a>
+                                                <a href="/resource/review/<%= courseInfo._id %>"> <button type="button" class="btn btn-outline-primary">Review Resources</button></a>
                                             </li>
                                         <% } %>
                                         <li class='list-group-item borderless' style='padding: 0 0 3px 0'>
-                                            <a href="/resource/upload/course/<%= courseInfo._id %>">Upload Resources</a>
+                                            <a href="/resource/upload/course/<%= courseInfo._id %>"> <button type="button" class="btn btn-outline-primary">Upload Resources</button></a>
                                         </li>
                                     </ul>
                                 </div>
