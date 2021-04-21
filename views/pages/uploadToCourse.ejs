@@ -80,10 +80,7 @@
                                 <select class='form-control' name='status'>
                                     <option selected value='privateToENACT'>Exclusive to all ENACT members</option>
                                     <option value='privateToProfessor'>Exclusive to ENACT professors</option>
-                                    <% if (status === 'admin') { %>
-                                        <option value='finalPublic'>Displayed on the front page</option>
-                                    <% } %>
-                                    <option value='public'>Open to public</option>
+                                    <option value='finalPublic'>Open to public</option>
                                 </select>
                             </div>
                             <br>
@@ -91,8 +88,8 @@
                             <div class='input-group-prepend'>
                                 <span class='input-group-text' style='width: 180px'>Resource Status</span>
                                 <select class='form-control' name='status'>
-                                    <option selected value='privateToENACT'>Exclusive to all ENACT members</option>
-                                    <option value='partPublic'>Open to public (needs admin review)</option>
+                                    <option selected value='privateToENACT'>Publish for ENACT students, faculty, and alumni only</option>
+                                    <option value='partPublic'>Publish for ENACT students, faculty, and alumni AND the public</option>
                                 </select>
                             </div>
                         <% } %>
