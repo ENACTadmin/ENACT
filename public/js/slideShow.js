@@ -458,7 +458,7 @@ let labels = [
     'ENACT Faculty Fellows at the Massachusetts State House with legislators and staff.',
     'Women\'s Engagement in Politics Forum: ENACT Academic Program Director Melissa Stimell, Mass. State Senator Cindy Friedman and Former New Hampshire Speaker of the House Terie Norelli (L-R).',
     'ENACT Faculty Fellow Victor Eno of Florida Agricultural and Mechanical University participating in the ENACT Institute.',
-    'Brandeis ENACT student Max Everson shares his ENACT experience with ENACT Faulty Fellows Michelle Inderbitzin of Oregon State and Jason Gainous of the University of Louisville.',
+    'Brandeis ENACT student Max Everson shares his ENACT experience with ENACT Faculty Fellows Michelle Inderbitzin of Oregon State and Jason Gainous of the University of Louisville.',
     'ENACT Faculty Fellow James Slack and his students during a visit to the Mississippi State Capitol Building.',
     'Professor Kathleen Cole of Metropolitan State University in Minneapolis, Minnesota, discusses the ENACT program with fellow ENACT Faculty Fellows.',
     'Former State Senator Richard Ross (R) and State Representative Jay Kaufman (D) speak to ENACT students at the Massachusetts State House.',
