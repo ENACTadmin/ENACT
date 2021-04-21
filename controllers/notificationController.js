@@ -59,7 +59,7 @@ exports.toPublic = async (req, res, next) => {
 
         for (let i = 0; i < resourceInfo.length; i++) {
             resourceInfo[i].checkStatus = 'approve'
-            resourceInfo[i].status = 'partPublic'
+            resourceInfo[i].status = 'finalPublic'
             resourceInfo[i].save()
         }
         res.redirect('back')
