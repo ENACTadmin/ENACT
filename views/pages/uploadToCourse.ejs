@@ -71,9 +71,10 @@
                         <br>
                         <%- include('../components/component-yearOfCreationSelector') -%>
                         <br>
-                        <h5 style="color: grey">Notice: To publish this resource to the public site, select the "Open to public" option here. Public resources are accessible to anyone, without log in.
-                            Please be sure there is no confidential information in materials you publish for public access. Resources not published to the public site will only be accessible to ENACT
-                            students, alumni, faculty and staff.</h5><br>
+                        <h5>Please be sure there is no confidential information in materials you upload. Materials you upload will be accessible to
+                            ENACT students, alumni, faculty and staff. Uploaded materials may also be selected by ENACT faculty, TAs or staff to be published to the
+                            "open to the public" portion of the ENACT website accessible to anyone without log in, and may be included in other ENACT-produced materials.
+                        </h5><br>
                         <% if (status === 'admin' || status === 'faculty' || status === 'TA') { %>
                             <div class='input-group-prepend'>
                                 <span class='input-group-text' style='width: 180px'>Resource Status</span>
@@ -86,11 +87,10 @@
                             <br>
                         <% } else { %>
                             <div class='input-group-prepend'>
-                                <span class='input-group-text' style='width: 180px'>Resource Status</span>
-                                <select class='form-control' name='status'>
-                                    <option selected value='privateToENACT'>Publish for ENACT students, faculty, and alumni only</option>
-                                    <option value='partPublic'>Publish for ENACT students, faculty, and alumni AND the public</option>
-                                </select>
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                                <label class="form-check-label" for="flexCheckChecked">
+                                    I have read and understand the notice above.
+                                </label>
                             </div>
                         <% } %>
                     </div>
