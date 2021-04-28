@@ -169,7 +169,7 @@ exports.loadApprovedResources = async (req, res, next) => {
 exports.loadPartPublicResources = async (req, res, next) => {
     try {
         res.locals.resourceInfo = await Resource.find({
-            status: 'partPublic'
+            checkStatus: 'underReview'
         }).sort({'createdAt': -1})
         res.render('./pages/resource-review-admin')
     } catch (e) {

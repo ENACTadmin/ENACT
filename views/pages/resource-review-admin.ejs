@@ -5,7 +5,7 @@
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
             <div class='section__title section__title--centered'>
-                Review Resources which Requested Open-to-public Access
+                Review Site-wide Unreviewed resources
             </div>
         </div>
     </div>
@@ -27,6 +27,8 @@
                                 <input type='submit' formaction='/resource/status/toENACT'
                                        class='btn btn-secondary'
                                        value='Leave it/them in ENACT (Only logged in members can access)'>
+                                <input type='submit' formaction='/resource/deny' class='btn btn-secondary'
+                                       value='Return with Comment to Edit'>
                             </div>
                         </div>
                         <% for (let i = 0; i < resourceInfo.length; i++) { %>

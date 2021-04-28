@@ -33,10 +33,23 @@
                     </li>
                     <% if (status === 'faculty' || status === 'admin') { %>
                         <li>
-                            <a class='header-link' href='/resource/upload/faculty'>Upload resources</a>
-                        </li>
-                        <li>
                             <a class='header-link' href='/resource/review'>Approve stdnt. rsrc(s)</a>
+                        </li>
+                    <% } %>
+                    <% for (let i = 0; i < courseInfoSet.length; i++) { %>
+                        <li>
+                            <% if (courseInfoSet[i].courseName.length <= 20) { %>
+                                <a class='header-link'
+                                   href='/resource/upload/course/<%= courseInfoSet[i]._id %>'> Upload rsrc to <%= courseInfoSet[i].courseName %></a>
+                            <% } else { %>
+                                <a class='header-link'
+                                   href='/resource/upload/course/<%= courseInfoSet[i]._id %>'> Upload rsrc to <%= courseInfoSet[i].courseName.substring(0, 16) + "..." %></a>
+                            <% } %>
+                        </li>
+                    <% } %>
+                    <% if (status === 'faculty' || status === 'admin') { %>
+                        <li>
+                            <a class='header-link' href='/resource/upload/faculty'>Upload faculty resources</a>
                         </li>
                         <li>
                             <a class='header-link' href='/resources/view/faculty'>Guide for faculty</a>
@@ -99,6 +112,11 @@
                 <li>
                     <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Admin</a>
                     <ul class='sub-menu'>
+
+                        <li>
+                            <a class='header-link' href='/resource/approve/public'>Approve all resources</a>
+                        </li>
+
                         <li>
                             <a class='header-link' href='/tag/approve'>Approve new topic(s)</a>
                         </li>
