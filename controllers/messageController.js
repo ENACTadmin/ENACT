@@ -96,13 +96,36 @@ exports.saveMessage = async (req, res, next) => {
         next(e)
     }
 }
-
+exports.sendResourceEmail = async (req, res) => {
+    //is req.user.id correct?
+    let userId = req.user.id
+    let userToEmail = await User.findOne({_id: userId})
+    const review = req.body.review;
+    const sgMail = require('@sendgrid/mail');
+    const msg = {
+        to: userToEmail,
+        from: "enact@brandeis.edu",
+        subject: 'ENACT Digital Platform: you have one new notification.',
+        text: 'ENACT Digital Platform: you have one new notification.',
+        html: 'Hi, ' + userName + '<br>' +
+            "<br>" + "An admin or faculty member has requested a change to your resource submission." +
+            "<br>" + "Comment:" +
+            "<br>" + "<b>" + review + "</b>" +
+            '<br><br>' + 'ENACT Support Team'
+    } 
+    try {
+        await sgMail.send(msg);
+    } catch (e) {
+        console.log("SENDGRID EXCEPTION: ", e)
+    }
+    res.render('./pages/deny')
+}
 exports.sendProfileEmail = async (req, res) => {
-    let userId = req.params.id
-    console.log("id: ", userId)
-    let currUser = await User.findOne({_id: userId})
-    let userName = currUser.userName
-    let email = currUser.workEmail || currUser.googleemail
+    let resourceId = req.params.resourceId
+    let resource = await Resource.findOne({_id: resourceId})
+    let userId = resource.ownerId
+    let user = await User.findOne({_id: userId})
+    let email = user.workEmail || user.googleemail
     let url = 'https://www.enactnetwork.org/login'
     const sgMail = require('@sendgrid/mail');
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -117,7 +140,9 @@ exports.sendProfileEmail = async (req, res) => {
             '<br><br>' + 'ENACT Support Team'
     };
     try {
-        await sgMail.send(msg);
+        console.dir(msg)
+        console.log("sending message")
+        // await sgMail.send(msg);
     } catch (e) {
         console.log("SENDGRID EXCEPTION: ", e)
     }
