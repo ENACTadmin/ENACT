@@ -407,7 +407,8 @@ app.post('/resource/resume/:resourceId',
 )
 
 app.post('/resource/comment/:resourceId',
-    notificationController.comment
+    notificationController.comment,
+    messageController.sendProfileEmail
 )
 
 app.post('/resource/deny',
