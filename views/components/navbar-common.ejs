@@ -33,17 +33,17 @@
                     </li>
                     <% if (status === 'faculty' || status === 'admin') { %>
                         <li>
-                            <a class='header-link' href='/resource/review'>Approve stdnt. rsrc(s)</a>
+                            <a class='header-link' href='/resource/review'>Approve resources</a>
                         </li>
                     <% } %>
                     <% for (let i = 0; i < courseInfoSet.length; i++) { %>
                         <li>
-                            <% if (courseInfoSet[i].courseName.length <= 20) { %>
+                            <% if (courseInfoSet[i].courseName.length <= 14) { %>
                                 <a class='header-link'
-                                   href='/resource/upload/course/<%= courseInfoSet[i]._id %>'> Upload rsrc to <%= courseInfoSet[i].courseName %></a>
+                                   href='/resource/upload/course/<%= courseInfoSet[i]._id %>'> Upload to <%= courseInfoSet[i].courseName %></a>
                             <% } else { %>
                                 <a class='header-link'
-                                   href='/resource/upload/course/<%= courseInfoSet[i]._id %>'> Upload rsrc to <%= courseInfoSet[i].courseName.substring(0, 16) + "..." %></a>
+                                   href='/resource/upload/course/<%= courseInfoSet[i]._id %>'> Upload to <%= courseInfoSet[i].courseName.substring(0, 13) + "..." %></a>
                             <% } %>
                         </li>
                     <% } %>
