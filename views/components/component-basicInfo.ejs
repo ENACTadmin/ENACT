@@ -3,8 +3,8 @@
 <% if (status === 'student') { %>
     <div class='input-group-prepend'>
         <span class='input-group-text' style='width: 180px'>Content Type</span>
-        <select id="contentSelect" class='form-control' name='contentType'>
-            <option selected value='empty'>Choose...</option>
+        <select id="contentSelect" class='form-control' name='contentType' required>
+            <option selected value=''>Choose...</option>
             <option value='Student Advice'>Advice & Tips for Students by Students</option>
             <option value='Advocacy Video'>Advocacy Video</option>
             <option value='Journal'>Campaign Journal/Personal Reflections</option>
@@ -102,8 +102,8 @@
 <% } else { %>
     <div class='input-group-prepend'>
         <span class='input-group-text' style='width: 180px'>Content Type</span>
-        <select id="contentSelect" class='form-control' name='contentType'>
-            <option selected value='empty'>Choose...</option>
+        <select id="contentSelect" class='form-control' name='contentType' required>
+            <option selected value=''>Choose...</option>
             <option value='Student Advice'>Advice & Tips for Students by Students</option>
             <option value='Advocacy Video'>Advocacy Video</option>
             <option value='Assignment Guidelines'>Assignment Guidelines & Rubrics</option>
@@ -237,26 +237,26 @@
 <div class='input-group-prepend'>
     <span class='input-group-text' style='width: 180px'>Resource Name</span>
     <input type='text' id='resourceName' class='form-control' name='resourceName'
-           placeholder='e.g. ENACT Introduction'>
+           placeholder='e.g. ENACT Introduction' required>
 </div>
 <br>
 <div class='input-group-prepend'>
     <span class='input-group-text' style='width: 180px'>Description</span>
     <textarea type='text' class='form-control' name='description' rows='4'
-              placeholder='e.g. Detailed description'></textarea>
+              placeholder='e.g. Detailed description' required></textarea>
 </div>
 <br>
 <!--hidden-->
 <div class='input-group-prepend'>
-    <span class='input-group-text' style='width: 180px'>URI</span>
+    <span class='input-group-text' style='width: 180px' >URL</span>
     <input type='text' id='fileURL' class='form-control' name='uri'
-           placeholder='e.g. URI'>
+           placeholder='e.g. URI' required>
 </div>
 <br>
 <div class='input-group-prepend'>
     <span class='input-group-text' style='width: 180px'>Media Type</span>
-    <select class='form-control' name='mediaType'>
-        <option selected value='empty'>Choose...</option>
+    <select class='form-control' name='mediaType' required>
+        <option value=''>Choose...</option>
         <option value='document'>Document</option>
         <option value='photo'>Photo</option>
         <option value='PowerPoint'>PowerPoint</option>

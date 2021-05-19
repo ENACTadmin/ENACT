@@ -44,7 +44,7 @@
                     <div class='col-md-6 col-sm-12'>
                         <h3>Author(s)</h3>
                         <hr>
-                        <h5 style="color: grey">Notice: If you wish to change the author, fill in the name of the actual author and click one of the suggestions</h5><br>
+                        <h5 style="color: grey">Notice: If you wish to change the author, fill in the name of the actual author and click one of the suggestions.</h5><br>
                         <div class="form-horizontal">
                             <div class="input-group-prepend">
                                 <span class='input-group-text' style='width: 180px'>Name</span>
@@ -67,9 +67,17 @@
                         <br>
                         <%- include('../components/component-stateSelector') -%>
                         <br>
-                        <%- include('../components/component-institutionSelector') -%>
+                        <div class='input-group-prepend'>
+                            <span class='input-group-text' style='width: 180px'>Institution</span>
+                            <input type='text' class='form-control' name='institution'
+                                   placeholder='e.g. Brandeis University' required>
+                        </div>
                         <br>
-                        <%- include('../components/component-yearOfCreationSelector') -%>
+                        <div class='input-group-prepend'>
+                            <span class='input-group-text' style='width: 180px'>Creation Year</span>
+                            <input type='text' class='form-control' name='yearOfCreation'
+                                   placeholder='e.g. 2020' required>
+                        </div>
                         <br>
                         <h5>Please be sure there is no confidential information in materials you upload. Materials you upload will be accessible to
                             ENACT students, alumni, faculty and staff. Uploaded materials may also be selected by ENACT faculty, TAs or staff to be published to the
@@ -87,8 +95,8 @@
                             <br>
                         <% } else { %>
                             <div class='input-group-prepend'>
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                                <label class="form-check-label" for="flexCheckChecked">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" required>
+                                <label class="form-check-label" for="flexCheckChecked" required>
                                     I have read and understand the notice above.
                                 </label>
                             </div>
