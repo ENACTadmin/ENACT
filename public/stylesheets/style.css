@@ -175,6 +175,15 @@ li.borderless {
     border-left: 0 none;
 }
 
+.dropdown-menu-right {
+    top: 0 !important;
+    right: 0 !important;
+    left: auto ;
+    float: right !important;
+}
+
+
+
 /*-----------------------------------------------------------------
 [Table of Contents]
 1. GENERAL

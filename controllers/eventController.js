@@ -138,7 +138,7 @@ exports.sendEventEmail = async (req, res) => {
             }
         }
     }
-    res.send()
+    res.redirect('back')
 }
 
 exports.loadEvents = async (req, res, next) => {

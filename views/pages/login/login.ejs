@@ -8,7 +8,7 @@
                 <div class="card card-signin my-5">
                     <div class="card-body">
                         <% if (secret === 'general') { %>
-                            <h5 class="card-title text-center">Sign In / Sign Up</h5>
+                            <h5 class="card-title text-center">Sign In With Email</h5>
                         <% } else if (secret === 'redirect') { %>
                             <h5 class="card-title text-center">To View Messages, please Sign In / Sign up</h5>
                         <% } %>
@@ -32,15 +32,13 @@
                                        required>
                                 <label for="inputPassword">Password</label>
                             </div>
-                            If you are an ENACT member, please <a href="/signup">SIGN UP</a>
-                            <br>
                             Forgot Password? <a href="/reset">RESET PASSWORD</a>
                             <br>
                             <br>
 
                             <input name="submit" class="btn btn-lg btn-primary btn-block text-uppercase" value="sign in"
                                    type="submit">
-                            <hr class="my-4">
+                            <h5 class="text-center">Or</h5>
                             <% if (secret === 'general') { %>
                                 <a href="/auth/google" class="btn btn-lg btn-google btn-block text-uppercase"><i
                                             class="fa fa-google mr-2"></i> Sign in with Google
@@ -51,6 +49,14 @@
                                             class="fa fa-google mr-2"></i> Sign in with Google
                                 </a>
                             <% } %>
+                            <hr class="my-4">
+                            <h5 class="card-title text-center">Sign Up</h5>
+                            <h4 class="text-center">If you are a new ENACT student, please </h4>
+                            <a href="/signup"
+                               class="btn btn-lg btn-primary btn-block text-uppercase"> Sign Up
+                            </a>
+
+                            <p class="text-center"> Please check out <a href="/accountHelp">Help Video</a>, if you need any help.</p>
                         </form>
                     </div>
                 </div>
