@@ -856,6 +856,10 @@ app.get('/help',
     (req, res) =>
         res.render('./pages/staticPages/help'))
 
+app.get('/accountHelp',
+    (req, res) =>
+        res.render('./pages/staticPages/accountHelp'))
+
 //*******************************************
 //*************Error related*****************
 

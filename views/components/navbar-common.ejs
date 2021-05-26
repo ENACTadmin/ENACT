@@ -1,8 +1,8 @@
 <nav class='header__menu'>
     <ul>
-        <li>
-            <a class='header-link' id='header-link' href='/' data-aos='fade-left'>HOME</a>
-        </li>
+            <li>
+                <a class='header-link' id='header-link' href='/' data-aos='fade-left'>HOME</a>
+            </li>
         <% if (!loggedIn) { %>
             <li>
                 <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Resources</a>
@@ -18,7 +18,7 @@
             </li>
 
             <li>
-                <a class='header-link' href='/events' data-aos='fade-left'>Events & Courses</a>
+                <a class='header-link' href='/events' data-aos='fade-left'>Events</a>
             </li>
 
             <li>
@@ -36,23 +36,30 @@
                             <a class='header-link' href='/resource/review'>Approve resources</a>
                         </li>
                     <% } %>
-                    <% for (let i = 0; i < courseInfoSet.length; i++) { %>
-                        <li>
-                            <% if (courseInfoSet[i].courseName.length <= 14) { %>
-                                <a class='header-link'
-                                   href='/resource/upload/course/<%= courseInfoSet[i]._id %>'> Upload to <%= courseInfoSet[i].courseName %></a>
-                            <% } else { %>
-                                <a class='header-link'
-                                   href='/resource/upload/course/<%= courseInfoSet[i]._id %>'> Upload to <%= courseInfoSet[i].courseName.substring(0, 13) + "..." %></a>
-                            <% } %>
-                        </li>
-                    <% } %>
+                   <li >
+                       <% if (courseInfoSet.length==1) { %>
+                            <a class='header-link' href='/resource/upload/course/<%= courseInfoSet[0]._id %>'>Upload class resources</a>
+                       <% } else { %>
+                               <a class='header-link' href='#'>Upload Class Resources</a>
+                            <ul class='dropdown-menu dropdown-menu-right'>
+                                <% for (let i = 0; i < courseInfoSet.length; i++) { %>
+                                        <% if (courseInfoSet[i].courseName.length <= 15) { %>
+                                            <a class='header-link'
+                                               href='/resource/upload/course/<%= courseInfoSet[i]._id %>'> <%= courseInfoSet[i].courseName %></a>
+                                        <% } else { %>
+                                            <a class='header-link'
+                                               href='/resource/upload/course/<%= courseInfoSet[i]._id %>'> <%= courseInfoSet[i].courseName.substring(0, 15) + "..." %></a>
+                                        <% } %>
+                                <% } %>
+                            </ul>
+                       <% } %>
+                   </li>
                     <% if (status === 'faculty' || status === 'admin') { %>
                         <li>
                             <a class='header-link' href='/resource/upload/faculty'>Upload faculty resources</a>
                         </li>
                         <li>
-                            <a class='header-link' href='/resources/view/faculty'>Guide for faculty</a>
+                            <a class='header-link' href='/resources/view/faculty'>Faculty resources</a>
                         </li>
                     <% } %>
                     <li>
@@ -65,20 +72,13 @@
             </li>
 
             <li>
-                <a class='header-link' id='header-link' href='#' data-aos='fade-left'>People & Networking</a>
+                <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Networking</a>
                 <ul class='sub-menu'>
                     <li>
                         <a class='header-link' href='/networking'>Networking</a>
                     </li>
                     <li>
                         <a class='header-link' href='/profiles/view/faculty'>Faculty & Staff</a>
-                    </li>
-                    <li>
-                        <a class='header-link' href='/profile/update'>Update profile</a>
-                    </li>
-                    <li>
-                        <a class='header-link' id='header-link' href='/messages/view/all'
-                           data-aos='fade-left'>Messages</a>
                     </li>
                 </ul>
             </li>
@@ -90,7 +90,7 @@
                         <a class='header-link' href='/courses/schedule'>Course schedule</a>
                     </li>
                     <li>
-                        <a class='header-link' href='/courses'>Courses</a>
+                        <a class='header-link' href='/courses'>Course Lists</a>
                     </li>
                     <% for (let i = 0; i < courseInfoSet.length; i++) { %>
                         <li>
@@ -103,6 +103,7 @@
                             <% } %>
                         </li>
                     <% } %>
+                    <li><option disabled> ─────────────</option></li>
                     <li>
                         <a class='header-link' href='/events'>Events</a>
                     </li>
@@ -161,11 +162,29 @@
                 <a class='btn btn-primary' id="adjustedLoginBtn"
                    style="background-color: #0053a4; color: white; font-weight: bold;" href='/login'
                    data-aos='fade-left'>Login</a>
+
             <% } else { %>
-                <a class='btn btn-primary' id="adjustedLoginBtn"
-                   style="background-color: #0053a4; color: white; font-weight: bold;" href='/logout'
-                   data-aos='fade-left'>Logout</a>
+                <a class='header-link' href='#'>Account</a>
+                    <ul class='sub-menu'>
+                        <li>
+                            <a class='header-link' href='/profile/update'>Update profile</a>
+                        </li>
+                        <li>
+                            <a class='header-link' id='header-link' href='/messages/view/all'
+                               data-aos='fade-left'>Messages</a>
+                        </li>
+                        <li >
+                        <a style="color: red; font-weight: bold;" href='/logout'
+                           data-aos='fade-left'>Log out</a>
+                        </li>
+                    </ul>
             <% } %>
         </li>
+
     </ul>
 </nav>
+<script>
+    function dropright() {
+        $("#dropright")
+    }
+</script>
