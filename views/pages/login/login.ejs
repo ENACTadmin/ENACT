@@ -1,14 +1,14 @@
 <%- include('../../components/header'); -%>
 <%- include('../../components/navbar'); -%>
 
-<section class='section section__grey' data-aos='fade-up' style="height: 100%; padding-top: 8%">
+<section class='section section__grey' data-aos='fade-up' style="height: 120%; padding-top: 8%">
     <div class="container">
         <div class="row">
             <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
                 <div class="card card-signin my-5">
                     <div class="card-body">
                         <% if (secret === 'general') { %>
-                            <h5 class="card-title text-center">Sign In With Email</h5>
+                            <h5 class="card-title text-center">Log In</h5>
                         <% } else if (secret === 'redirect') { %>
                             <h5 class="card-title text-center">To View Messages, please Sign In / Sign up</h5>
                         <% } %>
@@ -38,25 +38,28 @@
 
                             <input name="submit" class="btn btn-lg btn-primary btn-block text-uppercase" value="sign in"
                                    type="submit">
+
                             <h5 class="text-center">Or</h5>
                             <% if (secret === 'general') { %>
-                                <a href="/auth/google" class="btn btn-lg btn-google btn-block text-uppercase"><i
+                                <a href="/auth/google" class="btn btn-lg btn-warning btn-block text-uppercase"><i
                                             class="fa fa-google mr-2"></i> Sign in with Google
                                 </a>
                             <% } else if (secret === 'redirect') { %>
                                 <a href="/auth/google/messages"
-                                   class="btn btn-lg btn-google btn-block text-uppercase"><i
+                                   class="btn btn-lg btn-warning btn-block text-uppercase"><i
                                             class="fa fa-google mr-2"></i> Sign in with Google
                                 </a>
                             <% } %>
                             <hr class="my-4">
                             <h5 class="card-title text-center">Sign Up</h5>
-                            <h4 class="text-center">If you are a new ENACT student, please </h4>
+                            <p class="text-center">If you are a new ENACT member and have not created your account yet, please </p>
+
                             <a href="/signup"
                                class="btn btn-lg btn-primary btn-block text-uppercase"> Sign Up
                             </a>
+                            <br>
 
-                            <p class="text-center"> Please check out <a href="/accountHelp">Help Video</a>, if you need any help.</p>
+                            <p class="text-center"> Need Help? Check out <a href="/accountHelp">Help Video</a></p>
                         </form>
                     </div>
                 </div>
