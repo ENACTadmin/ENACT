@@ -39,6 +39,8 @@
                    <li >
                        <% if (courseInfoSet.length==1) { %>
                             <a class='header-link' href='/resource/upload/course/<%= courseInfoSet[0]._id %>'>Upload class resources</a>
+                       <% } else if (courseInfoSet.length==0){ %>
+                           
                        <% } else { %>
                                <a class='header-link' href='#'>Upload Class Resources</a>
                             <ul class='dropdown-menu dropdown-menu-right'>
