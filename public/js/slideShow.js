@@ -115,15 +115,6 @@ let bioPaths = [
     ],
 
 
-    ['../../images/Photos for ENACT platform faculty show/downey.jpg',
-
-        'Davia Downey',
-
-        'Dr. Downey is the MPA Program Coordinator and an Associate Professor of Public Administration at Grand Valley State University in Grand Rapids, Michigan. She teaches undergraduate and graduate courses in local politics, public policy and public administration.'
-
-    ],
-
-
     ['../../images/Photos for ENACT platform faculty show/ellis.jpg',
 
         'Richard Ellis',
@@ -269,14 +260,6 @@ let bioPaths = [
     ],
 
 
-    ['../../images/Photos for ENACT platform faculty show/ly-donovan.jpg',
-
-        'Carolyn Ly-Donovan',
-
-        'Dr. Ly-Donovan is an Assistant Professor in the Department of Sociology at Augustana University. Her work explores mechanisms of inequality with particular focus on organizations and culture.'
-
-    ],
-
 
     ['../../images/Photos for ENACT platform faculty show/mastracci.jpg',
 
@@ -304,14 +287,6 @@ let bioPaths = [
 
     ],
 
-
-    ['../../images/Photos for ENACT platform faculty show/melo.jpg',
-
-        'Milena Andrea Melo',
-
-        'Dr. A. Melo is an Assistant Professor of Cultural Anthropology with a specialty in Medical Anthropology at Mississippi State University. Dr. Melo is committed to conducting research that reduces barriers to healthcare, confronts social inequality, and combats the disenfranchisement faced by marginalized populations in the United States.'
-
-    ],
 
 
     ['../../images/Photos for ENACT platform faculty show/monteblanco.jpg',
