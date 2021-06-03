@@ -121,11 +121,11 @@ exports.sendResourceEmail = async (req, res) => {
     res.render('./pages/deny')
 }
 exports.sendProfileEmail = async (req, res) => {
-    let resourceId = req.params.resourceId
-    let resource = await Resource.findOne({_id: resourceId})
-    let userId = resource.ownerId
-    let user = await User.findOne({_id: userId})
-    let email = user.workEmail || user.googleemail
+    let userId = req.params.id
+    console.log("id: ", userId)
+    let currUser = await User.findOne({_id: userId})
+    let userName = currUser.userName
+    let email = currUser.workEmail || currUser.googleemail
     let url = 'https://www.enactnetwork.org/login'
     const sgMail = require('@sendgrid/mail');
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -140,9 +140,7 @@ exports.sendProfileEmail = async (req, res) => {
             '<br><br>' + 'ENACT Support Team'
     };
     try {
-        console.dir(msg)
-        console.log("sending message")
-        // await sgMail.send(msg);
+        await sgMail.send(msg);
     } catch (e) {
         console.log("SENDGRID EXCEPTION: ", e)
     }

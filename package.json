@@ -9,7 +9,7 @@
     "node": "12.x"
   },
   "dependencies": {
-    "@sendgrid/mail": "^7.4.2",
+    "@sendgrid/mail": "^7.4.4",
     "aos": "^2.3.4",
     "autocompleter": "^6.1.0",
     "aws-sdk": "^2.828.0",

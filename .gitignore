@@ -89,6 +89,8 @@ config/auth.js
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
 
+sendgrid.env
+
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries
@@ -155,3 +157,4 @@ fabric.properties
 .idea/**/markdown-navigator/
 
 # End of https://www.gitignore.io/api/intellij
+
