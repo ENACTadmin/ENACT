@@ -183,7 +183,7 @@ exports.updateProfileImageURLAdmin = async (req, res, next) => {
     }
 }
 
-let special = ["stimell@brandeis.edu", "djw@brandeis.edu"]
+let special = ["stimell@brandeis.edu", "djw@brandeis.edu","jayrkaufman@gmail.com"]
 exports.showFacultyProfiles = async (req, res, next) => {
     // sort by lastname
     let profileInfo = await User.find({status: "faculty"}).collation({locale: 'en'})
