@@ -75,12 +75,11 @@
                             <div class='input-group-prepend'>
                                 <span class='input-group-text' style='width: 180px'>Resource Status</span>
                                 <select class='form-control' name='status'>
-                                    <option selected value='privateToProfessor'>Exclusive to ENACT professors</option>
+                                    <option value='privateToProfessor'>Exclusive to ENACT professors</option>
                                     <option value='privateToENACT'>Exclusive to all ENACT members</option>
+                                    <option value='public'>Open to public</option>
                                     <% if (status === 'admin') { %>
                                         <option value='finalPublic'>Displayed on the front page</option>
-                                    <% } else { %>
-                                        <option value='finalPublic'>Open to public</option>
                                     <% } %>
                                 </select>
                             </div>
