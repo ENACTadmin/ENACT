@@ -361,6 +361,14 @@ exports.loadAllFacultyResources = async (req, res, next) => {
                 status: 'privateToProfessor',
                 'contentType': 'Course Planning'
             }).sort({yearOfCreation: -1}).limit(3)
+            let facultyResearch = await Resource.find({
+                status: 'privateToProfessor',
+                'contentType': 'ENACT Faculty Research'
+            }).sort({yearOfCreation: -1}).limit(3)
+            let essayENACT = await Resource.find({
+                status: 'privateToProfessor',
+                'contentType': 'Essays About ENACT'
+            }).sort({yearOfCreation: -1}).limit(3)
 
             let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
             let resourceIds = null
@@ -385,6 +393,10 @@ exports.loadSpecificContentType = async (req, res, next) => {
             contentType = 'Syllabus'
         else if (req.params.contentType === 'assignments')
             contentType = 'Assignment Guidelines'
+        else if (req.params.contentType === 'facultyResearch')
+            contentType = 'ENACT Faculty Research'
+        else if (req.params.contentType === 'essayENACT')
+            contentType = 'Essays About ENACT'
         else if (req.params.contentType === 'plan')
             contentType = 'Course Planning'
 
