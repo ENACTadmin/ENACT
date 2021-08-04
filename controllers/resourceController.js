@@ -379,6 +379,8 @@ exports.loadAllFacultyResources = async (req, res, next) => {
             res.locals.syllabus = await addAuthor(syllabus);
             res.locals.assignments = await addAuthor(assignments);
             res.locals.guides = await addAuthor(guides);
+            res.locals.facultyResearch = await addAuthor(facultyResearch);
+            res.locals.essayENACT = await addAuthor(essayENACT);
             next()
         }
     } catch (e) {
