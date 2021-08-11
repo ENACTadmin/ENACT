@@ -82,7 +82,7 @@ var simplemaps_usmap_mapdata = {
         },
         AK: {
             name: "Alaska",
-            description: "Come join ENACT :)",
+            description: "Iḷisaġvik College",
             color: "default",
             hover_color: "default",
             url: "https://www.enactnetwork.org/networking/AK"
@@ -322,7 +322,7 @@ var simplemaps_usmap_mapdata = {
         },
         NM: {
             name: "New Mexico",
-            description: "Come join ENACT :)",
+            description: "CDoña Ana Community College",
             color: "default",
             hover_color: "default",
             url: "https://www.enactnetwork.org/networking/NM"
