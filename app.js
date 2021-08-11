@@ -274,12 +274,20 @@ app.post('/resources/search/public/advanced',
 )
 
 // get impact resources
-app.get('/resources/view/impact',
+app.get('/resources/view/facultyResearch',
     utils.checkUserName,
     resourceController.loadAllFacultyResources,
     (req, res) =>
-        res.render('./pages/showImpact')
+        res.render('./pages/facultyResearch')
 )
+
+app.get('/resources/view/inTheNews',
+    utils.checkUserName,
+    resourceController.loadAllFacultyResources,
+    (req, res) =>
+        res.render('./pages/InTheNews')
+)
+
 
 // get faculty-only resources
 app.get('/resources/view/faculty',

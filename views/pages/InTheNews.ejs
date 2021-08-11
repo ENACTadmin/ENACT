@@ -1,0 +1,110 @@
+<%- include('../components/header'); -%>
+<%- include('../components/navbar'); -%>
+
+<script src="/js/likeAjax.js"></script>
+
+<section class='section'>
+    <div class='section__content section__content--full-width'>
+        <div class='jumbotron masthead text-center'>
+            <div class='section__title section__title--centered'>
+                ENACT Impact
+            </div>
+            <h3 style="display:inline;">Want to know about Faculty Research? &nbsp;</h3><a
+                    href='/resources/view/facultyResearch'
+                    class='btn btn-large btn-warning'
+                    style='width: 200px'>Faculty Research</a>
+        </div>
+    </div>
+</section>
+
+<!--Resources for Teaching ENACT Courses-->
+<!--Display current term and upcoming 3-->
+<section class='section section__grey' data-aos='fade-up'>
+    <section class='section__content section__content--fluid-width'>
+        <div class='container'>
+            <div class='row'>
+                <% if (loggedIn) { %>
+                    <div class='col-md-12 col-sm-12'>
+                        <h3>Essay About ENACT</h3>
+                        Link to all Articles: <a href="/resources/view/faculty/essayENACT"><b>click
+                                me</b></a>
+                        <hr>
+                        <% if (essayENACT && essayENACT.length > 0) { %>
+                            <% for (let i = essayENACT.length - 1; i >= 0; i--) { %>
+                                <div class='shadow-sm card-body'>
+                                    <h4><%= essayENACT[i].name %></h4>
+                                    <div class='card-text'>
+                                        <ul class='list-group'>
+                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
+                                                <h5 style="display: inline">
+                                                    Description:</h5> <%= essayENACT[i].description %></li>
+                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
+                                                <h5 style="display: inline">State:</h5> <%= essayENACT[i].state %></li>
+                                            <% if (essayENACT[i].mediaType === 'video' && essayENACT[i].uri.endsWith(".mp4")) { %>
+                                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
+                                                    <video style="width: 100%; max-width: 400px" controls>
+                                                        <source src="<%= essayENACT[i].uri %>" type="video/mp4">
+                                                    </video>
+                                                </li>
+                                            <% } else { %>
+                                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
+                                                    <h5 style="display: inline">Link:</h5> <a
+                                                            href='<%= essayENACT[i].uri %>'>click me</a>
+                                                </li>
+                                            <% } %>
+                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
+                                                <h5 style="display: inline">
+                                                    Institution:</h5> <%= essayENACT[i].institution %>
+                                            </li>
+                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
+                                                <h5 style="display: inline">Author:</h5> <%= essayENACT[i].ownerName %>
+                                            </li>
+                                            <% if (essayENACT[i].tags[0].length > 0) { %>
+                                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
+                                                    <h5 style="display: inline">
+                                                        Topic(s)/Issue(s):</h5> <%= essayENACT[i].tags %>
+                                                </li>
+                                            <% } %>
+                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
+                                                <h5 style="display: inline">Actions:</h5>
+                                                <button type="submit"
+
+                                                        class='focusMe btn btn-outline-danger'
+                                                        id="<%= essayENACT[i]._id %>">
+                                                    <% if (resourceIds && resourceIds.toString().includes(essayENACT[i]._id.toString())) { %>
+                                                        &#9829;
+                                                    <% } else { %>
+                                                        &#9825;
+                                                    <% } %>
+                                                </button>
+                                                <% if (essayENACT[i].ownerId.toString() !== user._id.toString()) { %>
+                                                    <a href='/messages/view/<%= user._id %>/<%= essayENACT[i].ownerId %>/<%= essayENACT[i]._id %>'><input
+                                                                class='btn btn-outline-primary'
+
+                                                                type='button' value='Contact the author'></a>
+                                                <% } %>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <% if (i !== 0) { %>
+                                    <br>
+                                <% } %>
+                            <% } %>
+                        <% } else { %>
+                            <div class='shadow-sm card-body text-center'>
+                                No resource available yet
+                            </div>
+                        <% } %>
+                    </div>
+                <% } else { %>
+                    <%- include('../components/component-loginToView'); -%>
+                <% } %>
+            </div>
+        </div>
+    </section>
+</section>
+
+<p hidden id="findMe"></p>
+
+<%- include('../components/footer'); -%>

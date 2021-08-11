@@ -13,7 +13,6 @@
                     href='/resources/search/private/advanced'
                     class='btn btn-large btn-warning'
                     style='width: 200px'>Search for Resources</a>
-            <br><br>
             <h3 style="display:inline;">Or, help the faculty community: </h3>
             <a href='/resource/upload/faculty' class='btn btn-large btn-primary'>Upload Faculty Resources</a>
         </div>
@@ -25,18 +24,95 @@
 <section class='section section__grey' data-aos='fade-up'>
     <section class='section__content section__content--fluid-width'>
         <div class='container'>
+
+            <div class="row">
+                <% if (loggedIn) { %>
+                    <div class='col-md-12 col-sm-12'>
+                        <h3>ENACT 2021 Virtual Institutes</h3>
+                        <hr>
+                    </div>
+                    <div class='col-md-4 col-sm-12'>
+                        <a href='https://www.enactnetwork.org/collection/view/610b6f1e819b080015a3b1c9'
+                           class='btn btn-primary'
+                           style='margin-bottom: 10px'>Introduction to the ENACT Model and Legislative Advocacy Projects</a>
+                    </div>
+                    <div class='col-md-4 col-sm-12'>
+                        <a href='https://www.enactnetwork.org/collection/view/610b6ef6819b080015a3b1c8'
+                           class='btn btn-primary'
+                           style='margin-bottom: 10px'>State Legislative Change: The Marriage Equality Movement</a>
+                    </div>
+                    <div class='col-md-4 col-sm-12'>
+                        <a href='https://www.enactnetwork.org/collection/view/610b6f3f819b080015a3b1ca'
+                           class='btn btn-primary'
+                           style='margin-bottom: 10px'>Discussion: Incorporating Materials Into Your Syllabus</a>
+                    </div>
+                    <div class='col-md-4 col-sm-12'>
+                        <a href='https://www.enactnetwork.org/collection/view/610b6f8e819b080015a3b1cb'
+                           class='btn btn-primary'
+                           style='margin-bottom: 10px'>Students Introduce Advocacy Campaigns</a>
+                    </div>
+                    <div class='col-md-4 col-sm-12'>
+                        <a href='https://www.enactnetwork.org/collection/view/610b6faa819b080015a3b1cc'
+                           class='btn btn-primary'
+                           style='margin-bottom: 10px'>Developing a Compelling Message</a>
+                    </div>
+                    <div class='col-md-4 col-sm-12'>
+                        <a href='https://www.enactnetwork.org/collection/view/610b6fc4819b080015a3b1cd'
+                           class='btn btn-primary'
+                           style='margin-bottom: 10px'>Discussion: How to Work with a Coalition</a>
+                    </div>
+                    <div class='col-md-4 col-sm-12'>
+                        <a href='https://www.enactnetwork.org/collection/view/610b702f819b080015a3b1ce'
+                           class='btn btn-primary'
+                           style='margin-bottom: 10px'>Discussion: Influencing Policymakers in Different Legislative Contexts - Rules, Norms, and Partisanship</a>
+                    </div>
+                    <div class='col-md-4 col-sm-12'>
+                        <a href='https://www.enactnetwork.org/collection/view/610b7047819b080015a3b1cf'
+                           class='btn btn-primary'
+                           style='margin-bottom: 10px'>The Present and Defend Model</a>
+                    </div>
+                    <div class='col-md-4 col-sm-12'>
+                        <a href='https://www.enactnetwork.org/collection/view/610b7056819b080015a3b1d0'
+                           class='btn btn-primary'
+                           style='margin-bottom: 10px'>Adapting ENACT to Your Course</a>
+                    </div>
+                    <div class='col-md-4 col-sm-12'>
+                        <a href='https://www.enactnetwork.org/collection/view/610b7069819b080015a3b1d1'
+                           class='btn btn-primary'
+                           style='margin-bottom: 10px'>The ENACT Network</a>
+                    </div>
+                    <div class='col-md-4 col-sm-12'>
+                        <a href='https://www.enactnetwork.org/collection/view/610b707b819b080015a3b1d2'
+                           class='btn btn-primary'
+                           style='margin-bottom: 10px'>Expanding Your Research to Include ENACT</a>
+                    </div>
+                    <div class='col-md-4 col-sm-12'>
+                        <a href='https://www.enactnetwork.org/collection/view/610b70b6819b080015a3b1d3'
+                           class='btn btn-primary'
+                           style='margin-bottom: 10px'> Introduction to and Overview of the ENACT Institute</a>
+                    </div>
+                    <div class='col-md-4 col-sm-12'>
+                        <a href='https://www.enactnetwork.org/collection/view/601334d97fdcf8001520ded2'
+                           class='btn btn-primary'
+                           style='margin-bottom: 10px'> How to Work with the Legislature</a>
+                    </div>
+                <% } else { %>
+                    <%- include('../components/component-loginToView'); -%>
+                <% } %>
+            </div>
+            <br>
             <div class="row">
                 <% if (loggedIn) { %>
                     <div class='col-md-12 col-sm-12'>
                         <h3>Course Planning Modules</h3>
                         <hr>
                     </div>
-                    <div class='col-md-4 col-sm-12'>
+                    <div class='col-md-5 col-sm-12'>
                         <a href='https://www.enactnetwork.org/collection/view/6025482e5cece7001580ed9c'
                            class='btn btn-primary'
                            style='margin-bottom: 10px'>Module 1: ENACT Course Module Overviews</a>
                     </div>
-                    <div class='col-md-4 col-sm-12'>
+                    <div class='col-md-3 col-sm-12'>
                         <a href='https://www.enactnetwork.org/collection/view/60259bca5cece7001580eda8'
                            class='btn btn-primary'
                            style='margin-bottom: 10px'>Module 2: Civic Education</a>
@@ -46,12 +122,12 @@
                            class='btn btn-primary'
                            style='margin-bottom: 10px'>Module 3: Building Teams</a>
                     </div>
-                    <div class='col-md-4 col-sm-12'>
+                    <div class='col-md-5 col-sm-12'>
                         <a href='https://www.enactnetwork.org/collection/view/60259fa95cece7001580edb1'
                            class='btn btn-primary'
                            style='margin-bottom: 10px'>Module 4: Research and Data</a>
                     </div>
-                    <div class='col-md-4 col-sm-12'>
+                    <div class='col-md-3 col-sm-12'>
                         <a href='https://www.enactnetwork.org/collection/view/602707c44bdb8600153e62d0'
                            class='btn btn-primary'
                            style='margin-bottom: 10px'>Module 5: Media Advocacy</a>
@@ -71,245 +147,33 @@
                 <% } %>
             </div>
             <br>
-            <div class='row'>
+            <div class="row">
                 <% if (loggedIn) { %>
                     <div class='col-md-12 col-sm-12'>
-                        <h3>Syllabi</h3> Link to all Syllabi: <a href="/resources/view/faculty/syllabus"><b>click
-                                me</b></a>
+                        <h3>Other Teaching Resources</h3>
                         <hr>
-                        <% if (syllabus && syllabus.length > 0) { %>
-                            <% for (let i = 0; i < syllabus.length; i++) { %>
-                                <div class='shadow-sm card-body'>
-                                    <h4><%= syllabus[i].name %></h4>
-                                    <div class='card-text'>
-                                        <ul class='list-group'>
-                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                <h5 style="display: inline">
-                                                    Description:</h5> <%= syllabus[i].description %></li>
-                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                <h5 style="display: inline">State:</h5> <%= syllabus[i].state %></li>
-                                            <% if (syllabus[i].mediaType === 'video' && syllabus[i].uri.endsWith(".mp4")) { %>
-                                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                    <video style="width: 100%; max-width: 400px" controls>
-                                                        <source src="<%= resourceInfo[i].uri %>" type="video/mp4">
-                                                    </video>
-                                                </li>
-                                            <% } else { %>
-                                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                    <h5 style="display: inline">Link:</h5> <a
-                                                            href='<%= syllabus[i].uri %>'>click
-                                                        me</a>
-                                                </li>
-                                            <% } %>
-                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                <h5 style="display: inline">
-                                                    Institution:</h5> <%= syllabus[i].institution %>
-                                            </li>
-                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                <h5 style="display: inline">Author:</h5> <%= syllabus[i].ownerName %>
-                                            </li>
-                                            <% if (syllabus[i].tags[0].length > 0) { %>
-                                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                    <h5 style="display: inline">
-                                                        Topic(s)/Issue(s):</h5> <%= syllabus[i].tags %>
-                                                </li>
-                                            <% } %>
-                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                <h5 style="display: inline">Actions:</h5>
-                                                <button type="submit"
-
-                                                        class='focusMe btn btn-outline-danger'
-                                                        id="<%= syllabus[i]._id %>">
-                                                    <% if (resourceIds && resourceIds.toString().includes(syllabus[i]._id.toString())) { %>
-                                                        &#9829;
-                                                    <% } else { %>
-                                                        &#9825;
-                                                    <% } %>
-                                                </button>
-                                                <% if (syllabus[i].ownerId.toString() !== user._id.toString()) { %>
-                                                    <a href='/messages/view/<%= user._id %>/<%= syllabus[i].ownerId %>/<%= syllabus[i]._id %>'><input
-                                                                class='btn btn-outline-primary'
-
-                                                                type='button' value='Contact the author'></a>
-                                                <% } %>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <% if (i !== syllabus.length - 1) { %>
-                                    <br>
-                                <% } %>
-                            <% } %>
-                        <% } else { %>
-                            <div class='shadow-sm card-body text-center'>
-                                No resource available yet
-                            </div>
-                        <% } %>
+                    </div>
+                    <div class='col-md-2 col-sm-12'>
+                        <a href='/resources/view/faculty/syllabus'
+                           class='btn btn-primary'
+                           style='margin-bottom: 10px'>Syllabus</a>
+                    </div>
+                    <div class='col-md-5 col-sm-12'>
+                        <a href='/resources/view/faculty/assignments'
+                           class='btn btn-primary'
+                           style='margin-bottom: 10px'>Assignment Guidelines & Rubrics</a>
+                    </div>
+                    <div class='col-md-2 col-sm-12'>
+                        <a href='/resources/view/faculty/plan'
+                           class='btn btn-primary'
+                           style='margin-bottom: 10px'>Course Planning</a>
                     </div>
                 <% } else { %>
-                    <%- include('../components/component-loginToView'); -%>
-                <% } %>
+                        <%- include('../components/component-loginToView'); -%>
+                    <% } %>
             </div>
-            <br>
-            <div class='row'>
-                <% if (loggedIn) { %>
-                    <div class='col-md-12 col-sm-12'>
-                        <h3>Assignment Guidelines & Rubrics</h3>
-                        Link to all Assignment Guidelines & Rubrics: <a href="/resources/view/faculty/assignments"><b>click
-                                me</b></a>
-                        <hr>
-                        <% if (assignments && assignments.length > 0) { %>
-                            <% for (let i = assignments.length - 1; i >= 0; i--) { %>
-                                <div class='shadow-sm card-body'>
-                                    <h4><%= assignments[i].name %></h4>
-                                    <div class='card-text'>
-                                        <ul class='list-group'>
-                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                <h5 style="display: inline">
-                                                    Description:</h5> <%= assignments[i].description %></li>
-                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                <h5 style="display: inline">State:</h5> <%= assignments[i].state %></li>
-                                            <% if (assignments[i].mediaType === 'video' && assignments[i].uri.endsWith(".mp4")) { %>
-                                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                    <video style="width: 100%; max-width: 400px" controls>
-                                                        <source src="<%= assignments[i].uri %>" type="video/mp4">
-                                                    </video>
-                                                </li>
-                                            <% } else { %>
-                                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                    <h5 style="display: inline">Link:</h5> <a
-                                                            href='<%= assignments[i].uri %>'>click me</a>
-                                                </li>
-                                            <% } %>
-                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                <h5 style="display: inline">
-                                                    Institution:</h5> <%= assignments[i].institution %>
-                                            </li>
-                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                <h5 style="display: inline">Author:</h5> <%= assignments[i].ownerName %>
-                                            </li>
-                                            <% if (assignments[i].tags[0].length > 0) { %>
-                                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                    <h5 style="display: inline">
-                                                        Topic(s)/Issue(s):</h5> <%= assignments[i].tags %>
-                                                </li>
-                                            <% } %>
-                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                <h5 style="display: inline">Actions:</h5>
-                                                <button type="submit"
 
-                                                        class='focusMe btn btn-outline-danger'
-                                                        id="<%= assignments[i]._id %>">
-                                                    <% if (resourceIds && resourceIds.toString().includes(assignments[i]._id.toString())) { %>
-                                                        &#9829;
-                                                    <% } else { %>
-                                                        &#9825;
-                                                    <% } %>
-                                                </button>
-                                                <% if (assignments[i].ownerId.toString() !== user._id.toString()) { %>
-                                                    <a href='/messages/view/<%= user._id %>/<%= assignments[i].ownerId %>/<%= assignments[i]._id %>'><input
-                                                                class='btn btn-outline-primary'
 
-                                                                type='button' value='Contact the author'></a>
-                                                <% } %>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <% if (i !== 0) { %>
-                                    <br>
-                                <% } %>
-                            <% } %>
-                        <% } else { %>
-                            <div class='shadow-sm card-body text-center'>
-                                No resource available yet
-                            </div>
-                        <% } %>
-                    </div>
-                <% } else { %>
-                    <%- include('../components/component-loginToView'); -%>
-                <% } %>
-            </div>
-            <br>
-            <div class='row'>
-                <% if (loggedIn) { %>
-                    <div class='col-md-12 col-sm-12'>
-                        <h3>Course Planning</h3>
-                        Link to all course planning materials: <a href="/resources/view/faculty/plan"><b>click
-                                me</b></a>
-                        <hr>
-                        <% if (guides && guides.length > 0) { %>
-                            <% for (let i = guides.length - 1; i >= 0; i--) { %>
-                                <div class='shadow-sm card-body'>
-                                    <h4><%= guides[i].name %></h4>
-                                    <div class='card-text'>
-                                        <ul class='list-group'>
-                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                <h5 style="display: inline">
-                                                    Description:</h5> <%= guides[i].description %></li>
-                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                <h5 style="display: inline">State:</h5> <%= guides[i].state %></li>
-                                            <% if (guides[i].mediaType === 'video' && guides[i].uri.endsWith(".mp4")) { %>
-                                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                    <video style="width: 100%; max-width: 400px" controls>
-                                                        <source src="<%= guides[i].uri %>" type="video/mp4">
-                                                    </video>
-                                                </li>
-                                            <% } else { %>
-                                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                    <h5 style="display: inline">Link:</h5> <a
-                                                            href='<%= guides[i].uri %>'>click me</a>
-                                                </li>
-                                            <% } %>
-                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                <h5 style="display: inline">
-                                                    Institution:</h5> <%= guides[i].institution %>
-                                            </li>
-                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                <h5 style="display: inline">Author:</h5> <%= guides[i].ownerName %>
-                                            </li>
-                                            <% if (guides[i].tags[0].length > 0) { %>
-                                                <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                    <h5 style="display: inline">
-                                                        Topic(s)/Issue(s):</h5> <%= guides[i].tags %>
-                                                </li>
-                                            <% } %>
-                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                <h5 style="display: inline">Actions:</h5>
-                                                <button type="submit"
-
-                                                        class='focusMe btn btn-outline-danger'
-                                                        id="<%= guides[i]._id %>">
-                                                    <% if (resourceIds && resourceIds.toString().includes(guides[i]._id.toString())) { %>
-                                                        &#9829;
-                                                    <% } else { %>
-                                                        &#9825;
-                                                    <% } %>
-                                                </button>
-                                                <% if (guides[i].ownerId.toString() !== user._id.toString()) { %>
-                                                    <a href='/messages/view/<%= user._id %>/<%= guides[i].ownerId %>/<%= guides[i]._id %>'><input
-                                                                class='btn btn-outline-primary'
-
-                                                                type='button' value='Contact the author'></a>
-                                                <% } %>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <% if (i !== 0) { %>
-                                    <br>
-                                <% } %>
-                            <% } %>
-                        <% } else { %>
-                            <div class='shadow-sm card-body text-center'>
-                                No resource available yet
-                            </div>
-                        <% } %>
-                    </div>
-                <% } else { %>
-                    <%- include('../components/component-loginToView'); -%>
-                <% } %>
-            </div>
         </div>
     </section>
 </section>
