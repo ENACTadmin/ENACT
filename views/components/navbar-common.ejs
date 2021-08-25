@@ -25,17 +25,19 @@
                 <a class='header-link' id='header-link' href='/about' data-aos='fade-left'>About</a>
             </li>
         <% } else { %>
-            <li>
-                <a class='header-link' id='header-link' data-aos='fade-left'>Impact</a>
-                <ul class='sub-menu'>
-                    <li>
-                        <a class='header-link' href='/resources/view/facultyResearch'>Faculty Research</a>
-                    </li>
-                    <li>
-                        <a class='header-link' href='/resources/view/inTheNews'>In the News</a>
-                    </li>
-                </ul>
-            </li>
+            <% if (status === 'admin') { %>
+                <li>
+                    <a class='header-link' id='header-link' data-aos='fade-left'>Impact</a>
+                    <ul class='sub-menu'>
+                        <li>
+                            <a class='header-link' href='/resources/view/facultyResearch'>Faculty Research</a>
+                        </li>
+                        <li>
+                            <a class='header-link' href='/resources/view/inTheNews'>In the News</a>
+                        </li>
+                    </ul>
+                </li>
+            <%}%>
             <li>
                 <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Resources</a>
                 <ul class='sub-menu' >
