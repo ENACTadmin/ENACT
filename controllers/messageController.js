@@ -158,14 +158,13 @@ function send_email(workEmail, userName, message, url) {
         const msg = {
             to: workEmail,
             from: 'enact@brandeis.edu',
-            subject: 'ENACT Digital Platform: you have one new message',
+            subject: 'ENACT Digital Platform: you have one new message'+ userName,
             text: 'ENACT Digital Platform: you have one new message from ' + userName,
-            html: 'Hi, <br><br>you received a message from ' + userName +
-                '<br>' + '<b>Subject</b>: ' + message.subject +
+            html: '<b>Hi, <br><br>you received a message from </b> ' + userName + 'Here is the message content:'+
+                '<br><br>' + '<b>Subject</b>: ' + message.subject +
                 '<br>' + '<b>Content</b>: ' + message.message +
-                '<br>' + '<b>Time</b>: ' + message.createdAt +
                 '<br>' + '<b>Click <a href=' + url + '>' + 'here' + '</a>' + ' to reply</b>' +
-                '<br><br>' + 'ENACT Support Team'
+                '<br><br>' + 'ENACT Support Team' +'<img src=\'/images/enact-logo.jpeg\'>'
         };
         try {
             sgMail.send(msg);
@@ -179,10 +178,11 @@ function send_email(workEmail, userName, message, url) {
             subject: 'ENACT Digital Platform: you have one new message from ' + userName,
             text: 'ENACT Digital Platform: you have one new message from ' + userName,
             html: 'Hi, <br><br>you received a message from ' + userName +
-                '<br>' + '<b>Content</b>: ' + message.message +
+                '<br><br>' + '<b>Content</b>: ' + message.message +
                 '<br>' + '<b>Time</b>: ' + message.createdAt +
                 '<br>' + '<b>Click <a href=' + url + '>' + 'here' + '</a>' + ' to reply</b>' +
                 '<br><br>' + 'ENACT Support Team'
+                +'<img src=\'/images/enact-logo.jpeg\'>'
         };
         try {
             sgMail.send(msg);
