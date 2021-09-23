@@ -640,7 +640,7 @@ exports.loadCollection = async (req, res, next) => {
         res.locals.resourceInfo = resourceInfo
         if (req.user) {
             let allLikedResourceSet = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
-            let allLikedResourceIds = allLikedResourceSet.resources
+            let allLikedResourceIds = allLikedResourceSet?allLikedResourceSet.resources:[]
             res.locals.allLikedResourceInfo = await Resource.find({_id: {$in: allLikedResourceIds}})
         }
         next()
