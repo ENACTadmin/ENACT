@@ -78,9 +78,11 @@ exports.saveMessage = async (req, res, next) => {
             })
         }
         await newMessage.save()
-        let receiver = await User.findOne({_id: req.params.receiver})
-        let workEmail = receiver.workEmail || receiver.googleemail
-        let userName = receiver.userName
+        let receiver = await User.findOne({_id: receivedBy})
+        let sender = await User.findOne({_id: sentBy})
+        let Email = receiver.workEmail || receiver.googleemail
+        let senderName = sender.userName
+        let receiverName = receiver.userName
         // send email to alternative users
         if (req.params.resourceId !== 'general') {
             let otherAuthors = await AuthorAlt.find({resourceId: req.params.resourceId})
@@ -90,14 +92,16 @@ exports.saveMessage = async (req, res, next) => {
                 send_email(email, name, newMessage, 'https://www.enactnetwork.org/messages/view/' + req.params.sender + '/' + req.params.receiver + '/' + req.params.resourceId)
             }
         }
-        send_email(workEmail, userName, newMessage, 'https://www.enactnetwork.org/messages/view/' + req.params.sender + '/' + req.params.receiver + '/' + req.params.resourceId)
+
+        send_email(Email, senderName,receiverName, newMessage, 'https://www.enactnetwork.org/messages/view/' + req.params.sender + '/' + req.params.receiver + '/' + req.params.resourceId)
         res.redirect('back')
     } catch (e) {
         next(e)
     }
 }
+
+
 exports.sendResourceEmail = async (req, res) => {
-    //is req.user.id correct?
     let userId = req.user.id
     let userToEmail = await User.findOne({_id: userId})
     const review = req.body.review;
@@ -150,21 +154,22 @@ exports.sendProfileEmail = async (req, res) => {
     })
 }
 
-function send_email(workEmail, userName, message, url) {
-    console.log('email: ', workEmail)
+function send_email(Email, senderName, receiverName, message, url) {
+    console.log('email: ', Email)
     const sgMail = require('@sendgrid/mail');
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     if (message.subject) {
         const msg = {
-            to: workEmail,
+            to: Email,
             from: 'enact@brandeis.edu',
-            subject: 'ENACT Digital Platform: you have one new message'+ userName,
-            text: 'ENACT Digital Platform: you have one new message from ' + userName,
-            html: '<b>Hi, <br><br>you received a message from </b> ' + userName + 'Here is the message content:'+
-                '<br><br>' + '<b>Subject</b>: ' + message.subject +
-                '<br>' + '<b>Content</b>: ' + message.message +
-                '<br>' + '<b>Click <a href=' + url + '>' + 'here' + '</a>' + ' to reply</b>' +
-                '<br><br>' + 'ENACT Support Team' +'<img src=\'/images/enact-logo.jpeg\'>'
+            subject: 'ENACT Digital Platform: you have one new message'+ senderName,
+            text: 'ENACT Digital Platform: you have one new message from ' + senderName,
+            html: 'Hi, '+receiverName+'<br><br>you received a message from ' + senderName + '<br>Here is the message content:'+
+                '<br><br>' + 'Subject: ' + message.subject +
+                '<br><br>' + 'Content:' + message.message +
+                '<br><br>' + '<b>Click <a href=' + url + '>' + 'here' + '</a>' + ' to reply</b>' +
+                '<br><br>' + 'ENACT Support Team' +
+                '<br>'+'<img style=\'height: 120px; width: 120px\' src="/images/enact-logo.jpeg">'
         };
         try {
             sgMail.send(msg);
@@ -173,16 +178,15 @@ function send_email(workEmail, userName, message, url) {
         }
     } else {
         const msg = {
-            to: workEmail,
+            to: Email,
             from: 'enact@brandeis.edu',
-            subject: 'ENACT Digital Platform: you have one new message from ' + userName,
-            text: 'ENACT Digital Platform: you have one new message from ' + userName,
-            html: 'Hi, <br><br>you received a message from ' + userName +
-                '<br><br>' + '<b>Content</b>: ' + message.message +
-                '<br>' + '<b>Time</b>: ' + message.createdAt +
-                '<br>' + '<b>Click <a href=' + url + '>' + 'here' + '</a>' + ' to reply</b>' +
-                '<br><br>' + 'ENACT Support Team'
-                +'<img src=\'/images/enact-logo.jpeg\'>'
+            subject: 'ENACT Digital Platform: you have one new message from ' + senderName,
+            text: 'ENACT Digital Platform: you have one new message from ' + senderName,
+            html: 'Hi, '+receiverName+'<br><br>you received a message from ' + senderName +'<br>Here is the message content:'+
+                '<br><br>' + message.message +
+                '<br><br>' + '<b>Click <a href=' + url + '>' + 'here' + '</a>' + ' to reply</b>' +
+                '<br><br>' + 'ENACT Support Team <br>'+
+                '<br>'+'<img style=\'height: 120px; width: 120px\' src="/images/enact-logo.jpeg">'
         };
         try {
             sgMail.send(msg);
