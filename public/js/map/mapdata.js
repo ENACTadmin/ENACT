@@ -357,7 +357,7 @@ var simplemaps_usmap_mapdata = {
         },
         WY: {
             name: "Wyoming",
-            description: "Come join ENACT :)",
+            description: "Laramie County Community College",
             color: "default",
             hover_color: "default",
             url: "https://www.enactnetwork.org/networking/WY"
