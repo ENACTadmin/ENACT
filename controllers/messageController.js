@@ -38,7 +38,7 @@ exports.loadMessagingPage = async (req, res, next) => {
                 ]
             }).sort({createdAt: 1})
         }
-        res.locals.messageInfo = await messageInfo
+        res.locals.messageInfo = messageInfo
         res.render('./pages/message')
     } catch (e) {
         next(e)
