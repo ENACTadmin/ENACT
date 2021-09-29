@@ -153,7 +153,7 @@ var simplemaps_usmap_mapdata = {
         },
         MD: {
             name: "Maryland",
-            description: "University of Maryland",
+            description: "University of Maryland, Community College of Baltimore County",
             color: "default",
             hover_color: "default",
             url: "https://www.enactnetwork.org/networking/MD"
