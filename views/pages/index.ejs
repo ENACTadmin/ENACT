@@ -408,40 +408,63 @@
 <!-- Intro Video -->
 <% if (!loggedIn) { %>
     <section class='section section__grey'>
-        <section class='section__content section__content--small-width'>
+        <section class='section__content section__content--fix-width'>
             <br><br><br>
             <h2 class='section__title section__title--centered' data-aos='fade-up'>Intro Video</h2>
             <div id="place2"></div>
-            <br><br><br>
-            <video style="width: 100%" poster="/images/introVideo.png" controls>
-                <source src="https://enact-resources.s3.us-east-2.amazonaws.com/Getting+to+Know+Enact+(With+Captions).mp4" type="video/mp4">
-            </video>
+            <div class="row">
+
+                <div class="column">
+                    <h3 style="text-align: center;">What is ENACT?</h3>
+                    <video style="width:600px; height: 400px;"  controls>
+                        <source src="https://enact-resources.s3.us-east-2.amazonaws.com/ENACT+Updated+Video+2.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="column">
+                    <h3 style="text-align: center">A Brief Tour of enactnetwork.org</h3>
+                    <video style="width:600px; height: 400px;" poster="/images/introVideo.png" controls>
+                        <source src="https://enact-resources.s3.us-east-2.amazonaws.com/Getting+to+Know+Enact+(With+Captions).mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
             <br><br><br>
             <div class='text-center' id="scrollToPlace3">
                 <input type='button' name='submit'
                        class='btn btn-lg btn-primary'
                        value='Back to Top'>
-            </div>
+
             <br><br><br>
+            </div>
         </section>
     </section>
 <% } else { %>
     <section class='section diagonal-gradient'>
-        <section class='section__content section__content--small-width'>
+        <section class='section__content section__content--fix-width'>
             <br><br><br>
             <h2 class='section__title section__title--centered1' style="color: white" data-aos='fade-up'>Intro Video</h2>
             <div id="place2"></div>
+            <div class="row">
+                <div class="column">
+                    <h3 style="text-align: center; color: white">What is ENACT?</h3>
+                    <video style="width:600px; height: 400px;"  controls>
+                        <source src="https://enact-resources.s3.us-east-2.amazonaws.com/ENACT+Updated+Video+2.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="column">
+                    <h3 style="text-align: center; color: white">A Brief Tour of enactnetwork.org</h3>
+                    <video style="width:600px; height: 400px;" poster="/images/introVideo.png" controls>
+                        <source src="https://enact-resources.s3.us-east-2.amazonaws.com/Getting+to+Know+Enact+(With+Captions).mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
             <br><br><br>
-            <video style="width: 100%" poster="/images/introVideo.png" controls>
-                <source src="https://enact-resources.s3.us-east-2.amazonaws.com/Getting+to+Know+Enact+(With+Captions).mp4" type="video/mp4">
-            </video>
-            <br><br><br>
-            <div class='text-center' id="scrollToPlace3">
+            <div class="text-cen" style="text-align: center" id="scrollToPlace3">
                 <input type='button' name='submit'
                        class='btn btn-lg btn-light'
                        value='Back to Top'>
             </div>
             <br><br><br>
+
         </section>
     </section>
 <% } %>
@@ -534,5 +557,31 @@
         });
     });
 </script>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    /* Create two equal columns that floats next to each other */
+    .column {
+        float: left;
+        width: 50%;
+        padding: 10px;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+    @media screen and (max-width: 1200px) {
+        .column {
+            width: 100%;
+        }
+    }
+</style>
 
 <%- include('../components/footer'); -%>

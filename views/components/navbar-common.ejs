@@ -174,10 +174,11 @@
 
 
 
-        <li class='header__btn header__btn--login'>
+        <li class='header-link' id='header-link' href='#' data-aos='fade-left'>
             <% if (!loggedIn) { %>
-                <a class='btn btn-primary' id="adjustedLoginBtn"
-                   style="background-color: #0053a4; color: white; font-weight: bold;" href='/login'
+                <a class='header__btn--signup'
+                   style="background-color: #0053a4; color: white; font-weight: bold;"
+                   href='/login'
                    data-aos='fade-left'>Login</a>
 
             <% } else { %>
