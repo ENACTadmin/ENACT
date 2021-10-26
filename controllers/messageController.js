@@ -162,14 +162,15 @@ function send_email(Email, senderName, receiverName, message, url) {
         const msg = {
             to: Email,
             from: 'enact@brandeis.edu',
-            subject: 'ENACT Digital Platform: you have one new message'+ senderName,
-            text: 'ENACT Digital Platform: you have one new message from ' + senderName,
-            html: 'Hi, '+receiverName+'<br><br>you received a message from ' + senderName + '<br>Here is the message content:'+
+            subject: 'You received a message on the ENACT Digital Platform',
+            text: 'New message from ' + senderName,
+            html: 'Hello '+receiverName+
+                '<br><br>'+'You received a message on the ENACT Digital Platform from ' + senderName + ':'+
                 '<br><br>' + 'Subject: ' + message.subject +
-                '<br><br>' + 'Content:' + message.message +
-                '<br><br>' + '<b>Click <a href=' + url + '>' + 'here' + '</a>' + ' to reply</b>' +
-                '<br><br>' + 'ENACT Support Team' +
-                '<br>'+'<img style=\'height: 120px; width: 120px\' src="/images/enact-logo.jpeg">'
+                '<br>' + message.message +
+                '<br><br>' + '<b>Click <a href=' + url + '>' + 'here' + '</a>' + ' to access the platform and reply</b>' +
+                '<br><br>' + 'Best, <br> '+'ENACT Support Team' +
+                '<br>'+'<img style=\'height: 120px; width: 120px\' src="https://www.brandeis.edu/ethics/enact/images/enact-logo.jpg">'
         };
         try {
             sgMail.send(msg);
@@ -180,13 +181,14 @@ function send_email(Email, senderName, receiverName, message, url) {
         const msg = {
             to: Email,
             from: 'enact@brandeis.edu',
-            subject: 'ENACT Digital Platform: you have one new message from ' + senderName,
-            text: 'ENACT Digital Platform: you have one new message from ' + senderName,
-            html: 'Hi, '+receiverName+'<br><br>you received a message from ' + senderName +'<br>Here is the message content:'+
+            subject: 'You received a message on the ENACT Digital Platform',
+            text: 'New message from ' + senderName,
+            html: 'Hello '+receiverName+
+                '<br><br>'+'You received a message on the ENACT Digital Platform from ' + senderName + ':'+
                 '<br><br>' + message.message +
-                '<br><br>' + '<b>Click <a href=' + url + '>' + 'here' + '</a>' + ' to reply</b>' +
-                '<br><br>' + 'ENACT Support Team <br>'+
-                '<br>'+'<img style=\'height: 120px; width: 120px\' src="/images/enact-logo.jpeg">'
+                '<br><br>' + '<b>Click <a href=' + url + '>' + 'here' + '</a>' + ' to access the platform and reply</b>' +
+                '<br><br>' + 'Best, <br> '+'ENACT Support Team' +
+                '<br>'+'<img style=\'height: 120px; width: 120px\' src="https://www.brandeis.edu/ethics/enact/images/enact-logo.jpg">'
         };
         try {
             sgMail.send(msg);
