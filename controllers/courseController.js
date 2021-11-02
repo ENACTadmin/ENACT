@@ -252,9 +252,20 @@ function containsString(list, elt) {
 }
 
 exports.showSchedule = async (req, res) => {
+
+    const d = new Date();
+    let year = d.getFullYear();
+    let month = d.getMonth();
+
+    let sem = "fall";
+    if (month<6){
+        sem ="spring"
+    }else if(month<9){
+        sem ="summer"
+    }
+    
     let courseTimes = await CourseTime.find({}, {'_id': 0, '__v': 0});
-    //need to change it every semester, try to make it autonomous someday
-    let courses = await Course.find({year: 2021, semester: "fall"}, {
+    let courses = await Course.find({year: year, semester: sem}, {
         'ownerId': 1,
         'institutionURL': 1,
         '_id': 1,
