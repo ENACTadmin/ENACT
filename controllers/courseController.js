@@ -253,7 +253,8 @@ function containsString(list, elt) {
 
 exports.showSchedule = async (req, res) => {
     let courseTimes = await CourseTime.find({}, {'_id': 0, '__v': 0});
-    let courses = await Course.find({year: 2021}, {
+    //need to change it every semester, try to make it autonomous someday
+    let courses = await Course.find({year: 2021, semester: "fall"}, {
         'ownerId': 1,
         'institutionURL': 1,
         '_id': 1,
@@ -261,7 +262,7 @@ exports.showSchedule = async (req, res) => {
         'courseName': 1,
         'timezone': 1,
         'instructor': 1,
-        'institution': 1
+        'institution': 1,
     })
     res.render('./pages/courses-schedule', {
         courseTimes: courseTimes,
