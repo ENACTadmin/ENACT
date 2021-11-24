@@ -275,6 +275,20 @@ exports.showSchedule = async (req, res) => {
         'instructor': 1,
         'institution': 1,
     })
+
+    if (month==0){
+        courses = await Course.find({year: year, $or: [{semester: sem}, {semester: "january"}]}, {
+            'ownerId': 1,
+            'institutionURL': 1,
+            '_id': 1,
+            'state': 1,
+            'courseName': 1,
+            'timezone': 1,
+            'instructor': 1,
+            'institution': 1,
+        })
+    }
+
     res.render('./pages/courses-schedule', {
         courseTimes: courseTimes,
         courses: courses
