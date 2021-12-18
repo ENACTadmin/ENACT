@@ -626,6 +626,7 @@ app.get('/events',
                 'ownerId': 1,
                 '_id': 1,
                 'state': 1,
+                'semester': 1,
                 'courseName': 1,
                 'timezone': 1,
                 'instructor': 1,
@@ -635,7 +636,7 @@ app.get('/events',
                 courseTimes: courseTimes,
                 courses: courses,
                 futureEventsInfo: futureEventsInfo,
-                pastEventsInfo: pastEventsInfo
+                pastEventsInfo: pastEventsInfo,
             })
         }
     }

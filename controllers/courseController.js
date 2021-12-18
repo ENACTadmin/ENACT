@@ -272,6 +272,8 @@ exports.showSchedule = async (req, res) => {
         'state': 1,
         'courseName': 1,
         'timezone': 1,
+        'semester': 1,
+        'year': 1,
         'instructor': 1,
         'institution': 1,
     })
@@ -284,6 +286,8 @@ exports.showSchedule = async (req, res) => {
             'state': 1,
             'courseName': 1,
             'timezone': 1,
+            'semester': 1,
+            'year': 1,
             'instructor': 1,
             'institution': 1,
         })

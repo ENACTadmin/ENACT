@@ -9,7 +9,7 @@
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
             <div class='section__title section__title--centered'>
-                All ENACT Course Schedule
+                Schedule of Current ENACT Courses
             </div>
             <h3># course(s) in session: <b><i><%= courses.length %></i></b></h3>
             <h4>Current Timezone: <b><i id="fillMe"></i></b> (Course times have been adjusted according to your current timezone)
@@ -46,6 +46,8 @@
                                                     href="/profile/view/<%= courses[j].ownerId %>"><%= courses[j].instructor %></a>
                                         </h5>
                                         <br>
+                                        <h5 style='display: inline'>Semester:</h5> <%= courses[j].year %>&nbsp; <%= courses[j].semester %>
+                                        <br>
                                         <h5 style='display: inline'>State:</h5> <%= courses[j].state %>
                                         <br>
                                         <!--                                            do not change this!-->
@@ -60,8 +62,14 @@
                 </div>
             <% } %>
         </div>
+        <h4 style="text-align: center">Current Timezone: <b><i id="fillMe2"></i></b> (Course times have been adjusted according to your current timezone)
+        </h4>
     </div>
+
 </section>
+
+
+
 
 <script>
     $(document).ready(function () {
@@ -117,6 +125,7 @@
             }
         }
         $('#fillMe').text(timezone);
+        $('#fillMe2').text(timezone);
         $('.timezoneStart').each(function () {
             let tmzArray = $(this).text().split(',')
             let timezone = tmzArray[0]
