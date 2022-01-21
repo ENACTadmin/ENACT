@@ -24,7 +24,7 @@
                         <hr>
                         <div class='input-group-prepend'>
                             <span class='input-group-text' style='width: 180px'>Course Name</span>
-                            <input type='text' class='form-control' name='courseName' placeholder='e.g. Brandeis ENACT'>
+                            <input type='text' class='form-control' name='courseName' placeholder='e.g. Brandeis ENACT' required>
                         </div>
                         <br>
                         <div class='input-group-prepend'>
@@ -34,7 +34,7 @@
                         <br>
                         <div class='input-group-prepend'>
                             <span class='input-group-text' style='width: 180px'>Semester</span>
-                            <select class='form-control' name="semester">
+                            <select class='form-control' name="semester" required>
                                 <option value="spring">Spring</option>
                                 <option value="summer">Summer</option>
                                 <option value="fall">Fall</option>
@@ -131,11 +131,11 @@
                         <div class="form-horizontal" id="form-horizontal">
                             <div class="input-group-prepend" id="input-group-prepend">
                                 <span class="input-group-text" style="width: 180px">Start Time</span>
-                                <input class="form-control" type="time" name="startTime" style="margin: 0 20px 0 0">
+                                <input class="form-control" type="time" name="startTime" style="margin: 0 20px 0 0" required>
                                 <span class="input-group-text" style="width: 180px">End Time</span>
-                                <input class="form-control" type="time" name="endTime" style="margin: 0 20px 0 0">
+                                <input class="form-control" type="time" name="endTime" style="margin: 0 20px 0 0" required>
                                 <span class="input-group-text" style="width: 180px">Day</span>
-                                <select id="day" class="form-control" name="day">
+                                <select id="day" class="form-control" name="day" required>
                                     <option value="Monday">Monday</option>
                                     <option value="Tuesday">Tuesday</option>
                                     <option value="Wednesday">Wednesday</option>
@@ -152,7 +152,7 @@
                         <br><br><br>
                         <h3>Submission</h3>
                         <hr>
-                        <input type='checkbox' name='norobot'> I am not a robot <br>
+                        <input type='checkbox' name='norobot' required> I am not a robot <br>
                         <input type='checkbox' name='robot'> I am a robot<br><br>
                         <input type='submit' name='submit' class='btn btn-outline-dark'
                                value='Save to ENACT database'>
