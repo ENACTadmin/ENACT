@@ -1,0 +1,53 @@
+<%- include('../components/header'); -%>
+<%- include('../components/navbar'); -%>
+
+<section class='section'>
+    <div class='section__content section__content--full-width'>
+        <div class='jumbotron masthead text-center'>
+            <div class='section__title section__title--centered'>
+                All ENACT Courses
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class='section section__grey' data-aos='fade-up'>
+    <div class='section__content section__content--fluid-width'>
+        <div class='container'>
+            <div class='row'>
+                <div class='col-md-2 col-sm-12 text-center'></div>
+                <div class='col-md-8 col-sm-12'>
+                    <% if (loggedIn) { %>
+
+                            <table class='table table-striped'>
+                                <thead style='background-color: #0053a4'>
+                                <tr>
+                                    <th scope='col' style='color: white'>Name</th>
+                                    <th scope='col' style='color: white'>Year</th>
+                                    <th scope='col' style='color: white'>Semester</th>
+                                    <th scope='col' style='color: white'>
+                                        Instructor
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <% for (let i = 0; i < courses.length; i++){ %>
+                                        <tr>
+                                            <td><%= courses[i].courseName %></td>
+                                            <td><%= courses[i].year %></td>
+                                            <td><%= courses[i].semester %></td>
+                                            <td><%= courses[i].instructor %></td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+
+
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('../components/footer'); -%>
