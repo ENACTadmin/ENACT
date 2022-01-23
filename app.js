@@ -6,6 +6,13 @@ const logger = require('morgan');
 const session = require("express-session");
 
 //*******************************************
+//***********Development****************
+const livereload = require("livereload");
+const connectLivereload = require("connect-livereload");
+const liveReloadServer = livereload.createServer();
+liveReloadServer.watch(path.join(__dirname, 'public'));
+
+//*******************************************
 //***********Database Schemas****************
 const Event = require('./models/Event')
 const Course = require('./models/Course')
@@ -33,19 +40,19 @@ const utils = require('./controllers/utils');
 //const MONGODB_URI = 'mongodb://localhost/ENACT';
 //const MONGODB_URI = process.env.MONGODB_URI_IND || 'mongodb://localhost/ENACT';
 const MONGODB_URI = 'mongodb+srv://heroku_s59qt61k:suo0sir3rh8b104b38574ju3dm@cluster-s59qt61k.xy6rv.mongodb.net/heroku_s59qt61k?retryWrites=true&w=majority' || 'mongodb://localhost/ENACT';
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'); 
 
 // Makes connection asynchronously.  Mongoose will queue up database
 // operations and release them when the connection is complete.
 mongoose.connect(MONGODB_URI, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
+    useNewUrlParser: true, 
+    useCreateIndex: true, 
     useUnifiedTopology: true
 });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
-    console.log("mongo connected")
+    console.log("mongo connected") 
 });
 
 
@@ -53,6 +60,14 @@ db.once('open', function () {
 //***********Middleware setup****************
 
 const app = express();
+
+// development web app reload
+app.use(connectLivereload());
+liveReloadServer.server.once("connection", () => {
+    setTimeout(() => {
+      liveReloadServer.refresh("/");
+    }, 100);
+  });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -607,8 +622,8 @@ app.get('/messages/view/all',
 //*************Event related*****************
 
 app.get('/events',
-    async (req, res) => {
-        if (res.locals.loggedIn) {
+    async (req, res) => { 
+        if (res.locals.loggedIn) {  
             let eventsInfo = await Event.find({}).sort({start: 1})
             let futureEventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() >= new Date().getTime());
             let pastEventsInfo = eventsInfo.filter(({start}) => new Date(start).getTime() < new Date().getTime()).reverse();
