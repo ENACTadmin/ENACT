@@ -251,8 +251,15 @@ function containsString(list, elt) {
     return found
 }
 
+// function editCourseTimes(courseTimes){
+//     for (courseTime in courseTimes) {
+//         courseTime.startTime = "edited"
+//         courseTime.endTime = "edited"
+//     }
+// }
+  
 exports.showSchedule = async (req, res) => {
-
+ 
     const d = new Date();
     let year = d.getFullYear();
     let month = d.getMonth();
@@ -263,8 +270,10 @@ exports.showSchedule = async (req, res) => {
     }else if(month<9){
         sem ="summer"
     }
-    
+     
     let courseTimes = await CourseTime.find({}, {'_id': 0, '__v': 0});
+    // editCourseTimes(courseTimes)
+    console.log(courseTimes);
     let courses = await Course.find({year: year, semester: sem}, {
         'ownerId': 1,
         'institutionURL': 1,
@@ -293,7 +302,7 @@ exports.showSchedule = async (req, res) => {
         })
     }
 
-    res.render('./pages/courses-schedule', {
+    res.render('./pages/courses-schedule', { 
         courseTimes: courseTimes,
         courses: courses
     })
@@ -396,3 +405,4 @@ async function getRandomPassword() {
     // but that won't be an issue with this alpha version!
     return Math.floor(Math.random() * 10000000)
 }
+
