@@ -368,7 +368,7 @@ exports.assignTA = async (req, res) => {
             console.log("SENDGRID EXCEPTION: ", e)
         }
         // points to newUser
-        taInfo = newUser
+        taInfo = newUser 
     }
 
     // update enrollment

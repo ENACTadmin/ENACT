@@ -591,8 +591,11 @@
     }
 
     function reminderSent() {
-        alert("Emails has been sent successfully.");
-    }
+        let proceed = confirm("Are you sure you want to notify the participants?");
+        if (proceed) {
+            alert("Emails has been sent successfully.");
+        } 
+    } 
 </script>
 
 <%- include('../components/footer'); -%>
