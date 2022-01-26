@@ -308,6 +308,29 @@ exports.showSchedule = async (req, res) => {
     })
 }
 
+exports.showCourses = async (req, res) => {
+
+    let courseTimes = await CourseTime.find({}, {'_id': 0, '__v': 0});
+    let courses = await Course.find({}, {
+        'ownerId': 1,
+        'institutionURL': 1,
+        '_id': 1,
+        'state': 1,
+        'courseName': 1,
+        'timezone': 1,
+        'semester': 1,
+        'year': 1,
+        'instructor': 1,
+        'institution': 1,
+    })
+
+
+    res.render('./pages/course-pastList', {
+        courseTimes: courseTimes,
+        courses: courses
+    })
+}
+
 exports.deleteCourse = async (req, res) => {
     await Course.deleteOne({_id: req.params.courseId})
     await CourseTime.deleteMany({courseId: req.params.courseId})
