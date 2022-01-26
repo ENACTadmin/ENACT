@@ -1,9 +1,10 @@
 {
   "name": "enact-dev",
   "version": "0.0.0",
-  "private": true,
+  "private": true, 
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www", 
+    "start:dev": "nodemon"
   },
   "engines": {
     "node": "12.x"
@@ -16,6 +17,7 @@
     "body-parser": "^1.19.0",
     "bootstrap": "^4.5.3",
     "connect-flash": "^0.1.1",
+    "connect-livereload": "^0.6.1",
     "cookie-parser": "~1.4.4",
     "debug": "^4.3.1",
     "deskapp": "0.0.2",
@@ -25,8 +27,10 @@
     "flash": "^1.1.0",
     "http-errors": "^1.8.0",
     "jquery": "^3.5.1",
+    "livereload": "^0.9.3",
     "mongoose": "^5.11.12",
     "morgan": "^1.10.0",
+    "nodemon": "^2.0.15",
     "npm": "^6.14.15",
     "passport": "^0.4.1",
     "passport-google-oauth": "^2.0.0",
