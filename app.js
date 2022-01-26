@@ -207,6 +207,13 @@ app.post('/course/join',
     courseController.joinCourse
 )
 
+// show a list of past courses
+app.get('/courses/pastList',
+    utils.checkUserName,
+    courseController.showCourses,
+    (req, res) =>
+        res.render('./pages/course-pastList'))
+
 //*******************************************
 //***********Resource related****************
 
