@@ -172,8 +172,9 @@
             } else if (finalTime > 12){
                 finalTime = parseInt(correctedTime.substring(0,2)) % 12 +":" + correctedTime.substring(3) + " PM"
             } else{
-                finalTime = parseInt(correctedTime.substring(0,2)) % 12 + ":" + correctedTime.substring(3) + " AM"
-            }
+                singleDigit = String(parseInt(correctedTime.substring(0,2)) % 12).length == 1
+                finalTime = singleDigit ? parseInt(correctedTime.substring(0,2)) % 12 + ":" + correctedTime.substring(2) + " AM" 
+                : parseInt(correctedTime.substring(0,2)) % 12 + ":" + correctedTime.substring(3)            }
             
             $(this).text(finalTime)
             $(this).removeAttr('hidden')
