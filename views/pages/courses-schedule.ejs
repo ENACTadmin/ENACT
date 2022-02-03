@@ -174,7 +174,7 @@
             } else{
                 singleDigit = String(parseInt(correctedTime.substring(0,2)) % 12).length == 1
                 finalTime = singleDigit ? parseInt(correctedTime.substring(0,2)) % 12 + ":" + correctedTime.substring(2) + " AM" 
-                : parseInt(correctedTime.substring(0,2)) % 12 + ":" + correctedTime.substring(3)            }
+                : parseInt(correctedTime.substring(0,2)) % 12 + ":" + correctedTime.substring(3)   + " AM"         }
             
             $(this).text(finalTime)
             $(this).removeAttr('hidden')
