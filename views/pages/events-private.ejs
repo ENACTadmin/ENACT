@@ -594,7 +594,9 @@
         let proceed = confirm("Are you sure you want to notify the participants?");
         if (proceed) {
             alert("Emails has been sent successfully.");
-        } 
+        } else {
+            e.preventDefault();
+        }
     } 
 </script>
 
