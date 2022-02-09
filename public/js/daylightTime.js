@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(function () {
     Date.prototype.stdTimezoneOffset = function () {
         var jan = new Date(this.getFullYear(), 0, 1);
         var jul = new Date(this.getFullYear(), 6, 1);

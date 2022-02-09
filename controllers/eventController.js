@@ -3,6 +3,7 @@ const Event = require('../models/Event');
 const User = require('../models/User');
 const sgMail = require('@sendgrid/mail');
 
+
 exports.saveEvent = async (req, res, next) => {
     try {
         let timezoneOffset = req.body.TZ
@@ -24,7 +25,7 @@ exports.saveEvent = async (req, res, next) => {
             let email = await faculties[idx].workEmail || faculties[idx].googleemail
             if (email && email !== 'shekenne@iupui.edu') {
                 let eventName = newEvent.title
-                let eventTime = parseInt(req.body.DST) === 0 ? new Date(newEvent.start - 300 * 60000) : new Date(newEvent.start - 240 * 60000)
+                let eventTime = dayLightTime(newEvent.start)
                 let eventDescription = newEvent.description
                 let visibility = newEvent.visibility
                 let url = 'https://www.enactnetwork.org/login'
@@ -102,11 +103,9 @@ exports.updateImageURL = async (req, res, next) => {
 
 exports.sendEventEmail = async (req, res) => {
     let eventId = req.params.id
-    console.log("id: ", eventId)
     let currEvent = await Event.findOne({_id: eventId})
     let eventName = currEvent.title
-    // for email sending, keep converting to US Eastern Time
-    let eventTime = parseInt(req.body.DST) === 0 ? new Date(currEvent.start - 300 * 60000) : new Date(currEvent.start - 240 * 60000)
+    let eventTime = dayLightTime(currEvent.start)
     let eventDescription = currEvent.description
     let visibility = currEvent.visibility
     let faculties = await User.find({status: {$in: ["faculty", "admin"]}})
@@ -150,4 +149,35 @@ exports.loadEvents = async (req, res, next) => {
     // }
     res.locals.eventsInfo = eventsInfo
     next()
+}
+
+// helper functions to adjust time to EST considering daylight savings
+const dayLightTime = (inputTime) => {
+    // convert to msec since Jan 1 1970
+    const localTime = inputTime.getTime()
+    // obtain local UTC offset and convert to msec
+    const localOffset = inputTime.getTimezoneOffset() * 60 * 1000
+    // obtain UTC time in msec
+    const utcTime = localTime + localOffset
+    // obtain and add destination's UTC time offset
+    const estOffset = getEstOffset()
+    const EST = utcTime + (60 * 60 * 1000 * estOffset)
+    return new Date(EST)
+}
+
+const getEstOffset = () => {
+    const stdTimezoneOffset = () => {
+        var jan = new Date(0, 1)
+        var jul = new Date(6, 1)
+        return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset())
+    }
+    var today = new Date()
+    const isDstObserved = () => {
+        return today.getTimezoneOffset() < stdTimezoneOffset()
+    }
+    if (isDstObserved(today)) {
+        return -4
+    } else {
+        return -5
+    }
 }
