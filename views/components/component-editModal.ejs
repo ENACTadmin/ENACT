@@ -56,6 +56,7 @@ let id_set = [] %>
                                         <option value='Personal Reflection'>Essays about ENACT</option>
                                         <option value='Flyer'>Fact Sheet/Storybook</option>
                                         <option value='Letter to Legislator'>Letter to the Legislator</option>
+                                        <option value='News and Articles'>News and Articles</option>
                                         <option value='Next Steps'>Next Steps</option>
                                         <option value='Online'>Online Teaching Resources</option>
                                         <option value='Outlets'>Outlets for Publication</option>
@@ -85,6 +86,7 @@ let id_set = [] %>
                                         <option value='Personal Reflection'>Essays about ENACT</option>
                                         <option value='Flyer'>Fact Sheet/Storybook</option>
                                         <option value='Letter to Legislator'>Letter to the Legislator</option>
+                                        <option value='News and Articles'>News and Articles</option>
                                         <option value='Next Steps'>Next Steps</option>
                                         <option value='Outlets'>Outlets for Publication</option>
                                         <option value='Op-Ed'>Op-Ed</option>
@@ -329,7 +331,7 @@ let id_set = [] %>
             let id_set_array = id_set.split(',')
             for (let i = 0; i < id_set_array.length; i++) {
                 let text = $('#contentTypeSelect' + id_set_array[i] + ' option:selected').text();
-                if (text === 'Assignment Guidelines & Rubrics' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
+                if (text === 'Assignment Guidelines & Rubrics' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'News and Articles' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
                     $(".toShow" + id_set_array[i]).hide()
                     $(".toShow2" + id_set_array[i]).hide()
                 } else if (text === 'Syllabi') {
@@ -341,7 +343,7 @@ let id_set = [] %>
                 }
                 $("#contentTypeSelect" + id_set_array[i]).on("change", function () {
                     text = $('#contentTypeSelect' + id_set_array[i] + ' option:selected').text();
-                    if (text === 'Assignment Guidelines & Rubrics' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
+                    if (text === 'Assignment Guidelines & Rubrics' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'News and Articles' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
                         $(".toShow" + id_set_array[i]).hide()
                         $(".toShow2" + id_set_array[i]).hide()
                     } else if (text === 'Syllabi') {

@@ -89,7 +89,7 @@ $(document).ready(function () {
         });
         // display correct tags for different content types
         let text = $('#contentTypeSelect option:selected').text();
-        if (text === 'Assignment Guidelines & Rubrics' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
+        if (text === 'Assignment Guidelines & Rubrics' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'News and Articles' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
             $(".toShow").hide()
             $(".toShow2").hide()
         } else if (text === 'Syllabi') {
@@ -101,7 +101,7 @@ $(document).ready(function () {
         }
         $("#contentTypeSelect").on("change", function () {
             text = $('#contentTypeSelect option:selected').text();
-            if (text === 'Assignment Guidelines & Rubrics' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
+            if (text === 'Assignment Guidelines & Rubrics' || text === 'Course Reading' || text === 'ENACT Faculty Research' || text === 'News and Articles' || text === 'Course Planning' || text === 'Online Teaching Resources' || text === 'Outlets for Publication' || text === 'Rubrics for grading' || text === 'State Legislative Website Resources') {
                 $(".toShow").hide()
                 $(".toShow2").hide()
             } else if (text === 'Syllabi') {
