@@ -127,6 +127,8 @@
                     break;
             }
         }
+
+
         $('#fillMe').text(timezone);
         $('#fillMe2').text(timezone);
         $('.timezoneStart').each(function () {
@@ -163,7 +165,7 @@
             }
 
             // corrected time after fixing the offset caused by timezones
-            let correctedTime = ((parseInt(time.split(':')[0]) + (n - offset1) + 24) % 24 + ':' + time.split(':')[1])
+            let correctedTime = ((parseInt(time.split(':')[0]) + (n - offset1) + 24) % 24 + 1 + ':' + time.split(':')[1])
             
             // time after conversion of the 24 hour format to 12 hour format
             finalTime = parseInt(correctedTime.substring(0,2))
