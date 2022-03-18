@@ -307,7 +307,7 @@ app.get('/resources/view/inTheNews',
     utils.checkUserName,
     resourceController.loadAllFacultyResources,
     (req, res) =>
-        res.render('./pages/InTheNews')
+        res.render('./pages/inTheNews')
 )
 
 
