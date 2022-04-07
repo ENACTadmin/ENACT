@@ -273,7 +273,7 @@ exports.showSchedule = async (req, res) => {
      
     let courseTimes = await CourseTime.find({}, {'_id': 0, '__v': 0});
     // editCourseTimes(courseTimes)
-    console.log(courseTimes);
+    // console.log(courseTimes);
     let courses = await Course.find({year: year, semester: sem}, {
         'ownerId': 1,
         'institutionURL': 1,
