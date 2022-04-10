@@ -25,7 +25,7 @@
             <div class='row'>
                 <% if (loggedIn) { %>
                     <div class='col-md-12 col-sm-12'>
-                        <h3>ENACT Faculty Research</h3> 
+                        <!-- <h3>ENACT Faculty Research</h3>  -->
                         <!-- Link to all research: <a href="/resources/view/faculty/facultyResearch/"><b>click
                                 me</b></a>
                         <hr> -->
@@ -36,10 +36,17 @@
                                     <div class='card-text'>
                                         <ul class='list-group'>
                                             <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                <h5 style="display: inline">
-                                                    Description:</h5> <%= facultyResearch[i].description %></li>
+                                                <h5 style="display: inline">Description:</h5> 
+                                                <%= facultyResearch[i].description %>
+                                            </li>
                                             <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                <h5 style="display: inline">State:</h5> <%= facultyResearch[i].state %></li>
+                                                <h5 style="display: inline">State:</h5> 
+                                                <%= facultyResearch[i].state %>
+                                            </li>
+                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
+                                                <h5 style="display: inline"> Year:</h5> 
+                                                <%= facultyResearch[i].yearOfCreation %>
+                                            </li>
                                             <% if (facultyResearch[i].mediaType === 'video' && facultyResearch[i].uri.endsWith(".mp4")) { %>
                                                 <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                                     <video style="width: 100%; max-width: 400px" controls>
@@ -48,9 +55,8 @@
                                                 </li>
                                             <% } else { %>
                                                 <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                    <h5 style="display: inline">Link:</h5> <a
-                                                            href='<%= facultyResearch[i].uri %>'>click
-                                                        me</a>
+                                                    <h5 style="display: inline">Link:</h5> 
+                                                    <a href='<%= facultyResearch[i].uri %>'>click me</a>
                                                 </li>
                                             <% } %>
                                             <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>

@@ -361,14 +361,15 @@ exports.loadAllFacultyResources = async (req, res, next) => {
                 status: 'privateToProfessor',
                 'contentType': 'Course Planning'
             }).sort({yearOfCreation: -1}).limit(3)
+
             let facultyResearch = await Resource.find({
-                // status: 'privateToProfessor',
+                status: {$in: ['public', 'finalPublic']},
                 contentType: 'ENACT Research'
-            }).sort({yearOfCreation: -1}).limit(3)
+            }).sort({yearOfCreation: -1})
             let essayENACT = await Resource.find({
-                // status: 'public',
+                status: {$in: ['public', 'finalPublic']},
                 contentType: {$in: ['Personal Reflection', 'News and Articles']} // 'Essays about Enact' value is set to 'Personal Reflection'
-            }).sort({yearOfCreation: -1}).limit(3)
+            }).sort({yearOfCreation: -1})
 
             let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
             let resourceIds = null
