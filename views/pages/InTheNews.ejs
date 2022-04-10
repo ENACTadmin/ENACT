@@ -25,13 +25,13 @@
             <div class='row'>
                 <% if (loggedIn) { %>
                     <div class='col-md-12 col-sm-12'>
-                        <h3>Essays about ENACT</h3>
+                        <!-- <h3>Essays about ENACT</h3> -->
                         
                         <!-- Link to all articles: <a href="/resources/view/faculty/essayENACT"><b>click
                                 me</b></a>
                         <hr> -->
                         <% if (essayENACT && essayENACT.length > 0) { %>
-                            <% for (let i = essayENACT.length - 1; i >= 0; i--) { %>
+                            <% for (let i = 0; i < essayENACT.length; i++){ %>
                                 <div class='shadow-sm card-body'>
                                     <h4><%= essayENACT[i].name %></h4>
                                     <div class='card-text'>
@@ -39,6 +39,9 @@
                                             <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                                 <h5 style="display: inline">
                                                     Description:</h5> <%= essayENACT[i].description %></li>
+                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
+                                                <h5 style="display: inline">
+                                                    Year:</h5> <%= essayENACT[i].yearOfCreation %></li>
                                             <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                                 <h5 style="display: inline">State:</h5> <%= essayENACT[i].state %></li>
                                             <% if (essayENACT[i].mediaType === 'video' && essayENACT[i].uri.endsWith(".mp4")) { %>
@@ -88,7 +91,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <% if (i !== 0) { %>
+                                <% if (i !== essayENACT.length) { %>
                                     <br>
                                 <% } %>
                             <% } %>
