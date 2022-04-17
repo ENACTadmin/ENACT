@@ -23,7 +23,6 @@
     <section class='section__content section__content--fluid-width'>
         <div class='container'>
             <div class='row'>
-                <% if (loggedIn) { %>
                     <div class='col-md-12 col-sm-12'>
                         <!-- <h3>ENACT Faculty Research</h3>  -->
                         <!-- Link to all research: <a href="/resources/view/faculty/facultyResearch/"><b>click
@@ -72,25 +71,6 @@
                                                         Topic(s)/Issue(s):</h5> <%= facultyResearch[i].tags %>
                                                 </li>
                                             <% } %>
-                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                <h5 style="display: inline">Actions:</h5>
-                                                <button type="submit"
-
-                                                        class='focusMe btn btn-outline-danger'
-                                                        id="<%= facultyResearch[i]._id %>">
-                                                    <% if (resourceIds && resourceIds.toString().includes(facultyResearch[i]._id.toString())) { %>
-                                                        &#9829;
-                                                    <% } else { %>
-                                                        &#9825;
-                                                    <% } %>
-                                                </button>
-                                                <% if (facultyResearch[i].ownerId.toString() !== user._id.toString()) { %>
-                                                    <a href='/messages/view/<%= user._id %>/<%= facultyResearch[i].ownerId %>/<%= facultyResearch[i]._id %>'><input
-                                                                class='btn btn-outline-primary'
-
-                                                                type='button' value='Contact the author'></a>
-                                                <% } %>
-                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -104,9 +84,7 @@
                             </div>
                         <% } %>
                     </div>
-                <% } else { %>
-                    <%- include('../components/component-loginToView'); -%>
-                <% } %>
+
             </div>
         </div>
     </section>
