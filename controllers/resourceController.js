@@ -345,7 +345,9 @@ async function addAuthor(resources) {
 }
 
 exports.loadAllFacultyResources = async (req, res, next) => {
+    
     try {
+        console.log(req.user.status, "*************");
         if (req.user.status !== 'admin' && req.user.status !== 'faculty')
             res.send("You are not allowed here!")
         else {
@@ -362,14 +364,7 @@ exports.loadAllFacultyResources = async (req, res, next) => {
                 'contentType': 'Course Planning'
             }).sort({yearOfCreation: -1}).limit(3)
 
-            let facultyResearch = await Resource.find({
-                status: {$in: ['public', 'finalPublic']},
-                contentType: 'ENACT Research'
-            }).sort({yearOfCreation: -1})
-            let essayENACT = await Resource.find({
-                status: {$in: ['public', 'finalPublic']},
-                contentType: {$in: ['Personal Reflection', 'News and Articles']} // 'Essays about Enact' value is set to 'Personal Reflection'
-            }).sort({yearOfCreation: -1})
+            
 
             let starred = await ResourceSet.findOne({ownerId: req.user._id, name: 'favorite'})
             let resourceIds = null
@@ -380,11 +375,28 @@ exports.loadAllFacultyResources = async (req, res, next) => {
             res.locals.syllabus = await addAuthor(syllabus);
             res.locals.assignments = await addAuthor(assignments);
             res.locals.guides = await addAuthor(guides);
-            res.locals.facultyResearch = await addAuthor(facultyResearch);
-            res.locals.essayENACT = await addAuthor(essayENACT);
             next()
         }
     } catch (e) {
+        next(e)
+    }
+}
+
+exports.loadImpactResources = async (req, res, next) => {
+    try {
+        let facultyResearch = await Resource.find({
+            status: {$in: ['public', 'finalPublic']},
+            contentType: 'ENACT Research'
+        }).sort({yearOfCreation: -1})
+        let essayENACT = await Resource.find({
+            status: {$in: ['public', 'finalPublic']},
+            contentType: {$in: ['Personal Reflection', 'News and Articles']} // 'Essays about Enact' value is set to 'Personal Reflection'
+        }).sort({yearOfCreation: -1})
+        res.locals.facultyResearch = await addAuthor(facultyResearch);
+        res.locals.essayENACT = await addAuthor(essayENACT);
+        next()
+    } catch (e) {
+        console.log("error: " + e)
         next(e)
     }
 }

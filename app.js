@@ -298,14 +298,14 @@ app.post('/resources/search/public/advanced',
 // get impact resources
 app.get('/resources/view/facultyResearch',
     utils.checkUserName,
-    resourceController.loadAllFacultyResources,
+    resourceController.loadImpactResources,
     (req, res) =>
         res.render('./pages/facultyResearch')
 )
 
 app.get('/resources/view/inTheNews',
     utils.checkUserName,
-    resourceController.loadAllFacultyResources,
+    resourceController.loadImpactResources,
     (req, res) =>
         res.render('./pages/InTheNews')
 )
