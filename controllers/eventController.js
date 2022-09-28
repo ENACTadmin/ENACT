@@ -25,7 +25,7 @@ exports.saveEvent = async (req, res, next) => {
             let email = await faculties[idx].workEmail || faculties[idx].googleemail
             if (email && email !== 'shekenne@iupui.edu') {
                 let eventName = newEvent.title
-                let eventTime = dayLightTime(newEvent.start)
+                let eventTime = newEvent.start.toLocaleString('en-US', { timeZone: 'America/New_York' })
                 let eventDescription = newEvent.description
                 let visibility = newEvent.visibility
                 let url = 'https://www.enactnetwork.org/login'
@@ -40,7 +40,7 @@ exports.saveEvent = async (req, res, next) => {
                         '<b>' + eventName + '</b>' +
                         '<br><br>' + 'Here is the event Description:' +
                         '<br><br>' + eventDescription +
-                        '<br><br>' + 'Event will start at ' + '<b>' + eventTime.toLocaleString() + ' (in US/Canada Eastern Time)</b>' +
+                        '<br><br>' + 'Event will start at ' + '<b>' + eventTime + ' (in US/Canada Eastern Time)</b>' +
                         '<br><br>' + 'Event visibility is: ' + '<b>' + visibility + '</b>' +
                         '<br>Please click <a href=' + url + '>' + 'here' + '</a>' + ' to login, and more details can be viewed in ' + '<b>' + 'Events and Courses. ' + '</b>' +
                         '<br><br><br>' + 'ENACT Support Team'
@@ -105,7 +105,7 @@ exports.sendEventEmail = async (req, res) => {
     let eventId = req.params.id
     let currEvent = await Event.findOne({_id: eventId})
     let eventName = currEvent.title
-    let eventTime = dayLightTime(currEvent.start)
+    let eventTime = currEvent.start.toLocaleString('en-US', { timeZone: 'America/New_York' })
     let eventDescription = currEvent.description
     let visibility = currEvent.visibility
     let faculties = await User.find({status: {$in: ["faculty", "admin"]}})
@@ -125,7 +125,7 @@ exports.sendEventEmail = async (req, res) => {
                     '<b>' + eventName + '</b>' +
                     '<br><br>' + 'Here is the event Description:' +
                     '<br><br>' + eventDescription +
-                    '<br><br>' + 'Event will start at ' + '<b>' + eventTime.toLocaleString() + ' (in US/Canada Eastern Time)</b>' +
+                    '<br><br>' + 'Event will start at ' + '<b>' + eventTime + ' (in US/Canada Eastern Time)</b>' +
                     '<br><br>' + 'Event visibility is: ' + '<b>' + visibility + '</b>' +
                     '<br>Please click <a href=' + url + '>' + 'here' + '</a>' + ' to login, and more details can be viewed in ' + '<b>' + 'Events and Courses. ' + '</b>' +
                     '<br><br><br>' + 'ENACT Support Team'
@@ -149,35 +149,4 @@ exports.loadEvents = async (req, res, next) => {
     // }
     res.locals.eventsInfo = eventsInfo
     next()
-}
-
-// helper functions to adjust time to EST considering daylight savings
-const dayLightTime = (inputTime) => {
-    // convert to msec since Jan 1 1970
-    const localTime = inputTime.getTime()
-    // obtain local UTC offset and convert to msec
-    const localOffset = inputTime.getTimezoneOffset() * 60 * 1000
-    // obtain UTC time in msec
-    const utcTime = localTime + localOffset
-    // obtain and add destination's UTC time offset
-    const estOffset = getEstOffset()
-    const EST = utcTime + (60 * 60 * 1000 * estOffset)
-    return new Date(EST)
-}
-
-const getEstOffset = () => {
-    const stdTimezoneOffset = () => {
-        var jan = new Date(0, 1)
-        var jul = new Date(6, 1)
-        return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset())
-    }
-    var today = new Date()
-    const isDstObserved = () => {
-        return today.getTimezoneOffset() < stdTimezoneOffset()
-    }
-    if (isDstObserved(today)) {
-        return -4
-    } else {
-        return -5
-    }
 }
