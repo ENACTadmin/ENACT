@@ -3,8 +3,29 @@ const Event = require('../models/Event');
 const User = require('../models/User');
 const sgMail = require('@sendgrid/mail');
 
-
 exports.saveEvent = async (req, res, next) => {
+    try {
+        let timezoneOffset = req.body.TZ
+        timezoneOffset = parseInt(timezoneOffset) - new Date().getTimezoneOffset()
+        let startDate = new Date(req.body.start).getTime() + parseInt(timezoneOffset) * 60000
+        let endDate = new Date(req.body.end).getTime() + parseInt(timezoneOffset) * 60000
+        let newEvent = new Event({
+            ownerId: req.user._id,
+            title: req.body.title,
+            start: startDate,
+            end: endDate,
+            uri: req.body.uri,
+            description: req.body.description,
+            visibility: req.body.visibility
+        })
+        await newEvent.save()
+        res.redirect('back')
+    } catch (e) {
+        next(e)
+    }
+}
+
+exports.saveEventAndSendReminder = async (req, res, next) => {
     try {
         let timezoneOffset = req.body.TZ
         timezoneOffset = parseInt(timezoneOffset) - new Date().getTimezoneOffset()
@@ -114,7 +135,7 @@ exports.sendEventEmail = async (req, res) => {
         if (email && email !== 'shekenne@iupui.edu') {
             let url = 'https://www.enactnetwork.org/login'
             const sgMail = require('@sendgrid/mail');
-            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+            await sgMail.setApiKey(process.env.SENDGRID_API_KEY);
             const msg = {
                 to: email,
                 from: 'enact@brandeis.edu',

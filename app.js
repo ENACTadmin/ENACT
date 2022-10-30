@@ -677,6 +677,9 @@ app.post('/event/edit/:eventId',
 app.post('/event/save',
     eventController.saveEvent
 )
+app.post('/event/saveAndSendReminder',
+    eventController.saveEventAndSendReminder
+)
 
 app.get('/event/image/update/:eventId',
     (async (req, res) => {
