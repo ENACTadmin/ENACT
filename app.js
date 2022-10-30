@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -38,7 +40,7 @@ const utils = require('./controllers/utils');
 //*******************************************
 //***********Database connection*************
 // const MONGODB_URI = 'mongodb://localhost/ENACT';
-//const MONGODB_URI = process.env.MONGODB_URI_IND || 'mongodb://localhost/ENACT';
+// const MONGODB_URI = process.env.MONGODB_URI_IND || 'mongodb://localhost/ENACT';
 const MONGODB_URI = 'mongodb+srv://heroku_s59qt61k:suo0sir3rh8b104b38574ju3dm@cluster-s59qt61k.xy6rv.mongodb.net/heroku_s59qt61k?retryWrites=true&w=majority' || 'mongodb://localhost/ENACT';
 const mongoose = require('mongoose'); 
 
@@ -674,6 +676,9 @@ app.post('/event/edit/:eventId',
 
 app.post('/event/save',
     eventController.saveEvent
+)
+app.post('/event/saveAndSendReminder',
+    eventController.saveEventAndSendReminder
 )
 
 app.get('/event/image/update/:eventId',
