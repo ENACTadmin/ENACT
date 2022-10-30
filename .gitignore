@@ -7,6 +7,9 @@ yarn-debug.log*
 yarn-error.log*
 package-lock.json
 
+#Vscode settings
+*.vscode/*
+
 # Runtime data
 pids
 *.pid
