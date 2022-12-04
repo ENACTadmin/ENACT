@@ -166,8 +166,13 @@
 </section>
 
 <script>
-    for (let i = new Date().getFullYear(); i > 2000; i--) {
-        $('#yearpicker').append($('<option class="form-control"/>').val(i).html(i));
+    let currentYear = new Date().getFullYear()
+    $('#yearpicker').append($('<option class="form-control" selected/>').val(currentYear).html(currentYear));
+    
+    for (let i = new Date().getFullYear()+1; i > 2000; i--) {
+        if (i !== currentYear){ 
+            $('#yearpicker').append($('<option class="form-control"/>').val(i).html(i));
+        }
     }
 </script>
 
