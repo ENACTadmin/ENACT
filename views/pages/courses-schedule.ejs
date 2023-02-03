@@ -38,8 +38,13 @@
                                     <div class='shadow-sm card-body'>
                                         <h5 style='display: inline'><%= courses[j].courseName %></h5>
                                         <br>
-                                        <h5 style='display: inline'><a
-                                                    href="<%= courses[j].institutionURL %>"><%= courses[j].institution %></a>
+                                        
+                                        <h5 style='display: inline'>
+                                            <% if (courses[j].institutionURL.substring(0,4) !=='http') { %>
+                                                <a href="https://<%= courses[j].institutionURL %>" target="_blank"><%= courses[j].institution %></a>
+                                            <% } else{ %>
+                                                <a href="<%= courses[j].institutionURL %>" target="_blank"><%= courses[j].institution %></a>
+                                            <% } %>    
                                         </h5>
                                         <br>
                                         <h5 style='display: inline'><a
