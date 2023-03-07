@@ -5,7 +5,7 @@ const User = require('../models/User');
 const CourseMember = require('../models/CourseMember');
 const CourseTime = require('../models/CourseTime');
 const TA = require('../models/TA')
-
+const Faculty = require('../models/Faculty');
 
 /**
  * create a new course
@@ -25,11 +25,22 @@ exports.createNewClass = async (req, res, next) => {
     }
     try {
         coursePin = await getCoursePin()
+        
+        let ownerId = req.user._id
+        let instructor =  req.user.userName
+        console.log(ownerId, req.body.email)
+        if (res.locals.status === "admin" && req.body.email !== "") {
+            let facultyId = await Faculty.findOne({_id: req.body.email})
+            let facultyUser = await User.findOne({_id: facultyId.userId})
+            ownerId = facultyId.userId
+            instructor =  facultyUser.userName
+        } 
+
         let newCourse = new Course(
             {
                 courseName: req.body.courseName,
-                ownerId: req.user._id,
-                instructor: req.user.userName,
+                ownerId,
+                instructor,
                 coursePin: coursePin,
                 year: req.body.year,
                 semester: req.body.semester,
