@@ -116,8 +116,13 @@ app.get('/',
 // course creation
 app.get('/course/create',
     utils.checkUserName,
-    (req, res) =>
-        res.render('./pages/course-create'))
+    async (req, res) => {
+        let faculties =  await Faculty.find()
+        res.render('./pages/course-create',  {
+            faculties
+        })
+    }
+)
 
 app.post('/course/create',
     courseController.createNewClass

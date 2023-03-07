@@ -22,6 +22,19 @@
                     <form method='post' action='/course/create'>
                         <h3>Basic Information</h3>
                         <hr>
+                        <% if (status === 'admin') { %>
+                            <div class='input-group-prepend'>
+                                <span class='input-group-text' style='width: 180px'>Faculty Email</span>
+                                <select class='form-control' name="email" id="email">
+                                    <option value=""  > [optional] Select faculty only if the course belongs to them </option>
+                                    <% faculties.forEach((faculty) => { %>
+                                        <% const email = faculty.email %>
+                                        <option value="<%= faculty._id %>"><%= email %></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                            <br>
+                        <% }  %>
                         <div class='input-group-prepend'>
                             <span class='input-group-text' style='width: 180px'>Course Name</span>
                             <input type='text' class='form-control' name='courseName' placeholder='e.g. Brandeis ENACT' required>
