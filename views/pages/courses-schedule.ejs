@@ -82,6 +82,7 @@
 <script>
     $(document).ready(function () {
         let n = new Date().getTimezoneOffset() / 60;
+        // console.log(n);
         let timezone = '';
         if (new Date().isDstObserved()) {
             switch (n) {
@@ -143,7 +144,7 @@
             let offset1 = 0;
             // console.log(typeof timezone)
             // console.log(timezone.trim().length)
-            // console.log(timezone.length)
+            // console.log(timezone)
             // console.log('US/Eastern')
             switch (timezone) {
                 case 'US/Atlantic':
@@ -164,13 +165,15 @@
                 case 'US/Alaska':
                     offset1 = 8;
                     break;
-                case 'US/Hawaii‑Aleutian':
+                case 'US/Hawaii-Aleutian':
                     offset1 = 9;
                     break;
             }
+            // console.log(n-offset1-1);
+            // $(this).text((parseInt(time.split(':')[0]) + ( offset1 - n + 1) + 24) % 24 + ':' + time.split(':')[1])
 
             // corrected time after fixing the offset caused by timezones
-            let correctedTime = ((parseInt(time.split(':')[0]) + (n - offset1) + 24) % 24 + 1 + ':' + time.split(':')[1])
+            let correctedTime = ((parseInt(time.split(':')[0]) + ( offset1 - n + 1) + 24) % 24 + ':' + time.split(':')[1])
             
             // time after conversion of the 24 hour format to 12 hour format
             finalTime = parseInt(correctedTime.substring(0,2))
