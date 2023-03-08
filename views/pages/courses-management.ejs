@@ -112,6 +112,11 @@
                                 </div>
                             <% } %>
                         <% } %>
+                        <% if (status === 'admin') { %>
+                            <br>
+                            <h3 style="text-align: center"> <a href="/courses/pastList">View All ENACT Courses</a>
+                            </h3>
+                        <% } %>
                     <% } else { %>
                         <%- include('../components/component-loginToView'); -%>
                     <% } %>
@@ -119,6 +124,7 @@
             </div>
         </div>
     </div>
+
 </section>
 
 <% if (courseInfoSet && courseInfoSet.length !== 0) { %>
