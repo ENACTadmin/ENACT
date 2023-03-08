@@ -17,7 +17,7 @@
             <div class='row'>
                 <div class='col-md-2 col-sm-12 text-center'></div>
                 <div class='col-md-8 col-sm-12'>
-                    <% if (loggedIn) { %>
+                    <% if (loggedIn ) { %>
 
                             <table class='table table-striped'>
                                 <thead style='background-color: #0053a4'>
@@ -33,12 +33,17 @@
                                 <tbody>
                                     <% for (let i = 0; i < courses.length; i++){ %>
                                         <tr>
-                                            <td><%= courses[i].courseName %></td>
+                                            <% if (status == 'admin') {%>
+                                                <td><a href="/course/view/<%= courses[i]._id%>/10"><%= courses[i].courseName %></a></td>
+                                            <% } else {%>
+                                                <td><%= courses[i].courseName %></td>
+                                            <% } %>
                                             <td><%= courses[i].year %></td>
                                             <td><%= courses[i].semester %></td>
                                             <td><%= courses[i].instructor %></td>
                                         </tr>
                                     <% } %>
+
                                 </tbody>
                             </table>
 
