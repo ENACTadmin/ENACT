@@ -86,30 +86,6 @@
         let timezone = '';
         if (new Date().isDstObserved()) {
             switch (n) {
-                case 3:
-                    timezone = 'US/Atlantic';
-                    break;
-                case 4:
-                    timezone = 'US/Eastern';
-                    break;
-                case 5:
-                    timezone = 'US/Central';
-                    break;
-                case 6:
-                    timezone = 'US/Mountain';
-                    break;
-                case 7:
-                    timezone = 'US/Pacific';
-                    break;
-                case 8:
-                    timezone = 'US/Alaska';
-                    break;
-                case 9:
-                    timezone = 'US/Hawaii‑Aleutian';
-                    break;
-            }
-        } else {
-            switch (n) {
                 case 4:
                     timezone = 'US/Atlantic';
                     break;
@@ -129,6 +105,30 @@
                     timezone = 'US/Alaska';
                     break;
                 case 10:
+                    timezone = 'US/Hawaii‑Aleutian';
+                    break;
+            }
+        } else {
+            switch (n) {
+                case 3:
+                    timezone = 'US/Atlantic';
+                    break;
+                case 4:
+                    timezone = 'US/Eastern';
+                    break;
+                case 5:
+                    timezone = 'US/Central';
+                    break;
+                case 6:
+                    timezone = 'US/Mountain';
+                    break;
+                case 7:
+                    timezone = 'US/Pacific';
+                    break;
+                case 8:
+                    timezone = 'US/Alaska';
+                    break;
+                case 9:
                     timezone = 'US/Hawaii‑Aleutian';
                     break;
             }
@@ -173,7 +173,7 @@
             // $(this).text((parseInt(time.split(':')[0]) + ( offset1 - n + 1) + 24) % 24 + ':' + time.split(':')[1])
 
             // corrected time after fixing the offset caused by timezones
-            let correctedTime = ((parseInt(time.split(':')[0]) + ( offset1 - n + 1) + 24) % 24 + ':' + time.split(':')[1])
+            let correctedTime = ((parseInt(time.split(':')[0]) + ( offset1 - n) + 24) % 24 + ':' + time.split(':')[1])
             
             // time after conversion of the 24 hour format to 12 hour format
             finalTime = parseInt(correctedTime.substring(0,2))
