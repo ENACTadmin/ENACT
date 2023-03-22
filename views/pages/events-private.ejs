@@ -59,19 +59,18 @@
                                                         style="font-size: large">
                                                         <h5 style="display: inline; font-weight: 650">Date:</h5>
                                                         <p style="display: inline"
-                                                           class=""><%= futureEventsInfo[i].start.toLocaleString('en-US', { timeZone: 'America/New_York', timeZoneName: "long" }) %></p>
+                                                            class="TZChange"><%= futureEventsInfo[i].start %></p>
                                                     </li>
                                                     <li class='list-group-item borderless box-padding bg-transparent'
                                                         style="font-size: large">
                                                         <h5 style="display: inline; font-weight: 650">Start time:</h5>
                                                         <p style="display: inline"
-                                                           class=""><%= futureEventsInfo[i].start.toLocaleString('en-US', { timeZone: 'America/New_York', timeZoneName: "long" }) %></p>
-                                                    </li>
+                                                            class="TZChange1"><%= futureEventsInfo[i].start %></p>                                                    </li>
                                                     <li class='list-group-item borderless box-padding bg-transparent'
                                                         style="font-size: large">
                                                         <h5 style="display: inline; font-weight: 650">End time:</h5>
                                                         <p style="display: inline"
-                                                           class=""><%= futureEventsInfo[i].end.toLocaleString('en-US', { timeZone: 'America/New_York', timeZoneName: "long" }) %></p>
+                                                            class="TZChange1"><%= futureEventsInfo[i].end %></p>
                                                     </li>
                                                 <% } %>
                                                 <% if (futureEventsInfo[i].uri !== null) { %>
@@ -174,19 +173,17 @@
                                                         style="font-size: large">
                                                         <h5 style="display: inline; font-weight: 650">Date: </h5>
                                                         <p style="display: inline"
-                                                           class=""><%= pastEventsInfo[i].start.toLocaleString('en-US', { timeZone: 'America/New_York', timeZoneName: "long" }) %></p>
-                                                    </li>
+                                                            class="TZChange"><%= pastEventsInfo[i].start %></p>                                                    </li>
                                                     <li class='list-group-item borderless box-padding bg-transparent'
                                                         style="font-size: large">
                                                         <h5 style="display: inline; font-weight: 650">Start time: </h5>
                                                         <p style="display: inline;"
-                                                           class=""><%= pastEventsInfo[i].start.toLocaleString('en-US', { timeZone: 'America/New_York', timeZoneName: "long" }) %></p>
-                                                    </li>
+                                                            class="TZChange1"><%= pastEventsInfo[i].start %></p>                                                    </li>
                                                     <li class='list-group-item borderless box-padding bg-transparent'
                                                         style="font-size: large">
                                                         <h5 style="display: inline; font-weight: 650">End time: </h5>
                                                         <p style="display: inline;"
-                                                           class=""><%= pastEventsInfo[i].end.toLocaleString('en-US', { timeZone: 'America/New_York', timeZoneName: "long" }) %></p>
+                                                            class="TZChange1"><%= pastEventsInfo[i].end %></p>
                                                     </li>
                                                 <% } %>
                                                 <% if (pastEventsInfo[i].uri !== null) { %>
@@ -568,7 +565,7 @@
         $(".TZChange").each(function () {
             let oldDate = $(this).text()
             let newDate = new Date(oldDate)
-            $(this).text(newDate.toLocaleDateString())
+            $(this).text(newDate.toLocaleTimeString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})+ ' (' + timezone + ')')
         })
         $(".TZChange1").each(function () {
             let today = new Date()
