@@ -54,19 +54,19 @@
                                                     style="font-size: large">
                                                     <h5 style="display: inline; font-weight: 650">Date: </h5>
                                                     <p style="display: inline"
-                                                       class=""><%= futureEventsInfo[i].start.toLocaleString('en-US', { timeZone: 'America/New_York', timeZoneName: "long" }) %></p>
+                                                        class="TZChange"><%= futureEventsInfo[i].start %></p>    
                                                 </li>
                                                 <li class='list-group-item borderless box-padding bg-transparent'
                                                     style="font-size: large">
                                                     <h5 style="display: inline; font-weight: 650">Start time: </h5>
                                                     <p style="display: inline;"
-                                                       class=""><%= futureEventsInfo[i].start.toLocaleString('en-US', { timeZone: 'America/New_York', timeZoneName: "long" }) %></p>
+                                                        class="TZChange1"><%= futureEventsInfo[i].start %></p>                                                    </li>
                                                 </li>
                                                 <li class='list-group-item borderless box-padding bg-transparent'
                                                     style="font-size: large">
                                                     <h5 style="display: inline; font-weight: 650">End time: </h5>
                                                     <p style="display: inline;"
-                                                       class=""><%= futureEventsInfo[i].end.toLocaleString('en-US', { timeZone: 'America/New_York', timeZoneName: "long" }) %></p>
+                                                        class="TZChange1"><%= futureEventsInfo[i].end %></p>
                                                 </li>
                                             <% } %>
                                             <% if (futureEventsInfo[i].uri !== null) { %>
@@ -130,19 +130,19 @@
                                                     style="font-size: large">
                                                     <h5 style="display: inline; font-weight: 650">Date: </h5>
                                                     <p style="display: inline"
-                                                       class=""><%= pastEventsInfo[i].start.toLocaleString('en-US', { timeZone: 'America/New_York', timeZoneName: "long" }) %></p>
+                                                        class="TZChange"><%= pastEventsInfo[i].start %></p>
                                                 </li>
                                                 <li class='list-group-item borderless box-padding bg-transparent'
                                                     style="font-size: large">
                                                     <h5 style="display: inline; font-weight: 650">Start time: </h5>
                                                     <p style="display: inline;"
-                                                       class=""><%= pastEventsInfo[i].start.toLocaleString('en-US', { timeZone: 'America/New_York', timeZoneName: "long" }) %></p>
+                                                        class="TZChange1"><%= pastEventsInfo[i].start %></p>
                                                 </li>
                                                 <li class='list-group-item borderless box-padding bg-transparent'
                                                     style="font-size: large">
                                                     <h5 style="display: inline; font-weight: 650">End time: </h5>
                                                     <p style="display: inline;"
-                                                       class=""><%= pastEventsInfo[i].end.toLocaleString('en-US', { timeZone: 'America/New_York', timeZoneName: "long" }) %></p>
+                                                        class="TZChange1"><%= pastEventsInfo[i].end %></p>
                                                 </li>
                                             <% } %>
                                             <% if (pastEventsInfo[i].uri !== null) { %>
@@ -235,6 +235,7 @@
 </section>
 
 
+<p hidden id='idSet'><%= id_set %></p>
 <script>
     $(document).ready(function () {
         let n = new Date().getTimezoneOffset() / 60;
@@ -289,61 +290,55 @@
             }
         }
         $('#fillMe').text(timezone);
-        $('#fillMe2').text(timezone);
-        $('.timezoneStart').each(function () {
-            let tmzArray = $(this).text().split(',')
-            let timezone = tmzArray[0]
-            let time = tmzArray[1]
-            let offset1 = 0;
-            // console.log(typeof timezone)
-            // console.log(timezone.trim().length)
-            // console.log(timezone.length)
-            // console.log('US/Eastern')
-            switch (timezone) {
-                case 'US/Atlantic':
-                    offset1 = 3;
-                    break;
-                case 'US/Eastern':
-                    offset1 = 4;
-                    break;
-                case 'US/Central':
-                    offset1 = 5;
-                    break;
-                case 'US/Mountain':
-                    offset1 = 6;
-                    break;
-                case 'US/Pacific':
-                    offset1 = 7;
-                    break;
-                case 'US/Alaska':
-                    offset1 = 8;
-                    break;
-                case 'US/Hawaii‑Aleutian':
-                    offset1 = 9;
-                    break;
+        $(".TZTZ").each(function () {
+            $(this).val(new Date().getTimezoneOffset())
+        })
+        let id_set = $('#idSet').text()
+        if (id_set.length !== 0) {
+            let id_set_array = id_set.split(',')
+            for (let i = 0; i < id_set_array.length; i++) {
+                let realType = $('#visiFromServer' + id_set_array[i]).text()
+                $('#visibility' + id_set_array[i] + ' option').each(function () {
+                    if ($(this).val() === realType) {
+                        $(this).prop('selected', true)
+                    }
+                })
             }
-
-            // corrected time after fixing the offset caused by timezones
-            let correctedTime = ((parseInt(time.split(':')[0]) + (n - offset1) + 24) % 24 + ':' + time.split(':')[1])
-            
-            // time after conversion of the 24 hour format to 12 hour format
-            finalTime = parseInt(correctedTime.substring(0,2))
-            if (finalTime == 12){ 
-                finalTime = "12" + ":" + correctedTime.substring(3) + " PM"
-            } else if (finalTime > 12){
-                finalTime = parseInt(correctedTime.substring(0,2)) % 12 +":" + correctedTime.substring(3) + " PM"
-            } else{
-                singleDigit = String(parseInt(correctedTime.substring(0,2)) % 12).length == 1
-                finalTime = singleDigit ? parseInt(correctedTime.substring(0,2)) % 12 + ":" + correctedTime.substring(2) + " AM" 
-                : parseInt(correctedTime.substring(0,2)) % 12 + ":" + correctedTime.substring(3)     + "AM"       }
-            
-            $(this).text(finalTime)
-            $(this).removeAttr('hidden')
-
-            
         }
-        )
+        $(".TZChange").each(function () {
+            let oldDate = $(this).text()
+            let newDate = new Date(oldDate)
+            $(this).text(newDate.toLocaleTimeString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})+ ' (' + timezone + ')')
+        })
+        $(".TZChange1").each(function () {
+            let today = new Date()
+            let oldDate = $(this).text()
+            let newDate = new Date(oldDate + today.getTimezoneOffset())
+            let minutes = newDate.getMinutes()
+            let hours = newDate.getHours()
+            let APM = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12
+            hours = hours ? hours : 12;
+            if (minutes.toString().length === 1)
+                minutes = '0' + minutes.toString()
+            if (hours.toString().length === 1)
+                hours = '0' + hours.toString()
+            $(this).text(hours + ':' + minutes + ' ' + APM + ' (' + timezone + ')')
+        })
     });
+
+    function showAddModal() {
+        $("#modal-view-event-add").modal()
+    }
+
+    function reminderSent() {
+        let proceed = confirm("Are you sure you want to notify the participants?");
+        if (proceed) {
+            alert("Emails have been sent successfully.");
+        } else {
+            e.preventDefault();
+        }
+    } 
 </script>
 
 
