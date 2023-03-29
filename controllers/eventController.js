@@ -16,7 +16,8 @@ exports.saveEvent = async (req, res, next) => {
             end: endDate,
             uri: req.body.uri,
             description: req.body.description,
-            visibility: req.body.visibility
+            visibility: req.body.visibility,
+            imageURL: req.body.imageURL
         })
         await newEvent.save()
         res.redirect('back')
