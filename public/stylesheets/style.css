@@ -2731,3 +2731,13 @@ Calendar Styling */
         color: #777;
     }
 }
+
+/* Events  */
+.days-row{
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 80px;
+    padding: 10px 0px;
+    z-index: 1;
+    background-color: #f7f8f9;
+}
