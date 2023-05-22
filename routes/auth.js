@@ -149,7 +149,7 @@ router.get('/login-fail',
 
 
 // will be moved to cloud later
-const adminList = ["naimulhasan@brandeis.edu","tjhickey@brandeis.edu", "bbdhy96@gmail.com", "enact@brandeis.edu", "bhershon@brandeis.edu", "nicolezhang@brandeis.edu", "stimell@brandeis.edu", "djw@brandeis.edu", "epevide@brandeis.edu", "luyaopei@brandeis.edu", "kchakoian@brandeis.edu", "charlottepowley88@gmail.com","bishalbaral@brandeis.edu"]
+const adminList = ["naimulhasan@brandeis.edu","tjhickey@brandeis.edu", "bbdhy96@gmail.com", "enact@brandeis.edu", "bhershon@brandeis.edu", "nicolezhang@brandeis.edu", "stimell@brandeis.edu", "djw@brandeis.edu", "epevide@brandeis.edu", "luyaopei@brandeis.edu", "kchakoian@brandeis.edu", "charlottepowley88@gmail.com","bishalbaral@brandeis.edu", "madina@brandeis.edu", "aiberkleid@brandeis.edu"]
 
 router.get('/signup',
     (req, res) =>
