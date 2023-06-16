@@ -50,7 +50,7 @@
                                                 Description:</h5> <%= resourceInfo[i].description %></li>
                                         <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                             <h5 style="display: inline">
-                                                Year:</h5> <%= resourceInfo[i].yearOfCreation %>
+                                                Year:</h5> <%= resourceInfo[i].yearOfCreation.split('').reverse().join('') %>
                                         </li>
                                         <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                             <h5 style="display: inline">State:</h5> <%= resourceInfo[i].state %></li>
