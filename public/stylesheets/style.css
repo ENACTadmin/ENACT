@@ -2311,7 +2311,7 @@ ul.grid__list--fmenu li a:hover {
 /* Mobile  800	  					 */
 /*===============================================*/
 
-@media screen and (max-width: 1292px) {
+@media screen and (max-width: 1298px) {
   .header__logo-title-1 {
     display: none;
     font-size: 20px;
