@@ -1,100 +1,127 @@
-<%- include('../components/header'); -%>
-<%- include('../components/navbar'); -%>
+<%- include('../components/header'); -%> <%- include('../components/navbar');
+-%>
 
-<script src='/js/autoCompleteSearch.js'></script>
+<script src="/js/autoCompleteSearch.js"></script>
 <script src="/js/disableautofill.js"></script>
 <script>
-    $('input[autofill="off"]').disableAutoFill;
+  $('input[autofill="off"]').disableAutoFill;
 </script>
 
-<section class='section'>
-    <div class='section__content section__content--full-width'>
-        <div class='jumbotron masthead text-center'>
-            <div class='section__title section__title--centered'>
-                Public Resources
-            </div>
-            <br>
-            <div class='text-center' data-aos='fade-up' data-aos-delay="100">
-                <h4>Search publicly available resources created by ENACT students from across the United States. <br>You
-                    can browse, enter a keyword in the search box, or search using any or all of the categories in the
-                    advanced search.
-                    <br>
-                    For example, search by content type, issue area, state, and more.
-                </h4>
-                <br>
-                <a href='/resources/search/public/advanced' class='btn btn-large btn-outline-info'>Search &#128269;</a>
-                <br>
-                <br>
-                <a href='/contact' class='btn btn-large btn-outline-primary'>Contact Us to Join ENACT <span
-                            style="font-size: large">&#9743;</span></a>
-            </div>
-        </div>
+<section class="section">
+  <div class="section__content section__content--full-width">
+    <div class="jumbotron masthead text-center">
+      <div class="section__title section__title--centered">
+        Public Resources
+      </div>
+      <br />
+      <div class="text-center" data-aos="fade-up" data-aos-delay="100">
+        <h4>
+          Search publicly available resources created by ENACT students from
+          across the United States. <br />You can browse, enter a keyword in the
+          search box, or search using any or all of the categories in the
+          advanced search.
+          <br />
+          For example, search by content type, issue area, state, and more.
+        </h4>
+        <br />
+        <a
+          href="/resources/search/public/advanced"
+          class="btn btn-large btn-outline-info"
+          >Search &#128269;</a
+        >
+        <br />
+        <br />
+        <a href="/contact" class="btn btn-large btn-outline-primary"
+          >Contact Us to Join ENACT
+          <span style="font-size: large">&#9743;</span></a
+        >
+      </div>
     </div>
+  </div>
 </section>
 
-<section class='section section__grey' data-aos='fade-up'>
-    <section class='section__content section__content--fluid-width'>
-        <div class='container'>
-            <div class='row'>
-                <div class='col-md-12 col-sm-12'>
-                    <h3>Most Recent Public Resources</h3>
-                    <hr>
-                    <% if (resourceInfo && resourceInfo.length > 0) { %>
-                        <% for (let i = resourceInfo.length - 1; i >= 0; i--) { %>
-                            <div class='shadow-sm card-body'>
-                                <h3><%= resourceInfo[i].name %></h3>
-                                <div class='card-text'>
-                                    <ul class='list-group'>
-                                        <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                            <h5 style="display: inline">
-                                                Description:</h5> <%= resourceInfo[i].description %></li>
-                                        <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                            <h5 style="display: inline">
-                                                Year:</h5> <%= resourceInfo[i].yearOfCreation %>
-                                        </li>
-                                        <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                            <h5 style="display: inline">State:</h5> <%= resourceInfo[i].state %></li>
-                                        <% if (resourceInfo[i].mediaType === 'video') { %>
-                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                <video style="width: 100%; max-width: 400px" controls>
-                                                    <source src="<%= resourceInfo[i].uri %>" type="video/mp4">
-                                                </video>
-                                            </li>
-                                        <% } else { %>
-                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                <h5 style="display: inline">Link:</h5> <a
-                                                        href='<%= resourceInfo[i].uri %>'>click me</a>
-                                            </li>
-                                        <% } %>
-                                        <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                            <h5 style="display: inline">
-                                                Institution:</h5> <%= resourceInfo[i].institution %>
-                                        </li>
-                                        <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                            <h5 style="display: inline">Author:</h5> <%= resourceInfo[i].ownerName %>
-                                        </li>
-                                        <% if (resourceInfo[i].tags.length >= 1 && resourceInfo[i].tags[0].length !== 0) { %>
-                                            <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                                                <h5 style="display: inline">
-                                                    Topic(s)/Issue(s):</h5> <%= resourceInfo[i].tags %>
-                                            </li>
-                                        <% } %>
-                                    </ul>
-                                </div>
-                            </div>
-                            <% if (i !== 0) { %>
-                                <br>
-                            <% } %>
-                        <% } %>
-                    <% } else { %>
-                        <div class='shadow-sm card-body text-center'>
-                            No resource available yet
-                        </div>
-                    <% } %>
-                </div>
+<section class="section section__grey" data-aos="fade-up">
+  <section class="section__content section__content--fluid-width">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+          <h3>Most Recent Public Resources</h3>
+          <hr />
+          <% if (resourceInfo && resourceInfo.length > 0) { %> <% for (let i =
+          resourceInfo.length - 1; i >= 0; i--) { %>
+          <div class="shadow-sm card-body">
+            <h3><%= resourceInfo[i].name %></h3>
+            <div class="card-text">
+              <ul class="list-group">
+                <li
+                  class="list-group-item borderless box-padding bg-transparent"
+                  style="font-size: large">
+                  <h5 style="display: inline">Description:</h5>
+                  <%= resourceInfo[i].description %>
+                </li>
+                <li
+                  class="list-group-item borderless box-padding bg-transparent"
+                  style="font-size: large">
+                  <h5 style="display: inline">Year:</h5>
+                  <%= resourceInfo[i].yearOfCreation %>
+                </li>
+                <li
+                  class="list-group-item borderless box-padding bg-transparent"
+                  style="font-size: large">
+                  <h5 style="display: inline">State:</h5>
+                  <%= resourceInfo[i].state %>
+                </li>
+                <% if (resourceInfo[i].mediaType === 'video') { %>
+                <li
+                  class="list-group-item borderless box-padding bg-transparent"
+                  style="font-size: large">
+                  <video style="width: 100%; max-width: 400px" controls>
+                    <source src="<%= resourceInfo[i].uri %>" type="video/mp4" />
+                  </video>
+                </li>
+                <% } else { %>
+                <li
+                  class="list-group-item borderless box-padding bg-transparent"
+                  style="font-size: large">
+                  <h5 style="display: inline">Link:</h5>
+                  <a href="<%= resourceInfo[i].uri %>">click me</a>
+                </li>
+                <% } %>
+                <li
+                  class="list-group-item borderless box-padding bg-transparent"
+                  style="font-size: large">
+                  <h5 style="display: inline">Institution:</h5>
+                  <%= resourceInfo[i].institution %>
+                </li>
+                <li
+                  class="list-group-item borderless box-padding bg-transparent"
+                  style="font-size: large">
+                  <h5 style="display: inline">Author:</h5>
+                  <%= resourceInfo[i].ownerName %>
+                </li>
+                <% if (resourceInfo[i].tags.length >= 1 &&
+                resourceInfo[i].tags[0].length !== 0) { %>
+                <li
+                  class="list-group-item borderless box-padding bg-transparent"
+                  style="font-size: large">
+                  <h5 style="display: inline">Topic(s)/Issue(s):</h5>
+                  <%= resourceInfo[i].tags %>
+                </li>
+                <% } %>
+              </ul>
             </div>
+          </div>
+          <% if (i !== 0) { %>
+          <br />
+          <% } %> <% } %> <% } else { %>
+          <div class="shadow-sm card-body text-center">
+            No resource available yet
+          </div>
+          <% } %>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 </section>
 
 <%- include('../components/footer'); -%>

@@ -40,7 +40,8 @@ For local installation, please remember to:
 - Front End Technologies: <b>EJS/Bootstrap/JQuery/Ajax</b>
 - Back End Technologies: <b>Node.js/Express.js/Passport.js</b>
 - Database: <b>MongoDB</b>
-- Cloud services: <b>AWS S3 Storage, Heroku</b>
+- Storage: AWS S3
+- Hosting: Heroku
 
 ## Key Functions
 
