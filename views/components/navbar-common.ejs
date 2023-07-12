@@ -1,219 +1,264 @@
-<nav class='header__menu'>
-    <ul>
-            <li>
-                <a class='header-link' id='header-link' href='/' data-aos='fade-left'>HOME</a>
-            </li>
-        <% if (!loggedIn) { %>
-            <li>
-                <a class='header-link' id='header-link' data-aos='fade-left'>Impact</a>
-                <ul class='sub-menu'>
-                    <li>
-                        <a class='header-link' href='/resources/view/facultyResearch'>Faculty Research</a>
-                    </li>
-                    <li>
-                        <a class='header-link' href='/resources/view/inTheNews'>In the News</a>
-                    </li>
-                </ul>
-            </li>
+<nav class="header__menu">
+  <ul>
+    <li>
+      <a class="header-link" id="header-link" href="/">Home</a>
+    </li>
+    <% if (!loggedIn) { %>
+    <li>
+      <a class="header-link" id="header-link">Impact</a>
+      <ul class="sub-menu">
+        <li>
+          <a class="header-link" href="/resources/view/facultyResearch"
+            >Faculty Research</a
+          >
+        </li>
+        <li>
+          <a class="header-link" href="/resources/view/inTheNews"
+            >In the News</a
+          >
+        </li>
+      </ul>
+    </li>
 
-            <li>
-                <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Resources</a>
-                <ul class='sub-menu'>
-                    <li>
-                        <a class='header-link' href='/resources/view/public'>Search Resources</a>
-                    </li>
-                </ul>
-            </li>
+    <li>
+      <a class="header-link" id="header-link" href="#">Resources</a>
+      <ul class="sub-menu">
+        <li>
+          <a class="header-link" href="/resources/view/public"
+            >Search Resources</a
+          >
+        </li>
+      </ul>
+    </li>
 
-            <li>
-                <a class='header-link' id='header-link' href='/networking' data-aos="fade-left">Networking & People</a>
-            </li>
+    <li>
+      <a class="header-link" id="header-link" href="/networking"
+        >Networking & People</a
+      >
+    </li>
 
-            <li>
-                <a class='header-link' href='/events' data-aos='fade-left'>Events</a>
-            </li>
+    <li>
+      <a class="header-link" href="/events">Events</a>
+    </li>
 
-            <li>
-                <a class='header-link' id='header-link' href='/about' data-aos='fade-left'>About</a>
-            </li>
-        <% } else { %>
-            <% if (status === 'admin') { %>
-                <li>
-                    <a class='header-link' id='header-link' data-aos='fade-left'>Impact</a>
-                    <ul class='sub-menu'>
-                        <li>
-                            <a class='header-link' href='/resources/view/facultyResearch'>Faculty Research</a>
-                        </li>
-                        <li>
-                            <a class='header-link' href='/resources/view/inTheNews'>In the News</a>
-                        </li>
-                    </ul>
-                </li>
-            <%}%>
-            <li>
-                <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Resources</a>
-                <ul class='sub-menu' >
-                    <li>
-                        <a class='header-link' href='/resources/search/private/advanced'>Search resources</a>
-                    </li>
-                    <% if (status === 'faculty' || status === 'admin') { %>
-                        <li>
-                            <a class='header-link' href='/resource/review'>Approve resources</a>
-                        </li>
-                    <% } %>
-                   <li >
-                       <% if (courseInfoSet.length==1) { %>
-                            <a class='header-link' href='/resource/upload/course/<%= courseInfoSet[0]._id %>'>Upload class resources</a>
-                       <% } else if (courseInfoSet.length==0){ %>
-                           
-                       <% } else { %>
-                               <a class='header-link' href='#'>Upload Class Resources</a>
-                            <ul class='dropdown-menu dropdown-menu-right'>
-                                <% for (let i = 0; i < courseInfoSet.length; i++) { %>
-                                        <% if (courseInfoSet[i].courseName.length <= 15) { %>
-                                            <a class='header-link'
-                                               href='/resource/upload/course/<%= courseInfoSet[i]._id %>'> <%= courseInfoSet[i].courseName %></a>
-                                        <% } else { %>
-                                            <a class='header-link'
-                                               href='/resource/upload/course/<%= courseInfoSet[i]._id %>'> <%= courseInfoSet[i].courseName.substring(0, 15) + "..." %></a>
-                                        <% } %>
-                                <% } %>
-                            </ul>
-                       <% } %>
-                   </li>
-                    <% if (status === 'faculty' || status === 'admin') { %>
-                        <li>
-                            <a class='header-link' href='/resource/upload/faculty'>Upload faculty resources</a>
-                        </li>
-                        <li>
-                            <a class='header-link' href='/resources/view/faculty'>Faculty resources</a>
-                        </li>
-                    <% } %>
-                    <li>
-                        <a class='header-link' href='/resources/view/favorite'>My favorites</a>
-                    </li>
-                    <li>
-                        <a class='header-link' href='/resources/view/private'>My resources</a>
-                    </li>
-                </ul>
-            </li>
-
-            <li>
-                <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Networking</a>
-                <ul class='sub-menu'>
-                    <li>
-                        <a class='header-link' href='/networking'>Networking</a>
-                    </li>
-                    <li>
-                        <a class='header-link' href='/profiles/view/faculty'>Faculty & Staff</a>
-                    </li>
-                </ul>
-            </li>
-
-            <li>
-                <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Courses & Events</a>
-                <ul class='sub-menu'>
-                    <li>
-                        <a class='header-link' href='/courses/schedule'>Course Schedule</a>
-                    </li>
-                    <li>
-                        <a class='header-link' href='/courses'>Course Management</a>
-                    </li>
-                    <% for (let i = 0; i < courseInfoSet.length; i++) { %>
-                        <li>
-                            <% if (courseInfoSet[i].courseName.length <= 20) { %>
-                                <a class='header-link'
-                                   href='/course/view/<%= courseInfoSet[i]._id %>/10'> - <%= courseInfoSet[i].courseName %></a>
-                            <% } else { %>
-                                <a class='header-link'
-                                   href='/course/view/<%= courseInfoSet[i]._id %>/10'> - <%= courseInfoSet[i].courseName.substring(0, 16) + "..." %></a>
-                            <% } %>
-                        </li>
-                    <% } %>
-                    <li><option disabled> ─────────────</option></li>
-                    <li>
-                        <a class='header-link' href='/events'>Events</a>
-                    </li>
-                </ul>
-            </li>
-            <% if (status === 'admin') { %>
-                <li>
-                    <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Admin</a>
-                    <ul class='sub-menu'>
-
-                        <li>
-                            <a class='header-link' href='/resource/approve/public'>Approve all resources</a>
-                        </li>
-
-                        <li>
-                            <a class='header-link' href='/tag/approve'>Approve new topic(s)</a>
-                        </li>
-                        <li>
-                            <a class='header-link' href='/resources/manage/public'>Manage homepage rsrc(s)</a>
-                        </li>
-                        <li>
-                            <a class='header-link' href='/profile/create/faculty'>Set up a new faculty</a>
-                        </li>
-                        <li>
-                            <a class='header-link' href='/course/join'>Join a course</a>
-                        </li>
-                        <li>
-                            <a class='header-link' href='/profiles/view/all'>View all profiles</a>
-                        </li>
-                        <li>
-                            <a class='header-link' href='/course/create'>Create Course (Faculty)</a>
-                        </li>
-
-                    </ul>
-                </li>
-            <% } %>
-            <li>
-                <a class='header-link' id='header-link' href='#' data-aos='fade-left'>Help & About</a>
-                <ul class='sub-menu'>
-                    <% if (status === 'faculty' || status === 'admin') { %>
-                        <li>
-                            <a class='header-link' href='/resources/view/faculty'>Guide for faculty</a>
-                        </li>
-                    <% } %>
-                    <li>
-                        <a class='header-link' id='header-link' href='/help' data-aos='fade-left'>How-to videos</a>
-                    </li>
-                    <li>
-                        <a class='header-link' id='header-link' href='/about' data-aos='fade-left'>About</a>
-                    </li>
-                    <li>
-                        <a class='header-link' id='header-link' href='/contact' data-aos='fade-left'>Contact</a>
-                    </li>
-                </ul>
-            </li>
+    <li>
+      <a class="header-link" id="header-link" href="/about">About</a>
+    </li>
+    <% } else { %> <% if (status === 'admin') { %>
+    <li>
+      <a class="header-link" id="header-link">Impact</a>
+      <ul class="sub-menu">
+        <li>
+          <a class="header-link" href="/resources/view/facultyResearch"
+            >Faculty Research</a
+          >
+        </li>
+        <li>
+          <a class="header-link" href="/resources/view/inTheNews"
+            >In the News</a
+          >
+        </li>
+      </ul>
+    </li>
+    <%}%>
+    <li>
+      <a class="header-link" id="header-link" href="#">Resources</a>
+      <ul class="sub-menu">
+        <li>
+          <a class="header-link" href="/resources/search/private/advanced"
+            >Search resources</a
+          >
+        </li>
+        <% if (status === 'faculty' || status === 'admin') { %>
+        <li>
+          <a class="header-link" href="/resource/review">Approve resources</a>
+        </li>
         <% } %>
-
-
-
-        <li class='header-link' id='header-link' href='#' data-aos='fade-left'>
-            <% if (!loggedIn) { %>
-                <a class='header__btn--signup'
-                   style="background-color: #0053a4; color: white; font-weight: bold;"
-                   href='/login'
-                   data-aos='fade-left'>Login</a>
-
+        <li>
+          <% if (courseInfoSet.length==1) { %>
+          <a
+            class="header-link"
+            href="/resource/upload/course/<%= courseInfoSet[0]._id %>"
+            >Upload class resources</a
+          >
+          <% } else if (courseInfoSet.length==0){ %> <% } else { %>
+          <a class="header-link" href="#">Upload Class Resources</a>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <% for (let i = 0; i < courseInfoSet.length; i++) { %> <% if
+            (courseInfoSet[i].courseName.length <= 15) { %>
+            <a
+              class="header-link"
+              href="/resource/upload/course/<%= courseInfoSet[i]._id %>">
+              <%= courseInfoSet[i].courseName %></a
+            >
             <% } else { %>
-                <a class='header-link' href='#'>Account</a>
-                    <ul class='sub-menu'>
-                        <li>
-                            <a class='header-link' href='/profile/update'>Update profile</a>
-                        </li>
-                        <li>
-                            <a class='header-link' id='header-link' href='/messages/view/all'
-                               data-aos='fade-left'>Messages</a>
-                        </li>
-                        <li >
-                        <a style="color: red; font-weight: bold;" href='/logout'
-                           data-aos='fade-left'>Log out</a>
-                        </li>
-                    </ul>
-            <% } %>
+            <a
+              class="header-link"
+              href="/resource/upload/course/<%= courseInfoSet[i]._id %>">
+              <%= courseInfoSet[i].courseName.substring(0, 15) + "..." %></a
+            >
+            <% } %> <% } %>
+          </ul>
+          <% } %>
+        </li>
+        <% if (status === 'faculty' || status === 'admin') { %>
+        <li>
+          <a class="header-link" href="/resource/upload/faculty"
+            >Upload faculty resources</a
+          >
+        </li>
+        <li>
+          <a class="header-link" href="/resources/view/faculty"
+            >Faculty resources</a
+          >
+        </li>
+        <% } %>
+        <li>
+          <a class="header-link" href="/resources/view/favorite"
+            >My favorites</a
+          >
+        </li>
+        <li>
+          <a class="header-link" href="/resources/view/private">My resources</a>
+        </li>
+      </ul>
+    </li>
+
+    <li>
+      <a class="header-link" id="header-link" href="#">Networking</a>
+      <ul class="sub-menu">
+        <li>
+          <a class="header-link" href="/networking">Networking</a>
+        </li>
+        <li>
+          <a class="header-link" href="/profiles/view/faculty"
+            >Faculty & Staff</a
+          >
+        </li>
+      </ul>
+    </li>
+
+    <li>
+      <a class="header-link" id="header-link" href="#">Courses & Events</a>
+      <ul class="sub-menu">
+        <li>
+          <a class="header-link" href="/courses/schedule">Course Schedule</a>
+        </li>
+        <li>
+          <a class="header-link" href="/courses">Course Management</a>
+        </li>
+        <% for (let i = 0; i < courseInfoSet.length; i++) { %>
+        <li>
+          <% if (courseInfoSet[i].courseName.length <= 20) { %>
+          <a
+            class="header-link"
+            href="/course/view/<%= courseInfoSet[i]._id %>/10">
+            - <%= courseInfoSet[i].courseName %></a
+          >
+          <% } else { %>
+          <a
+            class="header-link"
+            href="/course/view/<%= courseInfoSet[i]._id %>/10">
+            - <%= courseInfoSet[i].courseName.substring(0, 16) + "..." %></a
+          >
+          <% } %>
+        </li>
+        <% } %>
+        <li><option disabled>─────────────</option></li>
+        <li>
+          <a class="header-link" href="/events">Events</a>
+        </li>
+      </ul>
+    </li>
+    <% if (status === 'admin') { %>
+    <li>
+      <a class="header-link" id="header-link" href="#">Admin</a>
+      <ul class="sub-menu">
+        <li>
+          <a class="header-link" href="/resource/approve/public"
+            >Approve all resources</a
+          >
         </li>
 
-    </ul>
+        <li>
+          <a class="header-link" href="/tag/approve">Approve new topic(s)</a>
+        </li>
+        <li>
+          <a class="header-link" href="/resources/manage/public"
+            >Manage homepage rsrc(s)</a
+          >
+        </li>
+        <li>
+          <a class="header-link" href="/profile/create/faculty"
+            >Set up a new faculty</a
+          >
+        </li>
+        <li>
+          <a class="header-link" href="/course/join">Join a course</a>
+        </li>
+        <li>
+          <a class="header-link" href="/profiles/view/all">View all profiles</a>
+        </li>
+        <li>
+          <a class="header-link" href="/course/create"
+            >Create Course (Faculty)</a
+          >
+        </li>
+      </ul>
+    </li>
+    <% } %>
+    <li>
+      <a class="header-link" id="header-link" href="#">Help & About</a>
+      <ul class="sub-menu">
+        <% if (status === 'faculty' || status === 'admin') { %>
+        <li>
+          <a class="header-link" href="/resources/view/faculty"
+            >Guide for faculty</a
+          >
+        </li>
+        <% } %>
+        <li>
+          <a class="header-link" id="header-link" href="/help">How-to videos</a>
+        </li>
+        <li>
+          <a class="header-link" id="header-link" href="/about">About</a>
+        </li>
+        <li>
+          <a class="header-link" id="header-link" href="/contact">Contact</a>
+        </li>
+      </ul>
+    </li>
+    <% } %>
+
+    <li class="header-link" id="header-link" href="#">
+      <% if (!loggedIn) { %>
+      <a
+        class="header__btn--signup"
+        style="
+          background-color: #0053a4;
+          color: white;
+          text-transform: uppercase;
+        "
+        href="/login"
+        >Login</a
+      >
+
+      <% } else { %>
+      <a class="header-link" href="#">Account</a>
+      <ul class="sub-menu">
+        <li>
+          <a class="header-link" href="/profile/update">Update profile</a>
+        </li>
+        <li>
+          <a class="header-link" id="header-link" href="/messages/view/all"
+            >Messages</a
+          >
+        </li>
+        <li>
+          <a style="color: red; font-weight: bold" href="/logout">Log out</a>
+        </li>
+      </ul>
+      <% } %>
+    </li>
+  </ul>
 </nav>
