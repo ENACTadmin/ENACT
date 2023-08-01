@@ -18,6 +18,7 @@
   border: 1px solid #ffffff;
   -webkit-text-fill-color: #000000;
   -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  box-shadow: 0 0 0 1000px #ffffff inset;
   transition: background-color 5000s ease-in-out 0s;
 }
 
@@ -26,6 +27,7 @@
   -webkit-border-bottom-right-radius: 50px;
   -webkit-border-top-right-radius: 50px;
   -moz-border-radius: 50px;
+  border-radius: 50px;
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
 }
@@ -470,10 +472,10 @@ h6 {
   color: #000;
 }
 
-.header--sticky .menu-button,
+/* .header--sticky .menu-button,
 .menu-open .menu-button {
-  /*border-bottom: 1px solid #000;*/
-}
+  
+} */
 
 .header--sticky .menu-button:before,
 .menu-open .menu-button:before {
@@ -617,14 +619,14 @@ h6 {
 }
 
 .header__menu ul ul li a {
-  width: 200px;
+  width: 250px;
   padding: 0 15px;
   color: #231f20;
   border-bottom: 1px #f7f8f9 solid;
   margin: 0 10px;
   font-size: 14px;
   line-height: 45px;
-  height: 45px;
+  /* height: 45px; */
 }
 
 .header__menu ul ul li a:hover {
@@ -1219,6 +1221,8 @@ h6 {
   border: none;
   background: none;
   -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .form-demo__input::-webkit-input-placeholder {
@@ -2601,8 +2605,8 @@ Calendar Styling */
 /*==============================================================
 	Calendar Start
 ==============================================================*/
-.calendar-wrap {
-}
+/* .calendar-wrap {
+} */
 
 .calendar-wrap .fc-event.ui-draggable-handle {
   padding: 5px;
