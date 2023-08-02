@@ -1,7 +1,7 @@
 let imagePaths = [
   "../../images/PhotosForENACTplatformSlideshow/advocacysized.webp",
-  "../../images/PhotosForENACTplatformSlideshow/DSC_0504_B.webp",
-  "../../images/PhotosForENACTplatformSlideshow/DSC_5099.webp",
+  "../../images/PhotosForENACTplatformSlideshow/dsc_0504_b.webp",
+  "../../images/PhotosForENACTplatformSlideshow/dsc_5099.webp",
   "../../images/PhotosForENACTplatformSlideshow/enact_2018_institute_state_house.webp",
   "../../images/PhotosForENACTplatformSlideshow/enact_womens_forum_2018.webp",
   "../../images/PhotosForENACTplatformSlideshow/eno.webp",
