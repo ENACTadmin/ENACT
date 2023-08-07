@@ -1,613 +1,792 @@
-<%- include('../components/header'); -%>
-<%- include('../components/navbar'); -%>
-<%- include('../components/component-eventImport') -%>
-
-<% let id_set = []; %>
+<%- include('../components/header'); -%> <%- include('../components/navbar');
+-%> <%- include('../components/component-eventImport') -%> <% let id_set = [];
+%>
 
 <script src="/js/daylightTime.js"></script>
-<script src='/js/aws.js'></script>
-<script src='/js/aws-uploadProfilePic.js'></script>
+<script src="/js/aws.js"></script>
+<script src="/js/aws-uploadProfilePic.js"></script>
 
-<section class='section'>
-    <div class='section__content section__content--full-width'>
-        <div class='jumbotron masthead text-center'>
-            <div class='section__title section__title--centered'>
-                Latest Events
-            </div>
-            <h4>Current Timezone: <b><i id="fillMe"></i></b> (Event times have been adjusted according to your current timezone)
-                <% if (loggedIn && (status === 'admin' || status === 'faculty' || status === 'TA')) { %>
-                    <br><br>
-                    <button class="btn btn-primary" onclick="showAddModal()">Add a New Event</button>
-                <% } %>
-            </h4>
-        </div>
+<section class="section">
+  <div class="section__content section__content--full-width">
+    <div class="jumbotron masthead text-center">
+      <div class="section__title section__title--centered">Latest Events</div>
+      <h4>
+        Current Timezone: <b><i id="fillMe"></i></b> (Event times have been
+        adjusted according to your current timezone) <% if (loggedIn && (status
+        === 'admin' || status === 'faculty' || status === 'TA')) { %>
+        <br /><br />
+        <button class="btn btn-primary" onclick="showAddModal()">
+          Add a New Event
+        </button>
+        <% } %>
+      </h4>
     </div>
+  </div>
 </section>
 
-<section class='section section__grey'>
-    <section class='section__content section__content--fluid-width'>
-        <div class='container'>
-            <div class='row'>
-                <div class='col-md-12 col-sm-12'>
-                    <h3>Upcoming events</h3>
-                    <hr>
-                    <% if (futureEventsInfo && futureEventsInfo.length !== 0) { %>
-                        <% for (let i = 0; i < futureEventsInfo.length; i++) { %>
-                            <% if (loggedIn || futureEventsInfo[i].visibility === 'public') { %>
-                                <div class='card border-0' style="border-radius: 30px">
-                                    <div class='shadow-sm card-body' id="future">
-                                        <h3 style="margin-bottom: 12px"><%= futureEventsInfo[i].title %></h3>
-                                        <div class='card-text'>
-                                            <ul class='list-group'>
-                                                <li class='list-group-item borderless box-padding bg-transparent'
-                                                    style="font-size: large">
-                                                    <div class="row">
-                                                        <div class="col-md-9 col-sm-12" style="display: inline">
-                                                            <h5 style="display: inline; font-weight: 650">Description:</h5>
-                                                            <%= futureEventsInfo[i].description %>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-12 align-self-center"><img
-                                                                    class="rounded-lg"
-                                                            <% if (!futureEventsInfo[i].imageURL) { %>
-                                                                    src="/images/enact-logo.jpeg"
-                                                            <% } else { %>
-                                                                    src="<%= futureEventsInfo[i].imageURL %>"
-                                                                    <% } %>
-                                                                    style="height: auto; max-width: 100%"></div>
-                                                    </div>
-                                                </li>
-                                                <% if (futureEventsInfo[i].start !== null && futureEventsInfo[i].end !== null) { %>
-                                                    <li class='list-group-item borderless box-padding bg-transparent'
-                                                        style="font-size: large">
-                                                        <h5 style="display: inline; font-weight: 650">Date:</h5>
-                                                        <p style="display: inline"
-                                                            class="TZChange"><%= futureEventsInfo[i].start %></p>
-                                                    </li>
-                                                    <li class='list-group-item borderless box-padding bg-transparent'
-                                                        style="font-size: large">
-                                                        <h5 style="display: inline; font-weight: 650">Start time:</h5>
-                                                        <p style="display: inline"
-                                                            class="TZChange1"><%= futureEventsInfo[i].start %></p>                                                    </li>
-                                                    <li class='list-group-item borderless box-padding bg-transparent'
-                                                        style="font-size: large">
-                                                        <h5 style="display: inline; font-weight: 650">End time:</h5>
-                                                        <p style="display: inline"
-                                                            class="TZChange1"><%= futureEventsInfo[i].end %></p>
-                                                    </li>
-                                                <% } %>
-                                                <% if (futureEventsInfo[i].uri !== null) { %>
-                                                    <li class='list-group-item borderless box-padding bg-transparent'
-                                                        style="font-size: large">
-                                                        <h5 style="display: inline; font-weight: 650">Event Link:</h5>
-                                                        <a href="<%= futureEventsInfo[i].uri %>">click me</a>
-                                                    </li>
-                                                <% } %>
-                                                <% if ((status === 'admin' || status === 'faculty') && futureEventsInfo[i].visibility !== null) { %>
-                                                    <li class='list-group-item borderless box-padding bg-transparent'
-                                                        style="font-size: large">
-                                                        <h5 style="display: inline; font-weight: 650">
-                                                            Visibility:</h5> <%= futureEventsInfo[i].visibility %>
-                                                    </li>
-                                                <% } %>
-                                                <% if (loggedIn && (status === 'admin' || status === 'faculty')) { %>
-                                                    <li class='list-group-item borderless box-padding bg-transparent'
-                                                        style="display: inline">
-                                                        <h5 style="display: inline; font-weight: 650">Actions:</h5>
-                                                        <button type='button'
-                                                                class='btn btn-sm btn-outline-primary'
-                                                                data-toggle='modal'
-                                                                data-target='#editModal<%= futureEventsInfo[i]._id %>'>
-                                                            Edit
-                                                        </button>
+<section class="section section__grey">
+  <section class="section__content section__content--fluid-width">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+          <h3>Upcoming events</h3>
+          <hr />
+          <% if (futureEventsInfo && futureEventsInfo.length !== 0) { %> <% for
+          (let i = 0; i < futureEventsInfo.length; i++) { %> <% if (loggedIn ||
+          futureEventsInfo[i].visibility === 'public') { %>
+          <div class="card border-0" style="border-radius: 30px">
+            <div class="shadow-sm card-body" id="future">
+              <h3 style="margin-bottom: 12px">
+                <%= futureEventsInfo[i].title %>
+              </h3>
+              <div class="card-text">
+                <ul class="list-group">
+                  <li
+                    class="list-group-item borderless box-padding bg-transparent"
+                    style="font-size: large">
+                    <div class="row">
+                      <div class="col-md-9 col-sm-12" style="display: inline">
+                        <h5 style="display: inline; font-weight: 650">
+                          Description:
+                        </h5>
+                        <%= futureEventsInfo[i].description %>
+                      </div>
+                      <div class="col-md-3 col-sm-12 align-self-center">
+                        <img
+                          class="rounded-lg"
+                          <%
+                          if
+                          (!futureEventsInfo[i].imageURL)
+                          {
+                          % />
+                        src="/images/enact-logo.webp" <% } else { %> src="<%=
+                        futureEventsInfo[i].imageURL %>" <% } %> style="height:
+                        auto; max-width: 100%">
+                      </div>
+                    </div>
+                  </li>
+                  <% if (futureEventsInfo[i].start !== null &&
+                  futureEventsInfo[i].end !== null) { %>
+                  <li
+                    class="list-group-item borderless box-padding bg-transparent"
+                    style="font-size: large">
+                    <h5 style="display: inline; font-weight: 650">Date:</h5>
+                    <p style="display: inline" class="TZChange">
+                      <%= futureEventsInfo[i].start %>
+                    </p>
+                  </li>
+                  <li
+                    class="list-group-item borderless box-padding bg-transparent"
+                    style="font-size: large">
+                    <h5 style="display: inline; font-weight: 650">
+                      Start time:
+                    </h5>
+                    <p style="display: inline" class="TZChange1">
+                      <%= futureEventsInfo[i].start %>
+                    </p>
+                  </li>
+                  <li
+                    class="list-group-item borderless box-padding bg-transparent"
+                    style="font-size: large">
+                    <h5 style="display: inline; font-weight: 650">End time:</h5>
+                    <p style="display: inline" class="TZChange1">
+                      <%= futureEventsInfo[i].end %>
+                    </p>
+                  </li>
+                  <% } %> <% if (futureEventsInfo[i].uri !== null) { %>
+                  <li
+                    class="list-group-item borderless box-padding bg-transparent"
+                    style="font-size: large">
+                    <h5 style="display: inline; font-weight: 650">
+                      Event Link:
+                    </h5>
+                    <a href="<%= futureEventsInfo[i].uri %>">click me</a>
+                  </li>
+                  <% } %> <% if ((status === 'admin' || status === 'faculty') &&
+                  futureEventsInfo[i].visibility !== null) { %>
+                  <li
+                    class="list-group-item borderless box-padding bg-transparent"
+                    style="font-size: large">
+                    <h5 style="display: inline; font-weight: 650">
+                      Visibility:
+                    </h5>
+                    <%= futureEventsInfo[i].visibility %>
+                  </li>
+                  <% } %> <% if (loggedIn && (status === 'admin' || status ===
+                  'faculty')) { %>
+                  <li
+                    class="list-group-item borderless box-padding bg-transparent"
+                    style="display: inline">
+                    <h5 style="display: inline; font-weight: 650">Actions:</h5>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-primary"
+                      data-toggle="modal"
+                      data-target="#editModal<%= futureEventsInfo[i]._id %>">
+                      Edit
+                    </button>
 
-                                                        <a class="btn btn-outline-primary"
-                                                           href="/event/image/update/<%= futureEventsInfo[i]._id %>">Update event image</a>
+                    <a
+                      class="btn btn-outline-primary"
+                      href="/event/image/update/<%= futureEventsInfo[i]._id %>"
+                      >Update event image</a
+                    >
 
-                                                        <a class="btn btn-outline-dark"
-                                                           href="/event/send/<%= futureEventsInfo[i]._id %>"
-                                                           onclick="reminderSent()"
-                                                           class="btn btn-outline-dark">
-                                                            Send Reminders
-                                                        </a>
+                    <a
+                      class="btn btn-outline-dark"
+                      href="/event/send/<%= futureEventsInfo[i]._id %>"
+                      onclick="reminderSent()"
+                      class="btn btn-outline-dark">
+                      Send Reminders
+                    </a>
 
-                                                        <button type='button'
-                                                                class="btn btn-danger"
-                                                                data-toggle='modal'
-                                                                data-target='#deleteModal<%= futureEventsInfo[i]._id %>'>
-                                                            Delete
-                                                        </button>
-                                                    </li>
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      data-toggle="modal"
+                      data-target="#deleteModal<%= futureEventsInfo[i]._id %>">
+                      Delete
+                    </button>
+                  </li>
 
-                                                <% } %>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <% if (i !== futureEventsInfo.length - 1) { %>
-                                    <br>
-                                <% } %>
-                            <% } %>
-                        <% } %>
-                    <% } else { %>
-                        <div class='text-center partners__text'>
-                            <h3>No upcoming events</h3>
-                        </div>
-                    <% } %>
-                </div>
+                  <% } %>
+                </ul>
+              </div>
             </div>
+          </div>
+          <% if (i !== futureEventsInfo.length - 1) { %>
+          <br />
+          <% } %> <% } %> <% } %> <% } else { %>
+          <div class="text-center partners__text">
+            <h3>No upcoming events</h3>
+          </div>
+          <% } %>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 </section>
 
-<section class='section section__grey'>
-    <section class='section__content section__content--fluid-width'>
-        <div class='container'>
-            <div class='row'>
-                <div class='col-md-12 col-sm-12'>
-                    <h3>Past events</h3>
-                    <hr>
-                    <% if (pastEventsInfo && pastEventsInfo.length !== 0) { %>
-                        <% for (let i = 0; i < pastEventsInfo.length; i++) { %>
-                            <% if (loggedIn || pastEventsInfo[i].visibility === 'public') { %>
-                                <div class='card border-0' style="border-radius: 30px">
-                                    <div class='shadow-sm card-body' id="past">
-                                        <h3 style="margin-bottom: 12px"><%= pastEventsInfo[i].title %></h3>
-                                        <div class='card-text'>
-                                            <ul class='list-group'>
-                                                <li class='list-group-item borderless box-padding bg-transparent'
-                                                    style="font-size: large">
-                                                    <div class="row">
-                                                        <div class="col-md-9 col-sm-12" style="display: inline">
-                                                            <h5 style="display: inline; font-weight: 650">Description:</h5>
-                                                            <%= pastEventsInfo[i].description %>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-12 align-self-center"><img
-                                                            <% if (!pastEventsInfo[i].imageURL) { %>
-                                                                src="/images/enact-logo.jpeg"
-                                                            <% } else { %>
-                                                                src="<%= pastEventsInfo[i].imageURL %>"
-                                                                    <% } %>
-                                                                style="height: auto; max-width: 100%"></div>
-                                                    </div>
-                                                </li>
-                                                <% if (pastEventsInfo[i].start !== null && pastEventsInfo[i].end !== null) { %>
-                                                    <li class='list-group-item borderless box-padding bg-transparent'
-                                                        style="font-size: large">
-                                                        <h5 style="display: inline; font-weight: 650">Date: </h5>
-                                                        <p style="display: inline"
-                                                            class="TZChange"><%= pastEventsInfo[i].start %></p>                                                    </li>
-                                                    <li class='list-group-item borderless box-padding bg-transparent'
-                                                        style="font-size: large">
-                                                        <h5 style="display: inline; font-weight: 650">Start time: </h5>
-                                                        <p style="display: inline;"
-                                                            class="TZChange1"><%= pastEventsInfo[i].start %></p>                                                    </li>
-                                                    <li class='list-group-item borderless box-padding bg-transparent'
-                                                        style="font-size: large">
-                                                        <h5 style="display: inline; font-weight: 650">End time: </h5>
-                                                        <p style="display: inline;"
-                                                            class="TZChange1"><%= pastEventsInfo[i].end %></p>
-                                                    </li>
-                                                <% } %>
-                                                <% if (pastEventsInfo[i].uri !== null) { %>
-                                                    <li class='list-group-item borderless box-padding bg-transparent'
-                                                        style="font-size: large">
-                                                        <h5 style="display: inline; font-weight: 650">Event Link:</h5> <a
-                                                                href="<%= pastEventsInfo[i].uri %>">click me</a>
-                                                    </li>
-                                                <% } %>
-                                                <% if ((status === 'admin' || status === 'faculty') && pastEventsInfo[i].visibility !== null) { %>
-                                                    <li class='list-group-item borderless box-padding bg-transparent'
-                                                        style="font-size: large">
-                                                        <h5 style="display: inline; font-weight: 650">
-                                                            Visibility:</h5> <%= pastEventsInfo[i].visibility %>
-                                                    </li>
-                                                <% } %>
-
-                                                <% if (loggedIn && (status === 'admin' || status === 'faculty')) { %>
-                                                    <li class='list-group-item borderless box-padding bg-transparent'
-                                                        style="display: inline">
-                                                        <h5 style="display: inline; font-weight: 650">Actions:</h5>
-                                                        <button type='button'
-                                                                class="btn btn-outline-primary"
-                                                                data-toggle='modal'
-                                                                data-target='#editModal<%= pastEventsInfo[i]._id %>'>
-                                                            Edit
-                                                        </button>
-                                                        <a class="btn btn-outline-primary"
-                                                           href="/event/image/update/<%= pastEventsInfo[i]._id %>">Update event image</a>
-                                                        <button type='button'
-                                                                class="btn btn-danger"
-                                                                data-toggle='modal'
-                                                                data-target='#deleteModal<%= pastEventsInfo[i]._id %>'>
-                                                            Delete
-                                                        </button>
-
-                                                    </li>
-                                                <% } %>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <% if (i !== pastEventsInfo.length - 1) { %>
-                                    <br>
-                                <% } %>
-                            <% } %>
-                        <% } %>
-                    <% } else { %>
-                        <div class='text-center partners__text'>
-                            <h3>No past events</h3>
-                        </div>
-                    <% } %>
-                </div>
+<section class="section section__grey">
+  <section class="section__content section__content--fluid-width">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+          <h3>Past events</h3>
+          <hr />
+          <% if (pastEventsInfo && pastEventsInfo.length !== 0) { %> <% for (let
+          i = 0; i < pastEventsInfo.length; i++) { %> <% if (loggedIn ||
+          pastEventsInfo[i].visibility === 'public') { %>
+          <div class="card border-0" style="border-radius: 30px">
+            <div class="shadow-sm card-body" id="past">
+              <h3 style="margin-bottom: 12px">
+                <%= pastEventsInfo[i].title %>
+              </h3>
+              <div class="card-text">
+                <ul class="list-group">
+                  <li
+                    class="list-group-item borderless box-padding bg-transparent"
+                    style="font-size: large">
+                    <div class="row">
+                      <div class="col-md-9 col-sm-12" style="display: inline">
+                        <h5 style="display: inline; font-weight: 650">
+                          Description:
+                        </h5>
+                        <%= pastEventsInfo[i].description %>
+                      </div>
+                      <div class="col-md-3 col-sm-12 align-self-center">
+                        <img <% if (!pastEventsInfo[i].imageURL) { % />
+                        src="/images/enact-logo.webp" <% } else { %> src="<%=
+                        pastEventsInfo[i].imageURL %>" <% } %> style="height:
+                        auto; max-width: 100%">
+                      </div>
+                    </div>
+                  </li>
+                  <% if (pastEventsInfo[i].start !== null &&
+                  pastEventsInfo[i].end !== null) { %>
+                  <li
+                    class="list-group-item borderless box-padding bg-transparent"
+                    style="font-size: large">
+                    <h5 style="display: inline; font-weight: 650">Date:</h5>
+                    <p style="display: inline" class="TZChange">
+                      <%= pastEventsInfo[i].start %>
+                    </p>
+                  </li>
+                  <li
+                    class="list-group-item borderless box-padding bg-transparent"
+                    style="font-size: large">
+                    <h5 style="display: inline; font-weight: 650">
+                      Start time:
+                    </h5>
+                    <p style="display: inline" class="TZChange1">
+                      <%= pastEventsInfo[i].start %>
+                    </p>
+                  </li>
+                  <li
+                    class="list-group-item borderless box-padding bg-transparent"
+                    style="font-size: large">
+                    <h5 style="display: inline; font-weight: 650">End time:</h5>
+                    <p style="display: inline" class="TZChange1">
+                      <%= pastEventsInfo[i].end %>
+                    </p>
+                  </li>
+                  <% } %> <% if (pastEventsInfo[i].uri !== null) { %>
+                  <li
+                    class="list-group-item borderless box-padding bg-transparent"
+                    style="font-size: large">
+                    <h5 style="display: inline; font-weight: 650">
+                      Event Link:
+                    </h5>
+                    <a href="<%= pastEventsInfo[i].uri %>">click me</a>
+                  </li>
+                  <% } %> <% if ((status === 'admin' || status === 'faculty') &&
+                  pastEventsInfo[i].visibility !== null) { %>
+                  <li
+                    class="list-group-item borderless box-padding bg-transparent"
+                    style="font-size: large">
+                    <h5 style="display: inline; font-weight: 650">
+                      Visibility:
+                    </h5>
+                    <%= pastEventsInfo[i].visibility %>
+                  </li>
+                  <% } %> <% if (loggedIn && (status === 'admin' || status ===
+                  'faculty')) { %>
+                  <li
+                    class="list-group-item borderless box-padding bg-transparent"
+                    style="display: inline">
+                    <h5 style="display: inline; font-weight: 650">Actions:</h5>
+                    <button
+                      type="button"
+                      class="btn btn-outline-primary"
+                      data-toggle="modal"
+                      data-target="#editModal<%= pastEventsInfo[i]._id %>">
+                      Edit
+                    </button>
+                    <a
+                      class="btn btn-outline-primary"
+                      href="/event/image/update/<%= pastEventsInfo[i]._id %>"
+                      >Update event image</a
+                    >
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      data-toggle="modal"
+                      data-target="#deleteModal<%= pastEventsInfo[i]._id %>">
+                      Delete
+                    </button>
+                  </li>
+                  <% } %>
+                </ul>
+              </div>
             </div>
+          </div>
+          <% if (i !== pastEventsInfo.length - 1) { %>
+          <br />
+          <% } %> <% } %> <% } %> <% } else { %>
+          <div class="text-center partners__text">
+            <h3>No past events</h3>
+          </div>
+          <% } %>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 </section>
 
 <div id="modal-view-event-add" class="modal modal-top fade calendar-modal">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <form action='/event/saveAndSendReminder' method='post' id="add-event">
-                <div class="modal-body">
-                    <h4 class="text-blue h4 mb-10">Add Event Detail</h4>
-                    <div class="form-group">
-                        <label style="font-size: large">Event name</label>
-                        <input type="text" class="form-control" name="title">
-                    </div>
-                    <div class="form-group">
-                        <label style="font-size: large">Start Time</label>
-                        <input readonly autocomplete="off" type='text'
-                               class="datetimepicker form-control" name="start">
-                    </div>
-                    <div class="form-group">
-                        <label style="font-size: large">End Time</label>
-                        <input readonly autocomplete="off" type='text'
-                               class="datetimepicker form-control" name="end">
-                    </div>
-                    <div class="form-group">
-                        <label style="font-size: large">Event Description</label>
-                        <textarea class="form-control" name="description"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label style="font-size: large">Visibility</label>
-                        <h5 style="color: grey">Notice: To post this event to the public site, select the "Open to public" option here. Public events are accessible to anyone, without log in. Please be sure there is no confidential information in events you post for public access. Events not posted to the public site will only be accessible to ENACT students, alumni, faculty and staff.</h5><br>
-                        <select class="form-control" name="visibility">
-                            <option value="public">Open to public</option>
-                            <option value="member">Open to ENACT members only</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label style="font-size: large">Event Link</label>
-                        <input type="text" class="form-control" name="uri">
-                    </div>
-                    <div class="form-group">
-                        <label style="font-size: large" id='basic-addon1'>Upload photo [optional]</label>
-                        <input type='file' class='form-control' id='file-input'>
-                    </div>
-                    <div class='form-group'>
-                        <img style='border:1px solid gray; width:100%;'
-                             src='data:image/png;base64,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'
-                             id='preview'>
-                    </div>
-                </div>
-                <input hidden type="text" class="form-control TZTZ" name="TZ">
-                <input hidden type="text" class="form-control DST" name="DST">
-                <input type='hidden' id='imageURL' name='imageURL'>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" formaction="/event/save">Save</button>
-                    <button type="submit" class="btn btn-primary">Save & Notify all ENACT Faculty Fellows</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                </div>
-            </form>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form action="/event/saveAndSendReminder" method="post" id="add-event">
+        <div class="modal-body">
+          <h4 class="text-blue h4 mb-10">Add Event Detail</h4>
+          <div class="form-group">
+            <label style="font-size: large">Event name</label>
+            <input type="text" class="form-control" name="title" />
+          </div>
+          <div class="form-group">
+            <label style="font-size: large">Start Time</label>
+            <input
+              readonly
+              autocomplete="off"
+              type="text"
+              class="datetimepicker form-control"
+              name="start" />
+          </div>
+          <div class="form-group">
+            <label style="font-size: large">End Time</label>
+            <input
+              readonly
+              autocomplete="off"
+              type="text"
+              class="datetimepicker form-control"
+              name="end" />
+          </div>
+          <div class="form-group">
+            <label style="font-size: large">Event Description</label>
+            <textarea class="form-control" name="description"></textarea>
+          </div>
+          <div class="form-group">
+            <label style="font-size: large">Visibility</label>
+            <h5 style="color: grey">
+              Notice: To post this event to the public site, select the "Open to
+              public" option here. Public events are accessible to anyone,
+              without log in. Please be sure there is no confidential
+              information in events you post for public access. Events not
+              posted to the public site will only be accessible to ENACT
+              students, alumni, faculty and staff.
+            </h5>
+            <br />
+            <select class="form-control" name="visibility">
+              <option value="public">Open to public</option>
+              <option value="member">Open to ENACT members only</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label style="font-size: large">Event Link</label>
+            <input type="text" class="form-control" name="uri" />
+          </div>
+          <div class="form-group">
+            <label style="font-size: large" id="basic-addon1"
+              >Upload photo [optional]</label
+            >
+            <input type="file" class="form-control" id="file-input" />
+          </div>
+          <div class="form-group">
+            <img
+              style="border: 1px solid gray; width: 100%"
+              src="data:image/png;base64,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"
+              id="preview" />
+          </div>
         </div>
+        <input hidden type="text" class="form-control TZTZ" name="TZ" />
+        <input hidden type="text" class="form-control DST" name="DST" />
+        <input type="hidden" id="imageURL" name="imageURL" />
+        <div class="modal-footer">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            formaction="/event/save">
+            Save
+          </button>
+          <button type="submit" class="btn btn-primary">
+            Save & Notify all ENACT Faculty Fellows
+          </button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </form>
     </div>
+  </div>
 </div>
 
 <!-- Delete Modal -->
-<% if (futureEventsInfo.length !== 0) { %>
-    <% for (let i = 0; i < futureEventsInfo.length; i++) { %>
-        <div class='modal fade' id='deleteModal<%= futureEventsInfo[i]._id %>' tabindex='-1' role='dialog'
-             aria-labelledby='exampleModalLabel'
-             aria-hidden='true'>
-            <div class='modal-dialog modal-lg' role='document'>
-                <div class='modal-content'>
-                    <div class='modal-header'>
-                        <h5 class='modal-title' id='exampleModalLabel'>Delete?</h5>
-                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                            <span aria-hidden='true'>&times;</span>
-                        </button>
-                    </div>
-                    <div class='modal-body'>
-                        <div class='row'>
-                            <div class='col-md-12 col-sm-12'>
-                                <h4>Are you sure you want to delete this event permanently?</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class='modal-footer'>
-                        <form method='post' action='/event/delete/<%= futureEventsInfo[i]._id %>'>
-                            <input type='submit' name='submit' class='btn btn-outline-danger' value='Delete'>
-                        </form>
-                        <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>
-                            Close
-                        </button>
-                    </div>
-                </div>
-            </div>
+<% if (futureEventsInfo.length !== 0) { %> <% for (let i = 0; i <
+futureEventsInfo.length; i++) { %>
+<div
+  class="modal fade"
+  id="deleteModal<%= futureEventsInfo[i]._id %>"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete?</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12 col-sm-12">
+            <h4>Are you sure you want to delete this event permanently?</h4>
+          </div>
         </div>
-    <% } %>
-<% } %>
+      </div>
+
+      <div class="modal-footer">
+        <form
+          method="post"
+          action="/event/delete/<%= futureEventsInfo[i]._id %>">
+          <input
+            type="submit"
+            name="submit"
+            class="btn btn-outline-danger"
+            value="Delete" />
+        </form>
+        <button
+          type="button"
+          id="closeBtn"
+          class="btn btn-outline-secondary"
+          data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<% } %> <% } %>
 
 <!--Edit Modal-->
-<% if (futureEventsInfo.length !== 0) { %>
-    <% for (let i = 0; i < futureEventsInfo.length; i++) { %>
-        <!-- Modal -->
-        <div id="editModal<%= futureEventsInfo[i]._id %>" class="modal modal-top fade">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <form action='/event/edit/<%= futureEventsInfo[i]._id %>' method='post' id="add-event">
-                        <div class="modal-body">
-                            <h4 class="text-blue h4 mb-10">Edit Event</h4>
-                            <div class="form-group">
-                                <label style="font-size: large">Event name</label>
-                                <input type="text" class="form-control" name="title"
-                                       value="<%= futureEventsInfo[i].title %>">
-                            </div>
-                            <div class="form-group">
-                                <label style="font-size: large">Start Time</label>
-                                <input readonly autocomplete="off" type="text" class="datetimepicker form-control"
-                                       name="start"
-                                       value="<%= futureEventsInfo[i].start %>">
-                            </div>
-                            <div class="form-group">
-                                <label style="font-size: large">End Date</label>
-                                <input readonly autocomplete="off" type="text" class="datetimepicker form-control"
-                                       name="end"
-                                       value="<%= futureEventsInfo[i].end %>">
-                            </div>
-                            <div class="form-group">
-                                <label style="font-size: large">Event Description</label>
-                                <textarea type="text" class="form-control"
-                                          name="description"><%= futureEventsInfo[i].description %></textarea>
-                            </div>
+<% if (futureEventsInfo.length !== 0) { %> <% for (let i = 0; i <
+futureEventsInfo.length; i++) { %>
+<!-- Modal -->
+<div id="editModal<%= futureEventsInfo[i]._id %>" class="modal modal-top fade">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form
+        action="/event/edit/<%= futureEventsInfo[i]._id %>"
+        method="post"
+        id="add-event">
+        <div class="modal-body">
+          <h4 class="text-blue h4 mb-10">Edit Event</h4>
+          <div class="form-group">
+            <label style="font-size: large">Event name</label>
+            <input
+              type="text"
+              class="form-control"
+              name="title"
+              value="<%= futureEventsInfo[i].title %>" />
+          </div>
+          <div class="form-group">
+            <label style="font-size: large">Start Time</label>
+            <input
+              readonly
+              autocomplete="off"
+              type="text"
+              class="datetimepicker form-control"
+              name="start"
+              value="<%= futureEventsInfo[i].start %>" />
+          </div>
+          <div class="form-group">
+            <label style="font-size: large">End Date</label>
+            <input
+              readonly
+              autocomplete="off"
+              type="text"
+              class="datetimepicker form-control"
+              name="end"
+              value="<%= futureEventsInfo[i].end %>" />
+          </div>
+          <div class="form-group">
+            <label style="font-size: large">Event Description</label>
+            <textarea type="text" class="form-control" name="description">
+<%= futureEventsInfo[i].description %></textarea
+            >
+          </div>
 
-                            <h5 style="color: grey">Notice: To post this event to the public site, select the "Open to public" option here. Public events are accessible to anyone, without log in. Please be sure there is no confidential information in events you post for public access. Events not posted to the public site will only be accessible to ENACT students, alumni, faculty and staff.</h5><br>
+          <h5 style="color: grey">
+            Notice: To post this event to the public site, select the "Open to
+            public" option here. Public events are accessible to anyone, without
+            log in. Please be sure there is no confidential information in
+            events you post for public access. Events not posted to the public
+            site will only be accessible to ENACT students, alumni, faculty and
+            staff.
+          </h5>
+          <br />
 
-                            <div class="form-group">
-                                <label style="font-size: large">Visibility</label>
-                                <select id="visibility<%= futureEventsInfo[i]._id %>" class="form-control" name="visibility">
-                                    <option value="public">Open to public</option>
-                                    <option value="member">Open to ENACT members only</option>
-                                </select>
-                            </div>
+          <div class="form-group">
+            <label style="font-size: large">Visibility</label>
+            <select
+              id="visibility<%= futureEventsInfo[i]._id %>"
+              class="form-control"
+              name="visibility">
+              <option value="public">Open to public</option>
+              <option value="member">Open to ENACT members only</option>
+            </select>
+          </div>
 
-                            <div class="form-group">
-                                <label style="font-size: large">Event Link</label>
-                                <input type="text" class="form-control" name="uri"
-                                       value="<%= futureEventsInfo[i].uri %>">
-                            </div>
-                        </div>
-                        <input hidden type="text" class="form-control TZTZ" name="TZ">
-                        <input hidden type="text" class="form-control DST" name="DST">
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Save</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+          <div class="form-group">
+            <label style="font-size: large">Event Link</label>
+            <input
+              type="text"
+              class="form-control"
+              name="uri"
+              value="<%= futureEventsInfo[i].uri %>" />
+          </div>
         </div>
-        <p hidden id='visiFromServer<%= futureEventsInfo[i]._id %>'><%= futureEventsInfo[i].visibility %></p>
-        <% id_set.push(futureEventsInfo[i]._id) %>
-    <% } %>
-<% } %>
+        <input hidden type="text" class="form-control TZTZ" name="TZ" />
+        <input hidden type="text" class="form-control DST" name="DST" />
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<p hidden id="visiFromServer<%= futureEventsInfo[i]._id %>">
+  <%= futureEventsInfo[i].visibility %>
+</p>
+<% id_set.push(futureEventsInfo[i]._id) %> <% } %> <% } %>
 
 <!-- Delete Modal -->
-<% if (pastEventsInfo.length !== 0) { %>
-    <% for (let i = 0; i < pastEventsInfo.length; i++) { %>
-        <div class='modal fade' id='deleteModal<%= pastEventsInfo[i]._id %>' tabindex='-1' role='dialog'
-             aria-labelledby='exampleModalLabel'
-             aria-hidden='true'>
-            <div class='modal-dialog modal-lg' role='document'>
-                <div class='modal-content'>
-                    <div class='modal-header'>
-                        <h5 class='modal-title' id='exampleModalLabel'>Delete?</h5>
-                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                            <span aria-hidden='true'>&times;</span>
-                        </button>
-                    </div>
-                    <div class='modal-body'>
-                        <div class='row'>
-                            <div class='col-md-12 col-sm-12'>
-                                <h4>Are you sure you want to delete this event permanently?</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class='modal-footer'>
-                        <form method='post' action='/event/delete/<%= pastEventsInfo[i]._id %>'>
-                            <input type='submit' name='submit' class='btn btn-outline-danger' value='Delete'>
-                        </form>
-                        <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>
-                            Close
-                        </button>
-                    </div>
-                </div>
-            </div>
+<% if (pastEventsInfo.length !== 0) { %> <% for (let i = 0; i <
+pastEventsInfo.length; i++) { %>
+<div
+  class="modal fade"
+  id="deleteModal<%= pastEventsInfo[i]._id %>"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete?</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12 col-sm-12">
+            <h4>Are you sure you want to delete this event permanently?</h4>
+          </div>
         </div>
-    <% } %>
-<% } %>
+      </div>
+
+      <div class="modal-footer">
+        <form method="post" action="/event/delete/<%= pastEventsInfo[i]._id %>">
+          <input
+            type="submit"
+            name="submit"
+            class="btn btn-outline-danger"
+            value="Delete" />
+        </form>
+        <button
+          type="button"
+          id="closeBtn"
+          class="btn btn-outline-secondary"
+          data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<% } %> <% } %>
 
 <!--Edit Modal-->
-<% if (pastEventsInfo.length !== 0) { %>
-    <% for (let i = 0; i < pastEventsInfo.length; i++) { %>
-        <!-- Modal -->
-        <div id="editModal<%= pastEventsInfo[i]._id %>" class="modal modal-top fade">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <form action='/event/edit/<%= pastEventsInfo[i]._id %>' method='post' id="add-event">
-                        <div class="modal-body">
-                            <h4 class="text-blue h4 mb-10">Edit Event</h4>
-                            <div class="form-group">
-                                <label st>Event name</label>
-                                <input type="text" class="form-control" name="title"
-                                       value="<%= pastEventsInfo[i].title %>">
-                            </div>
-                            <div class="form-group">
-                                <label style="font-size: large">Start Time</label>
-                                <input readonly autocomplete="off" type="text" class="datetimepicker form-control"
-                                       name="start"
-                                       value="<%= pastEventsInfo[i].start %>">
-                            </div>
-                            <div class="form-group">
-                                <label style="font-size: large">End Date</label>
-                                <input readonly autocomplete="off" type="text" class="datetimepicker form-control"
-                                       name="end"
-                                       value="<%= pastEventsInfo[i].end %>">
-                            </div>
-                            <div class="form-group">
-                                <label style="font-size: large">Event Description</label>
-                                <textarea type="text" class="form-control"
-                                          name="description"><%= pastEventsInfo[i].description %></textarea>
-                            </div>
+<% if (pastEventsInfo.length !== 0) { %> <% for (let i = 0; i <
+pastEventsInfo.length; i++) { %>
+<!-- Modal -->
+<div id="editModal<%= pastEventsInfo[i]._id %>" class="modal modal-top fade">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form
+        action="/event/edit/<%= pastEventsInfo[i]._id %>"
+        method="post"
+        id="add-event">
+        <div class="modal-body">
+          <h4 class="text-blue h4 mb-10">Edit Event</h4>
+          <div class="form-group">
+            <label st>Event name</label>
+            <input
+              type="text"
+              class="form-control"
+              name="title"
+              value="<%= pastEventsInfo[i].title %>" />
+          </div>
+          <div class="form-group">
+            <label style="font-size: large">Start Time</label>
+            <input
+              readonly
+              autocomplete="off"
+              type="text"
+              class="datetimepicker form-control"
+              name="start"
+              value="<%= pastEventsInfo[i].start %>" />
+          </div>
+          <div class="form-group">
+            <label style="font-size: large">End Date</label>
+            <input
+              readonly
+              autocomplete="off"
+              type="text"
+              class="datetimepicker form-control"
+              name="end"
+              value="<%= pastEventsInfo[i].end %>" />
+          </div>
+          <div class="form-group">
+            <label style="font-size: large">Event Description</label>
+            <textarea type="text" class="form-control" name="description">
+<%= pastEventsInfo[i].description %></textarea
+            >
+          </div>
 
-                            <h5 style="color: grey">Notice: To post this event to the public site, select the "Open to public" option here. Public events are accessible to anyone, without log in. Please be sure there is no confidential information in events you post for public access. Events not posted to the public site will only be accessible to ENACT students, alumni, faculty and staff.</h5><br>
+          <h5 style="color: grey">
+            Notice: To post this event to the public site, select the "Open to
+            public" option here. Public events are accessible to anyone, without
+            log in. Please be sure there is no confidential information in
+            events you post for public access. Events not posted to the public
+            site will only be accessible to ENACT students, alumni, faculty and
+            staff.
+          </h5>
+          <br />
 
-                            <div class="form-group">
-                                <label style="font-size: large">Visibility</label>
-                                <select id="visibility<%= pastEventsInfo[i]._id %>" class="form-control"
-                                        name="visibility">
-                                    <option value="public">Open to public</option>
-                                    <option value="member">Open to ENACT members only</option>
-                                </select>
-                            </div>
+          <div class="form-group">
+            <label style="font-size: large">Visibility</label>
+            <select
+              id="visibility<%= pastEventsInfo[i]._id %>"
+              class="form-control"
+              name="visibility">
+              <option value="public">Open to public</option>
+              <option value="member">Open to ENACT members only</option>
+            </select>
+          </div>
 
-                            <div class="form-group">
-                                <label style="font-size: large">Event Link</label>
-                                <input type="text" class="form-control" name="uri" value="<%= pastEventsInfo[i].uri %>">
-                            </div>
-                        </div>
-                        <input hidden type="text" class="form-control TZTZ" name="TZ">
-                        <input hidden type="text" class="form-control DST" name="DST">
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Save</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+          <div class="form-group">
+            <label style="font-size: large">Event Link</label>
+            <input
+              type="text"
+              class="form-control"
+              name="uri"
+              value="<%= pastEventsInfo[i].uri %>" />
+          </div>
         </div>
-        <p hidden id='visiFromServer<%= pastEventsInfo[i]._id %>'><%= pastEventsInfo[i].visibility %></p>
-        <% id_set.push(pastEventsInfo[i]._id) %>
-    <% } %>
-<% } %>
+        <input hidden type="text" class="form-control TZTZ" name="TZ" />
+        <input hidden type="text" class="form-control DST" name="DST" />
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<p hidden id="visiFromServer<%= pastEventsInfo[i]._id %>">
+  <%= pastEventsInfo[i].visibility %>
+</p>
+<% id_set.push(pastEventsInfo[i]._id) %> <% } %> <% } %>
 
-<p hidden id='idSet'><%= id_set %></p>
+<p hidden id="idSet"><%= id_set %></p>
 <script>
-    $(document).ready(function () {
-        let n = new Date().getTimezoneOffset() / 60;
-        let timezone = '';
-        if (new Date().isDstObserved()) {
-            switch (n) {
-                case 3:
-                    timezone = 'US/Atlantic';
-                    break;
-                case 4:
-                    timezone = 'US/Eastern';
-                    break;
-                case 5:
-                    timezone = 'US/Central';
-                    break;
-                case 6:
-                    timezone = 'US/Mountain';
-                    break;
-                case 7:
-                    timezone = 'US/Pacific';
-                    break;
-                case 8:
-                    timezone = 'US/Alaska';
-                    break;
-                case 9:
-                    timezone = 'US/Hawaii‑Aleutian';
-                    break;
-            }
-        } else {
-            switch (n) {
-                case 4:
-                    timezone = 'US/Atlantic';
-                    break;
-                case 5:
-                    timezone = 'US/Eastern';
-                    break;
-                case 6:
-                    timezone = 'US/Central';
-                    break;
-                case 7:
-                    timezone = 'US/Mountain';
-                    break;
-                case 8:
-                    timezone = 'US/Pacific';
-                    break;
-                case 9:
-                    timezone = 'US/Alaska';
-                    break;
-                case 10:
-                    timezone = 'US/Hawaii‑Aleutian';
-                    break;
-            }
-        }
-        $('#fillMe').text(timezone);
-        $(".TZTZ").each(function () {
-            $(this).val(new Date().getTimezoneOffset())
-        })
-        let id_set = $('#idSet').text()
-        if (id_set.length !== 0) {
-            let id_set_array = id_set.split(',')
-            for (let i = 0; i < id_set_array.length; i++) {
-                let realType = $('#visiFromServer' + id_set_array[i]).text()
-                $('#visibility' + id_set_array[i] + ' option').each(function () {
-                    if ($(this).val() === realType) {
-                        $(this).prop('selected', true)
-                    }
-                })
-            }
-        }
-        $(".TZChange").each(function () {
-            let oldDate = $(this).text()
-            let newDate = new Date(oldDate)
-            $(this).text(newDate.toLocaleTimeString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})+ ' (' + timezone + ')')
-        })
-        $(".TZChange1").each(function () {
-            let today = new Date()
-            let oldDate = $(this).text()
-            let newDate = new Date(oldDate + today.getTimezoneOffset())
-            let minutes = newDate.getMinutes()
-            let hours = newDate.getHours()
-            let APM = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12
-            hours = hours ? hours : 12;
-            if (minutes.toString().length === 1)
-                minutes = '0' + minutes.toString()
-            if (hours.toString().length === 1)
-                hours = '0' + hours.toString()
-            $(this).text(hours + ':' + minutes + ' ' + APM + ' (' + timezone + ')')
-        })
-    });
-
-    function showAddModal() {
-        $("#modal-view-event-add").modal()
+  $(document).ready(function () {
+    let n = new Date().getTimezoneOffset() / 60;
+    let timezone = "";
+    if (new Date().isDstObserved()) {
+      switch (n) {
+        case 3:
+          timezone = "US/Atlantic";
+          break;
+        case 4:
+          timezone = "US/Eastern";
+          break;
+        case 5:
+          timezone = "US/Central";
+          break;
+        case 6:
+          timezone = "US/Mountain";
+          break;
+        case 7:
+          timezone = "US/Pacific";
+          break;
+        case 8:
+          timezone = "US/Alaska";
+          break;
+        case 9:
+          timezone = "US/Hawaii‑Aleutian";
+          break;
+      }
+    } else {
+      switch (n) {
+        case 4:
+          timezone = "US/Atlantic";
+          break;
+        case 5:
+          timezone = "US/Eastern";
+          break;
+        case 6:
+          timezone = "US/Central";
+          break;
+        case 7:
+          timezone = "US/Mountain";
+          break;
+        case 8:
+          timezone = "US/Pacific";
+          break;
+        case 9:
+          timezone = "US/Alaska";
+          break;
+        case 10:
+          timezone = "US/Hawaii‑Aleutian";
+          break;
+      }
     }
+    $("#fillMe").text(timezone);
+    $(".TZTZ").each(function () {
+      $(this).val(new Date().getTimezoneOffset());
+    });
+    let id_set = $("#idSet").text();
+    if (id_set.length !== 0) {
+      let id_set_array = id_set.split(",");
+      for (let i = 0; i < id_set_array.length; i++) {
+        let realType = $("#visiFromServer" + id_set_array[i]).text();
+        $("#visibility" + id_set_array[i] + " option").each(function () {
+          if ($(this).val() === realType) {
+            $(this).prop("selected", true);
+          }
+        });
+      }
+    }
+    $(".TZChange").each(function () {
+      let oldDate = $(this).text();
+      let newDate = new Date(oldDate);
+      $(this).text(
+        newDate.toLocaleTimeString([], {
+          year: "numeric",
+          month: "numeric",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }) +
+          " (" +
+          timezone +
+          ")"
+      );
+    });
+    $(".TZChange1").each(function () {
+      let today = new Date();
+      let oldDate = $(this).text();
+      let newDate = new Date(oldDate + today.getTimezoneOffset());
+      let minutes = newDate.getMinutes();
+      let hours = newDate.getHours();
+      let APM = hours >= 12 ? "PM" : "AM";
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      if (minutes.toString().length === 1) minutes = "0" + minutes.toString();
+      if (hours.toString().length === 1) hours = "0" + hours.toString();
+      $(this).text(hours + ":" + minutes + " " + APM + " (" + timezone + ")");
+    });
+  });
 
-    function reminderSent() {
-        let proceed = confirm("Are you sure you want to notify the participants?");
-        if (proceed) {
-            alert("Emails have been sent successfully.");
-        } else {
-            e.preventDefault();
-        }
-    } 
+  function showAddModal() {
+    $("#modal-view-event-add").modal();
+  }
+
+  function reminderSent() {
+    let proceed = confirm("Are you sure you want to notify the participants?");
+    if (proceed) {
+      alert("Emails have been sent successfully.");
+    } else {
+      e.preventDefault();
+    }
+  }
 </script>
 
 <%- include('../components/footer'); -%>
