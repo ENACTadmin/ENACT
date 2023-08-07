@@ -295,9 +295,9 @@
                                         <div class="col-md-3 col-sm-12 align-self-center">
                                             <img
                                             <% if (!eventsInfo[i].imageURL) { %>
-                                                src="/images/enact-logo.webp"
+                                                src="/images/enact-logo.webp" alt="Enact Logo"
                                             <% } else { %>
-                                                src="<%= eventsInfo[i].imageURL %>"
+                                                src="<%= eventsInfo[i].imageURL %>" alt="<%= eventsInfo[i].imageURL %>"
                                                     <% } %>
                                                 style="object-fit: cover; max-width: 100%; border-radius: 20px;"></div>
                                     </div>
