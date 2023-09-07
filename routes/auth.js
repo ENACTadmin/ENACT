@@ -81,11 +81,20 @@ router.use(async (req, res, next) => {
 router.get('/logout', function (req, res) {
     req.session.destroy((error) => {
         console.log("Error in destroying session: " + error)
+        // Handle errors if necessary
     });
     loggedIn = false
     console.log("session has been destroyed");
-    req.logout();
-    res.redirect('/');
+
+    // Call req.logout with a callback function
+    req.logout((err) => {
+        if (err) {
+            console.log("Error in logout: " + err);
+            // Handle errors if necessary
+        }
+        // Redirect after logout
+        res.redirect('/');
+    });
 });
 
 // ask for authentication
