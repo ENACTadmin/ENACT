@@ -26,6 +26,7 @@
                 <th scope="col" style="color: white">Name</th>
                 <th scope="col" style="color: white">Semester</th>
                 <th scope="col" style="color: white">Instructor</th>
+                <th scope="col" style="color: white">Day</th>
                 <th scope="col" style="color: white">Start</th>
                 <th scope="col" style="color: white">End</th>
                 <th scope="col" style="color: white">Timezone</th>
@@ -45,8 +46,9 @@
                 <% } else { %>
                 <td><%= courses[i].courseName %></td>
                 <% } %>
-                <td><%= courses[i].semester %></td>
+                <td style="text-transform:capitalize"><%= courses[i].semester %></td>
                 <td><%= courses[i].instructor %></td>
+                <td><%= courseTimes[i].day %></td>
                 <td><%= courseTimes[i].startTime %></td>
                 <td><%= courseTimes[i].endTime %></td>
                 <td><%= courses[i].timezone %></td>
