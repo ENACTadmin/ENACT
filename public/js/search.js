@@ -1,4 +1,6 @@
-    $(document).ready(function () {
+   // changed the search function so that it can search for the filters without keywords.
+   
+   $(document).ready(function () {
         let checkboxes = $(':checkbox');
         checkboxes.on('change', function () {
             let string = checkboxes.filter(':checked').map(function () {
