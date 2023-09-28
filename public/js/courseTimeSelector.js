@@ -13,6 +13,8 @@ $(document).ready(function () {
             '        <option value="Wednesday">Wednesday</option>\n' +
             '        <option value="Thursday">Thursday</option>\n' +
             '        <option value="Friday">Friday</option>\n' +
+            '        <option value="Saturday">Saturday</option>\n' +
+            '        <option value="Sunday">Sunday</option>\n' +
             '</select>' +
             '</div>');
     });
