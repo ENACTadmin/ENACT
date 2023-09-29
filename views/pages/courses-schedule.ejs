@@ -91,30 +91,6 @@
     let timezone = "";
     if (new Date().isDstObserved()) {
       switch (n) {
-        case 4:
-          timezone = "US/Atlantic";
-          break;
-        case 5:
-          timezone = "US/Eastern";
-          break;
-        case 6:
-          timezone = "US/Central";
-          break;
-        case 7:
-          timezone = "US/Mountain";
-          break;
-        case 8:
-          timezone = "US/Pacific";
-          break;
-        case 9:
-          timezone = "US/Alaska";
-          break;
-        case 10:
-          timezone = "US/Hawaii‑Aleutian";
-          break;
-      }
-    } else {
-      switch (n) {
         case 3:
           timezone = "US/Atlantic";
           break;
@@ -134,6 +110,30 @@
           timezone = "US/Alaska";
           break;
         case 9:
+          timezone = "US/Hawaii‑Aleutian";
+          break;
+      }
+    } else {
+      switch (n) {
+        case 4:
+          timezone = "US/Atlantic";
+          break;
+        case 5:
+          timezone = "US/Eastern";
+          break;
+        case 6:
+          timezone = "US/Central";
+          break;
+        case 7:
+          timezone = "US/Mountain";
+          break;
+        case 8:
+          timezone = "US/Pacific";
+          break;
+        case 9:
+          timezone = "US/Alaska";
+          break;
+        case 10:
           timezone = "US/Hawaii‑Aleutian";
           break;
       }
