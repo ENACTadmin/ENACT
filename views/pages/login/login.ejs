@@ -1,10 +1,10 @@
 <%- include('../../components/header'); -%>
 <%- include('../../components/navbar'); -%>
 
-<section class='section section__grey' data-aos='fade-up' style="height: 120%; padding-top: 8%">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+<section class='section section__grey' data-aos='fade-up' style="height: 140%; padding-top: 8%">
+    <div class="container" >
+        <div class="row" >
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto" >
                 <div class="card card-signin my-5">
                     <div class="card-body">
                         <% if (secret === 'general') { %>
@@ -32,7 +32,7 @@
                                        required>
                                 <label for="inputPassword">Password</label>
                             </div>
-                            Forgot Password? <a href="/reset">RESET PASSWORD</a>
+                            Forgot Password? <a href="/reset">Click here to recover account</a>
                             <br>
                             <br>
 
@@ -52,14 +52,20 @@
                             <% } %>
                             <hr class="my-4">
                             <h5 class="card-title text-center">Sign Up</h5>
-                            <p class="text-center">If you are a new ENACT member and have not created your account yet, please </p>
+                            <p class="text-center" style="margin-bottom:1rem;">New ENACT members create a new account below </p>
 
                             <a href="/signup"
                                class="btn btn-lg btn-primary btn-block text-uppercase"> Sign Up
                             </a>
                             <br>
 
-                            <p class="text-center"> Need Help? Check out the video: <a href="/accountHelp">How to create a new account</a></p>
+                            <p class="text-center" style="margin-bottom:1rem;"> Need Help? Check out our onboarding video</p>
+                            <video style="width: 100%" poster="/images/accountCreation.webp" controls>
+                                <source src="https://enact-resources.s3.us-east-2.amazonaws.com/Create+an+Account+and+Profile+(with+captions).mp4" type="video/mp4">
+                            </video>
+
+                           <div style="width:100%; display:flex; justify-content:center;"> <a href="/accountHelp" >Account Help Video Link</a></div>
+                           
                         </form>
                     </div>
                 </div>
