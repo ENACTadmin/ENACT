@@ -178,7 +178,7 @@
 
       // corrected time after fixing the offset caused by timezones
       let correctedTime =
-        ((parseInt(time.split(":")[0]) + (offset1 - n) + 24) % 24) +
+        ((parseInt(time.split(":")[0]) + (offset1 - n + 4) + 24) % 24) + // Added +4 here
         ":" +
         time.split(":")[1];
 
