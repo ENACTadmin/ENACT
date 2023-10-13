@@ -44,6 +44,17 @@
             <h5 style="display: inline"><%= courses[j].courseName %></h5>
             <br />
 
+            <h5 style="display: inline">
+              <% if (courses[j].institutionURL.substring(0,4) !=='http') { %>
+              <a href="https://<%= courses[j].institutionURL %>" target="_blank"
+                ><%= courses[j].institution %></a
+              >
+              <% } else{ %>
+              <a href="<%= courses[j].institutionURL %>" target="_blank"
+                ><%= courses[j].institution %></a
+              >
+              <% } %>
+            </h5>
             <br />
             <h5 style="display: inline">
               <a href="/profile/view/<%= courses[j].ownerId %>"
@@ -91,30 +102,6 @@
     let timezone = "";
     if (new Date().isDstObserved()) {
       switch (n) {
-        case 3:
-          timezone = "US/Atlantic";
-          break;
-        case 4:
-          timezone = "US/Eastern";
-          break;
-        case 5:
-          timezone = "US/Central";
-          break;
-        case 6:
-          timezone = "US/Mountain";
-          break;
-        case 7:
-          timezone = "US/Pacific";
-          break;
-        case 8:
-          timezone = "US/Alaska";
-          break;
-        case 9:
-          timezone = "US/Hawaii‑Aleutian";
-          break;
-      }
-    } else {
-      switch (n) {
         case 4:
           timezone = "US/Atlantic";
           break;
@@ -134,6 +121,30 @@
           timezone = "US/Alaska";
           break;
         case 10:
+          timezone = "US/Hawaii‑Aleutian";
+          break;
+      }
+    } else {
+      switch (n) {
+        case 3:
+          timezone = "US/Atlantic";
+          break;
+        case 4:
+          timezone = "US/Eastern";
+          break;
+        case 5:
+          timezone = "US/Central";
+          break;
+        case 6:
+          timezone = "US/Mountain";
+          break;
+        case 7:
+          timezone = "US/Pacific";
+          break;
+        case 8:
+          timezone = "US/Alaska";
+          break;
+        case 9:
           timezone = "US/Hawaii‑Aleutian";
           break;
       }
@@ -178,7 +189,7 @@
 
       // corrected time after fixing the offset caused by timezones
       let correctedTime =
-        ((parseInt(time.split(":")[0]) + (offset1 - n + 4) + 24) % 24) + // Added +4 here
+        ((parseInt(time.split(":")[0]) + (offset1 - n) + 24) % 24) +
         ":" +
         time.split(":")[1];
 

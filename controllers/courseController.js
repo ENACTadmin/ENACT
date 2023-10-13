@@ -6,6 +6,7 @@ const CourseMember = require("../models/CourseMember");
 const CourseTime = require("../models/CourseTime");
 const TA = require("../models/TA");
 const Faculty = require("../models/Faculty");
+const moment = require("moment-timezone");
 
 /**
  * create a new course
@@ -323,10 +324,25 @@ function containsString(list, elt) {
 // }
 
 exports.showSchedule = async (req, res) => {
-  let courseTimes = await CourseTime.find({}, { _id: 0, __v: 0 });
-  let courses = await Course.find(
-    {},
-    {
+  try {
+    let courseTimes = await CourseTime.find({}, { _id: 0, __v: 0 });
+
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1;
+
+    let semester;
+    if (currentMonth >= 1 && currentMonth <= 6) {
+      semester = "spring";
+    } else if (currentMonth >= 7 && currentMonth <= 12) {
+      semester = "fall";
+    }
+
+    const query = semester
+      ? { year: currentYear, semester: semester }
+      : { year: currentYear };
+
+    let courses = await Course.find(query, {
       ownerId: 1,
       institutionURL: 1,
       _id: 1,
@@ -337,13 +353,16 @@ exports.showSchedule = async (req, res) => {
       year: 1,
       instructor: 1,
       institution: 1,
-    }
-  );
+    });
 
-  res.render("./pages/courses-schedule", {
-    courseTimes: courseTimes,
-    courses: courses,
-  });
+    res.render("./pages/courses-schedule", {
+      courseTimes: courseTimes,
+      courses: courses,
+    });
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    res.status(500).send("Internal Server Error");
+  }
 };
 
 exports.showCourses = async (req, res) => {

@@ -1,0 +1,70 @@
+<%- include('../components/header'); -%> <%- include('../components/navbar');
+-%>
+
+<!-- Define the target semester here -->
+<% const targetSemester = "fall"; %>
+
+<section class="section">
+  <div class="section__content section__content--full-width">
+    <div class="jumbotron masthead text-center">
+      <div class="section__title section__title--centered">
+        <%= new Date().getFullYear() %> Course Schedules
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section__grey" data-aos="fade-up">
+  <div class="section__content section__content--fluid-width">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2 col-sm-12 text-center"></div>
+        <div class="col-md-8 col-sm-12">
+          <table class="table table-striped">
+            <thead style="background-color: #0053a4">
+              <tr>
+                <th scope="col" style="color: white">Name</th>
+                <th scope="col" style="color: white">Semester</th>
+                <th scope="col" style="color: white">Instructor</th>
+                <th scope="col" style="color: white">Day</th>
+                <th scope="col" style="color: white">Start</th>
+                <th scope="col" style="color: white">End</th>
+                <th scope="col" style="color: white">Timezone</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for (let i = 0; i < courses.length; i++){ %> <% if
+              (courses[i].year === new Date().getFullYear() &&
+              courses[i].semester === targetSemester) { %>
+              <tr>
+                <% if (status == 'admin') {%>
+                <td>
+                  <a href="/course/view/<%= courses[i]._id%>/10"
+                    ><%= courses[i].courseName %></a
+                  >
+                </td>
+                <% } else { %>
+                <td><%= courses[i].courseName %></td>
+                <% } %>
+                <td style="text-transform: capitalize">
+                  <%= courses[i].semester %>
+                </td>
+                <td><%= courses[i].instructor %></td>
+                <td><%= courseTimes[i].day %></td>
+                <td><%= courseTimes[i].startTime %></td>
+                <td><%= courseTimes[i].endTime %></td>
+                <td><%= courses[i].timezone %></td>
+              </tr>
+              <% } %> <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <h3 style="text-align: center">
+        Past Courses in ENACT: <a href="/courses/pastList">Course List</a>
+      </h3>
+    </div>
+  </div>
+</section>
+
+<%- include('../components/footer'); -%>
