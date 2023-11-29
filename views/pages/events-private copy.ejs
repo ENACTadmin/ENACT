@@ -11,7 +11,8 @@
       <div class="section__title section__title--centered">Latest Events</div>
       <h4>
         Current Timezone: <b><i id="fillMe"></i></b> (Event times have been
-        adjusted according to your current timezone) <% if (loggedIn && (status === 'admin' || status === 'faculty' || status === 'TA')) { %>
+        adjusted according to your current timezone) <% if (loggedIn && (status
+        === 'admin' || status === 'faculty' || status === 'TA')) { %>
         <br /><br />
         <button class="btn btn-primary" onclick="showAddModal()">
           Add a New Event
@@ -51,15 +52,15 @@
                       </div>
                       <div class="col-md-3 col-sm-12 align-self-center">
                         <img
-                        class="rounded-lg"
-                        <% if (!futureEventsInfo[i].imageURL) { %>
-                          src="/images/enact-logo.webp"
-                        <% } else { %>
-                          src="<%= futureEventsInfo[i].imageURL %>"
-                        <% } %>
-                        style="height: auto; max-width: 100%"
-                      >
-                      
+                          class="rounded-lg"
+                          <%
+                          if
+                          (!futureEventsInfo[i].imageURL)
+                          {
+                          % />
+                        src="/images/enact-logo.webp" <% } else { %> src="<%=
+                        futureEventsInfo[i].imageURL %>" <% } %> style="height:
+                        auto; max-width: 100%" >
                       </div>
                     </div>
                   </li>
@@ -165,7 +166,6 @@
   </section>
 </section>
 
-
 <section class="section section__grey">
   <section class="section__content section__content--fluid-width">
     <div class="container">
@@ -195,19 +195,20 @@
                       </div>
                       <div class="col-md-3 col-sm-12 align-self-center">
                         <img
-                        class="rounded-lg"
-                        <% if (!pastEventsInfo[i].imageURL) { %>
-                          src="/images/enact-logo.webp"
-                        <% } else { %>
-                          src="<%= pastEventsInfo[i].imageURL %>"
-                        <% } %>
-                        style="height: auto; max-width: 100%"
-                      >
-                      
+                          class="rounded-lg"
+                          <%
+                          if
+                          (!pastEventsInfo[i].imageURL)
+                          {
+                          % />
+                        src="/images/enact-logo.webp" <% } else { %> src="<%=
+                        pastEventsInfo[i].imageURL %>" <% } %> style="height:
+                        auto; max-width: 100%" >
                       </div>
                     </div>
                   </li>
-                  <% if (pastEventsInfo[i].start !== null && pastEventsInfo[i].end !== null) { %>
+                  <% if (pastEventsInfo[i].start !== null &&
+                  pastEventsInfo[i].end !== null) { %>
                   <li
                     class="list-group-item borderless box-padding bg-transparent"
                     style="font-size: large">
@@ -296,7 +297,6 @@
     </div>
   </section>
 </section>
-
 
 <div id="modal-view-event-add" class="modal modal-top fade calendar-modal">
   <div class="modal-dialog modal-dialog-centered">
@@ -483,7 +483,8 @@ futureEventsInfo.length; i++) { %>
             <label style="font-size: large">Event Description</label>
             <textarea type="text" class="form-control" name="description">
 <%= futureEventsInfo[i].description %> 
-</textarea>
+</textarea
+            >
           </div>
 
           <h5 style="color: grey">
@@ -629,7 +630,8 @@ pastEventsInfo.length; i++) { %>
             <label style="font-size: large">Event Description</label>
             <textarea type="text" class="form-control" name="description">
 <%= pastEventsInfo[i].description %>
-</textarea>
+</textarea
+            >
           </div>
 
           <h5 style="color: grey">
