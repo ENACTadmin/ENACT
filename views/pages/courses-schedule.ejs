@@ -146,9 +146,10 @@
       let timezone = tmzArray[0];
       let time = tmzArray[1];
       let offset1 = 0;
-      // console.log(typeof timezone)
-      // console.log(timezone.trim().length)
-      // console.log(timezone)
+      console.log("timezone")
+      console.log(typeof timezone)
+      console.log(timezone.trim().length)
+      console.log(timezone)
       // console.log('US/Eastern')
       switch (timezone) {
         case "US/Atlantic":
@@ -175,37 +176,23 @@
       }
       // console.log(n-offset1-1);
       // $(this).text((parseInt(time.split(':')[0]) + ( offset1 - n + 1) + 24) % 24 + ':' + time.split(':')[1])
-
+      let timeDifference = offset1 ;
       // corrected time after fixing the offset caused by timezones
-      let correctedTime =
-        ((parseInt(time.split(":")[0]) + (offset1 - n + 4) + 24) % 24) + // Added +4 here
-        ":" +
-        time.split(":")[1];
+      let correctedTimeHour = (parseInt(time.split(":")[0]) + timeDifference + 24) % 24;
+      let correctedTime = correctedTimeHour + ":" + time.split(":")[1];
 
       // time after conversion of the 24 hour format to 12 hour format
-      finalTime = parseInt(correctedTime.substring(0, 2));
-      if (finalTime == 12) {
-        finalTime = "12" + ":" + correctedTime.substring(3) + " PM";
-      } else if (finalTime > 12) {
-        finalTime =
-          (parseInt(correctedTime.substring(0, 2)) % 12) +
-          ":" +
-          correctedTime.substring(3) +
-          " PM";
+      let finalTime;
+      if (correctedTimeHour == 0) {
+          finalTime = "12" + correctedTime.substring(2) + " AM";
+      } else if (correctedTimeHour == 12) {
+          finalTime = "12" + correctedTime.substring(2) + " PM";
+      } else if (correctedTimeHour > 12) {
+          finalTime = (correctedTimeHour % 12) + correctedTime.substring(2) + " PM";
       } else {
-        singleDigit =
-          String(parseInt(correctedTime.substring(0, 2)) % 12).length == 1;
-        finalTime = singleDigit
-          ? (parseInt(correctedTime.substring(0, 2)) % 12) +
-            ":" +
-            correctedTime.substring(2) +
-            " AM"
-          : (parseInt(correctedTime.substring(0, 2)) % 12) +
-            ":" +
-            correctedTime.substring(3) +
-            " AM";
+          finalTime = correctedTimeHour + correctedTime.substring(2) + " AM";
       }
-
+  
       $(this).text(finalTime);
       $(this).removeAttr("hidden");
     });
