@@ -159,12 +159,50 @@
                                 </select>
                             </div>
                         </div>
+
                         <br>
                         <input class="btn btn-outline-primary" type='button' value='Add a timeslot'
                                id='addButton'/>
                         <input class="btn btn-outline-info" type='button' value='Remove last entered timeslot'
                                id='removeButton'/>
-                        <br><br><br>
+                        <br><br>
+
+                        <!-- Add asynchronous and undecided options -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="asyncCheckbox" name="asynchronous">
+                            <label class="form-check-label" for="asyncCheckbox">Asynchronous</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="undecidedCheckbox" name="undecided">
+                            <label class="form-check-label" for="undecidedCheckbox">Meeting days and times to be determined</label>
+                            </div>
+                        <br>
+                        
+                    <!-- JavaScript to toggle the disabled state of time and day inputs -->
+                    <script>
+                            document.getElementById('asyncCheckbox').addEventListener('change', function () {
+                            var timeInputs = document.querySelectorAll('[name="startTime"], [name="endTime"]');
+                            var dayInput = document.getElementById('day');
+        
+                            timeInputs.forEach(function (input) {
+                                input.disabled = this.checked;
+                            }, this);
+        
+                            dayInput.disabled = this.checked;
+                        });
+
+                        document.getElementById('undecidedCheckbox').addEventListener('change', function () {
+                            var timeInputs = document.querySelectorAll('[name="startTime"], [name="endTime"]');
+                            var dayInput = document.getElementById('day');
+        
+                            timeInputs.forEach(function (input) {
+                                input.disabled = this.checked;
+                            }, this);
+        
+                            dayInput.disabled = this.checked;
+                    });
+                </script>
+                
                         <h3>Submission</h3>
                         <hr>
                         <input type='checkbox' name='norobot' required> I am not a robot <br>
