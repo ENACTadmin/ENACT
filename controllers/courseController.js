@@ -39,6 +39,7 @@ exports.createNewClass = async (req, res, next) => {
       instructor = facultyUser.userName;
     }
 
+    console.log(req.body);
     let newCourse = new Course({
       courseName: req.body.courseName,
       ownerId,
@@ -51,6 +52,8 @@ exports.createNewClass = async (req, res, next) => {
       createdAt: new Date(),
       institution: req.body.institution,
       institutionURL: req.body.institutionURL,
+      asynchronous: req.body.asynchronous, 
+      undecided: req.body.undecided, 
     });
     // await until the newCourse is saved properly
     await newCourse.save();
@@ -83,6 +86,7 @@ exports.createNewClass = async (req, res, next) => {
   } catch (e) {
     next(e);
   }
+
 };
 
 exports.copyCourse = async (req, res, next) => {

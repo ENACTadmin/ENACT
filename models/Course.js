@@ -16,7 +16,9 @@ const courseSchema = Schema({
     createdAt: Date,
     institution: String,
     timezone: String,
-    institutionURL: String
+    institutionURL: String,
+    undecided: Boolean,
+    asynchronous: Boolean
 });
 
 module.exports = mongoose.model('Course', courseSchema);

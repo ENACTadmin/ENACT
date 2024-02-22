@@ -86,6 +86,42 @@
   </div>
 </section>
 
+
+<hr>
+
+<!-- New section for list-view of courses -->
+<section class="section">
+  <div class="section__content section__content--fluid-width">
+    <h2 class="section__title section__title--centered">List of Current ENACT Courses</h2>
+    <div class="list-group">
+      <% courses.forEach(function(course) { %>
+        <div class="list-group-item">
+          <h5 class="mb-1"><%= course.courseName %></h5>
+          <p class="mb-1">Instructor: <%= course.instructor %></p>
+          <small>
+            Times: 
+
+            <% if (course.asynchronous === true) { %>
+              <p>This course is asynchronous.</p>
+            <% } else if (course.undecided === true) { %>
+              <p>Meeting times for this course are to be determined.</p>
+            <% } else { %>
+              <!-- Display course times normally -->
+
+              <% courseTimes.forEach(function(time) { 
+                if(time.courseId.equals(course._id)) { %>
+                  <span><%= time.day %> <%= time.startTime %> - <%= time.endTime %></span><br>
+              <% }}) %>
+            <% } %>
+
+          </small>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+
 <script>
   $(document).ready(function () {
     $(document).ready(function () {
