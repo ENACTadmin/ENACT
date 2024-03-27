@@ -132,8 +132,9 @@ app.get(
   "/courses/schedule",
   utils.checkUserName,
   courseController.showSchedule,
-  console.log(courses)
-  (req, res) => res.render("./pages/courses-schedule")
+  (req, res) => {
+  res.render("./pages/courses-schedule")
+  }
 );
 
 // show all courses
