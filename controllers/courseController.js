@@ -15,79 +15,81 @@ const moment = require("moment-timezone");
  * @param next
  * @returns {Promise<void>}
  */
-let coursePin;
-exports.createNewClass = async (req, res, next) => {
-  if (res.locals.status === "student") {
-    res.send(
-      "You must log in with an authorized faculty account to create a class. <a href='/logout'>Logout</a>"
-    );
-    return;
-  } else if (!(req.body.norobot === "on" && req.body.robot === undefined)) {
-    res.send("no robots allowed!");
-    return;
-  }
-  try {
-    coursePin = await getCoursePin();
-
-    let ownerId = req.user._id;
-    let instructor = req.user.userName;
-    console.log(ownerId, req.body.email);
-    if (res.locals.status === "admin" && req.body.email !== "") {
-      let facultyId = await Faculty.findOne({ _id: req.body.email });
-      let facultyUser = await User.findOne({ _id: facultyId.userId });
-      ownerId = facultyId.userId;
-      instructor = facultyUser.userName;
+  let coursePin;
+  exports.createNewClass = async (req, res, next) => {
+    if (res.locals.status === "student") {
+      res.send(
+        "You must log in with an authorized faculty account to create a class. <a href='/logout'>Logout</a>"
+      );
+      return;
+    } else if (!(req.body.norobot === "on" && req.body.robot === undefined)) {
+      res.send("no robots allowed!");
+      return;
     }
+    try {
+      coursePin = await getCoursePin();
 
-    console.log(req.body);
-    let newCourse = new Course({
-      courseName: req.body.courseName,
-      ownerId,
-      instructor,
-      coursePin: coursePin,
-      year: req.body.year,
-      semester: req.body.semester,
-      timezone: req.body.timezone,
-      state: req.body.state,
-      createdAt: new Date(),
-      institution: req.body.institution,
-      institutionURL: req.body.institutionURL,
-      asynchronous: req.body.asynchronous, 
-      undecided: req.body.undecided, 
-    });
-    // await until the newCourse is saved properly
-    await newCourse.save();
-    // add additional authors
-    let startTime = req.body.startTime;
-    let endTime = req.body.endTime;
-    let day = req.body.day;
-    if (startTime) {
-      if (typeof startTime === "string") {
-        let courseTime = new CourseTime({
-          courseId: newCourse._id,
-          day: day,
-          startTime: startTime,
-          endTime: endTime,
-        });
-        await courseTime.save();
-      } else {
-        for (let i = 0; i < startTime.length; i++) {
+      let ownerId = req.user._id;
+      let instructor = req.user.userName;
+      console.log(ownerId, req.body.email);
+      if (res.locals.status === "admin" && req.body.email !== "") {
+        let facultyId = await Faculty.findOne({ _id: req.body.email });
+        let facultyUser = await User.findOne({ _id: facultyId.userId });
+        ownerId = facultyId.userId;
+        instructor = facultyUser.userName;
+      }
+
+      const isAsynchronous = req.body.asynchronous === 'true';
+      const isUndecided = req.body.undecided === 'true';
+
+      let newCourse = new Course({
+        courseName: req.body.courseName,
+        ownerId,
+        instructor,
+        coursePin: coursePin,
+        year: req.body.year,
+        semester: req.body.semester,
+        timezone: req.body.timezone,
+        state: req.body.state,
+        createdAt: new Date(),
+        institution: req.body.institution,
+        institutionURL: req.body.institutionURL,
+        asynchronous: isAsynchronous,
+        undecided: isUndecided,
+      });
+      // await until the newCourse is saved properly
+      await newCourse.save();
+      // add additional authors
+      let startTime = req.body.startTime;
+      let endTime = req.body.endTime;
+      let day = req.body.day;
+      if (startTime) {
+        if (typeof startTime === "string") {
           let courseTime = new CourseTime({
             courseId: newCourse._id,
-            day: day[i],
-            startTime: startTime[i],
-            endTime: endTime[i],
+            day: day,
+            startTime: startTime,
+            endTime: endTime,
           });
           await courseTime.save();
+        } else {
+          for (let i = 0; i < startTime.length; i++) {
+            let courseTime = new CourseTime({
+              courseId: newCourse._id,
+              day: day[i],
+              startTime: startTime[i],
+              endTime: endTime[i],
+            });
+            await courseTime.save();
+          }
         }
       }
+      res.redirect("/course/view/" + newCourse._id + "/10");
+    } catch (e) {
+      next(e);
     }
-    res.redirect("/course/view/" + newCourse._id + "/10");
-  } catch (e) {
-    next(e);
-  }
 
-};
+  };
 
 exports.copyCourse = async (req, res, next) => {
   try {
@@ -335,16 +337,16 @@ exports.showSchedule = async (req, res) => {
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth() + 1;
 
-    let semester;
+    let query = { year: currentYear };
+    
+    // Adjust the query based on the current month.
     if (currentMonth >= 1 && currentMonth <= 6) {
-      semester = "spring";
+      // If it's currently the first half of the year, fetch courses from "spring" or "january".
+      query.$or = [{ semester: "spring" }, { semester: "january" }];
     } else if (currentMonth >= 7 && currentMonth <= 12) {
-      semester = "fall";
+      // If it's the second half of the year, fetch only "fall" semester courses.
+      query.semester = "fall";
     }
-
-    const query = semester
-      ? { year: currentYear, semester: semester }
-      : { year: currentYear };
 
     let courses = await Course.find(query, {
       ownerId: 1,
@@ -357,8 +359,11 @@ exports.showSchedule = async (req, res) => {
       year: 1,
       instructor: 1,
       institution: 1,
+      asynchronous: 1, 
+      undecided: 1, 
     });
 
+    console.log(courses);
     res.render("./pages/courses-schedule", {
       courseTimes: courseTimes,
       courses: courses,
