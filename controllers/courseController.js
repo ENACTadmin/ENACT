@@ -390,7 +390,7 @@ exports.showCourses = async (req, res) => {
       instructor: 1,
       institution: 1,
     }
-  );
+  ).sort({year: -1});
 
   res.render("./pages/course-pastList", {
     courseTimes: courseTimes,
