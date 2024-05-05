@@ -6,6 +6,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const session = require("express-session");
+const mailRouter = require('./routes/mail'); 
 
 //*******************************************
 //***********Development****************
@@ -90,6 +91,10 @@ app.use(
     saveUninitialized: false,
   })
 );
+
+
+// Register the mail router
+app.use('/api/mail', mailRouter);
 
 // configure auth router
 const auth = require("./routes/auth");
