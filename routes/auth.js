@@ -4,6 +4,7 @@ const passport = require('passport');
 const flash = require('connect-flash');
 const bodyParser = require("body-parser");
 const session = require('session')
+const { sendMail } = require('../controllers/mailer'); 
 
 
 const Course = require('../models/Course');
@@ -177,22 +178,48 @@ router.get('/reset',
         res.render('./pages/login/login-reset')
 )
 
-router.post('/reset',
-    async (req, res) => {
-        let user = await User.findOne({
-            $or: [
-                {workEmail: req.body.email}, {googleemail: req.body.email}
-            ]
-        })
-        if (user) {
-            send_email(req.body.email, user._id)
-            res.send("<h1>Reset email sent, please check your email :) </h1><br><h1>Back to Login: <a href='/login'>Login</a></h1>")
-        } else {
-            res.send("<h1>Sry, your email is not registered in our system </h1><br><h1>Sign up if your are an ENACT member: <a href='/signup'>Sign Up</a></h1>")
+// router.post('/reset',
+//     async (req, res) => {
+//         let user = await User.findOne({
+//             $or: [
+//                 {workEmail: req.body.email}, {googleemail: req.body.email}
+//             ]
+//         })
+//         if (user) {
+//             send_email(req.body.email, user._id)
+//             res.send("<h1>Reset email sent, please check your email :) </h1><br><h1>Back to Login: <a href='/login'>Login</a></h1>")
+//         } else {
+//             res.send("<h1>Sry, your email is not registered in our system </h1><br><h1>Sign up if your are an ENACT member: <a href='/signup'>Sign Up</a></h1>")
 
-        }
+//         }
+//     }
+// )
+
+// POST route for password reset
+router.post('/reset', async (req, res) => {
+    const user = await User.findOne({
+      $or: [
+        { workEmail: req.body.email }, { googleemail: req.body.email }
+      ],
+    });
+  
+    if (user) {
+      try {
+        await sendMail(
+          req.body.email,
+          'ENACT Digital Platform: Password Reset',
+          `Password reset link: https://www.enactnetwork.org/reset/${user._id}`
+        );
+  
+        res.send("<h1>Reset email sent, please check your email :) </h1><br><h1>Back to Login: <a href='/login'>Login</a></h1>");
+      } catch (error) {
+        console.error('Error sending email:', error.message);
+        res.send("<h1>Error sending email. Please try again.</h1>");
+      }
+    } else {
+      res.send("<h1>Sorry, your email is not registered in our system </h1><br><h1>Sign up if you're an ENACT member: <a href='/signup'>Sign Up</a></h1>");
     }
-)
+  });
 
 router.get('/reset/:id',
     async (req, res) => {
