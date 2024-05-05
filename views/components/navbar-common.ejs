@@ -3,7 +3,7 @@
     <li>
       <!-- Updating the home button. -->
 
-      <a class="header-link" id="header-link" href="#">Home</a>
+      <a class="header-link" id="home-link"  href="#">Home</a>
       <ul class="sub-menu">
         <li>
           <a class="header-link" href="/">ENACT Resources</a>
@@ -16,66 +16,59 @@
     </li>
     
     <% if (!loggedIn) { %>
-    <li>
-      <a class="header-link" id="header-link">Impact</a>
-      <ul class="sub-menu">
-        <li>
-          <a class="header-link" href="/resources/view/facultyResearch"
-            >Faculty Research</a
-          >
-        </li>
-        <li>
-          <a class="header-link" href="/resources/view/inTheNews"
-            >In the News</a
-          >
-        </li>
-      </ul>
-    </li>
-
-    <li>
-      <a class="header-link" id="header-link" href="#">Resources</a>
-      <ul class="sub-menu">
-        <li>
-          <a class="header-link" href="/resources/view/public"
-            >Search Resources</a
-          >
-        </li>
-      </ul>
-    </li>
-
-    
-
-    <li>
-      <a class="header-link" id="header-link" href="/networking">Networking</a>
-    </li>
-
-    <!-- <li>
-      <a class="header-link" href="/events">Events</a>
-    </li> -->
-
-    <li>
-      <a class="header-link" id="header-link" href="#">Courses & Events</a>
-      <ul class="sub-menu">
-        <li>
-          <a class="header-link" href="/courses/schedule">Course Schedule</a>
-        </li>
-
-        <li>
-          <a class="header-link" href="/events">Events</a>
-        </li>
-
-        <li>
-          <a class="header-link" href="https://www.brandeis.edu/enact/news-updates/index.html">News & Updates</a>
-        </li>
-      </ul>
-    </li>
-
-    <li>
-      <a class="header-link" id="header-link" href="/about">About</a>
-    </li>
+      <li>
+        <a class="header-link" id="impact">Impact</a>
+        <ul class="sub-menu">
+          <li>
+            <a class="header-link" id="faculty-research" href="/resources/view/facultyResearch">
+              Faculty Research
+            </a>
+          </li>
+          <li>
+            <a class="header-link" id="in-the-news" href="/resources/view/inTheNews">
+              In the News
+            </a>
+          </li>
+        </ul>
+      </li>
+      
+      <li>
+        <a class="header-link" id="resources-menu" href="#">Resources</a>
+        <ul class="sub-menu">
+          <li>
+            <a class="header-link" id="search-resources" href="/resources/view/public">
+              Search Resources
+            </a>
+          </li>
+        </ul>
+      </li>
+      
+      <li>
+        <a class="header-link" id="networking" href="/networking">Networking</a>
+      </li>
+      
+      <li>
+        <a class="header-link" id="courses-events">Courses & Events</a>
+        <ul class="sub-menu">
+          <li>
+            <a class="header-link" id="course-schedule" href="/courses/schedule">Course Schedule</a>
+          </li>
+          <li>
+            <a class="header-link" id="events" href="/events">Events</a>
+          </li>
+          <li>
+            <a class="header-link" id="news-updates" href="https://www.brandeis.edu/enact/news-updates/index.html">News & Updates</a>
+          </li>
+        </ul>
+      </li>
+      
+      <li>
+        <a class="header-link" id="about" href="/about">About</a>
+      </li>
+      
     <% } else { %> <% if (status === 'admin') { %>
     <li>
-      <a class="header-link" id="header-link">Impact</a>
+      <a class="header-link" >Impact</a>
       <ul class="sub-menu">
         <li>
           <a class="header-link" href="/resources/view/facultyResearch"
@@ -91,7 +84,7 @@
     </li>
     <%}%>
     <li>
-      <a class="header-link" id="header-link" href="#">Resources</a>
+      <a class="header-link"  href="#">Resources</a>
       <ul class="sub-menu">
         <li>
           <a class="header-link" href="/resources/search/private/advanced"
@@ -154,7 +147,7 @@
     </li>
 
     <li>
-      <a class="header-link" id="header-link" href="#">Networking</a>
+      <a class="header-link"  href="#">Networking</a>
       <ul class="sub-menu">
         <li>
           <a class="header-link" href="/networking">Networking</a>
@@ -168,7 +161,7 @@
     </li>
 
     <li>
-      <a class="header-link" id="header-link" href="#">Courses & Events</a>
+      <a class="header-link"  href="#">Courses & Events</a>
       <ul class="sub-menu">
         <li>
           <a class="header-link" href="/courses/schedule">Course Schedule</a>
@@ -205,7 +198,7 @@
     </li>
     <% if (status === 'admin') { %>
     <li>
-      <a class="header-link" id="header-link" href="#">Admin</a>
+      <a class="header-link"  href="#">Admin</a>
       <ul class="sub-menu">
         <li>
           <a class="header-link" href="/resource/approve/public"
@@ -241,7 +234,7 @@
     </li>
     <% } %>
     <li>
-      <a class="header-link" id="header-link" href="#">Help & About</a>
+      <a class="header-link"  href="#">Help & About</a>
       <ul class="sub-menu">
         <% if (status === 'faculty' || status === 'admin') { %>
         <li>
@@ -251,19 +244,19 @@
         </li>
         <% } %>
         <li>
-          <a class="header-link" id="header-link" href="/help">How-to videos</a>
+          <a class="header-link"  href="/help">How-to videos</a>
         </li>
         <li>
-          <a class="header-link" id="header-link" href="/about">About</a>
+          <a class="header-link"  href="/about">About</a>
         </li>
         <li>
-          <a class="header-link" id="header-link" href="/contact">Contact</a>
+          <a class="header-link"  href="/contact">Contact</a>
         </li>
       </ul>
     </li>
     <% } %>
 
-    <li class="header-link" id="header-link" href="#">
+    <li class="header-link"  href="#">
       <% if (!loggedIn) { %>
       <a
         class="header__btn--signup"
@@ -283,7 +276,7 @@
           <a class="header-link" href="/profile/update">Update profile</a>
         </li>
         <li>
-          <a class="header-link" id="header-link" href="/messages/view/all"
+          <a class="header-link"  href="/messages/view/all"
             >Messages</a
           >
         </li>

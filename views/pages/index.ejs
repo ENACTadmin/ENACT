@@ -29,7 +29,7 @@
 </header>
 
 <!-- Front intro -->
-<section class='section section--intro section__grey' data-aos='fade-down' data-aos-duration='600'>
+<section  id="content-enact-front-intro" class='section section--intro section__grey' data-aos='fade-down' data-aos-duration='600'>
     <div class='section__content section__content--full-width' style='font-weight: 750;'>
         <div class='intro'>
             <div class='intro__content' data-aos="fade-right" data-aos-duration="600">
@@ -38,7 +38,7 @@
                     national, non-partisan program based at <a href="https://www.brandeis.edu">Brandeis University</a>, engaging undergraduates at colleges and universities in
                     state-level legislative change.
                     <% if (!loggedIn) { %>
-                        <a href="https://www.enactnetwork.org/about" class="btn btn-sm btn-warning">Learn More</a>
+                        <a id="not-logged-learn-more" href="https://www.enactnetwork.org/about" class="btn btn-sm btn-warning">Learn More</a>
                     <% } %>
                     <br>
                     <% if (loggedIn && status === 'student') { %>
@@ -46,7 +46,7 @@
                         <br>
                     <% } else if (!loggedIn) { %>
                         <b style="color: #FF9912">- ENACT Students & Alumni: </b> search student work. Network with students and alumni.
-                        <a href="/login" class="btn btn-sm btn-warning">Click to Login</a>
+                        <a id="not-logged-login" href="/login" class="btn btn-sm btn-warning">Click to Login</a>
                         <br>
                     <% } %>
                     <% if (loggedIn && (status === 'faculty' || status === 'admin')) { %>
@@ -123,7 +123,7 @@
 </section>
 
 <!-- ENACT Program intro -->
-<section class='section section__grey'>
+<section id="content-enact-program-intro" class='section section__grey'>
     <br><br><br>
     <h2 class='section__title section__title--centered'>Who we are & What you can do</h2>
     <br><br><br>
@@ -206,7 +206,7 @@
 </section>
 
 <!-- Public Resources Section -->
-<section class='section diagonal-gradient'>
+<section id="content-enact-public-resources" class='section diagonal-gradient'>
     <div class='section__content section__content--fluid-width section__content--padding'>
         <h2 class='section__title section__title--centered1' style="color: white" data-aos='fade-up'>Public resources</h2>
         <br><br><br>
@@ -273,7 +273,7 @@
 
 
 <!-- Events -->
-<section class='section section__grey'>
+<section id="content-enact-events" class='section section__grey'>
     <div style="padding-top: 0px" id="place4"></div>
     <section class='section__content section__content--fluid-width'>
         <br><br><br>
@@ -364,7 +364,7 @@
 
 <!-- Join Us Section -->
 <% if (!loggedIn) { %>
-    <section class='section diagonal-gradient'>
+    <section id="content-enact-join-us" class='section diagonal-gradient'>
         <br><br><br>
         <h2 class='section__title section__title--centered1' style="color: white" data-aos='fade-up'>Join Us</h2>
         <br><br><br>
@@ -410,7 +410,7 @@
 
 <!-- Intro Video -->
 <% if (!loggedIn) { %>
-    <section class='section section__grey'>
+    <section id="content-enact-intro-video" class='section section__grey'>
         <section class='section__content section__content--fix-width'>
             <br><br><br>
             <h2 class='section__title section__title--centered' data-aos='fade-up'>Intro Videos</h2>
