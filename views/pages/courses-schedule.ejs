@@ -80,6 +80,36 @@
       adjusted according to your current timezone)
     </h4>
     <br />
+      <!-- New section for list-view of courses -->
+      <section class="section__title--centered">
+        <div class="section__content section__content--fluid-width">
+          <h4 class="text-align: center-fluid">List of Current ENACT Asynchronous/TBD Courses</h4>
+          <div class="list-group">
+            <% courses.forEach(function(course) { %>
+              
+              <% if (course.asynchronous || course.undecided) { %>
+                <div class="list-group-item">
+                  <h5 class="mb-1"><%= course.courseName %></h5>
+                  <p class="mb-1">Instructor: <%= course.instructor %></p>
+                  <p class="mb-1">Institution: <%= course.institution %></p>
+                  <p class="mb-1">State: <%= course.state%></p>
+                  <small>
+                    <% if (course.asynchronous) { %>
+                      <p>This course is asynchronous.</p>
+                    <% } else if (course.undecided) { %>
+                      <p>Meeting times for this course are to be determined.</p>
+                    <% } %>
+                  </small>
+                </div>
+              <% } %>
+      
+            <% }) %>
+          </div>
+        </div>
+      </section>
+
+    </h4>
+    <br />
     <h3 style="text-align: center">
       Past Courses in ENACT: <a href="/courses/pastList">Course List</a>
     </h3>
