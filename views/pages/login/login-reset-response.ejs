@@ -1,0 +1,31 @@
+<%- include('../../components/header'); -%>
+<%- include('../../components/navbar'); -%>
+
+<section class='section section__grey' data-aos='fade-up' style="height: 100%; padding-top: 8%">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                <div class="card card-signin my-5">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Reset email sent to:</h5>
+                        <div class="alert alert-<%= statusClass %>" style="text-align: center;">
+                            <%= message %>
+                            <br>
+                            
+                        </div>
+                        <p class="text-center">Please check your inbox and spam folders.</p>
+                         <p class="text-center">If you haven't received an email within 10 minutes, try again.</p>
+
+                        <br/>
+                       
+                        <div class="text-center">
+                            <a href="<%= linkHref %>" class="btn btn-lg btn-primary text-uppercase"><%= linkText %></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('../../components/footer'); -%>

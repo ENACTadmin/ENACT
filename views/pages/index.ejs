@@ -217,9 +217,10 @@
         <% } %>
         <% for (let i = 0; i < resourceInfo.length && i < 3; i++) { %>
             <div class='shadow-sm card-body border-0' style='border-radius: 30px' data-aos='fade-up'>
-                <h3><%= resourceInfo[i].name %></h3>
+                <h3 style="margin-left:10px; padding-bottom:4px;"><%= resourceInfo[i].name %></h3>
+                <div style="width:100%; border-top:1px solid rgba(255,255,155); margin-bottom:6px;"></div>
                 <div class='card-text'>
-                    <ul class='list-group'>
+                    <ul class='list-group' style="margin-bottom:20px;">
                         <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                             <h5 style="display: inline">Description:</h5>
                             <%= resourceInfo[i].description %>
@@ -228,10 +229,7 @@
                             <h5 style="display: inline">State:</h5>
                             <%= resourceInfo[i].state %>
                         </li>
-                        <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
-                            <h5 style="display: inline">Link:</h5>
-                            <a href='<%= resourceInfo[i].uri %>'>click me</a>
-                        </li>
+                      
                         <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                             <h5 style="display: inline">Institution:</h5>
                             <%= resourceInfo[i].institution %>
@@ -247,6 +245,9 @@
                             <%= resourceInfo[i].tags %>
                         </li>
                     </ul>
+                    <div class='list-group-item' style='font-size: large; color:white; background:#0053a4; display:flex; justify-content:center; width: 260px;'>
+                        <a style="color:white;" href='<%= resourceInfo[i].uri %>' target="_blank">Download Resource</a>
+                    </div>
                 </div>
             </div>
             <br>
@@ -282,8 +283,8 @@
         <% if (eventsInfo.length !== 0) { %>
             <% for (let i = 0; i < eventsInfo.length; i++) { %>
                 <div class='card border-0' style='border-radius: 30px' data-aos='fade-up'>
-                    <div class='shadow-sm card-body'>
-                        <h3><%= eventsInfo[i].title %></h3>
+                    <div class='shadow-sm card-body' >
+                        <h3 style="margin-left:10px;"><%= eventsInfo[i].title %></h3>
                         <div class='card-text'>
                             <ul class='list-group'>
                                 <li class='list-group-item borderless box-padding bg-transparent' style="font-size: large">
@@ -325,10 +326,12 @@
                                         </li>
                                     <% } %>
                                     <% if (eventsInfo[i].uri !== null) { %>
-                                        <li class='list-group-item borderless box-padding bg-transparent' style="font-size: large">
-                                            <h5 style="display: inline; font-weight: 650">Link:</h5> <a
-                                                    href="<%= eventsInfo[i].uri %>">click me</a>
-                                        </li>
+                                
+
+
+                                        <div class='list-group-item' style='font-size: large; color:white; background:#0053a4; display:flex; justify-content:center; width: 260px; margin-top:30px;'>
+                                            <a style="color:white;" href='<%= eventsInfo[i].uri %>' target="_blank">View Event</a>
+                                        </div>
                                     <% } %>
                                 <% } else { %>
                                     <li class='list-group-item borderless box-padding bg-transparent' style="font-size: large">

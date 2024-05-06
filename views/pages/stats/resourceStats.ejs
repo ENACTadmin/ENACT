@@ -1,0 +1,259 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Resource Statistics</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/stats.css">
+
+</head>
+
+<%- include('../../components/header'); -%>
+
+    <%- include('../../components/navbar'); -%>
+    <section class="wrapper">
+        <div class="innerWrapper">
+            <h1 class="chart-title">ENACT Resource Statistics</h1>
+            <div class="rowdata">
+                <div class="tile">
+                    <h3 class="title">Total Resources:</h3>
+                    <h3 class="data"><%= totalResources %></h3>
+                </div>
+                <div class="tile">
+                    <h3 class="title">Total Approved:</h3>
+                    <h3 class="data"><%= totalApproved %></h3>
+                </div>
+                <div class="tile">
+                    <h3 class="title">Total Private to ENACT:</h3>
+                    <h3 class="data"><%= totalPrivateToENACT %></h3>
+                </div>
+            </div>
+
+            <svg class="chart" id="resourcesPerYearChart" width="1000" height="400"></svg>
+            <svg class="chart" id="resourcesPerTagChart" width="1000" height="400"></svg>
+
+            <!-- Author table with conditional highlighting -->
+            <h2>Resources per Author</h2>
+            <table id="resourcesPerAuthorTable">
+                <thead>
+                    <tr>
+                        <th>Author</th>
+                        <th>Resource Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% 
+                    // Array of highlighted author names
+                    const highlightNames = ["Aby", "Madina", "ENACT Admin", "David", "David Weinstein"];
+                    
+                    // Sort and then render
+                    totalPerAuthor.sort((a, b) => b.count - a.count).forEach(function (item) {
+                        const highlightClass = highlightNames.includes(item.authorName) ? "highlight" : ""; %>
+                        <tr class="<%= highlightClass %>" data-author="<%= item.authorName %>">
+                            <td><%= item.authorName %></td>
+                            <td><%= item.count %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+
+            <svg class="chart" id="resourcesPerAuthorChart" width="1000" height="400"></svg>
+        </div>
+    </section>
+
+    <script>
+        // Function to draw bar charts
+        function drawBarChart(chartId, data, xLabel, yLabel, chartTitle) {
+            // Sort data numerically in ascending order based on the count
+            data.sort((a, b) => a.count - b.count);
+
+            // Set up SVG dimensions and margins
+            const svg = d3.select(chartId);
+            const width = +svg.attr("width");
+            const height = +svg.attr("height");
+            const margin = { top: 40, right: 30, bottom: 40, left: 40 };
+
+            // Create scales for the x and y axes
+            const x = d3.scaleBand()
+                .domain(data.map(d => d.label))
+                .range([margin.left, width - margin.right])
+                .padding(0.1);
+
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(data, d => d.count)]).nice()
+                .range([height - margin.bottom, margin.top]);
+
+            // Add chart title
+            svg.append("text")
+                .attr("x", width / 2)
+                .attr("y", margin.top - 20)
+                .attr("text-anchor", "middle")
+                .attr("font-size", "16px")
+                .attr("font-weight", "bold")
+                .text(chartTitle);
+
+            // Add x-axis
+            svg.append("g")
+                .attr("transform", `translate(0, ${height - margin.bottom})`)
+                .call(d3.axisBottom(x).tickSizeOuter(0))
+                .selectAll("text")
+                .attr("class", "axis-label")
+                .attr("transform", "rotate(-45)")
+                .style("text-anchor", "end");
+
+            // Add y-axis
+            svg.append("g")
+                .attr("transform", `translate(${margin.left}, 0)`)
+                .call(d3.axisLeft(y))
+                .selectAll("text")
+                .attr("class", "axis-label");
+
+            // Create a tooltip div
+            const tooltip = d3.select("body").append("div")
+                .attr("class", "tooltip")
+                .style("position", "absolute")
+                .style("background", "rgba(0,0,0,0.7)")
+                .style("color", "white")
+                .style("padding", "5px")
+                .style("border-radius", "5px")
+                .style("opacity", 0);
+
+            // Draw the bars and add hover tooltip functionality
+            svg.selectAll(".bar")
+                .data(data)
+                .enter().append("rect")
+                .attr("class", "bar")
+                .attr("x", d => x(d.label))
+                .attr("y", d => y(d.count))
+                .attr("height", d => y(0) - y(d.count))
+                .attr("width", x.bandwidth())
+                .on("mouseover", function (event, d) {
+                    tooltip.transition().duration(200).style("opacity", .9);
+                    tooltip.html(`${xLabel}: ${d.label}<br>${yLabel}: ${d.count}`)
+                        .style("left", (event.pageX + 5) + "px")
+                        .style("top", (event.pageY - 28) + "px");
+                })
+                .on("mouseout", function () {
+                    tooltip.transition().duration(500).style("opacity", 0);
+                });
+
+            // Add x-axis label
+            svg.append("text")
+                .attr("class", "axis-label")
+                .attr("x", width / 2)
+                .attr("y", height - 5)
+                .attr("text-anchor", "middle")
+                .text(xLabel);
+
+            // Add y-axis label
+            svg.append("text")
+                .attr("class", "axis-label")
+                .attr("x", -height / 2)
+                .attr("y", 15)
+                .attr("dy", ".75em")
+                .attr("text-anchor", "middle")
+                .attr("transform", "rotate(-90)")
+                .text(yLabel);
+        }
+
+        // Draw the original bar charts for resources per year and per tag
+        const resourcesPerYearData = <%- JSON.stringify(totalPerYear.map(({ year, count }) => ({ label: year, count }))) %>;
+        const resourcesPerTagData = <%- JSON.stringify(totalPerTag.map(({ tag, count }) => ({ label: tag, count }))) %>;
+
+        drawBarChart("#resourcesPerYearChart", resourcesPerYearData, "Year", "Count", "Resources per Year");
+        drawBarChart("#resourcesPerTagChart", resourcesPerTagData, "Tag", "Count", "Resources per Tag");
+
+        // Function to draw the author bar chart and link it with the table
+        function drawAuthorBarChart(chartId, data, xLabel, yLabel, chartTitle) {
+            // Sort data numerically in ascending order based on the count
+            data.sort((a, b) => a.count - b.count);
+
+            // Set up SVG dimensions and margins
+            const svg = d3.select(chartId);
+            const width = +svg.attr("width");
+            const height = +svg.attr("height");
+            const margin = { top: 40, right: 30, bottom: 40, left: 40 };
+
+            // Create scales for the x and y axes
+            const x = d3.scaleBand()
+                .domain(data.map(d => d.label))
+                .range([margin.left, width - margin.right])
+                .padding(0.1);
+
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(data, d => d.count)]).nice()
+                .range([height - margin.bottom, margin.top]);
+
+            // Add chart title
+            svg.append("text")
+                .attr("x", width / 2)
+                .attr("y", margin.top - 20)
+                .attr("text-anchor", "middle")
+                .attr("font-size", "16px")
+                .attr("font-weight", "bold")
+                .text(chartTitle);
+
+            // Add x-axis
+            svg.append("g")
+                .attr("transform", `translate(0, ${height - margin.bottom})`)
+                .call(d3.axisBottom(x).tickSizeOuter(0))
+                .selectAll("text")
+                .attr("class", "axis-label")
+                .attr("transform", "rotate(-45)")
+                .style("text-anchor", "end");
+
+            // Add y-axis
+            svg.append("g")
+                .attr("transform", `translate(${margin.left}, 0)`)
+                .call(d3.axisLeft(y))
+                .selectAll("text")
+                .attr("class", "axis-label");
+
+            // Draw bars with brushing
+            svg.selectAll(".bar")
+                .data(data)
+                .enter().append("rect")
+                .attr("class", "bar")
+                .attr("x", d => x(d.label))
+                .attr("y", d => y(d.count))
+                .attr("height", d => y(0) - y(d.count))
+                .attr("width", x.bandwidth())
+                .on("click", function (_, d) {
+                    // Highlight the clicked bar
+                    d3.selectAll(".bar").classed("highlight", false);
+                    d3.select(this).classed("highlight", true);
+
+                    // Highlight the matching row in the table
+                    d3.selectAll("#resourcesPerAuthorTable tbody tr")
+                        .classed("highlight", false)
+                        .filter(function () {
+                            return d3.select(this).attr("data-author") === d.label;
+                        })
+                        .classed("highlight", true);
+                });
+
+            // Add x-axis label
+            svg.append("text")
+                .attr("class", "axis-label")
+                .attr("x", width / 2)
+                .attr("y", height - 5)
+                .attr("text-anchor", "middle")
+                .text(xLabel);
+
+            // Add y-axis label
+            svg.append("text")
+                .attr("class", "axis-label")
+                .attr("x", -height / 2)
+                .attr("y", 15)
+                .attr("dy", ".75em")
+                .attr("text-anchor", "middle")
+                .attr("transform", "rotate(-90)")
+                .text(yLabel);
+        }
+
+        // Data for the author chart, from the controller
+        const resourcesPerAuthorData = <%- JSON.stringify(totalPerAuthor.map(({ authorName, count }) => ({ label: authorName, count }))) %>;
+
+        // Draw author bar chart with brushing and linking
+        drawAuthorBarChart("#resourcesPerAuthorChart", resourcesPerAuthorData, "Author", "Count", "Resources per Author");
+    </script>
+
+<%- include('../../components/footer'); -%>
