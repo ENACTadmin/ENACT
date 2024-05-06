@@ -222,6 +222,16 @@ app.get(
 //*******************************************
 //***********Resource related****************
 
+
+//Resource API for ENACT-Data-Apps
+app.get("/resources/", resourceController.getResources);
+app.get("/resources/all", resourceController.getAllResources);
+app.get("/resources/stats", resourceController.getResourceStats);
+app.get("/resources/stats/page", resourceController.renderResourceStatsPage);
+app.get("/resources/:id", resourceController.getResourceById); 
+
+
+
 // upload resource to a course
 app.get(
   "/resource/upload/course/:courseId",

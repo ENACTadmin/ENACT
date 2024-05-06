@@ -159,7 +159,7 @@ router.get('/login-fail',
 
 
 // will be moved to cloud later
-const adminList = ["naimulhasan@brandeis.edu","tjhickey@brandeis.edu", "bbdhy96@gmail.com", "enact@brandeis.edu", "bhershon@brandeis.edu", "nicolezhang@brandeis.edu", "stimell@brandeis.edu", "djw@brandeis.edu", "epevide@brandeis.edu", "luyaopei@brandeis.edu", "kchakoian@brandeis.edu", "charlottepowley88@gmail.com","bishalbaral@brandeis.edu", "madina@brandeis.edu", "aiberkleid@brandeis.edu"]
+const adminList = ["tjhickey@brandeis.edu", "bbdhy96@gmail.com", "enact@brandeis.edu", "stimell@brandeis.edu", "djw@brandeis.edu", "epevide@brandeis.edu",  "charlottepowley88@gmail.com", "madina@brandeis.edu", "aiberkleid@brandeis.edu"]
 
 router.get('/signup',
     (req, res) =>
@@ -196,30 +196,73 @@ router.get('/reset',
 // )
 
 // POST route for password reset
+// router.post('/reset', async (req, res) => {
+//     const user = await User.findOne({
+//       $or: [
+//         { workEmail: req.body.email }, { googleemail: req.body.email }
+//       ],
+//     });
+  
+//     if (user) {
+//       try {
+//         await sendMail(
+//           req.body.email,
+//           'ENACT Digital Platform: Password Reset',
+//           `Password reset link: https://www.enactnetwork.org/reset/${user._id}`
+//         );
+  
+//         res.send("<h1>Reset email sent, please check your email :) </h1><br><h1>Back to Login: <a href='/login'>Login</a></h1> </h1><br><p>If you do not recevie an email in the next 10 minutes try clicking the reset link again os sign in with Google</p>");
+//       } catch (error) {
+//         console.error('Error sending email:', error.message);
+//         res.send("<h1>Error sending email. Please try again.</h1>");
+//       }
+//     } else {
+//       res.send("<h1>Sorry, your email is not registered in our system </h1><br><h1>Sign up if you're an ENACT member: <a href='/signup'>Sign Up</a></h1>");
+//     }
+//   });
+
 router.post('/reset', async (req, res) => {
     const user = await User.findOne({
-      $or: [
-        { workEmail: req.body.email }, { googleemail: req.body.email }
-      ],
+        $or: [
+            { workEmail: req.body.email }, { googleemail: req.body.email }
+        ],
     });
-  
+
     if (user) {
-      try {
-        await sendMail(
-          req.body.email,
-          'ENACT Digital Platform: Password Reset',
-          `Password reset link: https://www.enactnetwork.org/reset/${user._id}`
-        );
-  
-        res.send("<h1>Reset email sent, please check your email :) </h1><br><h1>Back to Login: <a href='/login'>Login</a></h1>");
-      } catch (error) {
-        console.error('Error sending email:', error.message);
-        res.send("<h1>Error sending email. Please try again.</h1>");
-      }
+        try {
+            await sendMail(
+                req.body.email,
+                'ENACT Digital Platform: Password Reset',
+                `Password reset link: https://www.enactnetwork.org/reset/${user._id}`
+            );
+
+            // Render the success page with a nice UI
+            res.render('pages/login/login-reset-response', {
+                statusClass: 'success',
+                message: `${req.body.email}`,
+                linkHref: '/login',
+                linkText: 'Back to Login'
+            });
+        } catch (error) {
+            console.error('Error sending email:', error.message);
+            res.render('pages/login/login-reset-response', {
+                statusClass: 'danger',
+                message: 'Error sending email. Please try again.',
+                linkHref: '/reset',
+                linkText: 'Try Again'
+            });
+        }
     } else {
-      res.send("<h1>Sorry, your email is not registered in our system </h1><br><h1>Sign up if you're an ENACT member: <a href='/signup'>Sign Up</a></h1>");
+        // Render a page for unregistered email
+        res.render('pages/login/login-reset-response', {
+            statusClass: 'warning',
+            message: 'Your email is not registered in our system.',
+            linkHref: '/signup',
+            linkText: 'Sign Up'
+        });
     }
-  });
+});
+
 
 router.get('/reset/:id',
     async (req, res) => {
