@@ -10,10 +10,10 @@ const mailRouter = require('./routes/mail');
 
 //*******************************************
 //***********Development****************
-const livereload = require("livereload");
-const connectLivereload = require("connect-livereload");
-const liveReloadServer = livereload.createServer();
-liveReloadServer.watch(path.join(__dirname, "public"));
+// const livereload = require("livereload");
+// const connectLivereload = require("connect-livereload");
+// const liveReloadServer = livereload.createServer();
+// liveReloadServer.watch(path.join(__dirname, "public"));
 
 //*******************************************
 //***********Database Schemas****************
@@ -65,12 +65,12 @@ db.once("open", function () {
 const app = express();
 
 // development web app reload
-app.use(connectLivereload());
-liveReloadServer.server.once("connection", () => {
-  setTimeout(() => {
-    liveReloadServer.refresh("/");
-  }, 100);
-});
+// app.use(connectLivereload());
+// liveReloadServer.server.once("connection", () => {
+//   setTimeout(() => {
+//     liveReloadServer.refresh("/");
+//   }, 100);
+// });
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
