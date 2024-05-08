@@ -217,6 +217,20 @@ app.get(
   (req, res) => res.render("./pages/course-pastList")
 );
 
+
+//*******************************************
+//***********API related****************
+
+
+//Resource API for ENACT-Data-Apps
+app.get("/api/v0/resources/", resourceController.getResources);
+app.get("/api/v0/resources/all", resourceController.getAllResources);
+app.get("/api/v0/resources/stats", resourceController.getResourceStats);
+app.get("/api/v0/resources/:id", resourceController.getResourceById); 
+app.get('/api/v0/resources/tags/:tag', resourceController.getResourcesByTag);
+
+
+
 //*******************************************
 //***********Resource related****************
 
