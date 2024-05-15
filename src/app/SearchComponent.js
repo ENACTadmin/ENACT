@@ -8,12 +8,12 @@ function SearchComponent() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const totalPages = 11; // Total number of pages assumed or dynamically set from API
+    const totalPages = 5; // Total number of pages assumed or dynamically set from API
 
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await fetch('http://localhost:3500/api/v0/resources/stats/');
+                const response = await fetch('/api/v0/resources/stats/');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
