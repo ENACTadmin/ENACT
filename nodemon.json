@@ -1,0 +1,7 @@
+{
+    "watch": ["bin/www", "routes", "public/js/bundle.js"],
+    "ext": "js,ejs",
+    "ignore": ["node_modules", "src/app"],
+    "exec": "node ./bin/www"
+  }
+  

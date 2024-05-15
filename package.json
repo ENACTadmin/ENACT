@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "start:dev": "nodemon",
+    "start:dev": "concurrently \"npm run watch\" \"nodemon\"",
     "test": "mocha ./test/**/*.js",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "watch": "webpack --watch"
   },
   "engines": {
     "node": "18.x"
@@ -55,6 +56,7 @@
     "babel-loader": "^9.1.3",
     "babel-plugin-transform-runtime": "^6.23.0",
     "chai": "^5.1.0",
+    "concurrently": "^8.2.2",
     "cypress": "^13.8.1",
     "dateformat": "^3.0.3",
     "lodash.template": ">=4.5.0",
