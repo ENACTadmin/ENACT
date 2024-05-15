@@ -8,7 +8,7 @@ function SearchComponent() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const totalPages = 11; // Total number of pages assumed or dynamically set from API
+    const totalPages = 5; // Total number of pages assumed or dynamically set from API
 
     useEffect(() => {
         const fetchCategories = async () => {
