@@ -45,11 +45,14 @@ function SearchComponent() {
             <ul>
                 {items.map(item => (
                     <li key={item._id} style={{marginBottom:"20px"}}>
-                        <strong>{item.name}</strong> ({item.state})
+                        <strong style={{fontSize:"1.4rem",marginBottom:"20px"}}>{item.name}</strong> ({item.state})
                         <br />
-                        Tags: {item.tags.join(", ")}
+                       <strong> Description:</strong> 
+                       <br /> 
+                       {item.description}
+                   
                         <br />
-                        Description: {item.description}
+                        <strong> Tags:</strong>  <br /> {item.tags.join(", ")}
                     </li>
                 ))}
             </ul>
