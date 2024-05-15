@@ -13,7 +13,7 @@ function SearchComponent() {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await fetch('http://localhost:3500/api/v0/resources/stats/');
+                const response = await fetch('/api/v0/resources/stats/');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
