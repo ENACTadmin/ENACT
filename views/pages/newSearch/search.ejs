@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resource Statistics</title>
+    <link rel="stylesheet" href="/stylesheets/stats.css">
+</head>
+<body>
+    <%- include('../../components/header'); -%>
+    <%- include('../../components/navbar'); -%>
+
+    <section class="wrapper">
+        <div class="innerWrapper">
+            <h1 class="chart-title">React Test</h1>
+        </div>
+    </section>
+
+    <div id="root"></div>
+    <script src="/js/bundle.js"></script> <!-- Include your bundled file here -->
+
+    <%- include('../../components/footer'); -%>
+</body>
+</html>
