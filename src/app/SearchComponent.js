@@ -16,6 +16,10 @@ function SearchComponent() {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState('');
+
+  const categories = ['Healthcare', 'Education', 'Environment', 'Technology', 'Food', 'Finance'];
+
 
     useEffect(() => {
         // Function to fetch data from API
@@ -41,8 +45,35 @@ function SearchComponent() {
     if (error) return <div>Error: {error}</div>;
 
     return (
-        <div>
-            <ul>
+        <div style={{display:"flex", flexDirection:"column", justifyContent:"center",alignItems:"center", gap:"2rem"}}>
+            <input style={{width:"500px"}} type="text" placeholder="Search..." />
+           <section style={{display:"flex",flexDirection:"row", gap:"10px"}}>
+            <nav style={{padding:"1rem", display:"flex", gap:"20px", width:"250px", border:"1px solid gray", height:"100%"}}>
+               <ul>
+               {categories.map((category, index) => (
+        <li key={index}>
+          <label>
+            <input
+              type="radio"
+              value={category}
+              checked={selectedCategory === category}
+            />
+            {category}
+          </label>
+        </li>
+      ))}
+
+               </ul>
+                </nav>
+           <ul style={{
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fill, minmax(100%, 1fr))",
+      gap: "10px",
+      padding: "10px",
+      listStyleType: "none",
+      maxWidth: "1000px",
+      minWidth: "300px",
+    }}>
                 {items.map(item => (
                     <li key={item._id} style={{marginBottom:"20px"}}>
                         <strong style={{fontSize:"1.4rem",marginBottom:"20px"}}>{item.name}</strong> ({item.state})
@@ -56,6 +87,7 @@ function SearchComponent() {
                     </li>
                 ))}
             </ul>
+           </section>
         </div>
     );
 }
