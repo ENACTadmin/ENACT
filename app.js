@@ -119,6 +119,22 @@ app.get(
   }
 );
 
+
+//*******************************************
+//***********New Seatch page router***************
+
+// load required resources and render index page
+app.get(
+  "/KMOqUDKFnTStYpLfNgy536CmgkBRvfvh/",
+  utils.checkUserName,
+  resourceController.loadDisplayedResources,
+  resourceController.loadImages,
+  eventController.loadEvents,
+  (req, res) => {
+    res.render("./pages/newSearch/search");
+  }
+);
+
 //*******************************************
 //***********Course related******************
 
