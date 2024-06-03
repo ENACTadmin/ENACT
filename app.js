@@ -244,7 +244,13 @@ app.get(
 app.get("/api/v0/resources/", resourceController.getResources);
 app.get("/api/v0/resources/all", resourceController.getAllResources);
 app.get("/api/v0/resources/stats", resourceController.getResourceStats);
-app.get("/api/v0/resources/:id", resourceController.getResourceById); 
+app.get("/api/v0/resources/search", (req, res) => {
+  console.log("Search query:", req.query.search);
+  resourceController.getResourcesByKeyWord(req, res);
+});
+
+
+app.get("/api/v0/resources/storage/:id", resourceController.getResourceById); 
 app.get('/api/v0/resources/tags/:tag', resourceController.getResourcesByTag);
 
 
