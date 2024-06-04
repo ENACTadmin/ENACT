@@ -6,6 +6,7 @@ import CategorySelector from "./CategorySelector";
 function SearchComponent() {
   const [items, setItems] = useState([]);
   const [categories, setCategories] = useState([]); // Dynamic categories from API
+  const [categoriesWithAmount, setCategoriesWithAmount] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -28,6 +29,26 @@ function SearchComponent() {
 
     fetchCategories();
   }, []);
+
+  useEffect(() => {
+    const fetchCategoriesWithAmount = async () => {
+      try {
+        const response = await fetch("/api/v0/resources/stats/");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setCategoriesWithAmount(data.totalPerTag.map((tag) => [tag.tag,tag.count])); // Assuming the response structure has a 'totalPerTag' field
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchCategoriesWithAmount();
+  }, []);
+
+console.log(categoriesWithAmount);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -83,7 +104,7 @@ function SearchComponent() {
             width: "100%"
           }}>
           <CategorySelector
-            categories={categories}
+            categories={categoriesWithAmount}
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
           />
