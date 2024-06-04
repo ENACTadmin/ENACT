@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import Card from "./card";
 import CategorySelector from "./CategorySelector";
+import Pagination from "./Pagination";
 
 function SearchComponent() {
   const [items, setItems] = useState([]);
@@ -38,7 +39,9 @@ function SearchComponent() {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        setCategoriesWithAmount(data.totalPerTag.map((tag) => [tag.tag,tag.count])); // Assuming the response structure has a 'totalPerTag' field
+        setCategoriesWithAmount(
+          data.totalPerTag.map((tag) => [tag.tag, tag.count])
+        ); // Assuming the response structure has a 'totalPerTag' field
       } catch (error) {
         setError(error.message);
       }
@@ -47,8 +50,7 @@ function SearchComponent() {
     fetchCategoriesWithAmount();
   }, []);
 
-console.log(categoriesWithAmount);
-
+  console.log(categoriesWithAmount);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -144,7 +146,14 @@ console.log(categoriesWithAmount);
               ))}
             </div>
           ) : (
-            <ul style={{ width: "100%", listStyleType: "none", display:"flex", flexDirection:"column", gap:"0.4rem" }}>
+            <ul
+              style={{
+                width: "100%",
+                listStyleType: "none",
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.4rem"
+              }}>
               {items.map((item) => (
                 <Card
                   key={item._id}
@@ -159,16 +168,11 @@ console.log(categoriesWithAmount);
               ))}
             </ul>
           )}
-          <div>
-            {Array.from({ length: totalPages }, (_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrentPage(i + 1)}
-                style={{ margin: "0 5px" }}>
-                {i + 1}
-              </button>
-            ))}
-          </div>
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
         </aside>
       </section>
     </div>
