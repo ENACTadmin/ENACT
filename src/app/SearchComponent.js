@@ -13,23 +13,61 @@ function SearchComponent() {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0); // Initialize totalPages from API
+  const [data, setData] = useState([]); // Initialize totalPages from API
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearchChange = (newSearchTerm) => {
+    setSearchTerm(newSearchTerm);
+  };
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch("/api/v0/resources/stats/");
+        const response = await fetch("/api/v0/resources/allstats");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        setCategories(data.totalPerTag.map((tag) => tag.tag)); // Assuming the response structure has a 'totalPerTag' field
+        console.log(data.resources);
+        let filteredItems = data.resources;
+        
+        // Only apply the filter if searchTerm is not empty and not undefined
+        if (searchTerm) {
+          filteredItems = data.resources.filter(item =>
+            item.name && item.name.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+        }
+        
+        setItems(filteredItems);
+        setLoading(false);
       } catch (error) {
         setError(error.message);
+        setLoading(false);
       }
     };
+  
+    fetchData();
+  }, [searchTerm]); // React to changes in searchTerm
+  
+  // console.log("stats", data.stats);
+  console.log("resources", data.resources);
 
-    fetchCategories();
-  }, []);
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     try {
+  //       const response = await fetch("/api/v0/resources/stats/");
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! status: ${response.status}`);
+  //       }
+  //       const data = await response.json();
+  //       setCategories(data.totalPerTag.map((tag) => tag.tag)); // Assuming the response structure has a 'totalPerTag' field
+  //     } catch (error) {
+  //       setError(error.message);
+  //     }
+  //   };
+
+  //   fetchCategories();
+  // }, []);
 
   useEffect(() => {
     const fetchCategoriesWithAmount = async () => {
@@ -50,37 +88,61 @@ function SearchComponent() {
     fetchCategoriesWithAmount();
   }, []);
 
-  console.log(categoriesWithAmount);
+  // console.log(categoriesWithAmount);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const url = selectedCategory
-          ? `/api/v0/resources/tags/${selectedCategory}?page=${currentPage}&limit=10`
-          : `/api/v0/resources?page=${currentPage}&limit=10`;
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setItems(data.data);
-        setTotalPages(data.totalPages || 0); // Assume 'totalPages' is the key, default to 1 if not provided
-        setLoading(false);
-      } catch (error) {
-        setError(error.message);
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const url = selectedCategory
+  //         ? `/api/v0/resources/tags/${selectedCategory}?page=${currentPage}&limit=10`
+  //         : `/api/v0/resources?page=${currentPage}&limit=10`;
+  //       const response = await fetch(url);
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! status: ${response.status}`);
+  //       }
+  //       const data = await response.json();
+  //       // setItems(data.data);
+  //       // setTotalPages(data.totalPages || 0); // Assume 'totalPages' is the key, default to 1 if not provided
+  //       setLoading(false);
+  //     } catch (error) {
+  //       setError(error.message);
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchData();
-  }, [currentPage, selectedCategory]); // Dependency on currentPage and selectedCategory
+  //   fetchData();
+  // }, [currentPage, selectedCategory]); // Dependency on currentPage and selectedCategory
 
-  if (loading && !error) return <div>Loading...</div>;
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch("/api/v0/resources/allstats");
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! status: ${response.status}`);
+  //       }
+  //       const data = await response.json();
+  
+  //       // Filter the items ensuring the 'title' is defined and converting it to lower case
+  //       const filteredItems = data.resources.filter(item =>
+  //         item.title && item.title.toLowerCase().includes(searchTerm.toLowerCase())
+  //       );
+  //       setItems(filteredItems);
+  //       setLoading(false);
+  //     } catch (error) {
+  //       setError(error.message);
+  //       setLoading(false);
+  //     }
+  //   };
+  
+  //   fetchData();
+  // }, [searchTerm]); // React to changes in searchTerm
+  
+  if (loading && !error) return <div></div>;
   if (error) return <div>Error: {error}</div>;
   const sorted = categories.sort((a, b) =>
     a.toUpperCase().localeCompare(b.toUpperCase())
   );
-  console.log(sorted);
+  // console.log(sorted);
 
   return (
     <div
@@ -90,11 +152,7 @@ function SearchComponent() {
         alignItems: "center",
         gap: "20px"
       }}>
-      {/* <input
-        type="text"
-        placeholder="Search..."
-        style={{ width: "500px", marginBottom: "20px" }}
-      /> */}
+      <h1>{searchTerm}</h1>
       <section
         style={{ display: "flex", flexDirection: "row", maxWidth: "1000px" }}>
         <nav
@@ -106,9 +164,11 @@ function SearchComponent() {
             width: "100%"
           }}>
           <CategorySelector
-            categories={categoriesWithAmount}
+            categories={categories}
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
+            searchTerm={searchTerm}
+            setSearchTerm={handleSearchChange} // Pass the handler
           />
         </nav>
         <aside
@@ -161,18 +221,18 @@ function SearchComponent() {
                   description={item.description}
                   link={item.uri}
                   state={item.state}
-                  type={item.resourceType}
+                  type={item.mediaType}
                   year={item.yearOfCreation}
                   author={item.authorName}
                 />
               ))}
             </ul>
           )}
-          <Pagination
+          {/* <Pagination
             totalPages={totalPages}
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
-          />
+          /> */}
         </aside>
       </section>
     </div>

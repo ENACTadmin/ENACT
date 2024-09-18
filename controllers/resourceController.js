@@ -550,6 +550,167 @@ exports.renderResourceStatsPage = async (req, res, next) => {
 
 
 
+exports.getResourcesAndStats = async (req, res, next) => {
+    try {
+        // Define aggregation pipelines for statistics and resources
+
+        // Pipeline for Total Resources count
+        const totalResourcesPipeline = [{ $count: "total" }];
+
+        // Pipeline for Total Approved Resources count
+        const totalApprovedResourcesPipeline = [
+            { $match: { checkStatus: "approve" } },
+            { $count: "total" }
+        ];
+
+        // Pipeline for Total Private to ENACT Resources count
+        const totalPrivateToENACTPipeline = [
+            { $match: { status: "privateToENACT" } },
+            { $count: "total" }
+        ];
+
+        // Pipeline for grouping resources by author
+        const totalPerAuthorPipeline = [
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "ownerId",
+                    foreignField: "_id",
+                    as: "ownerDetails"
+                }
+            },
+            { $unwind: "$ownerDetails" },
+            {
+                $group: {
+                    _id: "$ownerDetails.userName",
+                    count: { $sum: 1 }
+                }
+            },
+            {
+                $project: {
+                    authorName: "$_id",
+                    count: 1,
+                    _id: 0
+                }
+            }
+        ];
+
+        // Pipeline for grouping resources by tag
+        const totalPerTagPipeline = [
+            { $unwind: "$tags" },
+            {
+                $group: {
+                    _id: "$tags",
+                    count: { $sum: 1 }
+                }
+            },
+            {
+                $project: {
+                    tag: "$_id",
+                    count: 1,
+                    _id: 0
+                }
+            }
+        ];
+
+        // Pipeline for grouping resources by year of creation
+        const totalPerYearPipeline = [
+            {
+                $group: {
+                    _id: "$yearOfCreation",
+                    count: { $sum: 1 }
+                }
+            },
+            {
+                $project: {
+                    year: "$_id",
+                    count: 1,
+                    _id: 0
+                }
+            }
+        ];
+
+        // Pipeline for fetching all resources with joined data
+        const resourcesPipeline = [
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "ownerId",
+                    foreignField: "_id",
+                    as: "ownerDetails"
+                }
+            },
+            { $unwind: "$ownerDetails" },
+            {
+                $lookup: {
+                    from: "courses",
+                    localField: "courseId",
+                    foreignField: "_id",
+                    as: "courseDetails"
+                }
+            },
+            { $unwind: "$courseDetails" },
+            {
+                $project: {
+                    _id: 1,
+                    name: 1,
+                    description: 1,
+                    tags: 1,
+                    uri: 1,
+                    state: 1,
+                    resourceType: 1,
+                    institution: 1,
+                    yearOfCreation: 1,
+                    checkStatus: 1,
+                    contentType: 1,
+                    mediaType: 1,
+                    createdAt: 1,
+                    authorName: "$ownerDetails.userName",
+                    courseName: "$courseDetails.courseName",
+                    facultyId: 1
+                }
+            }
+        ];
+
+        // Execute the aggregation pipelines in parallel
+        const [
+            [totalResources],
+            [totalApproved],
+            [totalPrivateToENACT],
+            totalPerAuthor,
+            totalPerTag,
+            totalPerYear,
+            allResources
+        ] = await Promise.all([
+            Resource.aggregate(totalResourcesPipeline),
+            Resource.aggregate(totalApprovedResourcesPipeline),
+            Resource.aggregate(totalPrivateToENACTPipeline),
+            Resource.aggregate(totalPerAuthorPipeline),
+            Resource.aggregate(totalPerTagPipeline),
+            Resource.aggregate(totalPerYearPipeline),
+            Resource.aggregate(resourcesPipeline)
+        ]);
+
+        // Construct the combined response with statistics and resource data
+        const response = {
+            stats: {
+                totalResources: totalResources ? totalResources.total : 0,
+                totalApproved: totalApproved ? totalApproved.total : 0,
+                totalPrivateToENACT: totalPrivateToENACT ? totalPrivateToENACT.total : 0,
+                totalPerAuthor: totalPerAuthor,
+                totalPerTag: totalPerTag,
+                totalPerYear: totalPerYear
+            },
+            resources: allResources
+        };
+
+        // Send the combined response back to the client
+        res.json(response);
+    } catch (e) {
+        next(e);
+    }
+};
+
 
 
 
