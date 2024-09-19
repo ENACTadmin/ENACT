@@ -1,20 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import useDebounce from "./hooks/useDebounce";
 
-function CategorySelector({
+function StickySearchComponent({
   selectedCategory,
   setSelectedCategory,
-  searchTerm,
-  setSearchTerm,
   hits,
   resetFilters
 }) {
+  const [searchTerm, setSearchTerm] = useState("");
   const [inputValue, setInputValue] = useState(searchTerm);
   const debouncedSearchTerm = useDebounce(inputValue, 250); // Debounce the input by 250ms
-
-  useEffect(() => {
-    setSearchTerm(debouncedSearchTerm);
-  }, [debouncedSearchTerm, setSearchTerm]);
+  const [isSticky, setIsSticky] = useState(false);
+  const inputRef = useRef(null);
 
   const categories = {
     Years: [
@@ -77,6 +74,36 @@ function CategorySelector({
     (value) => value
   ).length;
 
+  const handleScroll = () => {
+    const scrollTop = window.scrollY;
+    const inputTop =
+      inputRef.current.getBoundingClientRect().top + window.scrollY;
+
+    // Check if the scroll has passed the input and make it sticky
+    if (scrollTop >= inputTop) {
+      setIsSticky(true);
+    }
+    // If the scroll is above the input position, unstick
+    else if (scrollTop < inputTop) {
+      setIsSticky(false);
+    }
+  };
+
+  useEffect(() => {
+    setSearchTerm(debouncedSearchTerm);
+  }, [debouncedSearchTerm, setSearchTerm]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
   function renderInput(group, items) {
     switch (group) {
       case "State":
@@ -96,8 +123,7 @@ function CategorySelector({
               })
             }
             style={{ marginBottom: "20px", padding: "5px", width: "100%" }}>
-            <option value="">Select {group}</option>{" "}
-            {/* Default 'not selected' state */}
+            <option value="">Select {group}</option>
             {items.map((item, index) => (
               <option key={index} value={item}>
                 {item}
@@ -126,7 +152,7 @@ function CategorySelector({
                 }
                 style={{ marginRight: "5px" }}
               />
-              None {/* Default 'not selected' radio option */}
+              None
             </label>
             {items.map((categoryName, index) => (
               <label
@@ -155,67 +181,102 @@ function CategorySelector({
           </>
         );
       default:
-        return null; // Default case for unexpected categories
+        return null;
     }
   }
 
   return (
-    <div
-      style={{
-        marginTop: "-20px",
-        width: "200px",
-        height: "100%",
-        maxHeight: "80vh",
-        display: "flex",
-        flexDirection: "column",
-        gap: "1rem",
-        padding: "1rem",
-        listStyle: "none",
-        position: "sticky",
-        top: 80,
-        zIndex: 1,
-        overflowY: "auto",
-        border: "0.1px solid lightgrey"
-      }}>
-      {/* Conditionally render the reset button if any filters are selected */}
-      {/* selectedFilterCount > 0 */}
-      {selectedFilterCount > 0  && (
-        <button
-          onClick={resetFilters}
+    <div style={{ width: "100%", padding: "20px" }}>
+      {/* Sticky search input */}
+      <div
+        ref={inputRef}
+        style={{
+          position: isSticky ? "fixed" : "relative",
+          top: isSticky ? 0 : "auto",
+          zIndex: 1000,
+          backgroundColor: "white",
+          width: "100%",
+          padding: "10px",
+          boxShadow: isSticky ? "0 2px 5px rgba(0,0,0,0.3)" : "none",
+          transition: "box-shadow 0.3s ease-in-out"
+        }}>
+        <input
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+          placeholder="Search..."
           style={{
-            borderRadius: "10px",
-            border: "0.5px solid whitesmoke",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignContent: "center",
-            alignItems: "center",
-            color: "white",
-            backgroundColor: "#0053A4",
-  
-          }}>
-          <span
-            style={{
-              backgroundColor: "#3584d2",
-              borderRadius: "12px",
-              padding: "1px 5px",
-              fontSize: "0.7rem"
-            }}>
-            {selectedFilterCount}
-          </span>
-          Clear Filters
-          <span style={{ color: "white !important", fontWeight: "bold" }}>
-            ✖
-          </span>{" "}
-          {/* Red 'x' */}
-        </button>
-      )}
+            width: "100%",
+            padding: "10px",
+            borderRadius: "5px",
+            border: "1px solid #ccc"
+          }}
+        />
+        <div style={{ padding: "2px 10px 10px 10px" }}>
+          {hits} documents found for "{searchTerm}"
+        </div>
+      </div>
 
-      {Object.entries(categories).map(([group, items]) => (
-        <div key={group}>{renderInput(group, items)}</div>
-      ))}
+      {/* Category Selector */}
+      <div
+        style={{
+          marginTop: "80px", // To ensure it's spaced well below the sticky header
+          width: "100%", // Make sure the container takes full width to fit row layout
+          height: "100%",
+          display: "flex", // Use flexbox to align items in a row
+          flexDirection: "row", // Make sure the direction is row
+          gap: "1rem", // Space between each item
+          padding: "1rem",
+          listStyle: "none",
+          border: "1px solid red" // For debugging, remove after testing
+        }}>
+        {/* Conditionally render the reset button if any filters are selected */}
+        {selectedFilterCount > 0 && (
+          <button
+            onClick={resetFilters}
+            style={{
+              borderRadius: "10px",
+              border: "0.5px solid whitesmoke",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignContent: "center",
+              alignItems: "center",
+              color: "white",
+              backgroundColor: "#0053A4"
+            }}>
+            <span
+              style={{
+                backgroundColor: "#3584d2",
+                borderRadius: "12px",
+                padding: "1px 5px",
+                fontSize: "0.7rem"
+              }}>
+              {selectedFilterCount}
+            </span>
+            Clear Filters
+            <span style={{ color: "white !important", fontWeight: "bold" }}>
+              ✖
+            </span>
+          </button>
+        )}
+
+        <div
+          style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
+          {Object.entries(categories).map(([group, items]) => (
+            <div
+              key={group}
+              style={{
+                width: "150px", // Adjust width to fit in a row, or use percentage
+                marginRight: "10px" // Adjust the spacing between elements
+              }}>
+              {renderInput(group, items)}
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
 
-export default CategorySelector;
+export default StickySearchComponent;

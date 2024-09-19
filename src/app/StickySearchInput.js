@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import useDebounce from "./hooks/useDebounce";
 
-function CategorySelector({
-  selectedCategory,
-  setSelectedCategory,
+function StickySearchInput({
   searchTerm,
   setSearchTerm,
+  selectedCategory,
+  setSelectedCategory,
   hits,
   resetFilters
 }) {
@@ -15,6 +15,10 @@ function CategorySelector({
   useEffect(() => {
     setSearchTerm(debouncedSearchTerm);
   }, [debouncedSearchTerm, setSearchTerm]);
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
 
   const categories = {
     Years: [
@@ -160,26 +164,31 @@ function CategorySelector({
   }
 
   return (
-    <div
-      style={{
-        marginTop: "-20px",
-        width: "200px",
-        height: "100%",
-        maxHeight: "80vh",
-        display: "flex",
-        flexDirection: "column",
-        gap: "1rem",
-        padding: "1rem",
-        listStyle: "none",
-        position: "sticky",
-        top: 80,
-        zIndex: 1,
-        overflowY: "auto",
-        border: "0.1px solid lightgrey"
-      }}>
-      {/* Conditionally render the reset button if any filters are selected */}
-      {/* selectedFilterCount > 0 */}
-      {selectedFilterCount > 0  && (
+    <div>
+      <div
+        style={{
+          position: "sticky", // Use sticky positioning
+          top: 80, // Stick to the top when scrolling
+          zIndex: 1000,
+          backgroundColor: "white",
+          padding: "0",
+          width: "100%",
+          marginBottom: "20px"
+        }}>
+        <input
+          type="search"
+          value={inputValue}
+          onChange={handleInputChange}
+          placeholder="Search..."
+          style={{
+            width: "100%",
+            padding: "10px",
+            borderRadius: "5px",
+            border: "1px solid #ccc"
+          }}
+        />
+      </div>
+      {selectedFilterCount > 0 && (
         <button
           onClick={resetFilters}
           style={{
@@ -191,8 +200,7 @@ function CategorySelector({
             alignContent: "center",
             alignItems: "center",
             color: "white",
-            backgroundColor: "#0053A4",
-  
+            backgroundColor: "#0053A4"
           }}>
           <span
             style={{
@@ -206,16 +214,39 @@ function CategorySelector({
           Clear Filters
           <span style={{ color: "white !important", fontWeight: "bold" }}>
             ✖
-          </span>{" "}
-          {/* Red 'x' */}
+          </span>
         </button>
       )}
 
-      {Object.entries(categories).map(([group, items]) => (
-        <div key={group}>{renderInput(group, items)}</div>
-      ))}
+      {/* Display selected categories */}
+      <div
+        style={{
+          marginTop: "10px",
+          width: "200px",
+          display: "flex",
+          flexDirection: "row",
+          gap: "1rem",
+          padding: "1rem",
+          listStyle: "none",
+          border: "0.1px solid lightgrey"
+        }}>
+        {/* Conditionally render the reset button if any filters are selected */}
+
+        {Object.entries(categories).map(([group, items]) => (
+          <div
+            key={group}
+            style={{
+              flex: "1",
+              minWidth: "120px",
+              marginRight: "5px",
+              width: "100%"
+            }}>
+            {renderInput(group, items)}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
 
-export default CategorySelector;
+export default StickySearchInput;

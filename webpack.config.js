@@ -2,6 +2,7 @@ const path = require('path');
 const LiveReloadPlugin = require('webpack-livereload-plugin');
 
 module.exports = {
+  mode: 'development', // You can switch to 'production' for production builds
   entry: './src/app/SearchComponent.js', // Path to your React component
   output: {
     path: path.resolve(__dirname, 'public/js'), // Output directory
@@ -18,6 +19,10 @@ module.exports = {
             presets: ['@babel/preset-env', '@babel/preset-react'] // Use presets for ES6 and React
           }
         }
+      },
+      {
+        test: /\.css$/, // Rule for .css files
+        use: ['style-loader', 'css-loader'] // Use 'style-loader' and 'css-loader'
       }
     ]
   },
