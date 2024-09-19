@@ -402,11 +402,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 		        // webpack-livereload-plugin
 /******/ 		        (function() {
 /******/ 		          if (typeof window === "undefined") { return };
-<<<<<<< HEAD
-/******/ 		          var id = "webpack-livereload-plugin-script-955a74246a878893";
-=======
-/******/ 		          var id = "webpack-livereload-plugin-script-95e5df51b6f9e084";
->>>>>>> skelton
+/******/ 		          var id = "webpack-livereload-plugin-script-e63caf1a46de6c46";
 /******/ 		          if (document.getElementById(id)) { return; }
 /******/ 		          var el = document.createElement("script");
 /******/ 		          el.id = id;
