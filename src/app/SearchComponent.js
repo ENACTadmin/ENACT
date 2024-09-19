@@ -2,57 +2,26 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import Card from "./card";
 import CategorySelector from "./CategorySelector";
-import Pagination from "./Pagination";
 
 function SearchComponent() {
+  const [allItems, setAllItems] = useState([]);
   const [items, setItems] = useState([]);
-  const [categories, setCategories] = useState([]); // Dynamic categories from API
-  const [categoriesWithAmount, setCategoriesWithAmount] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0); // Initialize totalPages from API
-  const [data, setData] = useState([]); // Initialize totalPages from API
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterTerms, setFilterTerms] = useState("");
-
-  const handleSearchChange = (newSearchTerm) => {
-    setSearchTerm(newSearchTerm);
-  };
-
-  const handleFiltersChange = (newSearchTerm) => {
-    setSearchTerm(newSearchTerm);
-  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const response = await fetch("/api/v0/resources/allstats");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        console.log(data.resources);
-        let filteredItems = data.resources;
-
-        if (searchTerm) {
-          filteredItems = data.resources.filter(
-            (item) =>
-              (item.name &&
-                item.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
-              (item.description &&
-                item.description
-                  .toLowerCase()
-                  .includes(searchTerm.toLowerCase())) ||
-              (item.tags &&
-                item.tags.some((tag) =>
-                  tag.toLowerCase().includes(searchTerm.toLowerCase())
-                ))
-          );
-        }
-
-        setItems(filteredItems);
+        setAllItems(data.resources);
+        setItems(data.resources);
         setLoading(false);
       } catch (error) {
         setError(error.message);
@@ -61,33 +30,39 @@ function SearchComponent() {
     };
 
     fetchData();
-  }, [searchTerm]); // React to changes in searchTerm
-
-  useEffect(() => {
-    const fetchCategoriesWithAmount = async () => {
-      try {
-        const response = await fetch("/api/v0/resources/stats/");
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setCategoriesWithAmount(
-          data.totalPerTag.map((tag) => [tag.tag, tag.count])
-        ); // Assuming the response structure has a 'totalPerTag' field
-      } catch (error) {
-        setError(error.message);
-      }
-    };
-
-    fetchCategoriesWithAmount();
   }, []);
 
-  if (loading && !error) return <div></div>;
+  useEffect(() => {
+    let filteredItems = allItems;
+
+    if (searchTerm) {
+      filteredItems = filteredItems.filter(item =>
+        item.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.description?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    Object.keys(selectedCategory).forEach(key => {
+      if (key === "Topics") {
+        filteredItems = filteredItems.filter(item =>
+          item.tags && item.tags.some(tag => tag.toLowerCase() === selectedCategory[key].toLowerCase())
+        );
+      } else if (key === "Years") {
+        filteredItems = filteredItems.filter(item =>
+          `${item.yearOfCreation}` === selectedCategory[key]
+        );
+      } else if (key !== "Types") {
+        filteredItems = filteredItems.filter(item =>
+          item[key] && item[key].toLowerCase() === selectedCategory[key].toLowerCase()
+        );
+      }
+    });
+
+    setItems(filteredItems);
+  }, [searchTerm, selectedCategory, allItems]);
+
+  if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
-  const sorted = categories.sort((a, b) =>
-    a.toUpperCase().localeCompare(b.toUpperCase())
-  );
-  // console.log(sorted);
 
   return (
     <div
@@ -97,7 +72,6 @@ function SearchComponent() {
         alignItems: "center",
         gap: "20px"
       }}>
-      <h1>{searchTerm}</h1>
       <section
         style={{ display: "flex", flexDirection: "row", maxWidth: "1000px" }}>
         <nav
@@ -109,11 +83,11 @@ function SearchComponent() {
             width: "100%"
           }}>
           <CategorySelector
-            categories={categories}
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
             searchTerm={searchTerm}
-            setSearchTerm={handleSearchChange} // Pass the handler
+            setSearchTerm={setSearchTerm}
+            hits={items.length} 
           />
         </nav>
         <aside
@@ -123,47 +97,29 @@ function SearchComponent() {
             alignItems: "center",
             minWidth: "800px"
           }}>
-            
-          {loading ? (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                flexWrap: "wrap"
-              }}>
-              {Array.from({ length: 5 }).map((_, index) => (
-                <SkeletonCard key={index} />
-              ))}
-            </div>
-          ) : (
-            <ul
-              style={{
-                width: "100%",
-                listStyleType: "none",
-                display: "flex",
-                flexDirection: "column",
-                gap: "0.4rem"
-              }}>
-              {items.map((item) => (
-                <Card
-                  key={item._id}
-                  title={item.name}
-                  description={item.description}
-                  link={item.uri}
-                  state={item.state}
-                  type={item.mediaType}
-                  year={item.yearOfCreation}
-                  author={item.authorName}
-                  tags={item.tags}
-                />
-              ))}
-            </ul>
-          )}
-          {/* <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          /> */}
+          <ul
+            style={{
+              width: "100%",
+              listStyleType: "none",
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.4rem"
+            }}>
+            {items.length > 0 ? items.map(item => (
+              <Card
+                key={item._id}
+                title={item.name}
+                description={item.description}
+                link={item.uri}
+                state={item.state}
+                type={item.mediaType}
+                year={item.yearOfCreation}
+                author={item.authorName}
+                tags={item.tags}
+                institution={item.institution}
+              />
+            )) : <li>No items found matching your criteria.</li>}
+          </ul>
         </aside>
       </section>
     </div>

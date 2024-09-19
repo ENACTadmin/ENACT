@@ -661,13 +661,10 @@ exports.getResourcesAndStats = async (req, res, next) => {
                     resourceType: 1,
                     institution: 1,
                     yearOfCreation: 1,
-                    checkStatus: 1,
                     contentType: 1,
                     mediaType: 1,
-                    createdAt: 1,
                     authorName: "$ownerDetails.userName",
                     courseName: "$courseDetails.courseName",
-                    facultyId: 1
                 }
             }
         ];
