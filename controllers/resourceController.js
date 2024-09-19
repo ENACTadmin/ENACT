@@ -250,6 +250,18 @@ exports.getResourceById = async (req, res, next) => {
     }
 };
 
+exports.renderStudentGuidePage = async (req, res, next) => {
+    try {
+        // Fetch resources where contentType is "Student Advice"
+        let resourceInfo = await Resource.find({ contentType: 'Student Advice' });
+
+        // Render the EJS page and pass the filtered resources to the view
+        res.render('./pages/student-guide', { resourceInfo: resourceInfo });
+    } catch (e) {
+        next(e);
+    }
+};
+
 
 exports.getResourceStats = async (req, res, next) => {
     try {
@@ -535,7 +547,7 @@ exports.renderResourceStatsPage = async (req, res, next) => {
         const totalPerYear = await Resource.aggregate(totalPerYearPipeline);
 
         // Pass data to the EJS template
-        res.render("pages/stats/resourceStats", {
+        res.render("./pages/stats/resourceStats", {
             totalResources: totalResources ? totalResources.total : 0,
             totalApproved: totalApproved ? totalApproved.total : 0,
             totalPrivateToENACT: totalPrivateToENACT ? totalPrivateToENACT.total : 0,
