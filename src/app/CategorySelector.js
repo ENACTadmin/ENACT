@@ -5,23 +5,60 @@ function CategorySelector({
   selectedCategory,
   setSelectedCategory,
   searchTerm,
-  setSearchTerm
+  setSearchTerm,
+  hits
 }) {
   const [inputValue, setInputValue] = useState(searchTerm);
-  const debouncedSearchTerm = useDebounce(inputValue, 250); // Debounce the input by 500ms
+  const debouncedSearchTerm = useDebounce(inputValue, 250); // Debounce the input by 250ms
 
   useEffect(() => {
     setSearchTerm(debouncedSearchTerm);
   }, [debouncedSearchTerm, setSearchTerm]);
 
-  // Define categories directly
+  // useEffect(() => {
+  //   console.log("Selected Category:", selectedCategory);
+  // }, [selectedCategory]);
+
+  // Define categories with appropriate input types
   const categories = {
     "Types": ["Op-ed", "Research", "Tool", "Other"],
-    "Years": ["2021", "2020", "2019", "2018", "2017", "2016", "2015"],
+    "Years": [2025, 2024, 2023, 2022, 2021, 2020],
     "State": ["MA", "CA", "NY", "TX", "FL", "IL", "PA"],
-    "Institutions": ["Brandeis", "Harvard", "MIT", "Stanford", "Yale", "Princeton", "Columbia"],
-    "Topic(s)/Issue(s)": ["Health", "Education", "Environment", "Economy", "Social Justice", "Other"],
+    "Topics": ["Health", "Education", "Environment", "Economy", "Social Justice", "Other"]
   };
+
+  function renderInput(group, items) {
+    switch (group) {
+      case "State":
+      case "Years": // Using dropdowns for "State" and "Years"
+        return (
+          <select
+            value={selectedCategory[group] || ''}
+            onChange={(e) => setSelectedCategory({ ...selectedCategory, [group]: e.target.value })}
+            style={{ marginBottom: "20px", padding: "5px", width: "100%" }}
+          >
+            {items.map((item, index) => <option key={index} value={item}>{item}</option>)}
+          </select>
+        );
+      case "Types":
+      case "Topic(s)/Issue(s)": // Using radio buttons for "Types" and "Topic(s)/Issue(s)"
+        return items.map((categoryName, index) => (
+          <label key={index} style={{ display: "block", marginTop: "5px", listStyle: "none" }}>
+            <input
+              type="radio"
+              name={group}
+              value={categoryName}
+              checked={selectedCategory[group] === categoryName}
+              onChange={() => setSelectedCategory({ ...selectedCategory, [group]: categoryName })}
+              style={{ marginRight: "5px" }}
+            />
+            {categoryName}
+          </label>
+        ));
+      default:
+        return null; // Default case for unexpected categories
+    }
+  }
 
   return (
     <div
@@ -29,7 +66,6 @@ function CategorySelector({
         width: "200px",
         height: "100%",
         maxHeight: "80vh",
-        // backgroundColor: "whitesmoke",
         display: "flex",
         flexDirection: "column",
         gap: "1rem",
@@ -51,28 +87,9 @@ function CategorySelector({
       />
 
       {Object.entries(categories).map(([group, items]) => (
-        <details key={group}>
+        <details key={group} open>
           <summary>{group}</summary>
-          {items.map((categoryName, index) => (
-            <label
-              key={index}
-              style={{
-                display: "block",
-                marginTop: "5px",
-                listStyle: "none"
-              }}
-            >
-              <input
-                type="radio"
-                name="category"
-                value={categoryName}
-                checked={selectedCategory === categoryName}
-                onChange={() => setSelectedCategory(categoryName)}
-                style={{ marginRight: "5px" }}
-              />
-              {categoryName}
-            </label>
-          ))}
+          {renderInput(group, items)}
         </details>
       ))}
     </div>
