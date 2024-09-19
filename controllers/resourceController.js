@@ -5,6 +5,7 @@ const Tag = require("../models/Tag");
 const Resource = require("../models/Resource");
 const ResourceSet = require("../models/ResourceSet");
 const AuthorAlt = require("../models/AuthorAlternative");
+const SearchKeyword = require("../models/SearchKeyword");
 const mongoose = require("mongoose");
 
 // Function to retrieve all resources with expanded owner and course information
@@ -385,45 +386,63 @@ exports.getResourceUnique = async (req, res, next) => {
 // Function to retrieve resources filtered by a substring in the name with pagination
 exports.getResourcesByKeyword = async (req, res) => {
   try {
-    const keyword = req.query.searchString;
+    const keyword = decodeURIComponent(req.query.searchString).trim(); // Decode and trim the search string
     if (!keyword) {
       return res
         .status(400)
         .json({ error: "searchString parameter is missing" });
     }
 
+
+
+    // Save the keyword into the searchKeywords collection
+    try {
+      await SearchKeyword.updateOne(
+        { keyword: keyword },
+        { $inc: { searchCount: 1 } },
+        { upsert: true }
+      );
+    } catch (err) {
+      if (err.code !== 11000) {
+        // 11000 is the error code for duplicate key
+        throw err; // Rethrow error if it's not a duplicate key error
+      }
+      // If it's a duplicate key error, we can safely ignore it
+    }
+
     // Create a regex object from the keyword
-    const nameRegex = new RegExp(keyword, "i"); // Case-insensitive regex search
+    const keywordRegex = new RegExp(keyword, "i"); // Case-insensitive regex search
 
     const resourcesPipeline = [
       {
         $match: {
-          or: [
+          $or: [
             // Search across multiple fields
             { name: { $regex: keywordRegex } },
-            { description: { $regex: keywordRegex } },
+            // { description: { $regex: keywordRegex } }
+            // Uncomment below if you want to search in tags too
             // { tags: { $regex: keywordRegex } }
           ]
         }
       },
       {
         $lookup: {
-          from: "users",
+          from: "users", // The collection name of users
           localField: "ownerId",
           foreignField: "_id",
           as: "ownerDetails"
         }
       },
-      { $unwind: "$ownerDetails" },
+      { $unwind: "$ownerDetails" }, // Flatten the result to have a single object
       {
         $lookup: {
-          from: "courses",
+          from: "courses", // The collection name of courses
           localField: "courseId",
           foreignField: "_id",
           as: "courseDetails"
         }
       },
-      { $unwind: "$courseDetails" },
+      { $unwind: "$courseDetails" }, // Flatten the result to have a single object
       {
         $project: {
           _id: 1,
@@ -439,8 +458,8 @@ exports.getResourcesByKeyword = async (req, res) => {
           contentType: 1,
           mediaType: 1,
           createdAt: 1,
-          authorName: "$ownerDetails.userName", // Replace `ownerId` with `userName`
-          courseName: "$courseDetails.courseName" // Replace `courseId` with `courseName`
+          authorName: "$ownerDetails.userName", // Replacing ownerId with the owner's name
+          courseName: "$courseDetails.courseName" // Replacing courseId with the course's name
         }
       }
     ];
@@ -448,15 +467,14 @@ exports.getResourcesByKeyword = async (req, res) => {
     // Execute the aggregation pipeline
     const resourcesByKeyword = await Resource.aggregate(resourcesPipeline);
 
-    // Return the resources
-    res.json({
-      data: resourcesByKeyword
-    });
+    // Return only the array of resources, not an object with a `data` field
+    res.json(resourcesByKeyword);
   } catch (e) {
     console.error("Error in getResourcesByKeyword:", e);
     res.status(500).json({ error: "Server error" });
   }
 };
+
 
 exports.getResources = async (req, res, next) => {
   try {

@@ -257,7 +257,7 @@ app.get('/api/v0/resources/searchByKeyword', (req, res) => {
     return res.status(400).json({ error: "searchString parameter is missing" });
   }
   const keyword = req.query.searchString;
-  console.log("Search query:", keyword);
+  // console.log("Search query:", keyword);
   // Call the controller function, passing the keyword and Express req, res objects
   resourceController.getResourcesByKeyword(req, res, keyword);
 });

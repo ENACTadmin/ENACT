@@ -12,7 +12,7 @@ function StickySearchInput({
   resetFilters
 }) {
   const [inputValue, setInputValue] = useState(searchTerm);
-  const debouncedSearchTerm = useDebounce(inputValue, 250); // Debounce the input by 250ms
+  const debouncedSearchTerm = useDebounce(inputValue, 400); // Debounce the input by 250ms
 
   useEffect(() => {
     setSearchTerm(debouncedSearchTerm);
