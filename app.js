@@ -243,6 +243,7 @@ app.get(
 //Resource API for ENACT-Data-Apps
 app.get("/api/v0/resources/", resourceController.getResources);
 app.get("/api/v0/resources/all", resourceController.getAllResources);
+app.get("/api/v0/resources/sets", resourceController.getResourceUnique);
 app.get("/api/v0/resources/allstats", resourceController.getResourcesAndStats);
 app.get("/api/v0/resources/stats", resourceController.getResourceStats);
 app.get("/api/v0/resources/search", (req, res) => {

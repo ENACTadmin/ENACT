@@ -11,17 +11,24 @@ function SearchComponent() {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
 
+  function resetFilters() {
+    setSelectedCategory({});
+    setSearchTerm("");
+    setItems(allItems);
+  }
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch("/api/v0/resources/allstats");
+        const response = await fetch("/api/v0/resources/all");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        setAllItems(data.resources);
-        setItems(data.resources);
+        console.log("here", data.length);
+        setAllItems(data);
+        setItems(data);
         setLoading(false);
       } catch (error) {
         setError(error.message);
@@ -34,33 +41,46 @@ function SearchComponent() {
 
   useEffect(() => {
     let filteredItems = allItems;
-
+  
     if (searchTerm) {
       filteredItems = filteredItems.filter(item =>
         item.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.description?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-
+  
     Object.keys(selectedCategory).forEach(key => {
-      if (key === "Topics") {
-        filteredItems = filteredItems.filter(item =>
-          item.tags && item.tags.some(tag => tag.toLowerCase() === selectedCategory[key].toLowerCase())
-        );
-      } else if (key === "Years") {
-        filteredItems = filteredItems.filter(item =>
-          `${item.yearOfCreation}` === selectedCategory[key]
-        );
-      } else if (key !== "Types") {
-        filteredItems = filteredItems.filter(item =>
-          item[key] && item[key].toLowerCase() === selectedCategory[key].toLowerCase()
-        );
+      if (filteredItems.length === 0) return; // Short-circuit if no items left to filter
+      
+      switch (key) {
+        case "Topics":
+          filteredItems = filteredItems.filter(item =>
+            item.tags && item.tags.some(tag => tag.toLowerCase() === selectedCategory[key].toLowerCase())
+          );
+          break;
+        case "Years":
+          filteredItems = filteredItems.filter(item =>
+            `${item.yearOfCreation}` === selectedCategory[key]
+          );
+          break;
+        case "State":
+          filteredItems = filteredItems.filter(item =>
+            item.state && item.state.toLowerCase() === selectedCategory[key].toLowerCase()
+          );
+          break;
+        default:
+          if (key !== "Types") {
+            filteredItems = filteredItems.filter(item =>
+              item[key] && item[key].toLowerCase() === selectedCategory[key].toLowerCase()
+            );
+          }
+          break;
       }
     });
-
+  
     setItems(filteredItems);
   }, [searchTerm, selectedCategory, allItems]);
-
+  
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -88,6 +108,7 @@ function SearchComponent() {
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
             hits={items.length} 
+            resetFilters={resetFilters}
           />
         </nav>
         <aside
