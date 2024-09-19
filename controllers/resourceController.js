@@ -8,22 +8,6 @@ const AuthorAlt = require('../models/AuthorAlternative')
 const mongoose = require('mongoose');
 
 
-// Function to retrieve all resources
-// exports.getAllResources = async (req, res, next) => {
-//     try {
-//         // Retrieve all resource documents
-//         const allResources = await Resource.find({});
-//         // Optionally, modify or filter the documents as needed here
-
-//         // Return or send the array of all resources
-//         res.json(allResources);
-//     } catch (e) {
-//         // Handle any errors that occur during the process
-//         next(e);
-//     }
-// };
-
-
 // Function to retrieve all resources with expanded owner and course information
 exports.getAllResources = async (req, res, next) => {
     try {
@@ -357,6 +341,51 @@ exports.getResourceStats = async (req, res, next) => {
         next(e);
     }
 };
+
+exports.getResourceUnique = async (req, res, next) => {
+    try {
+        // Aggregation pipelines for collecting unique sets
+        const contentTypesPipeline = [
+            { $group: { _id: null, contentTypes: { $addToSet: "$contentType" } } },
+            { $project: { _id: 0, contentTypes: 1 } }
+        ];
+
+        const mediaTypesPipeline = [
+            { $group: { _id: null, mediaTypes: { $addToSet: "$mediaType" } } },
+            { $project: { _id: 0, mediaTypes: 1 } }
+        ];
+
+        const institutionsPipeline = [
+            { $group: { _id: null, institutions: { $addToSet: "$institution" } } },
+            { $project: { _id: 0, institutions: 1 } }
+        ];
+
+        const yearsPipeline = [
+            { $group: { _id: null, years: { $addToSet: "$yearOfCreation" } } },
+            { $project: { _id: 0, years: 1 } }
+        ];
+
+        // Execute the aggregation pipelines
+        const [contentTypes] = await Resource.aggregate(contentTypesPipeline);
+        const [mediaTypes] = await Resource.aggregate(mediaTypesPipeline);
+        const [institutions] = await Resource.aggregate(institutionsPipeline);
+        const [years] = await Resource.aggregate(yearsPipeline);
+
+        // Construct the final sets response
+        const sets = {
+            contentTypes: contentTypes ? contentTypes.contentTypes : [],
+            mediaTypes: mediaTypes ? mediaTypes.mediaTypes : [],
+            institutions: institutions ? institutions.institutions : [],
+            years: years ? years.years : []
+        };
+
+        // Send back the sets of values
+        res.json(sets);
+    } catch (e) {
+        next(e);
+    }
+};
+
 
 
 
