@@ -1,42 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import useDebounce from "./hooks/useDebounce";
 
 function CategorySelector({
-  categories,
   selectedCategory,
   setSelectedCategory,
-  searchTerm, // This prop is now received from the parent
-  setSearchTerm // This prop is now received from the parent
+  searchTerm,
+  setSearchTerm
 }) {
-  const groupCategories = () => {
-    const groups = { "A-G": [], "H-M": [], "N-T": [], "U-Z": [] };
-    categories.forEach(([categoryName, count]) => {
-      const regex = /\b(course|semester)\b/i;
+  const [inputValue, setInputValue] = useState(searchTerm);
+  const debouncedSearchTerm = useDebounce(inputValue, 250); // Debounce the input by 500ms
 
-      // Skip categories that match the regex pattern
-      if (regex.test(categoryName)) {
-        return; // Continue to the next iteration of the forEach loop
-      }
+  useEffect(() => {
+    setSearchTerm(debouncedSearchTerm);
+  }, [debouncedSearchTerm, setSearchTerm]);
 
-      const firstLetter = categoryName[0].toUpperCase();
-      if ("A" <= firstLetter && firstLetter <= "G")
-        groups["A-G"].push([categoryName, count]);
-      else if ("H" <= firstLetter && firstLetter <= "M")
-        groups["H-M"].push([categoryName, count]);
-      else if ("N" <= firstLetter && firstLetter <= "T")
-        groups["N-T"].push([categoryName, count]);
-      else if ("U" <= firstLetter && firstLetter <= "Z")
-        groups["U-Z"].push([categoryName, count]);
-    });
-
-    // Sort each group by category name
-    Object.keys(groups).forEach((group) => {
-      groups[group].sort((a, b) => a[0].localeCompare(b[0]));
-    });
-
-    return groups;
+  // Define categories directly
+  const categories = {
+    "Types": ["Op-ed", "Research", "Tool", "Other"],
+    "Years": ["2021", "2020", "2019", "2018", "2017", "2016", "2015"],
+    "State": ["MA", "CA", "NY", "TX", "FL", "IL", "PA"],
+    "Institutions": ["Brandeis", "Harvard", "MIT", "Stanford", "Yale", "Princeton", "Columbia"],
+    "Topic(s)/Issue(s)": ["Health", "Education", "Environment", "Economy", "Social Justice", "Other"],
   };
-
-  const groupedCategories = groupCategories();
 
   return (
     <div
@@ -44,7 +29,7 @@ function CategorySelector({
         width: "200px",
         height: "100%",
         maxHeight: "80vh",
-        backgroundColor: "whitesmoke",
+        // backgroundColor: "whitesmoke",
         display: "flex",
         flexDirection: "column",
         gap: "1rem",
@@ -53,27 +38,30 @@ function CategorySelector({
         position: "sticky",
         top: 100,
         zIndex: 1,
-        overflowY: "auto"
-      }}>
+        overflowY: "auto",
+        border: "0.1px solid lightgrey"
+      }}
+    >
       <input
-        type="search" // Change the type to "search" to get a clear button
+        type="search"
         placeholder="Search..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
         style={{ marginBottom: "20px", padding: "5px", width: "100%" }}
       />
 
-      {Object.entries(groupedCategories).map(([group, items]) => (
+      {Object.entries(categories).map(([group, items]) => (
         <details key={group}>
           <summary>{group}</summary>
-          {items.map(([categoryName, count], index) => (
+          {items.map((categoryName, index) => (
             <label
               key={index}
               style={{
                 display: "block",
                 marginTop: "5px",
                 listStyle: "none"
-              }}>
+              }}
+            >
               <input
                 type="radio"
                 name="category"
@@ -82,7 +70,7 @@ function CategorySelector({
                 onChange={() => setSelectedCategory(categoryName)}
                 style={{ marginRight: "5px" }}
               />
-              {`${categoryName} (${count})`}
+              {categoryName}
             </label>
           ))}
         </details>
