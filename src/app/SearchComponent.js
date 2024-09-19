@@ -1,86 +1,125 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import Card from "./card";
-import CategorySelector from "./CategorySelector";
-import Pagination from "./Pagination";
+import StickySearchInput from "./StickySearchInput";
 
 function SearchComponent() {
+  const [allItems, setAllItems] = useState([]);
   const [items, setItems] = useState([]);
-  const [categories, setCategories] = useState([]); // Dynamic categories from API
-  const [categoriesWithAmount, setCategoriesWithAmount] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0); // Initialize totalPages from API
+  const [searchTerm, setSearchTerm] = useState("");
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch("/api/v0/resources/stats/");
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setCategories(data.totalPerTag.map((tag) => tag.tag)); // Assuming the response structure has a 'totalPerTag' field
-      } catch (error) {
-        setError(error.message);
+  const recommendations = [
+    "Op-Ed",
+    "Elevator Pitch",
+    "NY",
+    "Brandeis University"
+  ];
+
+  function resetFilters() {
+    setSelectedCategory({});
+    setSearchTerm("");
+    setItems(allItems);
+  }
+
+  // Refactor fetchData to check if searchTerm is empty
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      let response;
+
+      if (!searchTerm) {
+        response = await fetch("/api/v0/resources/all");
+      } else {
+        response = await fetch(
+          `/api/v0/resources/searchByKeyword?searchString=${searchTerm}`
+        );
       }
-    };
 
-    fetchCategories();
-  }, []);
-
-  useEffect(() => {
-    const fetchCategoriesWithAmount = async () => {
-      try {
-        const response = await fetch("/api/v0/resources/stats/");
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setCategoriesWithAmount(
-          data.totalPerTag.map((tag) => [tag.tag, tag.count])
-        ); // Assuming the response structure has a 'totalPerTag' field
-      } catch (error) {
-        setError(error.message);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    };
 
-    fetchCategoriesWithAmount();
-  }, []);
+      const data = await response.json();
 
-  console.log(categoriesWithAmount);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const url = selectedCategory
-          ? `/api/v0/resources/tags/${selectedCategory}?page=${currentPage}&limit=10`
-          : `/api/v0/resources?page=${currentPage}&limit=10`;
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setItems(data.data);
-        setTotalPages(data.totalPages || 0); // Assume 'totalPages' is the key, default to 1 if not provided
-        setLoading(false);
-      } catch (error) {
-        setError(error.message);
-        setLoading(false);
+      // Ensure data is an array, or set an empty array if no results
+      if (Array.isArray(data)) {
+        setAllItems(data);
+        setItems(data);
+      } else {
+        setAllItems([]);
+        setItems([]);
       }
-    };
 
+      setLoading(false);
+    } catch (error) {
+      setError(error.message);
+      setAllItems([]); // Set items to empty array in case of an error
+      setItems([]);
+      setLoading(false);
+    }
+  };
+
+  // Fetch data on initial render and when searchTerm changes
+  useEffect(() => {
     fetchData();
-  }, [currentPage, selectedCategory]); // Dependency on currentPage and selectedCategory
+  }, [searchTerm]);
 
-  if (loading && !error) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  const sorted = categories.sort((a, b) =>
-    a.toUpperCase().localeCompare(b.toUpperCase())
-  );
-  console.log(sorted);
+  useEffect(() => {
+    let filteredItems = Array.isArray(allItems) ? allItems : [];
+
+    if (searchTerm) {
+      filteredItems = filteredItems.filter(
+        (item) =>
+          item.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.description?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    Object.keys(selectedCategory).forEach((key) => {
+      if (filteredItems.length === 0) return; // Short-circuit if no items left to filter
+
+      switch (key) {
+        case "Topics":
+          filteredItems = filteredItems.filter(
+            (item) =>
+              item.tags &&
+              item.tags.some(
+                (tag) =>
+                  tag.toLowerCase() === selectedCategory[key].toLowerCase()
+              )
+          );
+          break;
+        case "Years":
+          filteredItems = filteredItems.filter(
+            (item) => `${item.yearOfCreation}` === selectedCategory[key]
+          );
+          break;
+        case "State":
+          filteredItems = filteredItems.filter(
+            (item) =>
+              item.state &&
+              item.state.toLowerCase() === selectedCategory[key].toLowerCase()
+          );
+          break;
+        default:
+          if (key !== "Types") {
+            filteredItems = filteredItems.filter(
+              (item) =>
+                item[key] &&
+                item[key].toLowerCase() === selectedCategory[key].toLowerCase()
+            );
+          }
+          break;
+      }
+    });
+
+    setItems(filteredItems); // Set filtered results
+  }, [searchTerm, selectedCategory, allItems]);
 
   return (
     <div
@@ -88,61 +127,58 @@ function SearchComponent() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: "20px"
+        gap: "20px",
+        paddingBottom: "100px"
       }}>
-      {/* <input
-        type="text"
-        placeholder="Search..."
-        style={{ width: "500px", marginBottom: "20px" }}
-      /> */}
       <section
         style={{ display: "flex", flexDirection: "row", maxWidth: "1000px" }}>
-        <nav
-          style={{
-            padding: "1rem",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "start",
-            width: "100%"
-          }}>
-          <CategorySelector
-            categories={categoriesWithAmount}
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-          />
-        </nav>
         <aside
           style={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            minWidth: "800px"
+            minWidth: "900px"
           }}>
-          {/* <ul style={{ width: "100%", listStyleType: "none" }}>
-            {items.map((item) => (
-              
-                <Card
-                  key={item._id}
-                  title={item.name}
-                  description={item.description}
-                  link={item.uri}
-                  state={item.state}
-                  type={item.resourceType}
-                  year={item.yearOfCreation}
-                  author={item.authorName}
-                />
-           
-            ))}
-          </ul> */}
+          <StickySearchInput
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            hits={items.length}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            resetFilters={resetFilters}
+          />
+          {error && <div>Error: {error}</div>}
           {loading ? (
             <div
               style={{
                 display: "flex",
-                flexDirection: "row",
-                flexWrap: "wrap"
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "20px"
               }}>
               {Array.from({ length: 5 }).map((_, index) => (
-                <SkeletonCard key={index} />
+                <div
+                  key={index}
+                  style={{
+                    width: "1000px",
+                    height: "200px",
+                    border: "2px solid #f0f0f0",
+                    marginBottom: "20px",
+                    borderRadius: "8px",
+                    padding: "20px"
+                  }}>
+                  <Skeleton height={30} width="80%" />
+                  <Skeleton
+                    height={20}
+                    width="90%"
+                    style={{ marginTop: "10px" }}
+                  />
+                  <Skeleton
+                    height={60}
+                    width="100%"
+                    style={{ marginTop: "20px" }}
+                  />
+                </div>
               ))}
             </div>
           ) : (
@@ -152,27 +188,79 @@ function SearchComponent() {
                 listStyleType: "none",
                 display: "flex",
                 flexDirection: "column",
-                gap: "0.4rem"
+                gap: "0.4rem",
+                padding: "0",
+                margin: "0",
+                justifyContent: "center",
+                alignContent: "center",
+                alignItems: "center"
               }}>
-              {items.map((item) => (
-                <Card
-                  key={item._id}
-                  title={item.name}
-                  description={item.description}
-                  link={item.uri}
-                  state={item.state}
-                  type={item.resourceType}
-                  year={item.yearOfCreation}
-                  author={item.authorName}
-                />
-              ))}
+              {items.length > 0 ? (
+                items.map((item) => (
+                  <Card
+                    key={item._id}
+                    title={item.name}
+                    description={item.description}
+                    link={item.uri}
+                    state={item.state}
+                    type={item.mediaType}
+                    year={item.yearOfCreation}
+                    author={item.authorName}
+                    tags={item.tags}
+                    institution={item.institution}
+                  />
+                ))
+              ) : (
+                <div>
+                  <div
+                    style={{
+                      textAlign: "center",
+                      marginTop: "20px",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "2rem",
+                      justifyContent: "center",
+                      alignContent: "center",
+                      alignItems: "center"
+                    }}>
+                    <p>
+                      No items found matching your criteria. Why not try one of
+                      these?
+                    </p>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        gap: "10px"
+                      }}>
+                      {recommendations.map((recommendation, index) => (
+                        <button
+                          key={index}
+                          onClick={() => setSearchTerm(recommendation)}
+                          style={{
+                            padding: "10px 20px",
+                            borderRadius: "5px",
+                            border: "none",
+                            backgroundColor: "#f0f0f0",
+                            cursor: "pointer"
+                          }}>
+                          {recommendation}
+                        </button>
+                      ))}
+                    </div>
+                    <svg
+                      width="50%"
+                      height="50%"
+                      viewBox="0 0 48 59"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      {/* SVG content here */}
+                    </svg>
+                  </div>
+                </div>
+              )}
             </ul>
           )}
-          <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
         </aside>
       </section>
     </div>
