@@ -8,7 +8,7 @@ function CategorySelector({
   setSearchTerm
 }) {
   const [inputValue, setInputValue] = useState(searchTerm);
-  const debouncedSearchTerm = useDebounce(inputValue, 200); // Debounce the input by 500ms
+  const debouncedSearchTerm = useDebounce(inputValue, 250); // Debounce the input by 500ms
 
   useEffect(() => {
     setSearchTerm(debouncedSearchTerm);
