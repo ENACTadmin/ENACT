@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 
 const Card = (props) => {
-  // console.log("card",props);
+  console.log("card",props.tags);
   return (
     <div style={{border: "0.2rem solid whitesmoke", padding:"1.5rem"}}>
       <h1 style={{fontSize:"1.4rem"}}>{props.title}</h1>
@@ -11,6 +11,7 @@ const Card = (props) => {
       <p>{props.state}</p>
       <p>{props.type}</p>
       <p>{props.author}</p>
+      {props.tags.map((tag, index) => <p key={index}>{tag}</p>)}
       <a href={props.link} target="_blank">Download</a>
     </div>
   );
