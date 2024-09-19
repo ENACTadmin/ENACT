@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 const Card = (props) => {
  
   return (
-    <div style={{ border: "0.2rem solid whitesmoke", padding: "1.5rem" }}>
+    <div style={{ border: "2px solid whitesmoke", padding: "1.5rem" }}>
       <h1 style={{ fontSize: "1.4rem" }}>{props.title}</h1>
       <p>{props.description}</p>
       <hr style={{ boxShadow: "none" }}></hr>

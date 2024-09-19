@@ -246,10 +246,22 @@ app.get("/api/v0/resources/all", resourceController.getAllResources);
 app.get("/api/v0/resources/sets", resourceController.getResourceUnique);
 app.get("/api/v0/resources/allstats", resourceController.getResourcesAndStats);
 app.get("/api/v0/resources/stats", resourceController.getResourceStats);
-app.get("/api/v0/resources/search", (req, res) => {
-  console.log("Search query:", req.query.search);
-  resourceController.getResourcesByKeyWord(req, res);
+// app.get("/api/v0/resources/search", (req, res) => {
+//   console.log("Search query:", req.query.search);
+//   resourceController.getResourcesByKeyWord(req, res);
+// });
+
+app.get('/api/v0/resources/searchByKeyword', (req, res) => {
+  // Check if the searchString query parameter is provided
+  if (!req.query.searchString) {
+    return res.status(400).json({ error: "searchString parameter is missing" });
+  }
+  const keyword = req.query.searchString;
+  console.log("Search query:", keyword);
+  // Call the controller function, passing the keyword and Express req, res objects
+  resourceController.getResourcesByKeyword(req, res, keyword);
 });
+
 
 
 app.get("/api/v0/resources/storage/:id", resourceController.getResourceById); 

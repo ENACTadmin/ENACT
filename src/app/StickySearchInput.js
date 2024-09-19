@@ -164,17 +164,17 @@ function StickySearchInput({
   }
 
   return (
-    <div>
-      <div
-        style={{
-          position: "sticky", // Use sticky positioning
-          top: 80, // Stick to the top when scrolling
-          zIndex: 1000,
-          backgroundColor: "white",
-          padding: "0",
-          width: "100%",
-          marginBottom: "20px"
-        }}>
+    <div
+      style={{
+        position: "sticky", // Use sticky positioning
+        top: 80, // Stick to the top when scrolling
+        zIndex: 1000,
+        backgroundColor: "white",
+        padding: "0",
+        width: "100%",
+        marginBottom: "20px"
+      }}>
+      <div>
         <input
           type="search"
           value={inputValue}
@@ -222,13 +222,13 @@ function StickySearchInput({
       <div
         style={{
           marginTop: "10px",
-          width: "200px",
+          width: "100%",
           display: "flex",
           flexDirection: "row",
           gap: "1rem",
           padding: "1rem",
           listStyle: "none",
-          border: "0.1px solid lightgrey"
+        //   border: "0.1px solid lightgrey"
         }}>
         {/* Conditionally render the reset button if any filters are selected */}
 
