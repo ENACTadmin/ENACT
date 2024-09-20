@@ -9,13 +9,6 @@ const session = require("express-session");
 const mailRouter = require('./routes/mail'); 
 
 //*******************************************
-//***********Development****************
-// const livereload = require("livereload");
-// const connectLivereload = require("connect-livereload");
-// const liveReloadServer = livereload.createServer();
-// liveReloadServer.watch(path.join(__dirname, "public"));
-
-//*******************************************
 //***********Database Schemas****************
 const Event = require("./models/Event");
 const Course = require("./models/Course");
@@ -39,8 +32,6 @@ const utils = require("./controllers/utils");
 
 //*******************************************
 //***********Database connection*************
-// const MONGODB_URI = 'mongodb://localhost/ENACT';
-// const MONGODB_URI = process.env.MONGODB_URI_IND || 'mongodb://localhost/ENACT';
 const MONGODB_URI =
   "mongodb+srv://heroku_s59qt61k:suo0sir3rh8b104b38574ju3dm@cluster-s59qt61k.xy6rv.mongodb.net/heroku_s59qt61k?retryWrites=true&w=majority" ||
   "mongodb://localhost/ENACT";
@@ -63,14 +54,6 @@ db.once("open", function () {
 //***********Middleware setup****************
 
 const app = express();
-
-// development web app reload
-// app.use(connectLivereload());
-// liveReloadServer.server.once("connection", () => {
-//   setTimeout(() => {
-//     liveReloadServer.refresh("/");
-//   }, 100);
-// });
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -281,7 +264,6 @@ app.get("/resources/stats/page", resourceController.renderResourceStatsPage);
 app.get("/resources/:id", resourceController.getResourceById); 
 
 
-
 // upload resource to a course
 app.get(
   "/resource/upload/course/:courseId",
@@ -388,6 +370,12 @@ app.get(
   utils.checkUserName,
   resourceController.loadAllFacultyResources,
   (req, res) => res.render("./pages/showFacultyGuide")
+);
+
+// get student guide resources by students
+app.get(
+  "/resources/view/student-guide",
+  resourceController.renderStudentGuidePage,
 );
 
 // get faculty-only resources for a certain contentType
