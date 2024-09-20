@@ -12,7 +12,7 @@ function StickySearchInput({
   resetFilters
 }) {
   const [inputValue, setInputValue] = useState(searchTerm);
-  const debouncedSearchTerm = useDebounce(inputValue, 400); // Debounce the input by 250ms
+  const debouncedSearchTerm = useDebounce(inputValue, 800); // Debounce the input by 250ms
 
   useEffect(() => {
     setSearchTerm(debouncedSearchTerm);
@@ -24,59 +24,39 @@ function StickySearchInput({
 
   const categories = {
     Years: [
-      2009, 1830, 2011, 2013, 2015, 2017, 2021, 2012, 2022, 2023, 2018, 2014,
-      2016, 2010, 2024, 2019, 2020, 2004
+      2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017,
+      2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009,
+      2004, 1830
+  ],
+    State: [
+        "CA", "FL", "IL", "MA", "NY", "PA", "TX"
     ],
-    State: ["MA", "CA", "NY", "TX", "FL", "IL", "PA"],
     Topics: [
-      "Health",
-      "Education",
-      "Environment",
-      "Economy",
-      "Social Justice",
-      "Other"
+        "Economy", "Education", "Environment", "Health",
+        "Other", "Social Justice"
     ],
     contentTypes: [
-      "Next Steps",
-      "Personal Reflection",
-      "Online",
-      "Flyer",
-      "Course Planning",
-      "ENACT Research",
-      "Elevator Speech",
-      "Op-Ed",
-      "Assignment Guidelines",
-      "Advocacy Video",
-      "Student Advice",
-      "Journal",
-      "Letter to Legislator",
-      "Research Report",
-      "Portfolio",
-      "empty",
-      "News and Articles",
-      "Syllabus",
-      "Presentations",
-      "Script"
+        "Advocacy Video", "Assignment Guidelines", "Course Planning",
+        "Elevator Speech", "ENACT Research", "Flyer", "Journal",
+        "Letter to Legislator", "News and Articles", "Next Steps",
+        "Online", "Op-Ed", "Portfolio", "Presentations", "Research Report",
+        "Script", "Student Advice", "Syllabus", "empty"
     ],
-    mediaTypes: ["video", "document", "photo", "PowerPoint", "empty"],
+    mediaTypes: [
+        "document", "empty", "photo", "PowerPoint", "video"
+    ],
     institutions: [
-      "Arts & Democracy Project",
-      "The University of Maine",
-      "Boise State University",
-      "Randolph-macon",
-      "The Pennsylvania State University",
-      "University of New Hampshire",
-      "Seattle University",
-      "Brandeis University",
-      "Delaware State University",
-      "Bennington College",
-      "Randolph Macon College",
-      "Emory University",
-      "FrameWorks Institute",
-      "Penn State University",
-      "Florida Agricultural and Mechanical University"
+        "Arts & Democracy Project", "Bennington College",
+        "Boise State University", "Brandeis University",
+        "Delaware State University", "Emory University",
+        "Florida Agricultural and Mechanical University",
+        "FrameWorks Institute", "Randolph Macon College",
+        "Randolph-Macon", "Seattle University",
+        "The Pennsylvania State University", "The University of Maine",
+        "University of New Hampshire", "Penn State University"
     ]
-  };
+};
+
 
   // Calculate the number of selected filters
   const selectedFilterCount = Object.values(selectedCategory).filter(
@@ -114,7 +94,7 @@ function StickySearchInput({
               color: "#333", // Text color
               cursor: "pointer" // Cursor to pointer on hover
             }}>
-            <option value="">Select {group}</option>{" "}
+            <option value="">{group}</option>{" "}
             {/* Default 'not selected' state */}
             {items.map((item, index) => (
               <option key={index} value={item}>

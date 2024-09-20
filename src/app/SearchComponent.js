@@ -106,6 +106,30 @@ function SearchComponent() {
               item.state.toLowerCase() === selectedCategory[key].toLowerCase()
           );
           break;
+        case "contentTypes":
+          filteredItems = filteredItems.filter(
+            (item) =>
+              item.contentType &&
+              item.contentType.toLowerCase() ===
+                selectedCategory[key].toLowerCase()
+          );
+          break;
+        case "mediaTypes":
+          filteredItems = filteredItems.filter(
+            (item) =>
+              item.mediaType &&
+              item.mediaType.toLowerCase() ===
+                selectedCategory[key].toLowerCase()
+          );
+          break;
+        case "institutions":
+          filteredItems = filteredItems.filter(
+            (item) =>
+              item.institution &&
+              item.institution.toLowerCase() ===
+                selectedCategory[key].toLowerCase()
+          );
+          break;
         default:
           if (key !== "Types") {
             filteredItems = filteredItems.filter(
@@ -236,7 +260,10 @@ function SearchComponent() {
                       {recommendations.map((recommendation, index) => (
                         <button
                           key={index}
-                          onClick={() => setSearchTerm(recommendation)}
+                          onClick={() => {
+                            resetFilters(); // Clear all filters
+                            setSearchTerm(recommendation); // Set the new search term
+                          }}
                           style={{
                             padding: "10px 20px",
                             borderRadius: "5px",
