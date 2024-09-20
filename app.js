@@ -382,6 +382,12 @@ app.get(
   (req, res) => res.render("./pages/InTheNews")
 );
 
+// get student guide resources by students
+app.get(
+  "/resources/view/student-guide",
+  resourceController.renderStudentGuidePage,
+);
+
 // get faculty-only resources
 app.get(
   "/resources/view/faculty",

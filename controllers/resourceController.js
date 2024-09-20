@@ -660,6 +660,18 @@ exports.renderResourceStatsPage = async (req, res, next) => {
   }
 };
 
+exports.renderStudentGuidePage = async (req, res, next) => {
+    try {
+        // Fetch resources where contentType is "Student Advice"
+        let resourceInfo = await Resource.find({ contentType: 'Student Advice' });
+
+        // Render the EJS page and pass the filtered resources to the view
+        res.render('./pages/student-guide', { resourceInfo: resourceInfo });
+    } catch (e) {
+        next(e);
+    }
+};
+
 exports.getResourcesAndStats = async (req, res, next) => {
   try {
     // Define aggregation pipelines for statistics and resources
