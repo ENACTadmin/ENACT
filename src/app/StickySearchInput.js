@@ -40,10 +40,10 @@ function StickySearchInput({
         "Elevator Speech", "ENACT Research", "Flyer", "Journal",
         "Letter to Legislator", "News and Articles", "Next Steps",
         "Online", "Op-Ed", "Portfolio", "Presentations", "Research Report",
-        "Script", "Student Advice", "Syllabus", "empty"
+        "Script", "Student Advice", "Syllabus"
     ],
     mediaTypes: [
-        "document", "empty", "photo", "PowerPoint", "video"
+        "document", "photo", "PowerPoint", "video"
     ],
     institutions: [
         "Arts & Democracy Project", "Bennington College",
