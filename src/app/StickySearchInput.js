@@ -46,7 +46,7 @@ function StickySearchInput({
               })
             }
             style={{
-              marginBottom: "20px",
+              marginBottom: "10px",
               padding: "5px 10px",
               width: "100%",
               fontSize: "1rem",
