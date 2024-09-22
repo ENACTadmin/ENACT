@@ -125,7 +125,7 @@ app.get(
 
 // load required resources and render index page
 app.get(
-  "/KMOqUDKFnTStYpLfNgy536CmgkBRvfvh/",
+  "/search/",
   utils.checkUserName,
   resourceController.loadDisplayedResources,
   resourceController.loadImages,

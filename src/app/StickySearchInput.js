@@ -28,10 +28,16 @@ function StickySearchInput({
     setSelectedCategory(updatedCategories);
   };
 
+  const capitalize = (str) => {
+    if (typeof str !== 'string') return str;
+    if (str.includes("Types")) {
+      str = str.replace("Types", "").trim();
+    }
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  };
+
   const renderInput = (group, items) => {
     switch (group) {
-      case "State":
-      case "Years":
       case "Topics":
       case "contentTypes":
       case "mediaTypes":
@@ -58,12 +64,42 @@ function StickySearchInput({
               color: "#333",
               cursor: "pointer"
             }}>
-            <option value="">{`${group}`}</option>
+            <option value="">{capitalize(group)}</option>
             {items.map((item, index) => (
-              <option key={index} value={item}>{item}</option>
+              <option key={index} value={item}>{capitalize(item)}</option>
             ))}
           </select>
         );
+      case "State":
+      case "Years":
+          return (
+            <select
+              value={selectedCategory[group] || ""}
+              onChange={(e) =>
+                setSelectedCategory({
+                  ...selectedCategory,
+                  [group]: e.target.value
+                })
+              }
+              style={{
+                marginBottom: "10px",
+                padding: "5px 10px",
+                width: "100%",
+                fontSize: "1rem",
+                borderRadius: "15px",
+                height: "34px",
+                outline: "none",
+                border: "1px solid #ccc",
+                backgroundColor: "#fff",
+                color: "#333",
+                cursor: "pointer"
+              }}>
+              <option value="">{group}</option>
+              {items.map((item, index) => (
+                <option key={index} value={item}>{item}</option>
+              ))}
+            </select>
+          );
       default:
         return null;
     }
