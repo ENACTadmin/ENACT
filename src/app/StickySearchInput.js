@@ -93,7 +93,7 @@ function StickySearchInput({
       style={{
         position: "sticky",
         top: 80,
-        zIndex: 1000,
+        zIndex: 900,
         backgroundColor: "white",
         padding: "10px 15px",
         width: "100%",
