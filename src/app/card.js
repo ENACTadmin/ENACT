@@ -31,7 +31,7 @@ const Card = (props) => {
           flexDirection: "row",
           justifyContent: "space-between",
         }}>
-        <h1 style={{ fontSize: "1.4rem", margin: "0 0", padding: "0 0" }}>
+        <h1 style={{ fontSize: "1.4rem", margin: "0 0", padding: "0 0", maxWidth:"95%" }}>
           {props.title}
         </h1>
          <span style={{
@@ -53,11 +53,11 @@ const Card = (props) => {
           display: "flex",
           flexDirection: "row",
           gap: "0.2rem",
-          margin: "0.2rem 0",
+          margin: "0.4rem 0 0 0",
         }}>
-        <h6>
+        <h5>
           By: {props.author} at {props.institution} {props.state} {props.year}
-        </h6>
+        </h5>
       </div>
       <p>{props.description}</p>
       <div
