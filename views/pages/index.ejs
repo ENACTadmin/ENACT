@@ -26,6 +26,16 @@
         <% } %>
         <%- include('../components/navbar-common'); -%>
     </div>
+    <!-- Notification for Faculty and Admin -->
+    <% if (!cookieDismissed) { %>
+        <div id="notification" class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 20px;">
+          <strong>OPPORTUNITY:</strong> Apply for the ENACT Faculty Fellowship by <strong>December 6, 2024</strong> <a href="https://www.brandeis.edu/enact/grants-fellowships/index.html" target="_blank">here</a>, or nominate a candidate by emailing <a href="mailto:ENACT@brandeis.edu">ENACT@brandeis.edu</a>.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close" id="dismiss-btn">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+    <% } %>
+  
 </header>
 
 <!-- Front intro -->
@@ -474,6 +484,23 @@
         </section>
     </section>
 <% } %>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    // Check if the notification is already dismissed
+    const dismissed = document.cookie.split('; ').find(row => row.startsWith('notificationDismissed='))?.split('=')[1];
+    
+    if (!dismissed) {
+      $('#notification').show();
+    }
+
+    $('#dismiss-btn').on('click', function() {
+      $('#notification').hide();
+      document.cookie = "notificationDismissed=true; path=/; max-age=" + 60 * 60 * 24 * 30; // Store dismissal for 30 days
+    });
+  });
+</script>
 
 
 <script>

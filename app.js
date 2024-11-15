@@ -115,13 +115,21 @@ app.get(
   resourceController.loadImages,
   eventController.loadEvents,
   (req, res) => {
-    res.render("./pages/index");
+    const notificationDismissed = req.cookies.notificationDismissed === 'true'; // Define notificationDismissed
+    res.render("./pages/index", { cookieDismissed: notificationDismissed });
   }
 );
 
+// Home route with notification check
+app.get('/home', utils.checkUserName, (req, res) => {
+  const notificationDismissed = req.cookies.notificationDismissed;
+  res.render('home', { cookieDismissed: notificationDismissed });
+});
+
+
 
 //*******************************************
-//***********New Seatch page router***************
+//***********New Search page router***************
 
 // load required resources and render index page
 app.get(
