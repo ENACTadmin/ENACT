@@ -59,11 +59,7 @@
                         <br>
                         <h3>Basic information</h3>
                         <hr>
-                        <% if (status === 'admin' || status === 'faculty') { %>
-                            <%- include('../components/component-basicInfo') -%>
-                        <% } else { %>
-                            <%- include('../components/component-basicInfo') -%>
-                        <% } %>
+                        <%- include('../components/component-basicInfo') -%>
                         <br>
                         <%- include('../components/component-stateSelector') -%>
                         <br>
@@ -79,30 +75,15 @@
                                    placeholder='e.g. 2020' required>
                         </div>
                         <br>
-                        <h5>Please be sure there is no confidential information in materials you upload. Materials you upload will be accessible to
-                            ENACT students, alumni, faculty and staff. Uploaded materials may also be selected by ENACT faculty, TAs or staff to be published to the
-                            "open to the public" portion of the ENACT website accessible to anyone without log in, and may be included in other ENACT-produced materials.
+                        <h5>Please be sure there is no confidential or sensitive information in materials you upload. Materials you upload will be accessible to the public, and may be included in other ENACT-produced materials.
                         </h5><br>
-                        <% if (status === 'admin' || status === 'faculty' || status === 'TA') { %>
-                            <div class='input-group-prepend'>
-                                <span class='input-group-text' style='width: 180px'>Resource Status</span>
-                                <select class='form-control' name='status'>
-                                    <option selected value='privateToENACT'>Exclusive to all ENACT members</option>
-                                    <option value='public'>Open to public</option>
-                                    <% if (status === 'admin') { %>
-                                        <option value='finalPublic'>Displayed on the front page</option>
-                                    <% } %>
-                                </select>
-                            </div>
-                            <br>
-                        <% } else { %>
-                            <div class='input-group-prepend'>
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" required>
-                                <label class="form-check-label" for="flexCheckChecked" required>
-                                    I have read and understand the notice above.
-                                </label>
-                            </div>
-                        <% } %>
+                        <input type="hidden" name="status" value="public">
+                        <div class='form-check'>
+                            <input class="form-check-input" type="checkbox" id="publicConsent" required>
+                            <label class="form-check-label" for="publicConsent">
+                                I agree that the materials I upload will be accessible to the public and may be used in ENACT-produced materials.
+                            </label>
+                        </div>
                     </div>
                     <div class='w-100'></div>
                     <br>
@@ -123,88 +104,6 @@
         <% } %>
     </div>
 </section>
-
-
-<!-- Modal -->
-<div class='modal fade' id='myModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel'
-     aria-hidden='true'>
-    <div class='modal-dialog modal-lg' role='document'>
-        <div class='modal-content'>
-            <div class='modal-header'>
-                <h5 class='modal-title' id='exampleModalLabel'>Upload file</h5>
-                <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                    <span aria-hidden='true'>&times;</span>
-                </button>
-            </div>
-            <div class='modal-body'>
-                <div class='row'>
-                    <br><br>
-                    <div class='col-md-12 col-sm-12'>
-                        <div class='input-group-prepend'>
-                            <span class='input-group-text' id='basic-addon1'>Upload File</span>
-                            <input type='file' class='form-control' id='file-input'>
-                        </div>
-                        <br>
-                        <h5 style="display: inline">Upload status:</h5>
-                        <img style='height: 50px; width: 50px' id="uploadStatus"
-                             src="https://image.flaticon.com/icons/svg/2078/2078840.svg">
-                        <p class='uploaded'><b>Not uploaded</b></p>
-                        <hr>
-                        <h5 id='fileName'>File Name:</h5>
-                        <h5 id='fileType'>File Type:</h5>
-                        <h5>If you are uploading a video, please use MP4 format.</h5>
-                        <h5>Please do not close the window until upload finishes.</h5>
-                    </div>
-                </div>
-            </div>
-            <div class='modal-footer'>
-                <button type='button' id='closeBtn' class='btn btn-secondary' data-dismiss='modal'>Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class='modal fade' id='addTags' tabindex='-1' role='dialog'
-     aria-labelledby='exampleModalLabel'
-     aria-hidden='true'>
-    <div class='modal-dialog modal-lg' role='document'>
-        <form method='post' action='/tag/add'>
-            <div class='modal-content'>
-                <div class='modal-header'>
-                    <h5 class='modal-title' id='exampleModalLabel'>Suggesting a new resource topic/issue?</h5>
-                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                        <span aria-hidden='true'>&times;</span>
-                    </button>
-                </div>
-                <div class='modal-body'>
-                    <div class='row'>
-                        <div class='col-md-12 col-sm-12'>
-                            <div class='input-group-prepend'>
-                                <span class='input-group-text' style='width: 180px'>Name</span>
-                                <input type='text' id='addingTag' class='form-control' name='addingTag'
-                                       placeholder='e.g. COVID-19'>
-                            </div>
-                            <br>
-                            <div class='input-group-prepend'>
-                                <span class='input-group-text' style='width: 180px'>Reason</span>
-                                <textarea type='text' class='form-control' name='reason'
-                                          rows='4'></textarea>
-                            </div>
-                            <br>
-                            <h6>Note: your request will be processed by ENACT admin. </h6>
-                        </div>
-                    </div>
-                </div>
-                <div class='modal-footer'>
-                    <input type='submit' name='submit' class='btn btn-outline-primary' value='Submit'>
-                    <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>
-                        Close
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
 
 <%- include('../components/footer'); -%>
 
