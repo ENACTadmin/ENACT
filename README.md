@@ -88,3 +88,5 @@ For local installation, please remember to:
 ```
 /events
 ```
+
+### Docs coming soon...
