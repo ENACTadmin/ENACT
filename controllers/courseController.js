@@ -272,80 +272,33 @@ function containsString(list, elt) {
   return found;
 }
 
-// function editCourseTimes(courseTimes){
-//     for (courseTime in courseTimes) {
-//         courseTime.startTime = "edited"
-//         courseTime.endTime = "edited"
-//     }
-// }
-
-// exports.showSchedule = async (req, res) => {
-
-//     const d = new Date();
-//     let year = d.getFullYear();
-//     let month = d.getMonth();
-
-//     let sem = "fall";
-//     if (month<6){
-//         sem ="spring"
-//     }else if(month<9){
-//         sem ="summer"
-//     }
-
-//     let courseTimes = await CourseTime.find({}, {'_id': 0, '__v': 0});
-//     // editCourseTimes(courseTimes)
-//     // console.log(courseTimes);
-//     let courses = await Course.find({year: year, semester: sem}, {
-//         'ownerId': 1,
-//         'institutionURL': 1,
-//         '_id': 1,
-//         'state': 1,
-//         'courseName': 1,
-//         'timezone': 1,
-//         'semester': 1,
-//         'year': 1,
-//         'instructor': 1,
-//         'institution': 1,
-//     })
-
-//     if (month==0){
-//         courses = await Course.find({year: year, $or: [{semester: sem}, {semester: "january"}]}, {
-//             'ownerId': 1,
-//             'institutionURL': 1,
-//             '_id': 1,
-//             'state': 1,
-//             'courseName': 1,
-//             'timezone': 1,
-//             'semester': 1,
-//             'year': 1,
-//             'instructor': 1,
-//             'institution': 1,
-//         })
-//     }
-
-//     res.render('./pages/courses-schedule', {
-//         courseTimes: courseTimes,
-//         courses: courses
-//     })
-// }
-
 exports.showSchedule = async (req, res) => {
   try {
     let courseTimes = await CourseTime.find({}, { _id: 0, __v: 0 });
 
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth() + 1;
+    const currentMonth = currentDate.getMonth() + 1; // Months are 0-indexed
+    const currentDay = currentDate.getDate();
 
-    let query = { year: currentYear };
-    
-    // Adjust the query based on the current month.
-    if (currentMonth >= 1 && currentMonth <= 6) {
-      // If it's currently the first half of the year, fetch courses from "spring" or "january".
+    console.log("Current Date:", currentDate);
+    console.log("Month:", currentMonth, "Day:", currentDay);
+
+    let query = {};
+
+    if (
+      (currentMonth === 12 && currentDay >= 21) || // December 21 and later
+      (currentMonth >= 1 && currentMonth <= 6) // January to June
+    ) {
+      // Handle Spring (or January) courses
       query.$or = [{ semester: "spring" }, { semester: "january" }];
-    } else if (currentMonth >= 7 && currentMonth <= 12) {
-      // If it's the second half of the year, fetch only "fall" semester courses.
+
+      // Use next year for December 21st or later
+      query.year = currentMonth === 12 && currentDay >= 21 ? currentYear + 1 : currentYear;
+    } else if (currentMonth >= 7 || (currentMonth === 12 && currentDay < 21)) {
+      // Handle Fall courses
       query.semester = "fall";
+      query.year = currentYear; // Fall is always the current year
     }
 
     let courses = await Course.find(query, {
@@ -359,11 +312,10 @@ exports.showSchedule = async (req, res) => {
       year: 1,
       instructor: 1,
       institution: 1,
-      asynchronous: 1, 
-      undecided: 1, 
+      asynchronous: 1,
+      undecided: 1,
     });
 
-    console.log(courses);
     res.render("./pages/courses-schedule", {
       courseTimes: courseTimes,
       courses: courses,
