@@ -15,8 +15,8 @@ function SearchComponent() {
 
   const recommendations = [
     "Op-Ed",
-    "Elevator Pitch",
-    "NY",
+    "Elevator Speech",
+    "Letter to the Legislator",
     "Brandeis University"
   ];
 

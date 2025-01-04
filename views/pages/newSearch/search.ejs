@@ -1,38 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Enact Resource Search</title>
-    <link rel="stylesheet" href="/stylesheets/stats.css">
+    <link rel="stylesheet" href="/stylesheets/search.css" />
     <link rel="icon" href="/images/enact-logo.webp" />
-</head>
-<body>
-    <%- include('../../components/header'); -%>
-    <%- include('../../components/navbar'); -%>
+  </head>
+  <body>
+    <%- include('../../components/header'); -%> <%-
+    include('../../components/navbar'); -%>
 
     <section class="section">
-        <div class="section__content section__content--full-width">
-          <div class="jumbotron masthead text-center">
-            <div class="section__title section__title--centered">
-              Public Resources
-            </div>
-            <br />
-            <div class="text-center" data-aos="fade-up" data-aos-delay="100">
-              <h4>
-                Search publicly available resources created by ENACT students from
-                across the United States. <br />You can browse, enter a keyword in the
-                search box, or search using any of the filters provided.
-                <br />
-                For example, search by keyword, and filter by issue area, state, and more.
-              </h4>
-            </div>
+      <div class="section__content section__content--full-width">
+        <div class="jumbotron masthead text-center">
+          <div class="section__title section__title--centered">
+            Public Resources
+          </div>
+          <br />
+          <div class="text-center" data-aos="fade-up" data-aos-delay="100">
+            <h4>
+              Search publicly available resources created by ENACT students from
+              across the United States. <br />You can browse, enter a keyword in
+              the search box, or search using any of the filters provided.
+              <br />
+              For example, search by keyword, and filter by issue area, state,
+              and more.
+            </h4>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
     <div id="root"></div>
-    <script src="/js/bundle.js"></script> <!-- Include your bundled file here -->
-</body>
+    <script src="/js/bundle.js"></script>
+    <!-- Include your bundled file here -->
+  </body>
 </html>
 
 <!---

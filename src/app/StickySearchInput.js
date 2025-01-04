@@ -29,7 +29,7 @@ function StickySearchInput({
   };
 
   const capitalize = (str) => {
-    if (typeof str !== 'string') return str;
+    if (typeof str !== "string") return str;
     if (str.includes("Types")) {
       str = str.replace("Types", "").trim();
     }
@@ -66,62 +66,68 @@ function StickySearchInput({
             }}>
             <option value="">{capitalize(group)}</option>
             {items.map((item, index) => (
-              <option key={index} value={item}>{capitalize(item)}</option>
+              <option key={index} value={item}>
+                {capitalize(item)}
+              </option>
             ))}
           </select>
         );
       case "State":
       case "Years":
-          return (
-            <select
-              value={selectedCategory[group] || ""}
-              onChange={(e) =>
-                setSelectedCategory({
-                  ...selectedCategory,
-                  [group]: e.target.value
-                })
-              }
-              style={{
-                marginBottom: "10px",
-                padding: "5px 10px",
-                width: "100%",
-                fontSize: "1rem",
-                borderRadius: "15px",
-                height: "34px",
-                outline: "none",
-                border: "1px solid #ccc",
-                backgroundColor: "#fff",
-                color: "#333",
-                cursor: "pointer"
-              }}>
-              <option value="">{group}</option>
-              {items.map((item, index) => (
-                <option key={index} value={item}>{item}</option>
-              ))}
-            </select>
-          );
+        return (
+          <select
+            value={selectedCategory[group] || ""}
+            onChange={(e) =>
+              setSelectedCategory({
+                ...selectedCategory,
+                [group]: e.target.value
+              })
+            }
+            style={{
+              marginBottom: "10px",
+              padding: "5px 10px",
+              width: "100%",
+              fontSize: "1rem",
+              borderRadius: "15px",
+              height: "34px",
+              outline: "none",
+              border: "1px solid #ccc",
+              backgroundColor: "#fff",
+              color: "#333",
+              cursor: "pointer"
+            }}>
+            <option value="">{group}</option>
+            {items.map((item, index) => (
+              <option key={index} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        );
       default:
         return null;
     }
   };
 
   function renderActiveFilterButtons() {
-    return Object.entries(selectedCategory).filter(([key, value]) => value).map(([key, value]) => (
-      <button
-        key={key}
-        onClick={() => handleRemoveFilter(key)}
-        style={{
-          padding: "4px 8px",
-          backgroundColor: "#d9534f",
-          color: "white",
-          border: "none",
-          borderRadius: "4px",
-          cursor: "pointer",
-          fontSize: "0.85rem"
-        }}>
-        {`${key}: ${value}`} ×
-      </button>
-    ));
+    return Object.entries(selectedCategory)
+      .filter(([key, value]) => value)
+      .map(([key, value]) => (
+        <button
+          key={key}
+          onClick={() => handleRemoveFilter(key)}
+          style={{
+            padding: "4px 8px",
+            backgroundColor: "white",
+            color: "gray",
+            border: "gray 0.3px solid",
+            borderRadius: "4px",
+            cursor: "pointer",
+            fontSize: "0.85rem"
+          }}>
+          {`${key}: ${value}`} ×
+        </button>
+      ));
   }
 
   return (
@@ -194,6 +200,7 @@ function StickySearchInput({
               flex: "1",
               minWidth: "120px",
               marginRight: "5px",
+              paddingRight: "5px",
               width: "100%"
             }}>
             {renderInput(group, items)}
@@ -210,16 +217,14 @@ function StickySearchInput({
           margin: "10px 0"
         }}>
         {renderActiveFilterButtons()}
-        {Object.keys(selectedCategory).some(
-          key => selectedCategory[key]
-        ) && (
+        {Object.keys(selectedCategory).some((key) => selectedCategory[key]) && (
           <button
             onClick={resetFilters}
             style={{
               padding: "4px 8px",
-              backgroundColor: "#d9534f",
-              color: "white",
-              border: "none",
+              backgroundColor: "white",
+              color: "gray",
+              border: "gray 0.3px solid",
               borderRadius: "4px",
               cursor: "pointer",
               fontSize: "0.85rem"

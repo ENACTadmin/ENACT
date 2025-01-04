@@ -1,0 +1,9 @@
+.filterTag {
+  padding: "4px 8px";
+  background-color: "white";
+  color: "gray";
+  border: "gray 0.3px solid";
+  border-radius: "4px";
+  cursor: "pointer";
+  font-size: "0.85rem";
+}
