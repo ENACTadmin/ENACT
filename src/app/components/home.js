@@ -1,5 +1,4 @@
-import React from "react";
-import { categories } from "../data/searchSetting";
+import React, { useState } from "react";
 
 const Topics = [
   "agriculture",
@@ -31,6 +30,10 @@ const Topics = [
 ];
 
 const Home = ({ onSelectTopic }) => {
+  const [showAll, setShowAll] = useState(false);
+
+  const displayedTopics = showAll ? Topics : Topics.slice(0, 8);
+
   return (
     <div
       style={{
@@ -50,7 +53,7 @@ const Home = ({ onSelectTopic }) => {
           width: "100%",
           maxWidth: "1200px"
         }}>
-        {Topics.map((topic) => (
+        {displayedTopics.map((topic) => (
           <div
             style={{
               flex: "1 1 calc(25% - 1rem)",
@@ -71,6 +74,20 @@ const Home = ({ onSelectTopic }) => {
           </div>
         ))}
       </div>
+      {!showAll && (
+        <button
+          onClick={() => setShowAll(true)}
+          style={{
+            padding: "5px 10px",
+            borderRadius: "5px",
+            border: "1px solid gray",
+            backgroundColor: "white",
+            // color: "white",
+            cursor: "pointer"
+          }}>
+          Show More Topics
+        </button>
+      )}
     </div>
   );
 };
