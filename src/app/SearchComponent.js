@@ -216,5 +216,3 @@ function SearchComponent() {
 }
 
 ReactDOM.render(<SearchComponent />, document.getElementById("root"));
-
-ReactDOM.render(<SearchComponent />, document.getElementById("root"));

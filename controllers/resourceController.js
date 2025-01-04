@@ -11,8 +11,15 @@ const mongoose = require("mongoose");
 // Function to retrieve all resources with expanded owner and course information
 exports.getAllResources = async (req, res, next) => {
   try {
+    // Get the amount of posts from the query parameters
+    const amount = parseInt(req.query.amount, 10) || 20; // Default to 20 posts if not provided
+
     // Define the aggregation pipeline
     const resourcesPipeline = [
+      // Sort by creation date (descending to get the latest posts first)
+      { $sort: { createdAt: -1 } },
+      // Limit the number of results
+      { $limit: amount },
       // Join with the User collection to replace `ownerId` with `ownerName`
       {
         $lookup: {
@@ -33,7 +40,7 @@ exports.getAllResources = async (req, res, next) => {
         }
       },
       { $unwind: "$courseDetails" }, // Convert `courseDetails` array into a single object
-      // Project only the necessary fields and exclude `facultyId`
+      // Project only the necessary fields
       {
         $project: {
           _id: 1,
@@ -51,7 +58,7 @@ exports.getAllResources = async (req, res, next) => {
           createdAt: 1,
           authorName: "$ownerDetails.userName", // Replace `ownerId` with `userName`
           courseName: "$courseDetails.courseName", // Replace `courseId` with `courseName`
-          facultyId: 1 // Exclude `facultyId`
+          facultyId: 1
         }
       }
     ];
