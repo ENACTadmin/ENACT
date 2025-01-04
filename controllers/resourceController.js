@@ -67,6 +67,68 @@ exports.getAllResources = async (req, res, next) => {
   }
 };
 
+// Function to retrieve resources by tag
+exports.getResourcesByTag = async (req, res, next) => {
+  try {
+    const { tag } = req.params;
+
+    if (!tag) {
+      return res.status(400).json({ message: "Tag parameter is required." });
+    }
+
+    // Define the aggregation pipeline
+    const resourcesPipeline = [
+      {
+        $match: {
+          tags: { $in: [tag] } // Filter resources where `tags` array contains the specified tag
+        }
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "ownerId",
+          foreignField: "_id",
+          as: "ownerDetails"
+        }
+      },
+      { $unwind: "$ownerDetails" },
+      {
+        $lookup: {
+          from: "courses",
+          localField: "courseId",
+          foreignField: "_id",
+          as: "courseDetails"
+        }
+      },
+      { $unwind: "$courseDetails" },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          description: 1,
+          tags: 1,
+          uri: 1,
+          state: 1,
+          resourceType: 1,
+          institution: 1,
+          yearOfCreation: 1,
+          checkStatus: 1,
+          contentType: 1,
+          mediaType: 1,
+          createdAt: 1,
+          authorName: "$ownerDetails.userName",
+          courseName: "$courseDetails.courseName"
+        }
+      }
+    ];
+
+    const resourcesByTag = await Resource.aggregate(resourcesPipeline);
+    res.json(resourcesByTag);
+  } catch (e) {
+    next(e);
+  }
+};
+
 exports.getResourceById = async (req, res, next) => {
   try {
     // Get the `id` from the request parameters
@@ -141,94 +203,94 @@ exports.getResourceById = async (req, res, next) => {
   }
 };
 
-// Function to retrieve resources filtered by a specific tag with pagination
-exports.getResourcesByTag = async (req, res, next) => {
-  try {
-    // Extract the tag from the route parameters
-    const { tag } = req.params;
-    if (!tag) {
-      return res.status(400).json({ error: "Tag parameter is missing" });
-    }
+// // Function to retrieve resources filtered by a specific tag with pagination
+// exports.getResourcesByTag = async (req, res, next) => {
+//   try {
+//     // Extract the tag from the route parameters
+//     const { tag } = req.params;
+//     if (!tag) {
+//       return res.status(400).json({ error: "Tag parameter is missing" });
+//     }
 
-    // Get pagination parameters from query, default to page 1 and 10 items per page
-    const page = parseInt(req.query.page, 10) || 1;
-    const limit = parseInt(req.query.limit, 10) || 10;
-    const skip = (page - 1) * limit;
+//     // Get pagination parameters from query, default to page 1 and 10 items per page
+//     const page = parseInt(req.query.page, 10) || 1;
+//     const limit = parseInt(req.query.limit, 10) || 10;
+//     const skip = (page - 1) * limit;
 
-    // Define the aggregation pipeline with a match stage to filter by the tag
-    const resourcesPipeline = [
-      {
-        $match: {
-          tags: tag
-        }
-      },
-      // Join with the User collection to replace `ownerId` with `ownerName`
-      {
-        $lookup: {
-          from: "users", // The name of the User collection
-          localField: "ownerId", // The field in the Resource collection
-          foreignField: "_id", // The field in the User collection
-          as: "ownerDetails" // Name for the new field in the resulting documents
-        }
-      },
-      { $unwind: "$ownerDetails" }, // Convert `ownerDetails` array into a single object
-      // Join with the Course collection to replace `courseId` with the course name
-      {
-        $lookup: {
-          from: "courses", // The name of the Course collection
-          localField: "courseId", // The field in the Resource collection
-          foreignField: "_id", // The field in the Course collection
-          as: "courseDetails" // Name for the new field in the resulting documents
-        }
-      },
-      { $unwind: "$courseDetails" }, // Convert `courseDetails` array into a single object
-      // Project only the necessary fields
-      {
-        $project: {
-          _id: 1,
-          name: 1,
-          description: 1,
-          tags: 1,
-          uri: 1,
-          state: 1,
-          resourceType: 1,
-          institution: 1,
-          yearOfCreation: 1,
-          checkStatus: 1,
-          contentType: 1,
-          mediaType: 1,
-          createdAt: 1,
-          authorName: "$ownerDetails.userName", // Replace `ownerId` with `userName`
-          courseName: "$courseDetails.courseName" // Replace `courseId` with `courseName`
-        }
-      },
-      // Apply pagination with skip and limit
-      { $skip: skip },
-      { $limit: limit }
-    ];
+//     // Define the aggregation pipeline with a match stage to filter by the tag
+//     const resourcesPipeline = [
+//       {
+//         $match: {
+//           tags: tag
+//         }
+//       },
+//       // Join with the User collection to replace `ownerId` with `ownerName`
+//       {
+//         $lookup: {
+//           from: "users", // The name of the User collection
+//           localField: "ownerId", // The field in the Resource collection
+//           foreignField: "_id", // The field in the User collection
+//           as: "ownerDetails" // Name for the new field in the resulting documents
+//         }
+//       },
+//       { $unwind: "$ownerDetails" }, // Convert `ownerDetails` array into a single object
+//       // Join with the Course collection to replace `courseId` with the course name
+//       {
+//         $lookup: {
+//           from: "courses", // The name of the Course collection
+//           localField: "courseId", // The field in the Resource collection
+//           foreignField: "_id", // The field in the Course collection
+//           as: "courseDetails" // Name for the new field in the resulting documents
+//         }
+//       },
+//       { $unwind: "$courseDetails" }, // Convert `courseDetails` array into a single object
+//       // Project only the necessary fields
+//       {
+//         $project: {
+//           _id: 1,
+//           name: 1,
+//           description: 1,
+//           tags: 1,
+//           uri: 1,
+//           state: 1,
+//           resourceType: 1,
+//           institution: 1,
+//           yearOfCreation: 1,
+//           checkStatus: 1,
+//           contentType: 1,
+//           mediaType: 1,
+//           createdAt: 1,
+//           authorName: "$ownerDetails.userName", // Replace `ownerId` with `userName`
+//           courseName: "$courseDetails.courseName" // Replace `courseId` with `courseName`
+//         }
+//       },
+//       // Apply pagination with skip and limit
+//       { $skip: skip },
+//       { $limit: limit }
+//     ];
 
-    // Get the total number of documents matching the tag
-    const totalDocuments = await Resource.countDocuments({ tags: tag });
+//     // Get the total number of documents matching the tag
+//     const totalDocuments = await Resource.countDocuments({ tags: tag });
 
-    // Execute the aggregation pipeline
-    const resourcesByTag = await Resource.aggregate(resourcesPipeline);
+//     // Execute the aggregation pipeline
+//     const resourcesByTag = await Resource.aggregate(resourcesPipeline);
 
-    // Calculate the total number of pages
-    const totalPages = Math.ceil(totalDocuments / limit);
+//     // Calculate the total number of pages
+//     const totalPages = Math.ceil(totalDocuments / limit);
 
-    // Return the filtered resources with pagination info
-    res.json({
-      data: resourcesByTag,
-      currentPage: page,
-      totalPages: totalPages,
-      itemsPerPage: limit
-    });
-  } catch (e) {
-    // Handle errors and pass to the next middleware for error logging
-    console.error("Error in getResourcesByTag:", e);
-    next(e);
-  }
-};
+//     // Return the filtered resources with pagination info
+//     res.json({
+//       data: resourcesByTag,
+//       currentPage: page,
+//       totalPages: totalPages,
+//       itemsPerPage: limit
+//     });
+//   } catch (e) {
+//     // Handle errors and pass to the next middleware for error logging
+//     console.error("Error in getResourcesByTag:", e);
+//     next(e);
+//   }
+// };
 
 exports.getResourceStats = async (req, res, next) => {
   try {
@@ -393,8 +455,6 @@ exports.getResourcesByKeyword = async (req, res) => {
         .json({ error: "searchString parameter is missing" });
     }
 
-
-
     // Save the keyword into the searchKeywords collection
     try {
       await SearchKeyword.updateOne(
@@ -419,9 +479,10 @@ exports.getResourcesByKeyword = async (req, res) => {
           $or: [
             // Search across multiple fields
             { name: { $regex: keywordRegex } },
-            // { description: { $regex: keywordRegex } }
+            { description: { $regex: keywordRegex } },
+            { authorName: { $regex: keywordRegex } },
             // Uncomment below if you want to search in tags too
-            // { tags: { $regex: keywordRegex } }
+            { tags: { $in: [keyword] } }
           ]
         }
       },
@@ -474,7 +535,6 @@ exports.getResourcesByKeyword = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
-
 
 exports.getResources = async (req, res, next) => {
   try {
@@ -661,15 +721,15 @@ exports.renderResourceStatsPage = async (req, res, next) => {
 };
 
 exports.renderStudentGuidePage = async (req, res, next) => {
-    try {
-        // Fetch resources where contentType is "Student Advice"
-        let resourceInfo = await Resource.find({ contentType: 'Student Advice' });
+  try {
+    // Fetch resources where contentType is "Student Advice"
+    let resourceInfo = await Resource.find({ contentType: "Student Advice" });
 
-        // Render the EJS page and pass the filtered resources to the view
-        res.render('./pages/student-guide', { resourceInfo: resourceInfo });
-    } catch (e) {
-        next(e);
-    }
+    // Render the EJS page and pass the filtered resources to the view
+    res.render("./pages/student-guide", { resourceInfo: resourceInfo });
+  } catch (e) {
+    next(e);
+  }
 };
 
 exports.getResourcesAndStats = async (req, res, next) => {
@@ -1291,6 +1351,7 @@ exports.loadSpecificContentType = async (req, res, next) => {
 };
 
 let fileData = require("../public/js/slideShow");
+const { authorize } = require("passport");
 exports.loadImages = async (req, res, next) => {
   try {
     let imagePaths = fileData.getPath("slideShow");

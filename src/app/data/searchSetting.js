@@ -61,15 +61,11 @@ export const categories = {
     "arts and culture",
     "cannabis",
     "consumer protection",
-    "course with internship content",
     "criminal justice",
     "disability",
     "elderly",
     "energy",
-    "environment/climate change",
-    "faculty guide",
-    "full-semester course",
-    "half-semester course",
+    "environment",
     "higher education",
     "healthcare",
     "mental health",
@@ -89,8 +85,7 @@ export const categories = {
     "COVID-19",
     "LGBTQ+",
     "labor",
-    "housing and homelessness",
-    "online course"
+    "housing and homelessness"
   ],
   contentTypes: [
     "Advocacy Video",

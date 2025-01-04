@@ -91,6 +91,8 @@ const useFetchData = (searchTerm, setError) => {
         }
 
         const data = await response.json();
+        console.log("Data fetched:", data);
+        console.log("Data fetched:", data.length);
         setAllItems(Array.isArray(data) ? data : []);
       } catch (err) {
         setError(err.message);
@@ -105,17 +107,8 @@ const useFetchData = (searchTerm, setError) => {
 
   return { allItems, loading };
 };
-
-const filterItems = (items, searchTerm, selectedCategory) => {
+const filterItems = (items, selectedCategory) => {
   let filtered = items;
-
-  if (searchTerm) {
-    filtered = filtered.filter(
-      (item) =>
-        item.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.description?.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }
 
   Object.keys(selectedCategory).forEach((key) => {
     if (!filtered.length) return;
@@ -150,14 +143,19 @@ function SearchComponent() {
   const [error, setError] = useState(null);
 
   const { allItems, loading } = useFetchData(searchTerm, setError);
-  const items = filterItems(allItems, searchTerm, selectedCategory);
+  const items = filterItems(allItems, selectedCategory);
 
   const resetFilters = () => {
     setSelectedCategory({});
     setSearchTerm("");
   };
 
-  // Determine the state
+  const handleSelectTopic = (topic) => {
+    console.log("Selected topic:", topic);
+    // Pass the topic to StickySearchInput by setting the searchTerm state
+    setSearchTerm(topic);
+  };
+
   const isHome = !searchTerm; // No search term means home state
   const hasSearchResults = searchTerm && items.length > 0;
   const noSearchResults = searchTerm && items.length === 0;
@@ -176,8 +174,8 @@ function SearchComponent() {
         style={{ display: "flex", flexDirection: "row", maxWidth: "1000px" }}>
         <aside>
           <StickySearchInput
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
+            searchTerm={searchTerm} // Pass the search term
+            setSearchTerm={setSearchTerm} // Allow StickySearchInput to update the term
             hits={items.length}
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
@@ -187,7 +185,7 @@ function SearchComponent() {
           {loading ? (
             <LoadingSkeleton count={5} />
           ) : isHome ? (
-            <Home />
+            <Home onSelectTopic={handleSelectTopic} />
           ) : hasSearchResults ? (
             <ul className="items-list" style={{ paddingLeft: 0 }}>
               {items.map((item) => (
@@ -206,34 +204,17 @@ function SearchComponent() {
               ))}
             </ul>
           ) : noSearchResults ? (
-            <div
-              style={{
-                marginTop: "20px",
-                display: "flex",
-                flexDirection: "column",
-                gap: "2rem",
-                justifyContent: "center",
-                alignContent: "center",
-                alignItems: "center"
-              }}>
-              <Recommendations
-                recommendations={[
-                  "Op-Ed",
-                  "Elevator Speech",
-                  "Letter to the Legislator",
-                  "Brandeis University"
-                ]}
-                onSelect={(rec) => {
-                  resetFilters();
-                  setSearchTerm(rec);
-                }}
-              />
-            </div>
+            <>
+              <p>Sorry Nothing Found</p>
+              <Home onSelectTopic={handleSelectTopic} />
+            </>
           ) : null}
         </aside>
       </section>
     </div>
   );
 }
+
+ReactDOM.render(<SearchComponent />, document.getElementById("root"));
 
 ReactDOM.render(<SearchComponent />, document.getElementById("root"));
