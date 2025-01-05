@@ -29,9 +29,30 @@
 
             <svg class="chart" id="resourcesPerYearChart" width="1000" height="400"></svg>
             <svg class="chart" id="resourcesPerTagChart" width="1000" height="400"></svg>
+            <h2>Resource count per views</h2>
+                        <!-- Table for Resources by Views -->
+            <table id="resourcesByViewsTable">
+                <thead>
+                <tr>
+                    <th>Views</th>
+                    <th>Resource Count</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% resourcesByViews.forEach(function (item) { %>
+                    <tr>
+                    <td><%= item.views %></td>
+                    <td><%= item.count %></td>
+                    </tr>
+                <% }); %>
+                </tbody>
+            </table>
+            
 
             <!-- Author table with conditional highlighting -->
             <h2>Resources per Author</h2>
+
+            <svg class="chart" id="resourcesPerAuthorChart" width="1000" height="400"></svg>
             <table id="resourcesPerAuthorTable">
                 <thead>
                     <tr>
@@ -42,7 +63,7 @@
                 <tbody>
                     <% 
                     // Array of highlighted author names
-                    const highlightNames = ["Aby", "Madina", "ENACT Admin", "David", "David Weinstein"];
+                    const highlightNames = ["Aby", "Madina", "ENACT Admin", "David", "David Weinstein", "Nemma Kalra","epevide"];
                     
                     // Sort and then render
                     totalPerAuthor.sort((a, b) => b.count - a.count).forEach(function (item) {
@@ -55,7 +76,7 @@
                 </tbody>
             </table>
 
-            <svg class="chart" id="resourcesPerAuthorChart" width="1000" height="400"></svg>
+           
         </div>
     </section>
 
@@ -165,23 +186,23 @@
         function drawAuthorBarChart(chartId, data, xLabel, yLabel, chartTitle) {
             // Sort data numerically in ascending order based on the count
             data.sort((a, b) => a.count - b.count);
-
+        
             // Set up SVG dimensions and margins
             const svg = d3.select(chartId);
             const width = +svg.attr("width");
             const height = +svg.attr("height");
             const margin = { top: 40, right: 30, bottom: 40, left: 40 };
-
+        
             // Create scales for the x and y axes
             const x = d3.scaleBand()
                 .domain(data.map(d => d.label))
                 .range([margin.left, width - margin.right])
                 .padding(0.1);
-
+        
             const y = d3.scaleLinear()
                 .domain([0, d3.max(data, d => d.count)]).nice()
                 .range([height - margin.bottom, margin.top]);
-
+        
             // Add chart title
             svg.append("text")
                 .attr("x", width / 2)
@@ -190,7 +211,7 @@
                 .attr("font-size", "16px")
                 .attr("font-weight", "bold")
                 .text(chartTitle);
-
+        
             // Add x-axis
             svg.append("g")
                 .attr("transform", `translate(0, ${height - margin.bottom})`)
@@ -199,15 +220,26 @@
                 .attr("class", "axis-label")
                 .attr("transform", "rotate(-45)")
                 .style("text-anchor", "end");
-
+        
             // Add y-axis
             svg.append("g")
                 .attr("transform", `translate(${margin.left}, 0)`)
                 .call(d3.axisLeft(y))
                 .selectAll("text")
                 .attr("class", "axis-label");
-
-            // Draw bars with brushing
+        
+            // Create a tooltip div
+            const tooltip = d3.select("body").append("div")
+                .attr("class", "tooltip")
+                .style("position", "absolute")
+                .style("background", "rgba(0,0,0,0.8)")
+                .style("color", "white")
+                .style("padding", "8px")
+                .style("border-radius", "5px")
+                .style("opacity", 0)
+                .style("pointer-events", "none");
+        
+            // Draw bars with brushing and tooltips
             svg.selectAll(".bar")
                 .data(data)
                 .enter().append("rect")
@@ -216,11 +248,26 @@
                 .attr("y", d => y(d.count))
                 .attr("height", d => y(0) - y(d.count))
                 .attr("width", x.bandwidth())
+                .on("mouseover", function (event, d) {
+                    tooltip.transition().duration(200).style("opacity", 0.9);
+                    tooltip.html(`${xLabel}: ${d.label}<br>${yLabel}: ${d.count}`)
+                        .style("left", (event.pageX + 10) + "px")
+                        .style("top", (event.pageY - 20) + "px");
+                    d3.select(this).classed("highlight", true);
+                })
+                .on("mousemove", function (event) {
+                    tooltip.style("left", (event.pageX + 10) + "px")
+                        .style("top", (event.pageY - 20) + "px");
+                })
+                .on("mouseout", function () {
+                    tooltip.transition().duration(500).style("opacity", 0);
+                    d3.select(this).classed("highlight", false);
+                })
                 .on("click", function (_, d) {
                     // Highlight the clicked bar
                     d3.selectAll(".bar").classed("highlight", false);
                     d3.select(this).classed("highlight", true);
-
+        
                     // Highlight the matching row in the table
                     d3.selectAll("#resourcesPerAuthorTable tbody tr")
                         .classed("highlight", false)
@@ -229,7 +276,7 @@
                         })
                         .classed("highlight", true);
                 });
-
+        
             // Add x-axis label
             svg.append("text")
                 .attr("class", "axis-label")
@@ -237,7 +284,7 @@
                 .attr("y", height - 5)
                 .attr("text-anchor", "middle")
                 .text(xLabel);
-
+        
             // Add y-axis label
             svg.append("text")
                 .attr("class", "axis-label")
@@ -248,7 +295,7 @@
                 .attr("transform", "rotate(-90)")
                 .text(yLabel);
         }
-
+        
         // Data for the author chart, from the controller
         const resourcesPerAuthorData = <%- JSON.stringify(totalPerAuthor.map(({ authorName, count }) => ({ label: authorName, count }))) %>;
 
