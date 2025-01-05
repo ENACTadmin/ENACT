@@ -6,7 +6,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const session = require("express-session");
-const mailRouter = require('./routes/mail'); 
+const mailRouter = require("./routes/mail");
 
 //*******************************************
 //***********Development****************
@@ -51,7 +51,7 @@ const mongoose = require("mongoose");
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
   useCreateIndex: true,
-  useUnifiedTopology: true,
+  useUnifiedTopology: true
 });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
@@ -88,13 +88,12 @@ app.use(
   session({
     secret: "keyboard cat",
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: false
   })
 );
 
-
 // Register the mail router
-app.use('/api/mail', mailRouter);
+app.use("/api/mail", mailRouter);
 
 // configure auth router
 const auth = require("./routes/auth");
@@ -115,18 +114,16 @@ app.get(
   resourceController.loadImages,
   eventController.loadEvents,
   (req, res) => {
-    const notificationDismissed = req.cookies.notificationDismissed === 'true'; // Define notificationDismissed
+    const notificationDismissed = req.cookies.notificationDismissed === "true"; // Define notificationDismissed
     res.render("./pages/index", { cookieDismissed: notificationDismissed });
   }
 );
 
 // Home route with notification check
-app.get('/home', utils.checkUserName, (req, res) => {
+app.get("/home", utils.checkUserName, (req, res) => {
   const notificationDismissed = req.cookies.notificationDismissed;
-  res.render('home', { cookieDismissed: notificationDismissed });
+  res.render("home", { cookieDismissed: notificationDismissed });
 });
-
-
 
 //*******************************************
 //***********New Search page router***************
@@ -150,7 +147,7 @@ app.get(
 app.get("/course/create", utils.checkUserName, async (req, res) => {
   let faculties = await Faculty.find();
   res.render("./pages/course-create", {
-    faculties,
+    faculties
   });
 });
 
@@ -162,7 +159,7 @@ app.get(
   utils.checkUserName,
   courseController.showSchedule,
   (req, res) => {
-  res.render("./pages/courses-schedule")
+    res.render("./pages/courses-schedule");
   }
 );
 
@@ -189,7 +186,7 @@ app.get("/course/update/:courseId", utils.checkUserName, async (req, res) => {
   let courseTimes = await CourseTime.find({ courseId: req.params.courseId });
   res.render("./pages/updateCourse", {
     courseInfo: courseInfo,
-    courseTimes: courseTimes,
+    courseTimes: courseTimes
   });
 });
 
@@ -203,7 +200,7 @@ app.post(
 app.get("/course/copy/:courseId", utils.checkUserName, async (req, res) => {
   let courseInfo = await Course.findOne({ _id: req.params.courseId });
   res.render("./pages/course-copy", {
-    courseInfo: courseInfo,
+    courseInfo: courseInfo
   });
 });
 
@@ -227,7 +224,7 @@ app.get("/course/join", utils.checkUserName, async (req, res) => {
     let courseInfo = await Course.find();
     res.render("./pages/admin-course-join", {
       enrolledCourses: req.user.enrolledCourses,
-      courseInfo: courseInfo,
+      courseInfo: courseInfo
     });
   }
 });
@@ -243,10 +240,8 @@ app.get(
   (req, res) => res.render("./pages/course-pastList")
 );
 
-
 //*******************************************
 //***********API related****************
-
 
 //Resource API for ENACT-Data-Apps
 app.get("/api/v0/resources/", resourceController.getResources);
@@ -254,12 +249,17 @@ app.get("/api/v0/resources/all", resourceController.getAllResources);
 app.get("/api/v0/resources/sets", resourceController.getResourceUnique);
 app.get("/api/v0/resources/allstats", resourceController.getResourcesAndStats);
 app.get("/api/v0/resources/stats", resourceController.getResourceStats);
+app.post(
+  "/api/v0/resources/:id/increment-view",
+  resourceController.incrementViewCount
+);
+
 // app.get("/api/v0/resources/search", (req, res) => {
 //   console.log("Search query:", req.query.search);
 //   resourceController.getResourcesByKeyWord(req, res);
 // });
 
-app.get('/api/v0/resources/searchByKeyword', (req, res) => {
+app.get("/api/v0/resources/searchByKeyword", (req, res) => {
   // Check if the searchString query parameter is provided
   if (!req.query.searchString) {
     return res.status(400).json({ error: "searchString parameter is missing" });
@@ -270,25 +270,18 @@ app.get('/api/v0/resources/searchByKeyword', (req, res) => {
   resourceController.getResourcesByKeyword(req, res, keyword);
 });
 
-
-
-app.get("/api/v0/resources/storage/:id", resourceController.getResourceById); 
-app.get('/api/v0/resources/tags/:tag', resourceController.getResourcesByTag);
-
-
+app.get("/api/v0/resources/storage/:id", resourceController.getResourceById);
+app.get("/api/v0/resources/tags/:tag", resourceController.getResourcesByTag);
 
 //*******************************************
 //***********Resource related****************
-
 
 //Resource API for ENACT-Data-Apps
 app.get("/resources/", resourceController.getResources);
 app.get("/resources/all", resourceController.getAllResources);
 app.get("/resources/stats", resourceController.getResourceStats);
 app.get("/resources/stats/page", resourceController.renderResourceStatsPage);
-app.get("/resources/:id", resourceController.getResourceById); 
-
-
+app.get("/resources/:id", resourceController.getResourceById);
 
 // upload resource to a course
 app.get(
@@ -297,7 +290,7 @@ app.get(
   tagController.getAllTags,
   (req, res) => {
     res.render("./pages/uploadToCourse", {
-      req: req,
+      req: req
     });
   }
 );
@@ -393,7 +386,7 @@ app.get(
 // get student guide resources by students
 app.get(
   "/resources/view/student-guide",
-  resourceController.renderStudentGuidePage,
+  resourceController.renderStudentGuidePage
 );
 
 // get faculty-only resources
@@ -588,7 +581,7 @@ app.post("/profile/update", profileController.updateProfile);
 app.get("/profile/update/:userId", async (req, res) => {
   let account = await User.findOne({ _id: req.params.userId });
   res.render("./pages/updateProfileAdmin", {
-    account: account,
+    account: account
   });
 });
 
@@ -626,7 +619,7 @@ app.get("/profile/send/:id", messageController.sendProfileEmail);
 
 app.get("/networking", async (req, res) => {
   let profileInfo = await User.find({ networkCheck: "on" }).collation({
-    locale: "en",
+    locale: "en"
   });
   let duplicate = JSON.parse(JSON.stringify(profileInfo));
   for (let i = 0; i < duplicate.length; i++) {
@@ -642,14 +635,14 @@ app.get("/networking", async (req, res) => {
   duplicate = duplicate.sort((a, b) => a.score.localeCompare(b.score));
   res.render("./pages/networking", {
     profileInfo: duplicate,
-    state: "U.S.",
+    state: "U.S."
   });
 });
 
 app.get("/networking/:state", async (req, res) => {
   let profileInfo = await User.find({
     state: req.params.state,
-    networkCheck: "on",
+    networkCheck: "on"
   }).collation({ locale: "en" });
   let duplicate = JSON.parse(JSON.stringify(profileInfo));
   for (let i = 0; i < duplicate.length; i++) {
@@ -665,7 +658,7 @@ app.get("/networking/:state", async (req, res) => {
   duplicate = duplicate.sort((a, b) => a.score.localeCompare(b.score));
   res.render("./pages/networking", {
     profileInfo: duplicate,
-    state: req.params.state,
+    state: req.params.state
   });
 });
 
@@ -701,7 +694,7 @@ app.get(
       req.params.resourceId;
     res.render("./pages/login/login", {
       secret: "redirect",
-      req: req,
+      req: req
     });
   }
 );
@@ -731,11 +724,11 @@ app.get("/events", async (req, res) => {
       .reverse();
     res.render("./pages/events-private", {
       futureEventsInfo: futureEventsInfo,
-      pastEventsInfo: pastEventsInfo,
+      pastEventsInfo: pastEventsInfo
     });
   } else {
     let eventsInfo = await Event.find({ visibility: "public" }).sort({
-      start: 1,
+      start: 1
     });
     let futureEventsInfo = eventsInfo.filter(
       ({ start }) => new Date(start).getTime() >= new Date().getTime()
@@ -755,14 +748,14 @@ app.get("/events", async (req, res) => {
         courseName: 1,
         timezone: 1,
         instructor: 1,
-        institution: 1,
+        institution: 1
       }
     );
     res.render("./pages/events-public", {
       courseTimes: courseTimes,
       courses: courses,
       futureEventsInfo: futureEventsInfo,
-      pastEventsInfo: pastEventsInfo,
+      pastEventsInfo: pastEventsInfo
     });
   }
 });
@@ -780,7 +773,7 @@ app.post(
 app.get("/event/image/update/:eventId", async (req, res) => {
   let eventInfo = await Event.findOne({ _id: req.params.eventId });
   res.render("./pages/event-updateImage", {
-    eventInfo: eventInfo,
+    eventInfo: eventInfo
   });
 });
 
@@ -810,8 +803,8 @@ app.get("/TA/assign/:courseId", async (req, res) => {
   if (currCourse.tas) {
     tasInfo = await User.find({
       _id: {
-        $in: currCourse.tas,
-      },
+        $in: currCourse.tas
+      }
     });
   } else {
     tasInfo = null;
@@ -819,7 +812,7 @@ app.get("/TA/assign/:courseId", async (req, res) => {
   res.render("./pages/ta-assign", {
     courseId: req.params.courseId,
     courseInfo: currCourse,
-    tas: tasInfo,
+    tas: tasInfo
   });
 });
 
@@ -848,8 +841,8 @@ app.get("/secretFunction3", async (req, res) => {
     let faculty = await User.findOne({
       $or: [
         { workEmail: allFaculty[i].email },
-        { googleemail: allFaculty[i].email },
-      ],
+        { googleemail: allFaculty[i].email }
+      ]
     });
     if (faculty) {
       allFaculty[i].userId = faculty._id;
@@ -938,7 +931,7 @@ async function addAuthorAlt(resource) {
 
 app.get("/profiles/faculties", async (req, res) => {
   let userProfiles = await User.find({
-    $or: [{ status: "faculty" }, { status: "admin" }],
+    $or: [{ status: "faculty" }, { status: "admin" }]
   });
   return res.send(userProfiles);
 });

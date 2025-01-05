@@ -142,6 +142,7 @@ const Home = ({ onSelectTopic }) => {
           apiData.map((item) => (
             <Card
               key={item._id}
+              id={item._id}
               title={item.name}
               description={item.description}
               link={item.uri}

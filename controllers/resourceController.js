@@ -210,6 +210,41 @@ exports.getResourceById = async (req, res, next) => {
   }
 };
 
+exports.incrementViewCount = async (req, res, next) => {
+  try {
+    // Extract the resource ID from the request parameters
+    const { id } = req.params;
+
+    // Validate and convert the ID to a valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid resource ID" });
+    }
+    const objectId = new mongoose.Types.ObjectId(id);
+
+    // Find the resource by ID and update or initialize `view`
+    const resource = await Resource.findByIdAndUpdate(
+      objectId,
+      { $inc: { views: 1 } }, // Increment `view` by 1, initializing it to 1 if it doesn't exist
+      { new: true, upsert: true, setDefaultsOnInsert: true } // Return the updated document
+    );
+
+    // If no resource is found, return a 404 response
+    if (!resource) {
+      return res.status(404).json({ message: "Resource not found" });
+    }
+
+    // Respond with the updated resource
+    res.status(200).json({
+      message: "View count incremented successfully",
+      updatedResource: resource
+    });
+  } catch (e) {
+    // Handle any errors that occur
+    console.error("Error in incrementViewCount:", e);
+    next(e);
+  }
+};
+
 // // Function to retrieve resources filtered by a specific tag with pagination
 // exports.getResourcesByTag = async (req, res, next) => {
 //   try {
