@@ -249,10 +249,13 @@ app.get("/api/v0/resources/all", resourceController.getAllResources);
 app.get("/api/v0/resources/sets", resourceController.getResourceUnique);
 app.get("/api/v0/resources/allstats", resourceController.getResourcesAndStats);
 app.get("/api/v0/resources/stats", resourceController.getResourceStats);
+app.get("/api/v0/resources/viewsAll", resourceController.getResourceViewsAll);
+app.get("/api/v0/resources/views", resourceController.getResourceViewsCount);
 app.post(
   "/api/v0/resources/:id/increment-view",
   resourceController.incrementViewCount
 );
+app.delete("/api/v0/resources/clean-views", resourceController.cleanViews);
 
 // app.get("/api/v0/resources/search", (req, res) => {
 //   console.log("Search query:", req.query.search);

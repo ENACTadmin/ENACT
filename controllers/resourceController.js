@@ -443,6 +443,77 @@ exports.getResourceStats = async (req, res, next) => {
   }
 };
 
+exports.getResourceViewsAll = async (req, res, next) => {
+  try {
+    const resources = await Resource.aggregate([
+      {
+        $project: {
+          _id: 1, // Include the document ID
+          name: 1, // Include the title (stored in `name`)
+          ownerName: 1, // Include the author's name
+          views: { $ifNull: ["$views", 0] } // Default to 0 if `views` is missing
+        }
+      }
+    ]);
+
+    // Respond with the aggregated data
+    res.status(200).json(resources);
+  } catch (error) {
+    console.error("Error in getResourceViews:", error);
+    next(error);
+  }
+};
+
+exports.getResourceViewsCount = async (req, res, next) => {
+  try {
+    const resources = await Resource.aggregate([
+      {
+        $project: {
+          views: { $ifNull: ["$views", 0] } // Default to 0 if `views` is missing
+        }
+      },
+      {
+        $group: {
+          _id: "$views", // Group by `views`
+          count: { $sum: 1 } // Count the number of resources with each `views` value
+        }
+      }
+    ]);
+
+    // Transform the result into a dictionary format
+    const result = resources.reduce((acc, item) => {
+      acc[item._id] = item.count;
+      return acc;
+    }, {});
+
+    // Respond with the count dictionary
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Error in getResourceViewsCount:", error);
+    next(error);
+  }
+};
+
+exports.cleanViews = async (req, res, next) => {
+  try {
+    // Remove the `views` field from all resources that have it
+    const result = await Resource.updateMany(
+      { views: { $exists: true } }, // Only match documents with a `views` field
+      { $unset: { views: "" } } // Remove the `views` field
+    );
+
+    // Respond with the result of the operation
+    res.status(200).json({
+      message: "Views field removed from resources",
+      matchedCount: result.matchedCount, // Number of documents matched
+      modifiedCount: result.modifiedCount // Number of documents updated
+    });
+  } catch (error) {
+    console.error("Error in cleanViews:", error);
+    next(error);
+  }
+};
+
 exports.getResourceUnique = async (req, res, next) => {
   try {
     // Aggregation pipelines for collecting unique sets
