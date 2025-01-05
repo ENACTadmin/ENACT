@@ -1,6 +1,9 @@
 const path = require("path");
 const LiveReloadPlugin = require("webpack-livereload-plugin");
 
+// Check for USE_LIVERELOAD environment variable
+const useLiveReload = process.env.USE_LIVERELOAD === "true";
+
 module.exports = {
   mode: "development", // Set the mode to development
   entry: "./src/app/SearchComponent.js", // Path to your React component
@@ -46,8 +49,12 @@ module.exports = {
     extensions: [".js", ".jsx"] // Automatically resolve these extensions
   },
   plugins: [
-    new LiveReloadPlugin({
-      appendScriptTag: true // This will append the livereload <script> tag automatically into your HTML
-    })
+    ...(useLiveReload
+      ? [
+          new LiveReloadPlugin({
+            appendScriptTag: true // Append livereload script automatically
+          })
+        ]
+      : [])
   ]
 };

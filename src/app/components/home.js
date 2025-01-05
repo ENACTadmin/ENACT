@@ -63,7 +63,7 @@ const Home = ({ onSelectTopic }) => {
         const data = await response.json();
         setApiData(data); // Save the fetched data
       } catch (error) {
-        console.error("Failed to fetch data from API:", error);
+        // console.error("Failed to fetch data from API:", error);
       } finally {
         setLoading(false); // Stop loading after fetch
       }

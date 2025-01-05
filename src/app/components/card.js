@@ -43,9 +43,7 @@ const Card = (props) => {
   };
 
   const handleIncrementView = async (e) => {
-    e.preventDefault(); // Prevent immediate navigation
-    console.log("Incrementing view count for resource:", props.id);
-
+    e.preventDefault();
     try {
       const response = await fetch(
         `/api/v0/resources/${props.id}/increment-view`,
@@ -58,13 +56,13 @@ const Card = (props) => {
       );
 
       if (!response.ok) {
-        console.error("Failed to increment view count");
+        // console.error("Failed to increment view count");
       }
 
       // Open the link in a new tab after incrementing the view count
       window.open(props.link, "_blank");
     } catch (error) {
-      console.error("Error incrementing view count:", error);
+      // console.error("Error incrementing view count:", error);
     }
   };
 
