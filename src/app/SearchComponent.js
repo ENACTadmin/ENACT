@@ -4,7 +4,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Card from "./components/card";
 import Home from "./components/home";
-import StickySearchInput from "./StickySearchInput";
+import StickySearchInput from "./components/StickySearchInput";
 import { categories } from "./data/searchSetting";
 
 const LoadingSkeleton = ({ count }) => (

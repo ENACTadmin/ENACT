@@ -240,9 +240,9 @@
 // export default StickySearchInput;
 
 import React, { useState, useEffect } from "react";
-import useDebounce from "./hooks/useDebounce";
+import useDebounce from "../hooks/useDebounce";
 import "rc-slider/assets/index.css";
-import { categories } from "./data/searchSetting";
+import { categories } from "../data/searchSetting";
 
 function StickySearchInput({
   searchTerm,
@@ -383,8 +383,8 @@ function StickySearchInput({
         zIndex: 900,
         backgroundColor: "white",
         padding: "10px 15px",
-        width: "100%",
-        marginBottom: "20px"
+        width: "100%"
+        // marginBottom: "20px"
       }}>
       <div
         style={{
@@ -436,7 +436,13 @@ function StickySearchInput({
           flexDirection: "row",
           flexWrap: "wrap",
           gap: "1rem",
-          listStyle: "none"
+          listStyle: "none",
+          visibility: inputValue === "" ? "hidden" : "visible", // Hide filters
+          pointerEvents: inputValue === "" ? "none" : "auto", // Disable interaction
+          height: inputValue === "" ? "0" : "auto", // Collapse the height
+          overflow: "hidden", // Ensure no content is shown when hidden
+          transition: "height 0.3s ease-in-out, opacity 0.3s ease-in-out", // Smooth transition
+          opacity: inputValue === "" ? 0 : 1 // Fade effect
         }}>
         {Object.entries(categories).map(([group, items]) => (
           <div
