@@ -206,7 +206,7 @@ function SearchComponent() {
             </ul>
           ) : noSearchResults ? (
             <>
-              <p>Sorry Nothing Found</p>
+              <p>No matches to your filters and search</p>
               <Home onSelectTopic={handleSelectTopic} />
             </>
           ) : null}
