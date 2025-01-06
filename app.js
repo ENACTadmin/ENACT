@@ -95,6 +95,10 @@ app.use(
 // Register the mail router
 app.use("/api/mail", mailRouter);
 
+// Apply middleware globally
+app.use(utils.checkUserName);
+app.use(utils.checkUserAccess);
+
 // configure auth router
 const auth = require("./routes/auth");
 app.use(auth);
@@ -163,8 +167,13 @@ app.get(
   }
 );
 
+
 // show all courses
-app.get("/courses", utils.checkUserName, (req, res) =>
+app.get("/courses", 
+  utils.checkUserName, 
+  utils.checkUserAccess, 
+  courseController.showCourseManagement,
+  (req, res) =>
   res.render("./pages/courses-management")
 );
 

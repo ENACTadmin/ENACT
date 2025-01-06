@@ -13,6 +13,7 @@ const userSchema = Schema({
     profilePicURL: String,
     status: String, // status of the user: student/faculty/admin
     linkedInURL: String,
+    hasFullAccess: Boolean,
     state: String,
     enrolledCourses: [ObjectID],
     workEmail: String,
