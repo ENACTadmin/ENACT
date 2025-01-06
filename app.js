@@ -99,10 +99,6 @@ app.use("/api/mail", mailRouter);
 app.use(utils.checkUserName);
 app.use(utils.checkUserAccess);
 
-// Apply middleware globally
-app.use(utils.checkUserName);
-app.use(utils.checkUserAccess);
-
 // configure auth router
 const auth = require("./routes/auth");
 app.use(auth);

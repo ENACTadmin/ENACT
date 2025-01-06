@@ -350,6 +350,43 @@ exports.showCourses = async (req, res) => {
   });
 };
 
+exports.showCourseManagement = async (req, res) => {
+  try {
+    let courses;
+    if (res.locals.hasFullAccess) {
+      // Fetch all courses if the user has full access
+      courses = await Course.find({}, {
+        ownerId: 1,
+        institutionURL: 1,
+        _id: 1,
+        state: 1,
+        courseName: 1,
+        timezone: 1,
+        semester: 1,
+        year: 1,
+        instructor: 1,
+        institution: 1,
+      });
+    } else {
+      // Fetch only courses owned by or enrolled in by the user
+      courses = await Course.find({
+        $or: [{ ownerId: req.user._id }, { _id: { $in: req.user.enrolledCourses } }],
+      });
+    }
+
+    // Pass both courses and hasFullAccess to the EJS template
+    res.render("./pages/courses-management", {
+      courses: courses,
+      hasFullAccess: res.locals.hasFullAccess, // Explicitly pass hasFullAccess
+      userId: req.user._id.toString(),        // Pass user ID for ownership comparison
+    });
+  } catch (error) {
+    console.error("Error fetching courses for management:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+
 exports.deleteCourse = async (req, res) => {
   await Course.deleteOne({ _id: req.params.courseId });
   await CourseTime.deleteMany({ courseId: req.params.courseId });

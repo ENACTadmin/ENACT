@@ -17,149 +17,90 @@
             <div class='row'>
                 <div class='col-md-2 col-sm-12 text-center'></div>
                 <div class='col-md-8 col-sm-12'>
-                    <% if (loggedIn) { %>
-                        <% if (status === 'faculty' || status === 'admin') { %>
-                            <div class='lead'><b>Create a new course</b></div>
-                            <hr>
-                            <a class='btn btn-lg btn-outline-primary' href='/course/create'>
-                                create a new course
-                            </a>
-                            <br>
-                            <br>
-                        <% } else { %>
-                            <div class='lead'><b>Enroll in a course</b></div>
-                            <hr>
-                            <form method='post' action='/course/join'>
-                                <div class='input-group-prepend'>
-                                    <span class='input-group-text' style='width: 180px'>Course Pin</span>
-                                    <input type='text' class='form-control' style='margin-right: 10px' name='coursePin'
-                                           placeholder='e.g. 7-digit number'>
-                                    <input type='submit' name='submit' class='btn btn-outline-dark' value='Enroll'>
-                                </div>
-                                <br>
-                            </form>
-                            <br>
-                        <% } %>
-                        <% if (courseInfoSet && courseInfoSet.length !== 0) { %>
-                            <% if (status === 'faculty' || status === 'admin') { %>
-                                <div class='lead'><b>Manage owned courses</b></div>
-                            <% } else { %>
-                                <div class='lead'><b>Your courses</b></div>
-                            <% } %>
-                            <hr>
 
-                            <table class='table table-striped'>
-                                <thead style='background-color: #0053a4'>
-                                <tr>
-                                    <th scope='col' style='color: white'>Name</th>
-                                    <th scope='col' style='color: white'>Year</th>
-                                    <th scope='col' style='color: white'>Semester</th>
-                                    <th scope='col' style='color: white'>
-                                        <% if (status === 'faculty' || status === 'admin') { %>
-                                            Course Pin
-                                        <% } else { %>
-                                            Instructor
-                                        <% } %>
-                                    </th>
-                                    <th scope='col' style='color: white'>
-                                        Action
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <% if (status === 'faculty' || status === 'admin') { %>
-                                    <% for(let i = 0; i < courseInfoSet.length; i++) { %>
-                                        <tr>
-                                            <td>
-                                                <a href='/course/view/<%= courseInfoSet[i]._id %>/10'><%= courseInfoSet[i].courseName %></a>
-                                            </td>
-                                            <td><%= courseInfoSet[i].year %></td>
-                                            <td><%= courseInfoSet[i].semester %></td>
-                                            <td>
-                                                <%= courseInfoSet[i].coursePin %>
-                                            </td>
-                                            <td>
-                                                <a href="/course/update/<%= courseInfoSet[i]._id %>">Edit</a>&nbsp&nbsp
-                                                <a href="/course/copy/<%= courseInfoSet[i]._id %>">Duplicate</a>&nbsp&nbsp
-                                                <a href="#" data-toggle='modal'
-                                                   data-target='#deleteModal<%= courseInfoSet[i]._id %>'>Delete</a>
-                                            </td>
-                                        </tr>
-                                    <% } %>
-                                <% } else { %>
-                                    <% for (let i = 0; i < courseInfoSet.length; i++){ %>
-                                        <tr>
-                                            <td>
-                                                <a href='/course/view/<%= courseInfoSet[i]._id %>/10'><%= courseInfoSet[i].courseName %></a>
-                                            </td>
-                                            <td><%= courseInfoSet[i].year %></td>
-                                            <td><%= courseInfoSet[i].semester %></td>
-                                            <td><%= courseInfoSet[i].instructor %></td>
-                                            <td>Unenroll</td>
-                                        </tr>
-                                    <% } %>
-                                </tbody>
-                                <% } %>
-                            </table>
-                        <% } else { %>
-                            <% if (status === 'admin' || status === 'faculty') { %>
-                                <div class='text-center partners__text'>
-                                    <h3>You haven't created any course yet</h3>
-                                </div>
-                            <% } else { %>
-                                <div class='text-center partners__text'>
-                                    <h3>You haven't enrolled in any course yet</h3>
-                                </div>
-                            <% } %>
-                        <% } %>
-
-                            <br>
-                            <h3 style="text-align: center"> <a href="/courses/pastList">View All ENACT Courses</a>
-                            </h3>
-
+                    <% if (hasFullAccess) { %>
+                        <h3 class="text-center">Manage All Courses</h3>
+                    <% } else if (userStatus === 'student') { %>
+                        <h3 class="text-center">View Your Enrolled Courses</h3>
                     <% } else { %>
-                        <%- include('../components/component-loginToView'); -%>
+                        <h3 class="text-center">Manage Your Courses</h3>
                     <% } %>
+
+                    <table class='table table-striped'>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Year</th>
+                                <th>Semester</th>
+                                <th>Instructor</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (courses && courses.length > 0) { %>
+                                <% courses.forEach(course => { %>
+                                    <tr>
+                                        <td><a href='/course/view/<%= course._id %>/10'><%= course.courseName %></a></td>
+                                        <td><%= course.year %></td>
+                                        <td><%= course.semester %></td>
+                                        <td><%= course.instructor %></td>
+                                        <td>
+                                            <% if (hasFullAccess || course.ownerId.toString() === userId) { %>
+                                                <a href="/course/update/<%= course._id %>" class="btn btn-outline-primary btn-sm d-block mb-2">Edit</a>
+                                                <a href="#" data-toggle='modal' data-target='#deleteModal<%= course._id %>' class="btn btn-outline-primary btn-sm d-block mb-2">Delete</a>
+                                                <a href="/course/copy/<%= course._id %>" class="btn btn-outline-primary btn-sm d-block mb-2">Copy</a>
+                                            <% }     else if (userStatus === 'student') { %>
+                                                <a href="/course/view/<%= course._id %>/10" class="btn btn-outline-primary btn-sm d-block mb-2">View</a>
+                                            <% } %>
+                                        </td>
+                                    </tr>
+                                <% }); %>
+                            <% } else { %>
+                                <tr>
+                                    <td colspan="5" class="text-center">No courses available to display.</td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+
+                    <% if (courses && courses.length > 0) { %>
+                        <% courses.forEach(course => { %>
+                            <!-- Modal -->
+                            <div class='modal fade' id='deleteModal<%= course._id %>' tabindex='-1' role='dialog'
+                                 aria-labelledby='exampleModalLabel' aria-hidden='true'>
+                                <div class='modal-dialog modal-lg' role='document'>
+                                    <div class='modal-content'>
+                                        <div class='modal-header'>
+                                            <h5 class='modal-title' id='exampleModalLabel'>Delete?</h5>
+                                            <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                                                <span aria-hidden='true'>&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class='modal-body'>
+                                            <div class='row'>
+                                                <div class='col-md-12 col-sm-12'>
+                                                    <h4>Are you sure you want to delete this course permanently?</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class='modal-footer'>
+                                            <form method='post' action='/course/delete/<%= course._id %>'>
+                                                <input type='submit' name='submit' class='btn btn-outline-danger' value='Delete'>
+                                            </form>
+                                            <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>
+                                                Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }); %>
+                    <% } %>
+
                 </div>
             </div>
         </div>
     </div>
-
 </section>
-
-<% if (courseInfoSet && courseInfoSet.length !== 0) { %>
-    <% for (let i = 0; i < courseInfoSet.length; i++) { %>
-        <!-- Modal -->
-        <div class='modal fade' id='deleteModal<%= courseInfoSet[i]._id %>' tabindex='-1' role='dialog'
-             aria-labelledby='exampleModalLabel'
-             aria-hidden='true'>
-            <div class='modal-dialog modal-lg' role='document'>
-                <div class='modal-content'>
-                    <div class='modal-header'>
-                        <h5 class='modal-title' id='exampleModalLabel'>Delete?</h5>
-                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                            <span aria-hidden='true'>&times;</span>
-                        </button>
-                    </div>
-                    <div class='modal-body'>
-                        <div class='row'>
-                            <div class='col-md-12 col-sm-12'>
-                                <h4>Are you sure you want to delete this course permanently?</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div class='modal-footer'>
-                        <form method='post' action='/course/delete/<%= courseInfoSet[i]._id %>'>
-                            <input type='submit' name='submit' class='btn btn-outline-danger' value='Delete'>
-                        </form>
-                        <button type='button' id='closeBtn' class='btn btn-outline-secondary' data-dismiss='modal'>
-                            Close
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <% } %>
-<% } %>
 
 <%- include('../components/footer'); -%>
