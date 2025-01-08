@@ -505,6 +505,11 @@ exports.getResourcesByKeyword = async (req, res) => {
             { name: { $regex: keywordRegex } },
             { description: { $regex: keywordRegex } },
             { authorName: { $regex: keywordRegex } },
+            { resourceType: { $regex: keywordRegex } },
+            { institution: { $regex: keywordRegex } },
+            { yearOfCreation: { $regex: keywordRegex } },
+            { contentType: { $regex: keywordRegex } },
+            { mediaType: { $regex: keywordRegex } },
             // Uncomment below if you want to search in tags too
             { tags: { $in: [keyword] } }
           ]

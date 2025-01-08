@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Card from "../components/card";
 import Skeleton from "react-loading-skeleton";
+import { categories } from "../data/searchSetting";
 
 const Topics = [
   "agriculture",
@@ -51,7 +52,7 @@ const LoadingSkeleton = ({ count }) => (
   </div>
 );
 
-const Home = ({ onSelectTopic }) => {
+const Home = ({ onSelectTopic, showItems = true }) => {
   const [apiData, setApiData] = useState([]);
   const [loading, setLoading] = useState(true); // Track loading state
   const [showAll, setShowAll] = useState(false);
@@ -72,7 +73,9 @@ const Home = ({ onSelectTopic }) => {
     fetchData();
   }, []);
 
-  const displayedTopics = showAll ? Topics : Topics.slice(0, 11);
+  const displayedTopics = showAll
+    ? categories.contentTypes
+    : categories.contentTypes.slice(0, 11);
 
   return (
     <>

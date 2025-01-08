@@ -6,6 +6,7 @@ import Card from "./components/card";
 import Home from "./components/home";
 import StickySearchInput from "./components/StickySearchInput";
 import { categories } from "./data/searchSetting";
+import SearchImage from "./media/Search.svg";
 
 const LoadingSkeleton = ({ count }) => (
   <div className="loading-container" style={{ maxWidth: "1000px" }}>
@@ -205,10 +206,24 @@ function SearchComponent() {
               ))}
             </ul>
           ) : noSearchResults ? (
-            <>
+            <div
+              style={{
+                textAlign: "center",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "20px",
+                width: "100%",
+                maxWidth: "1200px"
+              }}>
+              <img
+                src={SearchImage}
+                alt="Search Icon"
+                style={{ height: "300px" }}
+              />
               <p>No matches to your filters and search</p>
               <Home onSelectTopic={handleSelectTopic} />
-            </>
+            </div>
           ) : null}
         </aside>
       </section>

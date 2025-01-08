@@ -42,6 +42,10 @@ module.exports = {
         test: /\.css$/, // Match regular .css files (non-modules)
         exclude: /\.module\.css$/, // Exclude .module.css
         use: ["style-loader", "css-loader"] // Regular global CSS
+      },
+      {
+        test: /\.svg$/,
+        type: "asset/resource"
       }
     ]
   },
