@@ -645,112 +645,6 @@ exports.getResources = async (req, res, next) => {
     next(e);
   }
 };
-
-// Function to aggregate and render resource statistics
-// exports.renderResourceStatsPage = async (req, res, next) => {
-//   try {
-//     // Total resources count
-//     const totalResourcesPipeline = [{ $count: "total" }];
-
-//     // Total approved resources
-//     const totalApprovedResourcesPipeline = [
-//       { $match: { checkStatus: "approve" } },
-//       { $count: "total" }
-//     ];
-
-//     // Total resources with "privateToENACT" status
-//     const totalPrivateToENACTPipeline = [
-//       { $match: { status: "privateToENACT" } },
-//       { $count: "total" }
-//     ];
-
-//     // Group resources by author
-//     const totalPerAuthorPipeline = [
-//       {
-//         $lookup: {
-//           from: "users",
-//           localField: "ownerId",
-//           foreignField: "_id",
-//           as: "ownerDetails"
-//         }
-//       },
-//       { $unwind: "$ownerDetails" },
-//       {
-//         $group: {
-//           _id: "$ownerDetails.userName",
-//           count: { $sum: 1 }
-//         }
-//       },
-//       {
-//         $project: {
-//           authorName: "$_id",
-//           count: 1,
-//           _id: 0
-//         }
-//       }
-//     ];
-
-//     // Group resources by tag
-//     const totalPerTagPipeline = [
-//       { $unwind: "$tags" },
-//       {
-//         $group: {
-//           _id: "$tags",
-//           count: { $sum: 1 }
-//         }
-//       },
-//       {
-//         $project: {
-//           tag: "$_id",
-//           count: 1,
-//           _id: 0
-//         }
-//       }
-//     ];
-
-//     // Group resources by year of creation
-//     const totalPerYearPipeline = [
-//       {
-//         $group: {
-//           _id: "$yearOfCreation",
-//           count: { $sum: 1 }
-//         }
-//       },
-//       {
-//         $project: {
-//           year: "$_id",
-//           count: 1,
-//           _id: 0
-//         }
-//       }
-//     ];
-
-//     // Fetch results using aggregation pipelines
-//     const [totalResources] = await Resource.aggregate(totalResourcesPipeline);
-//     const [totalApproved] = await Resource.aggregate(
-//       totalApprovedResourcesPipeline
-//     );
-//     const [totalPrivateToENACT] = await Resource.aggregate(
-//       totalPrivateToENACTPipeline
-//     );
-//     const totalPerAuthor = await Resource.aggregate(totalPerAuthorPipeline);
-//     const totalPerTag = await Resource.aggregate(totalPerTagPipeline);
-//     const totalPerYear = await Resource.aggregate(totalPerYearPipeline);
-
-//     // Pass data to the EJS template
-//     res.render("pages/stats/resourceStats", {
-//       totalResources: totalResources ? totalResources.total : 0,
-//       totalApproved: totalApproved ? totalApproved.total : 0,
-//       totalPrivateToENACT: totalPrivateToENACT ? totalPrivateToENACT.total : 0,
-//       totalPerAuthor: totalPerAuthor,
-//       totalPerTag: totalPerTag,
-//       totalPerYear: totalPerYear
-//     });
-//   } catch (e) {
-//     next(e);
-//   }
-// };
-
 exports.renderResourceStatsPage = async (req, res, next) => {
   try {
     // Total resources count
@@ -851,18 +745,86 @@ exports.renderResourceStatsPage = async (req, res, next) => {
       }
     ];
 
+    // Group resources by resourceType
+    const totalPerResourceTypePipeline = [
+      {
+        $group: {
+          _id: "$resourceType",
+          count: { $sum: 1 }
+        }
+      },
+      {
+        $project: {
+          resourceType: "$_id",
+          count: 1,
+          _id: 0
+        }
+      }
+    ];
+
+    // Group resources by contentType
+    const totalPerContentTypePipeline = [
+      {
+        $group: {
+          _id: "$contentType",
+          count: { $sum: 1 }
+        }
+      },
+      {
+        $project: {
+          contentType: "$_id",
+          count: 1,
+          _id: 0
+        }
+      }
+    ];
+
+    // Group resources by mediaType
+    const totalPerMediaTypePipeline = [
+      {
+        $group: {
+          _id: "$mediaType",
+          count: { $sum: 1 }
+        }
+      },
+      {
+        $project: {
+          mediaType: "$_id",
+          count: 1,
+          _id: 0
+        }
+      }
+    ];
+
+    // Group resources by institution
+    const totalPerInstitutionPipeline = [
+      {
+        $group: {
+          _id: "$institution",
+          count: { $sum: 1 }
+        }
+      },
+      {
+        $project: {
+          institution: "$_id",
+          count: 1,
+          _id: 0
+        }
+      }
+    ];
+
     // Fetch results using aggregation pipelines
     const [totalResources] = await Resource.aggregate(totalResourcesPipeline);
-    const [totalApproved] = await Resource.aggregate(
-      totalApprovedResourcesPipeline
-    );
-    const [totalPrivateToENACT] = await Resource.aggregate(
-      totalPrivateToENACTPipeline
-    );
+    const [totalApproved] = await Resource.aggregate(totalApprovedResourcesPipeline);
+    const [totalPrivateToENACT] = await Resource.aggregate(totalPrivateToENACTPipeline);
     const totalPerAuthor = await Resource.aggregate(totalPerAuthorPipeline);
     const totalPerTag = await Resource.aggregate(totalPerTagPipeline);
     const totalPerYear = await Resource.aggregate(totalPerYearPipeline);
     const resourcesByViews = await Resource.aggregate(resourcesByViewsPipeline);
+    const totalPerResourceType = await Resource.aggregate(totalPerResourceTypePipeline);
+    const totalPerContentType = await Resource.aggregate(totalPerContentTypePipeline);
+    const totalPerMediaType = await Resource.aggregate(totalPerMediaTypePipeline);
+    const totalPerInstitution = await Resource.aggregate(totalPerInstitutionPipeline);
 
     // Pass data to the EJS template
     res.render("pages/stats/resourceStats", {
@@ -872,12 +834,144 @@ exports.renderResourceStatsPage = async (req, res, next) => {
       totalPerAuthor: totalPerAuthor,
       totalPerTag: totalPerTag,
       totalPerYear: totalPerYear,
-      resourcesByViews: resourcesByViews // Add this for displaying in the template
+      resourcesByViews: resourcesByViews,
+      totalPerResourceType: totalPerResourceType,
+      totalPerContentType: totalPerContentType,
+      totalPerMediaType: totalPerMediaType,
+      totalPerInstitution: totalPerInstitution
     });
   } catch (e) {
     next(e);
   }
 };
+
+// exports.renderResourceStatsPage = async (req, res, next) => {
+//   try {
+//     // Total resources count
+//     const totalResourcesPipeline = [{ $count: "total" }];
+
+//     // Total approved resources
+//     const totalApprovedResourcesPipeline = [
+//       { $match: { checkStatus: "approve" } },
+//       { $count: "total" }
+//     ];
+
+//     // Total resources with "privateToENACT" status
+//     const totalPrivateToENACTPipeline = [
+//       { $match: { status: "privateToENACT" } },
+//       { $count: "total" }
+//     ];
+
+//     // Group resources by author
+//     const totalPerAuthorPipeline = [
+//       {
+//         $lookup: {
+//           from: "users",
+//           localField: "ownerId",
+//           foreignField: "_id",
+//           as: "ownerDetails"
+//         }
+//       },
+//       { $unwind: "$ownerDetails" },
+//       {
+//         $group: {
+//           _id: "$ownerDetails.userName",
+//           count: { $sum: 1 }
+//         }
+//       },
+//       {
+//         $project: {
+//           authorName: "$_id",
+//           count: 1,
+//           _id: 0
+//         }
+//       }
+//     ];
+
+//     // Group resources by tag
+//     const totalPerTagPipeline = [
+//       { $unwind: "$tags" },
+//       {
+//         $group: {
+//           _id: "$tags",
+//           count: { $sum: 1 }
+//         }
+//       },
+//       {
+//         $project: {
+//           tag: "$_id",
+//           count: 1,
+//           _id: 0
+//         }
+//       }
+//     ];
+
+//     // Group resources by year of creation
+//     const totalPerYearPipeline = [
+//       {
+//         $group: {
+//           _id: "$yearOfCreation",
+//           count: { $sum: 1 }
+//         }
+//       },
+//       {
+//         $project: {
+//           year: "$_id",
+//           count: 1,
+//           _id: 0
+//         }
+//       }
+//     ];
+
+//     // Group resources by views count
+//     const resourcesByViewsPipeline = [
+//       {
+//         $project: {
+//           views: { $ifNull: ["$views", 0] } // Default to 0 if `views` is missing
+//         }
+//       },
+//       {
+//         $group: {
+//           _id: "$views", // Group by `views`
+//           count: { $sum: 1 } // Count the number of resources with each `views` value
+//         }
+//       },
+//       {
+//         $project: {
+//           views: "$_id",
+//           count: 1,
+//           _id: 0
+//         }
+//       }
+//     ];
+
+//     // Fetch results using aggregation pipelines
+//     const [totalResources] = await Resource.aggregate(totalResourcesPipeline);
+//     const [totalApproved] = await Resource.aggregate(
+//       totalApprovedResourcesPipeline
+//     );
+//     const [totalPrivateToENACT] = await Resource.aggregate(
+//       totalPrivateToENACTPipeline
+//     );
+//     const totalPerAuthor = await Resource.aggregate(totalPerAuthorPipeline);
+//     const totalPerTag = await Resource.aggregate(totalPerTagPipeline);
+//     const totalPerYear = await Resource.aggregate(totalPerYearPipeline);
+//     const resourcesByViews = await Resource.aggregate(resourcesByViewsPipeline);
+
+//     // Pass data to the EJS template
+//     res.render("pages/stats/resourceStats", {
+//       totalResources: totalResources ? totalResources.total : 0,
+//       totalApproved: totalApproved ? totalApproved.total : 0,
+//       totalPrivateToENACT: totalPrivateToENACT ? totalPrivateToENACT.total : 0,
+//       totalPerAuthor: totalPerAuthor,
+//       totalPerTag: totalPerTag,
+//       totalPerYear: totalPerYear,
+//       resourcesByViews: resourcesByViews // Add this for displaying in the template
+//     });
+//   } catch (e) {
+//     next(e);
+//   }
+// };
 
 exports.renderStudentGuidePage = async (req, res, next) => {
   try {

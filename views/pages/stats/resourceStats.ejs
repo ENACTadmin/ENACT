@@ -3,304 +3,215 @@
     <title>Resource Statistics</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <link rel="stylesheet" href="/stylesheets/stats.css">
-
 </head>
 
 <%- include('../../components/header'); -%>
-
-    <%- include('../../components/navbar'); -%>
-    <section class="wrapper">
-        <div class="innerWrapper">
-            <h1 class="chart-title">ENACT Resource Statistics</h1>
-            <div class="rowdata">
-                <div class="tile">
-                    <h3 class="title">Total Resources:</h3>
-                    <h3 class="data"><%= totalResources %></h3>
-                </div>
-                <div class="tile">
-                    <h3 class="title">Total Approved:</h3>
-                    <h3 class="data"><%= totalApproved %></h3>
-                </div>
-                <div class="tile">
-                    <h3 class="title">Total Private to ENACT:</h3>
-                    <h3 class="data"><%= totalPrivateToENACT %></h3>
-                </div>
+<%- include('../../components/navbar'); -%>
+<section class="wrapper">
+    <div class="innerWrapper">
+        <h1 class="chart-title">ENACT Resource Statistics</h1>
+        <div class="rowdata">
+            <div class="tile">
+                <h3 class="title">Total Resources:</h3>
+                <h3 class="data"><%= totalResources %></h3>
             </div>
+            <div class="tile">
+                <h3 class="title">Total Approved:</h3>
+                <h3 class="data"><%= totalApproved %></h3>
+            </div>
+            <div class="tile">
+                <h3 class="title">Total Private to ENACT:</h3>
+                <h3 class="data"><%= totalPrivateToENACT %></h3>
+            </div>
+        </div>
 
-            <svg class="chart" id="resourcesPerYearChart" width="1000" height="400"></svg>
-            <svg class="chart" id="resourcesPerTagChart" width="1000" height="400"></svg>
-            <h2>Resource count per views</h2>
-                        <!-- Table for Resources by Views -->
-            <table id="resourcesByViewsTable">
-                <thead>
+        <h2>Resources per Year</h2>
+        <svg class="chart" id="resourcesPerYearChart" width="1000" height="400"></svg>
+
+        <h2>Resources by Tag</h2>
+        <svg class="chart" id="resourcesPerTagChart" width="1000" height="400"></svg>
+
+        <h2>Resource Count per Views</h2>
+        <table id="resourcesByViewsTable">
+            <thead>
                 <tr>
                     <th>Views</th>
                     <th>Resource Count</th>
                 </tr>
-                </thead>
-                <tbody>
+            </thead>
+            <tbody>
                 <% resourcesByViews.forEach(function (item) { %>
                     <tr>
-                    <td><%= item.views %></td>
-                    <td><%= item.count %></td>
+                        <td><%= item.views %></td>
+                        <td><%= item.count %></td>
                     </tr>
                 <% }); %>
-                </tbody>
-            </table>
-            
+            </tbody>
+        </table>
 
-            <!-- Author table with conditional highlighting -->
-            <h2>Resources per Author</h2>
-
-            <svg class="chart" id="resourcesPerAuthorChart" width="1000" height="400"></svg>
-            <table id="resourcesPerAuthorTable">
-                <thead>
+        <h2>Resources per Author</h2>
+        <svg class="chart" id="resourcesPerAuthorChart" width="1000" height="400"></svg>
+        <table id="resourcesPerAuthorTable">
+            <thead>
+                <tr>
+                    <th>Author</th>
+                    <th>Resource Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% totalPerAuthor.forEach(function (item) { %>
                     <tr>
-                        <th>Author</th>
-                        <th>Resource Count</th>
+                        <td><%= item.authorName %></td>
+                        <td><%= item.count %></td>
                     </tr>
-                </thead>
-                <tbody>
-                    <% 
-                    // Array of highlighted author names
-                    const highlightNames = ["Aby", "Madina", "ENACT Admin", "David", "David Weinstein", "Nemma Kalra","epevide"];
-                    
-                    // Sort and then render
-                    totalPerAuthor.sort((a, b) => b.count - a.count).forEach(function (item) {
-                        const highlightClass = highlightNames.includes(item.authorName) ? "highlight" : ""; %>
-                        <tr class="<%= highlightClass %>" data-author="<%= item.authorName %>">
-                            <td><%= item.authorName %></td>
-                            <td><%= item.count %></td>
-                        </tr>
-                    <% }); %>
-                </tbody>
-            </table>
+                <% }); %>
+            </tbody>
+        </table>
 
-           
-        </div>
-    </section>
+        <!-- Additional Sections -->
+        <h2>Resources by Resource Type</h2>
+        <svg class="chart" id="resourcesPerResourceTypeChart" width="1000" height="400"></svg>
+        <table id="resourcesPerResourceTypeTable">
+            <thead>
+                <tr>
+                    <th>Resource Type</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% totalPerResourceType.forEach(function (item) { %>
+                    <tr>
+                        <td><%= item.resourceType %></td>
+                        <td><%= item.count %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
 
-    <script>
-        // Function to draw bar charts
-        function drawBarChart(chartId, data, xLabel, yLabel, chartTitle) {
-            // Sort data numerically in ascending order based on the count
-            data.sort((a, b) => a.count - b.count);
+        <h2>Resources by Media Type</h2>
+        <svg class="chart" id="resourcesPerMediaTypeChart" width="1000" height="400"></svg>
+        <table id="resourcesPerMediaTypeTable">
+            <thead>
+                <tr>
+                    <th>Media Type</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% totalPerMediaType.forEach(function (item) { %>
+                    <tr>
+                        <td><%= item.mediaType %></td>
+                        <td><%= item.count %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
 
-            // Set up SVG dimensions and margins
-            const svg = d3.select(chartId);
-            const width = +svg.attr("width");
-            const height = +svg.attr("height");
-            const margin = { top: 40, right: 30, bottom: 40, left: 40 };
+        <h2>Resources by Content Type</h2>
+        <svg class="chart" id="resourcesPerContentTypeChart" width="1000" height="400"></svg>
+        <table id="resourcesPerContentTypeTable">
+            <thead>
+                <tr>
+                    <th>Content Type</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% totalPerContentType.forEach(function (item) { %>
+                    <tr>
+                        <td><%= item.contentType %></td>
+                        <td><%= item.count %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
 
-            // Create scales for the x and y axes
-            const x = d3.scaleBand()
-                .domain(data.map(d => d.label))
-                .range([margin.left, width - margin.right])
-                .padding(0.1);
+        <h2>Resources by Institution</h2>
+        <svg class="chart" id="resourcesPerInstitutionChart" width="1000" height="400"></svg>
+        <table id="resourcesPerInstitutionTable">
+            <thead>
+                <tr>
+                    <th>Institution</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% totalPerInstitution.sort((a, b) => a.institution.localeCompare(b.institution)).forEach(function (item) { %>
+                    <tr>
+                        <td><%= item.institution %></td>
+                        <td><%= item.count %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</section>
 
-            const y = d3.scaleLinear()
-                .domain([0, d3.max(data, d => d.count)]).nice()
-                .range([height - margin.bottom, margin.top]);
+<script>
+    // Function to draw bar charts
+    function drawBarChart(chartId, data, xLabel, yLabel, chartTitle) {
+        data.sort((a, b) => a.count - b.count);
 
-            // Add chart title
-            svg.append("text")
-                .attr("x", width / 2)
-                .attr("y", margin.top - 20)
-                .attr("text-anchor", "middle")
-                .attr("font-size", "16px")
-                .attr("font-weight", "bold")
-                .text(chartTitle);
+        const svg = d3.select(chartId);
+        const width = +svg.attr("width");
+        const height = +svg.attr("height");
+        const margin = { top: 40, right: 30, bottom: 40, left: 40 };
 
-            // Add x-axis
-            svg.append("g")
-                .attr("transform", `translate(0, ${height - margin.bottom})`)
-                .call(d3.axisBottom(x).tickSizeOuter(0))
-                .selectAll("text")
-                .attr("class", "axis-label")
-                .attr("transform", "rotate(-45)")
-                .style("text-anchor", "end");
+        const x = d3.scaleBand()
+            .domain(data.map(d => d.label))
+            .range([margin.left, width - margin.right])
+            .padding(0.1);
 
-            // Add y-axis
-            svg.append("g")
-                .attr("transform", `translate(${margin.left}, 0)`)
-                .call(d3.axisLeft(y))
-                .selectAll("text")
-                .attr("class", "axis-label");
+        const y = d3.scaleLinear()
+            .domain([0, d3.max(data, d => d.count)]).nice()
+            .range([height - margin.bottom, margin.top]);
 
-            // Create a tooltip div
-            const tooltip = d3.select("body").append("div")
-                .attr("class", "tooltip")
-                .style("position", "absolute")
-                .style("background", "rgba(0,0,0,0.7)")
-                .style("color", "white")
-                .style("padding", "5px")
-                .style("border-radius", "5px")
-                .style("opacity", 0);
+        svg.append("text")
+            .attr("x", width / 2)
+            .attr("y", margin.top - 20)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "16px")
+            .attr("font-weight", "bold")
+            .text(chartTitle);
 
-            // Draw the bars and add hover tooltip functionality
-            svg.selectAll(".bar")
-                .data(data)
-                .enter().append("rect")
-                .attr("class", "bar")
-                .attr("x", d => x(d.label))
-                .attr("y", d => y(d.count))
-                .attr("height", d => y(0) - y(d.count))
-                .attr("width", x.bandwidth())
-                .on("mouseover", function (event, d) {
-                    tooltip.transition().duration(200).style("opacity", .9);
-                    tooltip.html(`${xLabel}: ${d.label}<br>${yLabel}: ${d.count}`)
-                        .style("left", (event.pageX + 5) + "px")
-                        .style("top", (event.pageY - 28) + "px");
-                })
-                .on("mouseout", function () {
-                    tooltip.transition().duration(500).style("opacity", 0);
-                });
+        svg.append("g")
+            .attr("transform", `translate(0, ${height - margin.bottom})`)
+            .call(d3.axisBottom(x).tickSizeOuter(0))
+            .selectAll("text")
+            .attr("transform", "rotate(-45)")
+            .style("text-anchor", "end");
 
-            // Add x-axis label
-            svg.append("text")
-                .attr("class", "axis-label")
-                .attr("x", width / 2)
-                .attr("y", height - 5)
-                .attr("text-anchor", "middle")
-                .text(xLabel);
+        svg.append("g")
+            .attr("transform", `translate(${margin.left}, 0)`)
+            .call(d3.axisLeft(y));
 
-            // Add y-axis label
-            svg.append("text")
-                .attr("class", "axis-label")
-                .attr("x", -height / 2)
-                .attr("y", 15)
-                .attr("dy", ".75em")
-                .attr("text-anchor", "middle")
-                .attr("transform", "rotate(-90)")
-                .text(yLabel);
-        }
+        svg.selectAll(".bar")
+            .data(data)
+            .enter().append("rect")
+            .attr("class", "bar")
+            .attr("x", d => x(d.label))
+            .attr("y", d => y(d.count))
+            .attr("height", d => y(0) - y(d.count))
+            .attr("width", x.bandwidth());
+    }
 
-        // Draw the original bar charts for resources per year and per tag
-        const resourcesPerYearData = <%- JSON.stringify(totalPerYear.map(({ year, count }) => ({ label: year, count }))) %>;
-        const resourcesPerTagData = <%- JSON.stringify(totalPerTag.map(({ tag, count }) => ({ label: tag, count }))) %>;
+    // Chart data
+    const resourcesPerYearData = <%- JSON.stringify(totalPerYear.map(({ year, count }) => ({ label: year, count }))) %>;
+    const resourcesPerTagData = <%- JSON.stringify(totalPerTag.map(({ tag, count }) => ({ label: tag, count }))) %>;
+    const resourcesPerAuthorData = <%- JSON.stringify(totalPerAuthor.map(({ authorName, count }) => ({ label: authorName, count }))) %>;
+    const resourcesPerResourceTypeData = <%- JSON.stringify(totalPerResourceType.map(({ resourceType, count }) => ({ label: resourceType, count }))) %>;
+    const resourcesPerMediaTypeData = <%- JSON.stringify(totalPerMediaType.map(({ mediaType, count }) => ({ label: mediaType, count }))) %>;
+    const resourcesPerContentTypeData = <%- JSON.stringify(totalPerContentType.map(({ contentType, count }) => ({ label: contentType, count }))) %>;
+    const resourcesPerInstitutionData = <%- JSON.stringify(totalPerInstitution.sort((a, b) => a.institution.localeCompare(b.institution)).map(({ institution, count }) => ({ label: institution, count }))) %>;
 
-        drawBarChart("#resourcesPerYearChart", resourcesPerYearData, "Year", "Count", "Resources per Year");
-        drawBarChart("#resourcesPerTagChart", resourcesPerTagData, "Tag", "Count", "Resources per Tag");
-
-        // Function to draw the author bar chart and link it with the table
-        function drawAuthorBarChart(chartId, data, xLabel, yLabel, chartTitle) {
-            // Sort data numerically in ascending order based on the count
-            data.sort((a, b) => a.count - b.count);
-        
-            // Set up SVG dimensions and margins
-            const svg = d3.select(chartId);
-            const width = +svg.attr("width");
-            const height = +svg.attr("height");
-            const margin = { top: 40, right: 30, bottom: 40, left: 40 };
-        
-            // Create scales for the x and y axes
-            const x = d3.scaleBand()
-                .domain(data.map(d => d.label))
-                .range([margin.left, width - margin.right])
-                .padding(0.1);
-        
-            const y = d3.scaleLinear()
-                .domain([0, d3.max(data, d => d.count)]).nice()
-                .range([height - margin.bottom, margin.top]);
-        
-            // Add chart title
-            svg.append("text")
-                .attr("x", width / 2)
-                .attr("y", margin.top - 20)
-                .attr("text-anchor", "middle")
-                .attr("font-size", "16px")
-                .attr("font-weight", "bold")
-                .text(chartTitle);
-        
-            // Add x-axis
-            svg.append("g")
-                .attr("transform", `translate(0, ${height - margin.bottom})`)
-                .call(d3.axisBottom(x).tickSizeOuter(0))
-                .selectAll("text")
-                .attr("class", "axis-label")
-                .attr("transform", "rotate(-45)")
-                .style("text-anchor", "end");
-        
-            // Add y-axis
-            svg.append("g")
-                .attr("transform", `translate(${margin.left}, 0)`)
-                .call(d3.axisLeft(y))
-                .selectAll("text")
-                .attr("class", "axis-label");
-        
-            // Create a tooltip div
-            const tooltip = d3.select("body").append("div")
-                .attr("class", "tooltip")
-                .style("position", "absolute")
-                .style("background", "rgba(0,0,0,0.8)")
-                .style("color", "white")
-                .style("padding", "8px")
-                .style("border-radius", "5px")
-                .style("opacity", 0)
-                .style("pointer-events", "none");
-        
-            // Draw bars with brushing and tooltips
-            svg.selectAll(".bar")
-                .data(data)
-                .enter().append("rect")
-                .attr("class", "bar")
-                .attr("x", d => x(d.label))
-                .attr("y", d => y(d.count))
-                .attr("height", d => y(0) - y(d.count))
-                .attr("width", x.bandwidth())
-                .on("mouseover", function (event, d) {
-                    tooltip.transition().duration(200).style("opacity", 0.9);
-                    tooltip.html(`${xLabel}: ${d.label}<br>${yLabel}: ${d.count}`)
-                        .style("left", (event.pageX + 10) + "px")
-                        .style("top", (event.pageY - 20) + "px");
-                    d3.select(this).classed("highlight", true);
-                })
-                .on("mousemove", function (event) {
-                    tooltip.style("left", (event.pageX + 10) + "px")
-                        .style("top", (event.pageY - 20) + "px");
-                })
-                .on("mouseout", function () {
-                    tooltip.transition().duration(500).style("opacity", 0);
-                    d3.select(this).classed("highlight", false);
-                })
-                .on("click", function (_, d) {
-                    // Highlight the clicked bar
-                    d3.selectAll(".bar").classed("highlight", false);
-                    d3.select(this).classed("highlight", true);
-        
-                    // Highlight the matching row in the table
-                    d3.selectAll("#resourcesPerAuthorTable tbody tr")
-                        .classed("highlight", false)
-                        .filter(function () {
-                            return d3.select(this).attr("data-author") === d.label;
-                        })
-                        .classed("highlight", true);
-                });
-        
-            // Add x-axis label
-            svg.append("text")
-                .attr("class", "axis-label")
-                .attr("x", width / 2)
-                .attr("y", height - 5)
-                .attr("text-anchor", "middle")
-                .text(xLabel);
-        
-            // Add y-axis label
-            svg.append("text")
-                .attr("class", "axis-label")
-                .attr("x", -height / 2)
-                .attr("y", 15)
-                .attr("dy", ".75em")
-                .attr("text-anchor", "middle")
-                .attr("transform", "rotate(-90)")
-                .text(yLabel);
-        }
-        
-        // Data for the author chart, from the controller
-        const resourcesPerAuthorData = <%- JSON.stringify(totalPerAuthor.map(({ authorName, count }) => ({ label: authorName, count }))) %>;
-
-        // Draw author bar chart with brushing and linking
-        drawAuthorBarChart("#resourcesPerAuthorChart", resourcesPerAuthorData, "Author", "Count", "Resources per Author");
-    </script>
+    // Draw charts
+    drawBarChart("#resourcesPerYearChart", resourcesPerYearData, "Year", "Count", "Resources per Year");
+    drawBarChart("#resourcesPerTagChart", resourcesPerTagData, "Tag", "Count", "Resources by Tag");
+    drawBarChart("#resourcesPerAuthorChart", resourcesPerAuthorData, "Author", "Count", "Resources per Author");
+    drawBarChart("#resourcesPerResourceTypeChart", resourcesPerResourceTypeData, "Resource Type", "Count", "Resources by Resource Type");
+    drawBarChart("#resourcesPerMediaTypeChart", resourcesPerMediaTypeData, "Media Type", "Count", "Resources by Media Type");
+    drawBarChart("#resourcesPerContentTypeChart", resourcesPerContentTypeData, "Content Type", "Count", "Resources by Content Type");
+    drawBarChart("#resourcesPerInstitutionChart", resourcesPerInstitutionData, "Institution", "Count", "Resources by Institution");
+</script>
 
 <%- include('../../components/footer'); -%>
