@@ -24,50 +24,6 @@ const ErrorDisplay = ({ error }) => (
   <div className="error-message">Error: {error}</div>
 );
 
-const Recommendations = ({ recommendations, onSelect }) => (
-  <div
-    className="recommendations"
-    style={{
-      width: "100%",
-      display: "flex",
-      flexDirection: "column",
-      gap: "2rem",
-      justifyContent: "center",
-      alignContent: "center",
-      alignItems: "center"
-    }}>
-    <div
-      style={{
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-        gap: "2rem",
-        justifyContent: "center",
-        alignContent: "center",
-        alignItems: "center"
-      }}>
-      <p style={{ textAlign: "center" }}>No items found. Try one of these:</p>
-    </div>
-    <div
-      className="recommendations-buttons"
-      style={{ display: "flex", gap: "10px" }}>
-      {recommendations.map((rec, index) => (
-        <button
-          key={index}
-          onClick={() => onSelect(rec)}
-          style={{
-            padding: "10px 20px",
-            borderRadius: "5px",
-            border: "none",
-            backgroundColor: "#f0f0f0",
-            cursor: "pointer"
-          }}>
-          {rec}
-        </button>
-      ))}
-    </div>
-  </div>
-);
 
 const useFetchData = (searchTerm, setError) => {
   const [allItems, setAllItems] = useState([]);
@@ -127,6 +83,34 @@ const filterItems = (items, selectedCategory) => {
           (item) => `${item.yearOfCreation}` === categoryFilter
         );
         break;
+      case "contentTypes":
+        filtered = filtered.filter(
+          (item) =>
+            item.contentType &&
+            item.contentType.toLowerCase() === categoryFilter
+        );
+        break;
+      case "mediaTypes":
+        filtered = filtered.filter(
+          (item) =>
+            item.mediaType &&
+            item.mediaType.toLowerCase() === categoryFilter
+        );
+        break;
+      case "institutions":
+        filtered = filtered.filter(
+          (item) =>
+            item.institution &&
+            item.institution.toLowerCase() === categoryFilter
+        );
+        break;
+        case "State":
+          filtered = filtered.filter(
+            (item) =>
+              item.state &&
+              item.state.toLowerCase() === categoryFilter
+          );
+          break;
       default:
         filtered = filtered.filter(
           (item) => item[key] && item[key].toLowerCase() === categoryFilter
@@ -137,6 +121,7 @@ const filterItems = (items, selectedCategory) => {
 
   return filtered;
 };
+
 
 function SearchComponent() {
   const [searchTerm, setSearchTerm] = useState("");
