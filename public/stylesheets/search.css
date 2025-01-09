@@ -7,3 +7,7 @@
   cursor: "pointer";
   font-size: "0.85rem";
 }
+
+code{
+  color:#0053a4 !important;
+}
