@@ -89,8 +89,8 @@ export const categories = {
   ],
   contentTypes: [
     "Advocacy Video",
-    "Assignment Guidelines",
-    "Course Planning",
+    // "Assignment Guidelines",
+    // "Course Planning",
     "Elevator Speech",
     "ENACT Research",
     "Flyer",
@@ -98,14 +98,14 @@ export const categories = {
     "Letter to Legislator",
     "News and Articles",
     "Next Steps",
-    "Online",
+    // "Online",
     "Op-Ed",
     "Portfolio",
     "Presentations",
     "Research Report",
     "Script",
-    "Student Advice",
-    "Syllabus"
+    "Student Advice"
+    // "Syllabus"
   ],
   mediaTypes: ["document", "photo", "PowerPoint", "video"],
   institutions: [

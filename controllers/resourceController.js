@@ -469,7 +469,6 @@ exports.getResourceUnique = async (req, res, next) => {
   }
 };
 
-// Function to retrieve resources filtered by a substring in the name with pagination
 exports.getResourcesByKeyword = async (req, res) => {
   try {
     const keyword = decodeURIComponent(req.query.searchString).trim(); // Decode and trim the search string
@@ -491,17 +490,16 @@ exports.getResourcesByKeyword = async (req, res) => {
         // 11000 is the error code for duplicate key
         throw err; // Rethrow error if it's not a duplicate key error
       }
-      // If it's a duplicate key error, we can safely ignore it
     }
 
     // Create a regex object from the keyword
     const keywordRegex = new RegExp(keyword, "i"); // Case-insensitive regex search
 
+    // Aggregation pipeline
     const resourcesPipeline = [
       {
         $match: {
           $or: [
-            // Search across multiple fields
             { name: { $regex: keywordRegex } },
             { description: { $regex: keywordRegex } },
             { authorName: { $regex: keywordRegex } },
@@ -510,7 +508,6 @@ exports.getResourcesByKeyword = async (req, res) => {
             { yearOfCreation: { $regex: keywordRegex } },
             { contentType: { $regex: keywordRegex } },
             { mediaType: { $regex: keywordRegex } },
-            // Uncomment below if you want to search in tags too
             { tags: { $in: [keyword] } }
           ]
         }
@@ -523,7 +520,6 @@ exports.getResourcesByKeyword = async (req, res) => {
           as: "ownerDetails"
         }
       },
-      { $unwind: "$ownerDetails" }, // Flatten the result to have a single object
       {
         $lookup: {
           from: "courses", // The collection name of courses
@@ -532,7 +528,12 @@ exports.getResourcesByKeyword = async (req, res) => {
           as: "courseDetails"
         }
       },
-      { $unwind: "$courseDetails" }, // Flatten the result to have a single object
+      {
+        $addFields: {
+          authorName: { $arrayElemAt: ["$ownerDetails.userName", 0] }, // Safely access array
+          courseName: { $arrayElemAt: ["$courseDetails.courseName", 0] } // Safely access array
+        }
+      },
       {
         $project: {
           _id: 1,
@@ -548,8 +549,8 @@ exports.getResourcesByKeyword = async (req, res) => {
           contentType: 1,
           mediaType: 1,
           createdAt: 1,
-          authorName: "$ownerDetails.userName", // Replacing ownerId with the owner's name
-          courseName: "$courseDetails.courseName" // Replacing courseId with the course's name
+          authorName: 1,
+          courseName: 1
         }
       }
     ];
@@ -557,13 +558,14 @@ exports.getResourcesByKeyword = async (req, res) => {
     // Execute the aggregation pipeline
     const resourcesByKeyword = await Resource.aggregate(resourcesPipeline);
 
-    // Return only the array of resources, not an object with a `data` field
+    // Return the aggregated results
     res.json(resourcesByKeyword);
   } catch (e) {
     console.error("Error in getResourcesByKeyword:", e);
     res.status(500).json({ error: "Server error" });
   }
 };
+
 
 exports.getResources = async (req, res, next) => {
   try {

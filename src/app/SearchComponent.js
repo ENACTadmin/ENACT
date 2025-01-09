@@ -153,6 +153,7 @@ function SearchComponent() {
 
   const handleSelectTopic = (topic) => {
     console.log("Selected topic:", topic);
+    setSelectedCategory({});
     // Pass the topic to StickySearchInput by setting the searchTerm state
     setSearchTerm(topic);
   };
@@ -221,8 +222,11 @@ function SearchComponent() {
                 alt="Search Icon"
                 style={{ height: "300px" }}
               />
-              <p>No matches to your filters and search</p>
-              <Home onSelectTopic={handleSelectTopic} />
+              <p>
+                No matches to your filters and search. Narrow your search of try
+                one of the suggestions bellow
+              </p>
+              <Home onSelectTopic={handleSelectTopic} showApiData={false} />
             </div>
           ) : null}
         </aside>

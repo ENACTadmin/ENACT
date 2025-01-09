@@ -8,6 +8,7 @@ import {
 
 const Card = (props) => {
   const renderIcon = (type) => {
+    if (!type) return null; // Return null if type is undefined or null
     switch (type.toLowerCase()) {
       case "document":
         return (
@@ -38,7 +39,7 @@ const Card = (props) => {
           />
         );
       default:
-        return;
+        return null; // Return null for unrecognized types
     }
   };
 
@@ -112,10 +113,11 @@ const Card = (props) => {
           margin: "0.4rem 0 0 0"
         }}>
         <h5>
-          By: {props.author} at {props.institution} {props.state} {props.year}
+          By: {props.author || "Unknown"} at {props.institution || "Unknown"}{" "}
+          {props.state || ""} {props.year || ""}
         </h5>
       </div>
-      <p>{props.description}</p>
+      <p>{props.description || "No description available."}</p>
       <div
         style={{
           marginTop: "1rem",
@@ -125,11 +127,11 @@ const Card = (props) => {
           justifyContent: "flex-start"
         }}>
         <a
-          href={props.link}
+          href={props.link || "#"}
           target="_blank"
           style={{ padding: "0.5rem", fontSize: "0.9rem" }}
           className="btn-primary"
-          onClick={handleIncrementView} // Increment view on click
+          onClick={props.link ? handleIncrementView : undefined} // Only attach handler if link exists
         >
           Open in new tab
         </a>

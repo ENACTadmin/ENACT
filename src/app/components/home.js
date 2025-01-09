@@ -1,36 +1,8 @@
+
 import React, { useState, useEffect } from "react";
 import Card from "../components/card";
 import Skeleton from "react-loading-skeleton";
 import { categories } from "../data/searchSetting";
-
-const Topics = [
-  "agriculture",
-  "cannabis",
-  "criminal justice",
-  "disability",
-  "energy",
-  "environment",
-  "higher education",
-  "healthcare",
-  "mental health",
-  "opioids",
-  "public health",
-  "public safety",
-  "race",
-  "substance use and recovery",
-  "taxes",
-  "technology",
-  "tourism",
-  "transportation",
-  "veterans",
-  "violence and sexual assault",
-  "voting",
-  "women and gender",
-  "COVID-19",
-  "LGBTQ+",
-  "labor",
-  "housing and homelessness"
-];
 
 const LoadingSkeleton = ({ count }) => (
   <div className="loading-container" style={{ maxWidth: "1000px" }}>
@@ -52,26 +24,30 @@ const LoadingSkeleton = ({ count }) => (
   </div>
 );
 
-const Home = ({ onSelectTopic, showItems = true }) => {
+const Home = ({ onSelectTopic, showApiData = true }) => {
   const [apiData, setApiData] = useState([]);
   const [loading, setLoading] = useState(true); // Track loading state
   const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/v0/resources/all?amount=10");
-        const data = await response.json();
-        setApiData(data); // Save the fetched data
-      } catch (error) {
-        // console.error("Failed to fetch data from API:", error);
-      } finally {
-        setLoading(false); // Stop loading after fetch
-      }
-    };
+    if (showApiData) {
+      const fetchData = async () => {
+        try {
+          const response = await fetch("/api/v0/resources/all?amount=10");
+          const data = await response.json();
+          setApiData(data); // Save the fetched data
+        } catch (error) {
+          // console.error("Failed to fetch data from API:", error);
+        } finally {
+          setLoading(false); // Stop loading after fetch
+        }
+      };
 
-    fetchData();
-  }, []);
+      fetchData();
+    } else {
+      setLoading(false); // If `showApiData` is false, set loading to false immediately
+    }
+  }, [showApiData]);
 
   const displayedTopics = showAll
     ? categories.contentTypes
@@ -138,27 +114,29 @@ const Home = ({ onSelectTopic, showItems = true }) => {
       <br />
 
       {/* Render Cards Section */}
-      <div style={{ marginBottom: "10px" }}>
-        {loading ? (
-          <LoadingSkeleton count={10} /> // Render skeletons while loading
-        ) : (
-          apiData.map((item) => (
-            <Card
-              key={item._id}
-              id={item._id}
-              title={item.name}
-              description={item.description}
-              link={item.uri}
-              state={item.state}
-              type={item.mediaType}
-              year={item.yearOfCreation}
-              author={item.authorName}
-              tags={item.tags}
-              institution={item.institution}
-            />
-          ))
-        )}
-      </div>
+      {showApiData && (
+        <div style={{ marginBottom: "10px" }}>
+          {loading ? (
+            <LoadingSkeleton count={10} /> // Render skeletons while loading
+          ) : (
+            apiData.map((item) => (
+              <Card
+                key={item._id}
+                id={item._id}
+                title={item.name}
+                description={item.description}
+                link={item.uri}
+                state={item.state}
+                type={item.mediaType}
+                year={item.yearOfCreation}
+                author={item.authorName}
+                tags={item.tags}
+                institution={item.institution}
+              />
+            ))
+          )}
+        </div>
+      )}
     </>
   );
 };
