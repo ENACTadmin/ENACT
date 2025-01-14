@@ -499,16 +499,21 @@ exports.getResourcesByKeyword = async (req, res) => {
     const resourcesPipeline = [
       {
         $match: {
-          $or: [
-            { name: { $regex: keywordRegex } },
-            { description: { $regex: keywordRegex } },
-            { authorName: { $regex: keywordRegex } },
-            { resourceType: { $regex: keywordRegex } },
-            { institution: { $regex: keywordRegex } },
-            { yearOfCreation: { $regex: keywordRegex } },
-            { contentType: { $regex: keywordRegex } },
-            { mediaType: { $regex: keywordRegex } },
-            { tags: { $in: [keyword] } }
+          $and: [
+            { status: "public" }, // Filter for documents with status as public
+            {
+              $or: [
+                { name: { $regex: keywordRegex } },
+                { description: { $regex: keywordRegex } },
+                { authorName: { $regex: keywordRegex } },
+                { resourceType: { $regex: keywordRegex } },
+                { institution: { $regex: keywordRegex } },
+                { yearOfCreation: { $regex: keywordRegex } },
+                { contentType: { $regex: keywordRegex } },
+                { mediaType: { $regex: keywordRegex } },
+                { tags: { $in: [keyword] } }
+              ]
+            }
           ]
         }
       },
@@ -565,7 +570,6 @@ exports.getResourcesByKeyword = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
-
 
 exports.getResources = async (req, res, next) => {
   try {
@@ -815,16 +819,28 @@ exports.renderResourceStatsPage = async (req, res, next) => {
 
     // Fetch results using aggregation pipelines
     const [totalResources] = await Resource.aggregate(totalResourcesPipeline);
-    const [totalApproved] = await Resource.aggregate(totalApprovedResourcesPipeline);
-    const [totalPrivateToENACT] = await Resource.aggregate(totalPrivateToENACTPipeline);
+    const [totalApproved] = await Resource.aggregate(
+      totalApprovedResourcesPipeline
+    );
+    const [totalPrivateToENACT] = await Resource.aggregate(
+      totalPrivateToENACTPipeline
+    );
     const totalPerAuthor = await Resource.aggregate(totalPerAuthorPipeline);
     const totalPerTag = await Resource.aggregate(totalPerTagPipeline);
     const totalPerYear = await Resource.aggregate(totalPerYearPipeline);
     const resourcesByViews = await Resource.aggregate(resourcesByViewsPipeline);
-    const totalPerResourceType = await Resource.aggregate(totalPerResourceTypePipeline);
-    const totalPerContentType = await Resource.aggregate(totalPerContentTypePipeline);
-    const totalPerMediaType = await Resource.aggregate(totalPerMediaTypePipeline);
-    const totalPerInstitution = await Resource.aggregate(totalPerInstitutionPipeline);
+    const totalPerResourceType = await Resource.aggregate(
+      totalPerResourceTypePipeline
+    );
+    const totalPerContentType = await Resource.aggregate(
+      totalPerContentTypePipeline
+    );
+    const totalPerMediaType = await Resource.aggregate(
+      totalPerMediaTypePipeline
+    );
+    const totalPerInstitution = await Resource.aggregate(
+      totalPerInstitutionPipeline
+    );
 
     // Pass data to the EJS template
     res.render("pages/stats/resourceStats", {

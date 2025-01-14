@@ -14,7 +14,7 @@ const extractAuthors = (description) => {
   if (match && match[1]) {
     // Truncate after any of these keywords (on, regarding, includes)
     let authorsString = match[1].split(
-      /\b(?:on|regarding|includes|for| An | about | at)\b/i
+      /\b(?:on|regarding|includes|for| An | about | at | outlining)\b/i
     )[0];
 
     // Extract and clean names
