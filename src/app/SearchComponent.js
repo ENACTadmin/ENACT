@@ -24,7 +24,6 @@ const ErrorDisplay = ({ error }) => (
   <div className="error-message">Error: {error}</div>
 );
 
-
 const useFetchData = (searchTerm, setError) => {
   const [allItems, setAllItems] = useState([]);
   const [loading, setLoading] = useState(false); // Default to false to avoid showing loading state unnecessarily
@@ -93,8 +92,7 @@ const filterItems = (items, selectedCategory) => {
       case "mediaTypes":
         filtered = filtered.filter(
           (item) =>
-            item.mediaType &&
-            item.mediaType.toLowerCase() === categoryFilter
+            item.mediaType && item.mediaType.toLowerCase() === categoryFilter
         );
         break;
       case "institutions":
@@ -104,13 +102,11 @@ const filterItems = (items, selectedCategory) => {
             item.institution.toLowerCase() === categoryFilter
         );
         break;
-        case "State":
-          filtered = filtered.filter(
-            (item) =>
-              item.state &&
-              item.state.toLowerCase() === categoryFilter
-          );
-          break;
+      case "State":
+        filtered = filtered.filter(
+          (item) => item.state && item.state.toLowerCase() === categoryFilter
+        );
+        break;
       default:
         filtered = filtered.filter(
           (item) => item[key] && item[key].toLowerCase() === categoryFilter
@@ -121,7 +117,6 @@ const filterItems = (items, selectedCategory) => {
 
   return filtered;
 };
-
 
 function SearchComponent() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -208,8 +203,8 @@ function SearchComponent() {
                 style={{ height: "300px" }}
               />
               <p>
-                No matches to your filters and search. Narrow your search of try
-                one of the suggestions bellow
+                No matches to your filters or search. Broaden your search by
+                reducing filters of try one of the suggestions below.
               </p>
               <Home onSelectTopic={handleSelectTopic} showApiData={false} />
             </div>
