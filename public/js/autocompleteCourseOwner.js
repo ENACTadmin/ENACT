@@ -1,32 +1,37 @@
-// import autocomplete from "autocompleter";
-
 $(document).ready(function () {
-    "use strict"
-    let profiles = null
-    // page is ready
+    "use strict";
+
+    let profiles = null;
+
+    // Fetch profiles data
     $.ajax({
         type: 'GET',
         url: '/profiles/faculties',
         async: false,
         dataType: 'json',
         success: function (data) {
-            profiles = data
+            profiles = data;
+            // Add a label field for autocomplete
+            profiles.forEach(profile => {
+                profile.label = profile.userName;
+            });
+        },
+        error: function (err) {
+            console.error('Error fetching profiles:', err);
         }
     });
-
-    for (let profile = 0; profile < profiles.length; profile++) {
-        profiles[profile].label = profiles[profile].userName;
-    }
 
     var input = document.getElementById("profiles");
     var ownerId = document.getElementById("ownerId");
 
+    // Initialize autocomplete
     autocomplete({
         input: input,
         fetch: function (text, update) {
             text = text.toLowerCase();
-            // you can also use AJAX requests instead of preloaded data
-            var suggestions = profiles.filter(n => (n.label !== undefined && n.label.toLowerCase().startsWith(text)))
+            var suggestions = profiles.filter(profile =>
+                profile.label && profile.label.toLowerCase().includes(text)
+            );
             update(suggestions);
         },
         onSelect: function (item) {
@@ -34,4 +39,4 @@ $(document).ready(function () {
             ownerId.value = item._id;
         }
     });
-})
+});

@@ -205,6 +205,22 @@
             $(this).prop('selected', true)
         }
     })
+
+    // Update ownerId when a new owner is selected
+    document.getElementById('profiles').addEventListener('change', async (event) => {
+        const userName = event.target.value;
+        try {
+            const response = await fetch(`/api/getUserByUsername?userName=${encodeURIComponent(userName)}`);
+            const data = await response.json();
+            if (data && data._id) {
+                document.getElementById('ownerId').value = data._id;
+            } else {
+                alert('User not found');
+            }
+        } catch (error) {
+            console.error('Error fetching user ID:', error);
+        }
+    });
 </script>
 
 
