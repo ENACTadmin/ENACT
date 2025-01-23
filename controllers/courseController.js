@@ -158,10 +158,19 @@ exports.updateCourse = async (req, res, next) => {
     courseToEdit.year = req.body.year;
     courseToEdit.timezone = req.body.timezone;
     courseToEdit.state = req.body.state;
-    let tempId = req.body.ownerId;
+
+    if (req.body.ownerId) {
+      let tempUser = await User.findOne({ _id: req.body.ownerId });
+      if (tempUser) {
+        courseToEdit.instructor = tempUser.userName;
+        courseToEdit.ownerId = tempUser._id;
+      }
+    }
+
+    /* let tempId = req.body.ownerId;
     let tempUser = await User.findOne({ _id: tempId });
     courseToEdit.instructor = tempUser.userName;
-    courseToEdit.ownerId = tempUser._id;
+    courseToEdit.ownerId = tempUser._id; */
 
     await CourseTime.deleteMany({ courseId: req.params.courseId });
     let startTime = req.body.startTime;

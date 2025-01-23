@@ -199,6 +199,18 @@ app.get("/course/update/:courseId", utils.checkUserName, async (req, res) => {
   });
 });
 
+app.get('/profiles/faculties', async (req, res) => {
+  try {
+    const profiles = await User.find(
+      { $or: [{ status: 'faculty' }, { status: 'admin' }] },
+      { userName: 1, _id: 1 }
+    );
+    res.json(profiles);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching profiles', error });
+  }
+});
+
 app.post(
   "/course/update/:courseId",
   utils.checkUserName,
@@ -940,13 +952,6 @@ async function addAuthorAlt(resource) {
   }
   return resource;
 }
-
-app.get("/profiles/faculties", async (req, res) => {
-  let userProfiles = await User.find({
-    $or: [{ status: "faculty" }, { status: "admin" }]
-  });
-  return res.send(userProfiles);
-});
 
 //*******************************************
 //************Static pages*******************
