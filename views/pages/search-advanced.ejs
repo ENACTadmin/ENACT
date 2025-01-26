@@ -35,7 +35,7 @@
                         <hr>
                         <div class='input-group'>
                             <input autofill="off" autocomplete="off" id="resources" type='text' class='form-control' name='search'
-                                   placeholder='Search for anything'>
+                                   placeholder='Search for anything' required>
                             <div class='input-group-append'>
                                 <input class="btn btn-light" style="border: 1px solid lightgray" id="myBtn" type='submit' name='submit' value='&#128269;'>
                             </div>
@@ -440,5 +440,18 @@
         </form>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("myBtn").addEventListener("click", function (event) {
+            const searchInput = document.getElementById("resources").value.trim();
+            if (searchInput === "") {
+                alert("Please enter a keyword before searching.");
+                event.preventDefault(); // Prevent form submission
+            }
+        });
+    });
+</script>
+
 
 <%- include('../components/footer'); -%>
