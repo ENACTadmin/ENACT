@@ -214,6 +214,9 @@ exports.getResourceCount = async (req, res, next) => {
   try {
     const aggregationPipeline = [
       {
+        $match: { status: "public" }
+      },
+      {
         $unwind: "$tags"
       },
       {

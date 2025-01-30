@@ -501,7 +501,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 		        // webpack-livereload-plugin
 /******/ 		        (function() {
 /******/ 		          if (typeof window === "undefined") { return };
-/******/ 		          var id = "webpack-livereload-plugin-script-d20b7e5a527118a8";
+/******/ 		          var id = "webpack-livereload-plugin-script-b6f58bb49db017fe";
 /******/ 		          if (document.getElementById(id)) { return; }
 /******/ 		          var el = document.createElement("script");
 /******/ 		          el.id = id;
