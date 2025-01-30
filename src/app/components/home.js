@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import Card from "../components/card";
 import Skeleton from "react-loading-skeleton";
@@ -33,9 +32,9 @@ const Home = ({ onSelectTopic, showApiData = true }) => {
     if (showApiData) {
       const fetchData = async () => {
         try {
-          const response = await fetch("/api/v0/resources/all?amount=10");
+          const response = await fetch("/api/v0/resources/counts");
           const data = await response.json();
-          setApiData(data); // Save the fetched data
+          setApiData(data.data.last); // Save the fetched data
         } catch (error) {
           // console.error("Failed to fetch data from API:", error);
         } finally {
@@ -76,18 +75,19 @@ const Home = ({ onSelectTopic, showApiData = true }) => {
           {displayedTopics.map((topic) => (
             <div
               style={{
-                height: "45px",
-                padding: "1px 3px",
-                borderRadius: "5px",
+                height: "30px",
+                padding: "1px",
+                borderRadius: "20px",
                 border: "none",
-                backgroundColor: "#f0f0f0",
+                backgroundColor: "white",
                 boxSizing: "border-box",
                 textAlign: "center",
                 cursor: "pointer",
                 fontSize: "0.9rem",
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center"
+                alignItems: "center",
+                border: "0.4px solid blue"
               }}
               key={topic}
               onClick={() => onSelectTopic(topic)}>
@@ -98,8 +98,9 @@ const Home = ({ onSelectTopic, showApiData = true }) => {
             <button
               onClick={() => setShowAll(true)}
               style={{
-                padding: "5px",
-                borderRadius: "5px",
+                height: "30px",
+                padding: "1px",
+                borderRadius: "20px",
                 border: "0.2px solid gray",
                 backgroundColor: "white",
                 cursor: "pointer",

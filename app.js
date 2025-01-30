@@ -167,14 +167,13 @@ app.get(
   }
 );
 
-
 // show all courses
-app.get("/courses", 
-  utils.checkUserName, 
-  utils.checkUserAccess, 
+app.get(
+  "/courses",
+  utils.checkUserName,
+  utils.checkUserAccess,
   courseController.showCourseManagement,
-  (req, res) =>
-  res.render("./pages/courses-management")
+  (req, res) => res.render("./pages/courses-management")
 );
 
 // show one course
@@ -199,15 +198,15 @@ app.get("/course/update/:courseId", utils.checkUserName, async (req, res) => {
   });
 });
 
-app.get('/profiles/faculties', async (req, res) => {
+app.get("/profiles/faculties", async (req, res) => {
   try {
     const profiles = await User.find(
-      { $or: [{ status: 'faculty' }, { status: 'admin' }] },
+      { $or: [{ status: "faculty" }, { status: "admin" }] },
       { userName: 1, _id: 1 }
     );
     res.json(profiles);
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching profiles', error });
+    res.status(500).json({ message: "Error fetching profiles", error });
   }
 });
 
@@ -268,6 +267,7 @@ app.get(
 app.get("/api/v0/resources/", resourceController.getResources);
 app.get("/api/v0/resources/all", resourceController.getAllResources);
 app.get("/api/v0/resources/sets", resourceController.getResourceUnique);
+app.get("/api/v0/resources/counts", resourceController.getResourceCount);
 app.get("/api/v0/resources/allstats", resourceController.getResourcesAndStats);
 app.get("/api/v0/resources/stats", resourceController.getResourceStats);
 app.get("/api/v0/resources/viewsAll", resourceController.getResourceViewsAll);

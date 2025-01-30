@@ -210,6 +210,107 @@ exports.getResourceById = async (req, res, next) => {
   }
 };
 
+exports.getResourceCount = async (req, res, next) => {
+  try {
+    const aggregationPipeline = [
+      {
+        $unwind: "$tags"
+      },
+      {
+        $group: {
+          _id: null,
+          tags: { $push: "$tags" },
+          contentTypes: { $push: "$contentType" },
+          mediaTypes: { $push: "$mediaType" }
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          tags: {
+            $map: {
+              input: { $setUnion: ["$tags"] },
+              as: "tag",
+              in: {
+                tag: "$$tag",
+                count: {
+                  $size: {
+                    $filter: {
+                      input: "$tags",
+                      as: "t",
+                      cond: { $eq: ["$$t", "$$tag"] }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          contentTypes: {
+            $map: {
+              input: { $setUnion: ["$contentTypes"] },
+              as: "type",
+              in: {
+                type: "$$type",
+                count: {
+                  $size: {
+                    $filter: {
+                      input: "$contentTypes",
+                      as: "t",
+                      cond: { $eq: ["$$t", "$$type"] }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          mediaTypes: {
+            $map: {
+              input: { $setUnion: ["$mediaTypes"] },
+              as: "type",
+              in: {
+                type: "$$type",
+                count: {
+                  $size: {
+                    $filter: {
+                      input: "$mediaTypes",
+                      as: "t",
+                      cond: { $eq: ["$$t", "$$type"] }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ];
+
+    const stats = await Resource.aggregate(aggregationPipeline);
+
+    // Retrieve last 10 created resources
+    const lastResources = await Resource.find({})
+      .sort({ createdAt: -1 })
+      .limit(10)
+      .select("name description uri createdAt tags contentType mediaType") // Select only needed fields
+      .lean();
+
+    if (!stats || stats.length === 0) {
+      return res.status(404).json({ message: "No data found" });
+    }
+
+    res.status(200).json({
+      message: "Resource stats retrieved successfully",
+      data: {
+        ...stats[0],
+        last: lastResources
+      }
+    });
+  } catch (error) {
+    console.error("Error in getResourceStats:", error);
+    next(error);
+  }
+};
+
 exports.incrementViewCount = async (req, res, next) => {
   try {
     // Extract the resource ID from the request parameters
