@@ -5,7 +5,6 @@ import "react-loading-skeleton/dist/skeleton.css";
 import Card from "./components/card";
 import Home from "./components/home";
 import StickySearchInput from "./components/StickySearchInput";
-import { categories } from "./data/searchSetting";
 import SearchImage from "./media/Search.svg";
 
 const LoadingSkeleton = ({ count }) => (
@@ -20,9 +19,9 @@ const LoadingSkeleton = ({ count }) => (
   </div>
 );
 
-const ErrorDisplay = ({ error }) => (
-  <div className="error-message">Error: {error}</div>
-);
+// const ErrorDisplay = ({ error }) => (
+//   <div className="error-message">Error: {error}</div>
+// );
 
 const useFetchData = (searchTerm, setError) => {
   const [allItems, setAllItems] = useState([]);
@@ -47,8 +46,6 @@ const useFetchData = (searchTerm, setError) => {
         }
 
         const data = await response.json();
-        console.log("Data fetched:", data);
-        console.log("Data fetched:", data.length);
         setAllItems(Array.isArray(data) ? data : []);
       } catch (err) {
         setError(err.message);
@@ -163,7 +160,6 @@ function SearchComponent() {
             setSelectedCategory={setSelectedCategory}
             resetFilters={resetFilters}
           />
-          {error && <ErrorDisplay error={error} />}
           {loading ? (
             <LoadingSkeleton count={5} />
           ) : isHome ? (
