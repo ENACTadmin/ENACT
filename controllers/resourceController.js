@@ -233,15 +233,15 @@ exports.getResourceCount = async (req, res, next) => {
           tags: {
             $map: {
               input: { $setUnion: ["$tags"] },
-              as: "tag",
+              as: "type",
               in: {
-                tag: "$$tag",
+                type: "$$type",
                 count: {
                   $size: {
                     $filter: {
                       input: "$tags",
                       as: "t",
-                      cond: { $eq: ["$$t", "$$tag"] }
+                      cond: { $eq: ["$$t", "$$type"] }
                     }
                   }
                 }

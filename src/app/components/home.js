@@ -25,6 +25,9 @@ const LoadingSkeleton = ({ count }) => (
 
 const Home = ({ onSelectTopic, showApiData = true }) => {
   const [apiData, setApiData] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [contentTypes, setContentTypes] = useState([]);
+  const [mediaTypes, setMediaTypes] = useState([]);
   const [loading, setLoading] = useState(true); // Track loading state
   const [showAll, setShowAll] = useState(false);
 
@@ -34,7 +37,10 @@ const Home = ({ onSelectTopic, showApiData = true }) => {
         try {
           const response = await fetch("/api/v0/resources/counts");
           const data = await response.json();
-          setApiData(data.data.last); // Save the fetched data
+          setApiData(data.data.last);
+          setContentTypes(data.data.contentTypes);
+          setMediaTypes(data.data.mediaTypes);
+          setTags(data.data.tags);
         } catch (error) {
           // console.error("Failed to fetch data from API:", error);
         } finally {
@@ -48,9 +54,17 @@ const Home = ({ onSelectTopic, showApiData = true }) => {
     }
   }, [showApiData]);
 
+  const allTopics = [...contentTypes, ...tags, ...mediaTypes];
+  const filteredAllTopics = allTopics.filter(
+    (item) =>
+      item.type !== "" &&
+      item.type !== "half-semester course" &&
+      item.type != "full-semester course" &&
+      item.type != "on"
+  );
   const displayedTopics = showAll
-    ? categories.contentTypes
-    : categories.contentTypes.slice(0, 11);
+    ? filteredAllTopics
+    : contentTypes.slice(0, 7);
 
   return (
     <>
@@ -66,7 +80,7 @@ const Home = ({ onSelectTopic, showApiData = true }) => {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: `repeat(6, 1fr)`, // Dynamic columns
+            gridTemplateColumns: `repeat(4, 1fr)`, // Dynamic columns
             gap: "1rem",
             justifyContent: "center",
             width: "100%",
@@ -87,11 +101,12 @@ const Home = ({ onSelectTopic, showApiData = true }) => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                border: "0.4px solid blue"
+                border: "0.4px solid blue",
+                textTransform: "capitalize"
               }}
-              key={topic}
-              onClick={() => onSelectTopic(topic)}>
-              <p style={{ textAlign: "center" }}>{topic}</p>
+              key={topic.type}
+              onClick={() => onSelectTopic(topic.type)}>
+              <p style={{ textAlign: "center" }}>{topic.type}</p>
             </div>
           ))}
           {!showAll && (
@@ -102,9 +117,10 @@ const Home = ({ onSelectTopic, showApiData = true }) => {
                 padding: "1px",
                 borderRadius: "20px",
                 border: "0.2px solid gray",
-                backgroundColor: "white",
+                backgroundColor: "rgb(25, 25, 25)",
                 cursor: "pointer",
-                fontSize: "0.9rem"
+                fontSize: "0.9rem",
+                color: "white"
               }}>
               Show More &#x25BC;
             </button>
