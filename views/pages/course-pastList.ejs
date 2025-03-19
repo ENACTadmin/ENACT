@@ -18,15 +18,15 @@
                 <div class='col-md-2 col-sm-12 text-center'></div>
                 <div class='col-md-8 col-sm-12'>
 
-                            <table class='table table-striped'>
+                            <table class='table table-striped table-bordered'>
                                 <thead style='background-color: #0053a4'>
                                 <tr>
                                     <th scope='col' style='color: white'>Name</th>
                                     <th scope='col' style='color: white'>Year</th>
                                     <th scope='col' style='color: white'>Semester</th>
-                                    <th scope='col' style='color: white'>
-                                        Instructor
-                                    </th>
+                                    <th scope='col' style='color: white'>Instructor</th>
+                                    <th scope='col' style='color: white'>State</th>
+                                    <th scope='col' style='color: white'>Institution</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -40,6 +40,8 @@
                                             <td><%= courses[i].year %></td>
                                             <td><%= courses[i].semester %></td>
                                             <td><%= courses[i].instructor %></td>
+                                            <td><%= courses[i].state %></td>
+                                            <td><%= courses[i].institution %></td>            
                                         </tr>
                                     <% } %>
 
