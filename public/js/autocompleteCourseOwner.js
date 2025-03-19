@@ -1,20 +1,19 @@
 $(document).ready(function () {
     "use strict";
 
-    let profiles = null;
+    let profiles = [];
 
     // Fetch profiles data
     $.ajax({
         type: 'GET',
         url: '/profiles/faculties',
-        async: false,
         dataType: 'json',
         success: function (data) {
-            profiles = data;
-            // Add a label field for autocomplete
-            profiles.forEach(profile => {
-                profile.label = profile.userName;
-            });
+            profiles = data.map(profile => ({
+                label: profile.userName,
+                value: profile.userName, // Ensures correct selection
+                id: profile._id // Store _id separately
+            }));
         },
         error: function (err) {
             console.error('Error fetching profiles:', err);
@@ -35,8 +34,18 @@ $(document).ready(function () {
             update(suggestions);
         },
         onSelect: function (item) {
-            input.value = item.userName;
-            ownerId.value = item._id;
+            input.value = item.value; // Correct username
+            ownerId.value = item.id;  // Correct faculty _id
+        }
+    });
+
+    // Ensure ownerId is updated if input is manually changed and matches an existing profile
+    input.addEventListener('blur', function () {
+        const selectedProfile = profiles.find(profile => profile.value === input.value);
+        if (selectedProfile) {
+            ownerId.value = selectedProfile.id;
+        } else {
+            ownerId.value = ''; // Clear ID if no match
         }
     });
 });

@@ -210,6 +210,39 @@ app.get("/profiles/faculties", async (req, res) => {
   }
 });
 
+app.get('/api/getUserByUsername', async (req, res) => {
+  try {
+      const { userName } = req.query;
+      if (!userName) {
+          return res.status(400).json({ error: 'Missing userName parameter' });
+      }
+
+      // First, check in the users collection
+      let user = await User.findOne(
+          { userName: userName, status: { $in: ["faculty", "admin"] } },
+          { _id: 1, userName: 1 }
+      );
+
+      // If not found in users, check in faculties collection
+      if (!user) {
+          const faculty = await Faculty.findOne({ userName: userName }).populate('userId');
+          if (faculty) {
+              user = { _id: faculty.userId._id, userName: faculty.userName };
+          }
+      }
+
+      if (!user) {
+          return res.status(404).json({ error: 'User not found' });
+      }
+
+      res.json(user);
+  } catch (error) {
+      console.error('Error fetching user:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 app.post(
   "/course/update/:courseId",
   utils.checkUserName,
