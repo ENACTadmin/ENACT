@@ -53,21 +53,16 @@
                                                 <li class='list-group-item borderless box-padding bg-transparent'
                                                     style="font-size: large">
                                                     <h5 style="display: inline; font-weight: 650">Date: </h5>
-                                                    <p style="display: inline"
-                                                        class="TZChange"><%= futureEventsInfo[i].start %></p>    
+                                                    <p style="display: inline" class="TZChange"><%= futureEventsInfo[i].start.toISOString().split('T')[0] %></p>  
                                                 </li>
-                                                <!-- <li class='list-group-item borderless box-padding bg-transparent'
-                                                    style="font-size: large">
+                                                <li class='list-group-item borderless box-padding bg-transparent' style="font-size: large">
                                                     <h5 style="display: inline; font-weight: 650">Start time: </h5>
-                                                    <p style="display: inline;"
-                                                        class="TZChange1"><%= futureEventsInfo[i].start %></p>                                                    </li>
-                                                </li>
-                                                <li class='list-group-item borderless box-padding bg-transparent'
-                                                    style="font-size: large">
+                                                    <p style="display: inline;" class="TZChange1"><%= futureEventsInfo[i].start %></p>
+                                                  </li>
+                                                  <li class='list-group-item borderless box-padding bg-transparent' style="font-size: large">
                                                     <h5 style="display: inline; font-weight: 650">End time: </h5>
-                                                    <p style="display: inline;"
-                                                        class="TZChange1"><%= futureEventsInfo[i].end %></p>
-                                                </li> -->
+                                                    <p style="display: inline;" class="TZChange1"><%= futureEventsInfo[i].end %></p>
+                                                  </li>
                                             <% } %>
                                             <% if (futureEventsInfo[i].uri !== null) { %>
                                                 <li class='list-group-item borderless box-padding bg-transparent'
@@ -126,24 +121,30 @@
                                                 </div>
                                             </li>
                                             <% if (pastEventsInfo[i].start !== null && pastEventsInfo[i].end !== null) { %>
-                                                <li class='list-group-item borderless box-padding bg-transparent'
-                                                    style="font-size: large">
-                                                    <h5 style="display: inline; font-weight: 650">Date: </h5>
-                                                    <p style="display: inline"
-                                                        class="TZChange"><%= pastEventsInfo[i].start %></p>
-                                                </li>
-                                                <!-- <li class='list-group-item borderless box-padding bg-transparent'
-                                                    style="font-size: large">
-                                                    <h5 style="display: inline; font-weight: 650">Start time: </h5>
-                                                    <p style="display: inline;"
-                                                        class="TZChange1"><%= pastEventsInfo[i].start %></p>
-                                                </li>
-                                                <li class='list-group-item borderless box-padding bg-transparent'
-                                                    style="font-size: large">
-                                                    <h5 style="display: inline; font-weight: 650">End time: </h5>
-                                                    <p style="display: inline;"
-                                                        class="TZChange1"><%= pastEventsInfo[i].end %></p>
-                                                </li> -->
+                                              <li class="list-group-item borderless box-padding bg-transparent" style="font-size: large">
+                                                <h5 style="display: inline; font-weight: 650">Date:</h5>
+                                                <p style="display: inline" class="TZChange">
+                                                  <%= pastEventsInfo[i].start.toISOString().split('T')[0] %>
+                                                </p>
+                                            </li>
+                                            <li
+                                            class="list-group-item borderless box-padding bg-transparent"
+                                            style="font-size: large">
+                                            <h5 style="display: inline; font-weight: 650">
+                                              Start time:
+                                            </h5>
+                                            <p style="display: inline" class="TZChange1">
+                                              <%= pastEventsInfo[i].start %>
+                                            </p>
+                                          </li>
+                                          <li
+                                            class="list-group-item borderless box-padding bg-transparent"
+                                            style="font-size: large">
+                                            <h5 style="display: inline; font-weight: 650">End time:</h5>
+                                            <p style="display: inline" class="TZChange1">
+                                              <%= pastEventsInfo[i].end %>
+                                            </p>
+                                          </li>
                                             <% } %>
                                             <% if (pastEventsInfo[i].uri !== null) { %>
                                                 <li class='list-group-item borderless box-padding bg-transparent'
@@ -238,94 +239,50 @@
 <p hidden id='idSet'><%= id_set %></p>
 <script>
     $(document).ready(function () {
-        let n = new Date().getTimezoneOffset() / 60;
-        let timezone = '';
-        if (new Date().isDstObserved()) {
-            switch (n) {
-                case 3:
-                    timezone = 'US/Atlantic';
-                    break;
-                case 4:
-                    timezone = 'US/Eastern';
-                    break;
-                case 5:
-                    timezone = 'US/Central';
-                    break;
-                case 6:
-                    timezone = 'US/Mountain';
-                    break;
-                case 7:
-                    timezone = 'US/Pacific';
-                    break;
-                case 8:
-                    timezone = 'US/Alaska';
-                    break;
-                case 9:
-                    timezone = 'US/Hawaii‑Aleutian';
-                    break;
-            }
-        } else {
-            switch (n) {
-                case 4:
-                    timezone = 'US/Atlantic';
-                    break;
-                case 5:
-                    timezone = 'US/Eastern';
-                    break;
-                case 6:
-                    timezone = 'US/Central';
-                    break;
-                case 7:
-                    timezone = 'US/Mountain';
-                    break;
-                case 8:
-                    timezone = 'US/Pacific';
-                    break;
-                case 9:
-                    timezone = 'US/Alaska';
-                    break;
-                case 10:
-                    timezone = 'US/Hawaii‑Aleutian';
-                    break;
-            }
-        }
-        $('#fillMe').text(timezone);
-        $(".TZTZ").each(function () {
-            $(this).val(new Date().getTimezoneOffset())
-        })
-        let id_set = $('#idSet').text()
-        if (id_set.length !== 0) {
-            let id_set_array = id_set.split(',')
-            for (let i = 0; i < id_set_array.length; i++) {
-                let realType = $('#visiFromServer' + id_set_array[i]).text()
-                $('#visibility' + id_set_array[i] + ' option').each(function () {
-                    if ($(this).val() === realType) {
-                        $(this).prop('selected', true)
-                    }
-                })
-            }
-        }
-        $(".TZChange").each(function () {
-            let oldDate = $(this).text()
-            let newDate = new Date(oldDate)
-            $(this).text(newDate.toLocaleTimeString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})+ ' (' + timezone + ')')
-        })
-        $(".TZChange1").each(function () {
-            let today = new Date()
-            let oldDate = $(this).text()
-            let newDate = new Date(oldDate + today.getTimezoneOffset())
-            let minutes = newDate.getMinutes()
-            let hours = newDate.getHours()
-            let APM = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12
-            hours = hours ? hours : 12;
-            if (minutes.toString().length === 1)
-                minutes = '0' + minutes.toString()
-            if (hours.toString().length === 1)
-                hours = '0' + hours.toString()
-            $(this).text(hours + ':' + minutes + ' ' + APM + ' (' + timezone + ')')
-        })
+    let timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    $("#fillMe").text(timezone);
+
+    $(".TZTZ").each(function () {
+        $(this).val(new Date().getTimezoneOffset());
     });
+
+    // Format only the date (YYYY-MM-DD) for `.TZChange`
+    $(".TZChange").each(function () {
+        let oldDate = $(this).text().trim();
+        if (!oldDate) return;
+
+        let newDate = new Date(oldDate);
+        if (isNaN(newDate)) return; // Ensure valid date
+
+        let formattedDate = new Intl.DateTimeFormat('en-US', {
+            year: "numeric",
+            month: "numeric",
+            day: "numeric",
+            timeZone: timezone
+        }).format(newDate);
+
+        $(this).text(formattedDate);
+    });
+
+    // Format time separately in AM/PM for `.TZChange1`
+    $(".TZChange1").each(function () {
+        let oldDate = $(this).text().trim();
+        if (!oldDate) return;
+
+        let newDate = new Date(oldDate);
+        if (isNaN(newDate)) return;
+
+        let formattedTime = new Intl.DateTimeFormat('en-US', {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+            timeZone: timezone
+        }).format(newDate);
+
+        $(this).text(formattedTime);
+    });
+});
+
 
     function showAddModal() {
         $("#modal-view-event-add").modal()
