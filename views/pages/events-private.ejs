@@ -681,7 +681,7 @@ pastEventsInfo.length; i++) { %>
         let oldDate = $(this).text().trim();
         if (!oldDate) return;
 
-        let newDate = new Date(oldDate);
+        let newDate = new Date(oldDate + "T12:00:00");
         if (isNaN(newDate)) return; // Ensure valid date
 
         let formattedDate = new Intl.DateTimeFormat('en-US', {
