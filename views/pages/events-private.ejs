@@ -69,7 +69,7 @@
                     class="list-group-item borderless box-padding bg-transparent"
                     style="font-size: large">
                     <h5 style="display: inline; font-weight: 650">Date:</h5>
-                    <p style="display: inline" class="TZChange"><%= futureEventsInfo[i].start.toISOString().split('T')[0] %></p>
+                    <p style="display: inline" class="TZChange"><%= futureEventsInfo[i].start.toISOString() %></p>
                   </li>
                   <li class='list-group-item borderless box-padding bg-transparent' style="font-size: large">
                     <h5 style="display: inline; font-weight: 650">Start time: </h5>
@@ -200,7 +200,7 @@
                     <li class="list-group-item borderless box-padding bg-transparent" style="font-size: large">
                       <h5 style="display: inline; font-weight: 650">Date:</h5>
                       <p style="display: inline" class="TZChange">
-                        <%= pastEventsInfo[i].start.toISOString().split('T')[0] %>
+                        <%= pastEventsInfo[i].start.toISOString() %>
                       </p>
                   </li>
                   <li
@@ -681,7 +681,7 @@ pastEventsInfo.length; i++) { %>
         let oldDate = $(this).text().trim();
         if (!oldDate) return;
 
-        let newDate = new Date(oldDate + "T12:00:00");
+        let newDate = new Date(oldDate);
         if (isNaN(newDate)) return; // Ensure valid date
 
         let formattedDate = new Intl.DateTimeFormat('en-US', {
