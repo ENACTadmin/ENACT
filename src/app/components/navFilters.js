@@ -11,7 +11,7 @@ export default function NavFilters({
   const { contentTypes, mediaTypes, tags, states, institutions, years } =
     counts.data;
 
-  const [openGroup, setOpenGroup] = useState("contentTypes");
+  const [openGroup, setOpenGroup] = useState("");
   const toggleGroup = (group) =>
     setOpenGroup(openGroup === group ? null : group);
 
@@ -51,7 +51,7 @@ export default function NavFilters({
                       width: "100%",
                       textAlign: "left"
                     }}>
-                    {type || "(none)"}
+                    {type || "Empty"}
                   </button>
                 </li>
               );
@@ -75,7 +75,7 @@ export default function NavFilters({
         type="text"
         placeholder="Search title & description…"
         value={textFilter}
-        onChange={(e) => onFilterChange("__text__", e.target.value)}
+        onChange={(e) => onTextFilterChange(e.target.value)}
         style={{
           width: "100%",
           padding: "8px",
