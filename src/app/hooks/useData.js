@@ -87,7 +87,7 @@ export function useResourceCounts() {
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
   }, []);
-
+  console.log(counts);
   return { counts, loading, error };
 }
 

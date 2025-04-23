@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import NavFilters from "./components/navFilters";
 import { useResourceCounts, useAllResources } from "./hooks/useData";
 import Card from "./components/card";
-// import LoadingSkeleton from "./components/LoadingSkeleton";
 
 function SearchComponent() {
   const {
@@ -13,34 +12,36 @@ function SearchComponent() {
   } = useResourceCounts();
   const { items, loading: itemsLoading, error: itemsError } = useAllResources();
 
-  // which group‐filters are active?
+  // six facet‐groups
   const [activeFilters, setActiveFilters] = useState({
     contentTypes: [],
     mediaTypes: [],
-    tags: []
+    tags: [],
+    states: [],
+    institutions: [],
+    years: []
   });
 
-  // free‐text filter
+  // free‐text
   const [textFilter, setTextFilter] = useState("");
 
-  const onFilterChange = (group, type) => {
+  const onFilterChange = (group, value) => {
     setActiveFilters((prev) => {
       const set = new Set(prev[group]);
-      if (set.has(type)) set.delete(type);
-      else set.add(type);
+      if (set.has(value)) set.delete(value);
+      else set.add(value);
       return { ...prev, [group]: Array.from(set) };
     });
   };
 
-  // apply both text + group filters
+  // apply text + all six facet‐groups
   const filteredItems = items
-    .filter((it) =>
-      textFilter
-        ? (it.name + " " + it.description)
-            .toLowerCase()
-            .includes(textFilter.toLowerCase())
-        : true
-    )
+    .filter((it) => {
+      if (!textFilter) return true;
+      return `${it.name} ${it.description}`
+        .toLowerCase()
+        .includes(textFilter.toLowerCase());
+    })
     .filter(
       (it) =>
         (activeFilters.contentTypes.length === 0 ||
@@ -48,12 +49,20 @@ function SearchComponent() {
         (activeFilters.mediaTypes.length === 0 ||
           activeFilters.mediaTypes.includes(it.mediaType)) &&
         (activeFilters.tags.length === 0 ||
-          it.tags.some((t) => activeFilters.tags.includes(t)))
+          it.tags.some((t) => activeFilters.tags.includes(t))) &&
+        (activeFilters.states.length === 0 ||
+          activeFilters.states.includes(it.state)) &&
+        (activeFilters.institutions.length === 0 ||
+          activeFilters.institutions.includes(it.institution)) &&
+        (activeFilters.years.length === 0 ||
+          activeFilters.years.includes(it.yearOfCreation))
     );
 
-  // if (countsLoading || itemsLoading) return <LoadingSkeleton count={5} />;
-  // if (countsError) return <div>Error loading counts: {countsError}</div>;
-  // if (itemsError) return <div>Error loading items: {itemsError}</div>;
+  if (countsLoading || itemsLoading) {
+    return <p>Loading…</p>;
+  }
+  if (countsError) return <p>Error loading counts: {countsError}</p>;
+  if (itemsError) return <p>Error loading items: {itemsError}</p>;
 
   return (
     <div
@@ -71,7 +80,6 @@ function SearchComponent() {
           display: "flex",
           flexDirection: "row",
           maxWidth: "1200px",
-
           width: "100%"
         }}>
         <NavFilters
@@ -88,7 +96,7 @@ function SearchComponent() {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax( 1fr))",
+                gridTemplateColumns: "repeat(auto-fill, minmax(1fr))",
                 gap: "1rem"
               }}>
               {filteredItems.map((item) => (

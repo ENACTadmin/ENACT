@@ -213,18 +213,17 @@ exports.getResourceById = async (req, res, next) => {
 exports.getResourceCount = async (req, res, next) => {
   try {
     const aggregationPipeline = [
-      {
-        $match: { status: "public" }
-      },
-      {
-        $unwind: "$tags"
-      },
+      { $match: { status: "public" } },
+      { $unwind: "$tags" },
       {
         $group: {
           _id: null,
           tags: { $push: "$tags" },
           contentTypes: { $push: "$contentType" },
-          mediaTypes: { $push: "$mediaType" }
+          mediaTypes: { $push: "$mediaType" },
+          states: { $push: "$state" },
+          institutions: { $push: "$institution" },
+          years: { $push: "$yearOfCreation" }
         }
       },
       {
@@ -283,6 +282,60 @@ exports.getResourceCount = async (req, res, next) => {
                 }
               }
             }
+          },
+          states: {
+            $map: {
+              input: { $setUnion: ["$states"] },
+              as: "type",
+              in: {
+                type: "$$type",
+                count: {
+                  $size: {
+                    $filter: {
+                      input: "$states",
+                      as: "t",
+                      cond: { $eq: ["$$t", "$$type"] }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          institutions: {
+            $map: {
+              input: { $setUnion: ["$institutions"] },
+              as: "type",
+              in: {
+                type: "$$type",
+                count: {
+                  $size: {
+                    $filter: {
+                      input: "$institutions",
+                      as: "t",
+                      cond: { $eq: ["$$t", "$$type"] }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          years: {
+            $map: {
+              input: { $setUnion: ["$years"] },
+              as: "type",
+              in: {
+                type: "$$type",
+                count: {
+                  $size: {
+                    $filter: {
+                      input: "$years",
+                      as: "t",
+                      cond: { $eq: ["$$t", "$$type"] }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -290,14 +343,16 @@ exports.getResourceCount = async (req, res, next) => {
 
     const stats = await Resource.aggregate(aggregationPipeline);
 
-    // Retrieve last 10 created resources
+    // last 10 created
     const lastResources = await Resource.find({})
       .sort({ createdAt: -1 })
       .limit(10)
-      .select("name description uri createdAt tags contentType mediaType") // Select only needed fields
+      .select(
+        "name description uri createdAt tags contentType mediaType state institution yearOfCreation"
+      )
       .lean();
 
-    if (!stats || stats.length === 0) {
+    if (!stats.length) {
       return res.status(404).json({ message: "No data found" });
     }
 
@@ -309,7 +364,7 @@ exports.getResourceCount = async (req, res, next) => {
       }
     });
   } catch (error) {
-    console.error("Error in getResourceStats:", error);
+    console.error("Error in getResourceCount:", error);
     next(error);
   }
 };

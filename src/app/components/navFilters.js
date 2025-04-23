@@ -8,9 +8,9 @@ export default function NavFilters({
   onTextFilterChange
 }) {
   if (!counts || !counts.data) return null;
-  const { contentTypes, mediaTypes, tags } = counts.data;
+  const { contentTypes, mediaTypes, tags, states, institutions, years } =
+    counts.data;
 
-  // which group is currently expanded?
   const [openGroup, setOpenGroup] = useState("contentTypes");
   const toggleGroup = (group) =>
     setOpenGroup(openGroup === group ? null : group);
@@ -30,7 +30,7 @@ export default function NavFilters({
             justifyContent: "space-between",
             alignItems: "center"
           }}>
-          {label}
+          {label}{" "}
           <span style={{ fontSize: "0.8em" }}>{isOpen ? "–" : "+"}</span>
         </h4>
         {isOpen && (
@@ -51,7 +51,7 @@ export default function NavFilters({
                       width: "100%",
                       textAlign: "left"
                     }}>
-                    {type || "(none)"} <small>({count})</small>
+                    {type || "(none)"}
                   </button>
                 </li>
               );
@@ -75,7 +75,7 @@ export default function NavFilters({
         type="text"
         placeholder="Search title & description…"
         value={textFilter}
-        onChange={(e) => onTextFilterChange(e.target.value)}
+        onChange={(e) => onFilterChange("__text__", e.target.value)}
         style={{
           width: "100%",
           padding: "8px",
@@ -89,6 +89,9 @@ export default function NavFilters({
       {renderGroup("Content Types", "contentTypes", contentTypes)}
       {renderGroup("Media Types", "mediaTypes", mediaTypes)}
       {renderGroup("Tags", "tags", tags)}
+      {renderGroup("States", "states", states)}
+      {renderGroup("Institutions", "institutions", institutions)}
+      {renderGroup("Years", "years", years)}
     </nav>
   );
 }
