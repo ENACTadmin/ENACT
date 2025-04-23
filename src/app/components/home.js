@@ -106,7 +106,9 @@ const Home = ({ onSelectTopic, showApiData = true }) => {
               }}
               key={topic.type}
               onClick={() => onSelectTopic(topic.type)}>
-              <p style={{ textAlign: "center" }}>{topic.type}</p>
+              <p style={{ textAlign: "center" }}>
+                {topic.type} {topic.count}
+              </p>
             </div>
           ))}
           {!showAll && (
