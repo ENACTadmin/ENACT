@@ -49,7 +49,7 @@
                                             <% if (facultyResearch[i].mediaType === 'video' && facultyResearch[i].uri.endsWith(".mp4")) { %>
                                                 <li class='list-group-item borderless box-padding bg-transparent' style='font-size: large'>
                                                     <video style="width: 100%; max-width: 400px" controls>
-                                                        <source src="<%= resourceInfo[i].uri %>" type="video/mp4">
+                                                        <source src="<%= facultyResearch[i].uri %>" type="video/mp4">
                                                     </video>
                                                 </li>
                                             <% } else { %>
