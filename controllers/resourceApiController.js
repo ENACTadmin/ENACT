@@ -33,7 +33,7 @@ exports.getAllResources = async (req, res, next) => {
           as: "courseDetails" // Name for the new field in the resulting documents
         }
       },
-      { $unwind: "$courseDetails" }, // Convert `courseDetails` array into a single object
+      // { $unwind: "$courseDetails" }, // Convert `courseDetails` array into a single object
       // Project only the necessary fields and exclude `facultyId`
       {
         $project: {

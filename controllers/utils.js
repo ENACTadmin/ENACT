@@ -31,6 +31,10 @@ function checkUserAccess(req, res, next) {
     try {
         if (req.user) {
             res.locals.hasFullAccess = req.user.hasFullAccess || false;
+            // give admin full access
+            if (req.user.status === 'admin') {
+                res.locals.hasFullAccess = true;
+            }
         } else {
             res.locals.hasFullAccess = false;
         }

@@ -159,6 +159,16 @@ exports.updateCourse = async (req, res, next) => {
     courseToEdit.timezone = req.body.timezone;
     courseToEdit.state = req.body.state;
 
+    // check if a a time is assinged. If so, set asynchronous and undecided to false
+    // the updateCourse.ejs need this to determine whether to put a course to TBD Courses
+    // Without this, a course will still be listed as a TBD course even if a time is assigned
+    if (req.body.startTime ) {
+      courseToEdit.asynchronous = false;
+      courseToEdit.undecided = false;
+    } else{
+      courseToEdit.undecided = true;
+    }
+
     if (req.body.ownerId) {
       let tempUser = await User.findOne({ _id: req.body.ownerId });
       if (tempUser) {

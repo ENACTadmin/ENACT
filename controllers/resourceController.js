@@ -1151,7 +1151,9 @@ exports.renderResourceStatsPage = async (req, res, next) => {
 exports.renderStudentGuidePage = async (req, res, next) => {
   try {
     // Fetch resources where contentType is "Student Advice"
-    let resourceInfo = await Resource.find({ contentType: "Student Advice" });
+   let resourceInfo = await Resource
+      .find({ contentType: "Student Advice" })
+      .sort({ createdAt: -1 });
 
     // Render the EJS page and pass the filtered resources to the view
     res.render("./pages/student-guide", { resourceInfo: resourceInfo });

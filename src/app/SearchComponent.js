@@ -95,7 +95,7 @@ function SearchComponent() {
     loading: countsLoading,
     error: countsError
   } = useResourceCounts();
-  const { items, loading: itemsLoading, error: itemsError } = useAllResources();
+  const { items, loading: itemsLoading, error: itemsError } = useAllResources(); // all resources included in search portal
 
   const [activeFilters, setActiveFilters] = useState({
     contentTypes: [],
@@ -130,7 +130,7 @@ function SearchComponent() {
     .filter((it) =>
       !textFilter
         ? true
-        : `${it.name} ${it.description}`
+        : `${it.name} ${it.description}` // search bar look matching names and descriptions
             .toLowerCase()
             .includes(textFilter.toLowerCase())
     )
