@@ -676,27 +676,25 @@ app.get("/profile/send/:id", messageController.sendProfileEmail);
 //*******************************************
 //***********Networking related**************
 
-app.get("/networking", async (req, res) => {
-  let profileInfo = await User.find({ networkCheck: "on" }).collation({
-    locale: "en"
+// app.get("/networking", async (req, res) => {
+//   let profileInfo = await User.find({ networkCheck: "on" }).collation({
+//     locale: "en"
+//   });
+//   let duplicate = JSON.parse(JSON.stringify(profileInfo));
+//   for (let i = 0; i < duplicate.length; i++) {
+//     if (duplicate[i].userName) {
+//       duplicate[i].score =
+//         duplicate[i].userName.split(" ")[
+//           duplicate[i].userName.split(" ").length - 1
+//         ];
+//     } else {
+//       duplicate[i].score = "zzzzzzz";
+//     }
+//   }
+
+  app.get("/networking", async (req, res) => {
+     res.redirect("https://www.brandeis.edu/enact/people/faculty-fellows/index.html");
   });
-  let duplicate = JSON.parse(JSON.stringify(profileInfo));
-  for (let i = 0; i < duplicate.length; i++) {
-    if (duplicate[i].userName) {
-      duplicate[i].score =
-        duplicate[i].userName.split(" ")[
-          duplicate[i].userName.split(" ").length - 1
-        ];
-    } else {
-      duplicate[i].score = "zzzzzzz";
-    }
-  }
-  duplicate = duplicate.sort((a, b) => a.score.localeCompare(b.score));
-  res.render("./pages/networking", {
-    profileInfo: duplicate,
-    state: "U.S."
-  });
-});
 
 app.get("/networking/:state", async (req, res) => {
   let profileInfo = await User.find({
@@ -773,51 +771,55 @@ app.get(
 //*************Event related*****************
 
 app.get("/events", async (req, res) => {
-  if (res.locals.loggedIn) {
-    let eventsInfo = await Event.find({}).sort({ start: 1 });
-    let futureEventsInfo = eventsInfo.filter(
-      ({ start }) => new Date(start).getTime() >= new Date().getTime()
-    );
-    let pastEventsInfo = eventsInfo
-      .filter(({ start }) => new Date(start).getTime() < new Date().getTime())
-      .reverse();
-    res.render("./pages/events-private", {
-      futureEventsInfo: futureEventsInfo,
-      pastEventsInfo: pastEventsInfo
-    });
-  } else {
-    let eventsInfo = await Event.find({ visibility: "public" }).sort({
-      start: 1
-    });
-    let futureEventsInfo = eventsInfo.filter(
-      ({ start }) => new Date(start).getTime() >= new Date().getTime()
-    );
-    let pastEventsInfo = eventsInfo
-      .filter(({ start }) => new Date(start).getTime() < new Date().getTime())
-      .reverse();
-    let courseTimes = await CourseTime.find({}, { _id: 0, __v: 0 });
-    let courses = await Course.find(
-      { year: 2021 },
-      {
-        institutionURL: 1,
-        ownerId: 1,
-        _id: 1,
-        state: 1,
-        semester: 1,
-        courseName: 1,
-        timezone: 1,
-        instructor: 1,
-        institution: 1
-      }
-    );
-    res.render("./pages/events-public", {
-      courseTimes: courseTimes,
-      courses: courses,
-      futureEventsInfo: futureEventsInfo,
-      pastEventsInfo: pastEventsInfo
-    });
-  }
-});
+  res.redirect("https://www.brandeis.edu/enact/news-events/index.html");
+})
+
+// app.get("/events", async (req, res) => {
+//   if (res.locals.loggedIn) {
+//     let eventsInfo = await Event.find({}).sort({ start: 1 });
+//     let futureEventsInfo = eventsInfo.filter(
+//       ({ start }) => new Date(start).getTime() >= new Date().getTime()
+//     );
+//     let pastEventsInfo = eventsInfo
+//       .filter(({ start }) => new Date(start).getTime() < new Date().getTime())
+//       .reverse();
+//     res.render("./pages/events-private", {
+//       futureEventsInfo: futureEventsInfo,
+//       pastEventsInfo: pastEventsInfo
+//     });
+//   } else {
+//     let eventsInfo = await Event.find({ visibility: "public" }).sort({
+//       start: 1
+//     });
+//     let futureEventsInfo = eventsInfo.filter(
+//       ({ start }) => new Date(start).getTime() >= new Date().getTime()
+//     );
+//     let pastEventsInfo = eventsInfo
+//       .filter(({ start }) => new Date(start).getTime() < new Date().getTime())
+//       .reverse();
+//     let courseTimes = await CourseTime.find({}, { _id: 0, __v: 0 });
+//     let courses = await Course.find(
+//       { year: 2021 },
+//       {
+//         institutionURL: 1,
+//         ownerId: 1,
+//         _id: 1,
+//         state: 1,
+//         semester: 1,
+//         courseName: 1,
+//         timezone: 1,
+//         instructor: 1,
+//         institution: 1
+//       }
+//     );
+//     res.render("./pages/events-public", {
+//       courseTimes: courseTimes,
+//       courses: courses,
+//       futureEventsInfo: futureEventsInfo,
+//       pastEventsInfo: pastEventsInfo
+//     });
+//   }
+// });
 
 app.post("/event/delete/:eventId", eventController.deleteEvent);
 
