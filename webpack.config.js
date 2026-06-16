@@ -5,11 +5,14 @@ const LiveReloadPlugin = require("webpack-livereload-plugin");
 const useLiveReload = process.env.USE_LIVERELOAD === "true";
 
 module.exports = {
-  mode: "development", // Set the mode to development
-  entry: "./src/app/SearchComponent.js", // Path to your React component
+  mode: "development",
+  entry: {
+    bundle: "./src/app/SearchComponent.js", // existing search component
+    main: "./src/app/main.jsx"             // new React SPA entry
+  },
   output: {
-    path: path.resolve(__dirname, "public/js"), // Output directory
-    filename: "bundle.js" // Output file
+    path: path.resolve(__dirname, "public/js"),
+    filename: "[name].js"
   },
   module: {
     rules: [

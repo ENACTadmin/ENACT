@@ -1006,6 +1006,66 @@ app.get("/accountHelp", (req, res) =>
 );
 
 //*******************************************
+//****** React SPA API & shell routes *******
+
+// Returns current session user info for the React frontend
+app.get("/api/v0/me", async (req, res) => {
+  if (!req.user) {
+    return res.json({ loggedIn: false });
+  }
+  try {
+    const courseMemberships = await require("./models/CourseMember")
+      .find({ studentId: req.user._id })
+      .lean();
+    const courseIds = courseMemberships.map(m => m.courseId);
+    let courses = [];
+    if (courseIds.length > 0) {
+      courses = await Course.find({ _id: { $in: courseIds } })
+        .select("_id courseName")
+        .lean();
+    }
+    // Faculty/admin own courses
+    if (req.user.status === "faculty" || req.user.status === "admin") {
+      const owned = await Course.find({ ownerId: req.user._id })
+        .select("_id courseName")
+        .lean();
+      const ownedIds = new Set(owned.map(c => String(c._id)));
+      courses = [
+        ...owned,
+        ...courses.filter(c => !ownedIds.has(String(c._id)))
+      ];
+    }
+    res.json({
+      loggedIn: true,
+      id: req.user._id,
+      userName: req.user.userName,
+      status: req.user.status,
+      profilePicURL: req.user.profilePicURL,
+      courses
+    });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to load user data" });
+  }
+});
+
+// Returns home page data (public resources, events, carousel images) for React
+app.get(
+  "/api/v0/home-data",
+  resourceController.loadDisplayedResources,
+  resourceController.loadImages,
+  eventController.loadEvents,
+  (req, res) => {
+    res.json({
+      resources: res.locals.resourceInfo || [],
+      events: res.locals.eventsInfo || [],
+      imagePaths: res.locals.imagePaths || [],
+      labelPaths: res.locals.labelPaths || [],
+      cookieDismissed: req.cookies.notificationDismissed === "true"
+    });
+  }
+);
+
+//*******************************************
 //*************Error related*****************
 
 // catch 404 and forward to error handler
