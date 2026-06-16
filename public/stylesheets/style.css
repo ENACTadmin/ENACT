@@ -790,6 +790,12 @@ h6 {
 
 /* -----------------------------------------------------  */
 /* ELEMENT grid__item BASED ON BLOCK MODIFIER grid--2col  */
+.grid--2col::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 .grid--2col .grid__item {
   float: left;
   margin-right: 80px;
