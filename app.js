@@ -1065,6 +1065,10 @@ app.get(
   }
 );
 
+// Serve the React SPA shell for all /app/* routes (catch-all for client-side router)
+app.get("/app", (req, res) => res.render("react-app"));
+app.get("/app/*", (req, res) => res.render("react-app"));
+
 //*******************************************
 //*************Error related*****************
 
