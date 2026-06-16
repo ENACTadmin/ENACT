@@ -9,7 +9,7 @@ import SignupPage from './pages/auth/SignupPage';
 export default function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/app">
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
