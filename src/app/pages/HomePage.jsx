@@ -70,14 +70,14 @@ function EventCard({ event, loggedIn }) {
                   </li>
                 )}
                 {event.uri && (
-                  <div className="list-group-item" style={{ fontSize: 'large', color: 'white', background: '#0053a4', display: 'flex', justifyContent: 'center', width: 260, marginTop: 30 }}>
+                  <li className="list-group-item" style={{ fontSize: 'large', color: 'white', background: '#0053a4', display: 'flex', justifyContent: 'center', width: 260, marginTop: 30 }}>
                     <a style={{ color: 'white' }} href={event.uri} target="_blank" rel="noreferrer">View Event</a>
-                  </div>
+                  </li>
                 )}
               </>
             ) : (
               <li className="list-group-item borderless box-padding bg-transparent" style={{ fontSize: 'large' }}>
-                <h5 style={{ display: 'inline' }}>To view details, <a href="/login" className="btn btn-sm btn-warning">Click to Login</a></h5>
+                <h5 style={{ display: 'inline' }}>To view details, <a href="/app/login" className="btn btn-sm btn-warning">Click to Login</a></h5>
               </li>
             )}
           </ul>
@@ -164,12 +164,12 @@ export default function HomePage() {
       {/* Sticky header banner */}
       <header className="header header--sticky">
         <div className="header__content header__content--fluid-width">
-          <a className="header__logo-title" href="/">
+          <a className="header__logo-title" href="/app">
             <div className="card-body" style={{ backgroundColor: 'transparent' }}>
               <img style={{ height: 70, width: 70 }} src="/images/enact-logo.webp" alt="ENACT logo" />
             </div>
           </a>
-          <a className="header__logo-title-1" href="/">
+          <a className="header__logo-title-1" href="/app">
             THE ABRAHAM FEINBERG EDUCATIONAL<br />NETWORK FOR ACTIVE CIVIC TRANSFORMATION
             <p style={{ fontSize: 'small' }}>a national program based at Brandeis University</p>
           </a>
@@ -208,8 +208,7 @@ export default function HomePage() {
                     <b style={{ color: '#FF9912' }}>- ENACT Students &amp; Alumni: </b>
                     search student work. Network with students and alumni.
                     {!loggedIn && (
-                      <> <a id="not-logged-login" href="/login" className="btn btn-sm btn-warning">Click to Login</a></>
-                    )}
+                      <> <a id="not-logged-login" href="/app/login" className="btn btn-sm btn-warning">Click to Login</a></>
                     <br />
                   </>
                 ) : null}
