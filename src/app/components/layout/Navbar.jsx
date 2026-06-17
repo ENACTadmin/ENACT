@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 export default function Navbar() {
   const { user, loading } = useAuth();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const navigate = useNavigate();
-
   const loggedIn = user?.loggedIn;
   const status = user?.status;
   const courses = user?.courses || [];
@@ -59,8 +56,7 @@ export default function Navbar() {
                 <li>
                   <a className="header-link" href="#">Resources</a>
                   <ul className="sub-menu">
-                    <li><Link className="header-link" to="/search/">Search Resources</Link></li>
-                    <li><a className="header-link" href="/resources/view/student-guide">Advice &amp; Tips for Students</a></li>
+                    <li><a className="header-link" href="/search/">Search Resources</a></li>
                   </ul>
                 </li>
 
@@ -103,7 +99,7 @@ export default function Navbar() {
                 <li>
                   <a className="header-link" href="#">Resources</a>
                   <ul className="sub-menu">
-                    <li><Link className="header-link" to="/search/">Search Resources</Link></li>
+                    <li><a className="header-link" href="/search/">Search Resources</a></li>
                     <li><a className="header-link" href="/resources/view/student-guide">Advice &amp; Tips for Students</a></li>
 
                     {(status === 'faculty' || status === 'admin') && (
@@ -122,9 +118,11 @@ export default function Navbar() {
                         <a className="header-link" href="#">Upload Class Resources</a>
                         <ul className="dropdown-menu dropdown-menu-right">
                           {courses.map(c => (
-                            <a key={c._id} className="header-link" href={`/resource/upload/course/${c._id}`}>
-                              {c.courseName.length <= 15 ? c.courseName : c.courseName.substring(0, 15) + '...'}
-                            </a>
+                            <li key={c._id}>
+                              <a className="header-link" href={`/resource/upload/course/${c._id}`}>
+                                {c.courseName.length <= 15 ? c.courseName : c.courseName.substring(0, 15) + '...'}
+                              </a>
+                            </li>
                           ))}
                         </ul>
                       </li>
@@ -206,15 +204,14 @@ export default function Navbar() {
             )}
 
             {/* Login / Account */}
-            <li className="header-link" href="#">
-              {!loggedIn ? (
-                <a
+            <li className="header-link">
+                <Link
                   className="header__btn--signup"
                   style={{ backgroundColor: '#0053a4', color: 'white', textTransform: 'uppercase' }}
-                  href="/login"
+                  to="/login"
                 >
                   Login
-                </a>
+                </Link>
               ) : (
                 <>
                   <a className="header-link" href="#">Account</a>
