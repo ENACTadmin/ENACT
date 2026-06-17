@@ -1,15 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    const form = e.target;
-    form.submit();
-  }
 
   return (
     <section className="section section__grey" data-aos="fade-up" style={{ height: '140%', paddingTop: '8%' }}>
