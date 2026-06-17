@@ -1014,10 +1014,13 @@ app.get("/api/v0/me", async (req, res) => {
     return res.json({ loggedIn: false });
   }
   try {
-    const courseMemberships = await require("./models/CourseMember")
-      .find({ studentId: req.user._id })
-      .lean();
-    const courseIds = courseMemberships.map(m => m.courseId);
+    let courseIds = Array.isArray(req.user.enrolledCourses) ? req.user.enrolledCourses : [];
+    if (courseIds.length === 0) {
+      const courseMemberships = await require("./models/CourseMember")
+        .find({ studentId: req.user._id })
+        .lean();
+      courseIds = courseMemberships.map(m => m.courseId);
+    }
     let courses = [];
     if (courseIds.length > 0) {
       courses = await Course.find({ _id: { $in: courseIds } })
@@ -1055,9 +1058,27 @@ app.get(
   resourceController.loadImages,
   eventController.loadEvents,
   (req, res) => {
+    const loggedIn = !!req.user;
+    const rawEvents = res.locals.eventsInfo || [];
+    const events = rawEvents.map(e => {
+      const ev = typeof e?.toObject === "function" ? e.toObject() : e;
+      if (!loggedIn && ev?.visibility !== "public") {
+        return {
+          _id: ev._id,
+          title: ev.title,
+          start: ev.start,
+          end: ev.end,
+          imageURL: ev.imageURL,
+          visibility: ev.visibility,
+          description: String(ev.description || "").split(".")[0] + "..."
+        };
+      }
+      return ev;
+    });
+
     res.json({
       resources: res.locals.resourceInfo || [],
-      events: res.locals.eventsInfo || [],
+      events,
       imagePaths: res.locals.imagePaths || [],
       labelPaths: res.locals.labelPaths || [],
       cookieDismissed: req.cookies.notificationDismissed === "true"
