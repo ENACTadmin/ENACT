@@ -208,8 +208,8 @@ export default function HomePage() {
                     <b style={{ color: '#FF9912' }}>- ENACT Students &amp; Alumni: </b>
                     search student work. Network with students and alumni.
                     {!loggedIn && (
-                      <> <a id="not-logged-login" href="/app/login" className="btn btn-sm btn-warning">Click to Login</a></>
-                    <br />
+                      <> <a id="not-logged-login" href="/app/login" className="btn btn-sm btn-warning">Click to Login</a><br /></>
+                    )}
                   </>
                 ) : null}
                 {((loggedIn && (status === 'faculty' || status === 'admin')) || !loggedIn) && (

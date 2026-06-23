@@ -1081,6 +1081,74 @@ app.get(
   }
 );
 
+// Returns future and past events (public-only for guests)
+app.get("/api/v0/events", async (req, res) => {
+  try {
+    const loggedIn = !!req.user;
+    const query = loggedIn ? {} : { visibility: "public" };
+    const eventsInfo = await Event.find(query).sort({ start: 1 });
+    const now = new Date().getTime();
+    const future = eventsInfo.filter(e => new Date(e.start).getTime() >= now);
+    const past = eventsInfo
+      .filter(e => new Date(e.start).getTime() < now)
+      .reverse();
+    res.json({ future, past });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to load events" });
+  }
+});
+
+// Returns staff and faculty profiles sorted by last name
+app.get("/api/v0/faculty-list", async (req, res) => {
+  try {
+    const special = ["stimell@brandeis.edu", "djw@brandeis.edu", "jayrkaufman@gmail.com"];
+    let faculty = await User.find({ status: "faculty" })
+      .select("_id userName profilePicURL linkedInURL personalWebsiteURL affiliation department state")
+      .collation({ locale: "en" })
+      .lean();
+    faculty = faculty.sort((a, b) => {
+      const lastName = u => (u.userName || "").split(" ").pop();
+      return lastName(a).localeCompare(lastName(b));
+    });
+    const staff = await User.find({
+      $or: [{ workEmail: { $in: special } }, { googleemail: { $in: special } }]
+    })
+      .select("_id userName profilePicURL linkedInURL personalWebsiteURL affiliation department state")
+      .sort({ userName: -1 })
+      .lean();
+    res.json({ staff, faculty });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to load faculty list" });
+  }
+});
+
+// Returns current-semester course schedule with times
+app.get("/api/v0/courses/schedule", async (req, res) => {
+  try {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1;
+    const currentDay = currentDate.getDate();
+    const currentYear = currentDate.getFullYear();
+    let query = {};
+    if ((currentMonth === 12 && currentDay >= 21) || (currentMonth >= 1 && currentMonth <= 6)) {
+      query.$or = [{ semester: "spring" }, { semester: "january" }];
+      query.year = currentMonth === 12 && currentDay >= 21 ? currentYear + 1 : currentYear;
+    } else {
+      query.semester = "fall";
+      query.year = currentYear;
+    }
+    const courses = await Course.find(query, {
+      ownerId: 1, institutionURL: 1, _id: 1, state: 1, courseName: 1,
+      timezone: 1, semester: 1, year: 1, instructor: 1, institution: 1,
+      asynchronous: 1, undecided: 1
+    }).lean();
+    const courseTimes = await CourseTime.find({}, { _id: 0, __v: 0 }).lean();
+    res.json({ courses, courseTimes });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to load schedule" });
+  }
+});
+
 // Serve the React SPA shell for all /app/* routes (catch-all for client-side router)
 app.get("/app", (req, res) => res.render("react-app"));
 app.get("/app/*", (req, res) => res.render("react-app"));
