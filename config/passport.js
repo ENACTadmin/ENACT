@@ -191,7 +191,7 @@ module.exports = function (passport) {
                 if (!user) {
                     return done(null, false, {message: 'Incorrect username.'});
                 }
-                if (user.password !== password) {
+                if (!user.comparePassword(password)) {
                     return done(null, false, {message: 'Incorrect password.'});
                 }
                 return done(null, user);
@@ -219,7 +219,7 @@ module.exports = function (passport) {
                 if (!user) {
                     return done(null, false, {message: 'Incorrect username.'});
                 }
-                if (user.password !== password) {
+                if (!user.comparePassword(password)) {
                     return done(null, false, {message: 'Incorrect password.'});
                 }
                 return done(null, user);
@@ -244,7 +244,7 @@ module.exports = function (passport) {
                     if (!user) {
                         return done(null, false, {message: 'Incorrect username.'});
                     }
-                    if (user.password !== password) {
+                    if (!user.comparePassword(password)) {
                         return done(null, false, {message: 'Incorrect password.'});
                     }
                     return done(null, user);
