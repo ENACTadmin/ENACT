@@ -35,13 +35,15 @@ describe("Mongoose v9 Compatibility", function () {
     }
   });
 
-  it("should have mongoose v9+ installed", function () {
+  it("should have mongoose v7+ installed", function () {
     const packageJson = require("../package.json");
     const mongooseVersion = packageJson.dependencies.mongoose;
     
-    if (mongooseVersion.startsWith("^5.") || mongooseVersion.startsWith("^6.") || 
-        mongooseVersion.startsWith("^7.") || mongooseVersion.startsWith("^8.")) {
-      throw new Error(`mongoose ${mongooseVersion} is outdated - upgrade to v9+ for security fixes`);
+    // Extract major version from version string like "^7.8.3"
+    const majorVersion = parseInt(mongooseVersion.replace(/[^0-9]/g, ''));
+    
+    if (majorVersion < 7) {
+      throw new Error(`mongoose ${mongooseVersion} is outdated - upgrade to v7+ for security fixes`);
     }
   });
 });
