@@ -9,6 +9,15 @@
 <script src="/js/daylightTime.js"></script>
 
 <header class='header header--sticky'>
+    <!-- Notification for Faculty and Admin -->
+    <% if (!cookieDismissed) { %>
+        <div id="notification" class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-top: 20px; z-index: 0;">
+          <strong>OPPORTUNITY:</strong> Apply for the ENACT Faculty Fellowship <a href="https://www.brandeis.edu/enact/grants-fellowships/index.html" target="_blank">here</a>, or nominate a candidate by emailing <a href="mailto:ENACT@brandeis.edu">ENACT@brandeis.edu</a>.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close" id="dismiss-btn">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+    <% } %>
     <div class='header__content header__content--fluid-width'>
         <a class='header__logo-title' href='/'>
             <div class='card-body' style='background-color: transparent'>
@@ -24,15 +33,6 @@
             </a>
         <%- include('../components/navbar-common'); -%>
     </div>
-    <!-- Notification for Faculty and Admin -->
-    <% if (!cookieDismissed) { %>
-        <div id="notification" class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-top: 20px;">
-          <strong>OPPORTUNITY:</strong> Apply for the ENACT Faculty Fellowship <a href="https://www.brandeis.edu/enact/grants-fellowships/index.html" target="_blank">here</a>, or nominate a candidate by emailing <a href="mailto:ENACT@brandeis.edu">ENACT@brandeis.edu</a>.
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close" id="dismiss-btn">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-    <% } %>
   
 </header>
 
