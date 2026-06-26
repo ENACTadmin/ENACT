@@ -412,7 +412,7 @@ exports.deleteCourse = async (req, res) => {
   let users = await User.find();
   // clean user object fields
   for (let i = 0; i < users.length; i++) {
-    users[i].enrolledCourses.remove(req.params.courseId);
+    users[i].enrolledCourses.pull(req.params.courseId);
     await users[i].save();
   }
   res.redirect("back");
