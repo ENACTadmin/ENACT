@@ -330,6 +330,47 @@ describe('Resolved Issues Verification', function () {
   });
 
   // =========================================================================
+  // #86 - Search dropdown/chronology improvements
+  // Fix: Search results sort by yearOfCreation: -1 descending. Autocomplete
+  // dropdown debounced at 150ms. Search hint text in alert-info box.
+  // Similar resources section added to search results page.
+  // =========================================================================
+  describe('#86 - Search dropdown/chronology', function () {
+    it('search controller sorts by yearOfCreation descending', function () {
+      const fs = require('fs');
+      const controller = fs.readFileSync('./controllers/resourceController.js', 'utf8');
+      const matches = controller.match(/yearOfCreation: -1/g);
+      assert.ok(matches.length >= 10);
+    });
+
+    it('autocomplete has debounce and cached lookups', function () {
+      const fs = require('fs');
+      const js = fs.readFileSync('./public/js/autoCompleteSearch.js', 'utf8');
+      assert.ok(js.includes('setTimeout') && js.includes('clearTimeout'));
+      assert.ok(!js.includes('let tagsJSON = [];'));
+      assert.ok(!js.includes('let namesJSON = [];'));
+    });
+
+    it('search hint text is in an alert box', function () {
+      const fs = require('fs');
+      const view = fs.readFileSync('./views/pages/search-primary.ejs', 'utf8');
+      assert.ok(view.includes('alert alert-info'));
+    });
+
+    it('similar resources section exists on search results page', function () {
+      const fs = require('fs');
+      const view = fs.readFileSync('./views/pages/resources-searchResult-private.ejs', 'utf8');
+      assert.ok(view.includes('Similar Resources'));
+    });
+
+    it('getSimilarResources function exists in controller', function () {
+      const fs = require('fs');
+      const controller = fs.readFileSync('./controllers/resourceController.js', 'utf8');
+      assert.ok(controller.includes('getSimilarResources'));
+    });
+  });
+
+  // =========================================================================
   // #87 - Empty state search
   // Fix: All search result pages (public, private, primary) now show helpful
   // "No resources found" messages with "Browse All Resources" buttons
