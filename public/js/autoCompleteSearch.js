@@ -72,65 +72,48 @@ $(document).ready(function () {
 
     let input = document.getElementById("resources");
 
+    // build static lookup lists once
+    let tagLookup = tags.map(t => ({ label: t }));
+    let nameLookup = [];
+    let seenNames = new Set();
+    for (let resource in resourcesJSON) {
+        let name = resourcesJSON[resource].ownerName;
+        if (!seenNames.has(name)) {
+            nameLookup.push({ label: name });
+            seenNames.add(name);
+        }
+    }
+    let contentLookup = [];
+    let seenContent = new Set();
+    for (let resource in resourcesJSON) {
+        let contentType = resourcesJSON[resource].contentType;
+        if (!seenContent.has(contentType)) {
+            contentLookup.push({ label: contentType });
+            seenContent.add(contentType);
+        }
+    }
+
+    let debounceTimer = null;
+
     autocomplete({
         input: input,
         fetch: function (text, update) {
-            // build tags JSON
-
-            let tagsJSON = []
-            for (let tag in tags) {
-                let newJSON = {
-                    "label": tags[tag]
-                }
-                tagsJSON.push(newJSON)
-            }
-            tagsJSON = JSON.parse(JSON.stringify(tagsJSON))
-
-            // build name JSON
-            let namesJSON = []
-            let seenNames = new Set()
-            for (let resource in resourcesJSON) {
-                let name = resourcesJSON[resource].ownerName
-                if (!seenNames.has(name)) {
-                    let newJSON = {
-                        "label": name
-                    }
-                    namesJSON.push(newJSON)
-                    seenNames.add(name)
-                }
-            }
-            namesJSON = JSON.parse(JSON.stringify(namesJSON))
-
-            // build contentType JSON
-            let contentJSON = []
-            let seenContent = new Set()
-            for (let resource in resourcesJSON) {
-                let contentType = resourcesJSON[resource].contentType
-                if (!seenContent.has(contentType)) {
-                    let newJSON = {
-                        "label": contentType
-                    }
-                    contentJSON.push(newJSON)
-                    seenContent.add(contentType)
-                }
-            }
-            contentJSON = JSON.parse(JSON.stringify(contentJSON))
-            text = text.toLowerCase();
-            // you can also use AJAX requests instead of preloaded data
-            let suggestions = resourcesJSON.filter(n => (n.label !== undefined && n.label.toLowerCase().includes(text))).slice(0, 10);
-            let tagSuggestions = tagsJSON.filter(n => (n.label !== undefined && n.label.toLowerCase().includes(text)))
-            let nameSuggestions = namesJSON.filter(n => (n.label !== undefined && n.label.toLowerCase().includes(text)))
-            let contentSuggestions = contentJSON.filter(n => (n.label !== undefined && n.label.toLowerCase().includes(text)))
-            suggestions = tagSuggestions.concat(nameSuggestions).concat(contentSuggestions).concat(suggestions)
-            // console.log("suggestions: ", suggestions)
-            update(suggestions);
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(function () {
+                text = text.toLowerCase();
+                let suggestions = resourcesJSON.filter(n => n.label !== undefined && n.label.toLowerCase().includes(text)).slice(0, 10);
+                let tagSuggestions = tagLookup.filter(n => n.label.toLowerCase().includes(text));
+                let nameSuggestions = nameLookup.filter(n => n.label.toLowerCase().includes(text));
+                let contentSuggestions = contentLookup.filter(n => n.label.toLowerCase().includes(text));
+                suggestions = tagSuggestions.concat(nameSuggestions).concat(contentSuggestions).concat(suggestions);
+                update(suggestions);
+            }, 150);
         },
         onSelect: function (item) {
             input.value = item.label;
         },
         render: function (item, currentValue) {
             let div = document.createElement("div");
-            div.append("<span class=''>")
             div.textContent = item.label;
             div.setAttribute('class', "complete-items");
             return div;

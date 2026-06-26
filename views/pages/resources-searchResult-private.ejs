@@ -539,6 +539,29 @@
     </section>
 </section>
 
+<% if (typeof similarResources !== 'undefined' && similarResources && similarResources.length > 0) { %>
+    <section class='section__content section__content--fluid-width'>
+        <div class="container">
+            <h3>Similar Resources</h3>
+            <hr>
+            <div class='row'>
+                <div class='col-md-12 col-sm-12'>
+                    <% for (let i = 0; i < similarResources.length; i++) { %>
+                        <div class='shadow-sm card-body' data-aos="fade-up">
+                            <h5><%= similarResources[i].name %></h5>
+                            <div class='card-text'>
+                                <p><%= similarResources[i].description %></p>
+                                <p><strong>Year:</strong> <%= similarResources[i].yearOfCreation %> &nbsp; <strong>Tags:</strong> <%= similarResources[i].tags.join(', ') %></p>
+                            </div>
+                        </div>
+                        <% if (i !== similarResources.length) { %><br><% } %>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </section>
+<% } %>
+
 <p hidden id="findMe"></p>
 
 <script>
