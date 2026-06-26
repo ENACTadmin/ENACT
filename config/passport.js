@@ -174,6 +174,21 @@ module.exports = function (passport) {
     // =========================================================================
     // LOCAL ===================================================================
     // =========================================================================
+    function checkPassword(user, password, done) {
+        if (user.comparePassword(password)) {
+            return done(null, user);
+        }
+        if (user.password && !user.password.startsWith('$2b$') && user.password === password) {
+            user.password = password;
+            user.save(function (err) {
+                if (err) console.log('password migration error:', err);
+                return done(null, user);
+            });
+            return;
+        }
+        return done(null, false, {message: 'Incorrect password.'});
+    }
+
     passport.use('local', new LocalStrategy({
             usernameField: 'email',
             passwordField: 'password'
@@ -191,10 +206,7 @@ module.exports = function (passport) {
                 if (!user) {
                     return done(null, false, {message: 'Incorrect username.'});
                 }
-                if (!user.comparePassword(password)) {
-                    return done(null, false, {message: 'Incorrect password.'});
-                }
-                return done(null, user);
+                checkPassword(user, password, done);
             });
         }
     ));
@@ -219,10 +231,7 @@ module.exports = function (passport) {
                 if (!user) {
                     return done(null, false, {message: 'Incorrect username.'});
                 }
-                if (!user.comparePassword(password)) {
-                    return done(null, false, {message: 'Incorrect password.'});
-                }
-                return done(null, user);
+                checkPassword(user, password, done);
             });
         }
     ));
@@ -244,10 +253,7 @@ module.exports = function (passport) {
                     if (!user) {
                         return done(null, false, {message: 'Incorrect username.'});
                     }
-                    if (!user.comparePassword(password)) {
-                        return done(null, false, {message: 'Incorrect password.'});
-                    }
-                    return done(null, user);
+                    checkPassword(user, password, done);
                 }
             )
             ;
