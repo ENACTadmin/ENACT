@@ -24,5 +24,8 @@ const resourceSchema = Schema({
   views: { type: Number, required: false, default: 0 }
 });
 
-// resourceSchema.ensureIndex({name: "text", ownerName: "text", description: "text", tags: "text", state: "text", mediaType: "text", contentType: "text", institution: "text", yearOfCreation: "text"})
+resourceSchema.index({ name: "text", ownerName: "text", description: "text", tags: "text", state: "text", contentType: "text", institution: "text" });
+resourceSchema.index({ ownerId: 1 });
+resourceSchema.index({ courseId: 1 });
+resourceSchema.index({ status: 1, checkStatus: 1 });
 module.exports = mongoose.model("Resource", resourceSchema);

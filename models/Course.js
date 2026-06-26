@@ -21,4 +21,7 @@ const courseSchema = Schema({
     asynchronous: Boolean
 });
 
+courseSchema.index({ ownerId: 1 });
+courseSchema.index({ coursePin: 1 });
+
 module.exports = mongoose.model('Course', courseSchema);

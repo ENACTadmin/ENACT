@@ -39,6 +39,10 @@ userSchema.pre('save', async function (next) {
     }
 });
 
+userSchema.index({ workEmail: 1 });
+userSchema.index({ googleemail: 1 });
+userSchema.index({ status: 1 });
+
 userSchema.methods.comparePassword = function (candidatePassword) {
     return bcrypt.compareSync(candidatePassword, this.password);
 };
