@@ -26,8 +26,10 @@ module.exports = function (passport) {
     // used to deserialize the user
     passport.deserializeUser(function (id, done) {
         // console.log('in deserializeUser');
-        User.findById(id, function (err, user) {
-            done(err, user);
+        User.findById(id).then(function (user) {
+            done(null, user);
+        }).catch(function (err) {
+            done(err);
         });
     });
 
@@ -57,48 +59,46 @@ module.exports = function (passport) {
                 // console.log("looking for userid")
                 // try to find the user based on their google id
                 User.findOne({
-                        $or: [
-                            {workEmail: profile.emails[0].value}, {googleemail: profile.emails[0].value}
-                        ]
-                    },
-                    function (err, user) {
-                        if (err)
-                            return done(err);
-
-                        if (user) {
-                            // console.log(`the user was found ${user}`);
-                            // if a user is found, log them in
-                            return done(null, user);
-                        } else {
-                            console.log(`we need to create a new user`);
-                            console.dir(profile);
-                            // if the user isnt in our database, create a new user
-                            var newUser
-                                = new User(
-                                {
-                                    googleid: profile.id,
-                                    googletoken: token,
-                                    googlename: profile.displayName,
-                                    googleemail: profile.emails[0].value,
-                                });
-
-                            // set all of the relevant information
-                            /*
-                            newUser.google = {}
-                            newUser.google.id    = profile.id;
-                            newUser.google.token = token;
-                            newUser.google.name  = profile.displayName;
-                            newUser.google.email = profile.emails[0].value; // pull the first email
-                            */
-                            // save the user
-                            newUser.save(function (err) {
-                                console.log("saving the new user");
-                                if (err)
-                                    throw err;
-                                return done(null, newUser);
+                    $or: [
+                        {workEmail: profile.emails[0].value}, {googleemail: profile.emails[0].value}
+                    ]
+                }).then(function (user) {
+                    if (user) {
+                        // console.log(`the user was found ${user}`);
+                        // if a user is found, log them in
+                        return done(null, user);
+                    } else {
+                        console.log(`we need to create a new user`);
+                        console.dir(profile);
+                        // if the user isnt in our database, create a new user
+                        var newUser
+                            = new User(
+                            {
+                                googleid: profile.id,
+                                googletoken: token,
+                                googlename: profile.displayName,
+                                googleemail: profile.emails[0].value,
                             });
-                        }
-                    });
+
+                        // set all of the relevant information
+                        /*
+                        newUser.google = {}
+                        newUser.google.id    = profile.id;
+                        newUser.google.token = token;
+                        newUser.google.name  = profile.displayName;
+                        newUser.google.email = profile.emails[0].value; // pull the first email
+                        */
+                        // save the user
+                        newUser.save().then(function () {
+                            console.log("saving the new user");
+                            return done(null, newUser);
+                        }).catch(function (err) {
+                            throw err;
+                        });
+                    }
+                }).catch(function (err) {
+                    return done(err);
+                });
             });
         })
     );
@@ -123,49 +123,47 @@ module.exports = function (passport) {
                 console.log("in secret google auth")
                 // try to find the user based on their google id
                 User.findOne({
-                        $or: [
-                            {workEmail: profile.emails[0].value}, {googleemail: profile.emails[0].value}
-                        ]
-                    },
-                    function (err, user) {
-                        if (err)
-                            return done(err);
-
-                        if (user) {
-                            // console.log(`the user was found ${user}`);
-                            // if a user is found, log them in
-                            return done(null, user);
-                        } else {
-                            console.log(`we need to create a new user`);
-                            console.dir(profile);
-                            // if the user isnt in our database, create a new user
-                            var newUser
-                                = new User(
-                                {
-                                    googleid: profile.id,
-                                    googletoken: token,
-                                    googlename: profile.displayName,
-                                    googleemail: profile.emails[0].value,
-                                });
-
-                            // set all of the relevant information
-                            /*
-                            newUser.google = {}
-                            newUser.google.id    = profile.id;
-                            newUser.google.token = token;
-                            newUser.google.name  = profile.displayName;
-                            newUser.google.email = profile.emails[0].value; // pull the first email
-                            */
-                            // save the user
-                            newUser.save(function (err) {
-                                console.log("saving the new user");
-                                if (err)
-                                    throw err;
-                                console.log("google secret success!")
-                                return done(null, newUser);
+                    $or: [
+                        {workEmail: profile.emails[0].value}, {googleemail: profile.emails[0].value}
+                    ]
+                }).then(function (user) {
+                    if (user) {
+                        // console.log(`the user was found ${user}`);
+                        // if a user is found, log them in
+                        return done(null, user);
+                    } else {
+                        console.log(`we need to create a new user`);
+                        console.dir(profile);
+                        // if the user isnt in our database, create a new user
+                        var newUser
+                            = new User(
+                            {
+                                googleid: profile.id,
+                                googletoken: token,
+                                googlename: profile.displayName,
+                                googleemail: profile.emails[0].value,
                             });
-                        }
-                    });
+
+                        // set all of the relevant information
+                        /*
+                        newUser.google = {}
+                        newUser.google.id    = profile.id;
+                        newUser.google.token = token;
+                        newUser.google.name  = profile.displayName;
+                        newUser.google.email = profile.emails[0].value; // pull the first email
+                        */
+                        // save the user
+                        newUser.save().then(function () {
+                            console.log("saving the new user");
+                            console.log("google secret success!")
+                            return done(null, newUser);
+                        }).catch(function (err) {
+                            throw err;
+                        });
+                    }
+                }).catch(function (err) {
+                    return done(err);
+                });
             });
         })
     );
@@ -180,8 +178,10 @@ module.exports = function (passport) {
         }
         if (user.password && !user.password.startsWith('$2b$') && user.password === password) {
             user.password = password;
-            user.save(function (err) {
-                if (err) console.log('password migration error:', err);
+            user.save().then(function () {
+                return done(null, user);
+            }).catch(function (err) {
+                console.log('password migration error:', err);
                 return done(null, user);
             });
             return;
@@ -199,14 +199,13 @@ module.exports = function (passport) {
                 $or: [
                     {workEmail: username}, {googleemail: username}
                 ]
-            }, function (err, user) {
-                if (err) {
-                    return done(err);
-                }
+            }).then(function (user) {
                 if (!user) {
                     return done(null, false, {message: 'Incorrect username.'});
                 }
                 checkPassword(user, password, done);
+            }).catch(function (err) {
+                return done(err);
             });
         }
     ));
@@ -224,14 +223,13 @@ module.exports = function (passport) {
                 $or: [
                     {workEmail: username}, {googleemail: username}
                 ]
-            }, function (err, user) {
-                if (err) {
-                    return done(err);
-                }
+            }).then(function (user) {
                 if (!user) {
                     return done(null, false, {message: 'Incorrect username.'});
                 }
                 checkPassword(user, password, done);
+            }).catch(function (err) {
+                return done(err);
             });
         }
     ));
@@ -242,21 +240,18 @@ module.exports = function (passport) {
         },
         function (username, password, done) {
             User.findOne({
-                    $or: [
-                        {workEmail: username}, {googleemail: username}
-                    ]
-                }, function (err, user) {
-                    console.log("found user is: ", user)
-                    if (err) {
-                        return done(err);
-                    }
-                    if (!user) {
-                        return done(null, false, {message: 'Incorrect username.'});
-                    }
-                    checkPassword(user, password, done);
+                $or: [
+                    {workEmail: username}, {googleemail: username}
+                ]
+            }).then(function (user) {
+                console.log("found user is: ", user)
+                if (!user) {
+                    return done(null, false, {message: 'Incorrect username.'});
                 }
-            )
-            ;
+                checkPassword(user, password, done);
+            }).catch(function (err) {
+                return done(err);
+            });
         }
     ));
 
@@ -280,11 +275,9 @@ module.exports = function (passport) {
                 $or: [
                     {workEmail: username}, {googleemail: username}
                 ]
-            }, function (err, user) {
+            }).then(function (user) {
                 console.log("found user is: ", user)
                 // if there are any errors, return the error
-                if (err)
-                    return done(err);
                 // check to see if theres already a user with that email
                 if (user) {
                     return done(null, false, {message: 'That email is already taken.'});
@@ -298,12 +291,14 @@ module.exports = function (passport) {
                     newUser.password = password;
 
                     // save the user
-                    newUser.save(function (err) {
-                        if (err)
-                            throw err;
+                    newUser.save().then(function () {
                         return done(null, newUser);
+                    }).catch(function (err) {
+                        throw err;
                     });
                 }
+            }).catch(function (err) {
+                return done(err);
             });
         }
     ));
