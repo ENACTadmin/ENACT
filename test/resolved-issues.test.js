@@ -403,6 +403,53 @@ describe('Resolved Issues Verification', function () {
   });
 
   // =========================================================================
+  // #39 - Query optimization (database indexes)
+  // Fix: Added indexes on Resource (ownerId, courseId, status+checkStatus),
+  // Course (ownerId, coursePin), User (workEmail, googleemail, status).
+  // Text index is commented out (already exists in production DB).
+  // =========================================================================
+  describe('#39 - Query optimization', function () {
+    it('Resource model has ownerId index', function () {
+      const fs = require('fs');
+      const model = fs.readFileSync('./models/Resource.js', 'utf8');
+      assert.ok(model.includes('resourceSchema.index({ ownerId: 1 })'));
+    });
+
+    it('Resource model has courseId index', function () {
+      const fs = require('fs');
+      const model = fs.readFileSync('./models/Resource.js', 'utf8');
+      assert.ok(model.includes('resourceSchema.index({ courseId: 1 })'));
+    });
+
+    it('Resource model has status+checkStatus compound index', function () {
+      const fs = require('fs');
+      const model = fs.readFileSync('./models/Resource.js', 'utf8');
+      assert.ok(model.includes('resourceSchema.index({ status: 1, checkStatus: 1 })'));
+    });
+
+    it('Resource text index is commented out (exists in DB)', function () {
+      const fs = require('fs');
+      const model = fs.readFileSync('./models/Resource.js', 'utf8');
+      assert.ok(model.includes('// resourceSchema.index({ name: "text"'));
+    });
+
+    it('Course model has ownerId and coursePin indexes', function () {
+      const fs = require('fs');
+      const model = fs.readFileSync('./models/Course.js', 'utf8');
+      assert.ok(model.includes('courseSchema.index({ ownerId: 1 })'));
+      assert.ok(model.includes('courseSchema.index({ coursePin: 1 })'));
+    });
+
+    it('User model has workEmail, googleemail, and status indexes', function () {
+      const fs = require('fs');
+      const model = fs.readFileSync('./models/User.js', 'utf8');
+      assert.ok(model.includes('userSchema.index({ workEmail: 1 })'));
+      assert.ok(model.includes('userSchema.index({ googleemail: 1 })'));
+      assert.ok(model.includes('userSchema.index({ status: 1 })'));
+    });
+  });
+
+  // =========================================================================
   // #87 - Empty state search
   // Fix: All search result pages (public, private, primary) now show helpful
   // "No resources found" messages with "Browse All Resources" buttons
