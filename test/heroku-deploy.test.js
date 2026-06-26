@@ -11,8 +11,8 @@ describe("Heroku Deployment Checks", function () {
     }
     
     const procfile = fs.readFileSync(procfilePath, "utf8");
-    if (!procfile.includes("node app.js")) {
-      throw new Error("Procfile does not contain 'web: node app.js'");
+    if (!procfile.includes("node ./bin/www") && !procfile.includes("node bin/www")) {
+      throw new Error("Procfile should use 'node ./bin/www' to start the server");
     }
   });
 
