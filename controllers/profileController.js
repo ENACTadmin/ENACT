@@ -10,7 +10,8 @@ exports.findOneUser = async (req, res, next) => {
         let userInfo = await User.findOne({_id: userId})
         res.render('./pages/showProfile', {
             userInfo: userInfo,
-            sentStatus: 'Email Not Sent'
+            sentStatus: 'Email Not Sent',
+            updated: req.query.updated
         })
     } catch (e) {
         next(e)
@@ -41,9 +42,11 @@ exports.updateProfile = async (req, res, next) => {
         userToUpdate.graduationYear = req.body.graduationYear;
         console.log("on or off: ", userToUpdate.networkCheck)
         await userToUpdate.save()
-        if (toIndex)
+        if (toIndex) {
             res.redirect('/')
-        res.redirect('/profile/view/' + req.user._id)
+            return
+        }
+        res.redirect('/profile/view/' + req.user._id + '?updated=1')
     } catch (e) {
         next(e)
     }

@@ -371,6 +371,38 @@ describe('Resolved Issues Verification', function () {
   });
 
   // =========================================================================
+  // #31 - UX improvement on upload success and profile editing
+  // Fix: Upload success page (views/pages/status/uploadSuccess.ejs) shows
+  // after resource upload with navigation options. Profile update redirects
+  // to profile view with ?updated=1 param, which shows success banner.
+  // =========================================================================
+  describe('#31 - Upload success and profile UX', function () {
+    it('upload success page exists', function () {
+      const fs = require('fs');
+      assert.ok(fs.existsSync('./views/pages/status/uploadSuccess.ejs'));
+    });
+
+    it('upload success page has navigation options', function () {
+      const fs = require('fs');
+      const view = fs.readFileSync('./views/pages/status/uploadSuccess.ejs', 'utf8');
+      assert.ok(view.includes('Upload Success'));
+      assert.ok(view.includes('Upload another resource'));
+    });
+
+    it('profile controller passes updated flag on save', function () {
+      const fs = require('fs');
+      const controller = fs.readFileSync('./controllers/profileController.js', 'utf8');
+      assert.ok(controller.includes("?updated=1"));
+    });
+
+    it('profile view shows success banner when updated', function () {
+      const fs = require('fs');
+      const view = fs.readFileSync('./views/pages/showProfile.ejs', 'utf8');
+      assert.ok(view.includes('Profile updated successfully'));
+    });
+  });
+
+  // =========================================================================
   // #87 - Empty state search
   // Fix: All search result pages (public, private, primary) now show helpful
   // "No resources found" messages with "Browse All Resources" buttons
@@ -397,6 +429,36 @@ describe('Resolved Issues Verification', function () {
       const view = fs.readFileSync('./views/pages/resources-searchResult-private.ejs', 'utf8');
       assert.ok(view.includes('No resources found'));
       assert.ok(view.includes('Browse All Resources'));
+    });
+  });
+
+  // =========================================================================
+  // #88 - Global Admin Access to resource approval
+  // Verified by code review:
+  // - Admin review dashboard at resource-review-admin.ejs
+  // - Approve/deny/publish/comment routes in app.js
+  // - Full approval workflow with notification controllers
+  // =========================================================================
+  describe('#88 - Admin resource approval (code review)', function () {
+    it('admin review view exists', function () {
+      const fs = require('fs');
+      assert.ok(fs.existsSync('./views/pages/resource-review-admin.ejs'));
+    });
+
+    it('approve/deny/publish routes exist in app.js', function () {
+      const fs = require('fs');
+      const appJs = fs.readFileSync('./app.js', 'utf8');
+      assert.ok(appJs.includes('"/resource/review"'));
+      assert.ok(appJs.includes('"/resource/approve"'));
+      assert.ok(appJs.includes('"/resource/deny"'));
+      assert.ok(appJs.includes('"/resource/publish"'));
+    });
+
+    it('approve route has controller function', function () {
+      const fs = require('fs');
+      const appJs = fs.readFileSync('./app.js', 'utf8');
+      assert.ok(appJs.includes('notificationController.approve'));
+      assert.ok(appJs.includes('notificationController.toPublic'));
     });
   });
 });

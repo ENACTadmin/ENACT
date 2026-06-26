@@ -1,6 +1,15 @@
 <%- include('../components/header'); -%>
 <%- include('../components/navbar'); -%>
 
+<% if (updated) { %>
+    <div class="alert alert-success alert-dismissible fade show text-center" role="alert" style="margin-bottom: 0; border-radius: 0;">
+        <strong>Profile updated successfully!</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+<% } %>
+
 <section class='section'>
     <div class='section__content section__content--full-width'>
         <div class='jumbotron masthead text-center'>
