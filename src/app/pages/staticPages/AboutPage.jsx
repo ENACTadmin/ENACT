@@ -1,365 +1,303 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-const ENACT_STAFF = [
+const NAVY = '#0f1f3d';
+const BLUE = '#0053a4';
+const GOLD = '#c49422';
+
+// ── Static data ──────────────────────────────────────────────────────────────
+
+const LEADERSHIP = [
   {
     photo: '/images/PhotoForAbout/stimell.webp',
-    name: 'Melissa Stimell',
-    title: 'Academic Program Director',
-    bio: 'Melissa Stimell is a Professor of the Practice in the Legal Studies Program at Brandeis University, and Director of the International Center for Ethics, Justice and Public Life.',
-    height: 725,
-    imgHeight: 250,
+    name: 'Melissa Stimell, JD',
+    role: 'Director',
+    title: 'Professor of the Practice',
+    bio: 'Founder and director of ENACT, teaching legislative advocacy and guiding the national network from Brandeis University.',
   },
   {
     photo: '/images/PhotoForAbout/DavidWeinstein.webp',
     name: 'David J. Weinstein',
-    title: 'Assistant Director',
-    bio: 'David Weinstein is Assistant Director of ENACT and Communications for the International Center for Ethics, Justice and Public Life at Brandeis University.',
-    height: 725,
-    imgHeight: 250,
-    delay: 200,
+    role: 'Assistant Director',
+    title: 'Communications, International Center for Ethics, Justice and Public Life',
+    bio: 'David Weinstein manages ENACT communications and outreach, connecting faculty fellows and students across the national network.',
   },
   {
     photo: '/images/PhotoForAbout/JayKaufman.webp',
     name: 'Jay Kaufman',
-    title: 'Distinguished Legislative Mentor',
-    bio: 'Jay R. Kaufman served in the Massachusetts House of Representatives from 1995 through 2018, and is capping a career in leadership education by launching a new non-profit organization to provide leadership education, mentoring, and professional development support.',
-    height: 725,
-    imgHeight: 250,
-    delay: 400,
+    role: 'Distinguished Legislative Mentor',
+    title: 'Former Massachusetts State Representative (1995–2018)',
+    bio: 'Jay Kaufman brings decades of legislative experience to ENACT, mentoring students and faculty on effective civic engagement.',
   },
   {
     photo: '/images/PhotoForAbout/RobGlover.webp',
     name: 'Rob Glover',
-    title: 'Fellow for Course Resources',
-    bio: 'Robert W. Glover is an Associate Professor of Political Science and Honors, a joint appointment in the Department of Political Science and the Honors College at the University of Maine.',
-    height: 725,
-    imgHeight: 250,
-    delay: 600,
+    role: 'Fellow for Course Resources',
+    title: 'Associate Professor of Political Science, University of Maine',
+    bio: 'Rob Glover curates and develops course resources for ENACT faculty, drawing on his research in democratic theory and civic education.',
   },
 ];
 
 const PLATFORM_STAFF = [
-  [
-    {
-      photo: '/images/PhotoForAbout/TimHickey.webp',
-      name: 'Timothy J. Hickey',
-      title: 'Technology Advisor (2020.5 - Present)',
-      bio: 'Timothy J. Hickey is a Professor of Computer Science and Chair of Computer Science at Brandeis University.',
-      delay: 200,
-    },
-    {
-      photo: '/images/PhotoForAbout/HanyuDu.webp',
-      name: 'Hangyu Du',
-      title: 'Software Developer (2020 - 2021)',
-      bio: 'Hangyu Du is one of the core developers of this digital platform. He is a fan of machine learning. He also enjoys coding and creating end-to-end user-interface programs from scratch.',
-      delay: 400,
-    },
-    {
-      photo: '/images/PhotoForAbout/HuiyanZhang.webp',
-      name: 'Huiyan Zhang',
-      title: 'Software Developer (2020 - 2021)',
-      bio: 'Huiyan Zhang is one of the core developers of this platform. She developed several core functions.',
-      delay: 600,
-    },
-  ],
-  [
-    {
-      photo: '/images/PhotoForAbout/ElainaPevide.webp',
-      name: 'Elaina Pevide',
-      title: 'Student Delegate (2020.5 - Present)',
-      bio: 'Elaina Pevide is the ENACT student delegate.',
-      delay: 800,
-    },
-    {
-      photo: '/images/PhotoForAbout/EmilyFishman.webp',
-      name: 'Emily Fishman',
-      title: 'Resource Support (2020.10 - Present)',
-      bio: 'Emily Fishman provides resource support for the ENACT platform. She participated in the ENACT course at Brandeis University in Spring 2020. Emily is interested in global health and health policy.',
-      delay: 0,
-    },
-    {
-      photo: '/images/PhotoForAbout/BeneeHershon.webp',
-      name: 'Benée Hershon',
-      title: 'Resource Support (2020.10 - Present)',
-      bio: 'Benée Hershon is resource support for this platform. Benée participated in the ENACT course at Brandeis University in Spring 2020. She currently works in the Sustainable Agriculture field and is interested in environmental policy.',
-      delay: 200,
-    },
-  ],
-  [
-    {
-      photo: '/images/PhotoForAbout/LouisePei.webp',
-      name: 'Louise Pei',
-      title: 'Software Developer (2021.1 - present)',
-      bio: 'Louise Pei is one of the core developers of this digital platform. Louise loves website development, and has helped with website maintenance.',
-      delay: 400,
-    },
-    {
-      photo: '/images/PhotoForAbout/AaronPortman.webp',
-      name: 'Aaron Portman',
-      title: 'Software Developer (2021.4 - 2021.7)',
-      bio: 'Aaron Portman is the student developer of this platform.',
-      delay: 600,
-    },
-    {
-      photo: '/images/PhotoForAbout/BishalBaral.webp',
-      name: 'Bishal Baral',
-      title: 'Software Developer (2021.12 - present)',
-      bio: 'Bishal is one of the core developers of this platform. He enjoys building software and writing efficient programs.',
-      delay: 600,
-    },
-  ],
-  [
-    {
-      photo: '/images/PhotoForAbout/KiyaGedamu.webp',
-      name: 'Kiya Gedamu',
-      title: 'Software Engineer (2026.5 - present)',
-      bio: 'Kiya is a Software Engineer on the ENACT digital platform team.',
-      delay: 0,
-    },
-    {
-      photo: '/images/PhotoForAbout/NayeliNaranjo.webp',
-      name: 'Nayeli Naranjo',
-      title: 'Software Engineer (2026.6 - present)',
-      bio: 'Nayeli is a Software Engineer on the ENACT digital platform team.',
-      delay: 200,
-    },
-  ],
+  { photo: '/images/PhotoForAbout/TimHickey.webp', name: 'Timothy J. Hickey', title: 'Technology Advisor · 2020–Present', bio: 'Professor and Chair of Computer Science at Brandeis University, advising the ENACT digital platform.' },
+  { photo: '/images/PhotoForAbout/HanyuDu.webp', name: 'Hangyu Du', title: 'Software Developer · 2020–2021', bio: 'Core developer of the ENACT digital platform. Fan of machine learning and end-to-end UI development.' },
+  { photo: '/images/PhotoForAbout/HuiyanZhang.webp', name: 'Huiyan Zhang', title: 'Software Developer · 2020–2021', bio: 'Developed several core functions of the ENACT platform.' },
+  { photo: '/images/PhotoForAbout/ElainaPevide.webp', name: 'Elaina Pevide', title: 'Student Delegate · 2020–Present', bio: 'ENACT student delegate, bridging the student voice with the platform team.' },
+  { photo: '/images/PhotoForAbout/EmilyFishman.webp', name: 'Emily Fishman', title: 'Resource Support · 2020–Present', bio: 'Emily provides resource support and is interested in global health and health policy.' },
+  { photo: '/images/PhotoForAbout/BeneeHershon.webp', name: 'Benée Hershon', title: 'Resource Support · 2020–Present', bio: 'Benée provides resource support and works in sustainable agriculture and environmental policy.' },
+  { photo: '/images/PhotoForAbout/LouisePei.webp', name: 'Louise Pei', title: 'Software Developer · 2021–Present', bio: 'Core developer focused on website maintenance and feature development.' },
+  { photo: '/images/PhotoForAbout/AaronPortman.webp', name: 'Aaron Portman', title: 'Software Developer · 2021', bio: 'Student developer who contributed to the ENACT platform.' },
+  { photo: '/images/PhotoForAbout/BishalBaral.webp', name: 'Bishal Baral', title: 'Software Developer · 2021–Present', bio: 'Core developer who enjoys building software and writing efficient programs.' },
+  { photo: '/images/PhotoForAbout/KiyaGedamu.webp', name: 'Kiya Gedamu', title: 'Software Engineer · 2026–Present', bio: 'Software Engineer on the ENACT digital platform team.' },
+  { photo: '/images/PhotoForAbout/NayeliNaranjo.webp', name: 'Nayeli Naranjo', title: 'Software Engineer · 2026–Present', bio: 'Software Engineer on the ENACT digital platform team.' },
 ];
 
-function StaffCard({ member, imgHeight = 100, cardHeight = 525 }) {
+// ── Sub-components ────────────────────────────────────────────────────────────
+
+function LeadershipCard({ person }) {
   return (
-    <div
-      className="partners__slide grid__item"
-      style={{ height: cardHeight }}
-      data-aos="fade-up"
-      data-aos-delay={member.delay || 0}
-    >
-      <div className="card-body" style={{ borderRadius: 30 }}>
-        <img
-          className="d-flex mr-3"
-          src={member.photo}
-          alt={member.name}
-          style={{ width: '100%', height: imgHeight, objectFit: 'contain' }}
-        />
-        <br />
-        <h4 style={{ textAlign: 'center' }}>{member.name}</h4>
-        <h5 style={{ textAlign: 'center' }}>{member.title}</h5>
-        <hr />
-        <p style={{ fontSize: 'larger' }}>{member.bio}</p>
-        <br />
+    <div style={{ border: '1px solid #e8e4de', borderRadius: 6, padding: '24px', display: 'flex', gap: 20, background: 'white' }}>
+      <img
+        src={person.photo}
+        alt={person.name}
+        style={{ width: 90, height: 90, objectFit: 'cover', borderRadius: 4, flexShrink: 0, background: '#ddd' }}
+        onError={e => { e.currentTarget.style.background = '#e0d9cc'; e.currentTarget.src = ''; }}
+      />
+      <div>
+        <h4 style={{ color: NAVY, fontWeight: 700, marginBottom: 2, fontSize: '1.1rem' }}>{person.name}</h4>
+        <p style={{ color: GOLD, fontWeight: 600, fontSize: '0.85rem', margin: '0 0 2px' }}>
+          {person.role} · <span style={{ fontStyle: 'italic' }}>{person.title}</span>
+        </p>
+        <hr style={{ margin: '10px 0', borderColor: '#e0e0e0' }} />
+        <p style={{ color: '#555', fontSize: '0.9rem', lineHeight: 1.6, margin: 0 }}>{person.bio}</p>
       </div>
     </div>
   );
 }
 
+function HoverCard({ photo, name, title, institution, bio, department, state }) {
+  const [hovered, setHovered] = useState(false);
+  const subtitle = institution || department || state || '';
+
+  return (
+    <div
+      style={{ position: 'relative', overflow: 'hidden', borderRadius: 6, border: '1px solid #e8e4de', background: 'white', cursor: 'default' }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <div style={{ padding: '20px 16px', textAlign: 'center' }}>
+        <img
+          src={photo || '/images/defaultProfile.webp'}
+          alt={name}
+          style={{ width: 80, height: 80, objectFit: 'cover', borderRadius: 4, background: '#d4cfc6', marginBottom: 10 }}
+          onError={e => { e.currentTarget.style.background = '#d4cfc6'; e.currentTarget.src = ''; }}
+        />
+        <h6 style={{ color: NAVY, fontWeight: 700, marginBottom: 4, fontSize: '0.9rem' }}>{name}</h6>
+        {title && <p style={{ color: '#666', fontSize: '0.78rem', margin: '0 0 4px' }}>{title}</p>}
+        {subtitle && <p style={{ color: '#888', fontSize: '0.75rem', margin: 0 }}>{subtitle}</p>}
+      </div>
+
+      {/* Hover overlay */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: NAVY,
+        padding: '20px 16px',
+        display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center',
+        opacity: hovered ? 1 : 0,
+        transition: 'opacity 0.22s ease',
+        pointerEvents: hovered ? 'auto' : 'none'
+      }}>
+        <h6 style={{ color: 'white', fontWeight: 700, marginBottom: 6, fontSize: '0.9rem' }}>{name}</h6>
+        {title && <p style={{ color: GOLD, fontSize: '0.78rem', margin: '0 0 10px', fontWeight: 600 }}>{title}</p>}
+        {bio && <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.8rem', lineHeight: 1.55, margin: 0 }}>{bio}</p>}
+      </div>
+    </div>
+  );
+}
+
+function FacultyHoverCard({ profile }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <div
+      style={{ position: 'relative', overflow: 'hidden', borderRadius: 6, border: '1px solid #e8e4de', background: 'white', cursor: 'default' }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <div style={{ padding: '20px 16px', textAlign: 'center' }}>
+        <img
+          src={profile.profilePicURL || '/images/defaultProfile.webp'}
+          alt={profile.userName}
+          style={{ width: 80, height: 80, objectFit: 'cover', borderRadius: 4, background: '#d4cfc6', marginBottom: 10 }}
+          onError={e => { e.currentTarget.style.background = '#d4cfc6'; e.currentTarget.src = ''; }}
+        />
+        <h6 style={{ color: NAVY, fontWeight: 700, marginBottom: 4, fontSize: '0.9rem' }}>{profile.userName}</h6>
+        {profile.affiliation && <p style={{ color: '#666', fontSize: '0.78rem', margin: '0 0 2px' }}>{profile.affiliation}</p>}
+        {profile.state && <p style={{ color: '#888', fontSize: '0.75rem', margin: 0 }}>{profile.state}</p>}
+      </div>
+      <div style={{
+        position: 'absolute', inset: 0, background: NAVY,
+        padding: '20px 16px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center',
+        opacity: hovered ? 1 : 0, transition: 'opacity 0.22s ease', pointerEvents: hovered ? 'auto' : 'none'
+      }}>
+        <h6 style={{ color: 'white', fontWeight: 700, marginBottom: 6, fontSize: '0.9rem' }}>{profile.userName}</h6>
+        {profile.affiliation && <p style={{ color: GOLD, fontSize: '0.78rem', margin: '0 0 8px', fontWeight: 600 }}>{profile.affiliation}</p>}
+        {profile.department && <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.75rem', margin: '0 0 8px' }}>{profile.department}</p>}
+        <a href={`/profile/view/${profile._id}`} style={{ color: 'white', border: '1px solid rgba(255,255,255,0.4)', borderRadius: 3, padding: '4px 14px', fontSize: '0.78rem', textDecoration: 'none', marginTop: 4 }}>
+          View Profile →
+        </a>
+      </div>
+    </div>
+  );
+}
+
+// ── Page ──────────────────────────────────────────────────────────────────────
+
 export default function AboutPage() {
+  const [faculty, setFaculty] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/v0/faculty-list')
+      .then(r => r.json())
+      .then(data => setFaculty(data.faculty || []))
+      .catch(() => {});
+  }, []);
+
+  const previewFaculty = faculty.slice(0, 8);
+
   return (
     <>
-      {/* Hero quote */}
-      <section id="content-about-quote" className="section">
-        <div className="section__content section__content--full-width" style={{ height: 300 }}>
-          <div className="jumbotron masthead text-center">
-            <div className="section__title section__title--centered">About US</div>
-            <h3>
-              "The most important office, and the one which all of us can and should fill, is that of
-              private citizen."
-              <br />– Louis D. Brandeis
-            </h3>
-          </div>
+      {/* Hero */}
+      <section style={{ background: 'linear-gradient(135deg, #060f1e 0%, #0f2444 65%, #0053a4 100%)', padding: 'clamp(60px,10vw,100px) 0 clamp(50px,8vw,80px)' }}>
+        <div style={{ maxWidth: 700, margin: '0 auto', padding: '0 clamp(20px,5vw,60px)' }}>
+          <p style={{ color: GOLD, fontSize: '0.68rem', letterSpacing: '0.22em', textTransform: 'uppercase', marginBottom: 18, display: 'flex', alignItems: 'center', gap: 12 }}>
+            <span style={{ display: 'inline-block', width: 28, height: 1, background: GOLD, flexShrink: 0 }} />
+            THE ENACT COMMUNITY
+          </p>
+          <h1 style={{ color: 'white', fontSize: 'clamp(2rem, 5vw, 3.2rem)', fontWeight: 700, lineHeight: 1.18, marginBottom: 20 }}>
+            The people behind the network.
+          </h1>
+          <p style={{ color: 'rgba(255,255,255,0.72)', fontSize: '1.05rem', lineHeight: 1.7, maxWidth: 480, margin: 0 }}>
+            A national community of faculty fellows, a dedicated team, and the staff who build the platform connecting them.
+          </p>
         </div>
       </section>
 
-      {/* Mission, intro videos, about, model, connect, funders, history */}
-      <section id="content-about-intro" className="section section__grey">
-        <br /><br />
-        <div className="section__content section__content--fluid-width section__content--padding--small">
-
-          <h3 data-aos="fade-up" style={{ fontWeight: 500 }}><b>MISSION</b></h3>
-          <hr data-aos="fade-up" />
-          <p style={{ fontSize: 'x-large' }} data-aos="fade-up">
+      {/* Mission */}
+      <section style={{ background: '#f8f7f2', padding: 'clamp(40px,6vw,64px) 0' }}>
+        <div style={{ maxWidth: 860, margin: '0 auto', padding: '0 clamp(20px,5vw,60px)' }}>
+          <p style={{ fontSize: '1.05rem', lineHeight: 1.8, color: '#444', margin: 0 }}>
             ENACT is a non-partisan program, based at{' '}
-            <a href="https://www.brandeis.edu">Brandeis University</a>, addressing challenges to
-            American democracy by engaging young people around the country in state-level legislative
+            <a href="https://www.brandeis.edu" target="_blank" rel="noreferrer" style={{ color: BLUE }}>Brandeis University ↗</a>,
+            addressing challenges to American democracy by engaging young people around the country in state-level legislative
             change based on a shared commitment to knowledge, cooperation, justice and integrity.
-          </p>
-
-          <br /><br />
-          <h3 data-aos="fade-up" style={{ fontWeight: 500 }}><b>INTRO VIDEOS</b></h3>
-          <hr data-aos="fade-up" />
-          <div className="grid--2col">
-            <div className="grid__item">
-              <h3 data-aos="fade-up" style={{ textAlign: 'center' }}>What is ENACT?</h3>
-              <video style={{ width: 600, height: 400 }} controls>
-                <source
-                  src="https://enact-resources.s3.us-east-2.amazonaws.com/ENACT+Updated+Video+2.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div className="grid__item">
-              <h3 data-aos="fade-up" style={{ textAlign: 'center' }}>A Brief Tour of enactnetwork.org</h3>
-              <video style={{ width: 600, height: 400 }} poster="/images/introVideo.webp" controls>
-                <source
-                  src="https://enact-resources.s3.us-east-2.amazonaws.com/Getting+to+Know+Enact+(With+Captions).mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-          </div>
-
-          <br /><br /><br />
-          <h3 data-aos="fade-up" style={{ fontWeight: 500 }}><b>ABOUT</b></h3>
-          <hr data-aos="fade-up" />
-          <p style={{ fontSize: 'x-large' }} data-aos="fade-up">
-            Is government dysfunctional? Can change come through the legislative process? Brandeis
-            University namesake Louis D. Brandeis suggested that the states can be "laboratories of
-            democracy." ENACT: The Educational Network for Active Civic Transformation, a national
-            program based at Brandeis University's{' '}
-            <a href="https://www.brandeis.edu/ethics/">
-              International Center for Ethics, Justice and Public Life
-            </a>
-            , takes inspiration in part from that idea.
-            <br /><br />
-            At the core of ENACT are courses taught by{' '}
-            <a href="/profiles/view/faculty">ENACT Faculty Fellows</a> at colleges and universities
-            across the country, supported by a national in-person and online network connecting the
-            faculty and staff in those courses with each other. Students learn through direct
-            engagement in the work of advancing legislation: researching the issues being debated,
-            meeting with community organizations, and traveling to the state capital to meet with
-            legislators. They develop sophisticated understandings of the political domain, learn to
-            distill political information, and acquire political efficacy. Many ENACT alumni go on to
-            pursue public service and public office.
-            <br /><br />
-            Participating schools represent a diverse range of higher education institutions. They are
-            linked through an online network that enhances student learning, connects them with people
-            active in the field, and provides an opportunity for ENACT faculty and students to inspire
-            and instruct others who are committed to engaging in effective, ethical state-level
-            legislative change.
-          </p>
-
-          <br /><br />
-          <h3 data-aos="fade-up" style={{ fontWeight: 500 }}><b>THE ENACT MODEL</b></h3>
-          <hr data-aos="fade-up" />
-          <p style={{ fontSize: 'x-large' }} data-aos="fade-up">
-            <b>- Workshop:</b> Under the leadership of the program's academic director, ENACT Fellows
-            meet in person to share ideas and work on course development. In-person and virtual
-            meetings continue on an ongoing basis.
-            <br /><br />
-            <b>- Courses:</b> In ENACT courses undergraduates learn about the legislative process at
-            the state level, with a substantial hands-on component in which they engage directly in
-            that process. See the full list of{' '}
-            <a href="https://www.brandeis.edu/ethics/enact/people/faculty-fellows.html">
-              ENACT schools.
-            </a>
-            <br /><br />
-            <b>- Online Network:</b> The enactnetwork.org digital resource sharing platform is a key
-            component of the ENACT Network, a national in-person and online network of students,
-            faculty, activists and legislators.
-            <br /><br />
-            <b>- Other Initiatives:</b> ENACT supports pilot projects and other initiatives related to
-            its mission. For example, in 2019-20 ENACT partnered with the Heller School for Social
-            Policy and Management to pilot the{' '}
-            <a href="https://www.brandeis.edu/ethics/ENACT/enactlabornetwork.html">
-              ENACT Labor Network
-            </a>
-            .
-          </p>
-
-          <br /><br />
-          <h3 data-aos="fade-up" style={{ fontWeight: 500 }}><b>HOW TO CONNECT</b></h3>
-          <hr data-aos="fade-up" />
-          <p style={{ fontSize: 'x-large' }} data-aos="fade-up">
-            Join our mailing list for news and updates: email request to{' '}
-            <a href="mailto:ENACT@brandeis.edu">ENACT@brandeis.edu</a>
-            <br />
-            - Follow us on Twitter:{' '}
-            <a href="https://twitter.com/enactnational">@ENACTnational</a>
-            <br />
-            - Explore resources at{' '}
-            <a href="https://www.ENACTnetwork.org">www.ENACTnetwork.org</a>
-          </p>
-
-          <br /><br />
-          <h3 data-aos="fade-up" style={{ fontWeight: 500 }}><b>FUNDERS</b></h3>
-          <hr data-aos="fade-up" />
-          <p style={{ fontSize: 'x-large' }} data-aos="fade-up">
-            ENACT was made possible by a generous gift from International Center for Ethics, Justice
-            and Public Life Board member Norbert Weissberg and his wife, former Board member Judith
-            Schneider. ENACT has also received support from the Rice Family Foundation, and from
-            Ethics Center Board member Mark Friedman. In 2019, ENACT was awarded a multi-year grant
-            from the Teagle Foundation's "Education for American Civic Life" initiative.
-          </p>
-
-          <br /><br />
-          <h3 data-aos="fade-up" style={{ fontWeight: 500 }}><b>HISTORY</b></h3>
-          <hr data-aos="fade-up" />
-          <p style={{ fontSize: 'x-large' }} data-aos="fade-up">
-            In the spring semester of the 2009-10 academic year, Melissa Stimell, Professor of the
-            Practice in Legal Studies at Brandeis University embarked on an experiment with 13
-            dedicated Brandeis University undergraduate students and the logistical, financial and
-            intellectual support of the International Center for Ethics, Justice and Public Life, and
-            the Legal Studies Program at Brandeis University.
-            <br /><br />
-            Together they created "Advocacy for Policy Change," a course, that combines an
-            investigation of the ethical dilemmas that arise in the process of lawmaking with
-            hands-on advocacy work at the state level.
-            <br /><br />
-            In 2015 a generous gift from International Center for Ethics, Justice and Public Life
-            Board member Norbert Weissberg and his wife, former Board member Judith Schneider, enabled
-            the national expansion of this course. This new program,{' '}
-            <a href="https://www.brandeis.edu/ethics/ENACT/index.html">
-              ENACT: The Educational Network for Active Civic Transformation
-            </a>
-            , built upon the original vision for the Center, which was inspired and supported by
-            Abraham Feinberg, the father of Judith Schneider.
-            <br /><br />
-            Brandeis has now helped to launch programs in{' '}
-            <a href="https://www.brandeis.edu/ethics/ENACT/ENACTschools.html">
-              colleges and universities located in or near state capitals across the United States
-            </a>
-            , and has built a national network of students, faculty, activists and legislators.
+            It is housed in the{' '}
+            <a href="https://www.brandeis.edu/ethics/" target="_blank" rel="noreferrer" style={{ color: BLUE }}>International Center for Ethics, Justice and Public Life ↗</a>.
+            The program was made possible by a generous gift from Board member Norbert Weissberg and Judith Schneider,
+            with support from the Rice Family Foundation, Mark Friedman, and the Teagle Foundation.
           </p>
         </div>
       </section>
 
-      {/* Staff section */}
-      <section id="content-about-staff" className="section diagonal-gradient">
-        <div className="section__content section__content--fluid-width section__content--padding">
-          <h2 className="section__title section__title--centered" style={{ color: 'whitesmoke' }}>
-            ENACT Staff
-          </h2>
-          <br />
+      {/* Leadership */}
+      <section style={{ background: 'white', padding: 'clamp(48px,7vw,72px) 0' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 clamp(20px,5vw,60px)' }}>
+          <p style={{ color: GOLD, fontSize: '0.68rem', letterSpacing: '0.22em', textTransform: 'uppercase', marginBottom: 8 }}>LEADERSHIP</p>
+          <h2 style={{ color: NAVY, fontSize: 'clamp(1.4rem, 3vw, 1.9rem)', fontWeight: 700, marginBottom: 32 }}>The team guiding ENACT</h2>
+          <div className="about-leadership-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+            {LEADERSHIP.map(p => <LeadershipCard key={p.name} person={p} />)}
+          </div>
+        </div>
+      </section>
 
-          {/* Core staff — 4-col grid */}
-          <div className="grid grid--4col">
-            {ENACT_STAFF.map(m => (
-              <StaffCard key={m.name} member={m} imgHeight={m.imgHeight} cardHeight={m.height} />
+      {/* Faculty Fellows */}
+      <section style={{ background: '#f8f7f2', padding: 'clamp(48px,7vw,72px) 0' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 clamp(20px,5vw,60px)' }}>
+          <p style={{ color: GOLD, fontSize: '0.68rem', letterSpacing: '0.22em', textTransform: 'uppercase', marginBottom: 8 }}>FACULTY FELLOWS</p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 28, flexWrap: 'wrap', gap: 12 }}>
+            <h2 style={{ color: NAVY, fontSize: 'clamp(1.4rem, 3vw, 2rem)', fontWeight: 700, margin: 0 }}>
+              A network across {faculty.length > 0 ? `${faculty.length}+` : '8+'} campuses
+            </h2>
+            <a href="/app/profiles/view/faculty" style={{ color: BLUE, fontWeight: 500, textDecoration: 'none', fontSize: '0.9rem' }}>
+              View all fellows →
+            </a>
+          </div>
+          {previewFaculty.length > 0 ? (
+            <div className="about-faculty-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
+              {previewFaculty.map(p => <FacultyHoverCard key={p._id} profile={p} />)}
+            </div>
+          ) : (
+            <p style={{ color: '#666' }}>
+              <a href="/app/profiles/view/faculty" style={{ color: BLUE }}>View the full list of faculty fellows →</a>
+            </p>
+          )}
+        </div>
+      </section>
+
+      {/* Digital Platform Staff */}
+      <section style={{ background: 'white', padding: 'clamp(48px,7vw,72px) 0' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 clamp(20px,5vw,60px)' }}>
+          <p style={{ color: GOLD, fontSize: '0.68rem', letterSpacing: '0.22em', textTransform: 'uppercase', marginBottom: 8 }}>DIGITAL PLATFORM STAFF</p>
+          <h2 style={{ color: NAVY, fontSize: 'clamp(1.4rem, 3vw, 2rem)', fontWeight: 700, marginBottom: 28 }}>The team that builds it</h2>
+          <div className="about-staff-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
+            {PLATFORM_STAFF.map(m => (
+              <HoverCard key={m.name} photo={m.photo} name={m.name} title={m.title} bio={m.bio} />
             ))}
           </div>
-          <div className="partners__pagination" />
-          <div className="clear" />
-
-          <br /><br /><br /><br />
-          <h2 className="section__title section__title--centered" style={{ color: 'whitesmoke' }}>
-            ENACT Digital Platform Staff
-          </h2>
-          <br />
-
-          {/* Platform staff — 3-col grids per era */}
-          {PLATFORM_STAFF.map((group, gi) => (
-            <React.Fragment key={gi}>
-              <div className="grid grid--3col">
-                {group.map(m => (
-                  <StaffCard key={m.name} member={m} />
-                ))}
-              </div>
-              <div className="partners__pagination" />
-              <div className="clear" />
-              <br /><br /><br /><br />
-            </React.Fragment>
-          ))}
         </div>
       </section>
+
+      {/* Intro videos */}
+      <section style={{ background: '#f8f7f2', padding: 'clamp(48px,7vw,72px) 0' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 clamp(20px,5vw,60px)' }}>
+          <p style={{ color: GOLD, fontSize: '0.68rem', letterSpacing: '0.22em', textTransform: 'uppercase', marginBottom: 8 }}>INTRO VIDEOS</p>
+          <h2 style={{ color: NAVY, fontSize: 'clamp(1.4rem, 3vw, 1.9rem)', fontWeight: 700, marginBottom: 28 }}>Learn more about ENACT</h2>
+          <div className="about-video-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32 }}>
+            <div>
+              <h5 style={{ color: NAVY, marginBottom: 12 }}>What is ENACT?</h5>
+              <video style={{ width: '100%', borderRadius: 6 }} controls>
+                <source src="https://enact-resources.s3.us-east-2.amazonaws.com/ENACT+Updated+Video+2.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div>
+              <h5 style={{ color: NAVY, marginBottom: 12 }}>A Brief Tour of enactnetwork.org</h5>
+              <video style={{ width: '100%', borderRadius: 6 }} poster="/images/introVideo.webp" controls>
+                <source src="https://enact-resources.s3.us-east-2.amazonaws.com/Getting+to+Know+Enact+(With+Captions).mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* External links */}
+      <section style={{ background: NAVY, padding: '36px 0' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 clamp(20px,5vw,60px)', display: 'flex', flexWrap: 'wrap', gap: 24, alignItems: 'center', justifyContent: 'space-between' }}>
+          <p style={{ color: 'rgba(255,255,255,0.7)', margin: 0, fontSize: '0.9rem' }}>ENACT is based at Brandeis University's International Center for Ethics, Justice and Public Life.</p>
+          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+            <a href="https://www.brandeis.edu/ethics/enact/index.html" target="_blank" rel="noreferrer" style={{ color: GOLD, fontWeight: 600, textDecoration: 'none', fontSize: '0.9rem' }}>
+              ENACT Program ↗
+            </a>
+            <a href="https://www.brandeis.edu/ethics/" target="_blank" rel="noreferrer" style={{ color: GOLD, fontWeight: 600, textDecoration: 'none', fontSize: '0.9rem' }}>
+              Ethics Center ↗
+            </a>
+            <a href="https://www.brandeis.edu" target="_blank" rel="noreferrer" style={{ color: GOLD, fontWeight: 600, textDecoration: 'none', fontSize: '0.9rem' }}>
+              Brandeis University ↗
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .about-leadership-grid { grid-template-columns: 1fr !important; }
+          .about-faculty-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .about-staff-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .about-video-grid { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 480px) {
+          .about-faculty-grid { grid-template-columns: 1fr !important; }
+          .about-staff-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </>
   );
 }
