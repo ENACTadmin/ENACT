@@ -1,9 +1,142 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 
 const NAVY = '#0f1f3d';
 const BLUE = '#0053a4';
 const GOLD = '#c49422';
+
+const NOTIFICATIONS = [
+  {
+    badge: 'OPPORTUNITY',
+    message: 'Faculty Fellowship applications are now open',
+    cta: { label: 'Apply →', href: 'https://www.brandeis.edu/enact/grants-fellowships/index.html', external: true },
+  },
+  {
+    badge: 'OPPORTUNITY',
+    message: 'Know a great educator? Nominate a Faculty Fellow candidate',
+    cta: { label: 'Nominate →', href: 'mailto:ENACT@brandeis.edu', external: false },
+  },
+  {
+    badge: 'NEWS',
+    message: 'Explore the latest ENACT news and program updates',
+    cta: { label: 'Read more →', href: 'https://www.brandeis.edu/enact/news-updates/index.html', external: true },
+  },
+  {
+    badge: 'EVENTS',
+    message: 'View upcoming ENACT events and workshops',
+    cta: { label: 'View events →', href: '/app/events', external: false },
+  },
+];
+
+function NotificationCarousel({ onDismiss }) {
+  const [idx, setIdx] = useState(0);
+  const [dir, setDir] = useState('left'); // direction of incoming slide
+  const [animKey, setAnimKey] = useState(0);
+  const timerRef = useRef(null);
+
+  const advance = useCallback((nextIdx, direction) => {
+    setDir(direction);
+    setIdx(nextIdx);
+    setAnimKey(k => k + 1);
+  }, []);
+
+  const resetTimer = useCallback(() => {
+    clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setIdx(i => { const n = (i + 1) % NOTIFICATIONS.length; return n; });
+      setDir('left');
+      setAnimKey(k => k + 1);
+    }, 5000);
+  }, []);
+
+  useEffect(() => {
+    resetTimer();
+    return () => clearInterval(timerRef.current);
+  }, [resetTimer]);
+
+  const prev = () => {
+    advance((idx - 1 + NOTIFICATIONS.length) % NOTIFICATIONS.length, 'right');
+    resetTimer();
+  };
+  const next = () => {
+    advance((idx + 1) % NOTIFICATIONS.length, 'left');
+    resetTimer();
+  };
+  const goTo = (i) => {
+    advance(i, i > idx ? 'left' : 'right');
+    resetTimer();
+  };
+
+  const n = NOTIFICATIONS[idx];
+  const animName = dir === 'left' ? 'slideInLeft' : 'slideInRight';
+
+  return (
+    <div style={{ background: '#08152a', display: 'flex', alignItems: 'center', height: 44, userSelect: 'none', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+      {/* Prev arrow */}
+      <button onClick={prev} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer', fontSize: '1.1rem', padding: '0 14px', height: '100%', display: 'flex', alignItems: 'center', flexShrink: 0, transition: 'color 0.15s' }}
+        onMouseEnter={e => e.currentTarget.style.color = 'white'}
+        onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.5)'}>
+        ‹
+      </button>
+
+      {/* Sliding content */}
+      <div style={{ flex: 1, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div key={animKey} style={{ display: 'flex', alignItems: 'center', gap: 10, animation: `${animName} 0.35s ease` }}>
+          <span style={{ background: GOLD, color: '#1a1100', padding: '2px 8px', fontSize: '0.62rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', borderRadius: 2, flexShrink: 0 }}>
+            {n.badge}
+          </span>
+          <span style={{ color: 'rgba(255,255,255,0.9)', fontSize: '0.875rem', whiteSpace: 'nowrap' }}>
+            {n.message}
+          </span>
+          <a
+            href={n.cta.href}
+            target={n.cta.external ? '_blank' : undefined}
+            rel={n.cta.external ? 'noreferrer' : undefined}
+            style={{ color: GOLD, fontWeight: 600, fontSize: '0.875rem', textDecoration: 'none', flexShrink: 0 }}
+          >
+            {n.cta.label}
+          </a>
+        </div>
+      </div>
+
+      {/* Next arrow */}
+      <button onClick={next} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer', fontSize: '1.1rem', padding: '0 14px', height: '100%', display: 'flex', alignItems: 'center', flexShrink: 0, transition: 'color 0.15s' }}
+        onMouseEnter={e => e.currentTarget.style.color = 'white'}
+        onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.5)'}>
+        ›
+      </button>
+
+      {/* Dots */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 5, paddingRight: 4 }}>
+        {NOTIFICATIONS.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => goTo(i)}
+            style={{ width: i === idx ? 18 : 6, height: 6, background: i === idx ? GOLD : 'rgba(255,255,255,0.3)', borderRadius: 3, border: 'none', cursor: 'pointer', padding: 0, transition: 'width 0.3s, background 0.3s' }}
+          />
+        ))}
+      </div>
+
+      {/* Close */}
+      <button onClick={onDismiss} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.45)', cursor: 'pointer', fontSize: '1.1rem', padding: '0 14px', height: '100%', display: 'flex', alignItems: 'center', flexShrink: 0, transition: 'color 0.15s' }}
+        onMouseEnter={e => e.currentTarget.style.color = 'white'}
+        onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.45)'}>
+        ×
+      </button>
+
+      <style>{`
+        @keyframes slideInLeft {
+          from { opacity: 0; transform: translateX(32px); }
+          to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideInRight {
+          from { opacity: 0; transform: translateX(-32px); }
+          to   { opacity: 1; transform: translateX(0); }
+        }
+      `}</style>
+    </div>
+  );
+}
 
 function ResourceAccordion({ resources }) {
   const [openIdx, setOpenIdx] = useState(null);
@@ -138,17 +271,8 @@ export default function HomePage() {
 
   return (
     <div>
-      {/* Announcement banner */}
-      {!dismissed && (
-        <div style={{ background: '#f5f0e8', borderBottom: '1px solid #e0d5c5', padding: '10px 24px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: 6, fontSize: '0.875rem', position: 'relative' }}>
-          <span style={{ color: GOLD, fontWeight: 700, textTransform: 'uppercase', fontSize: '0.7rem', letterSpacing: '0.12em' }}>OPPORTUNITY</span>
-          <span style={{ color: '#333' }}>Applications are open for the ENACT Faculty Fellowship —</span>
-          <a href="https://www.brandeis.edu/enact/grants-fellowships/index.html" target="_blank" rel="noreferrer" style={{ color: BLUE, fontWeight: 600 }}>apply</a>
-          <span style={{ color: '#333' }}>or</span>
-          <a href="mailto:ENACT@brandeis.edu" style={{ color: BLUE, fontWeight: 600 }}>nominate a candidate</a>.
-          <button onClick={handleDismiss} style={{ position: 'absolute', right: 16, background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.3rem', color: '#999', lineHeight: 1 }}>×</button>
-        </div>
-      )}
+      {/* Rotating notification carousel */}
+      {!dismissed && <NotificationCarousel onDismiss={handleDismiss} />}
 
       {/* Hero */}
       <section style={{ background: 'linear-gradient(135deg, #060f1e 0%, #0f2444 65%, #0053a4 100%)', padding: 'clamp(60px,10vw,110px) 0 clamp(60px,9vw,90px)', position: 'relative' }}>
