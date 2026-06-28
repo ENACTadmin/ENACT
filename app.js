@@ -1149,6 +1149,30 @@ app.get("/api/v0/courses/schedule", async (req, res) => {
   }
 });
 
+// Returns faculty research (ENACT Research) and news/essays for the Impact page
+app.get("/api/v0/impact-resources", async (req, res) => {
+  try {
+    const lookup = [
+      { $lookup: { from: "users", localField: "ownerId", foreignField: "_id", as: "ownerDetails" } },
+      { $unwind: { path: "$ownerDetails", preserveNullAndEmptyArrays: true } },
+      { $project: { _id: 1, name: 1, description: 1, tags: 1, uri: 1, state: 1, institution: 1, yearOfCreation: 1, contentType: 1, mediaType: 1, authorName: { $ifNull: ["$ownerDetails.userName", "$ownerName"] } } }
+    ];
+    const facultyResearch = await Resource.aggregate([
+      { $match: { status: { $in: ["public", "finalPublic"] }, contentType: "ENACT Research" } },
+      { $sort: { yearOfCreation: -1 } },
+      ...lookup
+    ]);
+    const essayENACT = await Resource.aggregate([
+      { $match: { status: { $in: ["public", "finalPublic"] }, contentType: { $in: ["Personal Reflection", "News and Articles"] } } },
+      { $sort: { yearOfCreation: -1 } },
+      ...lookup
+    ]);
+    res.json({ facultyResearch, essayENACT });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to load impact resources" });
+  }
+});
+
 // Serve the React SPA shell for all /app/* routes (catch-all for client-side router)
 app.get("/app", (req, res) => res.render("react-app"));
 app.get("/app/*", (req, res) => res.render("react-app"));
