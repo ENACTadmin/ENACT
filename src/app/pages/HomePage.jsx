@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const NAVY = '#0f1f3d';
@@ -65,7 +66,7 @@ function EventAccordion({ events, loggedIn }) {
                   {showFull && ev.uri ? (
                     <a href={ev.uri} target="_blank" rel="noreferrer" style={{ color: BLUE, fontWeight: 500, fontSize: '0.9rem' }}>View Event →</a>
                   ) : !loggedIn ? (
-                    <a href="/app/login" style={{ color: GOLD, fontWeight: 500, fontSize: '0.9rem' }}>Log in to see full details →</a>
+                    <Link to="/login" style={{ color: GOLD, fontWeight: 500, fontSize: '0.9rem' }}>Log in to see full details →</Link>
                   ) : null}
                 </div>
               </div>
@@ -104,23 +105,23 @@ export default function HomePage() {
     {
       number: '01', title: 'Students & Alumni',
       description: 'Search student work, and network with the national community of ENACT students and alumni.',
-      linkText: 'Log in to the network', linkHref: loggedIn ? '/search/' : '/app/login'
+      linkText: 'Log in to the network', linkTo: loggedIn ? '/search' : '/login'
     },
     {
       number: '02', title: 'Faculty Fellows',
       description: 'Access ENACT teaching resources, syllabi, and student work to bring civic engagement into your classroom.',
-      linkText: 'Explore teaching resources', linkHref: '/search/'
+      linkText: 'Explore teaching resources', linkTo: '/search'
     },
     {
       number: '03', title: 'The Public',
       description: 'Read student work on bills from across the U.S. — op-eds, issue research, testimony, and more.',
-      linkText: 'Browse public resources', linkHref: '/search/'
+      linkText: 'Browse public resources', linkTo: '/search'
     }
   ];
 
   const quickNavItems = [
-    { label: 'Search Resources', href: '/search/' },
-    { label: 'Get Started', href: loggedIn ? '/search/' : '/app/login' },
+    { label: 'Search Resources', to: '/search' },
+    { label: 'Get Started', to: loggedIn ? '/search' : '/login' },
     { label: 'Upcoming Events', href: '#', onClick: (e) => { e.preventDefault(); scrollTo(eventsRef); } },
     { label: 'Intro Video', href: '#', onClick: (e) => { e.preventDefault(); scrollTo(videoRef); } },
     { label: 'News & Updates', href: 'https://www.brandeis.edu/enact/news-updates/index.html', external: true }
@@ -144,10 +145,10 @@ export default function HomePage() {
             bridging the classroom and the statehouse.
           </p>
           <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-            <a href={loggedIn ? '/search/' : '/app/login'}
+            <Link to={loggedIn ? '/search' : '/login'}
               style={{ background: GOLD, color: '#1a1100', padding: '14px 28px', borderRadius: 4, fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: '0.95rem' }}>
               Get started →
-            </a>
+            </Link>
             <button onClick={() => scrollTo(videoRef)}
               style={{ background: 'transparent', color: 'white', border: '2px solid rgba(255,255,255,0.4)', padding: '13px 26px', borderRadius: 4, fontWeight: 600, cursor: 'pointer', fontSize: '0.95rem' }}>
               Watch the intro film
@@ -159,21 +160,13 @@ export default function HomePage() {
       {/* Quick nav bar */}
       <nav style={{ background: '#08152a', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
         <div style={{ display: 'flex', overflowX: 'auto' }}>
-          {quickNavItems.map((item, i) => (
-            <a key={item.label}
-              href={item.href}
-              onClick={item.onClick}
-              target={item.external ? '_blank' : undefined}
-              rel={item.external ? 'noreferrer' : undefined}
-              className="hp-qnav-item"
-              style={{ color: 'rgba(255,255,255,0.8)', flex: '1 1 auto', minWidth: 160, padding: '18px 22px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderRight: i < quickNavItems.length - 1 ? '1px solid rgba(255,255,255,0.07)' : 'none', textDecoration: 'none', fontSize: '0.875rem', fontWeight: 500, whiteSpace: 'nowrap', transition: 'background 0.15s, color 0.15s' }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.color = 'white'; }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(255,255,255,0.8)'; }}
-            >
-              <span>{item.label}</span>
-              <span style={{ color: GOLD, marginLeft: 10 }}>→</span>
-            </a>
-          ))}
+          {quickNavItems.map((item, i) => {
+            const navStyle = { color: 'rgba(255,255,255,0.8)', flex: '1 1 auto', minWidth: 160, padding: '18px 22px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderRight: i < quickNavItems.length - 1 ? '1px solid rgba(255,255,255,0.07)' : 'none', textDecoration: 'none', fontSize: '0.875rem', fontWeight: 500, whiteSpace: 'nowrap', transition: 'background 0.15s, color 0.15s' };
+            const hover = { onMouseEnter: e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.color = 'white'; }, onMouseLeave: e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(255,255,255,0.8)'; } };
+            const inner = <><span>{item.label}</span><span style={{ color: GOLD, marginLeft: 10 }}>→</span></>;
+            if (item.to) return <Link key={item.label} to={item.to} className="hp-qnav-item" style={navStyle} {...hover}>{inner}</Link>;
+            return <a key={item.label} href={item.href} onClick={item.onClick} target={item.external ? '_blank' : undefined} rel={item.external ? 'noreferrer' : undefined} className="hp-qnav-item" style={navStyle} {...hover}>{inner}</a>;
+          })}
         </div>
       </nav>
 
@@ -202,9 +195,9 @@ export default function HomePage() {
                 <div style={{ color: GOLD, fontSize: '0.75rem', fontWeight: 700, marginBottom: 10, letterSpacing: '0.05em' }}>{card.number}</div>
                 <h3 style={{ color: NAVY, fontSize: '1.2rem', fontWeight: 700, marginBottom: 12 }}>{card.title}</h3>
                 <p style={{ color: '#555', lineHeight: 1.65, marginBottom: 'auto', paddingBottom: 20, fontSize: '0.95rem' }}>{card.description}</p>
-                <a href={card.linkHref} style={{ color: BLUE, fontWeight: 600, textDecoration: 'none', fontSize: '0.9rem' }}>
+                <Link to={card.linkTo} style={{ color: BLUE, fontWeight: 600, textDecoration: 'none', fontSize: '0.9rem' }}>
                   {card.linkText} →
-                </a>
+                </Link>
               </div>
             ))}
           </div>
@@ -232,7 +225,7 @@ export default function HomePage() {
           <div style={{ maxWidth: 860, margin: '0 auto', padding: '0 clamp(20px,5vw,60px)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 28, flexWrap: 'wrap', gap: 8 }}>
               <h2 style={{ color: NAVY, fontSize: '1.75rem', fontWeight: 700, margin: 0 }}>Public Resources</h2>
-              <a href="/search/" style={{ color: BLUE, fontWeight: 500, textDecoration: 'none', fontSize: '0.9rem' }}>Browse all resources →</a>
+              <Link to="/search" style={{ color: BLUE, fontWeight: 500, textDecoration: 'none', fontSize: '0.9rem' }}>Browse all resources →</Link>
             </div>
             {resources.length > 0 ? (
               <ResourceAccordion resources={resources} />
@@ -254,7 +247,7 @@ export default function HomePage() {
           <div style={{ maxWidth: 860, margin: '0 auto', padding: '0 clamp(20px,5vw,60px)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 28, flexWrap: 'wrap', gap: 8 }}>
               <h2 style={{ color: NAVY, fontSize: '1.75rem', fontWeight: 700, margin: 0 }}>Events</h2>
-              <a href="/app/events" style={{ color: BLUE, fontWeight: 500, textDecoration: 'none', fontSize: '0.9rem' }}>View all events →</a>
+              <Link to="/events" style={{ color: BLUE, fontWeight: 500, textDecoration: 'none', fontSize: '0.9rem' }}>View all events →</Link>
             </div>
             {events.length > 0 ? (
               <EventAccordion events={events} loggedIn={loggedIn} />
