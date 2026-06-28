@@ -39,6 +39,8 @@ const LEADERSHIP = [
 ];
 
 const PLATFORM_STAFF = [
+  { photo: '/images/PhotoForAbout/KiyaGedamu.webp', name: 'Kiya Gedamu', title: 'Software Engineer · 2026–Present', bio: 'Software Engineer on the ENACT digital platform team.' },
+  { photo: '/images/PhotoForAbout/NayeliNaranjo.webp', name: 'Nayeli Naranjo', title: 'Software Engineer · 2026–Present', bio: 'Software Engineer on the ENACT digital platform team.' },
   { photo: '/images/PhotoForAbout/TimHickey.webp', name: 'Timothy J. Hickey', title: 'Technology Advisor · 2020–Present', bio: 'Professor and Chair of Computer Science at Brandeis University, advising the ENACT digital platform.' },
   { photo: '/images/PhotoForAbout/HanyuDu.webp', name: 'Hangyu Du', title: 'Software Developer · 2020–2021', bio: 'Core developer of the ENACT digital platform. Fan of machine learning and end-to-end UI development.' },
   { photo: '/images/PhotoForAbout/HuiyanZhang.webp', name: 'Huiyan Zhang', title: 'Software Developer · 2020–2021', bio: 'Developed several core functions of the ENACT platform.' },
@@ -48,8 +50,6 @@ const PLATFORM_STAFF = [
   { photo: '/images/PhotoForAbout/LouisePei.webp', name: 'Louise Pei', title: 'Software Developer · 2021–Present', bio: 'Core developer focused on website maintenance and feature development.' },
   { photo: '/images/PhotoForAbout/AaronPortman.webp', name: 'Aaron Portman', title: 'Software Developer · 2021', bio: 'Student developer who contributed to the ENACT platform.' },
   { photo: '/images/PhotoForAbout/BishalBaral.webp', name: 'Bishal Baral', title: 'Software Developer · 2021–Present', bio: 'Core developer who enjoys building software and writing efficient programs.' },
-  { photo: '/images/PhotoForAbout/KiyaGedamu.webp', name: 'Kiya Gedamu', title: 'Software Engineer · 2026–Present', bio: 'Software Engineer on the ENACT digital platform team.' },
-  { photo: '/images/PhotoForAbout/NayeliNaranjo.webp', name: 'Nayeli Naranjo', title: 'Software Engineer · 2026–Present', bio: 'Software Engineer on the ENACT digital platform team.' },
 ];
 
 // ── Sub-components ────────────────────────────────────────────────────────────
