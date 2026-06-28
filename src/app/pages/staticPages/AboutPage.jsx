@@ -115,8 +115,11 @@ function HoverCard({ photo, name, title, institution, bio, department, state }) 
   );
 }
 
-function FacultyHoverCard({ profile }) {
+function FacultyHoverCard({ profile, onImageError }) {
   const [hovered, setHovered] = useState(false);
+  const [imgFailed, setImgFailed] = useState(false);
+
+  if (imgFailed) return null;
 
   return (
     <div
@@ -126,10 +129,10 @@ function FacultyHoverCard({ profile }) {
     >
       <div style={{ padding: '20px 16px', textAlign: 'center' }}>
         <img
-          src={profile.profilePicURL || '/images/defaultProfile.webp'}
+          src={profile.profilePicURL}
           alt={profile.userName}
           style={{ width: 80, height: 80, objectFit: 'cover', borderRadius: 4, background: '#d4cfc6', marginBottom: 10 }}
-          onError={e => { e.currentTarget.style.background = '#d4cfc6'; e.currentTarget.src = ''; }}
+          onError={() => { setImgFailed(true); if (onImageError) onImageError(); }}
         />
         <h6 style={{ color: NAVY, fontWeight: 700, marginBottom: 4, fontSize: '0.9rem' }}>{profile.userName}</h6>
         {profile.affiliation && <p style={{ color: '#666', fontSize: '0.78rem', margin: '0 0 2px' }}>{profile.affiliation}</p>}
@@ -164,8 +167,8 @@ export default function AboutPage() {
   }, []);
 
   const previewFaculty = faculty
-    .filter(p => p.profilePicURL && !p.profilePicURL.includes('defaultProfile'))
-    .slice(0, 8);
+    .filter(p => p.profilePicURL && p.profilePicURL.startsWith('http') && !p.profilePicURL.includes('defaultProfile'))
+    .slice(0, 12); // fetch more than 8 so broken images still fill 8 slots
 
   return (
     <>
@@ -226,7 +229,7 @@ export default function AboutPage() {
           </div>
           {previewFaculty.length > 0 ? (
             <div className="about-faculty-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
-              {previewFaculty.map(p => <FacultyHoverCard key={p._id} profile={p} />)}
+              {previewFaculty.map(p => <FacultyHoverCard key={p._id} profile={p} onImageError={() => {}} />)}
             </div>
           ) : (
             <p style={{ color: '#666' }}>
