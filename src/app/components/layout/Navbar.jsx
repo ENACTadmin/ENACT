@@ -77,7 +77,7 @@ export default function Navbar() {
           <ul>
             {/* Home */}
             <li>
-              <a className="header-link" href="#">Home</a>
+              <a className="header-link" id="home-link" href="#">Home</a>
               <ul className="sub-menu">
                 <li><Link className="header-link" to="/">ENACT Resources</Link></li>
                 <li>
@@ -92,7 +92,7 @@ export default function Navbar() {
               <>
                 {/* Impact */}
                 <li>
-                  <a className="header-link" href="#">Impact</a>
+                  <a className="header-link" id="impact" href="#">Impact</a>
                   <ul className="sub-menu">
                     <li><Link className="header-link" to="/impact?tab=research">Faculty Research</Link></li>
                     <li><Link className="header-link" to="/impact?tab=news">In the News</Link></li>

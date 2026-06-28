@@ -2117,6 +2117,8 @@ exports.primarySearch = async (req, res, next) => {
     }
     res.locals.resourceIds = starredResourceIds;
     res.locals.resourceInfo = uniqueResourceInfo;
+    let similarResources = await getSimilarResources(uniqueResourceInfo);
+    res.locals.similarResources = similarResources;
     // resourceInfoSet = uniqueResourceInfo
     res.render("./pages/resources-searchResult-private", {
       secretType: "Search Result",
@@ -2127,7 +2129,8 @@ exports.primarySearch = async (req, res, next) => {
       search_institution: null,
       search_mediaType: null,
       search_yearOfCreation: null,
-      search_status: null
+      search_status: null,
+      similarResources: similarResources
     });
   } catch (e) {
     next(e);
@@ -2187,7 +2190,7 @@ async function invertedSearch(req, res) {
           institution: 1,
           yearOfCreation: 1
         }
-      ).sort({ score: { $meta: "textScore" } });
+      ).sort({ score: { $meta: "textScore" }, yearOfCreation: -1 });
     } else {
       resourceInfo = await Resource.find(
         {
@@ -2209,7 +2212,7 @@ async function invertedSearch(req, res) {
           institution: 1,
           yearOfCreation: 1
         } // content's actual creation time}
-      ).sort({ score: { $meta: "textScore" } });
+      ).sort({ score: { $meta: "textScore" }, yearOfCreation: -1 });
     }
   }
   // empty param search
@@ -2236,7 +2239,7 @@ async function invertedSearch(req, res) {
           institution: 1,
           yearOfCreation: 1 // content's actual creation time
         }
-      );
+      ).sort({ yearOfCreation: -1 });
     } else if (res.locals.status === "student") {
       resourceInfo = await Resource.find(
         {
@@ -2256,7 +2259,7 @@ async function invertedSearch(req, res) {
           institution: 1,
           yearOfCreation: 1 // content's actual creation time
         }
-      );
+      ).sort({ yearOfCreation: -1 });
     } else {
       resourceInfo = await Resource.find(
         {
@@ -2276,11 +2279,37 @@ async function invertedSearch(req, res) {
           institution: 1,
           yearOfCreation: 1 // content's actual creation time
         }
-      );
+      ).sort({ yearOfCreation: -1 });
     }
   }
   resourceInfo = await addAuthor(resourceInfo);
   return resourceInfo;
+}
+
+// -----------------------------------------------
+// --------------- Similar Resources --------------
+// -----------------------------------------------
+
+async function getSimilarResources(resourceInfo, limit = 5) {
+  if (!resourceInfo || resourceInfo.length === 0) return [];
+  let allTags = [];
+  for (let i = 0; i < resourceInfo.length; i++) {
+    if (resourceInfo[i].tags && resourceInfo[i].tags.length > 0) {
+      allTags = allTags.concat(resourceInfo[i].tags.filter(t => t && t.length > 0));
+    }
+  }
+  if (allTags.length === 0) return [];
+  allTags = [...new Set(allTags)];
+  let resourceIds = resourceInfo.map(r => r._id);
+  let similar = await Resource.find({
+    _id: { $nin: resourceIds },
+    tags: { $in: allTags },
+    checkStatus: "approve"
+  }, {
+    name: 1, description: 1, tags: 1, yearOfCreation: 1,
+    contentType: 1, institution: 1, state: 1, ownerName: 1
+  }).sort({ yearOfCreation: -1 }).limit(limit);
+  return similar;
 }
 
 // -----------------------------------------------
@@ -2373,6 +2402,8 @@ exports.advancedSearch = async (req, res) => {
   }
 
   res.locals.resourceIds = starredResourceIds;
+  let similarResources = await getSimilarResources(filteredResource);
+  res.locals.similarResources = similarResources;
 
   res.render("./pages/resources-searchResult-private", {
     resourceInfo: filteredResource,
@@ -2385,7 +2416,8 @@ exports.advancedSearch = async (req, res) => {
     search_institution: local_institution,
     search_mediaType: local_mediaType,
     search_yearOfCreation: local_yearOfCreation,
-    search_status: local_status
+    search_status: local_status,
+    similarResources: similarResources
   });
 };
 

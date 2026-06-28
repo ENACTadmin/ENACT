@@ -40,20 +40,15 @@ const utils = require("./controllers/utils");
 
 //*******************************************
 //***********Database connection*************
-// const MONGODB_URI = 'mongodb://localhost/ENACT';
-// const MONGODB_URI = process.env.MONGODB_URI_IND || 'mongodb://localhost/ENACT';
 const MONGODB_URI =
+  process.env.MONGODB_URI ||
   "mongodb+srv://heroku_s59qt61k:suo0sir3rh8b104b38574ju3dm@cluster-s59qt61k.xy6rv.mongodb.net/heroku_s59qt61k?retryWrites=true&w=majority" ||
   "mongodb://localhost/ENACT";
 const mongoose = require("mongoose");
 
 // Makes connection asynchronously.  Mongoose will queue up database
 // operations and release them when the connection is complete.
-mongoose.connect(MONGODB_URI, {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useUnifiedTopology: true
-});
+mongoose.connect(MONGODB_URI);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function () {
@@ -1177,6 +1172,7 @@ app.get("/api/v0/impact-resources", async (req, res) => {
     res.status(500).json({ error: "Failed to load impact resources" });
   }
 });
+
 
 // Serve the React SPA shell for all /app/* routes (catch-all for client-side router)
 app.get("/app", (req, res) => res.render("react-app"));
