@@ -1,89 +1,59 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+const NAVY = '#0f1f3d';
+const BLUE = '#0053a4';
+const GOLD = '#c49422';
+
 export default function LoginPage() {
-
   return (
-    <section className="section section__grey" data-aos="fade-up" style={{ height: '140%', paddingTop: '8%' }}>
-      <div className="container">
-        <div className="row">
-          <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
-            <div className="card card-signin my-5">
-              <div className="card-body">
-                <h5 className="card-title text-center">Log In</h5>
+    <section style={{ background: `linear-gradient(160deg, ${NAVY} 0%, #162847 100%)`, minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '48px 24px' }}>
+      <div style={{ background: '#fff', borderRadius: 12, padding: '40px 40px 36px', maxWidth: 440, width: '100%', boxShadow: '0 20px 60px rgba(0,0,0,0.35)' }}>
+        <div style={{ textAlign: 'center', marginBottom: 28 }}>
+          <img src="/images/enact-logo.webp" alt="ENACT" style={{ height: 48, marginBottom: 12 }} />
+          <h1 style={{ color: NAVY, fontSize: '1.4rem', fontWeight: 800, margin: '0 0 4px' }}>Welcome back</h1>
+          <p style={{ color: '#888', fontSize: '0.88rem', margin: 0 }}>Sign in to your ENACT account</p>
+        </div>
 
-                {/* POST directly to Express — no need to intercept in React */}
-                <form className="form-signin" action="/login" method="post">
-                  <div className="form-label-group">
-                    <input
-                      type="text"
-                      name="email"
-                      id="Username"
-                      className="form-control"
-                      placeholder="Username"
-                      required
-                      autoFocus
-                    />
-                    <label htmlFor="Username">Email</label>
-                  </div>
+        <form action="/login" method="post">
+          <div style={{ marginBottom: 16 }}>
+            <label style={{ display: 'block', color: '#444', fontSize: '0.82rem', fontWeight: 600, marginBottom: 6 }}>Email</label>
+            <input type="text" name="email" id="Username" placeholder="your@email.edu" required autoFocus
+              style={{ width: '100%', padding: '10px 14px', border: '1px solid #ddd', borderRadius: 7, fontSize: '0.95rem', outline: 'none', boxSizing: 'border-box' }} />
+          </div>
 
-                  <div className="form-label-group">
-                    <input
-                      type="password"
-                      name="password"
-                      id="inputPassword"
-                      className="form-control"
-                      placeholder="Password"
-                      required
-                    />
-                    <label htmlFor="inputPassword">Password</label>
-                  </div>
+          <div style={{ marginBottom: 8 }}>
+            <label style={{ display: 'block', color: '#444', fontSize: '0.82rem', fontWeight: 600, marginBottom: 6 }}>Password</label>
+            <input type="password" name="password" id="inputPassword" placeholder="••••••••" required
+              style={{ width: '100%', padding: '10px 14px', border: '1px solid #ddd', borderRadius: 7, fontSize: '0.95rem', outline: 'none', boxSizing: 'border-box' }} />
+          </div>
 
-                  Forgot Password? <a href="/reset">Click here to recover account</a>
-                  <br /><br />
+          <div style={{ marginBottom: 20, textAlign: 'right' }}>
+            <a href="/reset" style={{ color: BLUE, fontSize: '0.8rem', textDecoration: 'none', fontWeight: 600 }}>Forgot password?</a>
+          </div>
 
-                  <input
-                    name="submit"
-                    className="btn btn-lg btn-primary btn-block text-uppercase"
-                    value="sign in"
-                    type="submit"
-                  />
+          <input name="submit" type="submit" value="Sign in"
+            style={{ width: '100%', padding: '11px', background: BLUE, color: '#fff', border: 'none', borderRadius: 7, fontSize: '1rem', fontWeight: 700, cursor: 'pointer', marginBottom: 12 }} />
 
-                  <h5 className="text-center">Or</h5>
+          <a href="/auth/google"
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, width: '100%', padding: '11px', background: '#f5f5f5', color: '#333', border: '1px solid #e0e0e0', borderRadius: 7, fontSize: '0.95rem', fontWeight: 600, textDecoration: 'none', marginBottom: 24, boxSizing: 'border-box' }}>
+            <img src="https://www.google.com/favicon.ico" alt="" style={{ width: 16, height: 16 }} />
+            Sign in with Google
+          </a>
 
-                  <a href="/auth/google" className="btn btn-lg btn-warning btn-block text-uppercase">
-                    <i className="fa fa-google mr-2" /> Sign in with Google
-                  </a>
-
-                  <hr className="my-4" />
-                  <h5 className="card-title text-center">Sign Up</h5>
-                  <p className="text-center" style={{ marginBottom: '1rem' }}>
-                    New ENACT members create a new account below
-                  </p>
-
-                  <Link to="/signup" className="btn btn-lg btn-primary btn-block text-uppercase">
-                    Sign Up
-                  </Link>
-                  <br />
-
-                  <p className="text-center" style={{ marginBottom: '1rem' }}>
-                    Need Help? Look at our onboarding video
-                  </p>
-                  <video style={{ width: '100%' }} poster="/images/accountCreation.webp" controls>
-                    <source
-                      src="https://enact-resources.s3.us-east-2.amazonaws.com/Create+an+Account+and+Profile+(with+captions).mp4"
-                      type="video/mp4"
-                    />
-                  </video>
-
-                  <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                    <a href="/accountHelp">Account Help Video Link</a>
-                  </div>
-                </form>
-              </div>
+          <div style={{ borderTop: '1px solid #f0f0f0', paddingTop: 20, textAlign: 'center' }}>
+            <p style={{ color: '#666', fontSize: '0.88rem', marginBottom: 12 }}>New to ENACT?</p>
+            <Link to="/signup"
+              style={{ display: 'block', width: '100%', padding: '10px', background: NAVY, color: '#fff', borderRadius: 7, textDecoration: 'none', fontWeight: 700, fontSize: '0.95rem', textAlign: 'center', boxSizing: 'border-box' }}>
+              Create an account →
+            </Link>
+            <div style={{ marginTop: 14 }}>
+              <Link to="/accountHelp" style={{ color: BLUE, fontSize: '0.82rem', fontWeight: 600, textDecoration: 'none' }}>
+                Need help creating an account? Watch the guide
+              </Link>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </section>
   );
