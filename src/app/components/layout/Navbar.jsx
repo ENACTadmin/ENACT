@@ -103,7 +103,7 @@ export default function Navbar() {
                 <li>
                   <a className="header-link" href="#">Resources</a>
                   <ul className="sub-menu">
-                    <li><a className="header-link" href="/search/">Search Resources</a></li>
+                    <li><Link className="header-link" to="/search">Search Resources</Link></li>
                   </ul>
                 </li>
 
@@ -146,7 +146,7 @@ export default function Navbar() {
                 <li>
                   <a className="header-link" href="#">Resources</a>
                   <ul className="sub-menu">
-                    <li><a className="header-link" href="/search/">Search Resources</a></li>
+                    <li><Link className="header-link" to="/search">Search Resources</Link></li>
                     <li><a className="header-link" href="/resources/view/student-guide">Advice &amp; Tips for Students</a></li>
 
                     {(status === 'faculty' || status === 'admin') && (

@@ -23,6 +23,9 @@ import FacultyListPage from './pages/profiles/FacultyListPage';
 // Courses
 import CourseSchedulePage from './pages/courses/CourseSchedulePage';
 
+// Search
+import SearchPage from './pages/search/SearchPage';
+
 export default function App() {
   return (
     <AuthProvider>
@@ -48,6 +51,9 @@ export default function App() {
 
             {/* Courses */}
             <Route path="courses/schedule" element={<CourseSchedulePage />} />
+
+            {/* Search */}
+            <Route path="search" element={<SearchPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
