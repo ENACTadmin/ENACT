@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const NAVY = '#0f1f3d';
 const BLUE = '#0053a4';
@@ -50,9 +51,9 @@ export default function AccountHelpPage() {
               <h3 style={{ margin: '0 0 4px', color: NAVY, fontSize: '1rem', fontWeight: 700 }}>Ready to sign up?</h3>
               <p style={{ margin: 0, color: '#666', fontSize: '0.88rem' }}>Create your ENACT account and join the network.</p>
             </div>
-            <a href="/app/signup" style={{ background: BLUE, color: '#fff', padding: '10px 24px', borderRadius: 6, textDecoration: 'none', fontWeight: 600, fontSize: '0.9rem', whiteSpace: 'nowrap' }}>
+            <Link to="/signup" style={{ background: BLUE, color: '#fff', padding: '10px 24px', borderRadius: 6, textDecoration: 'none', fontWeight: 600, fontSize: '0.9rem', whiteSpace: 'nowrap' }}>
               Sign up →
-            </a>
+            </Link>
           </div>
         </div>
       </section>

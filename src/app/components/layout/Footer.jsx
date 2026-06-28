@@ -8,10 +8,10 @@ const COLUMNS = [
   {
     heading: 'Platform',
     links: [
-      { label: 'About ENACT', to: '/app/about' },
-      { label: 'Contact Us', to: '/app/contact' },
-      { label: 'Help Center', to: '/app/help' },
-      { label: 'Account Help', to: '/app/accountHelp' },
+      { label: 'About ENACT', to: '/about' },
+      { label: 'Contact Us', to: '/contact' },
+      { label: 'Help Center', to: '/help' },
+      { label: 'Account Help', to: '/accountHelp' },
     ],
   },
   {
@@ -25,9 +25,9 @@ const COLUMNS = [
   {
     heading: 'Network',
     links: [
-      { label: 'Faculty Fellows', to: '/app/profiles/view/faculty' },
-      { label: 'Course Schedule', to: '/app/courses/schedule' },
-      { label: 'Events', to: '/app/events' },
+      { label: 'Faculty Fellows', to: '/profiles/view/faculty' },
+      { label: 'Course Schedule', to: '/courses/schedule' },
+      { label: 'Events', to: '/events' },
     ],
   },
   {
