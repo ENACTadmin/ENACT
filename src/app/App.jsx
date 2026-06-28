@@ -26,6 +26,9 @@ import CourseSchedulePage from './pages/courses/CourseSchedulePage';
 // Search
 import SearchPage from './pages/search/SearchPage';
 
+// Impact
+import ImpactPage from './pages/impact/ImpactPage';
+
 export default function App() {
   return (
     <AuthProvider>
@@ -54,6 +57,9 @@ export default function App() {
 
             {/* Search */}
             <Route path="search" element={<SearchPage />} />
+
+            {/* Impact */}
+            <Route path="impact" element={<ImpactPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

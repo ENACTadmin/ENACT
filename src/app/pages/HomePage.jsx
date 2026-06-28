@@ -29,7 +29,7 @@ function ResourceAccordion({ resources }) {
                 {r.tags && <p style={{ margin: 0, color: '#444', fontSize: '0.95rem' }}><strong>Topics:</strong> {Array.isArray(r.tags) ? r.tags.join(', ') : r.tags}</p>}
               </div>
               <a href={r.uri} target="_blank" rel="noreferrer" style={{ background: BLUE, color: 'white', padding: '8px 20px', borderRadius: 4, textDecoration: 'none', fontWeight: 500, fontSize: '0.9rem' }}>
-                Download Resource
+                Download Resource ↗
               </a>
             </div>
           )}
@@ -64,7 +64,7 @@ function EventAccordion({ events, loggedIn }) {
                 <div>
                   <p style={{ margin: '0 0 12px', color: '#444', lineHeight: 1.65, fontSize: '0.95rem' }}>{desc}</p>
                   {showFull && ev.uri ? (
-                    <a href={ev.uri} target="_blank" rel="noreferrer" style={{ color: BLUE, fontWeight: 500, fontSize: '0.9rem' }}>View Event →</a>
+                    <a href={ev.uri} target="_blank" rel="noreferrer" style={{ color: BLUE, fontWeight: 500, fontSize: '0.9rem' }}>View Event ↗</a>
                   ) : !loggedIn ? (
                     <Link to="/login" style={{ color: GOLD, fontWeight: 500, fontSize: '0.9rem' }}>Log in to see full details →</Link>
                   ) : null}
@@ -163,7 +163,8 @@ export default function HomePage() {
           {quickNavItems.map((item, i) => {
             const navStyle = { color: 'rgba(255,255,255,0.8)', flex: '1 1 auto', minWidth: 160, padding: '18px 22px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderRight: i < quickNavItems.length - 1 ? '1px solid rgba(255,255,255,0.07)' : 'none', textDecoration: 'none', fontSize: '0.875rem', fontWeight: 500, whiteSpace: 'nowrap', transition: 'background 0.15s, color 0.15s' };
             const hover = { onMouseEnter: e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.color = 'white'; }, onMouseLeave: e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(255,255,255,0.8)'; } };
-            const inner = <><span>{item.label}</span><span style={{ color: GOLD, marginLeft: 10 }}>→</span></>;
+            const arrow = item.external ? '↗' : '→';
+            const inner = <><span>{item.label}</span><span style={{ color: GOLD, marginLeft: 10 }}>{arrow}</span></>;
             if (item.to) return <Link key={item.label} to={item.to} className="hp-qnav-item" style={navStyle} {...hover}>{inner}</Link>;
             return <a key={item.label} href={item.href} onClick={item.onClick} target={item.external ? '_blank' : undefined} rel={item.external ? 'noreferrer' : undefined} className="hp-qnav-item" style={navStyle} {...hover}>{inner}</a>;
           })}
@@ -182,7 +183,7 @@ export default function HomePage() {
             </div>
             <p style={{ fontSize: '1.05rem', lineHeight: 1.75, color: '#4a4a4a', paddingTop: 'clamp(0px,3vw,36px)', margin: 0 }}>
               ENACT is a national, non-partisan program based at{' '}
-              <a href="https://www.brandeis.edu" target="_blank" rel="noreferrer" style={{ color: BLUE }}>Brandeis University</a>.
+              <a href="https://www.brandeis.edu" target="_blank" rel="noreferrer" style={{ color: BLUE }}>Brandeis University ↗</a>.
               Through a signature course and a connected network, students research live legislation, draft testimony and
               op-eds, and work directly with lawmakers on the issues they care about most — gaining the skills and confidence
               to stay civically engaged for life.
