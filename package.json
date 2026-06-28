@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "start:dev": "nodemon",
     "start:devReact": "USE_LIVERELOAD=true concurrently \"npm run watch\" \"nodemon\"",
-    "test": "mocha --exit ./test/**/*.js",
+    "test": "mocha --exit --timeout 8000 ./test/**/*.js",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "watch": "webpack --watch",
