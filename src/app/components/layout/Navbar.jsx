@@ -131,16 +131,14 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                {/* Impact (admin only) */}
-                {status === 'admin' && (
-                  <li>
-                    <a className="header-link" href="#">Impact</a>
-                    <ul className="sub-menu">
-                      <li><a className="header-link" href="/resources/view/facultyResearch">Faculty Research</a></li>
-                      <li><a className="header-link" href="/resources/view/inTheNews">In the News</a></li>
-                    </ul>
-                  </li>
-                )}
+                {/* Impact */}
+                <li>
+                  <a className="header-link" href="#">Impact</a>
+                  <ul className="sub-menu">
+                    <li><Link className="header-link" to="/impact?tab=research">Faculty Research</Link></li>
+                    <li><Link className="header-link" to="/impact?tab=news">In the News</Link></li>
+                  </ul>
+                </li>
 
                 {/* Resources */}
                 <li>
