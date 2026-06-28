@@ -1,120 +1,79 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-function ResourceCard({ resource }) {
-  return (
-    <div className="shadow-sm card-body border-0" style={{ borderRadius: 30 }} data-aos="fade-up">
-      <h3 style={{ marginLeft: 10, paddingBottom: 4 }}>{resource.name}</h3>
-      <div style={{ width: '100%', borderTop: '1px solid rgba(255,255,155)', marginBottom: 6 }} />
-      <div className="card-text">
-        <ul className="list-group" style={{ marginBottom: 20 }}>
-          <li className="list-group-item borderless box-padding bg-transparent" style={{ fontSize: 'large' }}>
-            <h5 style={{ display: 'inline' }}>Description:</h5> {resource.description}
-          </li>
-          <li className="list-group-item borderless box-padding bg-transparent" style={{ fontSize: 'large' }}>
-            <h5 style={{ display: 'inline' }}>State:</h5> {resource.state}
-          </li>
-          <li className="list-group-item borderless box-padding bg-transparent" style={{ fontSize: 'large' }}>
-            <h5 style={{ display: 'inline' }}>Institution:</h5> {resource.institution}
-          </li>
-          {resource.ownerName && (
-            <li className="list-group-item borderless box-padding bg-transparent" style={{ fontSize: 'large' }}>
-              <h5 style={{ display: 'inline' }}>Author:</h5> {resource.ownerName}
-            </li>
-          )}
-          <li className="list-group-item borderless box-padding bg-transparent" style={{ fontSize: 'large' }}>
-            <h5 style={{ display: 'inline' }}>Topic(s)/Issue(s):</h5> {Array.isArray(resource.tags) ? resource.tags.join(', ') : resource.tags}
-          </li>
-        </ul>
-        <div className="list-group-item" style={{ fontSize: 'large', color: 'white', background: '#0053a4', display: 'flex', justifyContent: 'center', width: 260 }}>
-          <a style={{ color: 'white' }} href={resource.uri} target="_blank" rel="noreferrer">Download Resource</a>
-        </div>
-      </div>
-    </div>
-  );
-}
+const NAVY = '#0f1f3d';
+const BLUE = '#0053a4';
+const GOLD = '#c49422';
 
-function EventCard({ event, loggedIn }) {
-  const showFull = loggedIn || event.visibility === 'public';
-  const description = showFull
-    ? event.description
-    : (event.description.split('.')[0] + '...');
-
+function ResourceAccordion({ resources }) {
+  const [openIdx, setOpenIdx] = useState(null);
   return (
-    <div className="card border-0" style={{ borderRadius: 30 }} data-aos="fade-up">
-      <div className="shadow-sm card-body">
-        <h3 style={{ marginLeft: 10 }}>{event.title}</h3>
-        <div className="card-text">
-          <ul className="list-group">
-            <li className="list-group-item borderless box-padding bg-transparent" style={{ fontSize: 'large' }}>
-              <div className="row">
-                <div className="col-md-9 col-sm-12">
-                  <h5 style={{ display: 'inline', fontWeight: 650 }}>Description:</h5> {description}
-                </div>
-                <div className="col-md-3 col-sm-12 align-self-center">
-                  <img
-                    src={event.imageURL || '/images/enact-logo.webp'}
-                    alt={event.title}
-                    style={{ objectFit: 'cover', maxWidth: '100%', borderRadius: 20 }}
-                  />
-                </div>
+    <div>
+      {resources.map((r, i) => (
+        <div key={r._id || i} style={{ marginBottom: 8, border: '1px solid #e0e0e0', borderRadius: 6, overflow: 'hidden' }}>
+          <button
+            onClick={() => setOpenIdx(openIdx === i ? null : i)}
+            style={{ width: '100%', padding: '16px 20px', background: openIdx === i ? NAVY : 'white', color: openIdx === i ? 'white' : NAVY, border: 'none', textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', fontWeight: 600, fontSize: '1rem' }}
+          >
+            <span>{r.name}</span>
+            <span style={{ fontSize: '1.2rem', lineHeight: 1 }}>{openIdx === i ? '−' : '+'}</span>
+          </button>
+          {openIdx === i && (
+            <div style={{ padding: '20px 24px', background: '#fafafa' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px 32px', marginBottom: 16 }}>
+                {r.description && <p style={{ margin: 0, color: '#444', fontSize: '0.95rem' }}><strong>Description:</strong> {r.description}</p>}
+                {r.state && <p style={{ margin: 0, color: '#444', fontSize: '0.95rem' }}><strong>State:</strong> {r.state}</p>}
+                {r.institution && <p style={{ margin: 0, color: '#444', fontSize: '0.95rem' }}><strong>Institution:</strong> {r.institution}</p>}
+                {r.ownerName && <p style={{ margin: 0, color: '#444', fontSize: '0.95rem' }}><strong>Author:</strong> {r.ownerName}</p>}
+                {r.tags && <p style={{ margin: 0, color: '#444', fontSize: '0.95rem' }}><strong>Topics:</strong> {Array.isArray(r.tags) ? r.tags.join(', ') : r.tags}</p>}
               </div>
-            </li>
-
-            {showFull ? (
-              <>
-                {event.start && (
-                  <li className="list-group-item borderless box-padding bg-transparent" style={{ fontSize: 'large' }}>
-                    <h5 style={{ display: 'inline', fontWeight: 650 }}>Date: </h5>
-                    {new Date(event.start).toLocaleDateString()}
-                  </li>
-                )}
-                {event.uri && (
-                  <li className="list-group-item" style={{ fontSize: 'large', color: 'white', background: '#0053a4', display: 'flex', justifyContent: 'center', width: 260, marginTop: 30 }}>
-                    <a style={{ color: 'white' }} href={event.uri} target="_blank" rel="noreferrer">View Event</a>
-                  </li>
-                )}
-              </>
-            ) : (
-              <li className="list-group-item borderless box-padding bg-transparent" style={{ fontSize: 'large' }}>
-                <h5 style={{ display: 'inline' }}>To view details, <a href="/app/login" className="btn btn-sm btn-warning">Click to Login</a></h5>
-              </li>
-            )}
-          </ul>
+              <a href={r.uri} target="_blank" rel="noreferrer" style={{ background: BLUE, color: 'white', padding: '8px 20px', borderRadius: 4, textDecoration: 'none', fontWeight: 500, fontSize: '0.9rem' }}>
+                Download Resource ↗
+              </a>
+            </div>
+          )}
         </div>
-      </div>
+      ))}
     </div>
   );
 }
 
-function Carousel({ imagePaths, labelPaths }) {
-  const [active, setActive] = useState(0);
-
-  if (!imagePaths || imagePaths.length === 0) return null;
-
+function EventAccordion({ events, loggedIn }) {
+  const [openIdx, setOpenIdx] = useState(null);
   return (
-    <div id="carouselExampleControls" className="carousel slide" data-ride="carousel">
-      <div className="carousel-inner">
-        {imagePaths.map((src, i) => (
-          <div key={i} className={`carousel-item${i === active ? ' active' : ''}`}>
-            <img src={src} style={{ width: '100%', height: 480, objectFit: 'contain' }} className="d-block w-100" alt="" />
-            {labelPaths[i] && (
-              <div className="carousel-caption d-none d-md-block"
-                style={{ right: '1%', left: '1%', color: 'black', backgroundColor: 'white', opacity: 0.95, borderRadius: 15, padding: '4%' }}>
-                <p style={{ fontSize: 'large', lineHeight: '110%' }}>{labelPaths[i]}</p>
+    <div>
+      {events.map((ev, i) => {
+        const showFull = loggedIn || ev.visibility === 'public';
+        const desc = showFull ? ev.description : (String(ev.description || '').split('.')[0] + '...');
+        return (
+          <div key={ev._id || i} style={{ marginBottom: 8, border: '1px solid #e0e0e0', borderRadius: 6, overflow: 'hidden' }}>
+            <button
+              onClick={() => setOpenIdx(openIdx === i ? null : i)}
+              style={{ width: '100%', padding: '16px 20px', background: openIdx === i ? NAVY : 'white', color: openIdx === i ? 'white' : NAVY, border: 'none', textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', fontWeight: 600, fontSize: '1rem', gap: 12 }}
+            >
+              <span style={{ flex: 1 }}>{ev.title}</span>
+              <span style={{ fontSize: '0.8rem', fontWeight: 400, opacity: 0.8 }}>{new Date(ev.start).toLocaleDateString()}</span>
+              <span style={{ fontSize: '1.2rem', lineHeight: 1 }}>{openIdx === i ? '−' : '+'}</span>
+            </button>
+            {openIdx === i && (
+              <div style={{ padding: '20px 24px', background: '#fafafa', display: 'flex', gap: 20 }}>
+                {ev.imageURL && (
+                  <img src={ev.imageURL} alt={ev.title} style={{ width: 110, height: 75, objectFit: 'cover', borderRadius: 4, flexShrink: 0 }} />
+                )}
+                <div>
+                  <p style={{ margin: '0 0 12px', color: '#444', lineHeight: 1.65, fontSize: '0.95rem' }}>{desc}</p>
+                  {showFull && ev.uri ? (
+                    <a href={ev.uri} target="_blank" rel="noreferrer" style={{ color: BLUE, fontWeight: 500, fontSize: '0.9rem' }}>View Event ↗</a>
+                  ) : !loggedIn ? (
+                    <Link to="/login" style={{ color: GOLD, fontWeight: 500, fontSize: '0.9rem' }}>Log in to see full details →</Link>
+                  ) : null}
+                </div>
               </div>
             )}
           </div>
-        ))}
-      </div>
-      <button className="carousel-control-prev" type="button" onClick={() => setActive(i => (i - 1 + imagePaths.length) % imagePaths.length)}>
-        <span className="carousel-control-prev-icon" aria-hidden="true" />
-        <span className="sr-only">Previous</span>
-      </button>
-      <button className="carousel-control-next" type="button" onClick={() => setActive(i => (i + 1) % imagePaths.length)}>
-        <span className="carousel-control-next-icon" aria-hidden="true" />
-        <span className="sr-only">Next</span>
-      </button>
+        );
+      })}
     </div>
   );
 }
@@ -122,11 +81,9 @@ function Carousel({ imagePaths, labelPaths }) {
 export default function HomePage() {
   const { user } = useAuth();
   const [data, setData] = useState(null);
-  const [dismissed, setDismissed] = useState(false);
-  const topRef = useRef(null);
-  const getStartedRef = useRef(null);
-  const eventsRef = useRef(null);
   const videoRef = useRef(null);
+  const eventsRef = useRef(null);
+  const resourcesRef = useRef(null);
 
   const loggedIn = user?.loggedIn;
   const status = user?.status;
@@ -138,319 +95,206 @@ export default function HomePage() {
       .catch(() => setData({ resources: [], events: [], imagePaths: [], labelPaths: [], cookieDismissed: false }));
   }, []);
 
-  useEffect(() => {
-    if (data?.cookieDismissed) setDismissed(true);
-  }, [data]);
-
-  useEffect(() => {
-    if (window.AOS) window.AOS.init();
-  }, [data]);
-
-  function handleDismiss() {
-    setDismissed(true);
-    document.cookie = `notificationDismissed=true; path=/; max-age=${60 * 60 * 24 * 30}`;
-  }
-
   function scrollTo(ref) {
     ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  if (!data) return null;
+  const { resources = [], events = [] } = data || {};
 
-  const { resources, events, imagePaths, labelPaths } = data;
+  const audienceCards = [
+    {
+      number: '01', title: 'Students & Alumni',
+      description: 'Search student work, and network with the national community of ENACT students and alumni.',
+      linkText: 'Log in to the network', linkTo: loggedIn ? '/search' : '/login'
+    },
+    {
+      number: '02', title: 'Faculty Fellows',
+      description: 'Access ENACT teaching resources, syllabi, and student work to bring civic engagement into your classroom.',
+      linkText: 'Explore teaching resources', linkTo: '/search'
+    },
+    {
+      number: '03', title: 'The Public',
+      description: 'Read student work on bills from across the U.S. — op-eds, issue research, testimony, and more.',
+      linkText: 'Browse public resources', linkTo: '/search'
+    }
+  ];
+
+  const quickNavItems = [
+    { label: 'Search Resources', to: '/search' },
+    { label: 'Get Started', to: loggedIn ? '/search' : '/login' },
+    { label: 'Upcoming Events', href: '#', onClick: (e) => { e.preventDefault(); scrollTo(eventsRef); } },
+    { label: 'Intro Video', href: '#', onClick: (e) => { e.preventDefault(); scrollTo(videoRef); } },
+    { label: 'News & Updates', href: 'https://www.brandeis.edu/enact/news-updates/index.html', external: true }
+  ];
 
   return (
-    <div ref={topRef}>
-      {/* Sticky header banner */}
-      <header className="header header--sticky">
-        <div className="header__content header__content--fluid-width">
-          <a className="header__logo-title" href="/app">
-            <div className="card-body" style={{ backgroundColor: 'transparent' }}>
-              <img style={{ height: 70, width: 70 }} src="/images/enact-logo.webp" alt="ENACT logo" />
-            </div>
-          </a>
-          <a className="header__logo-title-1" href="/app">
-            THE ABRAHAM FEINBERG EDUCATIONAL<br />NETWORK FOR ACTIVE CIVIC TRANSFORMATION
-            <p style={{ fontSize: 'small' }}>a national program based at Brandeis University</p>
-          </a>
-        </div>
-        {!dismissed && (
-          <div id="notification" className="alert alert-warning alert-dismissible fade show" role="alert" style={{ marginTop: 20 }}>
-            <strong>OPPORTUNITY:</strong> Apply for the ENACT Faculty Fellowship{' '}
-            <a href="https://www.brandeis.edu/enact/grants-fellowships/index.html" target="_blank" rel="noreferrer">here</a>,
-            or nominate a candidate by emailing{' '}
-            <a href="mailto:ENACT@brandeis.edu">ENACT@brandeis.edu</a>.
-            <button type="button" className="close" aria-label="Close" onClick={handleDismiss}>
-              <span aria-hidden="true">&times;</span>
+    <div>
+      {/* Hero */}
+      <section style={{ background: 'linear-gradient(135deg, #060f1e 0%, #0f2444 65%, #0053a4 100%)', padding: 'clamp(60px,10vw,110px) 0 clamp(60px,9vw,90px)', position: 'relative' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto', padding: '0 clamp(20px,5vw,60px)' }}>
+          <p style={{ color: GOLD, fontSize: '0.68rem', letterSpacing: '0.22em', textTransform: 'uppercase', marginBottom: 18, display: 'flex', alignItems: 'center', gap: 12 }}>
+            <span style={{ display: 'inline-block', width: 30, height: 1, background: GOLD, flexShrink: 0 }} />
+            A NATIONAL, NON-PARTISAN PROGRAM AT BRANDEIS UNIVERSITY
+          </p>
+          <h1 style={{ color: 'white', fontSize: 'clamp(2rem, 5.5vw, 3.6rem)', fontWeight: 700, lineHeight: 1.14, marginBottom: 24 }}>
+            Students turning conviction into{' '}
+            <em style={{ color: GOLD, fontStyle: 'italic' }}>legislation.</em>
+          </h1>
+          <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', maxWidth: 520, marginBottom: 44, lineHeight: 1.7 }}>
+            ENACT engages undergraduates at colleges and universities across the country in real, state-level legislative change —
+            bridging the classroom and the statehouse.
+          </p>
+          <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+            <Link to={loggedIn ? '/search' : '/login'}
+              style={{ background: GOLD, color: '#1a1100', padding: '14px 28px', borderRadius: 4, fontWeight: 700, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: '0.95rem' }}>
+              Get started →
+            </Link>
+            <button onClick={() => scrollTo(videoRef)}
+              style={{ background: 'transparent', color: 'white', border: '2px solid rgba(255,255,255,0.4)', padding: '13px 26px', borderRadius: 4, fontWeight: 600, cursor: 'pointer', fontSize: '0.95rem' }}>
+              Watch the intro film
             </button>
           </div>
-        )}
-      </header>
-
-      {/* Intro section */}
-      <section id="content-enact-front-intro" className="section section--intro section__grey" data-aos="fade-down" data-aos-duration="600">
-        <div className="section__content section__content--full-width" style={{ fontWeight: 750 }}>
-          <div className="intro">
-            <div className="intro__content" data-aos="fade-right" data-aos-duration="600">
-              <div className="intro__description" style={{ color: 'black', lineHeight: '120%' }}>
-                <b style={{ color: '#0053a4' }}>
-                  ENACT: The Abraham Feinberg Educational Network for Active Civic Transformation
-                </b>{' '}
-                is a national, non-partisan program based at{' '}
-                <a href="https://www.brandeis.edu">Brandeis University</a>, engaging undergraduates at
-                colleges and universities in state-level legislative change.
-                {!loggedIn && (
-                  <> <a id="not-logged-learn-more" href="https://www.enactnetwork.org/about" className="btn btn-sm btn-warning">Learn More</a></>
-                )}
-                <br />
-                {(loggedIn && status === 'student') || !loggedIn ? (
-                  <>
-                    <b style={{ color: '#FF9912' }}>- ENACT Students &amp; Alumni: </b>
-                    search student work. Network with students and alumni.
-                    {!loggedIn && (
-                      <> <a id="not-logged-login" href="/app/login" className="btn btn-sm btn-warning">Click to Login</a></>
-                    <br />
-                  </>
-                ) : null}
-                {((loggedIn && (status === 'faculty' || status === 'admin')) || !loggedIn) && (
-                  <>
-                    <b style={{ color: '#FF9912' }}>- ENACT Faculty Fellows: </b>
-                    access ENACT teaching resources and student work.<br />
-                  </>
-                )}
-                {!loggedIn && (
-                  <b style={{ color: '#FF9912' }}>- Public: </b>
-                )}
-                {!loggedIn && ' access student work on bills from across the U.S., including op-eds, issue research and more.'}
-                {loggedIn && status === 'TA' && (
-                  <>
-                    <b style={{ color: '#FF9912' }}>- TA: </b>
-                    help instructor review/upload resources or post events.<br />
-                  </>
-                )}
-              </div>
-
-              <div className="form-demo">
-                {loggedIn ? (
-                  (status === 'admin' || status === 'faculty' || status === 'TA') ? (
-                    <>
-                      <a href="/courses"><button className="form-demo__large fa" style={{ fontSize: 'large', fontWeight: 680 }}>Courses &#xf02d;</button></a>
-                      <a href="/search/"><button className="form-demo__large fa" style={{ fontSize: 'large', fontWeight: 680 }}>Search Resources &#xf002;</button></a>
-                      <a href="/resources/view/faculty"><button className="form-demo__large fa" style={{ fontSize: 'large', fontWeight: 680 }}>Guide For Faculty &#xf14e;</button></a>
-                    </>
-                  ) : (
-                    <>
-                      <a href="/search/"><button className="form-demo__large fa" style={{ fontSize: 'large', fontWeight: 680 }}>Search Resources &#xf002;</button></a>
-                      <a href="/networking"><button className="form-demo__large fa" style={{ fontSize: 'large', fontWeight: 680 }}>Networking &#xf08c;</button></a>
-                    </>
-                  )
-                ) : (
-                  <>
-                    <a href="/search/"><button className="form-demo__large fa" style={{ fontSize: 'large', fontWeight: 680 }}>Search Resources &#xf002;</button></a>
-                    <button className="form-demo__large fa" style={{ fontSize: 'large', fontWeight: 680 }} onClick={() => scrollTo(getStartedRef)}>Get Started &#8595;</button>
-                  </>
-                )}
-                <button className="form-demo__large fa" style={{ fontSize: 'large', fontWeight: 680 }} onClick={() => scrollTo(eventsRef)}>Upcoming Events &#8595;</button>
-                <button className="form-demo__large fa" style={{ fontSize: 'large', fontWeight: 680 }} onClick={() => scrollTo(videoRef)}>Intro Video &#8595;</button>
-                <a href="https://www.brandeis.edu/enact/news-updates/index.html" target="_blank" rel="noreferrer">
-                  <button className="form-demo__large fa" style={{ fontSize: 'large', fontWeight: 680 }}>News&amp;Updates &#xf002;</button>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div style={{ marginTop: 100 }} ref={getStartedRef} />
-      </section>
-
-      {/* Who we are section */}
-      <section id="content-enact-program-intro" className="section section__grey">
-        <br /><br /><br />
-        <h2 className="section__title section__title--centered">Who we are &amp; What you can do</h2>
-        <br /><br /><br />
-        <div className="section__content section__content--fluid-width section__content--padding--small">
-          <div className="grid grid--3col">
-            <div className="grid__item shadow-sm partners__slide__grey" style={{ minHeight: 500 }} data-aos="fade-up">
-              <h3 className="grid__title"><span>What We Do</span></h3>
-              <p className="grid__text" style={{ fontSize: 'larger', lineHeight: '145%' }}>
-                The <b style={{ color: '#0053a4' }}>ENACT: The Abraham Feinberg Educational Network for Active Civic Transformation</b> is a
-                national program engaging undergraduates at colleges and universities in state-level legislative change by
-                learning to work with legislators, staffers, and community organizations to advance policy. It is becoming a
-                major voice in addressing challenges to American democracy by engaging young people around the country in civic
-                activism built on knowledge, cooperation, justice and integrity.
-              </p>
-            </div>
-
-            <div className="grid__item shadow-sm partners__slide__grey" style={{ minHeight: 500, backgroundColor: 'black' }} data-aos="fade-up">
-              <Carousel imagePaths={imagePaths} labelPaths={labelPaths} />
-            </div>
-
-            <div className="grid__item shadow-sm partners__slide__grey" style={{ minHeight: 500 }} data-aos="fade-up">
-              <h3 className="grid__title"><span>The ENACT Model</span></h3>
-              <p className="grid__text" style={{ fontSize: 'large', lineHeight: '140%' }}>
-                <b style={{ color: '#0053a4' }}>• Workshop</b>: ENACT launched with a workshop at Brandeis University in
-                May 2016. Under the leadership of the program's academic director, ENACT Fellows shared ideas and worked on course development.
-                <br />
-                <b style={{ color: '#0053a4' }}>• Courses</b>: In ENACT courses students learn about participating in the
-                legislative and advocacy process at the state level, with a substantial hands-on component in which they engage directly in that process.
-                <br />
-                <b style={{ color: '#0053a4' }}>• Online Network</b>: The ENACT Network is a national in-person and online
-                network of students, faculty, activists and legislators. It is a strategic and information hub for state-level
-                players that enables them to connect with counterparts throughout the country.
-              </p>
-            </div>
-          </div>
-          <div className="clear" />
         </div>
       </section>
 
-      {/* Public resources section */}
-      <section id="content-enact-public-resources" className="section diagonal-gradient">
-        <div className="section__content section__content--fluid-width section__content--padding">
-          <h2 className="section__title section__title--centered1" style={{ color: 'white' }} data-aos="fade-up">
-            Public resources
+      {/* Quick nav bar */}
+      <nav style={{ background: '#08152a', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ display: 'flex', overflowX: 'auto' }}>
+          {quickNavItems.map((item, i) => {
+            const navStyle = { color: 'rgba(255,255,255,0.8)', flex: '1 1 auto', minWidth: 160, padding: '18px 22px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderRight: i < quickNavItems.length - 1 ? '1px solid rgba(255,255,255,0.07)' : 'none', textDecoration: 'none', fontSize: '0.875rem', fontWeight: 500, whiteSpace: 'nowrap', transition: 'background 0.15s, color 0.15s' };
+            const hover = { onMouseEnter: e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.color = 'white'; }, onMouseLeave: e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'rgba(255,255,255,0.8)'; } };
+            const arrow = item.external ? '↗' : '→';
+            const inner = <><span>{item.label}</span><span style={{ color: GOLD, marginLeft: 10 }}>{arrow}</span></>;
+            if (item.to) return <Link key={item.label} to={item.to} className="hp-qnav-item" style={navStyle} {...hover}>{inner}</Link>;
+            return <a key={item.label} href={item.href} onClick={item.onClick} target={item.external ? '_blank' : undefined} rel={item.external ? 'noreferrer' : undefined} className="hp-qnav-item" style={navStyle} {...hover}>{inner}</a>;
+          })}
+        </div>
+      </nav>
+
+      {/* Who We Are */}
+      <section style={{ background: 'white', padding: 'clamp(48px,8vw,80px) 0' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 clamp(20px,5vw,60px)' }}>
+          <div className="hp-who-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(24px,5vw,72px)', marginBottom: 52, alignItems: 'start' }}>
+            <div>
+              <p style={{ color: GOLD, fontSize: '0.68rem', letterSpacing: '0.22em', textTransform: 'uppercase', marginBottom: 16 }}>WHO WE ARE</p>
+              <h2 style={{ fontSize: 'clamp(1.5rem, 3.2vw, 2.1rem)', fontWeight: 700, color: NAVY, lineHeight: 1.3, margin: 0 }}>
+                The Abraham Feinberg Educational Network for Active Civic Transformation.
+              </h2>
+            </div>
+            <p style={{ fontSize: '1.05rem', lineHeight: 1.75, color: '#4a4a4a', paddingTop: 'clamp(0px,3vw,36px)', margin: 0 }}>
+              ENACT is a national, non-partisan program based at{' '}
+              <a href="https://www.brandeis.edu" target="_blank" rel="noreferrer" style={{ color: BLUE }}>Brandeis University ↗</a>.
+              Through a signature course and a connected network, students research live legislation, draft testimony and
+              op-eds, and work directly with lawmakers on the issues they care about most — gaining the skills and confidence
+              to stay civically engaged for life.
+            </p>
+          </div>
+
+          <div className="hp-cards-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+            {audienceCards.map(card => (
+              <div key={card.number} style={{ border: '1px solid #e8e4de', borderTop: `3px solid ${GOLD}`, borderRadius: 4, padding: '28px 24px', background: 'white', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ color: GOLD, fontSize: '0.75rem', fontWeight: 700, marginBottom: 10, letterSpacing: '0.05em' }}>{card.number}</div>
+                <h3 style={{ color: NAVY, fontSize: '1.2rem', fontWeight: 700, marginBottom: 12 }}>{card.title}</h3>
+                <p style={{ color: '#555', lineHeight: 1.65, marginBottom: 'auto', paddingBottom: 20, fontSize: '0.95rem' }}>{card.description}</p>
+                <Link to={card.linkTo} style={{ color: BLUE, fontWeight: 600, textDecoration: 'none', fontSize: '0.9rem' }}>
+                  {card.linkText} →
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Stats */}
+      <section style={{ background: NAVY, padding: 'clamp(48px,7vw,72px) 0' }}>
+        <div className="hp-stats-grid" style={{ maxWidth: 1100, margin: '0 auto', padding: '0 clamp(20px,5vw,60px)', display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 'clamp(24px,4vw,48px)', alignItems: 'center' }}>
+          <h2 style={{ color: 'white', fontSize: 'clamp(1.3rem, 3vw, 2rem)', fontWeight: 700, lineHeight: 1.35, margin: 0 }}>
+            A measurable shift in<br />civic life.
           </h2>
-          <br /><br /><br />
-          {resources.length === 0 ? (
-            <div className="shadow-sm card-body text-center" style={{ borderRadius: 30 }}>
-              <h4>No resource available yet</h4>
+          {[{ value: '30+', label: 'partner campuses' }, { value: '1,000+', label: 'undergraduates engaged' }, { value: '25+', label: 'states reached' }].map(s => (
+            <div key={s.label} style={{ textAlign: 'center' }}>
+              <div style={{ color: GOLD, fontSize: 'clamp(2rem,4vw,2.8rem)', fontWeight: 700, lineHeight: 1 }}>{s.value}</div>
+              <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.85rem', marginTop: 8 }}>{s.label}</div>
             </div>
-          ) : (
-            resources.slice(0, 3).map((r, i) => (
-              <React.Fragment key={r._id || i}>
-                <ResourceCard resource={r} />
-                <br />
-              </React.Fragment>
-            ))
-          )}
-          <br /><br />
-          {status === 'admin' && (
-            <div className="text-center" data-aos="fade-up" data-aos-delay="100">
-              <a href="/resources/manage/public">
-                <button className="btn btn-lg btn-light">Manage Displayed Resources</button>
-              </a>
-            </div>
-          )}
-          <div className="text-center" data-aos="fade-up" data-aos-delay="100">
-            <a href="/search/"><button className="btn btn-lg btn-light">Find More Resources</button></a>
-          </div>
-          <br />
-          <div className="clear" />
+          ))}
         </div>
       </section>
 
-      {/* Events section */}
-      <section id="content-enact-events" className="section section__grey">
-        <div style={{ paddingTop: 0 }} ref={eventsRef} />
-        <section className="section__content section__content--fluid-width">
-          <br /><br /><br />
-          <h2 className="section__title section__title--centered" data-aos="fade-up">Events</h2>
-          <br /><br /><br />
-          {events.length > 0 ? (
-            events.map((e, i) => (
-              <React.Fragment key={e._id || i}>
-                <EventCard event={e} loggedIn={loggedIn} />
-                {i < events.length - 1 && <br />}
-              </React.Fragment>
-            ))
-          ) : (
-            <div className="shadow-sm card-body text-center" style={{ borderRadius: 30 }}>
-              <h4>No events available yet</h4>
+      {/* Expandable Resources */}
+      {data && (
+        <section ref={resourcesRef} style={{ background: '#f8f7f2', padding: 'clamp(48px,7vw,72px) 0' }}>
+          <div style={{ maxWidth: 860, margin: '0 auto', padding: '0 clamp(20px,5vw,60px)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 28, flexWrap: 'wrap', gap: 8 }}>
+              <h2 style={{ color: NAVY, fontSize: '1.75rem', fontWeight: 700, margin: 0 }}>Public Resources</h2>
+              <Link to="/search" style={{ color: BLUE, fontWeight: 500, textDecoration: 'none', fontSize: '0.9rem' }}>Browse all resources →</Link>
             </div>
-          )}
-          <br /><br /><br />
-          <div className="text-center" data-aos="fade-up" style={{ paddingBottom: 80 }} data-aos-delay="100">
-            <a href="/events"><button className="btn btn-lg btn-primary">View Upcoming &amp; Past Events</button></a>
+            {resources.length > 0 ? (
+              <ResourceAccordion resources={resources} />
+            ) : (
+              <p style={{ color: '#666' }}>No resources available yet.</p>
+            )}
+            {status === 'admin' && (
+              <div style={{ marginTop: 16 }}>
+                <a href="/resources/manage/public" style={{ color: BLUE, fontWeight: 500, fontSize: '0.9rem' }}>Manage Displayed Resources →</a>
+              </div>
+            )}
           </div>
         </section>
-      </section>
+      )}
 
-      {/* Join Us (non-logged-in only) */}
-      {!loggedIn && (
-        <section id="content-enact-join-us" className="section diagonal-gradient">
-          <br /><br /><br />
-          <h2 className="section__title section__title--centered1" style={{ color: 'white' }} data-aos="fade-up">Join Us</h2>
-          <br /><br /><br />
-          <div className="section__content section__content--fluid-width section__content--padding--small">
-            <div className="grid grid--2col">
-              <div className="grid__item partners__slide__grey" style={{ height: 480 }} data-aos="fade-up">
-                <h2 className="grid__title"><b>For Students</b></h2>
-                <p className="grid__text" style={{ fontSize: 'larger', lineHeight: '150%' }}>
-                  • Are you a student in an ENACT course? Contact your professor for the PIN you need to login,
-                  create a profile. You will then be able to access all resources, and upload your own work.
-                  Already have a profile? Login above to gain full access to the site.
-                  <br /><br />
-                  • Are you an alum of an ENACT course? If you do not already have a profile, contact{' '}
-                  <a href="mailto:enact@brandeis.edu">ENACT@brandeis.edu</a> to request a pin.
-                </p>
-              </div>
-              <div className="grid__item partners__slide__grey" style={{ height: 480 }} data-aos="fade-up">
-                <div>
-                  <h2 className="grid__title"><b>For Professors</b></h2>
-                  <p className="grid__text" style={{ fontSize: 'larger', lineHeight: '135%' }}>
-                    • Are you an ENACT Faculty Fellow? Login above to gain full access to the site.
-                    <br />
-                    • Are you interested in teaching an ENACT course? Contact{' '}
-                    <a href="mailto:enact@brandeis.edu">ENACT@brandeis.edu</a>
-                  </p>
-                </div>
-                <div>
-                  <h2 className="grid__title"><b>For Public</b></h2>
-                  <p className="grid__text" style={{ fontSize: 'larger', lineHeight: '135%' }}>
-                    • Are you an interested member of the public? Search publicly available resources created by
-                    ENACT students from across the United States. You can browse, enter a keyword in the search
-                    box, or search using any or all of the categories below.
-                  </p>
-                </div>
-              </div>
+      {/* Expandable Events */}
+      {data && (
+        <section ref={eventsRef} style={{ background: 'white', padding: 'clamp(48px,7vw,72px) 0' }}>
+          <div style={{ maxWidth: 860, margin: '0 auto', padding: '0 clamp(20px,5vw,60px)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 28, flexWrap: 'wrap', gap: 8 }}>
+              <h2 style={{ color: NAVY, fontSize: '1.75rem', fontWeight: 700, margin: 0 }}>Events</h2>
+              <Link to="/events" style={{ color: BLUE, fontWeight: 500, textDecoration: 'none', fontSize: '0.9rem' }}>View all events →</Link>
             </div>
-            <div className="clear" />
+            {events.length > 0 ? (
+              <EventAccordion events={events} loggedIn={loggedIn} />
+            ) : (
+              <p style={{ color: '#666' }}>
+                No upcoming events at this time.{' '}
+                <a href="https://www.brandeis.edu/enact/news-events/index.html" target="_blank" rel="noreferrer" style={{ color: BLUE }}>
+                  Check the ENACT events page ↗
+                </a>
+              </p>
+            )}
           </div>
         </section>
       )}
 
       {/* Intro Videos */}
-      <section
-        id="content-enact-intro-video"
-        className={loggedIn ? 'section diagonal-gradient' : 'section section__grey'}
-        ref={videoRef}
-      >
-        <section className="section__content section__content--fix-width">
-          <br /><br /><br />
-          <h2
-            className="section__title section__title--centered"
-            style={loggedIn ? { color: 'white' } : {}}
-            data-aos="fade-up"
-          >
-            Intro Videos
-          </h2>
-          <div className="row">
-            <div className="column">
-              <h3 style={{ textAlign: 'center', color: loggedIn ? 'white' : undefined }}>What is ENACT?</h3>
-              <video style={{ width: 600, height: 400 }} controls>
+      <section ref={videoRef} style={{ background: 'linear-gradient(135deg, #060f1e 0%, #0f2444 65%, #0053a4 100%)', padding: 'clamp(48px,7vw,72px) 0' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 clamp(20px,5vw,60px)' }}>
+          <h2 style={{ color: 'white', fontSize: '1.75rem', fontWeight: 700, marginBottom: 36, textAlign: 'center' }}>Intro Videos</h2>
+          <div className="hp-video-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32 }}>
+            <div>
+              <h5 style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 12, textAlign: 'center' }}>What is ENACT?</h5>
+              <video style={{ width: '100%', borderRadius: 6 }} controls>
                 <source src="https://enact-resources.s3.us-east-2.amazonaws.com/ENACT+Updated+Video+2.mp4" type="video/mp4" />
               </video>
             </div>
-            <div className="column">
-              <h3 style={{ textAlign: 'center', color: loggedIn ? 'white' : undefined }}>A Brief Tour of enactnetwork.org</h3>
-              <video style={{ width: 600, height: 400 }} poster="/images/introVideo.webp" controls>
+            <div>
+              <h5 style={{ color: 'rgba(255,255,255,0.8)', marginBottom: 12, textAlign: 'center' }}>A Brief Tour of enactnetwork.org</h5>
+              <video style={{ width: '100%', borderRadius: 6 }} poster="/images/introVideo.webp" controls>
                 <source src="https://enact-resources.s3.us-east-2.amazonaws.com/Getting+to+Know+Enact+(With+Captions).mp4" type="video/mp4" />
               </video>
             </div>
           </div>
-          <br /><br /><br />
-          <div className="text-center" style={{ paddingBottom: loggedIn ? 0 : 0 }}>
-            <button className={`btn btn-lg ${loggedIn ? 'btn-light' : 'btn-primary'}`} onClick={() => scrollTo(topRef)}>
-              Back to Top
-            </button>
-          </div>
-          <br /><br /><br />
-        </section>
+        </div>
       </section>
 
       <style>{`
-        .column { float: left; width: 50%; padding: 10px; }
-        .row:after { content: ""; display: table; clear: both; }
-        @media screen and (max-width: 1200px) { .column { width: 100%; } }
+        @media (max-width: 768px) {
+          .hp-who-grid { grid-template-columns: 1fr !important; }
+          .hp-cards-grid { grid-template-columns: 1fr !important; }
+          .hp-stats-grid { grid-template-columns: 1fr 1fr !important; }
+          .hp-video-grid { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 480px) {
+          .hp-stats-grid { grid-template-columns: 1fr !important; }
+        }
       `}</style>
     </div>
   );
