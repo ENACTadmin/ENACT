@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const NAVY = '#0f1f3d';
 const BLUE = '#0053a4';
@@ -162,7 +163,9 @@ export default function AboutPage() {
       .catch(() => {});
   }, []);
 
-  const previewFaculty = faculty.slice(0, 8);
+  const previewFaculty = faculty
+    .filter(p => p.profilePicURL && !p.profilePicURL.includes('defaultProfile'))
+    .slice(0, 8);
 
   return (
     <>
@@ -217,9 +220,9 @@ export default function AboutPage() {
             <h2 style={{ color: NAVY, fontSize: 'clamp(1.4rem, 3vw, 2rem)', fontWeight: 700, margin: 0 }}>
               A network across {faculty.length > 0 ? `${faculty.length}+` : '8+'} campuses
             </h2>
-            <a href="/app/profiles/view/faculty" style={{ color: BLUE, fontWeight: 500, textDecoration: 'none', fontSize: '0.9rem' }}>
+            <Link to="/profiles/view/faculty" style={{ color: BLUE, fontWeight: 500, textDecoration: 'none', fontSize: '0.9rem' }}>
               View all fellows →
-            </a>
+            </Link>
           </div>
           {previewFaculty.length > 0 ? (
             <div className="about-faculty-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
@@ -227,7 +230,7 @@ export default function AboutPage() {
             </div>
           ) : (
             <p style={{ color: '#666' }}>
-              <a href="/app/profiles/view/faculty" style={{ color: BLUE }}>View the full list of faculty fellows →</a>
+              <Link to="/profiles/view/faculty" style={{ color: BLUE }}>View the full list of faculty fellows →</Link>
             </p>
           )}
         </div>
