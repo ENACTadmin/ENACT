@@ -16,7 +16,44 @@ export default function Navbar() {
   if (loading) return null;
 
   return (
-    <header className="header">
+    <header className="header react-nav"
+      style={{ position: 'relative', background: '#0a1628', boxShadow: '0 2px 12px rgba(0,0,0,0.35)' }}>
+      <style>{`
+        /* ── Scoped React navbar overrides ── */
+        .react-nav .header__menu > ul > li > a,
+        .react-nav .header__menu ul li a.header-link {
+          color: rgba(255,255,255,0.85) !important;
+        }
+        .react-nav .header__menu > ul > li > a:hover,
+        .react-nav .header__menu ul li a.header-link:hover {
+          color: #fff !important;
+        }
+        /* Sub-menu dropdown dark theme */
+        .react-nav .header__menu .sub-menu,
+        .react-nav .header__menu .dropdown-menu {
+          background: #0a1628 !important;
+          border: 1px solid rgba(255,255,255,0.1) !important;
+          border-top: none !important;
+        }
+        .react-nav .header__menu .sub-menu li a,
+        .react-nav .header__menu .dropdown-menu li a {
+          color: rgba(255,255,255,0.78) !important;
+        }
+        .react-nav .header__menu .sub-menu li a:hover,
+        .react-nav .header__menu .dropdown-menu li a:hover {
+          color: #fff !important;
+          background: rgba(255,255,255,0.07) !important;
+        }
+        /* Keep LOGIN button white-on-blue */
+        .react-nav .header__menu > ul > li.header__btn--signup > a {
+          color: #fff !important;
+          background-color: #0053a4 !important;
+        }
+        /* Divider line between top-level items */
+        .react-nav .header__menu > ul > li {
+          border-right: 1px solid rgba(255,255,255,0.06);
+        }
+      `}</style>
       <div className="header__content header__content--fluid-width">
         <Link className="header__logo-title" to="/">
           <div className="card-body" style={{ backgroundColor: 'transparent' }}>
