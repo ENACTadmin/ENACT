@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
+// Pages with React equivalents — use <Link> to stay in the SPA.
+// Pages not yet migrated — use <a href> so Express handles them.
+
 export default function Navbar() {
   const { user, loading } = useAuth();
   const loggedIn = user?.loggedIn;
@@ -16,7 +19,51 @@ export default function Navbar() {
   if (loading) return null;
 
   return (
-    <header className="header">
+    <header className="header react-nav"
+      style={{ position: 'relative', background: '#0a1628', boxShadow: '0 2px 12px rgba(0,0,0,0.35)' }}>
+      <style>{`
+        /* ── Scoped React navbar overrides ── */
+        .react-nav .header__menu > ul > li > a,
+        .react-nav .header__menu > ul > li > .header-link,
+        .react-nav .header__menu ul li a.header-link,
+        .react-nav .header__menu ul li .header-link {
+          color: rgba(255,255,255,0.85) !important;
+        }
+        .react-nav .header__menu > ul > li > a:hover,
+        .react-nav .header__menu > ul > li > .header-link:hover,
+        .react-nav .header__menu ul li a.header-link:hover,
+        .react-nav .header__menu ul li .header-link:hover {
+          color: #fff !important;
+        }
+        .react-nav .header__menu .sub-menu,
+        .react-nav .header__menu .dropdown-menu {
+          background: #0a1628 !important;
+          border: 1px solid rgba(255,255,255,0.1) !important;
+          border-top: none !important;
+        }
+        .react-nav .header__menu .sub-menu li a,
+        .react-nav .header__menu .sub-menu li .header-link,
+        .react-nav .header__menu .dropdown-menu li a,
+        .react-nav .header__menu .dropdown-menu li .header-link {
+          color: rgba(255,255,255,0.78) !important;
+        }
+        .react-nav .header__menu .sub-menu li a:hover,
+        .react-nav .header__menu .sub-menu li .header-link:hover,
+        .react-nav .header__menu .dropdown-menu li a:hover,
+        .react-nav .header__menu .dropdown-menu li .header-link:hover {
+          color: #fff !important;
+          background: rgba(255,255,255,0.07) !important;
+        }
+        .react-nav .header__menu > ul > li.header__btn--signup > a,
+        .react-nav .header__menu > ul > li.header__btn--signup > .header-link {
+          color: #fff !important;
+          background-color: #0053a4 !important;
+        }
+        .react-nav .header__menu > ul > li {
+          border-right: 1px solid rgba(255,255,255,0.06);
+        }
+      `}</style>
+
       <div className="header__content header__content--fluid-width">
         <Link className="header__logo-title" to="/">
           <div className="card-body" style={{ backgroundColor: 'transparent' }}>
@@ -30,12 +77,12 @@ export default function Navbar() {
           <ul>
             {/* Home */}
             <li>
-              <a className="header-link" id="home-link" href="#">Home</a>
+              <a className="header-link" href="#">Home</a>
               <ul className="sub-menu">
                 <li><Link className="header-link" to="/">ENACT Resources</Link></li>
                 <li>
                   <a className="header-link" href="https://www.brandeis.edu/enact/index.html" target="_blank" rel="noreferrer">
-                    ENACT Program
+                    ENACT Program ↗
                   </a>
                 </li>
               </ul>
@@ -45,10 +92,10 @@ export default function Navbar() {
               <>
                 {/* Impact */}
                 <li>
-                  <a className="header-link" id="impact" href="#">Impact</a>
+                  <a className="header-link" href="#">Impact</a>
                   <ul className="sub-menu">
-                    <li><a className="header-link" href="/resources/view/facultyResearch">Faculty Research</a></li>
-                    <li><a className="header-link" href="/resources/view/inTheNews">In the News</a></li>
+                    <li><Link className="header-link" to="/impact?tab=research">Faculty Research</Link></li>
+                    <li><Link className="header-link" to="/impact?tab=news">In the News</Link></li>
                   </ul>
                 </li>
 
@@ -56,7 +103,7 @@ export default function Navbar() {
                 <li>
                   <a className="header-link" href="#">Resources</a>
                   <ul className="sub-menu">
-                    <li><a className="header-link" href="/search/">Search Resources</a></li>
+                    <li><Link className="header-link" to="/search">Search Resources</Link></li>
                   </ul>
                 </li>
 
@@ -69,44 +116,41 @@ export default function Navbar() {
                 <li>
                   <a className="header-link" href="#">Courses &amp; Events</a>
                   <ul className="sub-menu">
-                    <li><a className="header-link" href="/courses/schedule">Course Schedule</a></li>
-                    <li><a className="header-link" href="/events">Events</a></li>
+                    <li><Link className="header-link" to="/courses/schedule">Course Schedule</Link></li>
+                    <li><Link className="header-link" to="/events">Events</Link></li>
                     <li>
                       <a className="header-link" href="https://www.brandeis.edu/enact/news-updates/index.html" target="_blank" rel="noreferrer">
-                        News &amp; Updates
+                        News &amp; Updates ↗
                       </a>
                     </li>
                   </ul>
                 </li>
 
                 {/* About */}
-                <li><a className="header-link" href="/about">About</a></li>
+                <li><Link className="header-link" to="/about">About</Link></li>
               </>
             ) : (
               <>
-                {/* Impact (admin only) */}
-                {status === 'admin' && (
-                  <li>
-                    <a className="header-link" href="#">Impact</a>
-                    <ul className="sub-menu">
-                      <li><a className="header-link" href="/resources/view/facultyResearch">Faculty Research</a></li>
-                      <li><a className="header-link" href="/resources/view/inTheNews">In the News</a></li>
-                    </ul>
-                  </li>
-                )}
+                {/* Impact */}
+                <li>
+                  <a className="header-link" href="#">Impact</a>
+                  <ul className="sub-menu">
+                    <li><Link className="header-link" to="/impact?tab=research">Faculty Research</Link></li>
+                    <li><Link className="header-link" to="/impact?tab=news">In the News</Link></li>
+                  </ul>
+                </li>
 
                 {/* Resources */}
                 <li>
                   <a className="header-link" href="#">Resources</a>
                   <ul className="sub-menu">
-                    <li><a className="header-link" href="/search/">Search Resources</a></li>
+                    <li><Link className="header-link" to="/search">Search Resources</Link></li>
                     <li><a className="header-link" href="/resources/view/student-guide">Advice &amp; Tips for Students</a></li>
 
                     {(status === 'faculty' || status === 'admin') && (
                       <li><a className="header-link" href="/resource/review">Approve resources</a></li>
                     )}
 
-                    {/* Upload class resources dropdown */}
                     {courses.length === 1 ? (
                       <li>
                         <a className="header-link" href={`/resource/upload/course/${courses[0]._id}`}>
@@ -145,7 +189,7 @@ export default function Navbar() {
                   <a className="header-link" href="#">Networking</a>
                   <ul className="sub-menu">
                     <li><a className="header-link" href="/networking">Networking</a></li>
-                    <li><a className="header-link" href="/profiles/view/faculty">Faculty &amp; Staff</a></li>
+                    <li><Link className="header-link" to="/profiles/view/faculty">Faculty &amp; Staff</Link></li>
                   </ul>
                 </li>
 
@@ -153,7 +197,7 @@ export default function Navbar() {
                 <li>
                   <a className="header-link" href="#">Courses &amp; Events</a>
                   <ul className="sub-menu">
-                    <li><a className="header-link" href="/courses/schedule">Course Schedule</a></li>
+                    <li><Link className="header-link" to="/courses/schedule">Course Schedule</Link></li>
                     <li><a className="header-link" href="/courses">Course Management</a></li>
                     {courses.map(c => (
                       <li key={c._id}>
@@ -162,11 +206,11 @@ export default function Navbar() {
                         </a>
                       </li>
                     ))}
-                    <li><option disabled>─────────────</option></li>
-                    <li><a className="header-link" href="/events">Events</a></li>
+                    <li style={{ pointerEvents: 'none', opacity: 0.3 }}><span style={{ padding: '4px 16px', display: 'block' }}>─────────────</span></li>
+                    <li><Link className="header-link" to="/events">Events</Link></li>
                     <li>
                       <a className="header-link" href="https://www.brandeis.edu/enact/news-updates/index.html" target="_blank" rel="noreferrer">
-                        News &amp; Updates
+                        News &amp; Updates ↗
                       </a>
                     </li>
                   </ul>
@@ -195,18 +239,19 @@ export default function Navbar() {
                     {(status === 'faculty' || status === 'admin') && (
                       <li><a className="header-link" href="/resources/view/faculty">Guide for faculty</a></li>
                     )}
-                    <li><a className="header-link" href="/help">How-to videos</a></li>
-                    <li><a className="header-link" href="/about">About</a></li>
-                    <li><a className="header-link" href="/contact">Contact</a></li>
+                    <li><Link className="header-link" to="/help">How-to videos</Link></li>
+                    <li><Link className="header-link" to="/about">About</Link></li>
+                    <li><Link className="header-link" to="/contact">Contact</Link></li>
                   </ul>
                 </li>
               </>
             )}
 
             {/* Login / Account */}
-            <li className="header-link">
+            <li className="header__btn--signup">
+              {!loggedIn ? (
                 <Link
-                  className="header__btn--signup"
+                  className="header-link header__btn--signup"
                   style={{ backgroundColor: '#0053a4', color: 'white', textTransform: 'uppercase' }}
                   to="/login"
                 >
@@ -219,7 +264,7 @@ export default function Navbar() {
                     <li><a className="header-link" href="/profile/update">Update profile</a></li>
                     <li><a className="header-link" href="/messages/view/all">Messages</a></li>
                     <li>
-                      <a style={{ color: 'red', fontWeight: 'bold' }} href="/logout" onClick={handleLogout}>
+                      <a style={{ color: '#ff6b6b', fontWeight: 'bold' }} href="/logout" onClick={handleLogout}>
                         Log out
                       </a>
                     </li>
